@@ -26,7 +26,7 @@
 // Installing always arms the Adiutor hooks after stating what they do; a
 // backup of settings.json is taken first and the restore command printed.
 
-import { readdirSync, existsSync, readFileSync, copyFileSync, rmSync, mkdirSync, statSync } from 'node:fs';
+import { readdirSync, existsSync, readFileSync, copyFileSync, rmSync, rmdirSync, mkdirSync, statSync } from 'node:fs';
 import { join, dirname, basename, resolve as presolve, relative, extname, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -382,7 +382,12 @@ async function cmdInstall(o) {
 
   if (!o.noArm && !failed && !bad) {
     try {
+      const hadSettings = existsSync(join(target, 'settings.json'));
       const r = armSettings(join(target, 'settings.json'), join(target, NAME));
+      if (!hadSettings) {
+        manifest.settingsCreated = true;
+        writeLF(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+      }
       console.log(`armed ${r.added} event(s) (${r.unchanged} already present) in ${join(target, 'settings.json')}`);
       if (r.readOnly) console.log('settings.json carried the read-only attribute; it was lifted for the write and put back');
       if (r.backup) console.log(`restore: copy "${r.backup}" over settings.json   |   reverse: rdc disarm`);
@@ -423,14 +428,32 @@ async function cmdUninstall(o) {
     dirs.add(dirname(f.path));
     console.log(`  removed ${f.path}`);
   }
-  for (const d of [...dirs].sort((a, b) => b.length - a.length)) {
-    try {
-      if (existsSync(d) && readdirSync(d).length === 0 && d !== target) rmSync(d);
-    } catch {}
+  // Remove the directories left empty, climbing towards the target but never
+  // removing the target itself or anything with content.
+  for (let d of [...dirs].sort((a, b) => b.length - a.length)) {
+    while (d !== target && d.startsWith(target) && existsSync(d) && readdirSync(d).length === 0) {
+      rmdirSync(d);
+      d = dirname(d);
+    }
   }
   try {
-    const r = disarmSettings(join(target, 'settings.json'));
+    const sp = join(target, 'settings.json');
+    const r = disarmSettings(sp);
     console.log(`disarmed ${r.removed} hook entry(ies)${r.backup ? `; backup ${r.backup}` : ''}`);
+    // A settings.json this tool created from nothing is removed again once it
+    // is empty after the disarm; the backups this tool took are removed with
+    // it, since the disarm was verified by re-reading the file from disk.
+    if (m.settingsCreated && existsSync(sp)) {
+      const s = JSON.parse(readFileSync(sp, 'utf8').replace(/^﻿/, '') || '{}');
+      if (Object.keys(s).length === 0) {
+        rmSync(sp);
+        console.log('  removed settings.json (created by this tool; empty after disarm)');
+      }
+    }
+    for (const f of readdirSync(target).filter((f) => /^settings\.json\.rot-dtd-commander\.\d+\.bak$/.test(f))) {
+      rmSync(join(target, f));
+      console.log(`  removed backup ${f}`);
+    }
   } catch (e) {
     console.log(`DISARM FAIL ${e.message}`);
   }

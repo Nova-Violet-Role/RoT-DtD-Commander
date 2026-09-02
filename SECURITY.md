@@ -21,7 +21,8 @@ The contract, and how each part is verified rather than promised:
 | every key not added by the Adiutor is preserved, deep-compared after re-reading from disk; the backup is restored on any deviation | control C6 (a foreign nested key survives arm and disarm) |
 | idempotent by command string | control C6 (a second arm adds nothing; exactly one copy per event) |
 | `disarm` removes only entries carrying the Adiutor marker | control C6 |
-| installed files are recorded in a manifest with their sha256; `uninstall` removes only those, and keeps any the user edited | install round-trip on a scratch target during release |
+| installed files are recorded in a manifest with their sha256; `uninstall` removes only those, and keeps any the user edited | the `install-roundtrip` job in `.github/workflows/gate.yml`: a scratch target ends at zero files |
+| `uninstall` removes a `settings.json` only if this tool created it and it is empty after the disarm, and removes only the backups this tool named | same job; the disarm is verified by re-reading the file before anything is removed |
 | every written text file is re-read and verified: UTF-8, LF, no BOM | the installer's writer, `verifyFile` |
 | a hook reads stdin to the end, spawns no process, writes only under its state directory, and exits 0 | `bin/adiutor.mjs observe`; LAW.ADIUTOR.4 |
 | the Stop hook blocks at most once per run, and only under `ROT_DTD_ADIUTOR=strict` | control C3 |
