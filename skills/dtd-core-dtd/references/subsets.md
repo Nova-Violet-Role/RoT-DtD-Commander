@@ -220,7 +220,7 @@ The numbered, append-only field discipline for any file one session writes and a
 
 ## adiutor.dtd
 
-The Adiutor contract: a run with its expected headings, errors, findings and prescription; the policy and status enumerations; RECORD.run, the ten-field ledger line; ADIUTOR.policy.default bound to the code by control C7; the monitor and its emit lines, MONITOR.name, MONITOR.fail and MONITOR.malformed bound to monitors/commander-adiutor.mjs by control C12; LAW.ADIUTOR.1 to 7. Read by bin/adiutor.mjs and its controls; included by the Adiutor command.
+The Adiutor contract: a run with its expected headings, errors, findings and prescription; the policy and status enumerations; RECORD.run, the ten-field ledger line; ADIUTOR.policy.default bound to the code by control C7; the monitor and its emit lines, MONITOR.name, MONITOR.fail and MONITOR.malformed bound to monitors/commander-adiutor.mjs by control C12; LAW.ADIUTOR.1 to 9. Read by bin/adiutor.mjs and its controls; included by the Adiutor command.
 
 ```dtd
 <!--
@@ -242,7 +242,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
   RECORD.run field must be written by the code (C7), and the monitor's
   printed lines must match MONITOR.fail and MONITOR.malformed (C12), and a
   lagging answer behind narration must be completed from the Stop payload
-  (C13).
+  (C13), and a sloppy answer must close as a slop finding (C19).
 -->
 
 <!ENTITY % policy "(off|warn|strict)">
@@ -263,7 +263,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ELEMENT error (#PCDATA)>
 <!ATTLIST error tool CDATA #REQUIRED>
 <!ELEMENT finding (#PCDATA)>
-<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
+<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer|slop) #REQUIRED>
 <!ELEMENT prescription (charm, rite)>
 <!ELEMENT charm (#PCDATA)>
 <!ELEMENT rite (#PCDATA)>
@@ -293,4 +293,204 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ENTITY LAW.ADIUTOR.6 "Every guard has a control that was tripped on purpose before the guard was trusted.">
 <!ENTITY LAW.ADIUTOR.7 "The monitor reads the ledger and nothing else: one MONITOR.fail line per run closed as fail, one MONITOR.malformed line per line the reader refuses, nothing for a pass, and never a line for a run that closed before it started.">
 <!ENTITY LAW.ADIUTOR.8 "A file that declares no rendered heading is still judged by the shared laws: a non-empty answer, every heading carrying the sigil with a blank line before and after it, an Assumptions Made heading when the run had no gate, and every reference resolved; no run closes as skipped.">
+<!ENTITY LAW.ADIUTOR.9 "Every answer is measured by the AI_SLOP gate of ai-slop.dtd at Stop, after the grammar check; a gate that does not hold is a finding of kind slop, closes the run as fail like any other finding, and its prescription names the measure that failed (control C19).">
+```
+
+## ai-slop.dtd
+
+The AI_SLOP contract, the voice gate: slop_report with its verdict, hits and measures; the ban list SLOP.tell.*, SLOP.hedge.*, SLOP.filler.* and SLOP.closer.*; the bounds SLOP.tells.max to SLOP.rotation.max and SLOP.min_words; LAW.SLOP.1 to 6. Read by lib/ai-slop.mjs, whose controls run both ways (every declared phrase loaded, every declared measure computed, a sloppy fixture fails, a clean one passes); applied by the Adiutor at Stop under LAW.ADIUTOR.9; rendered as a table by the ai-slop-dtd skill.
+
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  ai-slop.dtd : the AI_SLOP contract, the voice gate of every -dtd answer.
+
+  Slop is prose that could have been written about anything: the same
+  hedges, the same tells, the same copula-only sentences at the same
+  length, the same openings answer after answer. This subset declares
+  what the gate measures and where it cuts, once, so that lib/ai-slop.mjs
+  reads its ban list and its bounds from here and never from a table of
+  its own. `node lib/ai-slop.mjs controls` runs both ways: every SLOP.*
+  phrase declared here is loaded by the code, every measure named in the
+  slop_measure enumeration is computed by the code, a deliberately sloppy
+  fixture fails and a clean one passes.
+
+  Three layers, as chosen for 5.0.0:
+    1. the ban list, SLOP.tell.*, SLOP.hedge.*, SLOP.filler.*, SLOP.closer.*
+    2. the verb gate, SLOP.static.max: sentences whose only verb is a
+       copula or an auxiliary are static, and an answer is alive when
+       they are few
+    3. the rotation, SLOP.rotation.max: two consecutive records of the
+       same command may not open their sentences the same way
+  plus two rhythm measures that catch monotone prose the lists miss.
+
+  A hit inside a quoted element, a code fence or a table is data, never a
+  hit (LAW.SLOP.1). The gate judges the answer's own voice only.
+-->
+
+<!ELEMENT slop_report (slop_verdict, slop_hit*, slop_measure+)>
+<!ATTLIST slop_report
+          file CDATA #REQUIRED
+          prev CDATA #IMPLIED>
+<!ELEMENT slop_verdict EMPTY>
+<!ATTLIST slop_verdict alive (yes|no) #REQUIRED>
+<!ELEMENT slop_hit (#PCDATA)>
+<!ATTLIST slop_hit
+          kind (tell|hedge|filler|closer|static) #REQUIRED
+          line CDATA #REQUIRED>
+<!ELEMENT slop_measure EMPTY>
+<!ATTLIST slop_measure
+          name  (tells|hedges|fillers|closers|static_share|rhythm_cv|lexical_mattr|rotation_overlap) #REQUIRED
+          value CDATA #REQUIRED
+          bound CDATA #REQUIRED
+          holds (yes|no) #REQUIRED>
+
+<!-- ===== THE BOUNDS ===== -->
+<!-- tells and closers: none allowed. hedges and fillers: per thousand words.
+     static_share: share of sentences with no verb beyond a copula or an
+     auxiliary. rhythm_cv: coefficient of variation of words per sentence.
+     lexical_mattr: moving-average type-token ratio, window 100 words.
+     rotation_overlap: Jaccard overlap of sentence-opening trigrams between
+     this record and the previous record of the same command. -->
+<!ENTITY SLOP.tells.max     "0">
+<!ENTITY SLOP.closers.max   "0">
+<!ENTITY SLOP.hedges.max    "4">
+<!ENTITY SLOP.fillers.max   "8">
+<!ENTITY SLOP.static.max    "0.40">
+<!ENTITY SLOP.rhythm.min    "0.35">
+<!ENTITY SLOP.mattr.min     "0.55">
+<!ENTITY SLOP.rotation.max  "0.50">
+<!ENTITY SLOP.min_words     "60">
+
+<!-- ===== THE BAN LIST ===== -->
+<!-- Matched case-insensitively on word boundaries in the answer's own voice. -->
+<!ENTITY SLOP.tell.1  "delve">
+<!ENTITY SLOP.tell.2  "delves">
+<!ENTITY SLOP.tell.3  "delving">
+<!ENTITY SLOP.tell.4  "tapestry">
+<!ENTITY SLOP.tell.5  "a testament to">
+<!ENTITY SLOP.tell.6  "it is worth noting">
+<!ENTITY SLOP.tell.7  "it's worth noting">
+<!ENTITY SLOP.tell.8  "in today's fast-paced">
+<!ENTITY SLOP.tell.9  "navigate the landscape">
+<!ENTITY SLOP.tell.10 "the landscape of">
+<!ENTITY SLOP.tell.11 "game-changer">
+<!ENTITY SLOP.tell.12 "unlock the potential">
+<!ENTITY SLOP.tell.13 "seamlessly">
+<!ENTITY SLOP.tell.14 "seamless">
+<!ENTITY SLOP.tell.15 "leverage">
+<!ENTITY SLOP.tell.16 "leverages">
+<!ENTITY SLOP.tell.17 "leveraging">
+<!ENTITY SLOP.tell.18 "embark on a journey">
+<!ENTITY SLOP.tell.19 "at the end of the day">
+<!ENTITY SLOP.tell.20 "in the realm of">
+<!ENTITY SLOP.tell.21 "let's dive in">
+<!ENTITY SLOP.tell.22 "dive into">
+<!ENTITY SLOP.tell.23 "it is important to note">
+<!ENTITY SLOP.tell.24 "it's important to note">
+<!ENTITY SLOP.tell.25 "as an AI">
+<!ENTITY SLOP.tell.26 "harness the power">
+<!ENTITY SLOP.tell.27 "pave the way">
+<!ENTITY SLOP.tell.28 "a myriad of">
+<!ENTITY SLOP.tell.29 "plethora">
+<!ENTITY SLOP.tell.30 "utilize">
+<!ENTITY SLOP.tell.31 "utilizes">
+<!ENTITY SLOP.tell.32 "utilizing">
+<!ENTITY SLOP.tell.33 "synergy">
+<!ENTITY SLOP.tell.34 "holistic">
+<!ENTITY SLOP.tell.35 "cutting-edge">
+<!ENTITY SLOP.tell.36 "state-of-the-art">
+<!ENTITY SLOP.tell.37 "plays a crucial role">
+<!ENTITY SLOP.tell.38 "plays a vital role">
+<!ENTITY SLOP.tell.39 "plays a pivotal role">
+<!ENTITY SLOP.tell.40 "paramount">
+<!ENTITY SLOP.tell.41 "underscores the importance">
+<!ENTITY SLOP.tell.42 "highlights the importance">
+<!ENTITY SLOP.tell.43 "sheds light on">
+<!ENTITY SLOP.tell.44 "in a nutshell">
+<!ENTITY SLOP.tell.45 "look no further">
+<!ENTITY SLOP.tell.46 "revolutionize">
+<!ENTITY SLOP.tell.47 "transformative">
+<!ENTITY SLOP.tell.48 "empower">
+<!ENTITY SLOP.tell.49 "empowers">
+<!ENTITY SLOP.tell.50 "foster">
+<!ENTITY SLOP.tell.51 "fosters">
+<!ENTITY SLOP.tell.52 "streamline">
+<!ENTITY SLOP.tell.53 "comprehensive guide">
+<!ENTITY SLOP.tell.54 "key takeaways">
+<!ENTITY SLOP.tell.55 "when it comes to">
+<!ENTITY SLOP.tell.56 "it goes without saying">
+<!ENTITY SLOP.tell.57 "needless to say">
+<!ENTITY SLOP.tell.58 "as we all know">
+<!ENTITY SLOP.tell.59 "in the world of">
+<!ENTITY SLOP.tell.60 "robust">
+<!ENTITY SLOP.tell.61 "elevate your">
+<!ENTITY SLOP.tell.62 "great question">
+<!ENTITY SLOP.tell.63 "rest assured">
+<!ENTITY SLOP.tell.64 "certainly!">
+<!ENTITY SLOP.tell.65 "absolutely!">
+
+<!ENTITY SLOP.hedge.1  "somewhat">
+<!ENTITY SLOP.hedge.2  "arguably">
+<!ENTITY SLOP.hedge.3  "it could be argued">
+<!ENTITY SLOP.hedge.4  "may or may not">
+<!ENTITY SLOP.hedge.5  "in some ways">
+<!ENTITY SLOP.hedge.6  "to some extent">
+<!ENTITY SLOP.hedge.7  "sort of">
+<!ENTITY SLOP.hedge.8  "kind of">
+<!ENTITY SLOP.hedge.9  "it seems that">
+<!ENTITY SLOP.hedge.10 "one might say">
+<!ENTITY SLOP.hedge.11 "I think that">
+<!ENTITY SLOP.hedge.12 "I believe that">
+<!ENTITY SLOP.hedge.13 "it is possible that">
+<!ENTITY SLOP.hedge.14 "generally speaking">
+<!ENTITY SLOP.hedge.15 "more or less">
+<!ENTITY SLOP.hedge.16 "basically">
+<!ENTITY SLOP.hedge.17 "essentially">
+<!ENTITY SLOP.hedge.18 "perhaps">
+<!ENTITY SLOP.hedge.19 "potentially">
+<!ENTITY SLOP.hedge.20 "in general,">
+
+<!ENTITY SLOP.filler.1  "very">
+<!ENTITY SLOP.filler.2  "really">
+<!ENTITY SLOP.filler.3  "actually">
+<!ENTITY SLOP.filler.4  "just">
+<!ENTITY SLOP.filler.5  "quite">
+<!ENTITY SLOP.filler.6  "simply">
+<!ENTITY SLOP.filler.7  "truly">
+<!ENTITY SLOP.filler.8  "in order to">
+<!ENTITY SLOP.filler.9  "the fact that">
+<!ENTITY SLOP.filler.10 "as a matter of fact">
+<!ENTITY SLOP.filler.11 "at this point in time">
+<!ENTITY SLOP.filler.12 "due to the fact that">
+<!ENTITY SLOP.filler.13 "for all intents and purposes">
+<!ENTITY SLOP.filler.14 "each and every">
+<!ENTITY SLOP.filler.15 "first and foremost">
+<!ENTITY SLOP.filler.16 "last but not least">
+<!ENTITY SLOP.filler.17 "furthermore,">
+<!ENTITY SLOP.filler.18 "moreover,">
+<!ENTITY SLOP.filler.19 "additionally,">
+<!ENTITY SLOP.filler.20 "overall,">
+
+<!ENTITY SLOP.closer.1  "I hope this helps">
+<!ENTITY SLOP.closer.2  "hope that helps">
+<!ENTITY SLOP.closer.3  "let me know if">
+<!ENTITY SLOP.closer.4  "feel free to">
+<!ENTITY SLOP.closer.5  "happy to help">
+<!ENTITY SLOP.closer.6  "don't hesitate">
+<!ENTITY SLOP.closer.7  "if you have any questions">
+<!ENTITY SLOP.closer.8  "in conclusion">
+<!ENTITY SLOP.closer.9  "to sum up">
+<!ENTITY SLOP.closer.10 "to wrap up">
+<!ENTITY SLOP.closer.11 "and there you have it">
+<!ENTITY SLOP.closer.12 "in summary,">
+
+<!-- ===== THE LAWS ===== -->
+<!ENTITY LAW.SLOP.1 "A SLOP.* phrase in the answer's own voice is a hit; inside a quoted element, a code fence, an inline code span or a table row it is data and never a hit.">
+<!ENTITY LAW.SLOP.2 "A sentence whose only verb is a copula or an auxiliary is static; the answer is alive only when the static share is at or below SLOP.static.max.">
+<!ENTITY LAW.SLOP.3 "Sentence length moves: the coefficient of variation of words per sentence is at least SLOP.rhythm.min, and the moving type-token ratio is at least SLOP.mattr.min; a monotone answer is a failed answer.">
+<!ENTITY LAW.SLOP.4 "Two consecutive records of the same command share at most SLOP.rotation.max of their sentence-opening trigrams; the previous record is read from disk, never recalled from memory.">
+<!ENTITY LAW.SLOP.5 "A slop verdict is measured by lib/ai-slop.mjs and rendered with every slop_measure and its bound; a verdict without its numbers was not given.">
+<!ENTITY LAW.SLOP.6 "An answer under SLOP.min_words is judged on the ban list alone; the rhythm, verb and rotation measures need a body to measure.">
 ```

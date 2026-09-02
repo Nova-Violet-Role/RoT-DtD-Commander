@@ -32,6 +32,7 @@ import { readText, resolveFile, check, parseSubset, splitDoctype } from '../lib/
 import { expectedFromCommand, checkAnswer, prescribe } from '../lib/render-check.mjs';
 import { armSettings, disarmSettings, armedIn, EVENTS, hookCommand } from '../lib/arm.mjs';
 import { claudeDir, stateDir, ledgerPath, safeId, RECORD_FIELDS, parseLedger } from '../lib/ledger.mjs';
+import { scan as slopScan, summary as slopSummary, SLOPPY_FIXTURE } from '../lib/ai-slop.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = presolve(HERE, '..');
@@ -306,6 +307,14 @@ export function observe(event, payload, io = console) {
       const { text: answer, detail } = answerAtStop(payload, run.command);
       const result = checkAnswer(answer, run.expected, { autonomous: run.autonomous });
       for (const f of result.findings) if (f.kind === 'no_answer') f.msg += ` (${detail})`;
+      // The AI_SLOP gate, after the grammar check (LAW.ADIUTOR.9, control C18).
+      if (answer.trim()) {
+        const slop = slopScan(answer);
+        if (!slop.alive) {
+          result.findings.push({ kind: 'slop', msg: `slop: ${slopSummary(slop)}` });
+          result.ok = false;
+        }
+      }
       if (result.ok) {
         closeRun(run, 'pass');
         return;
@@ -519,6 +528,24 @@ export async function controls(io = console) {
   control('C2 complete answer passes', () => {
     const r = checkAnswer(good, expected);
     return { ok: r.ok, detail: r.ok ? 'pass' : r.findings.map((f) => f.msg).join('; ') };
+  }, results);
+
+  control('C19 a sloppy answer closes as a slop finding at Stop; a clean answer passes', () => {
+    const sloppy = good.replace('one sentence\n', SLOPPY_FIXTURE + '\n');
+    if (sloppy === good || slopScan(sloppy).alive) return { ok: false, detail: 'mutation did not land' };
+    const stop = (session, text) => {
+      writeRun({ session, command: 'pareto-dtd', file: '', root: expected.root, expected, tools: 0, errors: [], attempts: 0, autonomous: false, trailing: false, opened: new Date().toISOString() });
+      const io = capture();
+      observe('Stop', { session_id: session, transcript_path: transcript(text), last_assistant_message: text }, io);
+      const rows = parseLedger(readFileSync(ledgerPath(), 'utf8')).rows.filter((r) => r.session === session);
+      return { row: rows[rows.length - 1], lines: io.lines };
+    };
+    const bad = stop('S18a', sloppy);
+    const fine = stop('S18b', good);
+    const badFindings = bad.row ? JSON.stringify(bad.row.findings) : '';
+    const tripped = !!bad.row && bad.row.status === 'fail' && /slop:/.test(badFindings) && /slop:/.test(bad.lines.join(' '));
+    const passed = !!fine.row && fine.row.status === 'pass';
+    return { ok: tripped && passed, detail: `sloppy closed ${bad.row ? bad.row.status : 'no row'} ${badFindings.slice(0, 140)}; clean closed ${fine.row ? fine.row.status : 'no row'}` };
   }, results);
 
   control('C9 crammed headings are a spacing finding', () => {

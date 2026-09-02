@@ -51,7 +51,7 @@ const NAME = 'rot-dtd-commander';
 const TEXT_EXT = new Set(['.md', '.dtd', '.sh', '.mjs', '.js', '.json', '.yml', '.yaml', '.txt', '.tsv', '.csv', '.ps1', '.nu', '.py', '.toml', '.tape']);
 const JUNK = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
 const MANIFEST = `.${NAME}-manifest.json`;
-const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd'];
+const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd', 'dtd/ai-slop.dtd', 'lib/ordinals.mjs', 'lib/ai-slop.mjs'];
 // The skills-directory plugin the installer writes so the monitor auto-starts
 // on the npx path. Claude Code loads any <target>/skills/<name>/ that carries a
 // .claude-plugin/plugin.json as <name>@skills-dir, personal scope, next session.

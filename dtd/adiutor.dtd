@@ -17,7 +17,7 @@
   RECORD.run field must be written by the code (C7), and the monitor's
   printed lines must match MONITOR.fail and MONITOR.malformed (C12), and a
   lagging answer behind narration must be completed from the Stop payload
-  (C13).
+  (C13), and a sloppy answer must close as a slop finding (C19).
 -->
 
 <!ENTITY % policy "(off|warn|strict)">
@@ -38,7 +38,7 @@
 <!ELEMENT error (#PCDATA)>
 <!ATTLIST error tool CDATA #REQUIRED>
 <!ELEMENT finding (#PCDATA)>
-<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
+<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer|slop) #REQUIRED>
 <!ELEMENT prescription (charm, rite)>
 <!ELEMENT charm (#PCDATA)>
 <!ELEMENT rite (#PCDATA)>
@@ -68,3 +68,4 @@
 <!ENTITY LAW.ADIUTOR.6 "Every guard has a control that was tripped on purpose before the guard was trusted.">
 <!ENTITY LAW.ADIUTOR.7 "The monitor reads the ledger and nothing else: one MONITOR.fail line per run closed as fail, one MONITOR.malformed line per line the reader refuses, nothing for a pass, and never a line for a run that closed before it started.">
 <!ENTITY LAW.ADIUTOR.8 "A file that declares no rendered heading is still judged by the shared laws: a non-empty answer, every heading carrying the sigil with a blank line before and after it, an Assumptions Made heading when the run had no gate, and every reference resolved; no run closes as skipped.">
+<!ENTITY LAW.ADIUTOR.9 "Every answer is measured by the AI_SLOP gate of ai-slop.dtd at Stop, after the grammar check; a gate that does not hold is a finding of kind slop, closes the run as fail like any other finding, and its prescription names the measure that failed (control C19).">

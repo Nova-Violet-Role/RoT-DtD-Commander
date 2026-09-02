@@ -1,6 +1,6 @@
 ---
 name: iupac-ordinals-dtd
-description: "The IUPAC numerical multiplier prefixes (mono-, di-, tri-, icosa-, triaconta-, hecta-, kilia-) used as ordinals in file and directory names. Load when numbering a set of files with words instead of digits, when reading or writing a name like tri-extraction.md or docosa-appendix.md, when a composite prefix must be built for a number above twenty, or when a word-numbered directory has stopped sorting in the order its author intended."
+description: "The IUPAC numerical multiplier prefixes (mono-, di-, tri-, icosa-, triaconta-, hecta-, kilia-) used as ordinals in file and directory names. Load when numbering a set of files with words instead of digits, when reading or writing a name like tri-extraction.md or docosa-appendix.md, when a composite prefix must be built for a number above twenty, or when a word-numbered directory has stopped sorting in the order its author intended. From 5.0.0 a record ordinal is the Greek cardinal (heis, duo, treis), read from lib/ordinals.mjs, with the IUPAC multiplier as the second column."
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
@@ -9,11 +9,12 @@ description: "The IUPAC numerical multiplier prefixes (mono-, di-, tri-, icosa-,
 <!DOCTYPE iupac_ordinals [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT iupac_ordinals (number, construction, prefix, filename, caveat*)>
+  <!ELEMENT iupac_ordinals (number, construction, prefix, cardinal, filename, caveat*)>
   <!ELEMENT number (#PCDATA)>
   <!ELEMENT construction (#PCDATA)>
   <!ELEMENT prefix (#PCDATA)>
   <!ATTLIST prefix n CDATA #REQUIRED>
+  <!ELEMENT cardinal (#PCDATA)>
   <!ELEMENT filename (#PCDATA)>
   <!ELEMENT caveat (#PCDATA)>
   <!ENTITY LAW.IUPAC.1 "A composite prefix is assembled from the least significant place upward, units then tens then hundreds then thousands, which is the reverse of the English reading order.">
@@ -21,6 +22,7 @@ description: "The IUPAC numerical multiplier prefixes (mono-, di-, tri-, icosa-,
   <!ENTITY LAW.IUPAC.3 "A word prefix does not sort: an ordinal set whose order must survive a directory listing carries a zero padded numeral as the leading key and the prefix as the name.">
   <!ENTITY LAW.IUPAC.4 "An ordinal once assigned is never reassigned; a file inserted between two others takes the next free number, because renumbering a set renames every link into it.">
   <!ENTITY LAW.IUPAC.5 "A prefix nobody can read is not a name: from the twenties up the answer states the digits beside the word, and above one hundred it recommends digits alone.">
+  <!ENTITY LAW.IUPAC.6 "A record ordinal is the Greek cardinal token of lib/ordinals.mjs, heis, duo, treis and onward, with the IUPAC multiplier printed beside it as the second column; a token written before this law, mono or di, reads as the same number and is never renamed.">
 ]>
 
 <trust_boundary>
@@ -108,6 +110,16 @@ The numeral is the key; the prefix is the name. Use the prefix alone only where 
 
 Once `tri-data.md` exists, 3 belongs to that file. A document that belongs conceptually between 3 and 4 takes the next free number at the end, not the number 4 with everything after it shifted. Renumbering a set renames every link, cross-reference and bookmark into it, and the word form makes those breaks silent rather than loud.
 
+## Records count in Greek cardinals (LAW.IUPAC.6)
+
+The IUPAC multiplier says how many of a thing there are; a record asks which one this is. From 5.0.0 the ordinal token of a record under `artifacts/<command>/` is the Greek `cardinal`: `heis`, `duo`, `treis`, `tessares`, `pente`, `hex`, `hepta`, `okto`, `ennea`, `deka`, then `hendeka`, `dodeka`, the `-kaideka` teens, `eikosi-heis` and so on, joined by hyphens from the largest place down. The second record of a command is `<name>.duo.md`. The IUPAC form is printed beside it as the second column, and a name written before this law (`mono`, `di`) still reads as the same number: the next free ordinal is measured from the directory, never from memory.
+
+```bash
+node lib/ordinals.mjs next artifacts/deep-dive-dtd deep-dive-dtd   # 3 treis taken=1,2
+node lib/ordinals.mjs 22                                          # 22 greek=eikosi-duo iupac=docosa
+node lib/ordinals.mjs controls                                    # twenty-three pinned spellings, full round trip
+```
+
 ## Stop before the reader does (LAW.IUPAC.5)
 
 `hexaoctacontatetracta-` is 486. Nobody reads that, nobody types it, and nobody notices when it is misspelled.
@@ -140,6 +152,7 @@ Load only what the question needs:
 
 - `references/prefix-table.md` — the complete tables (units 1 to 9, 10 to 19, 20 to 29, tens 30 to 90, hundreds 100 to 900, thousands 1000 to 9000), the assembly algorithm, the verified worked examples, and the source.
 - `references/file-naming.md` — applying the prefixes to real directories: sort keys, insertion, stability, mixed schemes, and what to do instead when the set is large.
+- `references/greek-cardinals.md` — the Greek cardinal beside the IUPAC multiplier for the first thirty numbers and the round places up to 9999; generated by `node lib/ordinals.mjs table`.
 
 </reference_index>
 
@@ -169,6 +182,7 @@ Render the `iupac_ordinals` root declared in the DOCTYPE as the markdown below. 
 - `number`: the ordinal asked about, in digits
 - `construction`: the place by place decomposition, smallest place first
 - `prefix`: the assembled prefix, with its value on the n attribute
+- `cardinal`: the Greek cardinal token for the same number, the record spelling from 5.0.0
 - `filename`: the ordinal applied to the name at hand, with a sort key when the set needs one
 - `caveat`: zero or more warnings that apply to this number or this set
 </grammar_map>

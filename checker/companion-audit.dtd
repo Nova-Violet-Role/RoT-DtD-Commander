@@ -1,0 +1,40 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  checker/companion-audit.dtd : the contract of the Scratchpad Companion.
+
+  The companion is a second Claude session, run in the FOREGROUND by
+  checker/companion-audit.sh after each build phase: `claude -p` with the
+  audit model, stdin closed, a turn ceiling, a wall-clock ceiling, output
+  teed to the scratchpad, exit code read through PIPESTATUS. It reads the
+  phase's diff and the tree and answers in the grammar below. It never
+  edits, never spawns, never backgrounds, never runs a command that reads
+  stdin, and never runs a command without its own ceiling: the anti-stall
+  laws are part of the contract, not advice.
+
+  This file lives under checker/ and not dtd/ on purpose: it is an
+  instrument of the checker, not a subset any command includes, so the
+  contract audit (every dtd/ declaration used by src/) does not apply.
+-->
+
+<!ELEMENT companion_audit (scope, finding*, verdict, next)>
+<!ATTLIST companion_audit phase CDATA #REQUIRED range CDATA #REQUIRED model CDATA #REQUIRED>
+<!ELEMENT scope (#PCDATA)>
+<!ELEMENT finding (#PCDATA)>
+<!ATTLIST finding
+          file       CDATA #REQUIRED
+          line       CDATA #REQUIRED
+          severity   (high|medium|low) #REQUIRED
+          confidence (measured|reasoned|guessed) #REQUIRED>
+<!ELEMENT verdict (#PCDATA)>
+<!ATTLIST verdict pass (yes|no) #REQUIRED>
+<!ELEMENT next (#PCDATA)>
+
+<!ENTITY COMPANION.verdict.pass "COMPANION VERDICT: pass">
+<!ENTITY COMPANION.verdict.fail "COMPANION VERDICT: fail">
+
+<!ENTITY LAW.COMPANION.1 "The companion reads and runs; it never writes, edits, deletes, commits, spawns an agent or backgrounds a process.">
+<!ENTITY LAW.COMPANION.2 "Every command the companion runs carries its own timeout ceiling and has stdin closed; a command that reads stdin is never run.">
+<!ENTITY LAW.COMPANION.3 "A finding names a file and a line it read, its severity and its confidence; measured requires a thing that was run or read in this audit.">
+<!ENTITY LAW.COMPANION.4 "The answer ends with exactly one verdict line, COMPANION.verdict.pass or COMPANION.verdict.fail, and fail requires at least one high finding.">
+<!ENTITY LAW.COMPANION.5 "A ceiling that fires (exit 124) is a result: the phase is recorded as unaudited, never as passed.">
