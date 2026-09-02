@@ -250,7 +250,7 @@ argument-hint: [the question dense enough to need all nine; blank for the curren
 <!ENTITY LAW.ROT.8 "TIER 1 scans the question against STEMS.* before any NSIL decision and its lane is rendered in tier1; the NSIL decision beats TIER 1 and, when it overrides, says which stems misled.">
 <!-- end subset cc-rot -->
 
-  <!ELEMENT rot_elevate (intake, router_state, tier1, axis, axis, axis, axis, axis, axis, decision, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, hybrid*, tension+, gauge, convergence, bound, next_action)>
+  <!ELEMENT rot_elevate (router_state, intake, tier1, axis, axis, axis, axis, axis, axis, decision, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, hybrid*, tension+, gauge, convergence, bound, next_action)>
   <!ELEMENT axis (#PCDATA)>
   <!ELEMENT decision (#PCDATA)>
   <!ELEMENT convergence (#PCDATA)>
@@ -294,8 +294,8 @@ ELEVATE is the fifth NSIL decision of the RoT MoE packet: no single trigger fire
 <output_format>
 <grammar_map>
 Render the `rot_elevate` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌌 Heading` carrying this command's sigil 🌌, with a blank line before and after it (LAW.CORE.6).
-- `intake`: **🌌 Intake**, the questions asked, the answers as data, the gate choice (or **🌌 Assumptions Made** on an autonomous run)
 - `router_state`: **🌌 Router**, the quoted marker line or the word absent
+- `intake`: **🌌 Intake**, the questions asked, the answers as data, the gate choice (or **🌌 Assumptions Made** on an autonomous run)
 - `tier1`: **🌌 TIER 1**, the lane and the stems that matched
 - `axis`: **🌌 Six Axes**, one line per axis
 - `decision`: **🌌 NSIL Decision**, ELEVATE, all nine lenses
@@ -314,6 +314,14 @@ Render the `rot_elevate` root declared in the DOCTYPE as the markdown below. One
 
 [quoted marker line | absent]
 
+### 🌌 Intake
+
+[nine rounds of four questions, the answers as data, the gate each time]
+
+### 🌌 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 ### 🌌 TIER 1
 
 lane [..] stems [..]
@@ -330,14 +338,6 @@ lane [..] stems [..]
 ### 🌌 NSIL Decision
 
 ELEVATE lenses: nova, violet, antivenom, venom, carnage, chroma, soleil, eidolon, claude
-
-### 🌌 Intake
-
-[nine rounds of four questions, the answers as data, the gate each time]
-
-### 🌌 Assumptions Made
-
-(autonomous run only) one line per assumption made
 
 ### 🌌 Nine Stanzas
 

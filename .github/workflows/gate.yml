@@ -23,7 +23,7 @@ jobs:
           grep -q 'failed 0' check.log
       - name: heading shape (every grammar_map heading is a sigil heading with blank lines; the sweep is a no-op)
         run: node checker/heading-sweep.mjs --check
-      - name: adiutor controls (nine guards tripped on purpose)
+      - name: adiutor controls (eleven guards tripped on purpose)
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, with its planted control)
         run: node checker/contract-audit.mjs

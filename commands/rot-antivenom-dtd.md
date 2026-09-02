@@ -251,7 +251,7 @@ allowed-tools: Read Grep Glob
 <!ENTITY LAW.ROT.8 "TIER 1 scans the question against STEMS.* before any NSIL decision and its lane is rendered in tier1; the NSIL decision beats TIER 1 and, when it overrides, says which stems misled.">
 <!-- end subset cc-rot -->
 
-  <!ELEMENT rot_antivenom (intake, router_state, diagnosis, finding*, isolation, preserved*, neutralization, purification, verification, expert+, interceptor*, gauge, bound, stanza)>
+  <!ELEMENT rot_antivenom (router_state, intake, diagnosis, finding*, isolation, preserved*, neutralization, purification, verification, expert+, interceptor*, gauge, bound, stanza)>
   <!ELEMENT diagnosis (#PCDATA)>
   <!ELEMENT isolation (#PCDATA)>
   <!ELEMENT neutralization (#PCDATA)>
@@ -301,8 +301,8 @@ Anti-Venom is the clinical lens of the RoT MoE packet and the lead of the CLINIC
 <output_format>
 <grammar_map>
 Render the `rot_antivenom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚪ Heading` carrying this command's sigil ⚪, with a blank line before and after it (LAW.CORE.6).
-- `intake`: **⚪ Intake**, the questions asked, the answers as data, the gate choice (or **⚪ Assumptions Made** on an autonomous run)
 - `router_state`: **⚪ Router**, the quoted marker line or the word absent
+- `intake`: **⚪ Intake**, the questions asked, the answers as data, the gate choice (or **⚪ Assumptions Made** on an autonomous run)
 - `diagnosis`: **⚪ Diagnose**
 - `finding`: **⚪ Findings**, one line per finding: id, severity, level, ci
 - `isolation`: **⚪ Isolate**
@@ -371,7 +371,7 @@ instrument [..] result [exit 0 | line ..]
 ### ⚪ Gauge
 
 rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- ⚪ antivenom lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- antivenom lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
 - **⚪ Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
 ### ⚪ Bound

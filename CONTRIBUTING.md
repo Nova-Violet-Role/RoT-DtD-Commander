@@ -23,7 +23,7 @@ npm run gate; echo "exit=$?"
 
 That runs, in order: `rdc build --check` (the committed resolved tree equals a
 fresh resolve of `src/`), `rdc check` (rules C1 to C13 on every source), the
-Adiutor controls (nine guards tripped on purpose), the contract audit (every
+Adiutor controls (eleven guards tripped on purpose), the contract audit (every
 declaration used, every law numbered densely, with a planted control), the
 checker controls (five mutations refused), and the SPDX and CRLF sweeps
 (each with its own negative control). Read the exit code directly, never

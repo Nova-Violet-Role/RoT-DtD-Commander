@@ -27,9 +27,14 @@ answer runs together and every command is recognisable at a glance. The nine
 lens commands carry their lens emoji where the lens speaks: the stanza, the
 bound, the gauge term, the roll-call. `dtd/sigils.json` declares the 75
 sigils once; `checker/heading-sweep.mjs` proves the tree is in shape with
-its own planted control. Every number is in [CHANGELOG.md](CHANGELOG.md)
-beside the command that measured it. Install and verify exactly as below;
-the tag is `v3.0.0`.
+its own planted control. Two live turns through the armed hooks closed as
+`pass` in the ledger (`/pareto-dtd`, `/rot-chroma-dtd --no-gate`), and the
+first failing ones fixed the Stop check for good: the answer of a run is
+every assistant text after the command prompt, not the last block. The
+marketplace round-trip was measured too, and `rdc prune-plugin` removes the
+cache the plugin CLI leaves behind. Every number is in
+[CHANGELOG.md](CHANGELOG.md) beside the command that measured it. Install
+and verify exactly as below; the tag is `v3.0.0`.
 
 ## v2.0.0 — the nine lenses, at full power
 

@@ -159,9 +159,20 @@ function findCommandFile(name, cwd) {
 
 // ---------- transcript ----------
 
-export function lastAssistantText(transcriptPath) {
+// The answer of the run: every assistant text block written after the user
+// entry that invoked the command (the last one naming /<command>), joined
+// in order. A turn can close with more than one assistant message (a tool
+// call between the answer and a closing stanza, or another plugin's Stop
+// hook asking for a last line, which arrives as a user entry that is not a
+// prompt), and the answer is all of it, not the last block alone. With no
+// command given or no such entry in the file (a hand-fed transcript) every
+// assistant text counts. A torn last line is skipped, never a finding
+// (LAW.ADIUTOR.2).
+export function lastAssistantText(transcriptPath, command = null) {
   if (!transcriptPath || !existsSync(transcriptPath)) return '';
-  let last = '';
+  const texts = [];
+  let sinceCommand = null;
+  const mark = command ? new RegExp('(^|[\\s>"])/' + command.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![\\w-])', 'i') : null;
   for (const line of readFileSync(transcriptPath, 'utf8').split('\n')) {
     if (!line.trim()) continue;
     let o;
@@ -170,14 +181,40 @@ export function lastAssistantText(transcriptPath) {
     } catch {
       continue;
     }
-    if (o.type !== 'assistant' || o.isSidechain) continue;
+    if (o.isSidechain) continue;
     const c = o.message && o.message.content;
-    if (Array.isArray(c)) {
-      const t = c.filter((b) => b && b.type === 'text').map((b) => b.text || '').join('\n');
-      if (t.trim()) last = t;
-    } else if (typeof c === 'string' && c.trim()) last = c;
+    if (o.type === 'user') {
+      if (!mark) continue;
+      const s = typeof c === 'string' ? c : Array.isArray(c) ? c.filter((b) => b && b.type === 'text').map((b) => b.text || '').join('\n') : '';
+      if (mark.test(s)) sinceCommand = [];
+      continue;
+    }
+    if (o.type !== 'assistant') continue;
+    let t = '';
+    if (Array.isArray(c)) t = c.filter((b) => b && b.type === 'text').map((b) => b.text || '').join('\n');
+    else if (typeof c === 'string') t = c;
+    if (t.trim()) {
+      texts.push(t);
+      if (sinceCommand) sinceCommand.push(t);
+    }
   }
-  return last;
+  return (sinceCommand && sinceCommand.length ? sinceCommand : texts).join('\n\n');
+}
+
+// At Stop the transcript can lag the final message by a moment; read again a
+// few times before concluding there is no text.
+function answerAtStop(payload, command) {
+  const wait = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+  let text = '';
+  for (let i = 0; i < 6; i++) {
+    text = lastAssistantText(payload.transcript_path, command);
+    if (text.trim()) break;
+    wait(250);
+  }
+  if (!text.trim() && typeof payload.last_assistant_message === 'string') text = payload.last_assistant_message;
+  const p = payload.transcript_path;
+  const detail = `transcript ${p ? (existsSync(p) ? 'present' : 'missing') : 'not given'}; payload keys ${Object.keys(payload).join(',')}`;
+  return { text, detail };
 }
 
 // ---------- observe ----------
@@ -254,8 +291,9 @@ export function observe(event, payload, io = console) {
       if (payload.stop_hook_active) return;
       const run = readRun(session);
       if (!run) return;
-      const answer = lastAssistantText(payload.transcript_path);
+      const { text: answer, detail } = answerAtStop(payload, run.command);
       const result = checkAnswer(answer, run.expected, { autonomous: run.autonomous });
+      for (const f of result.findings) if (f.kind === 'no_answer') f.msg += ` (${detail})`;
       if (result.ok) {
         closeRun(run, 'pass');
         return;
@@ -370,7 +408,7 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
   }
   const npxInstalled = existsSync(manifestPath);
   const pluginActive = registered || leftovers.length > 0;
-  row('plugin state', !(npxInstalled && pluginActive), pluginActive ? `plugin present (${registered ? 'registered' : 'not registered'}; ${leftovers.length} director${leftovers.length === 1 ? 'y' : 'ies'} under plugins/${npxInstalled ? '); the npx set is ALSO installed: keep one' : ')'}` : 'no plugin copy under plugins/cache, plugins/marketplaces or the registry');
+  row('plugin state', !(npxInstalled && pluginActive), pluginActive ? `plugin present (${registered ? 'registered' : 'not registered'}; ${leftovers.length} director${leftovers.length === 1 ? 'y' : 'ies'} under plugins/${npxInstalled ? '); the npx set is ALSO installed: keep one' : ')'}${registered ? '' : '; the plugin CLI left this behind: rdc prune-plugin removes it'}` : 'no plugin copy under plugins/cache, plugins/marketplaces or the registry');
   row('policy', true, `${policy()} (ROT_DTD_ADIUTOR=${process.env.ROT_DTD_ADIUTOR || 'unset'}; default ${POLICY_DEFAULT})`);
   for (const r of rows) io.log(`  ${r.ok ? 'OK  ' : 'FAIL'} ${r.name.padEnd(15)} ${r.detail}`);
   const bad = rows.filter((r) => !r.ok).length;
@@ -448,6 +486,80 @@ export function controls(io = console) {
     const hit = r.findings.some((f) => f.kind === 'spacing');
 
     return { ok: !r.ok && hit, detail: r.findings.map((f) => f.msg).join('; ') };
+
+  }, results);
+
+  control('C10 the answer of a run is every assistant text after the command prompt', () => {
+
+    // an earlier turn's answer, then the command, a tool call, the answer,
+
+    // another hook's feedback entry, and a closing stanza: the run's answer is
+
+    // the last three assistant texts joined, and the earlier turn is not in it
+
+    const p = join(tmp, 'turn.jsonl');
+
+    const L = (o) => JSON.stringify(o);
+
+    writeFileSync(p, [
+
+      L({ type: 'user', message: { content: 'an earlier question' } }),
+
+      L({ type: 'assistant', message: { content: [{ type: 'text', text: '### 🎯 Bottom Line\n\nfrom an earlier turn\n' }] } }),
+
+      L({ type: 'user', message: { content: '/pareto-dtd what first' } }),
+
+      L({ type: 'assistant', message: { content: [{ type: 'tool_use', name: 'Read', input: {} }] } }),
+
+      L({ type: 'user', message: { content: [{ type: 'tool_result', content: 'x' }] } }),
+
+      L({ type: 'assistant', message: { content: [{ type: 'text', text: good }] } }),
+
+      L({ type: 'user', message: { content: [{ type: 'text', text: 'Stop hook feedback: close with a stanza' }] } }),
+
+      L({ type: 'assistant', message: { content: [{ type: 'text', text: '<rot:claude>🧭 one line</rot:claude>' }] } }),
+
+    ].join('\n') + '\n', 'utf8');
+
+    const t = lastAssistantText(p, 'pareto-dtd');
+
+    const joined = t.includes('### 🎯 Vital Few') && t.includes('<rot:claude>') && !t.includes('from an earlier turn');
+
+    const stanzaLast = t.split('\n\n').pop().includes('<rot:claude>');
+
+    const r = checkAnswer(t, expected);
+
+    return { ok: joined && stanzaLast && r.ok, detail: `joined=${joined} stanzaLast=${stanzaLast} pass=${r.ok}` };
+
+  }, results);
+
+  control('C11 prune-plugin refuses while the plugin is registered, then removes the leftover', () => {
+
+    const cfg = join(tmp, 'cfg');
+
+    const cache = join(cfg, 'plugins', 'cache', 'rot-dtd-commander', 'rot-dtd-commander', '3.0.0');
+
+    mkdirSync(cache, { recursive: true });
+
+    writeFileSync(join(cache, 'x.txt'), 'x', 'utf8');
+
+    writeFileSync(join(cfg, 'plugins', 'installed_plugins.json'), '{"plugins":{"rot-dtd-commander@rot-dtd-commander":[]}}', 'utf8');
+
+    const bin = join(ROOT, 'bin', 'rot-dtd-commander.mjs');
+
+    const env = { ...process.env, CLAUDE_CONFIG_DIR: cfg };
+
+    const first = spawnSync(process.execPath, [bin, 'prune-plugin'], { env, encoding: 'utf8' });
+
+    const refused = first.status !== 0 && existsSync(cache);
+
+    unlinkSync(join(cfg, 'plugins', 'installed_plugins.json'));
+
+    const second = spawnSync(process.execPath, [bin, 'prune-plugin'], { env, encoding: 'utf8' });
+
+    const removed = second.status === 0 && !existsSync(join(cfg, 'plugins', 'cache', 'rot-dtd-commander'));
+
+    return { ok: refused && removed, detail: `refused=${refused} (exit ${first.status}) removed=${removed} (exit ${second.status})` };
 
   }, results);
 

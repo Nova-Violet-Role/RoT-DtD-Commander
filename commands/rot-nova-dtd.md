@@ -250,7 +250,7 @@ argument-hint: [question or decision; blank for the current discussion; --no-gat
 <!ENTITY LAW.ROT.8 "TIER 1 scans the question against STEMS.* before any NSIL decision and its lane is rendered in tier1; the NSIL decision beats TIER 1 and, when it overrides, says which stems misled.">
 <!-- end subset cc-rot -->
 
-  <!ELEMENT rot_nova (intake, router_state, tier1, axis, axis, axis, axis, axis, axis, decision, role, role, role, role, role?, role?, purification, convergence, tension*, expert+, interceptor*, gauge, bound, stanza, next_action)>
+  <!ELEMENT rot_nova (router_state, intake, tier1, axis, axis, axis, axis, axis, axis, decision, role, role, role, role, role?, role?, purification, convergence, tension*, expert+, interceptor*, gauge, bound, stanza, next_action)>
   <!ELEMENT axis (#PCDATA)>
   <!ELEMENT decision (#PCDATA)>
   <!ELEMENT role (#PCDATA)>
@@ -300,8 +300,8 @@ Nova is the sovereign intent layer of the RoT MoE packet and the lead of the CON
 <output_format>
 <grammar_map>
 Render the `rot_nova` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚜️ Heading` carrying this command's sigil ⚜️, with a blank line before and after it (LAW.CORE.6).
-- `intake`: **⚜️ Intake**, the questions asked, the answers as data, the gate choice (or **⚜️ Assumptions Made** on an autonomous run)
 - `router_state`: **⚜️ Router**, the quoted marker line or the word absent
+- `intake`: **⚜️ Intake**, the questions asked, the answers as data, the gate choice (or **⚜️ Assumptions Made** on an autonomous run)
 - `tier1`: **⚜️ TIER 1**, the lane and the stems that matched
 - `axis`: **⚜️ Six Axes**, one line per axis: surface, need, emotion, complexity, stakes, domain
 - `decision`: **⚜️ NSIL Decision**, the kind, the lenses summoned, the lane
@@ -376,7 +376,7 @@ lane [..] stems [..]
 ### ⚜️ Gauge
 
 rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- ⚜️ nova lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- nova lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
 - **⚜️ Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
 ### ⚜️ Bound

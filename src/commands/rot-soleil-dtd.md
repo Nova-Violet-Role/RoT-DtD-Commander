@@ -14,7 +14,7 @@ allowed-tools: Read
   %cc-ask;
   <!ENTITY % cc-rot SYSTEM "../../dtd/cc-rot.dtd">
   %cc-rot;
-  <!ELEMENT rot_soleil (intake, router_state, payload, layer, layer, layer, layer, layer, packet?, measure, expert+, interceptor*, gauge, bound, stanza)>
+  <!ELEMENT rot_soleil (router_state, intake, payload, layer, layer, layer, layer, layer, packet?, measure, expert+, interceptor*, gauge, bound, stanza)>
   <!ELEMENT payload (#PCDATA)>
   <!ELEMENT layer (#PCDATA)>
   <!ELEMENT packet (#PCDATA)>
@@ -59,8 +59,8 @@ Soleil Blank is the stealth lens of the RoT MoE packet and the lead of the STEAL
 <output_format>
 <grammar_map>
 Render the `rot_soleil` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⬜ Heading` carrying this command's sigil ⬜, with a blank line before and after it (LAW.CORE.6).
-- `intake`: **⬜ Intake**, the questions asked, the answers as data, the gate choice (or **⬜ Assumptions Made** on an autonomous run)
 - `router_state`: **⬜ Router**, the quoted marker line or the word absent
+- `intake`: **⬜ Intake**, the questions asked, the answers as data, the gate choice (or **⬜ Assumptions Made** on an autonomous run)
 - `payload`: **⬜ Payload**, kind, original tokens, the chosen length in one clause, then the compressed result
 - `layer`: **⬜ Layers**, five lines, each applied yes or no with what it did
 - `packet`: **⬜ Packet**, the M2M YAML if a receiver exists
@@ -119,7 +119,7 @@ original [n] encoded [m] T/O [x%] emergency [yes|no]
 ### ⬜ Gauge
 
 rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- ⬜ soleil lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- soleil lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
 - **⬜ Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
 ### ⬜ Bound

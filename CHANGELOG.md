@@ -47,10 +47,54 @@ and the lens emoji back where the lenses speak.
 - The intake commands render an `Assumptions Made` heading in their
   template (autonomous runs only), which C13 required; the demo transcripts
   under `docs/tapes/` are in the new shape.
+- Two live turns through the armed hooks, in a fresh headless child session
+  (`claude -p ... --dangerously-skip-permissions`): `/pareto-dtd` closed as
+  `pass` in the ledger, and `/rot-chroma-dtd ... --no-gate` rendered all
+  thirteen lens headings with the sigil and closed as `pass`
+  (`rdc ledger --last 1`). The first two live runs failed and exposed three
+  defects, each fixed with the live transcript as the instrument:
+  - The Stop check read only the last assistant text, so when another
+    plugin's Stop hook asked for a closing stanza (a user entry that is not
+    a prompt, followed by one more assistant message) the answer was
+    hidden behind it and the ledger said `no assistant text found`. The
+    answer of a run is now every assistant text after the entry that
+    invoked the command, read again a few times while the transcript lags,
+    with the transcript state in the finding when nothing is there.
+    Control C10 feeds a transcript with an earlier turn, a tool call, the
+    answer, a hook-feedback entry and a stanza: `10 run, 0 failing`.
+  - The ten lens grammars declared `intake` before `router_state` while
+    the process and the template put Router first, so an answer that
+    followed its own template failed the order check. The declared order
+    is now `router_state, intake`; the elevate template renders its intake
+    block right after Router.
+  - A nested bold heading (Steps under a timeline) was held to the
+    blank-line rule, and a short id defined behind a sigil
+    (`- **🔮 T3** ...`) was reported dangling. Both fixed in
+    `lib/render-check.mjs`.
+- Git Bash rewrites a leading `/pareto-dtd` argument into
+  `C:/Program Files/Git/pareto-dtd` before a native executable sees it;
+  a headless run from Git Bash needs `MSYS_NO_PATHCONV=1` or the prompt
+  hook sees no slash command and opens no run.
+- The marketplace round-trip, measured on a machine that also has the npx
+  set: `claude plugin marketplace add` and `claude plugin install` succeed
+  (the plugin CLI needs `settings.json` writable; a read-only attribute
+  makes both fail with `EPERM` after the marketplace clone, which the
+  doctor then flags as an unregistered directory); with both installed the
+  doctor turns `plugin state` and `double install` red; `claude plugin
+  uninstall` and `claude plugin marketplace remove` clean
+  `installed_plugins.json`, `known_marketplaces.json` and `enabledPlugins`
+  but leave `plugins/cache/rot-dtd-commander/` on disk (6.2 MB), which the
+  doctor keeps flagging. New command `rdc prune-plugin` removes what the
+  plugin CLI left under `plugins/cache` and `plugins/marketplaces` and
+  refuses while the plugin is still registered; control C11 proves both
+  halves in a scratch `CLAUDE_CONFIG_DIR`. The 202 hook lines of
+  `settings.json` were the same set, in the same order, after the
+  round-trip.
 - Numbers on the day: `rdc check`: `checked 91  failed 0`; `rdc build
   --check`: `223 targets, 0 drifted, 0 failing`;
   `node checker/contract-audit.mjs`: `155 declarations, 0 unused, 0 law
-  gaps`; `npm run gate`: exit 0.
+  gaps`; `node bin/adiutor.mjs controls`: `11 run, 0 failing`;
+  `npm run gate`: exit 0.
 
 ## 2.0.0 (2026-09-02)
 

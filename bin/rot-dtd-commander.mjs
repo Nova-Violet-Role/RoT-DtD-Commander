@@ -506,6 +506,47 @@ function cmdResolve(o) {
   console.log(`resolved ${src} -> ${out} (${v.bytes} B; includes ${r.order.join(',') || 'none'})`);
 }
 
+// prune-plugin: remove the directories the plugin CLI leaves under
+// <claude>/plugins/cache and plugins/marketplaces after `claude plugin
+// uninstall` and `claude plugin marketplace remove` (measured 2026-09-02:
+// the registry was clean, the cache stayed at 6.2 MB, and the doctor flagged
+// a double install). Refuses while installed_plugins.json,
+// known_marketplaces.json or settings.json enabledPlugins still name the
+// plugin. CLAUDE_CONFIG_DIR or --target choose the .claude directory.
+function cmdPrunePlugin(o) {
+  const claude = o.target ? presolve(o.target) : process.env.CLAUDE_CONFIG_DIR ? presolve(process.env.CLAUDE_CONFIG_DIR) : join(os.homedir(), '.claude');
+  const plug = join(claude, 'plugins');
+  const names = (p) => existsSync(p) && /rot-dtd-commander/i.test(readFileSync(p, 'utf8'));
+  let registered = names(join(plug, 'installed_plugins.json')) || names(join(plug, 'known_marketplaces.json'));
+  const sp = join(claude, 'settings.json');
+  if (existsSync(sp)) {
+    try {
+      const s = JSON.parse(readFileSync(sp, 'utf8'));
+      if (Object.keys(s.enabledPlugins || {}).some((k) => /^rot-dtd-commander@/i.test(k))) registered = true;
+    } catch {
+      // an unreadable settings.json names nothing
+    }
+  }
+  const dirs = [];
+  for (const sub of ['cache', 'marketplaces']) {
+    const d = join(plug, sub);
+    if (!existsSync(d)) continue;
+    for (const n of readdirSync(d)) if (/rot-dtd-commander/i.test(n) && statSync(join(d, n)).isDirectory()) dirs.push(join(d, n));
+  }
+  if (!dirs.length) {
+    console.log('prune-plugin: nothing under plugins/cache or plugins/marketplaces names rot-dtd-commander');
+    return;
+  }
+  if (registered) die(`prune-plugin: the plugin is still registered (installed_plugins.json, known_marketplaces.json or enabledPlugins); run \`claude plugin uninstall rot-dtd-commander@rot-dtd-commander\` and \`claude plugin marketplace remove rot-dtd-commander\` first. Left in place: ${dirs.join(', ')}`);
+  for (const d of dirs) {
+    rmSync(d, { recursive: true, force: true });
+    console.log(`removed ${d}`);
+  }
+  const left = dirs.filter((d) => existsSync(d));
+  if (left.length) die(`prune-plugin: still present after removal: ${left.join(', ')}`);
+  console.log(`prune-plugin: ${dirs.length} director${dirs.length === 1 ? 'y' : 'ies'} removed; the registry named none of them`);
+}
+
 async function cmdForge(o) {
   const [specPath, ...names] = o._;
   if (!specPath) die('usage: forge <spec.json|spec.mjs> [names...]');
@@ -561,6 +602,9 @@ switch (cmd) {
   case 'uninstall':
     await cmdUninstall(o);
     break;
+  case 'prune-plugin':
+    cmdPrunePlugin(o);
+    break;
   case 'list':
     cmdList(o);
     break;
@@ -585,6 +629,6 @@ switch (cmd) {
     delegate(cmd, o);
     break;
   default:
-    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | list | check | build | resolve | forge | arm | disarm | doctor | controls | ledger | suggest\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --no-arm\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C12\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose\n`);
+    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | prune-plugin | list | check | build | resolve | forge | arm | disarm | doctor | controls | ledger | suggest\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --no-arm\n  prune-plugin  remove what the plugin CLI leaves under plugins/cache and plugins/marketplaces after uninstall; refuses while still registered\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C13\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose\n`);
     process.exit(cmd ? 2 : 0);
 }

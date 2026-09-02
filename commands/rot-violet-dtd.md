@@ -250,7 +250,7 @@ argument-hint: [the situation, message or text; blank for the current discussion
 <!ENTITY LAW.ROT.8 "TIER 1 scans the question against STEMS.* before any NSIL decision and its lane is rendered in tier1; the NSIL decision beats TIER 1 and, when it overrides, says which stems misled.">
 <!-- end subset cc-rot -->
 
-  <!ELEMENT rot_violet (intake, router_state, frequency, track, landscape, role, role, role, role, role?, synthesis, unplayed_note, expert+, interceptor*, gauge, bound, stanza)>
+  <!ELEMENT rot_violet (router_state, intake, frequency, track, landscape, role, role, role, role, role?, synthesis, unplayed_note, expert+, interceptor*, gauge, bound, stanza)>
   <!ELEMENT frequency (#PCDATA)>
   <!ELEMENT track (#PCDATA)>
   <!ELEMENT landscape (#PCDATA)>
@@ -300,8 +300,8 @@ Violet Noir is the empathic lens of the RoT MoE packet and the lead of the EMPAT
 <output_format>
 <grammar_map>
 Render the `rot_violet` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🎷 Heading` carrying this command's sigil 🎷, with a blank line before and after it (LAW.CORE.6).
-- `intake`: **🎷 Intake**, the questions asked, the answers as data, the gate choice (or **🎷 Assumptions Made** on an autonomous run)
 - `router_state`: **🎷 Router**, the quoted marker line or the word absent
+- `intake`: **🎷 Intake**, the questions asked, the answers as data, the gate choice (or **🎷 Assumptions Made** on an autonomous run)
 - `frequency`: **🎷 Frequency**, the dominant frequency and the secondary ones
 - `track`: **🎷 Track**, the one selected and why
 - `landscape`: **🎷 Landscape**, one line per emotion with its weight
@@ -367,7 +367,7 @@ dominant [..]; also [..]
 ### 🎷 Gauge
 
 rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- 🎷 violet lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- violet lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
 - **🎷 Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
 ### 🎷 Bound

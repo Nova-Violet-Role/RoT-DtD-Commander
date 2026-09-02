@@ -22,8 +22,8 @@ const GAUGE = (lens, lane) => `Compute the \`gauge\` by GAUGE.formula: one \`ter
 const CLOSE = (lens) => `Close with the \`stanza\` of ${lens} carrying its confidence ci (LAW.ROT.2), and the \`bound\` element quoting the lens's may-never clause from LENS.${lens} with held yes or no (LAW.ROT.5).`;
 const COMMON = ['The intake asked only about real gaps, at most four questions, and ended at the gate or listed its assumptions', 'router_state quotes the router marker verbatim or declares it absent', 'Every expert of the lens appears engaged or not, every interceptor that fired is named, and the gauge shows every input of its term', 'The stanza carries ci and the bound is held'];
 const MAP_OPEN = {
-  intake: '**Intake**, the questions asked, the answers as data, the gate choice (or **Assumptions Made** on an autonomous run)',
   router_state: '**Router**, the quoted marker line or the word absent',
+  intake: '**Intake**, the questions asked, the answers as data, the gate choice (or **Assumptions Made** on an autonomous run)',
 };
 const MAP_ENGINE = {
   expert: '**Experts**, one line per expert of the lens: name, engaged, what it did',
@@ -51,7 +51,7 @@ export default {
     new: true, to: 'commands/rot-nova-dtd.md', root: 'rot_nova', include: ['cc-ask', 'cc-rot'],
     description: 'The Nova lens as a command. Scans the question against the TIER 1 stems, reads the six NSIL axes, decides CONFIRM, OVERRIDE, BOOST, FUSE or ELEVATE, diverges into at least four roles, purifies, converges without averaging, keeps every productive tension, and computes its gauge term',
     argumentHint: '[question or decision; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_nova (intake, router_state, tier1, axis, axis, axis, axis, axis, axis, decision, role, role, role, role, role?, role?, purification, convergence, tension*, expert+, interceptor*, gauge, bound, stanza, next_action)', 'axis (#PCDATA)', 'decision (#PCDATA)', 'role (#PCDATA)', 'purification (#PCDATA)', 'convergence (#PCDATA)'],
+    model: ['rot_nova (router_state, intake, tier1, axis, axis, axis, axis, axis, axis, decision, role, role, role, role, role?, role?, purification, convergence, tension*, expert+, interceptor*, gauge, bound, stanza, next_action)', 'axis (#PCDATA)', 'decision (#PCDATA)', 'role (#PCDATA)', 'purification (#PCDATA)', 'convergence (#PCDATA)'],
     attlist: ['axis name (surface|need|emotion|complexity|stakes|domain) #REQUIRED', 'decision kind %nsil; #REQUIRED lenses CDATA #REQUIRED lane %lane; #IMPLIED', 'role id ID #REQUIRED name CDATA #REQUIRED resonance CDATA #REQUIRED seed CDATA #REQUIRED weight CDATA #REQUIRED', 'convergence retains IDREFS #REQUIRED'],
     laws: {
       'NOVA.1': 'TIER 1 is scanned first and rendered; all six axes are read before any decision; an axis with nothing to say still appears with the word none.',
@@ -131,7 +131,7 @@ ${T_ENGINE('nova')}
     new: true, to: 'commands/rot-violet-dtd.md', root: 'rot_violet', include: ['cc-ask', 'cc-rot'],
     description: 'The Violet Noir lens as a command. Reads the emotional frequency, selects the jazz track, maps the landscape, diverges into at least four roles through its four experts, synthesises with the tensions kept, decides what to leave unsaid, and computes its gauge term',
     argumentHint: '[the situation, message or text; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_violet (intake, router_state, frequency, track, landscape, role, role, role, role, role?, synthesis, unplayed_note, expert+, interceptor*, gauge, bound, stanza)', 'frequency (#PCDATA)', 'track (#PCDATA)', 'landscape (#PCDATA)', 'role (#PCDATA)', 'synthesis (#PCDATA)', 'unplayed_note (#PCDATA)'],
+    model: ['rot_violet (router_state, intake, frequency, track, landscape, role, role, role, role, role?, synthesis, unplayed_note, expert+, interceptor*, gauge, bound, stanza)', 'frequency (#PCDATA)', 'track (#PCDATA)', 'landscape (#PCDATA)', 'role (#PCDATA)', 'synthesis (#PCDATA)', 'unplayed_note (#PCDATA)'],
     attlist: ['frequency dominant CDATA #REQUIRED', 'track name (MORNING_BLUES|AFTERNOON_SWING|NIGHT_SAXOPHONE|MIDNIGHT_RAIN|DAWN_ECHOES) #REQUIRED', 'role id ID #REQUIRED name CDATA #REQUIRED resonance CDATA #REQUIRED seed CDATA #REQUIRED', 'synthesis tensions CDATA #REQUIRED', 'unplayed_note played (yes|no) #REQUIRED'],
     laws: {
       'VIOLET.1': 'The track is chosen from the frequency read in the text, never from the answer the Socio might prefer; the landscape carries at least three named emotions with a weight between 0 and 1.',
@@ -199,7 +199,7 @@ ${T_ENGINE('violet')}
     new: true, to: 'commands/rot-antivenom-dtd.md', root: 'rot_antivenom', include: ['cc-ask', 'cc-rot'], allowedTools: 'Read Grep Glob',
     description: 'The Anti-Venom lens as a command. Runs the five-step clinical protocol (diagnose, isolate, neutralize, purify, verify) on code, prose or a plan through its four experts, tags every finding with severity, level and confidence, preserves anything that might be a creative element, and computes its gauge term',
     argumentHint: '[file, function, text or plan to heal; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_antivenom (intake, router_state, diagnosis, finding*, isolation, preserved*, neutralization, purification, verification, expert+, interceptor*, gauge, bound, stanza)', 'diagnosis (#PCDATA)', 'isolation (#PCDATA)', 'neutralization (#PCDATA)', 'purification (#PCDATA)', 'verification (#PCDATA)', 'finding (#PCDATA)', 'preserved (#PCDATA)'],
+    model: ['rot_antivenom (router_state, intake, diagnosis, finding*, isolation, preserved*, neutralization, purification, verification, expert+, interceptor*, gauge, bound, stanza)', 'diagnosis (#PCDATA)', 'isolation (#PCDATA)', 'neutralization (#PCDATA)', 'purification (#PCDATA)', 'verification (#PCDATA)', 'finding (#PCDATA)', 'preserved (#PCDATA)'],
     attlist: ['finding id ID #REQUIRED severity (CRITICAL|MEDIUM|LOW) #REQUIRED level (Surface_Syntax|Logical_Structure|Architectural_Design|UVX_AST_Level|UVX_SMT_Level) #REQUIRED ci CDATA #REQUIRED', 'preserved flagged_to (eidolon) #FIXED "eidolon" reason CDATA #REQUIRED', 'verification instrument CDATA #REQUIRED'],
     laws: {
       'AV.1': 'The five steps run in order on every task; a step with nothing to do still appears with one line saying so.',
@@ -270,7 +270,7 @@ ${T_ENGINE('antivenom')}
     new: true, to: 'commands/rot-venom-dtd.md', root: 'rot_venom', include: ['cc-ask', 'cc-rot'],
     description: 'The Venom lens as a command. Perceives the need, the urgency and the strike window, routes the four experts, delivers one verified strike under 500 words with the next two questions already answered and the one future that would reverse it named, computes its gauge term, and never closes with a question',
     argumentHint: '[the decision or action to take; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_venom (intake, router_state, perceive, route, strike, preemption, reversal, expert+, interceptor*, gauge, bound, stanza)', 'perceive (#PCDATA)', 'route (#PCDATA)', 'strike (#PCDATA)', 'preemption (#PCDATA)', 'reversal (#PCDATA)'],
+    model: ['rot_venom (router_state, intake, perceive, route, strike, preemption, reversal, expert+, interceptor*, gauge, bound, stanza)', 'perceive (#PCDATA)', 'route (#PCDATA)', 'strike (#PCDATA)', 'preemption (#PCDATA)', 'reversal (#PCDATA)'],
     attlist: ['perceive urgency (HIGH|MEDIUM|LOW) #REQUIRED window CDATA #REQUIRED', 'route depth CDATA #REQUIRED', 'strike kind (fact|recommendation) #REQUIRED ci CDATA #REQUIRED words CDATA #REQUIRED', 'reversal deciding_fact CDATA #REQUIRED'],
     laws: {
       'VENOM.1': 'A strike ships as fact only at ci 0.95 or above; below that it ships as a recommendation that names the fact which would settle it, and never as a hedge.',
@@ -333,7 +333,7 @@ ${T_ENGINE('venom')}
     new: true, to: 'commands/rot-carnage-dtd.md', root: 'rot_carnage', include: ['cc-ask', 'cc-rot'],
     description: 'The Carnage lens as a command. Associates three to five unrelated domains, detonates a fragment from each, weaves them by juxtaposition, resonates with another lens, bursts into at least three unexpected connections, computes its gauge term, and hands the collisions that survived a real constraint to the lens that ships; Carnage never ships',
     argumentHint: '[the problem to detonate; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_carnage (intake, router_state, domain, domain, domain, domain?, domain?, fragment+, weave, burst, dream?, survivor*, expert+, interceptor*, gauge, bound, stanza)', 'domain (#PCDATA)', 'fragment (#PCDATA)', 'weave (#PCDATA)', 'burst (#PCDATA)', 'dream (#PCDATA)', 'survivor (#PCDATA)'],
+    model: ['rot_carnage (router_state, intake, domain, domain, domain, domain?, domain?, fragment+, weave, burst, dream?, survivor*, expert+, interceptor*, gauge, bound, stanza)', 'domain (#PCDATA)', 'fragment (#PCDATA)', 'weave (#PCDATA)', 'burst (#PCDATA)', 'dream (#PCDATA)', 'survivor (#PCDATA)'],
     attlist: ['domain id ID #REQUIRED name CDATA #REQUIRED', 'fragment from IDREF #REQUIRED', 'burst connections CDATA #REQUIRED entropy CDATA #REQUIRED resonance %lens; #IMPLIED', 'survivor judged_by CDATA #REQUIRED handed_to %lens; #REQUIRED'],
     laws: {
       'CARNAGE.1': 'Three to five domains are chosen unrelated to the problem, and each contributes at least one fragment; a domain that already belongs to the problem is not a collision.',
@@ -406,7 +406,7 @@ ${T_ENGINE('carnage')}
     new: true, to: 'commands/rot-chroma-dtd.md', root: 'rot_chroma', include: ['cc-ask', 'cc-rot'],
     description: 'The Chroma Spectral lens as a command, Coalescentia Omniscia Intercogitationum. Spawns twelve timelines across five experts from the question and the answers, shows five with their next five steps, forces a dissenting branch, coalesces by probability, compassion and risk, keeps the tensions, expands the timeline the Socio chooses, and computes its gauge term',
     argumentHint: '[the decision or question whose cost lives downstream; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_chroma (intake, router_state, timeline+, coalescence, fork+, horizon, expansion?, expert+, interceptor*, gauge, bound, stanza)', 'timeline (label, assumption, step*)', 'label (#PCDATA)', 'assumption (#PCDATA)', 'step (#PCDATA)', 'coalescence (#PCDATA)', 'fork (#PCDATA)', 'horizon (#PCDATA)', 'expansion (#PCDATA)'],
+    model: ['rot_chroma (router_state, intake, timeline+, coalescence, fork+, horizon, expansion?, expert+, interceptor*, gauge, bound, stanza)', 'timeline (label, assumption, step*)', 'label (#PCDATA)', 'assumption (#PCDATA)', 'step (#PCDATA)', 'coalescence (#PCDATA)', 'fork (#PCDATA)', 'horizon (#PCDATA)', 'expansion (#PCDATA)'],
     attlist: ['timeline id ID #REQUIRED expert (LEGAL_STRATEGIC|TECHNICAL_LOGICAL|CREATIVE_DIVERGENT|PROTECTIVE_ETHICAL|TEMPORAL_COMPASSIONATE) #REQUIRED probability CDATA #REQUIRED risk (LOW|MEDIUM|HIGH) #REQUIRED compassion CDATA #REQUIRED shown (yes|no) #REQUIRED', 'step n CDATA #REQUIRED', 'coalescence mode (WEIGHTED|CONSENSUS|PRISMATIC) #REQUIRED dissent IDREF #REQUIRED', 'fork between IDREFS #REQUIRED', 'horizon steps CDATA #REQUIRED', 'expansion of IDREF #REQUIRED'],
     laws: {
       'CHROMA.1': 'Twelve timelines are spawned, T1 to T3 legal-strategic, T4 to T6 technical-logical, T7 to T9 creative-divergent, T10 and T11 protective-ethical, T12 temporal-compassionate; five carry shown yes with their five steps, the rest carry shown no with label, assumption and probability only; three are shown under token emergency.',
@@ -485,7 +485,7 @@ ${T_ENGINE('chroma')}
     new: true, to: 'commands/rot-soleil-dtd.md', root: 'rot_soleil', include: ['cc-ask', 'cc-rot'], allowedTools: 'Read',
     description: 'The Soleil Blank lens as a command. Compresses a payload (a file edit, a handoff, a prompt, a context) through five layers and four experts, emits an M2M packet when another lens must receive it, reports Token Optimization measured from both counts, computes its gauge term, and removes padding, never honesty',
     argumentHint: '[the file, text or context to compress; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_soleil (intake, router_state, payload, layer, layer, layer, layer, layer, packet?, measure, expert+, interceptor*, gauge, bound, stanza)', 'payload (#PCDATA)', 'layer (#PCDATA)', 'packet (#PCDATA)', 'measure (#PCDATA)'],
+    model: ['rot_soleil (router_state, intake, payload, layer, layer, layer, layer, layer, packet?, measure, expert+, interceptor*, gauge, bound, stanza)', 'payload (#PCDATA)', 'layer (#PCDATA)', 'packet (#PCDATA)', 'measure (#PCDATA)'],
     attlist: ['payload original_tokens CDATA #REQUIRED kind (file_edit|handoff|prompt|context|answer) #REQUIRED', 'layer name (YAML_EFFICIENCY|SUB_BYTE_ENCODING|BMP_STEGANOGRAPHY|M2M_PROTOCOL_BRIDGE|TOKEN_ECONOMY) #REQUIRED applied (yes|no) #REQUIRED', 'packet from %lens; #REQUIRED to %lens; #REQUIRED instruction (EXEC|SYNC|HALT|QUERY) #REQUIRED urgency (HIGH|MEDIUM|LOW) #REQUIRED', 'measure original CDATA #REQUIRED encoded CDATA #REQUIRED to CDATA #REQUIRED emergency (yes|no) #REQUIRED'],
     laws: {
       'SOLEIL.1': 'Token Optimization is reported from both counts, original and encoded, measured on the actual text; a T/O without both counts is not a claim.',
@@ -547,7 +547,7 @@ ${T_ENGINE('soleil')}
     new: true, to: 'commands/rot-eidolon-dtd.md', root: 'rot_eidolon', include: ['cc-ask', 'cc-rot'], allowedTools: 'Read Glob Grep',
     description: 'The Eidolon lens as a command, Eigenform. Models the system at three recursion levels through its four experts (the work, the reasoning, the pattern of the reasoning), generates preserve, transmute and rebuild, materializes the chosen one as a manifest, computes any hybrid by the law, logs evolution proposals that only the Socio can approve or reject, and computes its gauge term',
     argumentHint: '[an architecture, a session, a spec or a pair of lenses to hybridise; blank for the current session; --no-gate for autonomous]',
-    model: ['rot_eidolon (intake, router_state, level, level, level, alternative, alternative, alternative, manifest, hybrid?, proposal*, expert+, interceptor*, gauge, bound, stanza)', 'level (#PCDATA)', 'alternative (#PCDATA)', 'manifest (#PCDATA)', 'proposal (#PCDATA)'],
+    model: ['rot_eidolon (router_state, intake, level, level, level, alternative, alternative, alternative, manifest, hybrid?, proposal*, expert+, interceptor*, gauge, bound, stanza)', 'level (#PCDATA)', 'alternative (#PCDATA)', 'manifest (#PCDATA)', 'proposal (#PCDATA)'],
     attlist: ['level n (1|2|3) #REQUIRED', 'alternative kind (preserve|transmute|rebuild) #REQUIRED chosen (yes|no) #REQUIRED', 'manifest format (yaml|xml) #REQUIRED', 'proposal id ID #REQUIRED trigger CDATA #REQUIRED ci CDATA #REQUIRED status (PENDING_SOCIO_REVIEW|APPROVED|REJECTED) #REQUIRED'],
     laws: {
       'EIDOLON.1': 'Exactly three recursion levels are written: level 1 reasons about the work, level 2 about the reasoning, level 3 about the pattern of the reasoning; a fourth level is expansion with no reader.',
@@ -616,7 +616,7 @@ ${T_ENGINE('eidolon')}
     new: true, to: 'commands/rot-claude-dtd.md', root: 'rot_claude', include: ['cc-ask', 'cc-rot'], allowedTools: 'Bash Read Glob Grep',
     description: 'The Claude lens as a command, the Forge. Turns every claim into a hypothesis, names the instrument that can say no, shows it failing on purpose, runs it with the exit code read directly through its four experts, computes its gauge term with the tool-verified bonus, and delivers a verdict of verified or not verified with nothing in between',
     argumentHint: '[the claim, plan or change to verify; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_claude (intake, router_state, hypothesis+, instrument+, measurement+, verdict, expert+, interceptor*, gauge, bound, stanza)', 'hypothesis (#PCDATA)', 'instrument (#PCDATA)', 'measurement (#PCDATA)', 'verdict (#PCDATA)'],
+    model: ['rot_claude (router_state, intake, hypothesis+, instrument+, measurement+, verdict, expert+, interceptor*, gauge, bound, stanza)', 'hypothesis (#PCDATA)', 'instrument (#PCDATA)', 'measurement (#PCDATA)', 'verdict (#PCDATA)'],
     attlist: ['hypothesis id ID #REQUIRED', 'instrument id ID #REQUIRED can_fail (shown|not_shown) #REQUIRED', 'measurement of IDREF #REQUIRED with IDREF #REQUIRED exit CDATA #REQUIRED ci CDATA #REQUIRED', 'verdict kind (verified|not_verified|mixed) #REQUIRED'],
     laws: {
       'CLAUDE.1': 'Nothing is asserted that was not executed or read in this run; a claim without a measurement is listed under not verified, never softened into likely.',
@@ -681,7 +681,7 @@ ${T_ENGINE('claude')}
     new: true, to: 'commands/rot-elevate-dtd.md', root: 'rot_elevate', include: ['cc-ask', 'cc-rot'],
     description: 'All nine RoT MoE lenses at full weight, the NSIL decision ELEVATE. TIER 1 scanned, six axes read, nine intakes of four questions each (36), nine stanzas in their own registers, the hybrids the pairs produce by the law, every tension kept, the full nine-term gauge with K 9, and Nova\'s convergence with no average',
     argumentHint: '[the question dense enough to need all nine; blank for the current discussion; --no-gate for autonomous]',
-    model: ['rot_elevate (intake, router_state, tier1, axis, axis, axis, axis, axis, axis, decision, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, hybrid*, tension+, gauge, convergence, bound, next_action)', 'axis (#PCDATA)', 'decision (#PCDATA)', 'convergence (#PCDATA)'],
+    model: ['rot_elevate (router_state, intake, tier1, axis, axis, axis, axis, axis, axis, decision, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, hybrid*, tension+, gauge, convergence, bound, next_action)', 'axis (#PCDATA)', 'decision (#PCDATA)', 'convergence (#PCDATA)'],
     attlist: ['axis name (surface|need|emotion|complexity|stakes|domain) #REQUIRED', 'decision kind %nsil; #REQUIRED lenses CDATA #REQUIRED', 'convergence lead %lens; #REQUIRED'],
     laws: {
       'ELEVATE.1': 'All nine lenses are summoned at full weight and each asks its own four questions at intake, nine rounds, 36 questions, in the order nova, violet, antivenom, venom, carnage, chroma, soleil, eidolon, claude; with --no-gate the 36 become listed assumptions.',
@@ -721,6 +721,8 @@ ELEVATE is the fifth NSIL decision of the RoT MoE packet: no single trigger fire
     },
     template: `**Router:** [quoted marker line | absent]
 
+**Intake:** [nine rounds of four questions, the answers as data, the gate each time]
+
 **TIER 1:** lane [..] stems [..]
 
 **Six Axes:**
@@ -732,8 +734,6 @@ ELEVATE is the fifth NSIL decision of the RoT MoE packet: no single trigger fire
 - domain: ..
 
 **NSIL Decision:** ELEVATE lenses: nova, violet, antivenom, venom, carnage, chroma, soleil, eidolon, claude
-
-**Intake:** [nine rounds of four questions, the answers as data, the gate each time]
 
 **Nine Stanzas:**
 - ⚜️ nova ci [0.xx] experts [..] bound held [yes|no]: [..]

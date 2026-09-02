@@ -122,7 +122,7 @@ Render `eval_session` as: **Target** (path and root), **Fixture**, **Run** (the 
 
 <additional_resources>
 
-- `node bin/adiutor.mjs controls` runs the nine built-in guards in a temporary state directory; C1 is the same missing-heading check this skill trips by hand
+- `node bin/adiutor.mjs controls` runs the eleven built-in guards in a temporary state directory; C1 is the same missing-heading check this skill trips by hand
 
 </additional_resources>
 

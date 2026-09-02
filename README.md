@@ -18,7 +18,7 @@
 
 [![Checker](https://img.shields.io/badge/checked-91_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
 [![Contract](https://img.shields.io/badge/contract_audit-155_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-9_%2B_5-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-11_%2B_5-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
 
@@ -322,7 +322,7 @@ and the rite (how the fix is verified). Under `ROT_DTD_ADIUTOR=strict` the
 Stop is blocked once with that prescription as the reason.
 
 <details>
-<summary><b>Watch: nine guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding)</summary>
+<summary><b>Watch: eleven guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding, C10 the answer of a run is every assistant text after the command prompt, C11 prune-plugin refuses while registered and removes the leftover)</summary>
 
 ![controls](docs/gifs/adiutor-fail.gif)
 
@@ -352,10 +352,15 @@ nine rounds.
 ```sh
 rdc disarm       # remove only the hooks; files stay
 rdc uninstall    # remove every file the manifest lists, disarm, remove its own backups
+rdc prune-plugin # after `claude plugin uninstall` and `marketplace remove`: delete the cache the plugin CLI leaves behind
 ```
 
 A `settings.json` you had before is left byte-identical; one this tool created
-from nothing is removed again once it is empty.
+from nothing is removed again once it is empty. The plugin CLI's own
+`uninstall` and `marketplace remove` clean the registry but leave
+`~/.claude/plugins/cache/rot-dtd-commander/` on disk (measured: 6.2 MB); the
+doctor flags it as a double install and `rdc prune-plugin` removes it, refusing
+while the plugin is still registered.
 
 ---
 
@@ -368,7 +373,10 @@ from nothing is removed again once it is empty.
 | the committed resolved tree equals a fresh build | `rdc build --check`: `223 targets, 0 drifted` | 2026-09-02 |
 | the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading and a heading without its sigil | `bash checker/checker-controls.sh` | 2026-09-02 |
 | every declaration in the five subsets is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `155 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
-| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, and flags a crammed answer as a spacing finding | `node bin/adiutor.mjs controls`: `9 run, 0 failing` | 2026-09-02 |
+| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, and reads the whole turn after the command prompt | `node bin/adiutor.mjs controls`: `11 run, 0 failing` | 2026-09-02 |
+| a live `/pareto-dtd` turn in a fresh headless session, through the armed hooks, closes as `pass` in the ledger | `MSYS_NO_PATHCONV=1 claude -p "/pareto-dtd ..." --dangerously-skip-permissions`, then `rdc ledger --last 1` | 2026-09-02 |
+| a live `/rot-chroma-dtd ... --no-gate` turn renders all thirteen lens headings with the sigil and closes as `pass` | the same, then `rdc ledger --last 1` | 2026-09-02 |
+| the marketplace round-trip (add, install, uninstall, remove) leaves the registry clean and the npx set intact; the doctor turns its `plugin state` and `double install` rows red while both are installed, and red again on the cache directory the plugin CLI leaves behind, which `rdc prune-plugin` removes (and refuses to touch while the plugin is registered) | `claude plugin marketplace add Nova-Violet-Role/RoT-DtD-Commander`, `claude plugin install rot-dtd-commander@rot-dtd-commander`, `rdc doctor`, `claude plugin uninstall ...`, `claude plugin marketplace remove rot-dtd-commander`, `rdc prune-plugin`, `rdc doctor` | 2026-09-02 |
 | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
 | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
 | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
@@ -392,7 +400,7 @@ directly. Then break it:
 
 ```sh
 bash checker/checker-controls.sh      # five mutations and one untouched file, each asserted present, each refused
-node bin/adiutor.mjs controls         # nine guards; C3 is the strict block, once and never twice
+node bin/adiutor.mjs controls         # eleven guards; C3 is the strict block, once and never twice
 ```
 
 A guard nobody has tripped on purpose is decoration. Every one here has been.
