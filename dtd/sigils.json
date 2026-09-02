@@ -110,5 +110,10 @@
   "create-prompt-alarm": "🚨",
   "create-prompt-polyalarm": "🎪",
   "create-meta-prompt-alarm": "📯",
-  "create-meta-prompt-polyalarm": "🪅"
+  "create-meta-prompt-polyalarm": "🪅",
+  "create-task": "📌",
+  "audit-tasks": "📋",
+  "create-workflow-tasks": "🏗️",
+  "task-run": "🏃",
+  "task-handoff": "🤝"
 }

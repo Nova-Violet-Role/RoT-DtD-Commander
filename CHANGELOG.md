@@ -185,6 +185,21 @@ counts are re-measured.
   creators (create-prompt-alarm 🚨, create-prompt-polyalarm 🎪,
   create-meta-prompt-alarm 📯, create-meta-prompt-polyalarm 🪅); the
   routers and the launcher offer the alarm shape.
+- The tasks family: `dtd/cc-task.dtd` declares a project's tasks folder and
+  its registry Task.json (a task with its status, length, schematic, schema,
+  file, dollar variables and steps; the audit of folder against registry
+  both ways), the variables a step may expand (TASK.vars) and may not
+  (TASK.never), the step caps per length, the ledger, LAW.TASK.1 to 6.
+  `lib/task.mjs validate | audit | run | close | controls` (twenty controls,
+  every refusal tripped, a task run through the workflow runner). Five
+  commands from `dtd/tasks-v5.spec.mjs`: create-task 📌 (twelve questions,
+  the file in a chosen schematic with the chosen schemas' parts, registered
+  through the runtime, a todo line imported), audit-tasks 📋 (the audit,
+  the ledger tail, every open task elaborated and marked), create-workflow-
+  tasks 🏗️ (chosen tasks into a workflow file, validated and dry-run),
+  task-run 🏃 (one task in the foreground under ceilings, the expansion
+  shown first), task-handoff 🤝 (evidence, status through the runtime, the
+  record with the command-generated filename, the next session's line).
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

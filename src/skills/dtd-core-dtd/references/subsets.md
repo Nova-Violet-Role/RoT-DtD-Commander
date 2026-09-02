@@ -1461,6 +1461,83 @@ A workflow file (WORKFLOW.file: steps with a run string, a ceiling, an expected 
 <!ENTITY LAW.WF.6 "validate refuses a file with more than WORKFLOW.max_steps steps, a step without name or run, a ceiling above WORKFLOW.ceiling.max, a key outside WORKFLOW.keys or WORKFLOW.step.keys, or a trigger or on_fail outside the enumeration, naming the offending key; a file that validate refuses is never run.">
 ```
 
+## cc-task.dtd
+
+The tasks folder of a project and its registry (tasks, task, var, step; registry, entry), the caps and names (TASK.dir, TASK.file, TASK.ledger, TASK.vars, TASK.lengths, TASK.never), the four questions ASK.TASK.1 to 4 in the four variants, LAW.TASK.1 to 6; read, audited and tripped by lib/task.mjs. Included by create-task, audit-tasks, create-workflow-tasks, task-run and task-handoff.
+
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-task.dtd : the tasks folder of a project and the registry that binds it.
+
+  A project keeps its tasks in TASK.dir: one file per task, written in a
+  chosen schematic with a chosen semantic schema, and one registry,
+  TASK.file, that names every task with its status, its length, its dollar
+  variables and its steps. Five commands inter-operate on the folder:
+  create-task writes a task and registers it, audit-tasks checks the
+  registry against the folder in both directions and picks one, create-
+  workflow-tasks turns chosen tasks into a workflow file, task-run runs one
+  task's steps in the foreground under ceilings, and task-handoff closes a
+  task with its record. lib/task.mjs reads this declaration, validates the
+  registry, audits the folder, expands the variables, and its controls trip
+  every refusal on purpose.
+-->
+
+<!ELEMENT tasks (task*)>
+<!ATTLIST tasks dir CDATA #REQUIRED file CDATA #REQUIRED>
+<!ELEMENT task (var*, step*)>
+<!ATTLIST task
+          name      NMTOKEN #REQUIRED
+          status    (open|running|done|blocked|handed_off) "open"
+          length    (short|medium|long) "short"
+          schematic (callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm) "nt"
+          schema    NMTOKEN "none"
+          file      CDATA #REQUIRED
+          created   CDATA #REQUIRED>
+<!ELEMENT var EMPTY>
+<!ATTLIST var name NMTOKEN #REQUIRED value CDATA #REQUIRED>
+<!ELEMENT step (#PCDATA)>
+<!ATTLIST step
+          n            NMTOKEN #REQUIRED
+          run          CDATA #REQUIRED
+          ceiling_secs NMTOKEN "300"
+          expect_exit  NMTOKEN "0">
+
+<!-- the audit of the folder against the registry, both ways -->
+<!ELEMENT registry (entry*)>
+<!ATTLIST registry entries NMTOKEN #REQUIRED files NMTOKEN #REQUIRED drift NMTOKEN #REQUIRED>
+<!ELEMENT entry (#PCDATA)>
+<!ATTLIST entry name NMTOKEN #REQUIRED state (declared_and_present|declared_and_missing|present_and_orphan) #REQUIRED>
+
+<!ENTITY TASK.dir        "tasks">
+<!ENTITY TASK.file       "Task.json">
+<!ENTITY TASK.ledger     "tasks/ledger.tsv">
+<!ENTITY TASK.keys       "name, status, length, schematic, schema, file, created, vars, steps">
+<!ENTITY TASK.step.keys  "n, run, ceiling_secs, expect_exit">
+<!ENTITY TASK.vars       "TASK, LENGTH, SCHEMA, SCHEMATIC, STEPS, CEILING, RECORD, OWNER, DUE">
+<!ENTITY TASK.var.sigil  "a dollar sign before the name, as in the shell; braces allowed around the name">
+<!ENTITY TASK.lengths    "short: one step, under an hour; medium: up to five steps, one session; long: up to twelve steps, a handoff between sessions">
+<!ENTITY TASK.steps.short  "1">
+<!ENTITY TASK.steps.medium "5">
+<!ENTITY TASK.steps.long   "12">
+<!ENTITY TASK.record.fields "1 ts, 2 task, 3 event, 4 detail">
+<!ENTITY TASK.events     "created, audited, run, done, blocked, handed_off">
+<!ENTITY TASK.never      "ARGUMENTS, VERBOSE, DEBUG">
+
+<!ENTITY ASK.TASK.1 "Length|How long is the task?|Short: one step, under an hour|Medium: up to five steps, one session|Long: up to twelve steps, a handoff between sessions|Typed under Other">
+<!ENTITY ASK.TASK.2 "Vars|Which dollar variables does the task declare? Pick any.|TASK, LENGTH, SCHEMA and SCHEMATIC, the four the registry fills|STEPS, CEILING and RECORD, the run variables|OWNER and DUE|Typed under Other, from TASK.vars">
+<!ENTITY ASK.TASK.3 "Steps|How are the steps written?|One run string per step, each under a ceiling, from the purpose|From the next_step field of a todo line|None yet: a task to shape later|Typed under Other">
+<!ENTITY ASK.TASK.4 "Pick|Which open task? Each is elaborated first; mark the ones that apply.|The oldest open task|The task named in the argument|The task whose next step is smallest|Typed under Other">
+
+<!ENTITY LAW.TASK.1 "TASK.file is the registry of TASK.dir: one entry per task file and one file per entry; audit-tasks reads both and renders every name as declared and present, declared and missing, or present and orphan, and drift is the count of the last two (after catalog-dtd).">
+<!ENTITY LAW.TASK.2 "A task declares only variables named in TASK.vars, each with a CDATA value; a step's run string expands a dollar variable from the task's own vars alone, and a variable that is not declared, not set, or named in TASK.never is refused with the step named; the argument string never expands into a step.">
+<!ENTITY LAW.TASK.3 "A task's steps run through the workflow runner: in the foreground, stdin closed, each under its ceiling, the exit read directly and compared to the expected one; task-run turns the task into a workflow of its steps and never runs a step any other way.">
+<!ENTITY LAW.TASK.4 "The four answer variants appear across the family: the length is a select, the variables a check, the steps an elaborate, and the pick of an open task a mark, each option elaborated before the ask (LAW.ASK.13).">
+<!ENTITY LAW.TASK.5 "Every event of a task appends one line to TASK.ledger with the fields TASK.record.fields, the event one of TASK.events; a line is never rewritten, and a task's history is read from the ledger, never from memory.">
+<!ENTITY LAW.TASK.6 "A task file is written in the task's schematic with the parts of its schema in order, proven by lib/schematic.mjs check, and its steps never exceed the count TASK.lengths allows for its length; a registry entry whose file fails the check is blocked, not open.">
+```
+
 ## cc-report.dtd
 
 The research report: a strategic summary, named sections that may quote, the claude_context block, one next action, and sources with a kind. Included by the research commands and deep-dive.
