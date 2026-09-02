@@ -1,5 +1,5 @@
 ---
-description: Send a command file to slash-command-auditor-dtd: contract rules C1 to C13 first, then YAML, arguments, tools and content
+description: "Send a command file to slash-command-auditor-dtd: contract rules C1 to C14 first, then YAML, arguments, tools and content"
 argument-hint: <command-path>
 ---
 

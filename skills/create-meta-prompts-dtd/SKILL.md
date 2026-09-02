@@ -1,6 +1,6 @@
 ---
 name: create-meta-prompts-dtd
-description: Create optimized prompts for Claude-to-Claude pipelines with research, planning, and execution stages. Use when building prompts that produce outputs for other prompts to consume, or when running multi-stage workflows (research -> plan -> implement). Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces.
+description: "Create optimized prompts for Claude-to-Claude pipelines with research, planning, and execution stages. Use when building prompts that produce outputs for other prompts to consume, or when running multi-stage workflows (research -> plan -> implement). Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->

@@ -1,5 +1,5 @@
 ---
-description: Who else does this and how: three competitors minimum with sources, a matrix, the gaps, the differentiation options
+description: "Who else does this and how: three competitors minimum with sources, a matrix, the gaps, the differentiation options"
 argument-hint: [product/feature or leave blank for current context]
 ---
 

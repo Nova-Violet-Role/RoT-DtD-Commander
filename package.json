@@ -1,6 +1,6 @@
 {
   "name": "rot-dtd-commander",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "RoT DtD Commander: 68 Claude Code commands (the nine RoT MoE lenses as commands among them), 19 skills and 4 agents that carry their own DTD grammar and trust boundary, a guided NPX installer into ~/.claude, and the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it.",
   "type": "module",
   "license": "AGPL-3.0-or-later OR EUPL-1.2",
@@ -50,7 +50,7 @@
     "controls": "node bin/adiutor.mjs controls",
     "doctor": "node bin/adiutor.mjs doctor",
     "sweep": "bash checker/spdx-sweep.sh && bash checker/crlf-sweep.sh",
-    "gate": "npm run build:check && npm run check && node checker/heading-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep",
+    "gate": "npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep",
     "install-home": "node bin/rot-dtd-commander.mjs install --yes"
   },
   "keywords": [

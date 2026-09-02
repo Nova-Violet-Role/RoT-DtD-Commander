@@ -22,10 +22,10 @@ npm run gate; echo "exit=$?"
 ```
 
 That runs, in order: `rdc build --check` (the committed resolved tree equals a
-fresh resolve of `src/`), `rdc check` (rules C1 to C13 on every source), the
+fresh resolve of `src/`), `rdc check` (rules C1 to C14 on every source), the
 Adiutor controls (eleven guards tripped on purpose), the contract audit (every
 declaration used, every law numbered densely, with a planted control), the
-checker controls (five mutations refused), and the SPDX and CRLF sweeps
+checker controls (six mutations refused), and the SPDX and CRLF sweeps
 (each with its own negative control). Read the exit code directly, never
 through a pipe.
 
@@ -75,5 +75,5 @@ ships with a new control in the same pull request.
 ## Where to look first
 
 `NOTICE.md` for provenance and the limits of what is checked;
-`skills/dtd-core-dtd/references/checker-rules.md` for the thirteen rules and
+`skills/dtd-core-dtd/references/checker-rules.md` for the fourteen rules and
 their fixes; `dtd/adiutor.dtd` for the Adiutor's contract.

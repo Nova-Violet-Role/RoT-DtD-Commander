@@ -18,6 +18,15 @@
 
 ---
 
+## v3.1.0 — the front matter parses
+
+GitHub showed `Error in user YAML ... at line 1 column 32` on
+`pareto-dtd.md`: a bare `: ` inside the description. An independent parser
+found the same shape in 32 sources; all are quoted, rule C14 refuses the
+shape from now on (mutation M6 proves it), and `rdc forge` writes quoted
+values. Every number is in [CHANGELOG.md](CHANGELOG.md). The tag is
+`v3.1.0`.
+
 ## v3.0.0 — every answer in one shape
 
 A full audit of the 68 commands: every heading an answer carries is now a

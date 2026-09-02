@@ -1,6 +1,6 @@
 ---
 name: whats-next-dtd
-description: Write the handoff for a fresh context: six declared sections, every remaining item a sentence with a verb, every path one that was read
+description: "Write the handoff for a fresh context: six declared sections, every remaining item a sentence with a verb, every path one that was read"
 allowed-tools:
   - Read
   - Write

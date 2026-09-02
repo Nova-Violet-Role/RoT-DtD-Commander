@@ -1,5 +1,5 @@
 ---
-description: How to implement it: three approaches with complexity and best-when, a comparison, the chosen one with its first step
+description: "How to implement it: three approaches with complexity and best-when, a comparison, the chosen one with its first step"
 argument-hint: [what to implement or leave blank for current context]
 ---
 

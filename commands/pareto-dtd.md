@@ -1,5 +1,5 @@
 ---
-description: Find the vital few: rank every factor by impact, cut at a declared count, and name what you will ignore
+description: "Find the vital few: rank every factor by impact, cut at a declared count, and name what you will ignore"
 argument-hint: [topic or leave blank for current context]
 ---
 

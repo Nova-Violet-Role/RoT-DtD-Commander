@@ -18,7 +18,7 @@
 
 [![Checker](https://img.shields.io/badge/checked-91_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
 [![Contract](https://img.shields.io/badge/contract_audit-155_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-11_%2B_5-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-11_%2B_6-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
 
@@ -136,7 +136,7 @@ node bin/rot-dtd-commander.mjs install      # or: npx . install
 
 ### 🔧 Requirements
 
-Node 20 or later. Nothing else is required: the thirteen checker rules, the
+Node 20 or later. Nothing else is required: the fourteen checker rules, the
 contract audit and the Adiutor run on Node alone.
 
 ### ⚙️ Configuration
@@ -280,11 +280,11 @@ Afterwards, restart Claude Code once so the agents and the hooks load.
 
 ```sh
 rdc doctor          # or: node ~/.claude/rot-dtd-commander/bin/adiutor.mjs doctor
-rdc check           # from a clone: every source against its own DOCTYPE, rules C1 to C13
+rdc check           # from a clone: every source against its own DOCTYPE, rules C1 to C14
 ```
 
 <details>
-<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C13 on 91 sources, then <code>checker/checker-controls.sh</code> refusing three mutations on purpose)</summary>
+<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C14 on 91 sources, then <code>checker/checker-controls.sh</code> refusing three mutations on purpose)</summary>
 
 ![check](docs/gifs/check.gif)
 
@@ -369,14 +369,15 @@ while the plugin is still registered.
 | claim | instrument | last measured |
 |---|---|---|
 | 68 commands, 19 skills, 4 agents carry a DOCTYPE | `rdc list` | 2026-09-02 |
-| every source passes rules C1 to C13 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
+| every source passes rules C1 to C14 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
 | the committed resolved tree equals a fresh build | `rdc build --check`: `223 targets, 0 drifted` | 2026-09-02 |
-| the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading and a heading without its sigil | `bash checker/checker-controls.sh` | 2026-09-02 |
+| the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil and a front-matter value YAML would misread | `bash checker/checker-controls.sh` | 2026-09-02 |
 | every declaration in the five subsets is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `155 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
 | the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, and reads the whole turn after the command prompt | `node bin/adiutor.mjs controls`: `11 run, 0 failing` | 2026-09-02 |
 | a live `/pareto-dtd` turn in a fresh headless session, through the armed hooks, closes as `pass` in the ledger | `MSYS_NO_PATHCONV=1 claude -p "/pareto-dtd ..." --dangerously-skip-permissions`, then `rdc ledger --last 1` | 2026-09-02 |
 | a live `/rot-chroma-dtd ... --no-gate` turn renders all thirteen lens headings with the sigil and closes as `pass` | the same, then `rdc ledger --last 1` | 2026-09-02 |
 | the marketplace round-trip (add, install, uninstall, remove) leaves the registry clean and the npx set intact; the doctor turns its `plugin state` and `double install` rows red while both are installed, and red again on the cache directory the plugin CLI leaves behind, which `rdc prune-plugin` removes (and refuses to touch while the plugin is registered) | `claude plugin marketplace add Nova-Violet-Role/RoT-DtD-Commander`, `claude plugin install rot-dtd-commander@rot-dtd-commander`, `rdc doctor`, `claude plugin uninstall ...`, `claude plugin marketplace remove rot-dtd-commander`, `rdc prune-plugin`, `rdc doctor` | 2026-09-02 |
+| the front matter of every source parses as YAML (no bare `: ` or ` #` in a value), so GitHub renders it without an error | `rdc check` rule C14; `node checker/frontmatter-sweep.mjs --check`: `0 would change, 91 already parse`; confirmed once with js-yaml 4.1.0 outside the repository | 2026-09-02 |
 | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
 | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
 | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
@@ -399,7 +400,7 @@ two sweeps; each ends with a line of counts, and the exit code is read
 directly. Then break it:
 
 ```sh
-bash checker/checker-controls.sh      # five mutations and one untouched file, each asserted present, each refused
+bash checker/checker-controls.sh      # six mutations and one untouched file, each asserted present, each refused
 node bin/adiutor.mjs controls         # eleven guards; C3 is the strict block, once and never twice
 ```
 

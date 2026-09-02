@@ -1,6 +1,6 @@
 ---
 name: create-agent-skills-dtd
-description: Expert guidance for creating, writing, building, and refining Claude Code Skills. Use when working with SKILL.md files, authoring new skills, improving existing skills, or understanding skill structure and best practices. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces.
+description: "Expert guidance for creating, writing, building, and refining Claude Code Skills. Use when working with SKILL.md files, authoring new skills, improving existing skills, or understanding skill structure and best practices. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->

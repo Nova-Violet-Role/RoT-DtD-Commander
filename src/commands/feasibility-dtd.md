@@ -1,5 +1,5 @@
 ---
-description: Can we build it with what we have: technical, resource and external verdicts, blockers with mitigations, one overall go, conditional go or no-go
+description: "Can we build it with what we have: technical, resource and external verdicts, blockers with mitigations, one overall go, conditional go or no-go"
 argument-hint: [idea/project or leave blank for current context]
 ---
 

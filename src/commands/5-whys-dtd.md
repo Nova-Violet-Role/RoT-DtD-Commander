@@ -1,5 +1,5 @@
 ---
-description: Ask why until the cause is actionable: three to five links, each answering the last, and an intervention that names its recurrence check
+description: "Ask why until the cause is actionable: three to five links, each answering the last, and an intervention that names its recurrence check"
 argument-hint: [problem or leave blank for current context]
 ---
 

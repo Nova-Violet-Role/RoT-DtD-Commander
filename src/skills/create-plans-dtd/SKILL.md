@@ -1,6 +1,6 @@
 ---
 name: create-plans-dtd
-description: Create hierarchical project plans optimized for solo agentic development. Use when planning projects, phases, or tasks that Claude will execute. Produces Claude-executable plans with verification criteria, not enterprise documentation. Handles briefs, roadmaps, phase plans, and context handoffs. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces.
+description: "Create hierarchical project plans optimized for solo agentic development. Use when planning projects, phases, or tasks that Claude will execute. Produces Claude-executable plans with verification criteria, not enterprise documentation. Handles briefs, roadmaps, phase plans, and context handoffs. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->

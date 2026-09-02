@@ -1,5 +1,5 @@
 ---
-description: What was tried before: dated attempts, why they worked or failed, what is different now, the lessons to adopt or avoid
+description: "What was tried before: dated attempts, why they worked or failed, what is different now, the lessons to adopt or avoid"
 argument-hint: [problem/approach or leave blank for current context]
 ---
 

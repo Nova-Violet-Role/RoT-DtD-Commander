@@ -1,6 +1,6 @@
 ---
 name: dtd-eval-dtd
-description: Measure whether a *-dtd command's answers conform to its declared grammar with the Adiutor as the instrument: run the command on a fixture argument, read the ledger line its Stop check wrote, then feed a deliberately broken answer through the same check in a scratch state directory and watch it fail. Use before shipping a new command, after changing a grammar, or when asked to prove a DOCTYPE is more than decoration.
+description: "Measure whether a *-dtd command's answers conform to its declared grammar with the Adiutor as the instrument: run the command on a fixture argument, read the ledger line its Stop check wrote, then feed a deliberately broken answer through the same check in a scratch state directory and watch it fail. Use before shipping a new command, after changing a grammar, or when asked to prove a DOCTYPE is more than decoration."
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->

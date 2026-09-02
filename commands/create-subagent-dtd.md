@@ -1,5 +1,5 @@
 ---
-description: Invoke create-subagents-dtd for an agent declared as a roster row: name, element, what it produces, what it may never do
+description: "Invoke create-subagents-dtd for an agent declared as a roster row: name, element, what it produces, what it may never do"
 argument-hint: [agent idea or description]
 allowed-tools: Skill(create-subagents-dtd)
 ---

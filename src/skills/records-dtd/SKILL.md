@@ -1,6 +1,6 @@
 ---
 name: records-dtd
-description: The numbered, append-only field discipline for any file one session writes and a later session parses: handoffs, todo lists, plans, indexes, TSV logs. Load when declaring a RECORD.* entity, when adding a column to an existing record, when a reader finds more or fewer columns than expected, or when a file format must survive across versions.
+description: "The numbered, append-only field discipline for any file one session writes and a later session parses: handoffs, todo lists, plans, indexes, TSV logs. Load when declaring a RECORD.* entity, when adding a column to an existing record, when a reader finds more or fewer columns than expected, or when a file format must survive across versions."
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->

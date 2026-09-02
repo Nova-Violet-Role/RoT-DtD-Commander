@@ -1,5 +1,5 @@
 ---
-description: Write the failure recipe first: each way to guarantee defeat, its likelihood and damage, and the rule that avoids it
+description: "Write the failure recipe first: each way to guarantee defeat, its likelihood and damage, and the rule that avoids it"
 argument-hint: [goal or leave blank for current context]
 ---
 

@@ -1,5 +1,5 @@
 ---
-description: Fix a skill from what execution revealed: quoted proposed edits, an approval gate, then the verified write
+description: "Fix a skill from what execution revealed: quoted proposed edits, an approval gate, then the verified write"
 argument-hint: [optional: specific issue to fix]
 allowed-tools: [Read, Edit, Bash(ls:*), Bash(git:*)]
 ---

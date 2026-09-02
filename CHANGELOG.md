@@ -7,6 +7,35 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 3.1.0 (2026-09-02)
+
+The front matter of every source parses as YAML.
+
+- Reported on github.com viewing `pareto-dtd.md`: `Error in user YAML:
+  (<unknown>): mapping values are not allowed in this context at line 1
+  column 32`. Column 32 is the second colon of
+  `description: Find the vital few: rank every factor ...`; a bare YAML
+  scalar may not carry `: `, so the parser reads a nested mapping and stops.
+  Claude Code's own loader is lenient and ran the command in the live test;
+  GitHub's renderer and every strict parser are not.
+- Measured with a parser this repository did not write (`js-yaml` 4.1.0,
+  installed in a scratch directory, never in the repository): 32 of the 91
+  sources failed the same way, pareto at exactly line 1 column 32; 51
+  bracketed argument hints parse silently as lists and never error, and were
+  left alone.
+- `lib/dtd.mjs` gains `yamlScalar` (double quotes only where YAML needs
+  them) and rule C14: a bare front-matter value carrying `: ` or ` #` fails
+  the file. `checker/frontmatter-sweep.mjs` quoted the 32 values (`32
+  changed, 59 already parse`, then `0 would change`), with its own planted
+  control; `rdc forge` writes quoted values so a re-forge cannot bring the
+  shape back; mutation M6 strips the quotes from pareto's description and
+  the checker refuses it: `bash checker/checker-controls.sh` prints six
+  passes and `all tripped as designed`.
+- After the sweep the independent parser reads all 91 front matters with 0
+  errors.
+- Numbers on the day: `rdc check`: `checked 91  failed 0`; `rdc build
+  --check`: `223 targets, 0 drifted, 0 failing`; `npm run gate`: exit 0.
+
 ## 3.0.0 (2026-09-02)
 
 Every answer in one shape: a sigil on every heading, a blank line around it,

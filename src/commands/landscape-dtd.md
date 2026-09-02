@@ -1,5 +1,5 @@
 ---
-description: Map a domain: scope, categories, players, trends, white space, and what it implies for us
+description: "Map a domain: scope, categories, players, trends, white space, and what it implies for us"
 argument-hint: [domain/space or leave blank for current context]
 ---
 

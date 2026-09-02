@@ -1,5 +1,5 @@
 ---
-description: Find the libraries that solve this: licence first, maintenance signals, a comparison, and a build-versus-use call
+description: "Find the libraries that solve this: licence first, maintenance signals, a comparison, and a build-versus-use call"
 argument-hint: [problem/need or leave blank for current context]
 ---
 

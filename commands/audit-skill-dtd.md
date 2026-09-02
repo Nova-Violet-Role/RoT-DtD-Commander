@@ -1,5 +1,5 @@
 ---
-description: Send a skill directory to skill-auditor-dtd: contract rules first, supporting files both ways, findings with file and line
+description: "Send a skill directory to skill-auditor-dtd: contract rules first, supporting files both ways, findings with file and line"
 argument-hint: <skill-path>
 ---
 

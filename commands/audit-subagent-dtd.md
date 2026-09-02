@@ -1,5 +1,5 @@
 ---
-description: Send an agent file to subagent-auditor-dtd: contract rules first, then the roster row, role, tools and bound
+description: "Send an agent file to subagent-auditor-dtd: contract rules first, then the roster row, role, tools and bound"
 argument-hint: <subagent-path>
 ---
 

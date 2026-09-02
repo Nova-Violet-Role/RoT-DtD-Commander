@@ -37,6 +37,10 @@ out=$(run "$T/commands/m4.md"); echo "$out" | grep -q -E 'ERR +C13 .*blank lines
 # M5: a grammar_map heading stripped of its sigil -> C13
 node -e "const fs=require('fs');const t=fs.readFileSync('commands/pareto-dtd.md','utf8');const u=t.replace('**🎯 Bottom Line**','**Bottom Line**');if(u===t){process.exit(3)};fs.writeFileSync(process.argv[1],u)" "$T/commands/m5.md" || { echo "M5 mutation did not land"; fail=1; }
 out=$(run "$T/commands/m5.md"); echo "$out" | grep -q -E 'ERR +C13 .*no sigil' && echo "PASS M5 heading without sigil -> C13" || { echo "FAIL M5"; echo "$out" | tail -3; fail=1; }
+# M6: a front-matter value with a bare ": " (the shape GitHub's renderer rejected) -> C14
+node -e "const fs=require('fs');const t=fs.readFileSync('commands/pareto-dtd.md','utf8');const u=t.replace(/^description: \"(.*)\"\$/m,'description: \$1');if(u===t){process.exit(3)};fs.writeFileSync(process.argv[1],u)" "$T/commands/m6.md" || { echo "M6 mutation did not land"; fail=1; }
+grep -q '^description: Find the vital few: ' "$T/commands/m6.md" || { echo "M6 mutation did not land"; fail=1; }
+out=$(run "$T/commands/m6.md"); echo "$out" | grep -q -E 'ERR +C14' && echo "PASS M6 bare colon in front matter -> C14" || { echo "FAIL M6"; echo "$out" | tail -3; fail=1; }
 # Untouched -> pass
 out=$(run "$T/commands/pareto-dtd.md"); echo "$out" | grep -q 'failed 0' && echo "PASS M0 untouched file passes" || { echo "FAIL M0"; echo "$out" | tail -3; fail=1; }
 

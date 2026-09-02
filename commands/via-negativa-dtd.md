@@ -1,5 +1,5 @@
 ---
-description: Improve by removing: each candidate with the impact of its removal, what passed the keep test, what to refuse next
+description: "Improve by removing: each candidate with the impact of its removal, what passed the keep test, what to refuse next"
 argument-hint: [situation or leave blank for current context]
 ---
 
