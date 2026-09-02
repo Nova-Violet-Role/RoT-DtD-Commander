@@ -735,7 +735,9 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
   the context, the ledger, the codebase or the command), the rule that no
   create- command skips its gate, the rounds as an enumeration a command
   may raise before the include (the driver-file pattern, LAW.ASK.11), and
-  the back token that re-asks a question (LAW.ASK.12).
+  the back token that re-asks a question (LAW.ASK.12), the four variants a
+  question may take with the token each renders as (LAW.ASK.13), and the
+  elaborated preview (LAW.ASK.14).
 -->
 
 <!-- The rounds a prompt may chain, as an enumeration. A command that
@@ -765,18 +767,25 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
 <!ELEMENT question (option, option, (option, option?)?)>
 <!ATTLIST question
           header      CDATA #REQUIRED
+          variant     (select|check|elaborate|mark) "select"
           multiSelect (true|false) "false"
           bilateral   (true|false) "true">
-<!ELEMENT option (label, description, preview?)>
+<!ELEMENT option (label, description, preview?, elaboration?)>
 <!ELEMENT label (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT preview (#PCDATA)>
 <!ATTLIST preview mode (cut|expanded) "cut">
+<!-- The model's elaboration of one option, written before the ask for an
+     elaborate or a mark question: cut into the option's description in the
+     widget, expanded in the transcript above the call. -->
+<!ELEMENT elaboration (#PCDATA)>
+<!ATTLIST elaboration mode (cut|expanded) "expanded">
 
 <!ELEMENT answer (#PCDATA)>
 <!ATTLIST answer
           trust  (cdata) #FIXED "cdata"
-          header CDATA #REQUIRED>
+          header CDATA #REQUIRED
+          marked (yes|no) #IMPLIED>
 
 <!-- The impactful selection: one to four selections the model provides,
      ranked, each with the place it was drawn from. The reply picks one
@@ -804,6 +813,17 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
 <!ENTITY ASK.max_total         "12">
 <!ENTITY ASK.other             "Other">
 <!ENTITY ASK.preview.cut_lines "3">
+<!ENTITY ASK.preview.expanded_lines "12">
+
+<!-- The four variants a question may take, and the token each renders as in the transcript. -->
+<!ENTITY ASK.variant.select    "one option of the list, a single choice; multiSelect false">
+<!ENTITY ASK.variant.check     "any options of the list, a multiple choice; multiSelect true">
+<!ENTITY ASK.variant.elaborate "every option elaborated by the model before the ask, the elaboration cut into the description and expanded in the transcript; a single choice among the elaborated">
+<!ENTITY ASK.variant.mark      "every option elaborated by the model, then marked by the user: the elaborated options are listed as markable lines in the transcript, the ask runs with multiSelect true, and each option comes back as an answer marked yes or no">
+<!ENTITY ASK.token.select    "[...]">
+<!ENTITY ASK.token.check     "[X]">
+<!ENTITY ASK.token.elaborate "[ ]">
+<!ENTITY ASK.token.mark      "a bracketed space between a less-than sign and a greater-than sign">
 <!ENTITY ASK.back              "the arrow token: a less-than sign followed by a hyphen">
 
 <!ENTITY LAW.ASK.1 "No question is asked about a slot the context already fills.">
@@ -818,6 +838,8 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
 <!ENTITY LAW.ASK.10 "A command whose name starts with create- and includes this subset, and a book-derived command that includes cc-lexicon, runs at least one round before it writes or analyses anything, unless --no-gate is present; context fills slots, it never skips the gate; a create- command that does not include this subset is outside the gate and must not claim it.">
 <!ENTITY LAW.ASK.11 "A command raises its rounds only by declaring ask.rounds, ask.of, ASK.rounds_per_prompt and ASK.max_total before it includes this subset; the first declaration binds, a declaration after the include is ignored, and the raised count is still an enumeration the checker reads.">
 <!ENTITY LAW.ASK.12 "The token ASK.back typed into Other returns to the question just asked, which is asked again without loss of the answers already taken; it is a navigation token, never an answer.">
+<!ENTITY LAW.ASK.13 "Every question declares its variant, select, check, elaborate or mark, and the round names it beside the question: select and check map onto multiSelect false and true; elaborate renders one elaboration per option, cut into the description in the widget and expanded in the transcript above the call; mark elaborates likewise, lists the options as markable lines with ASK.token.mark, asks with multiSelect true, and turns every option into an answer marked yes or no, the unmarked ones dropped; a command that asks offers all four variants across its rounds where its slots allow.">
+<!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
 <!-- end subset cc-ask -->
 
   <!ELEMENT meta_forge (args, intake, sections, schemas, forms, embedding, file, guards, proof, assumption_made*)>
@@ -864,8 +886,8 @@ The schematic is pinned: each section a key with a multiline string, an angle br
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; words after ARG.end that read schematic=, schemas= or forms= are known slots placed by a router and fill those questions without asking (LAW.ASK.1); render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
-2. Round 1 of 3: ask ASK.META.1 to ASK.META.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, multi-select), ASK.SCHEMA.2 (which of them), ASK.FORM.1 and ASK.FORM.2 (multi-select), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.META.5 to ASK.META.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+2. Round 1 of 3: ask ASK.META.1 to ASK.META.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, check), ASK.SCHEMA.2 (select), ASK.FORM.1 and ASK.FORM.2 (check), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.META.5 (elaborate: each voice elaborated before the ask), ASK.META.6 (select), ASK.META.7 (select) and ASK.META.8 (mark: each license elaborated, the marked ones joined into the expression); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `sections`: one `section` per name of SCHEMA.meta.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for nt: print its skeleton with node lib/schematic.mjs render, the schema name and nt, and fill the bracketed words in place (LAW.META.6); render the `forms`: one `form` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.META.7); render the `embedding`: the reference syntax SCHEMA.nt.reference, the literal syntax SCHEMA.nt.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.nt: a NestedText document, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.META.4).
 6. Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.

@@ -164,7 +164,9 @@ argument-hint: [what the lenses are for, or leave blank; --no-gate for autonomou
   the context, the ledger, the codebase or the command), the rule that no
   create- command skips its gate, the rounds as an enumeration a command
   may raise before the include (the driver-file pattern, LAW.ASK.11), and
-  the back token that re-asks a question (LAW.ASK.12).
+  the back token that re-asks a question (LAW.ASK.12), the four variants a
+  question may take with the token each renders as (LAW.ASK.13), and the
+  elaborated preview (LAW.ASK.14).
 -->
 
 <!-- The rounds a prompt may chain, as an enumeration. A command that
@@ -194,18 +196,25 @@ argument-hint: [what the lenses are for, or leave blank; --no-gate for autonomou
 <!ELEMENT question (option, option, (option, option?)?)>
 <!ATTLIST question
           header      CDATA #REQUIRED
+          variant     (select|check|elaborate|mark) "select"
           multiSelect (true|false) "false"
           bilateral   (true|false) "true">
-<!ELEMENT option (label, description, preview?)>
+<!ELEMENT option (label, description, preview?, elaboration?)>
 <!ELEMENT label (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT preview (#PCDATA)>
 <!ATTLIST preview mode (cut|expanded) "cut">
+<!-- The model's elaboration of one option, written before the ask for an
+     elaborate or a mark question: cut into the option's description in the
+     widget, expanded in the transcript above the call. -->
+<!ELEMENT elaboration (#PCDATA)>
+<!ATTLIST elaboration mode (cut|expanded) "expanded">
 
 <!ELEMENT answer (#PCDATA)>
 <!ATTLIST answer
           trust  (cdata) #FIXED "cdata"
-          header CDATA #REQUIRED>
+          header CDATA #REQUIRED
+          marked (yes|no) #IMPLIED>
 
 <!-- The impactful selection: one to four selections the model provides,
      ranked, each with the place it was drawn from. The reply picks one
@@ -233,6 +242,17 @@ argument-hint: [what the lenses are for, or leave blank; --no-gate for autonomou
 <!ENTITY ASK.max_total         "12">
 <!ENTITY ASK.other             "Other">
 <!ENTITY ASK.preview.cut_lines "3">
+<!ENTITY ASK.preview.expanded_lines "12">
+
+<!-- The four variants a question may take, and the token each renders as in the transcript. -->
+<!ENTITY ASK.variant.select    "one option of the list, a single choice; multiSelect false">
+<!ENTITY ASK.variant.check     "any options of the list, a multiple choice; multiSelect true">
+<!ENTITY ASK.variant.elaborate "every option elaborated by the model before the ask, the elaboration cut into the description and expanded in the transcript; a single choice among the elaborated">
+<!ENTITY ASK.variant.mark      "every option elaborated by the model, then marked by the user: the elaborated options are listed as markable lines in the transcript, the ask runs with multiSelect true, and each option comes back as an answer marked yes or no">
+<!ENTITY ASK.token.select    "[...]">
+<!ENTITY ASK.token.check     "[X]">
+<!ENTITY ASK.token.elaborate "[ ]">
+<!ENTITY ASK.token.mark      "a bracketed space between a less-than sign and a greater-than sign">
 <!ENTITY ASK.back              "the arrow token: a less-than sign followed by a hyphen">
 
 <!ENTITY LAW.ASK.1 "No question is asked about a slot the context already fills.">
@@ -247,6 +267,8 @@ argument-hint: [what the lenses are for, or leave blank; --no-gate for autonomou
 <!ENTITY LAW.ASK.10 "A command whose name starts with create- and includes this subset, and a book-derived command that includes cc-lexicon, runs at least one round before it writes or analyses anything, unless --no-gate is present; context fills slots, it never skips the gate; a create- command that does not include this subset is outside the gate and must not claim it.">
 <!ENTITY LAW.ASK.11 "A command raises its rounds only by declaring ask.rounds, ask.of, ASK.rounds_per_prompt and ASK.max_total before it includes this subset; the first declaration binds, a declaration after the include is ignored, and the raised count is still an enumeration the checker reads.">
 <!ENTITY LAW.ASK.12 "The token ASK.back typed into Other returns to the question just asked, which is asked again without loss of the answers already taken; it is a navigation token, never an answer.">
+<!ENTITY LAW.ASK.13 "Every question declares its variant, select, check, elaborate or mark, and the round names it beside the question: select and check map onto multiSelect false and true; elaborate renders one elaboration per option, cut into the description in the widget and expanded in the transcript above the call; mark elaborates likewise, lists the options as markable lines with ASK.token.mark, asks with multiSelect true, and turns every option into an answer marked yes or no, the unmarked ones dropped; a command that asks offers all four variants across its rounds where its slots allow.">
+<!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
 <!-- end subset cc-ask -->
 
   <!ELEMENT moe_creation (args, intake, roster, contract, checker, proof, assumption_made*)>

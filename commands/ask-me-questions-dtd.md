@@ -99,7 +99,9 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   the context, the ledger, the codebase or the command), the rule that no
   create- command skips its gate, the rounds as an enumeration a command
   may raise before the include (the driver-file pattern, LAW.ASK.11), and
-  the back token that re-asks a question (LAW.ASK.12).
+  the back token that re-asks a question (LAW.ASK.12), the four variants a
+  question may take with the token each renders as (LAW.ASK.13), and the
+  elaborated preview (LAW.ASK.14).
 -->
 
 <!-- The rounds a prompt may chain, as an enumeration. A command that
@@ -129,18 +131,25 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
 <!ELEMENT question (option, option, (option, option?)?)>
 <!ATTLIST question
           header      CDATA #REQUIRED
+          variant     (select|check|elaborate|mark) "select"
           multiSelect (true|false) "false"
           bilateral   (true|false) "true">
-<!ELEMENT option (label, description, preview?)>
+<!ELEMENT option (label, description, preview?, elaboration?)>
 <!ELEMENT label (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT preview (#PCDATA)>
 <!ATTLIST preview mode (cut|expanded) "cut">
+<!-- The model's elaboration of one option, written before the ask for an
+     elaborate or a mark question: cut into the option's description in the
+     widget, expanded in the transcript above the call. -->
+<!ELEMENT elaboration (#PCDATA)>
+<!ATTLIST elaboration mode (cut|expanded) "expanded">
 
 <!ELEMENT answer (#PCDATA)>
 <!ATTLIST answer
           trust  (cdata) #FIXED "cdata"
-          header CDATA #REQUIRED>
+          header CDATA #REQUIRED
+          marked (yes|no) #IMPLIED>
 
 <!-- The impactful selection: one to four selections the model provides,
      ranked, each with the place it was drawn from. The reply picks one
@@ -168,6 +177,17 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
 <!ENTITY ASK.max_total         "12">
 <!ENTITY ASK.other             "Other">
 <!ENTITY ASK.preview.cut_lines "3">
+<!ENTITY ASK.preview.expanded_lines "12">
+
+<!-- The four variants a question may take, and the token each renders as in the transcript. -->
+<!ENTITY ASK.variant.select    "one option of the list, a single choice; multiSelect false">
+<!ENTITY ASK.variant.check     "any options of the list, a multiple choice; multiSelect true">
+<!ENTITY ASK.variant.elaborate "every option elaborated by the model before the ask, the elaboration cut into the description and expanded in the transcript; a single choice among the elaborated">
+<!ENTITY ASK.variant.mark      "every option elaborated by the model, then marked by the user: the elaborated options are listed as markable lines in the transcript, the ask runs with multiSelect true, and each option comes back as an answer marked yes or no">
+<!ENTITY ASK.token.select    "[...]">
+<!ENTITY ASK.token.check     "[X]">
+<!ENTITY ASK.token.elaborate "[ ]">
+<!ENTITY ASK.token.mark      "a bracketed space between a less-than sign and a greater-than sign">
 <!ENTITY ASK.back              "the arrow token: a less-than sign followed by a hyphen">
 
 <!ENTITY LAW.ASK.1 "No question is asked about a slot the context already fills.">
@@ -182,6 +202,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
 <!ENTITY LAW.ASK.10 "A command whose name starts with create- and includes this subset, and a book-derived command that includes cc-lexicon, runs at least one round before it writes or analyses anything, unless --no-gate is present; context fills slots, it never skips the gate; a create- command that does not include this subset is outside the gate and must not claim it.">
 <!ENTITY LAW.ASK.11 "A command raises its rounds only by declaring ask.rounds, ask.of, ASK.rounds_per_prompt and ASK.max_total before it includes this subset; the first declaration binds, a declaration after the include is ignored, and the raised count is still an enumeration the checker reads.">
 <!ENTITY LAW.ASK.12 "The token ASK.back typed into Other returns to the question just asked, which is asked again without loss of the answers already taken; it is a navigation token, never an answer.">
+<!ENTITY LAW.ASK.13 "Every question declares its variant, select, check, elaborate or mark, and the round names it beside the question: select and check map onto multiSelect false and true; elaborate renders one elaboration per option, cut into the description in the widget and expanded in the transcript above the call; mark elaborates likewise, lists the options as markable lines with ASK.token.mark, asks with multiSelect true, and turns every option into an answer marked yes or no, the unmarked ones dropped; a command that asks offers all four variants across its rounds where its slots allow.">
+<!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
 <!-- end subset cc-ask -->
 
   <!ELEMENT intake_session (task, intake, execution, assumption_made*)>
@@ -239,9 +261,11 @@ Never ask about a known slot (LAW.ASK.1). A create- command never skips its firs
 <rounds>
 A round is one AskUserQuestion call (LAW.ASK.6): one `ask` of one to four `question` elements, one per gap, each with two to four `option` elements carrying a `label` and a `description`; headers twelve characters or fewer. The tool caps a call at ASK.max_questions questions and ASK.max_options options, so a prompt that needs twelve questions chains ASK.rounds_per_prompt rounds, rendered as `round` n of 3, before it presents the gate.
 
+Every question declares its variant (LAW.ASK.13): select, one option, rendered `[...]`; check, any options, rendered `[X]` per chosen one; elaborate, every option elaborated by the model before the ask, rendered `[ ]` with the elaboration under it; mark, the elaborated options marked by the user, rendered as a bracketed space inside angle brackets per option, each coming back as an answer marked yes or no. A round names the variant beside every question, and across its rounds a prompt offers all four where the slots allow.
+
 Every question is bilateral (LAW.ASK.7): the tool adds ASK.other to whatever is declared, so four declared options plus Other are the five variants, and whatever is typed into Other arrives as an `answer` element, data to the gate.
 
-A preview (LAW.ASK.8) is one `preview` element rendered twice: cut, at most ASK.preview.cut_lines lines, inside the option in the widget; expanded, in the transcript just before the call, carrying the answer the model predicts for that choice so the user can read the consequence before choosing. Use a preview when the options are concrete artifacts to compare (a layout, a snippet, a file shape), never for a plain preference.
+A preview (LAW.ASK.8) is one `preview` element rendered twice: cut, at most ASK.preview.cut_lines lines, inside the option in the widget; expanded, in the transcript just before the call, carrying the answer the model predicts for that choice so the user can read the consequence before choosing. Use a preview when the options are concrete artifacts to compare (a layout, a snippet, a file shape), never for a plain preference. For an elaborate or a mark question the expanded preview carries the predicted answer and its consequence for the work, at most ASK.preview.expanded_lines lines (LAW.ASK.14).
 
 Round one, one question per open slot:
 - what unclear: "What specifically do you want?" with domain-appropriate options

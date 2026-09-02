@@ -71,7 +71,7 @@ The shell is built the way the DITA shells are built: a header, a declaration pe
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the name or purpose; render the walk under `args`. A plugin is a create- command, so round one always runs (LAW.ASK.10).
-2. Round 1 of 3: ask ASK.PLUGIN.1 to ASK.PLUGIN.4 as one AskUserQuestion call, four options each plus Other, questions 2 to 4 multi-select (LAW.PLUGIN.3); render the round.
+2. Round 1 of 3: ask ASK.PLUGIN.1 to ASK.PLUGIN.4 as one AskUserQuestion call, four options each plus Other (ASK.PLUGIN.1 select, the creation questions check), questions 2 to 4 multi-select (LAW.PLUGIN.3); render the round.
 3. Present the gate; on more, round 2 of 3 with ASK.PLUGIN.5 to ASK.PLUGIN.8; on more again, round 3 of 3 with ASK.PLUGIN.9 to ASK.PLUGIN.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Check the license against LICENSE.list (LAW.PLUGIN.4, LAW.LICENSE.1): an identifier in the list, or a compound expression of listed identifiers joined by LICENSE.join, passes; anything else is refused with the list printed and ASK.PLUGIN.5 asked again; render the `license` with the expression, its count and listed yes.
 5. Write the `shell`: dtd/<name>.dtd at the plugin root with the header (PLUGIN.shell.header), one parameter entity per creation set to INCLUDE or IGNORE, one conditional section per creation declaring that creation's domain elements and entities, the nesting override, the element integration, and the cc-core include; render one `domain` per creation with its keyword (LAW.PLUGIN.1, LAW.PLUGIN.2).
@@ -102,7 +102,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🧩 Intake
 
-- round 1 of 3: Name, Creations A, Creations B, Creations C answered [labels, the multi-selects listed, or Other text]
+- round 1 of 3: Name, Creations A, Creations B, Creations C answered [labels, the check answers listed, or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
 - gate: [start|more|add|impactful] (round N)
@@ -138,7 +138,7 @@ rdc check [n] files, 0 failing; manifests parsed [n]; excluded [creation] absent
 </output_format>
 
 <success_criteria>
-- Round one ran before any file was written; the creation questions were multi-select and All of them selected every creation
+- Round one ran before any file was written; the creation questions were check questions and All of them selected every creation
 - The shell carries one conditional section per creation with the keyword the intake chose, and an excluded creation appears nowhere else
 - The license is a curated identifier or a compound of curated identifiers, and it heads every file that allows a comment
 - The manifests were rendered from the shell and parsed back

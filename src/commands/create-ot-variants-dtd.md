@@ -63,7 +63,7 @@ The shapes are DocBook's: a productionset of lhs and rhs for the thought structu
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags, the stem and the kinds; render the walk under `args`. A family is a create- command, so round one always runs (LAW.ASK.10).
-2. Round 1 of 3: ask ASK.OT.1 to ASK.OT.4 as one AskUserQuestion call, four options each plus Other, questions 2 and 3 multi-select (LAW.OT.4); render the round.
+2. Round 1 of 3: ask ASK.OT.1 to ASK.OT.4 as one AskUserQuestion call, four options each plus Other (ASK.OT.1 select, the variant questions check), questions 2 and 3 multi-select (LAW.OT.4); render the round.
 3. Present the gate; on more, round 2 of 3 with ASK.OT.5 to ASK.OT.8; on more again, round 3 of 3 with ASK.OT.9 to ASK.OT.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `variants`: one `variant` per chosen kind with its name, depth and branching; render the `grammar`: one `production` per rule of each variant (LAW.OT.1); render the `walk` for the fixture: one `step` per step with its performance, degree and alternatives (LAW.OT.2).
 5. Write the shared contract dtd/<stem>-ot.dtd: the kind enumeration, the productions, the step element, the certainty attribute, the buffer file as an NDATA entity when chosen, and a LAW entity per promise the intake made; include cc-core.
@@ -89,7 +89,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🧠 Intake
 
-- round 1 of 3: Name, Variants A, Variants B, Grammar answered [labels, the multi-selects listed, or Other text]
+- round 1 of 3: Name, Variants A, Variants B, Grammar answered [labels, the check answers listed, or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
 - gate: [start|more|add|impactful] (round N)
@@ -119,7 +119,7 @@ tripped yes
 </output_format>
 
 <success_criteria>
-- Round one ran before any file was written; the variant questions were multi-select and All eight selected every kind
+- Round one ran before any file was written; the variant questions were check questions and All eight selected every kind
 - Every variant is a command whose DOCTYPE declares its productions and its walk
 - Every step carries its number, performance, degree and alternatives as declared
 - The control walked the fixture through every variant and the skipped step was refused

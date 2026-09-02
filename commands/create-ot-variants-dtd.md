@@ -164,7 +164,9 @@ argument-hint: [which variants and for what, or leave blank; --no-gate for auton
   the context, the ledger, the codebase or the command), the rule that no
   create- command skips its gate, the rounds as an enumeration a command
   may raise before the include (the driver-file pattern, LAW.ASK.11), and
-  the back token that re-asks a question (LAW.ASK.12).
+  the back token that re-asks a question (LAW.ASK.12), the four variants a
+  question may take with the token each renders as (LAW.ASK.13), and the
+  elaborated preview (LAW.ASK.14).
 -->
 
 <!-- The rounds a prompt may chain, as an enumeration. A command that
@@ -194,18 +196,25 @@ argument-hint: [which variants and for what, or leave blank; --no-gate for auton
 <!ELEMENT question (option, option, (option, option?)?)>
 <!ATTLIST question
           header      CDATA #REQUIRED
+          variant     (select|check|elaborate|mark) "select"
           multiSelect (true|false) "false"
           bilateral   (true|false) "true">
-<!ELEMENT option (label, description, preview?)>
+<!ELEMENT option (label, description, preview?, elaboration?)>
 <!ELEMENT label (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT preview (#PCDATA)>
 <!ATTLIST preview mode (cut|expanded) "cut">
+<!-- The model's elaboration of one option, written before the ask for an
+     elaborate or a mark question: cut into the option's description in the
+     widget, expanded in the transcript above the call. -->
+<!ELEMENT elaboration (#PCDATA)>
+<!ATTLIST elaboration mode (cut|expanded) "expanded">
 
 <!ELEMENT answer (#PCDATA)>
 <!ATTLIST answer
           trust  (cdata) #FIXED "cdata"
-          header CDATA #REQUIRED>
+          header CDATA #REQUIRED
+          marked (yes|no) #IMPLIED>
 
 <!-- The impactful selection: one to four selections the model provides,
      ranked, each with the place it was drawn from. The reply picks one
@@ -233,6 +242,17 @@ argument-hint: [which variants and for what, or leave blank; --no-gate for auton
 <!ENTITY ASK.max_total         "12">
 <!ENTITY ASK.other             "Other">
 <!ENTITY ASK.preview.cut_lines "3">
+<!ENTITY ASK.preview.expanded_lines "12">
+
+<!-- The four variants a question may take, and the token each renders as in the transcript. -->
+<!ENTITY ASK.variant.select    "one option of the list, a single choice; multiSelect false">
+<!ENTITY ASK.variant.check     "any options of the list, a multiple choice; multiSelect true">
+<!ENTITY ASK.variant.elaborate "every option elaborated by the model before the ask, the elaboration cut into the description and expanded in the transcript; a single choice among the elaborated">
+<!ENTITY ASK.variant.mark      "every option elaborated by the model, then marked by the user: the elaborated options are listed as markable lines in the transcript, the ask runs with multiSelect true, and each option comes back as an answer marked yes or no">
+<!ENTITY ASK.token.select    "[...]">
+<!ENTITY ASK.token.check     "[X]">
+<!ENTITY ASK.token.elaborate "[ ]">
+<!ENTITY ASK.token.mark      "a bracketed space between a less-than sign and a greater-than sign">
 <!ENTITY ASK.back              "the arrow token: a less-than sign followed by a hyphen">
 
 <!ENTITY LAW.ASK.1 "No question is asked about a slot the context already fills.">
@@ -247,6 +267,8 @@ argument-hint: [which variants and for what, or leave blank; --no-gate for auton
 <!ENTITY LAW.ASK.10 "A command whose name starts with create- and includes this subset, and a book-derived command that includes cc-lexicon, runs at least one round before it writes or analyses anything, unless --no-gate is present; context fills slots, it never skips the gate; a create- command that does not include this subset is outside the gate and must not claim it.">
 <!ENTITY LAW.ASK.11 "A command raises its rounds only by declaring ask.rounds, ask.of, ASK.rounds_per_prompt and ASK.max_total before it includes this subset; the first declaration binds, a declaration after the include is ignored, and the raised count is still an enumeration the checker reads.">
 <!ENTITY LAW.ASK.12 "The token ASK.back typed into Other returns to the question just asked, which is asked again without loss of the answers already taken; it is a navigation token, never an answer.">
+<!ENTITY LAW.ASK.13 "Every question declares its variant, select, check, elaborate or mark, and the round names it beside the question: select and check map onto multiSelect false and true; elaborate renders one elaboration per option, cut into the description in the widget and expanded in the transcript above the call; mark elaborates likewise, lists the options as markable lines with ASK.token.mark, asks with multiSelect true, and turns every option into an answer marked yes or no, the unmarked ones dropped; a command that asks offers all four variants across its rounds where its slots allow.">
+<!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
 <!-- end subset cc-ask -->
 
   <!ELEMENT ot_creation (args, intake, variants, grammar, walk, proof, assumption_made*)>
@@ -299,7 +321,7 @@ The shapes are DocBook's: a productionset of lhs and rhs for the thought structu
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags, the stem and the kinds; render the walk under `args`. A family is a create- command, so round one always runs (LAW.ASK.10).
-2. Round 1 of 3: ask ASK.OT.1 to ASK.OT.4 as one AskUserQuestion call, four options each plus Other, questions 2 and 3 multi-select (LAW.OT.4); render the round.
+2. Round 1 of 3: ask ASK.OT.1 to ASK.OT.4 as one AskUserQuestion call, four options each plus Other (ASK.OT.1 select, the variant questions check), questions 2 and 3 multi-select (LAW.OT.4); render the round.
 3. Present the gate; on more, round 2 of 3 with ASK.OT.5 to ASK.OT.8; on more again, round 3 of 3 with ASK.OT.9 to ASK.OT.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `variants`: one `variant` per chosen kind with its name, depth and branching; render the `grammar`: one `production` per rule of each variant (LAW.OT.1); render the `walk` for the fixture: one `step` per step with its performance, degree and alternatives (LAW.OT.2).
 5. Write the shared contract dtd/<stem>-ot.dtd: the kind enumeration, the productions, the step element, the certainty attribute, the buffer file as an NDATA entity when chosen, and a LAW entity per promise the intake made; include cc-core.
@@ -325,7 +347,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🧠 Intake
 
-- round 1 of 3: Name, Variants A, Variants B, Grammar answered [labels, the multi-selects listed, or Other text]
+- round 1 of 3: Name, Variants A, Variants B, Grammar answered [labels, the check answers listed, or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
 - gate: [start|more|add|impactful] (round N)
@@ -355,7 +377,7 @@ tripped yes
 </output_format>
 
 <success_criteria>
-- Round one ran before any file was written; the variant questions were multi-select and All eight selected every kind
+- Round one ran before any file was written; the variant questions were check questions and All eight selected every kind
 - Every variant is a command whose DOCTYPE declares its productions and its walk
 - Every step carries its number, performance, degree and alternatives as declared
 - The control walked the fixture through every variant and the skipped step was refused

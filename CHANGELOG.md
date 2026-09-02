@@ -167,6 +167,15 @@ counts are re-measured.
 - create-plugin includes cc-license and drops its private list; LAW.PLUGIN.4
   cites LICENSE.list and LICENSE.join, and LAW.PLUGIN.6 hands name=, emoji=
   and license= to each creator as known slots after the end token.
+- The four answer variants of every question (cc-ask): `variant` on a question,
+  select `[...]`, check `[X]`, elaborate `[ ]` (one `elaboration` per option,
+  cut into the widget and expanded above the call) and mark (the elaborated
+  options listed as markable lines, asked with multiSelect, each answer
+  `marked` yes or no); ASK.variant.* and ASK.token.*; the preview elaborated
+  to ASK.preview.expanded_lines with the predicted answer and its
+  consequence; LAW.ASK.13 and 14. Every generated round names the variant
+  beside each question (forty commands re-forged); ask-me-questions,
+  ask-me-many-questions and ask-me-preview carry the rule.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

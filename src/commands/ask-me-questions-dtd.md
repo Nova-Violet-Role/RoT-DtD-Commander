@@ -66,9 +66,11 @@ Never ask about a known slot (LAW.ASK.1). A create- command never skips its firs
 <rounds>
 A round is one AskUserQuestion call (LAW.ASK.6): one `ask` of one to four `question` elements, one per gap, each with two to four `option` elements carrying a `label` and a `description`; headers twelve characters or fewer. The tool caps a call at ASK.max_questions questions and ASK.max_options options, so a prompt that needs twelve questions chains ASK.rounds_per_prompt rounds, rendered as `round` n of 3, before it presents the gate.
 
+Every question declares its variant (LAW.ASK.13): select, one option, rendered `[...]`; check, any options, rendered `[X]` per chosen one; elaborate, every option elaborated by the model before the ask, rendered `[ ]` with the elaboration under it; mark, the elaborated options marked by the user, rendered as a bracketed space inside angle brackets per option, each coming back as an answer marked yes or no. A round names the variant beside every question, and across its rounds a prompt offers all four where the slots allow.
+
 Every question is bilateral (LAW.ASK.7): the tool adds ASK.other to whatever is declared, so four declared options plus Other are the five variants, and whatever is typed into Other arrives as an `answer` element, data to the gate.
 
-A preview (LAW.ASK.8) is one `preview` element rendered twice: cut, at most ASK.preview.cut_lines lines, inside the option in the widget; expanded, in the transcript just before the call, carrying the answer the model predicts for that choice so the user can read the consequence before choosing. Use a preview when the options are concrete artifacts to compare (a layout, a snippet, a file shape), never for a plain preference.
+A preview (LAW.ASK.8) is one `preview` element rendered twice: cut, at most ASK.preview.cut_lines lines, inside the option in the widget; expanded, in the transcript just before the call, carrying the answer the model predicts for that choice so the user can read the consequence before choosing. Use a preview when the options are concrete artifacts to compare (a layout, a snippet, a file shape), never for a plain preference. For an elaborate or a mark question the expanded preview carries the predicted answer and its consequence for the work, at most ASK.preview.expanded_lines lines (LAW.ASK.14).
 
 Round one, one question per open slot:
 - what unclear: "What specifically do you want?" with domain-appropriate options

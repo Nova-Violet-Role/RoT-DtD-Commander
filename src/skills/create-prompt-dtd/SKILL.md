@@ -46,8 +46,8 @@ Six creators write prompts, one per schematic (callout, heredoc, yaml, nt, xml, 
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- skill, so round one always runs (LAW.ASK.10).
-2. Round 1 of 3: ask ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 (the families, multi-select) and ASK.SCHEMA.2 (which of them) as one AskUserQuestion call; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (multi-select) and ASK.ROUTE.1; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+2. Round 1 of 3: ask ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (which of them, select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13).
+3. Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (check) and ASK.ROUTE.1 (elaborate: each purpose elaborated before the ask); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `launch`: the schematic (nt when none was chosen), the kind, the creator they select, the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was).
 5. Render the `instruction`: goal, the purpose; step, one Skill call to the creator with the argument made of the purpose, then ARG.end, then schematic=, schemas= and forms= with comma-separated values (LAW.ROUTE.3); then make that call and stop (LAW.ROUTE.4).
 </process>

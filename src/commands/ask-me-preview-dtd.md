@@ -18,6 +18,7 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY LAW.PREVIEW.1 "Every option of every question carries one preview element rendered twice: cut to ASK.preview.cut_lines lines inside the widget, and expanded in the transcript before the call under the words PREVIEW.expand, carrying the answer the model predicts for that choice (LAW.ASK.8).">
   <!ENTITY LAW.PREVIEW.2 "An expanded preview is marked guessed: it is the consequence the model predicts, never a thing that was run or read, and it says so in its first line.">
   <!ENTITY LAW.PREVIEW.3 "The back token ASK.back typed into Other returns to the question just asked, which is asked again with the same previews and without loss of the answers already taken (LAW.ASK.12).">
+  <!ENTITY LAW.PREVIEW.4 "Every question declares its variant (LAW.ASK.13); an elaborate or a mark question carries one elaboration per option, cut into the widget and expanded above the call, and its expanded preview names the consequence for the work within ASK.preview.expanded_lines lines (LAW.ASK.14).">
   <!ENTITY TASK.question "What would you like help with?">
   <!ENTITY TASK.write "Write something">
   <!ENTITY TASK.build "Build something">

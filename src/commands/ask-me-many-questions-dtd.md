@@ -22,6 +22,7 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY LAW.MANY.1 "The rounds are raised to eight by the four declarations that precede the include of the ask grammar in this DOCTYPE (LAW.ASK.11); the enumeration the checker reads is (1|2|3|4|5|6|7|8) and ASK.max_total is thirty, so the eighth round asks at most two questions.">
   <!ENTITY LAW.MANY.2 "Each round is one ask element with one to four questions, then the gate is offered only after a round that closed a slot; a round whose every question was answered Other with the back token re-asks and does not count.">
   <!ENTITY LAW.MANY.3 "Execution opens with a restatement of every known slot and every answer received, thirty at most, so the work can be audited against what was asked.">
+  <!ENTITY LAW.MANY.4 "Every question of every round declares its variant, select, check, elaborate or mark, and the round names it (LAW.ASK.13); across thirty questions all four appear where the slots allow, and the previews of the elaborate and mark questions carry the predicted answer and its consequence (LAW.ASK.14).">
   <!ENTITY TASK.question "What would you like help with?">
   <!ENTITY TASK.write "Write something">
   <!ENTITY TASK.build "Build something">

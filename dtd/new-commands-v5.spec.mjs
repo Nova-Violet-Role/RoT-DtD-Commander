@@ -96,8 +96,8 @@ function promptCreator(schematic, meta) {
 The schematic is pinned: ${s.example}. What a literal is, what expands, how a value is referenced, defined, escaped, commented, included or made conditional, is read from the SCHEMA.${schematic}.* table of cc-schematic.dtd, the table cut from the argument-variant references: the quoted heredoc is the CDATA section is the strip block scalar is the NestedText multiline string, and the argument string is always the quoted whole. The sections are ${sectionsEnt}. The file is guarded by cc-form before it is reported and proven by a planted out-of-table syntax that the proof refuses.`,
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; words after ARG.end that read schematic=, schemas= or forms= are known slots placed by a router and fill those questions without asking (LAW.ASK.1); render the walk under \`args\`. This is a create- command, so round one always runs (LAW.ASK.10).`,
-      `Round 1 of 3: ask ASK.${prefix}.1 to ASK.${prefix}.4 as one AskUserQuestion call, four options each plus Other; render the round.`,
-      `Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, multi-select), ASK.SCHEMA.2 (which of them), ASK.FORM.1 and ASK.FORM.2 (multi-select), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.${prefix}.5 to ASK.${prefix}.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
+      `Round 1 of 3: ask ASK.${prefix}.1 to ASK.${prefix}.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).`,
+      `Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, check), ASK.SCHEMA.2 (select), ASK.FORM.1 and ASK.FORM.2 (check), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.${prefix}.5 (elaborate: each voice elaborated before the ask), ASK.${prefix}.6 (select), ASK.${prefix}.7 (select) and ASK.${prefix}.8 (mark: each license elaborated, the marked ones joined into the expression); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
       `Render the \`sections\`: one \`section\` per name of ${sectionsEnt}, in order, each with its text; render the \`schemas\`: one \`semantic\` per schema chosen, its \`part\` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for ${schematic}: print its skeleton with node lib/schematic.mjs render, the schema name and ${schematic}, and fill the bracketed words in place (LAW.${prefix}.6); render the \`forms\`: one \`form\` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.${prefix}.7); render the \`embedding\`: the reference syntax SCHEMA.${schematic}.reference, the literal syntax SCHEMA.${schematic}.literal, and the cc-args class chosen for the argument words.`,
       `Write the \`file\` <name>.<schematic>.${s.ext}: ${s.label}, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.${prefix}.4).`,
       `Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one \`guard\` per line printed, held yes or no; a guard that did not hold stops the command.`,
@@ -212,8 +212,8 @@ function promptRouter(meta) {
 Six creators write ${kind}s, one per schematic (callout, heredoc, yaml, nt, xml, polyglot), each pinned to its shape and asking twelve questions. This ${self} is the door in front of them: it asks the three choices that pick the creator and shape the body, the schematic, the semantic-schema families and the forms, and hands them over as known slots, so the creator asks only what is still open and never asks a slot twice across the hand-off (LAW.ASK.1, LAW.SCHEMA.10).`,
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; render the walk under \`args\`. This is a create- ${self}, so round one always runs (LAW.ASK.10).`,
-      'Round 1 of 3: ask ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 (the families, multi-select) and ASK.SCHEMA.2 (which of them) as one AskUserQuestion call; render the round.',
-      `Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (multi-select) and ASK.${prefix}.1; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
+      'Round 1 of 3: ask ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (which of them, select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13).',
+      `Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (check) and ASK.${prefix}.1 (elaborate: each purpose elaborated before the ask); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
       'Render the \`launch\`: the schematic (nt when none was chosen), the kind, the creator they select, the \`schemas\` with one \`semantic\` per schema chosen and its \`part\` elements from the SEMANTIC entity of that schema, and the \`forms\` with one \`form\` per kind chosen (nt alone when none was).',
       `Render the \`instruction\`: goal, the purpose; step, one Skill call to the creator with the argument made of the purpose, then ARG.end, then schematic=, schemas= and forms= with comma-separated values (LAW.${prefix}.3); then make that call and stop (LAW.${prefix}.4).`,
     ],
@@ -636,8 +636,8 @@ perfect [yes|partial|no]; short: [probes still not yes]
 The shape is borrowed from the instruction channel of the RoT DTD GOAL trust contract: when a queue advances, the gate is not reporting a result but issuing an instruction, and that is tagged as its own element with a goal and a step so a reader can tell what happened from what to do next. Here the instruction is always the same two moves: run CLEAR.command, then open the next section with the launch line that names the handoff file and the creator that matches the schematic chosen, so the bigger prompt is written in that schematic, with those schemas and those forms, by a creator that already knows them.`,
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the topic or the prompt; render the walk under \`args\`.`,
-      'Round 1 of 3: ask ASK.CLEAR.1 to ASK.CLEAR.4 as one AskUserQuestion call, four options each plus Other; render the round.',
-      'Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 (the families, multi-select) and ASK.SCHEMA.2 (which of them); on more again, round 3 of 3 with ASK.CLEAR.5, ASK.FORM.1 and ASK.FORM.2 (the last two multi-select); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
+      'Round 1 of 3: ask ASK.CLEAR.1 to ASK.CLEAR.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).',
+      'Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (select); on more again, round 3 of 3 with ASK.CLEAR.5 (elaborate: each kind elaborated), ASK.FORM.1 and ASK.FORM.2 (check); the ideas of the brainstorm are then marked (mark: each idea elaborated, the marked ones kept); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
       'Render the `brainstorm`: the chosen count of `idea` elements, ranked, the kept ones marked; the ideas come from the topic, the conversation and the files named in it, each idea one sentence with a verb.',
       'Render the `launch`: the schematic chosen (nt when none was), the kind (prompt when none was), the creator they select, then the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was) (LAW.CLEAR.6).',
       'Compose the bigger prompt: the goal, the state as of this run, the files touched, the next step, the kept ideas folded into the prompt the operator gave, whole, and a known-slots block naming the schematic, the schemas, the kind and the forms chosen (LAW.CLEAR.2, LAW.CLEAR.3, LAW.CLEAR.6).',
@@ -716,6 +716,7 @@ step 2: [the launch line: an at-sign reference to the handoff file, then /[creat
       'MANY.1': 'The rounds are raised to eight by the four declarations that precede the include of the ask grammar in this DOCTYPE (LAW.ASK.11); the enumeration the checker reads is (1|2|3|4|5|6|7|8) and ASK.max_total is thirty, so the eighth round asks at most two questions.',
       'MANY.2': 'Each round is one ask element with one to four questions, then the gate is offered only after a round that closed a slot; a round whose every question was answered Other with the back token re-asks and does not count.',
       'MANY.3': 'Execution opens with a restatement of every known slot and every answer received, thirty at most, so the work can be audited against what was asked.',
+      'MANY.4': 'Every question of every round declares its variant, select, check, elaborate or mark, and the round names it (LAW.ASK.13); across thirty questions all four appear where the slots allow, and the previews of the elaborate and mark questions carry the predicted answer and its consequence (LAW.ASK.14).',
     },
     objective: `Use the Intake and Decision Gate pattern with a long intake to gather requirements before executing ${ARGS}.
 
@@ -781,6 +782,7 @@ Restating what was asked: [every known slot and every answer]
       'PREVIEW.1': 'Every option of every question carries one preview element rendered twice: cut to ASK.preview.cut_lines lines inside the widget, and expanded in the transcript before the call under the words PREVIEW.expand, carrying the answer the model predicts for that choice (LAW.ASK.8).',
       'PREVIEW.2': 'An expanded preview is marked guessed: it is the consequence the model predicts, never a thing that was run or read, and it says so in its first line.',
       'PREVIEW.3': 'The back token ASK.back typed into Other returns to the question just asked, which is asked again with the same previews and without loss of the answers already taken (LAW.ASK.12).',
+      'PREVIEW.4': 'Every question declares its variant (LAW.ASK.13); an elaborate or a mark question carries one elaboration per option, cut into the widget and expanded above the call, and its expanded preview names the consequence for the work within ASK.preview.expanded_lines lines (LAW.ASK.14).',
     },
     objective: `Use the Intake and Decision Gate pattern with previews to gather requirements before executing ${ARGS}.
 
@@ -1145,7 +1147,7 @@ decided: [heads|tails|undecided], [the side by name], because the landing felt [
 The shell is built the way the DITA shells are built: a header, a declaration per domain, a conditional section per domain keyed by a parameter entity that says INCLUDE or IGNORE, a nesting override, the element integration last. Here the domains are the creations: monitor, mixture of lenses, router, X-of-Thought variants, database, MCP server, workflow JSON, skills, hooks, commands, agents. The intake asks which are in, in three multi-select lists with All of them as the first choice of the first list, and each chosen creation becomes a section whose keyword is INCLUDE and an instruction to run its creator; each creation left out becomes a section whose keyword is IGNORE and appears nowhere else. The resolver of this repository flattens those sections before anything renders, so the plugin's commands carry no conditional section themselves. The manifests are rendered from the shell, the license comes from a curated SPDX list, and the proof shows one excluded creation absent.`,
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the name or purpose; render the walk under \`args\`. A plugin is a create- command, so round one always runs (LAW.ASK.10).`,
-      'Round 1 of 3: ask ASK.PLUGIN.1 to ASK.PLUGIN.4 as one AskUserQuestion call, four options each plus Other, questions 2 to 4 multi-select (LAW.PLUGIN.3); render the round.',
+      'Round 1 of 3: ask ASK.PLUGIN.1 to ASK.PLUGIN.4 as one AskUserQuestion call, four options each plus Other (ASK.PLUGIN.1 select, the creation questions check), questions 2 to 4 multi-select (LAW.PLUGIN.3); render the round.',
       'Present the gate; on more, round 2 of 3 with ASK.PLUGIN.5 to ASK.PLUGIN.8; on more again, round 3 of 3 with ASK.PLUGIN.9 to ASK.PLUGIN.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
       'Check the license against LICENSE.list (LAW.PLUGIN.4, LAW.LICENSE.1): an identifier in the list, or a compound expression of listed identifiers joined by LICENSE.join, passes; anything else is refused with the list printed and ASK.PLUGIN.5 asked again; render the `license` with the expression, its count and listed yes.',
       'Write the `shell`: dtd/<name>.dtd at the plugin root with the header (PLUGIN.shell.header), one parameter entity per creation set to INCLUDE or IGNORE, one conditional section per creation declaring that creation\'s domain elements and entities, the nesting override, the element integration, and the cc-core include; render one `domain` per creation with its keyword (LAW.PLUGIN.1, LAW.PLUGIN.2).',
@@ -1172,7 +1174,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🧩 Intake
 
-- round 1 of 3: Name, Creations A, Creations B, Creations C answered [labels, the multi-selects listed, or Other text]
+- round 1 of 3: Name, Creations A, Creations B, Creations C answered [labels, the check answers listed, or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
 - gate: [start|more|add|impactful] (round N)
@@ -1206,7 +1208,7 @@ rdc check [n] files, 0 failing; manifests parsed [n]; excluded [creation] absent
 
 - [each unasked question, first option taken]`,
     success: [
-      'Round one ran before any file was written; the creation questions were multi-select and All of them selected every creation',
+      'Round one ran before any file was written; the creation questions were check questions and All of them selected every creation',
       'The shell carries one conditional section per creation with the keyword the intake chose, and an excluded creation appears nowhere else',
       'The license is a curated identifier or a compound of curated identifiers, and it heads every file that allows a comment',
       'The manifests were rendered from the shell and parsed back',
@@ -1559,7 +1561,7 @@ wrote 1 row, read back equal; torn row at line [n] refused; verifier: schema ok,
 The shapes are DocBook's: a productionset of lhs and rhs for the thought structure of each variant, a procedure of steps with substeps and step alternatives for its walk, a certainty degree per step from TEI, an interpretation per step from the analysis module. Chain walks a line, tree branches and prunes, graph joins branches, skeleton lays the frame then fills it, program writes and runs code for a step, algorithm searches, buffer reuses templates from a declared file, everything combines them; each is declared, none is described.`,
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags, the stem and the kinds; render the walk under \`args\`. A family is a create- command, so round one always runs (LAW.ASK.10).`,
-      'Round 1 of 3: ask ASK.OT.1 to ASK.OT.4 as one AskUserQuestion call, four options each plus Other, questions 2 and 3 multi-select (LAW.OT.4); render the round.',
+      'Round 1 of 3: ask ASK.OT.1 to ASK.OT.4 as one AskUserQuestion call, four options each plus Other (ASK.OT.1 select, the variant questions check), questions 2 and 3 multi-select (LAW.OT.4); render the round.',
       'Present the gate; on more, round 2 of 3 with ASK.OT.5 to ASK.OT.8; on more again, round 3 of 3 with ASK.OT.9 to ASK.OT.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
       'Render the `variants`: one `variant` per chosen kind with its name, depth and branching; render the `grammar`: one `production` per rule of each variant (LAW.OT.1); render the `walk` for the fixture: one `step` per step with its performance, degree and alternatives (LAW.OT.2).',
       'Write the shared contract dtd/<stem>-ot.dtd: the kind enumeration, the productions, the step element, the certainty attribute, the buffer file as an NDATA entity when chosen, and a LAW entity per promise the intake made; include cc-core.',
@@ -1581,7 +1583,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🧠 Intake
 
-- round 1 of 3: Name, Variants A, Variants B, Grammar answered [labels, the multi-selects listed, or Other text]
+- round 1 of 3: Name, Variants A, Variants B, Grammar answered [labels, the check answers listed, or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
 - gate: [start|more|add|impactful] (round N)
@@ -1609,7 +1611,7 @@ tripped yes
 
 - [each unasked question, first option taken]`,
     success: [
-      'Round one ran before any file was written; the variant questions were multi-select and All eight selected every kind',
+      'Round one ran before any file was written; the variant questions were check questions and All eight selected every kind',
       'Every variant is a command whose DOCTYPE declares its productions and its walk',
       'Every step carries its number, performance, degree and alternatives as declared',
       'The control walked the fixture through every variant and the skipped step was refused',
