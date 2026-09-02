@@ -348,6 +348,31 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
     for (const d of commandDirs(null).slice(1)) if (existsSync(d)) for (const f of readdirSync(d)) if (names.has(f)) dup.push(f);
   }
   row('double install', dup.length === 0, dup.length ? `${dup.length} command(s) present both user-wide and in a plugin: ${dup.slice(0, 5).join(', ')}` : 'none');
+  // The plugin path and the npx path must never both be active, and a removed
+  // plugin must leave nothing behind under plugins/: cache, marketplaces and
+  // the registry are each scanned for this package's name.
+  const leftovers = [];
+  const pdir = join(target, 'plugins');
+  const scan = (d, depth) => {
+    if (!existsSync(d) || depth > 3) return;
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      if (!e.isDirectory()) continue;
+      if (/rot-dtd-commander/i.test(e.name)) leftovers.push(join(d, e.name));
+      else scan(join(d, e.name), depth + 1);
+    }
+  };
+  scan(join(pdir, 'cache'), 0);
+  scan(join(pdir, 'marketplaces'), 0);
+  let registered = false;
+  const reg = join(pdir, 'installed_plugins.json');
+  if (existsSync(reg)) {
+    try {
+      registered = /rot-dtd-commander/i.test(readFileSync(reg, 'utf8'));
+    } catch {}
+  }
+  const npxInstalled = existsSync(manifestPath);
+  const pluginActive = registered || leftovers.length > 0;
+  row('plugin state', !(npxInstalled && pluginActive), pluginActive ? `plugin present (${registered ? 'registered' : 'not registered'}; ${leftovers.length} director${leftovers.length === 1 ? 'y' : 'ies'} under plugins/${npxInstalled ? '); the npx set is ALSO installed: keep one' : ')'}` : 'no plugin copy under plugins/cache, plugins/marketplaces or the registry');
   row('policy', true, `${policy()} (ROT_DTD_ADIUTOR=${process.env.ROT_DTD_ADIUTOR || 'unset'}; default ${POLICY_DEFAULT})`);
   for (const r of rows) io.log(`  ${r.ok ? 'OK  ' : 'FAIL'} ${r.name.padEnd(15)} ${r.detail}`);
   const bad = rows.filter((r) => !r.ok).length;

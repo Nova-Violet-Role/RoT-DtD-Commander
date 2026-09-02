@@ -205,34 +205,83 @@ rdc suggest         # a charm and a rite for every failed run
 
 ---
 
-## 🎬 The Grand Gallery
+## 🎬 The install tutorial, on camera
 
 Every GIF is rendered from a committed [VHS tape](docs/tapes/) on release.
-`vhs` renders them where it runs; on the maintainer's Windows machine it
-stalls before spawning `ttyd`, so `docs/tapes/render.mjs` reads the same
-tapes, really runs the commands, feeds the typed answers on stdin, and draws
-the captured output with `ffmpeg`. Either way the install tape is the test of
-the guided prompts: a tape that fails to render is a failed test.
+`vhs` renders them where it runs (the `tapes` workflow does so on ubuntu); on
+the maintainer's Windows machine it stalls before spawning `ttyd`, so
+`docs/tapes/render.mjs` reads the same tapes, really runs the commands, feeds
+the typed answers on stdin, and draws the captured output with `ffmpeg`.
+Either way the install tape is the test of the guided prompts: a tape that
+fails to render is a failed test.
 
-**The guided installer**, into a scratch target, with the capability statement
-before the confirm:
+### Step 1: install
+
+```sh
+npx github:Nova-Violet-Role/RoT-DtD-Commander install
+```
+
+Answer three questions: the target (`1` for user-wide, `2` for this project,
+`3` for a path), the kinds (Enter for all), and `y` after reading what the
+Adiutor will do. The GIF installs into a scratch path so you can see every
+line, including the capability statement and the arm:
 
 ![install](docs/gifs/install.gif)
 
-**The checker** over the whole tree with `xmlstarlet` on the six examples,
-then refusing three mutations and one broken instance on purpose:
+Afterwards, restart Claude Code once so the agents and the hooks load.
+
+### Step 2: check what you installed
+
+```sh
+rdc doctor          # or: node ~/.claude/rot-dtd-commander/bin/adiutor.mjs doctor
+rdc check --xml     # from a clone: every source against its own DOCTYPE
+```
+
+The checker over the whole tree with `xmlstarlet` on the six examples, then
+refusing three mutations and one broken instance on purpose:
 
 ![check](docs/gifs/check.gif)
 
-**The Adiutor** in a scratch state directory: a run opens, a complete answer
-passes, a broken one fails, the ledger and the prescription:
+### Step 3: run a command, then ask the Adiutor
+
+In Claude Code, type any `-dtd` command, for example:
+
+```
+/pareto-dtd what to do first on the release
+```
+
+The prompt hook prints one line saying which headings the answer must carry;
+at Stop the answer is checked; the run becomes one ledger line. Then:
+
+```
+/RoT-DtD-Commander-Adiutor
+```
+
+The same mechanism driven by hand in a scratch state directory: a run opens,
+a complete answer passes, a broken one fails, then the ledger and the
+prescription:
 
 ![doctor](docs/gifs/doctor.gif)
 
-**Eight guards tripped on purpose**, including the strict policy blocking a
-Stop once and letting the second one through:
+### Step 4: when an answer fails its grammar
+
+Under the default `warn` policy you get a one-line system message and a
+ledger line; `/RoT-DtD-Commander-Adiutor` shows the charm (what to change)
+and the rite (how the fix is verified). Under `ROT_DTD_ADIUTOR=strict` the
+Stop is blocked once with that prescription as the reason. Eight guards
+tripped on purpose, C3 being exactly that block, once and never twice:
 
 ![controls](docs/gifs/adiutor-fail.gif)
+
+### Step 5: undo any of it
+
+```sh
+rdc disarm       # remove only the hooks; files stay
+rdc uninstall    # remove every file the manifest lists, disarm, remove its own backups
+```
+
+A `settings.json` you had before is left byte-identical; one this tool created
+from nothing is removed again once it is empty.
 
 ---
 

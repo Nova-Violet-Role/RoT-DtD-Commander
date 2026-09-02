@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+#
+# Render every tape with the real vhs on a platform where vhs runs, and keep
+# the results as workflow artifacts. Check-only: nothing is committed. A tape
+# that does not produce a GIF fails the job, which is the point: the tapes
+# are the test of the guided prompts.
+name: tapes
+on:
+  push:
+    paths:
+      - 'docs/tapes/**'
+      - 'bin/**'
+      - 'lib/**'
+      - '.github/workflows/tapes.yml'
+  workflow_dispatch:
+
+jobs:
+  render-with-vhs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: ffmpeg, fonts, xmlstarlet
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core xmlstarlet
+      - name: ttyd 1.7.7
+        run: |
+          curl -fsSL -o /usr/local/bin/ttyd https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.x86_64
+          sudo chmod +x /usr/local/bin/ttyd
+          ttyd --version
+      - name: vhs 0.11.0
+        run: |
+          go install github.com/charmbracelet/vhs@v0.11.0
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+      - name: render every tape with vhs
+        run: |
+          export PATH="$HOME/go/bin:$PATH"
+          vhs --version
+          rc=0
+          for t in docs/tapes/*.tape; do
+            echo "== $t"
+            rm -f "docs/gifs/$(basename "$t" .tape).gif"
+            timeout 600 vhs "$t" || { echo "vhs failed on $t"; rc=1; continue; }
+            g="docs/gifs/$(basename "$t" .tape).gif"
+            [ -s "$g" ] && echo "rendered $g $(stat -c %s "$g") bytes" || { echo "no gif for $t"; rc=1; }
+          done
+          exit $rc
+      - name: the ffmpeg renderer produces the same four files
+        run: |
+          mkdir -p /tmp/ff && cp -r docs /tmp/ff/
+          node docs/tapes/render.mjs docs/tapes/install.tape docs/tapes/check.tape docs/tapes/doctor.tape docs/tapes/adiutor-fail.tape
+        env:
+          RENDER_FONT: /usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gifs-rendered-by-vhs-and-ffmpeg
+          path: docs/gifs/*.gif
+          if-no-files-found: error
