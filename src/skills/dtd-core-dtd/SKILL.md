@@ -50,10 +50,11 @@ The four terms and where each lives:
 
 The `subsets` under dtd/ are the external subsets a source file includes with `<!ENTITY % cc-core SYSTEM "../dtd/cc-core.dtd"> %cc-core;` inside its DOCTYPE. Paths are relative to the source file under src/: `../../dtd/` from src/commands/ and src/agents/, `../../../dtd/` from src/skills/name/. The resolved files under commands/, skills/ and agents/ carry the text inline and no path.
 - cc-core.dtd: trust classes, the four channels, common enumerations (%depth; %verdict3; %severity; %confidence; %horizon;), next_action, bottom_line, claim, assumption_made, LAW.CORE.1 to 6.
-- cc-ask.dtd: the AskUserQuestion grammar (intake, context_analysis, known, gap, ask, question, option, label, description, preview, answer, gate), the GATE.* strings, LAW.ASK.1 to 5.
+- cc-ask.dtd: the AskUserQuestion grammar (intake, context_analysis, known, gap, round, ask, question, option, label, description, preview, answer, impactful, selection, gate), the GATE.* and ASK.* strings, the rounds as ask.rounds and ask.of that a command raises before the include, LAW.ASK.1 to 12.
+- cc-args.dtd: the launch-time argument walk (args, word), ARG.arguments, ARG.verbose, ARG.debug, ARG.end, LAW.ARGS.1 to 4.
 - cc-report.dtd: report, strategic_summary, section, claude_context, block, sources, source, artifact, LAW.REPORT.1 to 4.
 - cc-record.dtd: records, record, field with numbered append-only attributes, LAW.REC.1 to 4.
-- adiutor.dtd: the Adiutor contract (run, expected, heading, error, finding, prescription, charm, rite, the policy and status enumerations, RECORD.run, ADIUTOR.policy.default, LAW.ADIUTOR.1 to 7; and the monitor with its emit lines, MONITOR.name, MONITOR.fail, MONITOR.malformed), read by bin/adiutor.mjs and bound to it by control C7, the monitor lines bound to monitors/commander-adiutor.mjs by control C12.
+- adiutor.dtd: the Adiutor contract (run, expected, heading, error, finding, prescription, charm, rite, the policy and status enumerations, RECORD.run, ADIUTOR.policy.default, LAW.ADIUTOR.1 to 10; and the monitor with its emit lines, MONITOR.name, MONITOR.fail, MONITOR.malformed), read by bin/adiutor.mjs and bound to it by control C7, the monitor lines bound to monitors/commander-adiutor.mjs by control C12; since 5.0.0 both run only by hand, under a 300 second ceiling (LAW.ADIUTOR.10).
 For the full text read [references/subsets.md](references/subsets.md).
 
 </subsets>

@@ -23,6 +23,7 @@ description: "The IUPAC numerical multiplier prefixes (mono-, di-, tri-, icosa-,
   <!ENTITY LAW.IUPAC.4 "An ordinal once assigned is never reassigned; a file inserted between two others takes the next free number, because renumbering a set renames every link into it.">
   <!ENTITY LAW.IUPAC.5 "A prefix nobody can read is not a name: from the twenties up the answer states the digits beside the word, and above one hundred it recommends digits alone.">
   <!ENTITY LAW.IUPAC.6 "A record ordinal is the Greek cardinal token of lib/ordinals.mjs, heis, duo, treis and onward, with the IUPAC multiplier printed beside it as the second column; a token written before this law, mono or di, reads as the same number and is never renamed.">
+  <!ENTITY LAW.IUPAC.7 "An ordinal numbers the files of one command that produced many, or the repeated records of a sweep; it never replaces the filename a command generated when it completed, and that name stays the record's name.">
 ]>
 
 <trust_boundary>
@@ -112,7 +113,7 @@ Once `tri-data.md` exists, 3 belongs to that file. A document that belongs conce
 
 ## Records count in Greek cardinals (LAW.IUPAC.6)
 
-The IUPAC multiplier says how many of a thing there are; a record asks which one this is. From 5.0.0 the ordinal token of a record under `artifacts/<command>/` is the Greek `cardinal`: `heis`, `duo`, `treis`, `tessares`, `pente`, `hex`, `hepta`, `okto`, `ennea`, `deka`, then `hendeka`, `dodeka`, the `-kaideka` teens, `eikosi-heis` and so on, joined by hyphens from the largest place down. The second record of a command is `<name>.duo.md`. The IUPAC form is printed beside it as the second column, and a name written before this law (`mono`, `di`) still reads as the same number: the next free ordinal is measured from the directory, never from memory.
+The IUPAC multiplier says how many of a thing there are; a record asks which one this is. From 5.0.0 the ordinal token of a record under `artifacts/<command>/` is the Greek `cardinal`: `heis`, `duo`, `treis`, `tessares`, `pente`, `hex`, `hepta`, `okto`, `ennea`, `deka`, then `hendeka`, `dodeka`, the `-kaideka` teens, `eikosi-heis` and so on, joined by hyphens from the largest place down. The second record of a sweep over a command is `<name>.duo.md`, and a command that produces many files in one run numbers them the same way; a file the command named when it completed keeps that name, an ordinal is never put in its place (LAW.IUPAC.7). The IUPAC form is printed beside it as the second column, and a name written before this law (`mono`, `di`) still reads as the same number: the next free ordinal is measured from the directory, never from memory.
 
 ```bash
 node lib/ordinals.mjs next artifacts/deep-dive-dtd deep-dive-dtd   # 3 treis taken=1,2

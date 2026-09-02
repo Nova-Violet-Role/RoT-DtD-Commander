@@ -430,29 +430,34 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
   const npxInstalled = existsSync(manifestPath);
   const pluginActive = registered || leftovers.length > 0;
   row('plugin state', !(npxInstalled && pluginActive), pluginActive ? `plugin present (${registered ? 'registered' : 'not registered'}; ${leftovers.length} director${leftovers.length === 1 ? 'y' : 'ies'} under plugins/${npxInstalled ? '); the npx set is ALSO installed: keep one' : ')'}${registered ? '' : '; the plugin CLI left this behind: rdc prune-plugin removes it'}` : 'no plugin copy under plugins/cache, plugins/marketplaces or the registry');
-  // The monitor. On the npx path rdc install writes a skills-directory plugin
-  // under <target>/skills/rot-dtd-commander-adiutor/ whose monitors.json runs
-  // the copied script; on the plugin path the plugin's own monitors/monitors.json
-  // starts it. Only an npx set without its monitor plugin is a failure.
-  const monDir = join(target, 'skills', 'rot-dtd-commander-adiutor');
-  const monJson = join(monDir, 'monitors', 'monitors.json');
+  // The monitor (5.0.0): declared in monitors/manual.json, a file the loader
+  // never reads, and started only by rdc watch under a 300 s ceiling. Green
+  // when that declaration is sound; red when a monitor plugin written by an
+  // older install still starts it with every session.
+  const manual = join(ROOT, 'monitors', 'manual.json');
+  const monJson = join(target, 'skills', 'rot-dtd-commander-adiutor', 'monitors', 'monitors.json');
   let monOk = true;
   let monDetail;
+  try {
+    const mons = JSON.parse(readFileSync(manual, 'utf8'));
+    const m = Array.isArray(mons) && mons.find((x) => x && x.name === 'commander-adiutor');
+    monOk = !!m && m.when === 'manual' && /commander-adiutor\.mjs/.test(String(m.command));
+    monDetail = monOk ? `manual: declared in monitors/manual.json, started only by rdc watch (ceiling 300 s), never by the loader` : `${manual} does not declare commander-adiutor with when manual`;
+  } catch (e) {
+    monOk = false;
+    monDetail = `${manual} does not parse: ${e.message}`;
+  }
   if (existsSync(monJson)) {
+    let auto = true;
     try {
       const mons = JSON.parse(readFileSync(monJson, 'utf8'));
-      const m = Array.isArray(mons) && mons.find((x) => x && x.name === 'commander-adiutor');
-      const script = m && /"([^"]+commander-adiutor\.mjs)"/.exec(String(m.command));
-      monOk = !!script && existsSync(script[1]);
-      monDetail = monOk ? `rot-dtd-commander-adiutor@skills-dir runs ${script[1]}` : `${monJson} names no commander-adiutor script that exists`;
-    } catch (e) {
+      auto = Array.isArray(mons) && mons.some((x) => x && x.name === 'commander-adiutor');
+    } catch {}
+    if (auto) {
       monOk = false;
-      monDetail = `${monJson} does not parse: ${e.message}`;
+      monDetail = `an older install still starts the monitor with every session from ${monJson}; write [] into it or delete it, the monitor runs only by hand since 5.0.0`;
     }
-  } else if (npxInstalled) {
-    monOk = false;
-    monDetail = `not installed under ${monDir}; rdc install writes it`;
-  } else monDetail = 'no npx set here; a plugin install starts it from its own monitors/monitors.json';
+  }
   row('monitor', monOk, monDetail);
   row('policy', true, `${policy()} (ROT_DTD_ADIUTOR=${process.env.ROT_DTD_ADIUTOR || 'unset'}; default ${POLICY_DEFAULT})`);
   for (const r of rows) io.log(`  ${r.ok ? 'OK  ' : 'FAIL'} ${r.name.padEnd(15)} ${r.detail}`);
@@ -883,8 +888,10 @@ export async function controls(io = console) {
     const tpl = (s) => new RegExp('^' + s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&').replace(/%[a-z]+%/g, '(.+?)') + '$');
     const failT = tpl(ent('MONITOR.fail'));
     const malT = tpl(ent('MONITOR.malformed'));
-    const mons = JSON.parse(readText(join(ROOT, 'monitors', 'monitors.json')));
-    const declared = Array.isArray(mons) && mons.length === 1 && mons[0].name === ent('MONITOR.name') && /monitors\/commander-adiutor\.mjs/.test(mons[0].command) && mons[0].when === 'always' && typeof mons[0].description === 'string';
+    // 5.0.0: the declaration lives in manual.json, a file the loader never
+    // reads; when is manual, and only rdc watch starts the process.
+    const mons = JSON.parse(readText(join(ROOT, 'monitors', 'manual.json')));
+    const declared = Array.isArray(mons) && mons.length === 1 && mons[0].name === ent('MONITOR.name') && /monitors\/commander-adiutor\.mjs/.test(mons[0].command) && mons[0].when === 'manual' && typeof mons[0].description === 'string';
     // history: a failed run that closed BEFORE the monitor started is never printed
     const lp = join(tmp, 'ledger.tsv');
     const run = { session: 'S6', command: 'x-dtd', root: 'x', expected, tools: 0, errors: [] };

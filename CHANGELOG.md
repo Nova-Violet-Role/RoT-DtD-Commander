@@ -7,6 +7,33 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 5.0.0 (in progress, 2026-09-02)
+
+The creator kit. Nothing below is released until the gate is green and the
+counts are re-measured.
+
+- The Adiutor and its monitor run only by hand (LAW.ADIUTOR.10). The plugin
+  ships no `hooks/hooks.json`; `rdc install` arms nothing unless `--arm` is
+  given; the monitor is declared in `monitors/manual.json`, a file the loader
+  never reads, and starts only through `rdc watch`; every run of either ends
+  at a 300 second ceiling (Stop hook timeout 300, `rdc doctor` and
+  `rdc controls` under a 300 s delegate timeout, `rdc watch --secs 300`).
+  Measured cause: two sessions lost to the hooks and the monitor talking over
+  the work.
+- `dtd/cc-ask.dtd`: the rounds are an enumeration (`ask.rounds`, `ask.of`) a
+  command raises before the include (LAW.ASK.11); `ASK.max_total`; the back
+  token `ASK.back` (LAW.ASK.12).
+- `dtd/cc-args.dtd`: the launch-time argument walk (`args`, `word`, ARG.*,
+  LAW.ARGS.1 to 4).
+- `lib/dtd.mjs`: the first declaration of an entity binds, as XML 1.0
+  section 4.2 has it, in the resolver and the parser; `forgeNew` takes
+  `predeclare` for driver-file overrides.
+- New commands: git-gh-amplification, repo-git-scalar,
+  repo-creativity-askingstorm, brainstorm-meta-clear-section,
+  ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,
+  coin-flip-weighted, coin-flip-reveal (with create-monitor from the
+  foundation commit).
+
 ## 4.0.0 (2026-09-02)
 
 The Commander-Adiutor: the Adiutor's monitor, a separate process beside the

@@ -19,15 +19,16 @@
 // control C12 in bin/adiutor.mjs trips this monitor on purpose and holds the
 // printed lines to those templates.
 //
-//   node commander-adiutor.mjs [--poll <ms>] [--once] [--from-start]
-//     default   start at the current end of the ledger, poll every 1000 ms
+//   node commander-adiutor.mjs [--poll <ms>] [--once] [--from-start] [--secs <n>]
+//     default   start at the current end of the ledger, poll every 1000 ms,
+//               stop after 300 s (--secs, 0 for no ceiling)
 //     --once    read the whole ledger from the top, print, exit 0
 //   stderr carries one 'watching <path>' line at start; stderr is not a
 //   notification.
 //
-// Started by Claude Code from monitors/monitors.json when this repository is
-// installed as a plugin, or from the skills-directory plugin that rdc install
-// writes under <target>/skills/rot-dtd-commander-adiutor/. By hand: rdc watch.
+// Never started by Claude Code since 5.0.0: monitors/manual.json declares it
+// for rdc watch, which runs it by hand for at most 300 s. No monitors.json
+// and no monitor plugin is shipped or written.
 
 import { statSync, existsSync, openSync, readSync, closeSync } from 'node:fs';
 import { resolve as presolve } from 'node:path';
@@ -52,6 +53,7 @@ const opt = (name, dflt) => {
 const POLL = Math.max(50, Number(opt('--poll', 1000)) || 1000);
 const ONCE = args.includes('--once');
 const FROM_START = ONCE || args.includes('--from-start');
+const SECS = Math.max(0, Number(opt('--secs', 300)) || 0);
 
 const path = ledgerPath();
 let offset = 0;
@@ -129,6 +131,10 @@ if (isMain) {
     tick();
     process.exit(0);
   }
-  process.stderr.write(`${MONITOR_NAME}: watching ${path} (poll ${POLL} ms)\n`);
+  process.stderr.write(`${MONITOR_NAME}: watching ${path} (poll ${POLL} ms, ceiling ${SECS ? SECS + ' s' : 'none'})\n`);
   setInterval(tick, POLL);
+  if (SECS > 0) setTimeout(() => {
+    process.stderr.write(`${MONITOR_NAME}: ${SECS} s ceiling reached, exit 0\n`);
+    process.exit(0);
+  }, SECS * 1000);
 }

@@ -1,0 +1,8 @@
+[
+  {
+    "name": "commander-adiutor",
+    "command": "node \"${CLAUDE_PLUGIN_ROOT}/monitors/commander-adiutor.mjs\"",
+    "description": "-dtd answers that failed their own grammar, as the Adiutor ledger closes them; run by hand with rdc watch, never started by the loader, 300 s ceiling",
+    "when": "manual"
+  }
+]

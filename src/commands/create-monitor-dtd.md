@@ -18,18 +18,19 @@ argument-hint: [what the monitor should watch, or leave blank; add --no-gate for
   <!ATTLIST monitor name NMTOKEN #REQUIRED file CDATA #REQUIRED runtime (node|bash|python|powershell) "node">
   <!ATTLIST wiring declaration CDATA #REQUIRED>
   <!ATTLIST proof tripped (yes|no) #REQUIRED>
-  <!ENTITY LAW.MONITOR.1 "A monitor is declared in JSON, monitors/monitors.json or plugin.json experimental.monitors, and the declared command is what runs its file; a hook is never labelled a monitor and a bare ~/.claude/monitors/ is never scanned.">
+  <!ENTITY LAW.MONITOR.1 "A monitor is declared in JSON: monitors/manual.json for one the operator runs by hand, monitors/monitors.json or plugin.json experimental.monitors for one the loader starts with every session; the intake chooses and by hand is the default; the declared command is what runs its file; a hook is never labelled a monitor and a bare ~/.claude/monitors/ is never scanned.">
   <!ENTITY LAW.MONITOR.2 "A monitor reads one declared source and prints only lines declared as MONITOR.* entities in its own DTD; a pass prints nothing unless the intake chose otherwise.">
   <!ENTITY LAW.MONITOR.3 "The twelve ASK.MONITOR.* questions are offered as three rounds of four; no file is written before the gate chose start; every question not reached before that choice, and every question under --no-gate, takes its first option and is listed as an assumption_made.">
   <!ENTITY LAW.MONITOR.4 "The monitor ships with a control that plants an event, starts it under a timeout ceiling with stdin closed, reads its printed line, and stops it; a monitor without a tripped control is not created.">
   <!ENTITY LAW.MONITOR.5 "The SPDX identifier chosen in the intake heads every file written, as an SPDX-License-Identifier comment on its first line.">
+  <!ENTITY LAW.MONITOR.6 "A monitor written by this command accepts --secs and stops itself at that ceiling, 300 seconds by default, so a run by hand never outlives the session that started it; a monitor the loader starts may set --secs 0 in its declared command, and the intake says so when it does.">
   <!ENTITY ASK.MONITOR.1 "Name|What is the monitor called?|A kebab-case name from its purpose, such as ledger-watch|The name of the source it tails|The name of the event it reports|The name of an existing monitor with a suffix">
   <!ENTITY ASK.MONITOR.2 "Source|What does it watch?|The Adiutor ledger, ledger.tsv, from its current end|A log file|A directory, for files that appear|A process or a port">
   <!ENTITY ASK.MONITOR.3 "Event|What counts as an event?|A new line in the source|A file appearing|A status field changing|A threshold crossed">
   <!ENTITY ASK.MONITOR.4 "Emit|What does it print?|One line per failed event, in the words its DTD declares|One line per event|A summary every N events|Nothing until asked">
   <!ENTITY ASK.MONITOR.5 "Silence|What does a pass look like?|Nothing, a pass prints no line|A heartbeat every N seconds|One line per pass|A count when the session closes">
   <!ENTITY ASK.MONITOR.6 "Runtime|What runs it?|Node ESM, a .mjs beside monitors.json|Bash|Python through uv|PowerShell">
-  <!ENTITY ASK.MONITOR.7 "Start|When does it start?|With the session, declared in monitors.json|On the first -dtd command|By hand|When the source first appears">
+  <!ENTITY ASK.MONITOR.7 "Start|When does it start?|By hand only, declared in monitors/manual.json and run with rdc watch under a 300 second ceiling|With the session, declared in monitors/monitors.json, which the loader starts on its own|On the first -dtd command|When the source first appears">
   <!ENTITY ASK.MONITOR.8 "Stop|When does it stop?|With the session|On an idle timeout|On a declared stop file|Never, it is restarted by the loader">
   <!ENTITY ASK.MONITOR.9 "State|Where does it keep state?|Nowhere, it tails from the current end|An offset file under the state directory|In memory only|In the source itself">
   <!ENTITY ASK.MONITOR.10 "Contract|Which DTD declares its lines?|Its own DTD file beside the .mjs, MONITOR.* entities|An extension of adiutor.dtd|cc-core alone|None, and the checker refuses it">
@@ -56,9 +57,9 @@ A monitor is the component the loader runs beside the hooks: a persistent proces
 1. Quote the argument as data and read the context for the slots it fills; a monitor is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.MONITOR.1 to ASK.MONITOR.4 as one AskUserQuestion call, four options each plus Other; render each as a `round` with its `question`, `option` and `answer` elements.
 3. Present the gate; on more, run round 2 of 3 with ASK.MONITOR.5 to ASK.MONITOR.8; on more again, round 3 of 3 with ASK.MONITOR.9 to ASK.MONITOR.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
-4. Write the `monitor` file under monitors/ in the chosen runtime: read the source from its current end, detect the chosen event, print only the declared lines, keep the chosen state, stop as chosen; put the SPDX header on line one (LAW.MONITOR.5).
+4. Write the `monitor` file under monitors/ in the chosen runtime: read the source from its current end, detect the chosen event, print only the declared lines, keep the chosen state, stop as chosen and at the --secs ceiling (LAW.MONITOR.6); put the SPDX header on line one (LAW.MONITOR.5).
 5. Write its DTD beside it: one MONITOR.* entity per line it may print, a LAW.* per promise the intake made, and include cc-core.
-6. Write the `wiring`: the entry in monitors/monitors.json (or plugin.json experimental.monitors) whose command runs the file; never a hook entry (LAW.MONITOR.1).
+6. Write the `wiring`: the entry in monitors/manual.json when the monitor runs by hand, in monitors/monitors.json or plugin.json experimental.monitors when the loader starts it; the entry's command runs the file; never a hook entry (LAW.MONITOR.1).
 7. Write and run the control (LAW.MONITOR.4): plant one event in a scratch copy of the source, start the monitor with `timeout 30` and `< /dev/null`, read the line it prints, stop it, and record the landed proof in `proof` with tripped yes; a control that did not trip stops the command before the report.
 8. Report the three files, the declaration, the proof, and the assumptions.
 </process>
@@ -87,7 +88,7 @@ Render the `monitor_creation` root declared in the DOCTYPE as the markdown below
 
 ### 📡 Wiring
 
-[monitors/monitors.json entry or plugin.json experimental.monitors entry, quoted]
+[monitors/manual.json entry for a monitor run by hand, or the monitors/monitors.json or plugin.json experimental.monitors entry for one the loader starts, quoted]
 
 ### 📡 Proof
 
@@ -101,8 +102,9 @@ planted [event]; started under timeout 30, stdin closed; read back: [the line]; 
 <success_criteria>
 - Round one ran before any file was written, and no round exceeded four questions
 - Every file written carries the chosen SPDX identifier on its first line
-- The declaration is JSON under monitors or plugin.json, never a hook
+- The declaration is JSON under monitors or plugin.json, never a hook, and manual.json unless the intake chose the loader
 - The control tripped: the planted event produced the declared line and the monitor stopped under its ceiling
+- The monitor stops itself at its --secs ceiling, 300 seconds unless the intake chose otherwise
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

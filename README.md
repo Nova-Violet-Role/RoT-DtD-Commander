@@ -83,7 +83,10 @@ process (`monitors/commander-adiutor.mjs`, not `bin/adiutor.mjs`) that tails
 the ledger and hands every answer that failed its grammar to the session the
 moment the run closes, one line each, nothing for a pass. It reads the ledger
 only, never a transcript, and the two lines it may print are declared in
-`dtd/adiutor.dtd`.
+`dtd/adiutor.dtd`. Since 5.0.0 neither runs on its own: no plugin manifest
+arms the hooks, an install arms nothing unless `--arm` is given, the monitor
+is declared in `monitors/manual.json` and started only by `rdc watch`, and
+every run of either ends at a 300 second ceiling.
 
 The answer has one shape too. Every heading a command's grammar map declares
 is rendered as a markdown heading that carries the command's own sigil, with
@@ -134,14 +137,14 @@ The installer is guided: it asks for the target (user-wide `~/.claude` by
 default, or the project's `./.claude`), lists what it will write, prints
 exactly what the Adiutor hooks do and where the `settings.json` backup goes,
 and waits for a `y`. Add `--yes` for a non-interactive install that prints the
-same statement and proceeds. The install also writes the monitor as a small
-plugin under `~/.claude/skills/rot-dtd-commander-adiutor/` (a bare
-`~/.claude/monitors/` is not something Claude Code scans; a
-`.claude-plugin/plugin.json` under `skills/` is). It starts on the next
-session; `rdc watch` runs it by hand before then.
+same statement and proceeds. The install arms nothing and starts no monitor:
+the Adiutor runs when you run it (`rdc doctor`, `rdc controls`,
+`/RoT-DtD-Commander-Adiutor`) and the monitor when you run `rdc watch`, each
+under a 300 second ceiling. `rdc install --arm` or `rdc arm` registers the
+hooks deliberately, with the Stop hook at 300 seconds.
 
-As a plugin, from inside Claude Code (the monitor starts from the plugin's own
-`monitors/monitors.json`):
+As a plugin, from inside Claude Code (the plugin arms no hook and starts no
+monitor; both run by hand):
 
 ```
 /plugin marketplace add Nova-Violet-Role/RoT-DtD-Commander
@@ -267,10 +270,10 @@ references (`E4`, `T1`, `A2`) defined somewhere in it. It does not judge
 whether the content is true; `NOTICE.md` §D says so in full.
 
 ```sh
-rdc doctor          # manifest vs disk, checker on installed files, hooks armed, settings parses, ledger sound, monitor plugin present
+rdc doctor          # manifest vs disk, checker on installed files, hooks armed or deliberately not, settings parses, ledger sound, monitor declared manual
 rdc ledger --last 5 # closed runs, ten numbered fields each
 rdc suggest         # a charm and a rite for every failed run
-rdc watch --once    # what the Commander-Adiutor monitor would have said for the ledger as it stands; without --once it keeps watching
+rdc watch --once    # what the Commander-Adiutor monitor would have said for the ledger as it stands; without --once it watches for 300 s (--secs)
 ```
 
 The monitor's two lines, verbatim from `dtd/adiutor.dtd`:
