@@ -35,6 +35,15 @@ counts are re-measured.
 - `create-plugin-dtd`: the plugin creator in the DITA shell anatomy, one
   conditional section per creation, a curated SPDX list (`PLUGIN.licenses`),
   rendered manifests, one instruction per creation naming its creator.
+- The other four creators, each twelve questions in three rounds with a
+  tripped control: `create-moe-dtd` (the roster, the voice contract and the
+  two-direction checker in the rot-voice.dtd shape), `create-router-dtd`
+  (a classification scheme, a route tree, accelerator shortcuts, a declared
+  state machine, a measured method, armed only by hand),
+  `create-db-dtd` (numbered append-only fields twinned with a sequence
+  model, one store kind from TSV to a vector store, a torn row refused),
+  `create-ot-variants-dtd` (eight X-of-Thought kinds as productionsets and
+  procedures with step alternatives). Sigils 🎛️ 🚦 🗄️ 🧠.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

@@ -965,4 +965,405 @@ rdc check [n] files, 0 failing; manifests parsed [n]; excluded [creation] absent
       'The proof tripped: check clean, manifests parsed, one excluded creation shown absent',
     ],
   },
+
+  'create-moe': {
+    new: true, to: 'src/commands/create-moe-dtd.md', root: 'moe_creation', include: ['cc-args', 'cc-ask'],
+    description: 'DTD-native: create a mixture of lenses through twelve questions in three rounds: a roster declared once, one element per lens, lane and verdict vocabularies, the voice block content model, an optional formula layer, an environment vocabulary, an exclusion list, and a checker that holds the roster and the agent files identical in both directions, tripped before it ships',
+    argumentHint: '[what the lenses are for, or leave blank; --no-gate for autonomous defaults; --verbose prints the roster as written]',
+    model: [
+      'moe_creation (args, intake, roster, contract, checker, proof, assumption_made*)',
+      'roster (lens+)', 'lens (#PCDATA)', 'contract (#PCDATA)', 'checker (#PCDATA)', 'proof (#PCDATA)',
+    ],
+    attlist: [
+      'lens name NMTOKEN #REQUIRED element CDATA #REQUIRED sigil CDATA #REQUIRED bound CDATA #REQUIRED',
+      'contract file CDATA #REQUIRED lanes CDATA #REQUIRED verdicts CDATA #REQUIRED',
+      'checker file CDATA #REQUIRED directions (both) #FIXED "both"',
+      'proof tripped (yes|no) #REQUIRED',
+    ],
+    entities: {
+      'ASK.MOE.1': 'Name|What is the mixture called?|A kebab-case name from the argument|The name of the plugin it belongs to|A name typed under Other|Undecided, ask again after the roster',
+      'ASK.MOE.2': 'Lenses|How many lenses?|Nine, the roster of rot-voice.dtd as the model|Five|Three|A number typed under Other',
+      'ASK.MOE.3': 'Charters|Where do the charters come from?|One line each from the argument and the conversation, three nouns joined by a times sign and the lane it leads|Borrowed from the nine of rot-voice.dtd and renamed|Typed under Other, one per lens|Left blank, which this command refuses',
+      'ASK.MOE.4': 'Bounds|What may each lens never do?|One may-never clause per lens, written verbatim into its file|One clause for all|None, which this command refuses|Typed under Other',
+      'ASK.MOE.5': 'Lanes|Which lanes route the turn?|The ten lanes of rot-voice.dtd|Five lanes|One lane per lens|Typed under Other',
+      'ASK.MOE.6': 'Verdicts|Which adjudication verdicts?|CONFIRM, OVERRIDE, BOOST, FUSE, ELEVATE|CONFIRM and OVERRIDE only|None, the lenses speak without a verdict|Typed under Other',
+      'ASK.MOE.7': 'Frame|Who speaks the frame line?|A router hook the operator arms by hand, printing measured fields|The convening model itself|No frame, stanzas only|Typed under Other',
+      'ASK.MOE.8': 'Formula|Does each lens carry a computation layer?|Yes, YAML in a CDATA block under a NOTATION that names the executable it is verified against|No formula|Typed under Other|Later',
+      'ASK.MOE.9': 'Environment|Is there a configuration vocabulary?|Yes, ENV entities name, values, effect, read from a KEY=VALUE file that is parsed, never sourced|No configuration|Typed under Other|Later',
+      'ASK.MOE.10': 'Exclusions|What may no lens file carry?|A declared list of markers the checker greps for and refuses|None|Typed under Other|Later',
+      'ASK.MOE.11': 'Checker|How is the roster held to the files?|Both directions: every declared lens has a file, every file speaks only in its element, nothing undeclared speaks, with a negative control|One direction only|None, which this command refuses|Typed under Other',
+      'ASK.MOE.12': 'License|Which SPDX header heads its files?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other',
+      'MOE.roster.format': 'name|element|sigil|charter|tools|bound',
+    },
+    laws: {
+      'MOE.1': 'The roster is declared once, one LENS entity per lens in the MOE.roster.format shape, and read by the checker; a lens not in the roster does not exist and a roster line without a file is a failure.',
+      'MOE.2': 'A lens speaks only inside its own declared element; analysis is PCDATA and anything quoted from tool output is CDATA behind the fence; a stanza outside its element is refused by the checker.',
+      'MOE.3': 'The voice block is one frame element then zero or more lens stanzas in roster order; every lane, verdict and band string the frame may utter is a declared entity.',
+      'MOE.4': 'A formula layer, when chosen, is YAML inside a CDATA marked section under a NOTATION that names the executable it is verified against; a formula the checker cannot re-derive from that executable is not declared.',
+      'MOE.5': 'Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made; the charters and bounds are never left blank.',
+      'MOE.6': 'The checker runs both directions and ships with a negative control that plants an undeclared lens file, a roster line without a file and a stanza outside its element, and shows all three refused; a mixture whose control did not trip is not created.',
+      'MOE.7': 'The SPDX identifier chosen in the intake heads every file written.',
+    },
+    objective: `Create a mixture of lenses for ${ARGS} (or ask what it is for): the roster, the voice contract, one agent file per lens, and the checker that holds them identical.
+
+The model is rot-voice.dtd: nine lens elements, a LENS roster of name, element, sigil, charter, tools and bound, LANE and NSIL and BAND vocabularies, a voice block whose content model is one frame then stanzas in roster order, a formula layer as CDATA under a NOTATION that names what it is verified against, an ENV vocabulary, an EXCLUDE list, and checker/voice-contract.sh reading the roster in both directions. This command asks the twelve questions that decide those parts, writes the contract, the files and the checker, and runs the checker with its negative control before it reports.`,
+    process: [
+      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; render the walk under \`args\`. A mixture is a create- command, so round one always runs (LAW.ASK.10).`,
+      'Round 1 of 3: ask ASK.MOE.1 to ASK.MOE.4 as one AskUserQuestion call, four options each plus Other; render the round.',
+      'Present the gate; on more, round 2 of 3 with ASK.MOE.5 to ASK.MOE.8; on more again, round 3 of 3 with ASK.MOE.9 to ASK.MOE.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
+      'Render the `roster`: one `lens` per lens with its name, element, sigil, charter and bound; the sigils are unique and declared as glyphs.',
+      'Write the `contract`: dtd/<name>-voice.dtd with the frame and quoted elements, one element per lens, the LENS entities, the lane, verdict and band entities, the voice block content model, the formula NOTATION when chosen, the ENV and EXCLUDE entities when chosen, the LAW entities for every promise the intake made, and the cc-core include (LAW.MOE.1 to LAW.MOE.4).',
+      'Write one agent file per lens under agents/: frontmatter with name, description and tools, the charter, the bound clause verbatim, and the rule that it speaks only inside its element (LAW.MOE.2); every file with the SPDX header (LAW.MOE.7).',
+      'Write the `checker`: checker/<name>-voice-contract.sh reading the roster from the contract, holding files and declarations identical in both directions, grepping the exclusions, and carrying its negative control.',
+      'Run the checker in the foreground under a timeout with stdin closed: the written tree passes; then plant an undeclared lens file, remove a declared file, and insert a stanza outside its element in a scratch copy, and show each refused (LAW.MOE.6); render the `proof` with tripped yes; a control that did not trip stops the command before the report.',
+    ],
+    map: {
+      args: '**🎛️ Args**, the launch walk: count, the flags, the positional words',
+      intake: '**🎛️ Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice',
+      roster: '**🎛️ Roster**, one line per lens: name, element, sigil, charter, bound',
+      contract: '**🎛️ Contract**, the voice DTD written, its lanes and verdicts',
+      checker: '**🎛️ Checker**, the checker script written and its two directions',
+      proof: '**🎛️ Proof**, the checker run as executed: pass on the tree, three plants refused, tripped yes or no',
+      assumption_made: '**🎛️ Assumptions Made**, every ASK.MOE.* question not asked, with the first option taken',
+    },
+    template: `### 🎛️ Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### 🎛️ Intake
+
+- round 1 of 3: Name, Lenses, Charters, Bounds answered [labels or Other text]
+- round 2 of 3: [when asked]
+- round 3 of 3: [when asked]
+- gate: [start|more|add|impactful] (round N)
+
+### 🎛️ Roster
+
+- [name] | [element] | [sigil] | [charter] | may never [bound]
+- [one line per lens]
+
+### 🎛️ Contract
+
+\`dtd/<name>-voice.dtd\`: lanes [..]; verdicts [..]; formula [yes|no]; env [n entities]; exclusions [n]
+
+### 🎛️ Checker
+
+\`checker/<name>-voice-contract.sh\`: declared lens has file [yes]; file speaks only in its element [yes]; nothing undeclared speaks [yes]
+
+### 🎛️ Proof
+
+tree passed; planted undeclared file refused; missing file refused; stanza outside element refused; tripped yes
+
+### 🎛️ Assumptions Made
+
+- [each unasked question, first option taken]`,
+    success: [
+      'Round one ran before any file was written',
+      'Every lens has a file, every file speaks only in its element, and the roster is declared once',
+      'The checker ran both directions and its three plants were refused',
+      'Every file written carries the chosen SPDX identifier',
+    ],
+  },
+
+  'create-router': {
+    new: true, to: 'src/commands/create-router-dtd.md', root: 'router_creation', include: ['cc-args', 'cc-ask'],
+    description: 'DTD-native: create a router through twelve questions in three rounds: a classification scheme of subjects to lanes, a route tree with ids and labels, shortcut tokens bound to targets, a declared state machine, a measured method that is never a second model, a hook the operator arms by hand, and a control with a fixture prompt per subject',
+    argumentHint: '[what is routed and where, or leave blank; --no-gate for autonomous defaults; --debug prints the gauge per fixture]',
+    model: [
+      'router_creation (args, intake, scheme, routes, shortcuts, state, proof, assumption_made*)',
+      'scheme (subject+)', 'subject (#PCDATA)', 'routes (route+)', 'route (#PCDATA)', 'shortcuts (shortcut*)', 'shortcut (#PCDATA)', 'state (#PCDATA)', 'proof (#PCDATA)',
+    ],
+    attlist: [
+      'subject key NMTOKEN #REQUIRED lane CDATA #REQUIRED aliases CDATA #IMPLIED',
+      'route id NMTOKEN #REQUIRED label CDATA #REQUIRED target CDATA #REQUIRED',
+      'shortcut code CDATA #REQUIRED target CDATA #REQUIRED',
+      'state kind (stateless|counter|registration) "stateless" expires CDATA #IMPLIED',
+      'proof tripped (yes|no) #REQUIRED',
+    ],
+    entities: {
+      'ASK.ROUTER.1': 'Name|What is the router called?|A kebab-case name from the argument|The name of the plugin it belongs to|A name typed under Other|Undecided, ask again after the scheme',
+      'ASK.ROUTER.2': 'Input|What does it classify?|The prompt text at UserPromptSubmit|The tool stream at PreToolUse and PostToolUse|Both|Typed under Other',
+      'ASK.ROUTER.3': 'Scheme|Where do the subjects come from?|The roster of commands, one subject per command family|A taxonomy typed under Other|The lanes of a mixture of lenses|Undecided',
+      'ASK.ROUTER.4': 'Method|How is a subject decided?|A measured keyword gauge with declared weights per subject|One declared regular expression per subject|A second model call, which this command refuses|Typed under Other',
+      'ASK.ROUTER.5': 'Targets|What does a route point at?|Commands, by their slash name|Agents|Lanes of a mixture|Typed under Other',
+      'ASK.ROUTER.6': 'Shortcuts|Which shortcut tokens?|The three of cc-args, verbose, debug and arguments, and no more|Those plus one code per route|None|Typed under Other',
+      'ASK.ROUTER.7': 'Aliases|Do subjects have alternate spellings?|Yes, declared per subject in the gschema aliases shape|No|Typed under Other|Later',
+      'ASK.ROUTER.8': 'State|What state does it keep?|None, every prompt is classified alone|A counter per route|A registration per subject with an expiry|Typed under Other',
+      'ASK.ROUTER.9': 'Emission|What does it print?|One frame line with the subject, the lane and the measured fields|JSON records to a sink file|Both|Nothing',
+      'ASK.ROUTER.10': 'Wiring|How does it run?|A UserPromptSubmit hook the operator arms by hand, never by an install|By hand, on a prompt text given as an argument|As a monitor, which this command refuses|Typed under Other',
+      'ASK.ROUTER.11': 'Control|How is it proven?|One fixture prompt per subject routes to its lane and an unknown prompt to the default, tripped|A single fixture|None, which this command refuses|Typed under Other',
+      'ASK.ROUTER.12': 'License|Which SPDX header heads its files?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other',
+      'ROUTER.default': 'the default lane, taken when no subject scores',
+    },
+    laws: {
+      'ROUTER.1': 'The classification is a declared scheme, one subject element per subject with its lane and its aliases, read by the router code from the contract; a subject the code knows and the contract does not is a failure in either direction.',
+      'ROUTER.2': 'The method is measured: declared weights or declared expressions applied to the input; a second model call is never a method, and the frame line prints the numbers the decision was made from.',
+      'ROUTER.3': 'The shortcut vocabulary is closed: the three tokens of cc-args and, when chosen, one code per route bound to one target, in the accelerator shape; a token outside the vocabulary is data.',
+      'ROUTER.4': 'The state machine is declared: stateless, a counter per route, or a registration per subject with an expiry; a router keeps no state its contract does not name.',
+      'ROUTER.5': 'The router arms nothing itself: its hook is registered only by the operator, by hand, and every run ends at a declared ceiling; it never runs as a monitor.',
+      'ROUTER.6': 'Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made; the control routes one fixture per subject and an unknown prompt to ROUTER.default, and a router whose control did not trip is not created.',
+      'ROUTER.7': 'The SPDX identifier chosen in the intake heads every file written.',
+    },
+    objective: `Create a router for ${ARGS} (or ask what is routed): the scheme, the route tree, the shortcuts, the state, the code and the control.
+
+The shapes come from the examples: a classification map of subjects to lanes, a menu tree of routes with ids and labels, accelerator items binding a code to a target, a settings schema with aliases per subject, a registration state with an expiry. The method is measured, never a second model, in the way the RoT MoE router gauges a turn: weights and counts printed beside the decision. The router is armed only by the operator and proven by a fixture per subject.`,
+    process: [
+      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; render the walk under \`args\`. A router is a create- command, so round one always runs (LAW.ASK.10).`,
+      'Round 1 of 3: ask ASK.ROUTER.1 to ASK.ROUTER.4 as one AskUserQuestion call, four options each plus Other; render the round.',
+      'Present the gate; on more, round 2 of 3 with ASK.ROUTER.5 to ASK.ROUTER.8; on more again, round 3 of 3 with ASK.ROUTER.9 to ASK.ROUTER.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
+      'Render the `scheme`: one `subject` per subject with its key, its lane and its aliases; render the `routes`: one `route` per target with id, label and target; render the `shortcuts`: one `shortcut` per code with its target (LAW.ROUTER.1, LAW.ROUTER.3); render the `state` with its kind and expiry (LAW.ROUTER.4).',
+      'Write the contract dtd/<name>-router.dtd: the scheme, the routes, the shortcuts, the state, ROUTER.default, the lane entities, and a LAW entity per promise the intake made; include cc-core.',
+      'Write the code hooks/<name>-router.mjs: read the scheme from the contract, apply the declared method to the input, print the chosen emission with the measured fields, keep the declared state and no other, and exit at a ceiling (LAW.ROUTER.2, LAW.ROUTER.5); never arm it; print the arm command the operator may run.',
+      'Write the control checker/<name>-router-controls.sh: one fixture prompt per subject expected to land on its lane, one unknown prompt expected to land on ROUTER.default, each run in the foreground under a timeout with stdin closed; run it and render the `proof` with tripped yes (LAW.ROUTER.6); a control that did not trip stops the command before the report.',
+    ],
+    map: {
+      args: '**🚦 Args**, the launch walk: count, the flags, the positional words',
+      intake: '**🚦 Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice',
+      scheme: '**🚦 Scheme**, one line per subject: key, lane, aliases',
+      routes: '**🚦 Routes**, one line per route: id, label, target',
+      shortcuts: '**🚦 Shortcuts**, one line per code and its target, or none',
+      state: '**🚦 State**, the kind and the expiry',
+      proof: '**🚦 Proof**, the control run as executed: each fixture and where it landed, the unknown prompt on the default, tripped yes or no',
+      assumption_made: '**🚦 Assumptions Made**, every ASK.ROUTER.* question not asked, with the first option taken',
+    },
+    template: `### 🚦 Args
+
+count [n]; debug [0|1]; words [each positional word]
+
+### 🚦 Intake
+
+- round 1 of 3: Name, Input, Scheme, Method answered [labels or Other text]
+- round 2 of 3: [when asked]
+- round 3 of 3: [when asked]
+- gate: [start|more|add|impactful] (round N)
+
+### 🚦 Scheme
+
+- [key]: lane [lane]; aliases [..]
+
+### 🚦 Routes
+
+- [id]: [label] to [target]
+
+### 🚦 Shortcuts
+
+- [code] to [target], or none
+
+### 🚦 State
+
+[stateless|counter|registration], expires [..]
+
+### 🚦 Proof
+
+- fixture [subject]: landed [lane]
+- unknown prompt: landed [default lane]
+tripped yes
+
+### 🚦 Assumptions Made
+
+- [each unasked question, first option taken]`,
+    success: [
+      'Round one ran before any file was written',
+      'The scheme, the routes, the shortcuts and the state are declared in the contract and read by the code',
+      'The method printed the numbers it decided from; no second model was called',
+      'The router armed nothing; the control routed every fixture and the unknown prompt as declared',
+    ],
+  },
+
+  'create-db': {
+    new: true, to: 'src/commands/create-db-dtd.md', root: 'db_creation', include: ['cc-args', 'cc-ask'],
+    description: 'DTD-native: create a database layer through twelve questions in three rounds: records with numbered append-only fields twinned with a sequence model, a store kind from a cat-readable TSV to SQLite to a vector store, one runtime module per kind, a schema verifier, and a control that writes, reads back and refuses a torn row',
+    argumentHint: '[what is stored, or leave blank; --no-gate for autonomous defaults; --debug prints every query run]',
+    model: [
+      'db_creation (args, intake, schema, store, migration, proof, assumption_made*)',
+      'schema (record+)', 'record (field+)', 'field (#PCDATA)', 'store (#PCDATA)', 'migration (#PCDATA)', 'proof (#PCDATA)',
+    ],
+    attlist: [
+      'record name NMTOKEN #REQUIRED file CDATA #REQUIRED',
+      'field n CDATA #REQUIRED name NMTOKEN #REQUIRED type (atom|integer|float|text|list|tuple|record|map|blob|vector) #REQUIRED since CDATA #REQUIRED key (none|primary|foreign|index|unique) "none"',
+      'store kind (tsv|json|sqlite|duckdb|postgres|chroma|lancedb) #REQUIRED path CDATA #REQUIRED',
+      'migration policy (append-only) #FIXED "append-only"',
+      'proof tripped (yes|no) #REQUIRED',
+    ],
+    entities: {
+      'ASK.DB.1': 'Name|What is the layer called?|A kebab-case name from the argument|The name of the plugin it belongs to|A name typed under Other|Undecided, ask again after the records',
+      'ASK.DB.2': 'Store|Which store kind?|A TSV a human can cat, append-only|SQLite through node:sqlite|A vector store, Chroma or LanceDB|DuckDB or Postgres, typed under Other',
+      'ASK.DB.3': 'Records|What records does it hold?|The records named in the argument|A ledger of runs, one row per run|A glossary of terms with definitions and locators|Typed under Other',
+      'ASK.DB.4': 'Fields|How are fields declared?|Numbered from one, dense, each with a type and the version it appeared in|Free columns, which this command refuses|Typed under Other|Later',
+      'ASK.DB.5': 'Keys|Which keys?|One primary key per record and an index per lookup field|A primary key only|None|Typed under Other',
+      'ASK.DB.6': 'Types|Which type set?|atom, integer, float, text, list, tuple, record, map, blob, vector|SQL types, mapped onto that set|JSON values only|Typed under Other',
+      'ASK.DB.7': 'Runtime|What runs it?|Node built-ins only, one module per store kind|A named client package|Shell tools, sqlite3 or psql|Typed under Other',
+      'ASK.DB.8': 'Migration|How does the schema change?|Fields are appended, numbers never reused, since never decreases|In place, which this command refuses|Typed under Other|Later',
+      'ASK.DB.9': 'Reading|Can a human read it?|Yes, a cat-readable TSV form is kept beside every binary store|Binary only|Typed under Other|Later',
+      'ASK.DB.10': 'Channels|Which channels are declared?|parsed-tsv and append-only-log as NOTATIONs, the files as NDATA entities|None|Typed under Other|Later',
+      'ASK.DB.11': 'Control|How is it proven?|Write a row, read it back, refuse a torn row, verify dense numbers and column counts, tripped|Write and read only|None, which this command refuses|Typed under Other',
+      'ASK.DB.12': 'License|Which SPDX header heads its files?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other',
+      'DB.field.format': 'n=name:type@since',
+    },
+    laws: {
+      'DB.1': 'Every record is declared twice and the two are cross-checked: a RECORD entity of numbered fields in the DB.field.format shape, and a sequence element naming the same fields in the same order; where they disagree neither is trusted.',
+      'DB.2': 'Field numbers are dense from one, never reused, and since never decreases as the number grows; a schema that fails one of the three is refused by the verifier.',
+      'DB.3': 'The store kind is an enumeration and each kind has one runtime module; a row is written through the module and read back through it, and a cat-readable form is kept beside every binary store when the intake chose reading.',
+      'DB.4': 'A torn row, one whose column count differs from the highest field number, is refused on read and named with its line; it is never silently skipped.',
+      'DB.5': 'Migration is append-only: a field is added at the end with the version it appeared in; a rewrite of an existing field is refused and printed as a plan the operator runs.',
+      'DB.6': 'Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made; the control writes, reads back, plants a torn row and shows it refused, and a layer whose control did not trip is not created.',
+      'DB.7': 'The SPDX identifier chosen in the intake heads every file written.',
+    },
+    objective: `Create a database layer for ${ARGS} (or ask what is stored): the schema contract, the store, the runtime module, the verifier and the control.
+
+The discipline is the one the trust contract of RoT DTD GOAL learned from column drift: fields are numbered, numbers are never reused, new fields are appended with the version they appeared in, and the numbered declaration is twinned with a sequence element so a typo in either is caught by the other. The vocabulary is DocBook's database classes and EDoc's type set; the constraints are XSD facets; the channels are NOTATIONs. From a TSV a human can cat to SQLite to a vector store is one enumeration on the store kind, with one module and one control per kind.`,
+    process: [
+      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and what is stored; render the walk under \`args\`. A layer is a create- command, so round one always runs (LAW.ASK.10).`,
+      'Round 1 of 3: ask ASK.DB.1 to ASK.DB.4 as one AskUserQuestion call, four options each plus Other; render the round.',
+      'Present the gate; on more, round 2 of 3 with ASK.DB.5 to ASK.DB.8; on more again, round 3 of 3 with ASK.DB.9 to ASK.DB.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
+      'Render the `schema`: one `record` per record with its file, and one `field` per field with n, name, type, since and key (LAW.DB.1, LAW.DB.2); render the `store` with its kind and path; render the `migration` with its policy (LAW.DB.5).',
+      'Write the contract dtd/<name>-schema.dtd: the RECORD entities in DB.field.format, the twin sequence elements, the store enumeration, the NOTATIONs and NDATA entities when chosen, and a LAW entity per promise the intake made; include cc-core.',
+      'Write the module lib/<name>-store.mjs for the chosen kind: write a row, read rows, refuse a torn row with its line, keep the cat-readable form when chosen (LAW.DB.3, LAW.DB.4); write the verifier checker/<name>-schema.mjs: dense numbers, since monotone, twin agreement, live column counts.',
+      'Run the control in the foreground under a timeout with stdin closed: write one row, read it back equal, plant a torn row in a scratch copy and show it refused, run the verifier on the schema and on a mutated copy with a gap and show the gap named; render the `proof` with tripped yes (LAW.DB.6); a control that did not trip stops the command before the report.',
+    ],
+    map: {
+      args: '**🗄️ Args**, the launch walk: count, the flags, the positional words',
+      intake: '**🗄️ Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice',
+      schema: '**🗄️ Schema**, one block per record with its numbered fields',
+      store: '**🗄️ Store**, the kind, the path, the module',
+      migration: '**🗄️ Migration**, the policy and the version fields appear in',
+      proof: '**🗄️ Proof**, the control run as executed: row written and read back, torn row refused, gap named, tripped yes or no',
+      assumption_made: '**🗄️ Assumptions Made**, every ASK.DB.* question not asked, with the first option taken',
+    },
+    template: `### 🗄️ Args
+
+count [n]; debug [0|1]; words [each positional word]
+
+### 🗄️ Intake
+
+- round 1 of 3: Name, Store, Records, Fields answered [labels or Other text]
+- round 2 of 3: [when asked]
+- round 3 of 3: [when asked]
+- gate: [start|more|add|impactful] (round N)
+
+### 🗄️ Schema
+
+- record [name] ([file]): 1=[name]:[type]@[since] [key]; 2=[..]; [..]
+
+### 🗄️ Store
+
+[tsv|json|sqlite|duckdb|postgres|chroma|lancedb] at [path]; module \`lib/<name>-store.mjs\`; cat-readable form [yes|no]
+
+### 🗄️ Migration
+
+append-only; highest field [n]; since [versions]
+
+### 🗄️ Proof
+
+wrote 1 row, read back equal; torn row at line [n] refused; verifier: schema ok, mutated copy gap named; tripped yes
+
+### 🗄️ Assumptions Made
+
+- [each unasked question, first option taken]`,
+    success: [
+      'Round one ran before any file was written',
+      'Every record is declared twice and the two agree; numbers are dense and since is monotone',
+      'The torn row was refused with its line and the mutated schema was refused with its gap',
+      'Every file written carries the chosen SPDX identifier',
+    ],
+  },
+
+  'create-ot-variants': {
+    new: true, to: 'src/commands/create-ot-variants-dtd.md', root: 'ot_creation', include: ['cc-args', 'cc-ask'],
+    description: 'DTD-native: create X-of-Thought variants (chain, tree, graph, skeleton, program, algorithm, buffer, everything) as commands through twelve questions in three rounds: each variant a productionset for its thought structure and a procedure for its walk, every step with a certainty degree and its alternatives, a control that walks a fixture problem through each variant',
+    argumentHint: '[which variants and for what, or leave blank; --no-gate for autonomous defaults; --verbose prints every walk]',
+    model: [
+      'ot_creation (args, intake, variants, grammar, walk, proof, assumption_made*)',
+      'variants (variant+)', 'variant (#PCDATA)', 'grammar (production+)', 'production (#PCDATA)', 'walk (step+)', 'step (#PCDATA)', 'proof (#PCDATA)',
+    ],
+    attlist: [
+      'variant kind (chain|tree|graph|skeleton|program|algorithm|buffer|everything) #REQUIRED name NMTOKEN #REQUIRED depth CDATA #REQUIRED branching CDATA "1"',
+      'production lhs NMTOKEN #REQUIRED rhs CDATA #REQUIRED',
+      'step n CDATA #REQUIRED performance (optional|required) "required" degree CDATA #IMPLIED alternatives CDATA #IMPLIED',
+      'proof tripped (yes|no) #REQUIRED',
+    ],
+    entities: {
+      'ASK.OT.1': 'Name|What is the family called?|A kebab-case stem from the argument, each variant adds its kind|The name of the plugin it belongs to|A name typed under Other|Undecided, ask again after the variants',
+      'ASK.OT.2': 'Variants A|Which variants? Pick any, this is one of two lists.|All eight|Chain of thought|Tree of thought|Graph of thought',
+      'ASK.OT.3': 'Variants B|Which variants? Second list.|Skeleton of thought|Program of thought|Algorithm of thought|Buffer of thought and everything of thought',
+      'ASK.OT.4': 'Grammar|How is a variant\'s structure declared?|A productionset per variant, lhs and rhs, the walk derived from it|A prose description, which this command refuses|Typed under Other|Later',
+      'ASK.OT.5': 'Depth|How many steps per walk?|Five|Three|Seven|A number typed under Other',
+      'ASK.OT.6': 'Branching|How many branches at a node, where the variant branches?|Two|Three|Typed under Other|One, no branching',
+      'ASK.OT.7': 'Pruning|How is a branch dropped?|By a declared certainty degree per step, below a declared floor|Never, every branch is walked|Typed under Other|Later',
+      'ASK.OT.8': 'Rendering|How is a walk shown?|One heading per step with the variant sigil, alternatives indented|A table of steps|A text drawing of the tree|Typed under Other',
+      'ASK.OT.9': 'Buffer|Where do reusable templates live?|A declared file of templates the buffer variant reads and the others may cite|Nowhere, no buffer|Typed under Other|Later',
+      'ASK.OT.10': 'Annotation|Is each step annotated?|Yes, an interpretation per step in the analysis shape, span from to|No|Typed under Other|Later',
+      'ASK.OT.11': 'Control|How is it proven?|A fixture problem walked by every variant, every walk matching its grammar, tripped by a walk that skips a required step|One variant walked|None, which this command refuses|Typed under Other',
+      'ASK.OT.12': 'License|Which SPDX header heads its files?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other',
+      'OT.kinds': 'chain, tree, graph, skeleton, program, algorithm, buffer, everything',
+    },
+    laws: {
+      'OT.1': 'Each variant is one command whose DOCTYPE declares its productions, lhs and rhs, and its walk as a procedure of steps; a walk that is not derivable from the productions is a failed answer.',
+      'OT.2': 'Every step carries its number, whether it is required or optional, its certainty degree when pruning was chosen, and its alternatives when the variant branches; the depth and the branching are declared numbers, never a feeling.',
+      'OT.3': 'The buffer variant reads its templates from the declared file and every other variant cites that file when it reuses one; a template not in the file is not a template.',
+      'OT.4': 'Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made; the two variant questions are multi-select and All eight selects every kind in OT.kinds.',
+      'OT.5': 'The control walks one fixture problem through every variant written, checks each walk against its grammar, and plants a walk that skips a required step to show it refused; a family whose control did not trip is not created.',
+      'OT.6': 'The SPDX identifier chosen in the intake heads every file written.',
+    },
+    objective: `Create a family of X-of-Thought variants for ${ARGS} (or ask which): one command per variant, a shared contract, and a control that walks a fixture through each.
+
+The shapes are DocBook's: a productionset of lhs and rhs for the thought structure of each variant, a procedure of steps with substeps and step alternatives for its walk, a certainty degree per step from TEI, an interpretation per step from the analysis module. Chain walks a line, tree branches and prunes, graph joins branches, skeleton lays the frame then fills it, program writes and runs code for a step, algorithm searches, buffer reuses templates from a declared file, everything combines them; each is declared, none is described.`,
+    process: [
+      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags, the stem and the kinds; render the walk under \`args\`. A family is a create- command, so round one always runs (LAW.ASK.10).`,
+      'Round 1 of 3: ask ASK.OT.1 to ASK.OT.4 as one AskUserQuestion call, four options each plus Other, questions 2 and 3 multi-select (LAW.OT.4); render the round.',
+      'Present the gate; on more, round 2 of 3 with ASK.OT.5 to ASK.OT.8; on more again, round 3 of 3 with ASK.OT.9 to ASK.OT.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
+      'Render the `variants`: one `variant` per chosen kind with its name, depth and branching; render the `grammar`: one `production` per rule of each variant (LAW.OT.1); render the `walk` for the fixture: one `step` per step with its performance, degree and alternatives (LAW.OT.2).',
+      'Write the shared contract dtd/<stem>-ot.dtd: the kind enumeration, the productions, the step element, the certainty attribute, the buffer file as an NDATA entity when chosen, and a LAW entity per promise the intake made; include cc-core.',
+      'Write one command per variant, commands/<stem>-<kind>-dtd.md, whose DOCTYPE includes the shared contract and declares its own productions and walk, whose grammar map renders one heading per step with the variant sigil, and whose SPDX header is the chosen one (LAW.OT.6); write the buffer file when chosen (LAW.OT.3).',
+      'Run the control in the foreground under a timeout with stdin closed: walk the fixture through every variant written, check each walk against its grammar with rdc check on the command file and a step-by-step match, plant a walk that skips a required step in a scratch copy and show it refused; render the `proof` with tripped yes (LAW.OT.5); a control that did not trip stops the command before the report.',
+    ],
+    map: {
+      args: '**🧠 Args**, the launch walk: count, the flags, the positional words',
+      intake: '**🧠 Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the multi-select variants as chosen, the `impactful` selections when asked for, the gate choice',
+      variants: '**🧠 Variants**, one line per variant: kind, name, depth, branching',
+      grammar: '**🧠 Grammar**, the productions per variant, lhs and rhs',
+      walk: '**🧠 Walk**, the fixture walked: one line per step with performance, degree and alternatives',
+      proof: '**🧠 Proof**, the control run as executed: each variant walked and matched, the skipped step refused, tripped yes or no',
+      assumption_made: '**🧠 Assumptions Made**, every ASK.OT.* question not asked, with the first option taken',
+    },
+    template: `### 🧠 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### 🧠 Intake
+
+- round 1 of 3: Name, Variants A, Variants B, Grammar answered [labels, the multi-selects listed, or Other text]
+- round 2 of 3: [when asked]
+- round 3 of 3: [when asked]
+- gate: [start|more|add|impactful] (round N)
+
+### 🧠 Variants
+
+- [kind]: \`commands/<stem>-<kind>-dtd.md\`, depth [n], branching [n]
+
+### 🧠 Grammar
+
+- [kind]: [lhs] = [rhs]; [lhs] = [rhs]
+
+### 🧠 Walk
+
+- step 1 (required, degree [..]): [..]; alternatives [..]
+- [one line per step of the fixture walk]
+
+### 🧠 Proof
+
+- [kind]: walked [n] steps, matched its grammar
+- planted walk skipping a required step: refused
+tripped yes
+
+### 🧠 Assumptions Made
+
+- [each unasked question, first option taken]`,
+    success: [
+      'Round one ran before any file was written; the variant questions were multi-select and All eight selected every kind',
+      'Every variant is a command whose DOCTYPE declares its productions and its walk',
+      'Every step carries its number, performance, degree and alternatives as declared',
+      'The control walked the fixture through every variant and the skipped step was refused',
+    ],
+  },
 };

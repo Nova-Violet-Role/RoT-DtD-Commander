@@ -87,5 +87,9 @@
   "coin-flip-best-of": "🥇",
   "coin-flip-weighted": "🎚️",
   "coin-flip-reveal": "🎭",
-  "create-plugin": "🧩"
+  "create-plugin": "🧩",
+  "create-moe": "🎛️",
+  "create-router": "🚦",
+  "create-db": "🗄️",
+  "create-ot-variants": "🧠"
 }
