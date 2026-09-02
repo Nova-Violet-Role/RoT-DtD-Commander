@@ -18,6 +18,18 @@
 
 ---
 
+## v4.0.0 — the Commander-Adiutor
+
+The Adiutor's monitor, a separate process beside the hooks:
+`monitors/commander-adiutor.mjs` tails the ledger and hands every `-dtd`
+answer that failed its own grammar to the session as the run closes, one
+line each, nothing for a pass, in the words `dtd/adiutor.dtd` declares.
+Declared in `monitors/monitors.json` for the plugin path; on the npx path
+`rdc install` writes a skills-directory plugin Claude Code loads by itself,
+and `rdc uninstall` removes it. Control C12 trips the monitor live; the
+doctor gained a `monitor` row; `rdc watch` runs it by hand. Every number is
+in [CHANGELOG.md](CHANGELOG.md). The tag is `v4.0.0`.
+
 ## v3.2.0 — the lens commands render clean
 
 The SPDX header showed as text on GitHub in the ten `rot-*-dtd.md` files:

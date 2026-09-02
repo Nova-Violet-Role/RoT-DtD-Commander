@@ -7,6 +7,75 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 4.0.0 (2026-09-02)
+
+The Commander-Adiutor: the Adiutor's monitor, a separate process beside the
+hooks. Major because `rdc install` now writes a second plugin and `rdc doctor`
+gained a row that goes red on an install made before this release.
+
+- Reported: on claudepluginhub.com the Adiutor showed only as ten hook
+  entries of `type: command`, and the plugin's monitor count was zero.
+  Measured in the Claude Code 2.1.235 binary: monitors are their own plugin
+  component, loaded from `experimental.monitors ?? monitors` in
+  `plugin.json` or, when neither is set, from `monitors/monitors.json` at
+  the plugin root. A hook cannot be labelled a monitor, and a bare
+  `~/.claude/monitors/` is not scanned; a `.claude-plugin/plugin.json` under
+  `~/.claude/skills/<name>/` is, as `<name>@skills-dir`, personal scope.
+- Added `monitors/commander-adiutor.mjs`: a persistent process that tails
+  `ledger.tsv` from its current end and prints one line per run closed as
+  `fail` (`MONITOR.fail`) and one per ledger line the reader refuses
+  (`MONITOR.malformed`); nothing for a pass, nothing for history. It reads
+  the ledger only, never a transcript, and never writes. Declared for the
+  plugin path in `monitors/monitors.json` (`commander-adiutor`, `when:
+  always`). `bin/adiutor.mjs` stays the hook engine and imports nothing
+  from it.
+- Added `lib/ledger.mjs`: the one resolver of the state directory
+  (`CLAUDE_CONFIG_DIR`, `ROT_DTD_STATE`) and the one ledger reader, shared
+  by the hooks and the monitor so both open the same file. `bin/adiutor.mjs`
+  now imports it; its hooks are otherwise untouched.
+- `dtd/adiutor.dtd`: `monitor` and `emit` elements, `MONITOR.name`,
+  `MONITOR.fail`, `MONITOR.malformed`, and `LAW.ADIUTOR.7`.
+- Control C12 starts the monitor on a scratch ledger that already holds one
+  failed run, waits for its `watching` line on stderr, appends a pass, a
+  fail with two findings and a nine-column line (landed-proof: four lines on
+  disk), and requires exactly two printed lines, each matching its DTD
+  template with the right command, finding, line number and column count,
+  and the history line absent. `node bin/adiutor.mjs controls`:
+  `12 run, 0 failing`.
+- `rdc install` writes `<target>/skills/rot-dtd-commander-adiutor/` with a
+  `.claude-plugin/plugin.json` and a `monitors/monitors.json` whose command
+  runs the copied script by absolute path, forward slashes, quoted. Claude
+  Code loads it as `rot-dtd-commander-adiutor@skills-dir` on the next
+  session. Both files are in the manifest; `rdc uninstall` removes them.
+  Measured on a scratch target with `--only pareto-dtd`: `written 17`, the
+  doctor's `monitor` row `OK`, then `removed 17  kept 0` and `skills/`
+  empty. The capability statement printed before arming names the monitor.
+- `rdc watch [--once] [--poll <ms>]` runs the monitor by hand. `rdc doctor`
+  gained a `monitor` row: red only when the npx set is installed without
+  its monitor plugin; a plugin install starts the monitor from its own
+  `monitors/monitors.json` and the row stays green.
+- `claude plugin validate .`: `Validation passed`.
+- README: the tagline, the Adiutor paragraph, install, the decoded section,
+  step 6, the claims table and the verify section name the monitor. The
+  skills paragraph said eighteen and named seven new skills while nineteen
+  are installed (`rot-lenses-dtd` was missing from it): fixed. Guard counts
+  that still said eight or eleven now say twelve.
+- The GitHub About was still the 1.0.0 text (58 commands, 18 skills); set
+  to the package.json description. claudepluginhub.com holds a scan of
+  1.0.0 (58 commands, 18 skills, no `rot-*` file, last commit 01:13 UTC);
+  nothing in this repository can refresh it, the listing does.
+- Counts at this release: 68 commands, 19 skills, 4 agents, 1 monitor.
+- The Adiutor contract is quoted verbatim in the `dtd-core-dtd` skill
+  (`references/subsets.md`); the contract audit counts that quotation as
+  the use of every `adiutor.dtd` declaration, so it went `5 unused` until
+  the quotation was refreshed from the live file, then `0`.
+- Numbers on the day: `rdc check`: `checked 91  failed 0`; `rdc build
+  --check`: `223 targets, 0 drifted, 0 failing`; `node bin/adiutor.mjs
+  controls`: `12 run, 0 failing`; `node checker/contract-audit.mjs`:
+  `161 declarations, 0 unused, 0 law gaps`; `bash checker/spdx-sweep.sh`:
+  `491 files checked, 0 missing`; `bash checker/crlf-sweep.sh`:
+  `508 files checked, 0 bad`; `npm run gate`: exit 0.
+
 ## 3.2.0 (2026-09-02)
 
 The lens commands render clean on GitHub again.

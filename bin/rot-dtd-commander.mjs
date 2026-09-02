@@ -14,17 +14,23 @@
 //   rdc resolve   <src.md> <out.md>
 //   rdc forge     <spec.json|spec.mjs> [names...]
 //   rdc arm | disarm | doctor | controls
+//   rdc watch     [--once] [--poll <ms>]   run the Commander-Adiutor monitor by hand
 //
 // Layout: src/ holds the sources with %cc-core; includes; commands/, skills/
 // and agents/ hold the RESOLVED files that the plugin loads and the installer
 // copies. `rdc build` produces the second from the first; `rdc build --check`
-// proves the committed output equals a fresh build.
+// proves the committed output equals a fresh build. monitors/ holds the
+// Commander-Adiutor monitor and the monitors.json the plugin loader reads.
 //
 // Default target is the user-wide ~/.claude (os.homedir, never $HOME). Every
 // write goes through one writer: check, write UTF-8 LF without BOM, re-read
 // and verify. Nothing this tool did not write is ever overwritten or removed.
 // Installing always arms the Adiutor hooks after stating what they do; a
 // backup of settings.json is taken first and the restore command printed.
+// Installing also writes a skills-directory plugin, <target>/skills/
+// rot-dtd-commander-adiutor/, whose monitors.json starts the monitor on the
+// next session: a bare <target>/monitors/ is not scanned by Claude Code, a
+// .claude-plugin/plugin.json under skills/ is (personal scope, no install).
 
 import { readdirSync, existsSync, readFileSync, copyFileSync, rmSync, rmdirSync, mkdirSync, statSync } from 'node:fs';
 import { join, dirname, basename, resolve as presolve, relative, extname, sep } from 'node:path';
@@ -45,7 +51,12 @@ const NAME = 'rot-dtd-commander';
 const TEXT_EXT = new Set(['.md', '.dtd', '.sh', '.mjs', '.js', '.json', '.yml', '.yaml', '.txt', '.tsv', '.csv', '.ps1', '.nu', '.py', '.toml', '.tape']);
 const JUNK = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
 const MANIFEST = `.${NAME}-manifest.json`;
-const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd'];
+const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd'];
+// The skills-directory plugin the installer writes so the monitor auto-starts
+// on the npx path. Claude Code loads any <target>/skills/<name>/ that carries a
+// .claude-plugin/plugin.json as <name>@skills-dir, personal scope, next session.
+const MONITOR_PLUGIN = 'rot-dtd-commander-adiutor';
+const MONITOR_NAME = 'commander-adiutor';
 
 // ---------- args ----------
 
@@ -66,6 +77,8 @@ function parseArgs(argv) {
     else if (a === '--check') o.check = true;
     else if (a === '--no-arm') o.noArm = true;
     else if (a === '--guided') o.guided = true;
+    else if (a === '--once') o.once = true;
+    else if (a === '--poll') o.poll = argv[++i];
     else if (a.startsWith('-')) die(`unknown flag ${a}`);
     else o._.push(a);
   }
@@ -211,10 +224,13 @@ function capabilities(target) {
     `  file edited : ${settings} (a timestamped backup is written first; the restore command is printed;`,
     '                a read-only attribute on the file is lifted for the one write and put back)',
     `  hook events : ${EVENTS.map((e) => e[0]).join(', ')}`,
-    `  runtime     : ${state} (bin, lib, dtd; nothing outside it)`,
+    `  runtime     : ${state} (bin, lib, dtd, monitors; nothing outside it)`,
     '  what it does: when you run any /*-dtd command it reads that command\'s own DOCTYPE, records the headings',
     '                the answer must carry, counts tool calls and errors during the run, and at Stop reads the',
     `                answer from the transcript and checks it. Every closed run is one line in ${join(state, 'ledger.tsv')}.`,
+    `  monitor     : ${join(target, 'skills', MONITOR_PLUGIN)} is written as a plugin Claude Code loads by itself`,
+    `                (${MONITOR_PLUGIN}@skills-dir, next session). Its one monitor, ${MONITOR_NAME}, tails the ledger and`,
+    '                prints one line per -dtd answer that failed its grammar. It reads the ledger only, never the transcript.',
     '  what it never does: edit your files, spawn a process from a hook, or block a session more than once per run',
     '                (blocking only under ROT_DTD_ADIUTOR=strict; the default policy is warn).',
     '  you decide  : /RoT-DtD-Commander-Adiutor runs the doctor and shows the prescriptions when you want them.',
@@ -345,6 +361,41 @@ async function cmdInstall(o) {
     if (!existsSync(src)) continue;
     writeOne(src, join(target, NAME, rel), `runtime ${rel}`, false);
   }
+
+  // The monitor plugin: two generated files, tracked in the manifest like
+  // every other write, so uninstall removes them and a file this tool did not
+  // write is never overwritten. The command carries the absolute path of the
+  // copied script, forward slashes, quoted: Node reads it on every platform.
+  const writeGenerated = (dest, text, label) => {
+    if (existsSync(dest) && !owned.has(dest) && !o.force) {
+      console.log(`  SKIP ${label} (exists and was not installed by ${NAME}; use --force)`);
+      skipped++;
+      return;
+    }
+    if (o.dryRun) {
+      console.log(`  plan ${label} -> ${dest}`);
+      return;
+    }
+    try {
+      mkdirSync(dirname(dest), { recursive: true });
+      const v = writeLF(dest, text);
+      written.push({ path: dest, sha256: sha256(readFileSync(dest)), bytes: v.bytes, label });
+      console.log(`  WROTE ${label} (${v.bytes} B, LF, no BOM)`);
+    } catch (e) {
+      console.log(`  FAIL ${label}: ${e.message}`);
+      failed++;
+    }
+  };
+  const monRoot = join(target, 'skills', MONITOR_PLUGIN);
+  const monScript = join(target, NAME, 'monitors', 'commander-adiutor.mjs').split(sep).join('/');
+  const monManifest = {
+    name: MONITOR_PLUGIN,
+    version: VERSION,
+    description: `The Commander-Adiutor monitor of RoT DtD Commander ${VERSION}: tails the Adiutor ledger and prints one line per -dtd answer that failed its own grammar. Written by rdc install; rdc uninstall removes it.`,
+  };
+  const monDecl = [{ name: MONITOR_NAME, command: `node "${monScript}"`, description: '-dtd answers that failed their own grammar, as the Adiutor ledger closes them', when: 'always' }];
+  writeGenerated(join(monRoot, '.claude-plugin', 'plugin.json'), JSON.stringify(monManifest, null, 2) + '\n', `monitor skills/${MONITOR_PLUGIN}/.claude-plugin/plugin.json`);
+  writeGenerated(join(monRoot, 'monitors', 'monitors.json'), JSON.stringify(monDecl, null, 2) + '\n', `monitor skills/${MONITOR_PLUGIN}/monitors/monitors.json`);
 
   if (o.dryRun) {
     console.log(`\nplanned ${plan.length} artifact(s); skipped ${skipped}; failed ${failed}`);
@@ -628,7 +679,17 @@ switch (cmd) {
   case 'suggest':
     delegate(cmd, o);
     break;
+  case 'watch': {
+    // The Commander-Adiutor monitor by hand: the same process Claude Code
+    // starts from monitors.json, on this terminal, until Ctrl-C.
+    const args = [join(ROOT, 'monitors', 'commander-adiutor.mjs')];
+    if (o.once) args.push('--once');
+    if (o.poll) args.push('--poll', String(o.poll));
+    const r = spawnSync(process.execPath, args, { stdio: 'inherit' });
+    process.exit(r.status === null ? 1 : r.status);
+    break;
+  }
   default:
-    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | prune-plugin | list | check | build | resolve | forge | arm | disarm | doctor | controls | ledger | suggest\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --no-arm\n  prune-plugin  remove what the plugin CLI leaves under plugins/cache and plugins/marketplaces after uninstall; refuses while still registered\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C14\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose\n`);
+    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | prune-plugin | list | check | build | resolve | forge | arm | disarm | doctor | controls | ledger | suggest | watch\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --no-arm\n  prune-plugin  remove what the plugin CLI leaves under plugins/cache and plugins/marketplaces after uninstall; refuses while still registered\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C14\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose\n  watch     [--once] [--poll <ms>]   the Commander-Adiutor monitor by hand: one line per -dtd answer that failed its grammar\n`);
     process.exit(cmd ? 2 : 0);
 }

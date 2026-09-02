@@ -15,6 +15,10 @@
 // State lives under <claude dir>/rot-dtd-commander/ (ROT_DTD_STATE overrides):
 //   runs/<session>.json  the open run of a session
 //   ledger.tsv           one line per closed run, RECORD.run fields 1..10
+// The Commander-Adiutor monitor (monitors/commander-adiutor.mjs) is a separate
+// process that reads ledger.tsv and prints every failed run; it is not a hook
+// and nothing here imports it. lib/ledger.mjs is the one resolver of the state
+// directory and the one ledger reader both sides use.
 // Policy: ROT_DTD_ADIUTOR = off | warn | strict (default in POLICY_DEFAULT,
 // bound to ADIUTOR.policy.default in dtd/adiutor.dtd by the controls).
 
@@ -22,33 +26,22 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, append
 import { join, dirname, resolve as presolve, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { spawnSync } from 'node:child_process';
+import { spawnSync, spawn } from 'node:child_process';
 import os from 'node:os';
 import { readText, resolveFile, check, parseSubset, splitDoctype } from '../lib/dtd.mjs';
 import { expectedFromCommand, checkAnswer, prescribe } from '../lib/render-check.mjs';
 import { armSettings, disarmSettings, armedIn, EVENTS, hookCommand } from '../lib/arm.mjs';
+import { claudeDir, stateDir, ledgerPath, safeId, RECORD_FIELDS, parseLedger } from '../lib/ledger.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = presolve(HERE, '..');
 export const POLICY_DEFAULT = 'warn';
 const STRICT_MAX_BLOCKS = 1;
-const RECORD_FIELDS = ['ts', 'session', 'command', 'root', 'expected', 'tools', 'errors', 'status', 'findings', 'prescription'];
+export { parseLedger };
 
-function claudeDir() {
-  return process.env.CLAUDE_CONFIG_DIR ? presolve(process.env.CLAUDE_CONFIG_DIR) : join(os.homedir(), '.claude');
-}
-function stateDir() {
-  const d = process.env.ROT_DTD_STATE ? presolve(process.env.ROT_DTD_STATE) : join(claudeDir(), 'rot-dtd-commander');
-  mkdirSync(join(d, 'runs'), { recursive: true });
-  return d;
-}
 function policy() {
   const p = (process.env.ROT_DTD_ADIUTOR || POLICY_DEFAULT).toLowerCase();
   return ['off', 'warn', 'strict'].includes(p) ? p : POLICY_DEFAULT;
-}
-function safeId(s) {
-  const t = String(s || '').replace(/[^A-Za-z0-9-]/g, '');
-  return (t || 'unknown').slice(0, 64);
 }
 function runPath(session) {
   return join(stateDir(), 'runs', `${safeId(session)}.json`);
@@ -75,9 +68,6 @@ function dropRun(session) {
 function cdata(v) {
   return JSON.stringify(v === undefined ? '' : v);
 }
-function ledgerPath() {
-  return join(stateDir(), 'ledger.tsv');
-}
 export function ledgerLine(run, status, findings = [], prescription = null) {
   const fields = [
     new Date().toISOString(),
@@ -96,31 +86,6 @@ export function ledgerLine(run, status, findings = [], prescription = null) {
 function closeRun(run, status, findings = [], prescription = null) {
   appendFileSync(ledgerPath(), ledgerLine(run, status, findings, prescription) + '\n', 'utf8');
   dropRun(run.session);
-}
-export function parseLedger(text) {
-  const rows = [];
-  const bad = [];
-  for (const [i, line] of text.split('\n').entries()) {
-    if (!line.trim() || line.startsWith('#')) continue;
-    const cols = line.split('\t');
-    if (cols.length !== RECORD_FIELDS.length) {
-      bad.push({ line: i + 1, columns: cols.length });
-      continue;
-    }
-    const row = {};
-    RECORD_FIELDS.forEach((k, j) => {
-      row[k] = ['expected', 'errors', 'findings', 'prescription'].includes(k) ? safeParse(cols[j]) : cols[j];
-    });
-    rows.push(row);
-  }
-  return { rows, bad };
-}
-function safeParse(s) {
-  try {
-    return JSON.parse(s);
-  } catch {
-    return s;
-  }
 }
 
 // ---------- locating command files ----------
@@ -409,6 +374,30 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
   const npxInstalled = existsSync(manifestPath);
   const pluginActive = registered || leftovers.length > 0;
   row('plugin state', !(npxInstalled && pluginActive), pluginActive ? `plugin present (${registered ? 'registered' : 'not registered'}; ${leftovers.length} director${leftovers.length === 1 ? 'y' : 'ies'} under plugins/${npxInstalled ? '); the npx set is ALSO installed: keep one' : ')'}${registered ? '' : '; the plugin CLI left this behind: rdc prune-plugin removes it'}` : 'no plugin copy under plugins/cache, plugins/marketplaces or the registry');
+  // The monitor. On the npx path rdc install writes a skills-directory plugin
+  // under <target>/skills/rot-dtd-commander-adiutor/ whose monitors.json runs
+  // the copied script; on the plugin path the plugin's own monitors/monitors.json
+  // starts it. Only an npx set without its monitor plugin is a failure.
+  const monDir = join(target, 'skills', 'rot-dtd-commander-adiutor');
+  const monJson = join(monDir, 'monitors', 'monitors.json');
+  let monOk = true;
+  let monDetail;
+  if (existsSync(monJson)) {
+    try {
+      const mons = JSON.parse(readFileSync(monJson, 'utf8'));
+      const m = Array.isArray(mons) && mons.find((x) => x && x.name === 'commander-adiutor');
+      const script = m && /"([^"]+commander-adiutor\.mjs)"/.exec(String(m.command));
+      monOk = !!script && existsSync(script[1]);
+      monDetail = monOk ? `rot-dtd-commander-adiutor@skills-dir runs ${script[1]}` : `${monJson} names no commander-adiutor script that exists`;
+    } catch (e) {
+      monOk = false;
+      monDetail = `${monJson} does not parse: ${e.message}`;
+    }
+  } else if (npxInstalled) {
+    monOk = false;
+    monDetail = `not installed under ${monDir}; rdc install writes it`;
+  } else monDetail = 'no npx set here; a plugin install starts it from its own monitors/monitors.json';
+  row('monitor', monOk, monDetail);
   row('policy', true, `${policy()} (ROT_DTD_ADIUTOR=${process.env.ROT_DTD_ADIUTOR || 'unset'}; default ${POLICY_DEFAULT})`);
   for (const r of rows) io.log(`  ${r.ok ? 'OK  ' : 'FAIL'} ${r.name.padEnd(15)} ${r.detail}`);
   const bad = rows.filter((r) => !r.ok).length;
@@ -444,8 +433,16 @@ function control(name, fn, results) {
     results.push({ name, ok: false, detail: e.message });
   }
 }
+async function controlAsync(name, fn, results) {
+  try {
+    const r = await fn();
+    results.push({ name, ok: !!r.ok, detail: r.detail });
+  } catch (e) {
+    results.push({ name, ok: false, detail: e.message });
+  }
+}
 
-export function controls(io = console) {
+export async function controls(io = console) {
   const tmp = join(os.tmpdir(), `rot-dtd-adiutor-${process.pid}`);
   mkdirSync(join(tmp, 'runs'), { recursive: true });
   process.env.ROT_DTD_STATE = tmp;
@@ -635,6 +632,52 @@ export function controls(io = console) {
     return { ok: opened && io.lines.length === 1 && io.lines[0].includes('Adiutor armed') && notOpened && io2.lines.length === 0, detail: `opened=${opened} armed-line=${io.lines.length} unknown-ignored=${notOpened}` };
   }, results);
 
+  await controlAsync('C12 the monitor prints one line per failed run and one per malformed line, nothing for a pass, nothing for history, in the words of dtd/adiutor.dtd', async () => {
+    // The templates come from the contract, not from the monitor: a printed
+    // line that drifts from MONITOR.fail or MONITOR.malformed fails here.
+    const dtd = readText(join(ROOT, 'dtd', 'adiutor.dtd'));
+    const ent = (n) => (new RegExp(`<!ENTITY ${n.replace('.', '\\.')}\\s+"([^"]+)">`).exec(dtd) || [])[1] || '';
+    const tpl = (s) => new RegExp('^' + s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&').replace(/%[a-z]+%/g, '(.+?)') + '$');
+    const failT = tpl(ent('MONITOR.fail'));
+    const malT = tpl(ent('MONITOR.malformed'));
+    const mons = JSON.parse(readText(join(ROOT, 'monitors', 'monitors.json')));
+    const declared = Array.isArray(mons) && mons.length === 1 && mons[0].name === ent('MONITOR.name') && /monitors\/commander-adiutor\.mjs/.test(mons[0].command) && mons[0].when === 'always' && typeof mons[0].description === 'string';
+    // history: a failed run that closed BEFORE the monitor started is never printed
+    const lp = join(tmp, 'ledger.tsv');
+    const run = { session: 'S6', command: 'x-dtd', root: 'x', expected, tools: 0, errors: [] };
+    writeFileSync(lp, ledgerLine(run, 'fail', [{ msg: 'from history' }]) + '\n', 'utf8');
+    const child = spawn(process.execPath, [join(ROOT, 'monitors', 'commander-adiutor.mjs'), '--poll', '50'], { env: { ...process.env, ROT_DTD_STATE: tmp }, stdio: ['ignore', 'pipe', 'pipe'] });
+    let out = '';
+    let err = '';
+    child.stdout.on('data', (d) => (out += d));
+    child.stderr.on('data', (d) => (err += d));
+    const until = (pred, ms) =>
+      new Promise((res) => {
+        const t0 = Date.now();
+        const iv = setInterval(() => {
+          if (pred() || Date.now() - t0 > ms) {
+            clearInterval(iv);
+            res(pred());
+          }
+        }, 20);
+      });
+    const ready = await until(() => err.includes('watching'), 8000);
+    // then a pass, a fail with two findings, and a nine-column line
+    const failLine = ledgerLine(run, 'fail', [{ msg: 'missing heading Bottom Line' }, { msg: 'second finding' }]);
+    const nine = ledgerLine(run, 'pass').split('\t').slice(0, RECORD_FIELDS.length - 1).join('\t');
+    appendFileSync(lp, ledgerLine(run, 'pass') + '\n' + failLine + '\n' + nine + '\n', 'utf8');
+    const landed = readFileSync(lp, 'utf8').split('\n').filter(Boolean).length === 4 && nine.split('\t').length === RECORD_FIELDS.length - 1;
+    const got = await until(() => out.split('\n').filter(Boolean).length >= 2, 8000);
+    await new Promise((r) => setTimeout(r, 300)); // a third line, if the pass or the history leaked, lands here
+    child.kill();
+    const lines = out.split('\n').filter(Boolean);
+    const f = lines[0] ? failT.exec(lines[0]) : null;
+    const m = lines[1] ? malT.exec(lines[1]) : null;
+    const historySilent = !out.includes('from history');
+    const ok = declared && ready && landed && got && lines.length === 2 && !!f && f[1] === 'x-dtd' && f[2] === 'missing heading Bottom Line' && !!m && m[1] === '4' && m[2] === '9' && historySilent;
+    return { ok, detail: `declared=${declared} ready=${ready} landed=${landed} lines=${lines.length} fail-line=${!!f} malformed-line=${!!m} pass-silent=${lines.length === 2} history-silent=${historySilent}` };
+  }, results);
+
   for (const r of results) io.log(`  ${r.ok ? 'PASS' : 'FAIL'} ${r.name}: ${r.detail}`);
   const bad = results.filter((r) => !r.ok).length;
   io.log(`\ncontrols: ${results.length} run, ${bad} failing`);
@@ -681,7 +724,7 @@ if (isMain) {
       break;
     }
     case 'controls':
-      process.exit(controls() ? 0 : 1);
+      process.exit((await controls()) ? 0 : 1);
       break;
     default:
       console.log('adiutor: observe <event> | doctor | ledger [--last N] | suggest | arm [hookRoot] | disarm | controls');

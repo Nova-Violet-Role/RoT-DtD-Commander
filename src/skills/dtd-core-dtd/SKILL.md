@@ -53,7 +53,7 @@ The `subsets` under dtd/ are the external subsets a source file includes with `<
 - cc-ask.dtd: the AskUserQuestion grammar (intake, context_analysis, known, gap, ask, question, option, label, description, preview, answer, gate), the GATE.* strings, LAW.ASK.1 to 5.
 - cc-report.dtd: report, strategic_summary, section, claude_context, block, sources, source, artifact, LAW.REPORT.1 to 4.
 - cc-record.dtd: records, record, field with numbered append-only attributes, LAW.REC.1 to 4.
-- adiutor.dtd: the Adiutor contract (run, expected, heading, error, finding, prescription, charm, rite, the policy and status enumerations, RECORD.run, ADIUTOR.policy.default, LAW.ADIUTOR.1 to 6), read by bin/adiutor.mjs and bound to it by control C7.
+- adiutor.dtd: the Adiutor contract (run, expected, heading, error, finding, prescription, charm, rite, the policy and status enumerations, RECORD.run, ADIUTOR.policy.default, LAW.ADIUTOR.1 to 7; and the monitor with its emit lines, MONITOR.name, MONITOR.fail, MONITOR.malformed), read by bin/adiutor.mjs and bound to it by control C7, the monitor lines bound to monitors/commander-adiutor.mjs by control C12.
 For the full text read [references/subsets.md](references/subsets.md).
 
 </subsets>

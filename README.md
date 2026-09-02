@@ -10,15 +10,15 @@
 
 **Commands that carry their own grammar, and a doctor that reads it**
 
-*68 Claude Code slash commands, 19 skills and 4 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; and the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it*
+*68 Claude Code slash commands, 19 skills and 4 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it*
 
 [![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/saimonokuma)
 [![Nova-Violet Role](https://img.shields.io/badge/Nova--Violet-Role-9b59b6?style=for-the-badge)](https://github.com/Nova-Violet-Role)
 [![License](https://img.shields.io/badge/License-AGPL--3.0_OR_EUPL--1.2-764ba2?style=for-the-badge)](LICENSE)
 
 [![Checker](https://img.shields.io/badge/checked-91_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Contract](https://img.shields.io/badge/contract_audit-155_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-11_%2B_6-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Contract](https://img.shields.io/badge/contract_audit-161_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-12_%2B_6-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Listed on ClaudePluginHub](https://www.claudepluginhub.com/badge/nova-violet-role-rot-dtd-commander)](https://www.claudepluginhub.com/plugins/nova-violet-role-rot-dtd-commander?ref=badge)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
@@ -78,6 +78,13 @@ Every run is one line in a ledger. `/RoT-DtD-Commander-Adiutor` is the doctor
 that reads the ledger and prescribes. Nothing is described twice: the grammar
 the model was shown is the grammar the hook reads.
 
+Beside the hooks runs the **Commander-Adiutor**, a monitor: a separate
+process (`monitors/commander-adiutor.mjs`, not `bin/adiutor.mjs`) that tails
+the ledger and hands every answer that failed its grammar to the session the
+moment the run closes, one line each, nothing for a pass. It reads the ledger
+only, never a transcript, and the two lines it may print are declared in
+`dtd/adiutor.dtd`.
+
 The answer has one shape too. Every heading a command's grammar map declares
 is rendered as a markdown heading that carries the command's own sigil, with
 a blank line before it and after it:
@@ -104,7 +111,9 @@ The commands install into `~/.claude/commands` like any other. The hooks are
 added to `~/.claude/settings.json` by an additive merge that backs up first,
 preserves every key it did not add (deep-compared after re-reading from disk),
 and reverses with one command. A hook reads its payload, writes under its own
-state directory, spawns nothing, and exits.
+state directory, spawns nothing, and exits. The monitor is a plugin of its
+own, `~/.claude/skills/rot-dtd-commander-adiutor/`, that Claude Code loads by
+itself; it reads the ledger and prints, nothing more.
 
 ---
 
@@ -118,9 +127,14 @@ The installer is guided: it asks for the target (user-wide `~/.claude` by
 default, or the project's `./.claude`), lists what it will write, prints
 exactly what the Adiutor hooks do and where the `settings.json` backup goes,
 and waits for a `y`. Add `--yes` for a non-interactive install that prints the
-same statement and proceeds.
+same statement and proceeds. The install also writes the monitor as a small
+plugin under `~/.claude/skills/rot-dtd-commander-adiutor/` (a bare
+`~/.claude/monitors/` is not something Claude Code scans; a
+`.claude-plugin/plugin.json` under `skills/` is). It starts on the next
+session; `rdc watch` runs it by hand before then.
 
-As a plugin, from inside Claude Code:
+As a plugin, from inside Claude Code (the monitor starts from the plugin's own
+`monitors/monitors.json`):
 
 ```
 /plugin marketplace add Nova-Violet-Role/RoT-DtD-Commander
@@ -147,8 +161,9 @@ contract audit and the Adiutor run on Node alone.
 | `ROT_DTD_ADIUTOR` | `off`, `warn` (default), `strict` | `warn`: a failed answer gets a ledger line and a one-line system message. `strict`: the Stop is blocked **once** per run with the prescription as the reason; the second Stop always passes. `off`: ledger only. |
 | `ROT_DTD_STATE` | a directory | where the ledger and open runs live (default `~/.claude/rot-dtd-commander`) |
 
-Reverse everything: `rdc uninstall` removes every file in the manifest and
-disarms the hooks; `rdc disarm` removes only the hooks.
+Reverse everything: `rdc uninstall` removes every file in the manifest (the
+monitor plugin among them) and disarms the hooks; `rdc disarm` removes only
+the hooks.
 
 ---
 
@@ -219,11 +234,12 @@ organisation's own RoT MoE packet at v10.0.2 (the nine charters and the engine),
 `/check-todos-dtd`, `/run-plan-dtd`, `/heal-skill-dtd`, `/debug-dtd`, the
 `create-*-dtd` and `audit-*-dtd` wrappers, and `/RoT-DtD-Commander-Adiutor`.
 
-Eighteen skills load themselves when the description matches: the eleven
+Nineteen skills load themselves when the description matches: the eleven
 converted ones (`create-plans-dtd`, `create-slash-commands-dtd`,
-`debug-like-expert-dtd`, and the rest) and seven new: `dtd-core-dtd` (the
+`debug-like-expert-dtd`, and the rest) and eight new: `dtd-core-dtd` (the
 contract), `dtd-forge-dtd` (make a new command), `dtd-audit-dtd`,
-`ask-gate-dtd`, `phantom-library-dtd`, `records-dtd`, `dtd-eval-dtd`. Four
+`ask-gate-dtd`, `phantom-library-dtd`, `records-dtd`, `dtd-eval-dtd`, and
+`rot-lenses-dtd` (the nine lenses' rows, bands and hybrid law). Four
 agents audit the set: `slash-command-auditor-dtd`, `skill-auditor-dtd`,
 `subagent-auditor-dtd`, `dtd-contract-auditor`.
 
@@ -241,10 +257,22 @@ references (`E4`, `T1`, `A2`) defined somewhere in it. It does not judge
 whether the content is true; `NOTICE.md` §D says so in full.
 
 ```sh
-rdc doctor          # manifest vs disk, checker on installed files, hooks armed, settings parses, ledger sound
+rdc doctor          # manifest vs disk, checker on installed files, hooks armed, settings parses, ledger sound, monitor plugin present
 rdc ledger --last 5 # closed runs, ten numbered fields each
 rdc suggest         # a charm and a rite for every failed run
+rdc watch --once    # what the Commander-Adiutor monitor would have said for the ledger as it stands; without --once it keeps watching
 ```
+
+The monitor's two lines, verbatim from `dtd/adiutor.dtd`:
+
+```
+Adiutor: /pareto-dtd failed at Stop: required heading "Bottom Line" (element bottom_line) is absent. Run /RoT-DtD-Commander-Adiutor.
+Adiutor: ledger line 14 malformed (9 fields, expected 10). Run rdc doctor.
+```
+
+A pass prints nothing, and a run that closed before the monitor started is
+never replayed. Every stdout line of a monitor is a notification in the
+session, so it prints only what needs acting on.
 
 ---
 
@@ -323,7 +351,7 @@ and the rite (how the fix is verified). Under `ROT_DTD_ADIUTOR=strict` the
 Stop is blocked once with that prescription as the reason.
 
 <details>
-<summary><b>Watch: eleven guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding, C10 the answer of a run is every assistant text after the command prompt, C11 prune-plugin refuses while registered and removes the leftover)</summary>
+<summary><b>Watch: twelve guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding, C10 the answer of a run is every assistant text after the command prompt, C11 prune-plugin refuses while registered and removes the leftover, C12 the monitor prints one line per failed run and per malformed line, nothing for a pass or for history, in the DTD's words)</summary>
 
 ![controls](docs/gifs/adiutor-fail.gif)
 
@@ -352,7 +380,7 @@ nine rounds.
 
 ```sh
 rdc disarm       # remove only the hooks; files stay
-rdc uninstall    # remove every file the manifest lists, disarm, remove its own backups
+rdc uninstall    # remove every file the manifest lists (the monitor plugin among them), disarm, remove its own backups
 rdc prune-plugin # after `claude plugin uninstall` and `marketplace remove`: delete the cache the plugin CLI leaves behind
 ```
 
@@ -373,8 +401,10 @@ while the plugin is still registered.
 | every source passes rules C1 to C14 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
 | the committed resolved tree equals a fresh build | `rdc build --check`: `223 targets, 0 drifted` | 2026-09-02 |
 | the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil and a front-matter value YAML would misread | `bash checker/checker-controls.sh` | 2026-09-02 |
-| every declaration in the five subsets is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `155 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
-| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, and reads the whole turn after the command prompt | `node bin/adiutor.mjs controls`: `11 run, 0 failing` | 2026-09-02 |
+| every declaration in the five subsets and the Adiutor contract is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `161 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
+| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, reads the whole turn after the command prompt, and its monitor prints one line per failed run and one per malformed ledger line in the DTD's words, nothing for a pass and nothing for history | `node bin/adiutor.mjs controls`: `12 run, 0 failing` | 2026-09-02 |
+| `rdc install` writes the monitor as `skills/rot-dtd-commander-adiutor/` (a `.claude-plugin/plugin.json` and a `monitors/monitors.json` running the copied script), the doctor's `monitor` row is green, and `rdc uninstall` leaves `skills/` empty | `rdc install --yes --target <scratch> --only pareto-dtd`: `written 17`; `CLAUDE_CONFIG_DIR=<scratch> node bin/adiutor.mjs doctor`: `11 checks, 0 failing`; `rdc uninstall --yes --target <scratch>`: `removed 17  kept 0` | 2026-09-02 |
+| the repository is a valid plugin with its monitor declared | `claude plugin validate .`: `Validation passed` | 2026-09-02 |
 | a live `/pareto-dtd` turn in a fresh headless session, through the armed hooks, closes as `pass` in the ledger | `MSYS_NO_PATHCONV=1 claude -p "/pareto-dtd ..." --dangerously-skip-permissions`, then `rdc ledger --last 1` | 2026-09-02 |
 | a live `/rot-chroma-dtd ... --no-gate` turn renders all thirteen lens headings with the sigil and closes as `pass` | the same, then `rdc ledger --last 1` | 2026-09-02 |
 | the marketplace round-trip (add, install, uninstall, remove) leaves the registry clean and the npx set intact; the doctor turns its `plugin state` and `double install` rows red while both are installed, and red again on the cache directory the plugin CLI leaves behind, which `rdc prune-plugin` removes (and refuses to touch while the plugin is registered) | `claude plugin marketplace add Nova-Violet-Role/RoT-DtD-Commander`, `claude plugin install rot-dtd-commander@rot-dtd-commander`, `rdc doctor`, `claude plugin uninstall ...`, `claude plugin marketplace remove rot-dtd-commander`, `rdc prune-plugin`, `rdc doctor` | 2026-09-02 |
@@ -396,13 +426,14 @@ cd RoT-DtD-Commander
 npm run gate; echo "exit=$?"
 ```
 
-`gate` runs `build --check`, `check`, the eight Adiutor controls, the contract audit, the checker controls and the
+`gate` runs `build --check`, `check`, the twelve Adiutor controls, the contract audit, the checker controls and the
 two sweeps; each ends with a line of counts, and the exit code is read
 directly. Then break it:
 
 ```sh
 bash checker/checker-controls.sh      # six mutations and one untouched file, each asserted present, each refused
-node bin/adiutor.mjs controls         # eleven guards; C3 is the strict block, once and never twice
+node bin/adiutor.mjs controls         # twelve guards; C3 is the strict block, once and never twice; C12 is the monitor, tripped live
+rdc watch --once                      # the monitor over your own ledger: one line per failed run, silence for a pass
 ```
 
 A guard nobody has tripped on purpose is decoration. Every one here has been.

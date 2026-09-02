@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
 # Copyright 2026 Saimonokuma.
 cff-version: 1.2.0
-title: "RoT DtD Commander - Claude Code commands that carry their own DTD, an NPX installer, and the Adiutor Stop-hook doctor"
+title: "RoT DtD Commander - Claude Code commands that carry their own DTD, an NPX installer, the Adiutor Stop-hook doctor and the Commander-Adiutor monitor"
 message: "If you use this software, please cite it as below."
 type: software
 authors:
@@ -12,7 +12,7 @@ repository-code: "https://github.com/Nova-Violet-Role/RoT-DtD-Commander"
 license:
   - AGPL-3.0-or-later
   - EUPL-1.2
-version: 3.2.0
+version: 4.0.0
 date-released: 2026-09-02
 abstract: >-
   Sixty-eight Claude Code slash commands (the nine RoT MoE lenses and their ELEVATE among them), nineteen skills and four agents whose
@@ -25,8 +25,10 @@ abstract: >-
   byte-level re-read. The Adiutor is a Stop hook plus a ledger plus a doctor
   command: it reads the DOCTYPE of the command that produced an answer, checks
   the rendered answer against it, records every run under a numbered
-  append-only record, and prescribes. Eight controls trip every guard on
-  purpose before the guard is trusted.
+  append-only record, and prescribes. The Commander-Adiutor is the monitor
+  beside it: a separate process that reads the ledger only and hands every
+  failed answer to the session as the run closes. Twelve controls trip every
+  guard on purpose before the guard is trusted.
 keywords:
   - "claude-code"
   - "dtd"

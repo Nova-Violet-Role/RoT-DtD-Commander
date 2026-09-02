@@ -219,7 +219,7 @@ The numbered, append-only field discipline for any file one session writes and a
 
 ## adiutor.dtd
 
-The Adiutor contract: a run with its expected headings, errors, findings and prescription; the policy and status enumerations; RECORD.run, the ten-field ledger line; ADIUTOR.policy.default bound to the code by control C7; LAW.ADIUTOR.1 to 6. Read by bin/adiutor.mjs and its controls; included by the Adiutor command.
+The Adiutor contract: a run with its expected headings, errors, findings and prescription; the policy and status enumerations; RECORD.run, the ten-field ledger line; ADIUTOR.policy.default bound to the code by control C7; the monitor and its emit lines, MONITOR.name, MONITOR.fail and MONITOR.malformed bound to monitors/commander-adiutor.mjs by control C12; LAW.ADIUTOR.1 to 7. Read by bin/adiutor.mjs and its controls; included by the Adiutor command.
 
 ```dtd
 <!--
@@ -228,12 +228,18 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 
   adiutor.dtd : the contract of the RoT DtD Commander Adiutor.
 
-  The Adiutor is a Stop hook plus a ledger plus a doctor command. It reads
-  the DOCTYPE of the -dtd command that produced an answer and checks the
-  rendered answer against it. This file declares the run, its states, its
-  policy and the ledger record. checker/adiutor-controls runs both ways:
-  the policy default declared here must equal the code default in
-  bin/adiutor.mjs, and every RECORD.run field must be written by the code.
+  The Adiutor is a Stop hook plus a ledger plus a doctor command, and the
+  Commander-Adiutor is the monitor beside it. The hooks (bin/adiutor.mjs)
+  read the DOCTYPE of the -dtd command that produced an answer, check the
+  rendered answer against it and close the run as one ledger line. The
+  monitor (monitors/commander-adiutor.mjs) reads that ledger only and hands
+  every failed run to the session as it closes; it never reads a
+  transcript and never judges. This file declares the run, its states, its
+  policy, the ledger record and the two lines the monitor may print.
+  `node bin/adiutor.mjs controls` runs both ways: the policy default
+  declared here must equal the code default in bin/adiutor.mjs, every
+  RECORD.run field must be written by the code (C7), and the monitor's
+  printed lines must match MONITOR.fail and MONITOR.malformed (C12).
 -->
 
 <!ENTITY % policy "(off|warn|strict)">
@@ -259,9 +265,22 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ELEMENT charm (#PCDATA)>
 <!ELEMENT rite (#PCDATA)>
 
+<!-- The monitor's whole output: zero or more emitted lines, each of one
+     of two kinds. A pass emits nothing. -->
+<!ELEMENT monitor (emit*)>
+<!ATTLIST monitor name NMTOKEN #FIXED "commander-adiutor">
+<!ELEMENT emit (#PCDATA)>
+<!ATTLIST emit kind (fail|malformed) #REQUIRED>
+
 <!ENTITY ADIUTOR.policy.default "warn">
 <!ENTITY ADIUTOR.strict.max_blocks "1">
 <!ENTITY RECORD.run "run|ledger.tsv|1=ts:PCDATA@1|2=session:PCDATA@1|3=command:PCDATA@1|4=root:PCDATA@1|5=expected:CDATA@1|6=tools:PCDATA@1|7=errors:CDATA@1|8=status:PCDATA@1|9=findings:CDATA@1|10=prescription:CDATA@1">
+
+<!-- The two lines the monitor may print. %name% marks the one field taken
+     from the ledger row or the reader; the rest is literal. -->
+<!ENTITY MONITOR.name      "commander-adiutor">
+<!ENTITY MONITOR.fail      "Adiutor: /%command% failed at Stop: %finding%. Run /RoT-DtD-Commander-Adiutor.">
+<!ENTITY MONITOR.malformed "Adiutor: ledger line %line% malformed (%columns% fields, expected 10). Run rdc doctor.">
 
 <!ENTITY LAW.ADIUTOR.1 "A run opens only for a slash command whose installed file carries a DOCTYPE; the expected headings are derived from that file's grammar_map, never typed twice.">
 <!ENTITY LAW.ADIUTOR.2 "The answer judged is the last assistant text of the transcript that is not a sidechain; a torn last line is tolerated and never a finding.">
@@ -269,4 +288,5 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ENTITY LAW.ADIUTOR.4 "The Adiutor edits no file the user owns and spawns no process from a hook; it writes only under its own state directory and, when arming, settings.json with a backup first.">
 <!ENTITY LAW.ADIUTOR.5 "Every closed run is one ledger line with the ten RECORD.run fields in order; a line with more or fewer columns is refused by the reader.">
 <!ENTITY LAW.ADIUTOR.6 "Every guard has a control that was tripped on purpose before the guard was trusted.">
+<!ENTITY LAW.ADIUTOR.7 "The monitor reads the ledger and nothing else: one MONITOR.fail line per run closed as fail, one MONITOR.malformed line per line the reader refuses, nothing for a pass, and never a line for a run that closed before it started.">
 ```
