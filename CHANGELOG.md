@@ -30,7 +30,7 @@ First public release.
   a reversible arm of the hooks.
 - Twenty new commands drawn from the Phantom Books shelf, four power-ups with
   the AskUserQuestion grammar, seven new skills, four auditor agents.
-- SPDX headers in every source file (`checker/spdx-sweep.sh`: 230 checked,
+- SPDX headers in every source file (`checker/spdx-sweep.sh`: 244 checked,
   0 missing); no carriage returns anywhere (`checker/crlf-sweep.sh`).
 - Licence: AGPL-3.0-or-later OR EUPL-1.2, with MIT portions from
   taches-cc-resources declared in `NOTICE.md`.
