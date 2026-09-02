@@ -17,7 +17,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
   %cc-schematic;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
-  <!ELEMENT prompt_forge (args, intake, sections, embedding, file, guards, proof, assumption_made*)>
+  <!ELEMENT prompt_forge (args, intake, sections, schemas, embedding, file, guards, proof, assumption_made*)>
   <!ELEMENT embedding (#PCDATA)>
   <!ELEMENT file (#PCDATA)>
   <!ELEMENT guards (guard+)>
@@ -30,19 +30,18 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
   <!ENTITY LAW.PROMPT.2 "The sections are those of SCHEMA.prompt.sections, rendered in that order; the argument words are embedded through SCHEMA.yaml.reference and SCHEMA.yaml.literal in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).">
   <!ENTITY LAW.PROMPT.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.">
   <!ENTITY LAW.PROMPT.4 "The file takes the extension SCHEMA.ext.yaml, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).">
-  <!ENTITY LAW.PROMPT.5 "The proof reads the file back, runs the guards, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
+  <!ENTITY LAW.PROMPT.5 "The proof reads the file back, runs the guards, checks the sections and the schema parts are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
+  <!ENTITY LAW.PROMPT.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by the rules SEMANTIC.yaml.part, SEMANTIC.yaml.many and SEMANTIC.yaml.label; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8).">
   <!ENTITY ASK.PROMPT.1 "Name|What is the prompt called?|A kebab-case name from the argument|The name of the task it performs|A name typed under Other|Undecided, ask again after the objective">
   <!ENTITY ASK.PROMPT.2 "Objective|What does the prompt make its reader do?|The one task named in the argument, stated as a verb and an object|A judgement with a declared verdict vocabulary|A transformation of an input into an output form|Typed under Other">
   <!ENTITY ASK.PROMPT.3 "Reader|Who reads it?|A Claude Code session, as a slash command|A model called through an API|A person, as a checklist|Typed under Other">
   <!ENTITY ASK.PROMPT.4 "Arguments|How does it read its arguments?|The cc-args walk: flags removed, the end token, positional words quoted whole|A single free sentence|Named options only|None">
-  <!ENTITY ASK.PROMPT.5 "Sections|Which sections does it carry?|The six of SCHEMA.prompt.sections, in order|The six plus worked examples|Objective and process only, the rest one line each|Typed under Other">
-  <!ENTITY ASK.PROMPT.6 "Voice|Which voice profile?|Original, prepared, factual, the text_desc defaults|Paraphrase of a named source, cited|Spontaneous|Typed under Other">
-  <!ENTITY ASK.PROMPT.7 "Length|How long?|Under three hundred words of the prompt's own voice|Under one hundred|As long as the sections need|Typed under Other">
-  <!ENTITY ASK.PROMPT.8 "Examples|How many worked examples?|One|Three|None|Typed under Other">
-  <!ENTITY ASK.PROMPT.9 "Output|In which form does it render its answer?|NestedText, the default form|Markdown with the five callouts|YAML block scalars|Typed under Other">
-  <!ENTITY ASK.PROMPT.10 "Record|Where does a run record?|artifacts under the prompt name, command-generated filename|Nowhere|Typed under Other|Undecided">
-  <!ENTITY ASK.PROMPT.11 "Proof|How is it proven?|Read back, guards run, sections in order, one out-of-table syntax planted and refused|Read back only|None, which this command refuses|Typed under Other">
-  <!ENTITY ASK.PROMPT.12 "License|Which SPDX header heads the file?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other">
+  <!ENTITY ASK.PROMPT.5 "Voice|Which voice profile?|Original, prepared, factual, the text_desc defaults|Paraphrase of a named source, cited|Spontaneous|Typed under Other">
+  <!ENTITY ASK.PROMPT.6 "Length|How long?|Under three hundred words of the prompt's own voice|Under one hundred|As long as the sections need|Typed under Other">
+  <!ENTITY ASK.PROMPT.7 "Output|In which form does it render its answer?|NestedText, the default form|Markdown with the five callouts|YAML block scalars|Typed under Other">
+  <!ENTITY ASK.PROMPT.8 "Record|Where does a run record?|artifacts under the prompt name, command-generated filename|Nowhere|Typed under Other|Undecided">
+  <!ENTITY ASK.PROMPT.9 "Proof|How is it proven?|Read back, guards run, sections and schema parts in order, one out-of-table syntax planted and refused|Read back only|None, which this command refuses|Typed under Other">
+  <!ENTITY ASK.PROMPT.10 "License|Which SPDX header heads the file?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other">
 ]>
 
 <trust_boundary>
@@ -63,8 +62,8 @@ The schematic is pinned: each section a key with a block scalar, the strip indic
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.PROMPT.1 to ASK.PROMPT.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.PROMPT.5 to ASK.PROMPT.8; on more again, round 3 of 3 with ASK.PROMPT.9 to ASK.PROMPT.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
-4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `embedding`: the reference syntax SCHEMA.yaml.reference, the literal syntax SCHEMA.yaml.literal, and the cc-args class chosen for the argument words.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 and ASK.SCHEMA.2 (both multi-select) then ASK.PROMPT.5 and ASK.PROMPT.6; on more again, round 3 of 3 with ASK.PROMPT.7 to ASK.PROMPT.10; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered by SEMANTIC.yaml.part, SEMANTIC.yaml.many and SEMANTIC.yaml.label (LAW.PROMPT.6); render the `embedding`: the reference syntax SCHEMA.yaml.reference, the literal syntax SCHEMA.yaml.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.yaml: a YAML document, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.PROMPT.4).
 6. Run the cc-form guards on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
 7. Run the proof: the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with tripped yes (LAW.SCHEMA.5).
@@ -77,6 +76,7 @@ Render the `prompt_forge` root declared in the DOCTYPE as the markdown below. On
 - `args`: **🧷 Args**, the launch walk: count, the flags, the positional words
 - `intake`: **🧷 Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice
 - `sections`: **🧷 Sections**, one line per section in order with its first line
+- `schemas`: **🧷 Schemas**, one line per semantic schema chosen with its parts in order, or one line saying none
 - `embedding`: **🧷 Embedding**, the reference syntax, the literal syntax, the class
 - `file`: **🧷 File**, the path and the bytes, and the file itself under --verbose
 - `guards`: **🧷 Guards**, one line per guard with held yes or no
@@ -98,6 +98,10 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 ### 🧷 Sections
 
 - [section]: [its first line]
+
+### 🧷 Schemas
+
+- [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset]: parts [in order, occurs one, optional or many], rendered by the yaml part, many and label rules; or: none, the sections alone
 
 ### 🧷 Embedding
 
@@ -124,6 +128,7 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
 - Round one ran before any file was written
 - Every syntax in the file is one the SCHEMA.yaml.* table declares
 - The argument words are embedded in a declared class and never evaluated
+- Every schema chosen carries its parts in order by the form rules, and no required part is missing
 - Every guard held, the sections are in order, and the planted syntax was refused
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

@@ -371,11 +371,63 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY SCHEMA.ext.xml      "md">
 <!ENTITY SCHEMA.ext.polyglot "md">
 
+<!-- ===== THE SEMANTIC SCHEMAS, in every form =====
+     A schema says what parts a body carries and in what order, after the
+     DocBook and TEI shapes: a refentry is a manual page, a qandaset a set
+     of questions and answers, a procedure numbered steps, a glossary terms
+     with definitions and locators, a textdesc the situational profile of a
+     voice, a msgset a catalogue of messages, a productionset a grammar.
+     The schema is chosen independently of the form: every form declares
+     one rule for a part, one for a repeated part and one for a label, and
+     the schema's parts render by those rules. -->
+<!ELEMENT schemas (semantic*)>
+<!ELEMENT semantic (part+)>
+<!ATTLIST semantic name (refentry|qandaset|procedure|glossary|textdesc|msgset|productionset) #REQUIRED>
+<!ELEMENT part EMPTY>
+<!ATTLIST part
+          name   NMTOKEN #REQUIRED
+          occurs (one|optional|many) "one">
+
+<!ENTITY SEMANTIC.refentry.parts      "refname, refpurpose, synopsis, description, options (many), examples (optional), see_also (optional)">
+<!ENTITY SEMANTIC.qandaset.parts      "label (optional), question, answer (many)">
+<!ENTITY SEMANTIC.procedure.parts     "title, prerequisite (optional), step (many), substeps (optional), alternatives (optional), result">
+<!ENTITY SEMANTIC.glossary.parts      "term, acronym (optional), definition (many), see_also (optional), locator">
+<!ENTITY SEMANTIC.textdesc.parts      "derivation, domain, factuality, preparedness, purpose, degree (optional)">
+<!ENTITY SEMANTIC.msgset.parts        "message, level, origin (optional), audience (optional), explanation (many)">
+<!ENTITY SEMANTIC.productionset.parts "lhs, rhs, constraint (many)">
+
+<!-- how one part, a repeated part and a label render, per form -->
+<!ENTITY SEMANTIC.callout.part   "one typed callout per part, its body the part's text">
+<!ENTITY SEMANTIC.callout.many   "one callout per occurrence, numbered in the title">
+<!ENTITY SEMANTIC.callout.label  "the callout title, after the type">
+<!ENTITY SEMANTIC.callout.types  "NOTE for a descriptive part, IMPORTANT for a required part, WARNING for a constraint, TIP for an example, CAUTION for a hazard">
+<!ENTITY SEMANTIC.heredoc.part   "one shell variable per part, its value a quoted heredoc">
+<!ENTITY SEMANTIC.heredoc.many   "an indexed array, one element per occurrence">
+<!ENTITY SEMANTIC.heredoc.label  "the variable name, upper case, the part name">
+<!ENTITY SEMANTIC.yaml.part      "one key per part with a block scalar, the strip indicator">
+<!ENTITY SEMANTIC.yaml.many      "a sequence under the key, one item per occurrence">
+<!ENTITY SEMANTIC.yaml.label     "the key, the part name in lower case">
+<!ENTITY SEMANTIC.nt.part        "one key per part with a multiline string">
+<!ENTITY SEMANTIC.nt.many        "a list under the key, one item per occurrence">
+<!ENTITY SEMANTIC.nt.label       "the key, the part name in lower case">
+<!ENTITY SEMANTIC.xml.part       "one element per part under a DOCTYPE that declares the schema as a sequence">
+<!ENTITY SEMANTIC.xml.many       "the element repeated, declared with a plus">
+<!ENTITY SEMANTIC.xml.label      "the element name, the part name">
+<!ENTITY SEMANTIC.polyglot.part  "the outermost layer's part rule, the inner layers literal to it">
+<!ENTITY SEMANTIC.polyglot.many  "the outermost layer's many rule">
+<!ENTITY SEMANTIC.polyglot.label "the outermost layer's label rule">
+
+<!ENTITY ASK.SCHEMA.1 "Schema A|Which semantic schema shapes the body? Pick any.|None, the six sections alone|A refentry, a manual page|A qandaset, questions and answers|A procedure, numbered steps">
+<!ENTITY ASK.SCHEMA.2 "Schema B|Which more? Pick any.|A glossary, terms with definitions and locators|A textdesc, the voice profile|A msgset, a catalogue of messages|A productionset, a grammar">
+
 <!ENTITY LAW.SCHEMA.1 "A prompt is written in one declared schematic, and every concept it uses, literal, expanded, reference, definition, escape, comment, include, conditional, type or binary, takes the syntax the SCHEMA entity of that schematic declares; a syntax improvised outside the table is a failed answer.">
 <!ENTITY LAW.SCHEMA.2 "The argument words are embedded through the schematic's reference and literal concepts and in one of the cc-args classes, and the whole argument string is treated as quoted; a word is never evaluated, never split, never placed where the schematic's parser would read it as markup.">
 <!ENTITY LAW.SCHEMA.3 "A prompt carries the six sections of SCHEMA.prompt.sections in that order, and a meta-prompt the six of SCHEMA.meta.sections; a section with nothing to say still appears, with one line saying so.">
 <!ENTITY LAW.SCHEMA.4 "The file written passes the cc-form guards of its kind before it is reported, and its extension is the SCHEMA.ext entity of its schematic; a callout prompt uses only the five GitHub types.">
 <!ENTITY LAW.SCHEMA.5 "The creator writes the prompt and its record and runs the proof; the proof reads the file back, runs the guards, checks the sections are present in order, and plants one out-of-table syntax to show it refused.">
+<!ENTITY LAW.SCHEMA.6 "A body may carry any number of semantic schemas, chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 independently of the schematic; each chosen schema is rendered as a semantic element whose parts are those of its SEMANTIC.*.parts entity, in that order, with occurs one, optional or many as declared.">
+<!ENTITY LAW.SCHEMA.7 "A schema's parts render by the form's three rules, SEMANTIC.form.part, SEMANTIC.form.many and SEMANTIC.form.label, where form is the schematic name; in the callout form the type of each part follows SEMANTIC.callout.types; a part rendered outside those rules is a failed answer.">
+<!ENTITY LAW.SCHEMA.8 "A part that occurs one and is missing is a failed answer; a part that occurs optional may be absent; a part that occurs many carries at least one occurrence, each rendered by the many rule.">
 <!-- end subset cc-schematic -->
 
   
@@ -488,7 +540,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY LAW.ASK.12 "The token ASK.back typed into Other returns to the question just asked, which is asked again without loss of the answers already taken; it is a navigation token, never an answer.">
 <!-- end subset cc-ask -->
 
-  <!ELEMENT prompt_forge (args, intake, sections, embedding, file, guards, proof, assumption_made*)>
+  <!ELEMENT prompt_forge (args, intake, sections, schemas, embedding, file, guards, proof, assumption_made*)>
   <!ELEMENT embedding (#PCDATA)>
   <!ELEMENT file (#PCDATA)>
   <!ELEMENT guards (guard+)>
@@ -501,19 +553,18 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
   <!ENTITY LAW.PROMPT.2 "The sections are those of SCHEMA.prompt.sections, rendered in that order; the argument words are embedded through SCHEMA.polyglot.reference and SCHEMA.polyglot.literal in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).">
   <!ENTITY LAW.PROMPT.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.">
   <!ENTITY LAW.PROMPT.4 "The file takes the extension SCHEMA.ext.polyglot, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).">
-  <!ENTITY LAW.PROMPT.5 "The proof reads the file back, runs the guards, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
+  <!ENTITY LAW.PROMPT.5 "The proof reads the file back, runs the guards, checks the sections and the schema parts are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
+  <!ENTITY LAW.PROMPT.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by the rules SEMANTIC.polyglot.part, SEMANTIC.polyglot.many and SEMANTIC.polyglot.label; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8).">
   <!ENTITY ASK.PROMPT.1 "Name|What is the prompt called?|A kebab-case name from the argument|The name of the task it performs|A name typed under Other|Undecided, ask again after the objective">
   <!ENTITY ASK.PROMPT.2 "Objective|What does the prompt make its reader do?|The one task named in the argument, stated as a verb and an object|A judgement with a declared verdict vocabulary|A transformation of an input into an output form|Typed under Other">
   <!ENTITY ASK.PROMPT.3 "Reader|Who reads it?|A Claude Code session, as a slash command|A model called through an API|A person, as a checklist|Typed under Other">
   <!ENTITY ASK.PROMPT.4 "Arguments|How does it read its arguments?|The cc-args walk: flags removed, the end token, positional words quoted whole|A single free sentence|Named options only|None">
-  <!ENTITY ASK.PROMPT.5 "Sections|Which sections does it carry?|The six of SCHEMA.prompt.sections, in order|The six plus worked examples|Objective and process only, the rest one line each|Typed under Other">
-  <!ENTITY ASK.PROMPT.6 "Voice|Which voice profile?|Original, prepared, factual, the text_desc defaults|Paraphrase of a named source, cited|Spontaneous|Typed under Other">
-  <!ENTITY ASK.PROMPT.7 "Length|How long?|Under three hundred words of the prompt's own voice|Under one hundred|As long as the sections need|Typed under Other">
-  <!ENTITY ASK.PROMPT.8 "Examples|How many worked examples?|One|Three|None|Typed under Other">
-  <!ENTITY ASK.PROMPT.9 "Output|In which form does it render its answer?|NestedText, the default form|Markdown with the five callouts|YAML block scalars|Typed under Other">
-  <!ENTITY ASK.PROMPT.10 "Record|Where does a run record?|artifacts under the prompt name, command-generated filename|Nowhere|Typed under Other|Undecided">
-  <!ENTITY ASK.PROMPT.11 "Proof|How is it proven?|Read back, guards run, sections in order, one out-of-table syntax planted and refused|Read back only|None, which this command refuses|Typed under Other">
-  <!ENTITY ASK.PROMPT.12 "License|Which SPDX header heads the file?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other">
+  <!ENTITY ASK.PROMPT.5 "Voice|Which voice profile?|Original, prepared, factual, the text_desc defaults|Paraphrase of a named source, cited|Spontaneous|Typed under Other">
+  <!ENTITY ASK.PROMPT.6 "Length|How long?|Under three hundred words of the prompt's own voice|Under one hundred|As long as the sections need|Typed under Other">
+  <!ENTITY ASK.PROMPT.7 "Output|In which form does it render its answer?|NestedText, the default form|Markdown with the five callouts|YAML block scalars|Typed under Other">
+  <!ENTITY ASK.PROMPT.8 "Record|Where does a run record?|artifacts under the prompt name, command-generated filename|Nowhere|Typed under Other|Undecided">
+  <!ENTITY ASK.PROMPT.9 "Proof|How is it proven?|Read back, guards run, sections and schema parts in order, one out-of-table syntax planted and refused|Read back only|None, which this command refuses|Typed under Other">
+  <!ENTITY ASK.PROMPT.10 "License|Which SPDX header heads the file?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other">
 ]>
 
 <trust_boundary>
@@ -534,8 +585,8 @@ The schematic is pinned: Markdown with YAML front matter holding a NestedText bl
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.PROMPT.1 to ASK.PROMPT.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.PROMPT.5 to ASK.PROMPT.8; on more again, round 3 of 3 with ASK.PROMPT.9 to ASK.PROMPT.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
-4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `embedding`: the reference syntax SCHEMA.polyglot.reference, the literal syntax SCHEMA.polyglot.literal, and the cc-args class chosen for the argument words.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 and ASK.SCHEMA.2 (both multi-select) then ASK.PROMPT.5 and ASK.PROMPT.6; on more again, round 3 of 3 with ASK.PROMPT.7 to ASK.PROMPT.10; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered by SEMANTIC.polyglot.part, SEMANTIC.polyglot.many and SEMANTIC.polyglot.label (LAW.PROMPT.6); render the `embedding`: the reference syntax SCHEMA.polyglot.reference, the literal syntax SCHEMA.polyglot.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.md: a polyglot of more than one parser, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.PROMPT.4).
 6. Run the cc-form guards on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
 7. Run the proof: the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with tripped yes (LAW.SCHEMA.5).
@@ -548,6 +599,7 @@ Render the `prompt_forge` root declared in the DOCTYPE as the markdown below. On
 - `args`: **🎴 Args**, the launch walk: count, the flags, the positional words
 - `intake`: **🎴 Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice
 - `sections`: **🎴 Sections**, one line per section in order with its first line
+- `schemas`: **🎴 Schemas**, one line per semantic schema chosen with its parts in order, or one line saying none
 - `embedding`: **🎴 Embedding**, the reference syntax, the literal syntax, the class
 - `file`: **🎴 File**, the path and the bytes, and the file itself under --verbose
 - `guards`: **🎴 Guards**, one line per guard with held yes or no
@@ -569,6 +621,10 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 ### 🎴 Sections
 
 - [section]: [its first line]
+
+### 🎴 Schemas
+
+- [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset]: parts [in order, occurs one, optional or many], rendered by the polyglot part, many and label rules; or: none, the sections alone
 
 ### 🎴 Embedding
 
@@ -595,6 +651,7 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
 - Round one ran before any file was written
 - Every syntax in the file is one the SCHEMA.polyglot.* table declares
 - The argument words are embedded in a declared class and never evaluated
+- Every schema chosen carries its parts in order by the form rules, and no required part is missing
 - Every guard held, the sections are in order, and the planted syntax was refused
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

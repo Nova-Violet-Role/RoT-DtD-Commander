@@ -912,11 +912,63 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SCHEMA.ext.xml      "md">
 <!ENTITY SCHEMA.ext.polyglot "md">
 
+<!-- ===== THE SEMANTIC SCHEMAS, in every form =====
+     A schema says what parts a body carries and in what order, after the
+     DocBook and TEI shapes: a refentry is a manual page, a qandaset a set
+     of questions and answers, a procedure numbered steps, a glossary terms
+     with definitions and locators, a textdesc the situational profile of a
+     voice, a msgset a catalogue of messages, a productionset a grammar.
+     The schema is chosen independently of the form: every form declares
+     one rule for a part, one for a repeated part and one for a label, and
+     the schema's parts render by those rules. -->
+<!ELEMENT schemas (semantic*)>
+<!ELEMENT semantic (part+)>
+<!ATTLIST semantic name (refentry|qandaset|procedure|glossary|textdesc|msgset|productionset) #REQUIRED>
+<!ELEMENT part EMPTY>
+<!ATTLIST part
+          name   NMTOKEN #REQUIRED
+          occurs (one|optional|many) "one">
+
+<!ENTITY SEMANTIC.refentry.parts      "refname, refpurpose, synopsis, description, options (many), examples (optional), see_also (optional)">
+<!ENTITY SEMANTIC.qandaset.parts      "label (optional), question, answer (many)">
+<!ENTITY SEMANTIC.procedure.parts     "title, prerequisite (optional), step (many), substeps (optional), alternatives (optional), result">
+<!ENTITY SEMANTIC.glossary.parts      "term, acronym (optional), definition (many), see_also (optional), locator">
+<!ENTITY SEMANTIC.textdesc.parts      "derivation, domain, factuality, preparedness, purpose, degree (optional)">
+<!ENTITY SEMANTIC.msgset.parts        "message, level, origin (optional), audience (optional), explanation (many)">
+<!ENTITY SEMANTIC.productionset.parts "lhs, rhs, constraint (many)">
+
+<!-- how one part, a repeated part and a label render, per form -->
+<!ENTITY SEMANTIC.callout.part   "one typed callout per part, its body the part's text">
+<!ENTITY SEMANTIC.callout.many   "one callout per occurrence, numbered in the title">
+<!ENTITY SEMANTIC.callout.label  "the callout title, after the type">
+<!ENTITY SEMANTIC.callout.types  "NOTE for a descriptive part, IMPORTANT for a required part, WARNING for a constraint, TIP for an example, CAUTION for a hazard">
+<!ENTITY SEMANTIC.heredoc.part   "one shell variable per part, its value a quoted heredoc">
+<!ENTITY SEMANTIC.heredoc.many   "an indexed array, one element per occurrence">
+<!ENTITY SEMANTIC.heredoc.label  "the variable name, upper case, the part name">
+<!ENTITY SEMANTIC.yaml.part      "one key per part with a block scalar, the strip indicator">
+<!ENTITY SEMANTIC.yaml.many      "a sequence under the key, one item per occurrence">
+<!ENTITY SEMANTIC.yaml.label     "the key, the part name in lower case">
+<!ENTITY SEMANTIC.nt.part        "one key per part with a multiline string">
+<!ENTITY SEMANTIC.nt.many        "a list under the key, one item per occurrence">
+<!ENTITY SEMANTIC.nt.label       "the key, the part name in lower case">
+<!ENTITY SEMANTIC.xml.part       "one element per part under a DOCTYPE that declares the schema as a sequence">
+<!ENTITY SEMANTIC.xml.many       "the element repeated, declared with a plus">
+<!ENTITY SEMANTIC.xml.label      "the element name, the part name">
+<!ENTITY SEMANTIC.polyglot.part  "the outermost layer's part rule, the inner layers literal to it">
+<!ENTITY SEMANTIC.polyglot.many  "the outermost layer's many rule">
+<!ENTITY SEMANTIC.polyglot.label "the outermost layer's label rule">
+
+<!ENTITY ASK.SCHEMA.1 "Schema A|Which semantic schema shapes the body? Pick any.|None, the six sections alone|A refentry, a manual page|A qandaset, questions and answers|A procedure, numbered steps">
+<!ENTITY ASK.SCHEMA.2 "Schema B|Which more? Pick any.|A glossary, terms with definitions and locators|A textdesc, the voice profile|A msgset, a catalogue of messages|A productionset, a grammar">
+
 <!ENTITY LAW.SCHEMA.1 "A prompt is written in one declared schematic, and every concept it uses, literal, expanded, reference, definition, escape, comment, include, conditional, type or binary, takes the syntax the SCHEMA entity of that schematic declares; a syntax improvised outside the table is a failed answer.">
 <!ENTITY LAW.SCHEMA.2 "The argument words are embedded through the schematic's reference and literal concepts and in one of the cc-args classes, and the whole argument string is treated as quoted; a word is never evaluated, never split, never placed where the schematic's parser would read it as markup.">
 <!ENTITY LAW.SCHEMA.3 "A prompt carries the six sections of SCHEMA.prompt.sections in that order, and a meta-prompt the six of SCHEMA.meta.sections; a section with nothing to say still appears, with one line saying so.">
 <!ENTITY LAW.SCHEMA.4 "The file written passes the cc-form guards of its kind before it is reported, and its extension is the SCHEMA.ext entity of its schematic; a callout prompt uses only the five GitHub types.">
 <!ENTITY LAW.SCHEMA.5 "The creator writes the prompt and its record and runs the proof; the proof reads the file back, runs the guards, checks the sections are present in order, and plants one out-of-table syntax to show it refused.">
+<!ENTITY LAW.SCHEMA.6 "A body may carry any number of semantic schemas, chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 independently of the schematic; each chosen schema is rendered as a semantic element whose parts are those of its SEMANTIC.*.parts entity, in that order, with occurs one, optional or many as declared.">
+<!ENTITY LAW.SCHEMA.7 "A schema's parts render by the form's three rules, SEMANTIC.form.part, SEMANTIC.form.many and SEMANTIC.form.label, where form is the schematic name; in the callout form the type of each part follows SEMANTIC.callout.types; a part rendered outside those rules is a failed answer.">
+<!ENTITY LAW.SCHEMA.8 "A part that occurs one and is missing is a failed answer; a part that occurs optional may be absent; a part that occurs many carries at least one occurrence, each rendered by the many rule.">
 ```
 
 ## cc-report.dtd

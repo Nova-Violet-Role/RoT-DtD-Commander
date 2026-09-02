@@ -71,6 +71,13 @@ counts are re-measured.
   schematic as a fixed attribute of its root, embedding the argument words
   in a declared class, guarding the file with cc-form, and proving itself
   by a planted out-of-table syntax.
+- `dtd/cc-schematic.dtd` gains the semantic layer: seven schemas (refentry,
+  qandaset, procedure, glossary, textdesc, msgset, productionset) with their
+  parts in order as SEMANTIC.*.parts, and per form one rule each for a part,
+  a repeated part and a label (SEMANTIC.<form>.part, many, label), so schema
+  and form are chosen independently; ASK.SCHEMA.1 and 2 multi-select;
+  LAW.SCHEMA.6 to 8. The twelve prompt creators ask the schema in place of
+  the sections and examples questions and render a `schemas` child.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,
