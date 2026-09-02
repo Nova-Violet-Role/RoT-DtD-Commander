@@ -1,0 +1,58 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-workflow.dtd : a workflow file and the runner that walks it.
+
+  A workflow is a JSON file, WORKFLOW.file, that names steps in order; each
+  step is one command string run in the foreground with stdin closed under
+  its own ceiling, its exit code read directly from the process and compared
+  to the exit it expects. The runner is lib/workflow.mjs: validate reads the
+  file against this declaration and refuses what it cannot run safely; run
+  walks the steps and appends one record line per step; controls trip every
+  refusal on purpose. Nothing here backgrounds a process or summons an agent
+  (LAW.WF.2): a workflow is a foreground job with ceilings, not a daemon.
+-->
+
+<!ELEMENT workflow (step+)>
+<!ATTLIST workflow
+          name    NMTOKEN #REQUIRED
+          trigger (manual|hook|cron) "manual"
+          on_fail (stop|continue) "stop">
+<!ELEMENT step (#PCDATA)>
+<!ATTLIST step
+          name         NMTOKEN #REQUIRED
+          run          CDATA #REQUIRED
+          cwd          CDATA #IMPLIED
+          ceiling_secs NMTOKEN "300"
+          expect_exit  NMTOKEN "0"
+          record       CDATA #IMPLIED>
+
+<!-- the runner's answer -->
+<!ELEMENT run_result (step_result+)>
+<!ATTLIST run_result workflow NMTOKEN #REQUIRED verdict (pass|fail) #REQUIRED>
+<!ELEMENT step_result (#PCDATA)>
+<!ATTLIST step_result
+          name   NMTOKEN #REQUIRED
+          exit   NMTOKEN #REQUIRED
+          status (pass|fail|ceiling|skipped) #REQUIRED
+          ms     NMTOKEN #REQUIRED>
+
+<!ENTITY WORKFLOW.file            "a JSON object with name, trigger, on_fail and steps; each step an object with name, run, and the optional cwd, ceiling_secs, expect_exit and record">
+<!ENTITY WORKFLOW.keys            "name, trigger, on_fail, steps">
+<!ENTITY WORKFLOW.step.keys       "name, run, cwd, ceiling_secs, expect_exit, record">
+<!ENTITY WORKFLOW.dir             "workflows">
+<!ENTITY WORKFLOW.ext             "workflow.json">
+<!ENTITY WORKFLOW.ceiling.default "300">
+<!ENTITY WORKFLOW.ceiling.max     "3600">
+<!ENTITY WORKFLOW.max_steps       "12">
+<!ENTITY WORKFLOW.exit.ceiling    "124">
+<!ENTITY WORKFLOW.stdin           "closed: every step reads the null device">
+<!ENTITY WORKFLOW.forbidden       "nohup, setsid, disown, start /b, Start-Process, run_in_background, claude -p">
+<!ENTITY WORKFLOW.record.fields   "1 ts, 2 workflow, 3 step, 4 exit, 5 status, 6 ms">
+
+<!ENTITY LAW.WF.1 "Every step runs in the foreground with stdin closed (WORKFLOW.stdin) under its ceiling, WORKFLOW.ceiling.default seconds unless the step says otherwise and never above WORKFLOW.ceiling.max; a ceiling that fires is exit WORKFLOW.exit.ceiling and status ceiling, a result and never a pass.">
+<!ENTITY LAW.WF.2 "No step backgrounds a process or summons an agent: a run string that ends in an ampersand or carries one of WORKFLOW.forbidden is refused by validate with the step named; a nested session is run only with a ceiling and stdin closed, and never from a workflow.">
+<!ENTITY LAW.WF.3 "The expected exit of a step is compared to the exit read from the process directly, never through a pipe or a wrapper's status; a step whose exit differs is a fail with both numbers printed.">
+<!ENTITY LAW.WF.4 "on_fail stop halts the run at the first failing step and marks the steps after it skipped; on_fail continue runs every step, and the run's verdict is fail when any step failed.">
+<!ENTITY LAW.WF.5 "When a step names a record, the runner appends one tab-separated line with the fields WORKFLOW.record.fields, numbered and append-only after cc-record, and never rewrites a line.">
+<!ENTITY LAW.WF.6 "validate refuses a file with more than WORKFLOW.max_steps steps, a step without name or run, a ceiling above WORKFLOW.ceiling.max, a key outside WORKFLOW.keys or WORKFLOW.step.keys, or a trigger or on_fail outside the enumeration, naming the offending key; a file that validate refuses is never run.">

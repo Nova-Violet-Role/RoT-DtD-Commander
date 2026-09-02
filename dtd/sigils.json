@@ -105,5 +105,6 @@
   "create-meta-prompt-nt": "🪆",
   "create-meta-prompt-xml": "🔖",
   "create-meta-prompt-polyglot": "🎩",
-  "create-mcp": "🔌"
+  "create-mcp": "🔌",
+  "create-workflowjson": "🧰"
 }

@@ -128,6 +128,17 @@ counts are re-measured.
   audit run by the creator itself in the foreground under a ceiling with one
   rule per code (C1 to C14 and the auditor style areas, or H1 to H4, P1 to
   P4, M1 to M4), and a planted fault the audit refuses; LAW.<PREFIX>.1 to 6.
+- create-workflowjson (🧰), the seventh creator, with its own runtime:
+  `dtd/cc-workflow.dtd` declares a workflow file as JSON steps that run in
+  the foreground with stdin closed under a ceiling each (300 s default, 3600
+  max, twelve steps at most), an expected exit compared to the exit read
+  directly, on_fail stop or continue, and a record line per step;
+  LAW.WF.1 to 6. `lib/workflow.mjs validate | run [--dry] | controls`
+  refuses a step that backgrounds a process or nests a session, a ceiling
+  above the cap, an unknown key or a missing run, and its controls trip a
+  hanging step at its ceiling (exit 124), a failing step under stop, and
+  every refusal by name; `controls:workflow` in the gate; W1 to W4 as the
+  creator's audit.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

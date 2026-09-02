@@ -53,7 +53,7 @@ const NAME = 'rot-dtd-commander';
 const TEXT_EXT = new Set(['.md', '.dtd', '.sh', '.mjs', '.js', '.json', '.yml', '.yaml', '.txt', '.tsv', '.csv', '.ps1', '.nu', '.py', '.toml', '.tape']);
 const JUNK = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
 const MANIFEST = `.${NAME}-manifest.json`;
-const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-args.dtd', 'dtd/cc-form.dtd', 'lib/form.mjs', 'dtd/cc-lexicon.dtd', 'lib/args.mjs', 'dtd/cc-schematic.dtd', 'lib/schematic.mjs', 'dtd/cc-license.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd', 'dtd/ai-slop.dtd', 'lib/ordinals.mjs', 'lib/ai-slop.mjs'];
+const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-args.dtd', 'dtd/cc-form.dtd', 'lib/form.mjs', 'dtd/cc-lexicon.dtd', 'lib/args.mjs', 'dtd/cc-schematic.dtd', 'lib/schematic.mjs', 'dtd/cc-license.dtd', 'dtd/cc-workflow.dtd', 'lib/workflow.mjs', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd', 'dtd/ai-slop.dtd', 'lib/ordinals.mjs', 'lib/ai-slop.mjs'];
 // The skills-directory plugin older installs wrote to auto-start the monitor;
 // 5.0.0 writes none, and the doctor turns red while one is still present.
 const MONITOR_PLUGIN = 'rot-dtd-commander-adiutor';

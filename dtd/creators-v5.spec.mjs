@@ -85,6 +85,18 @@ const CREATORS = [
       'Surface|Beyond tools?|Tools only|Tools and resources|Tools, resources and prompts|Typed under Other',
     ],
   },
+  {
+    key: 'create-workflowjson', sigil: '🧰', root: 'workflow_forge', prefix: 'WF', what: 'a workflow file', skill: null, extraInclude: ['cc-workflow'],
+    artifact: 'a JSON workflow of foreground steps under ceilings (WORKFLOW.file), run by node lib/workflow.mjs', auditKind: 'workflow', auditor: null,
+    dir: 'WORKFLOW.dir as <name>.workflow.json',
+    q: [
+      'Name|What is the workflow called?|A kebab-case name from the argument|The job it runs, as a verb and an object|Typed under Other|Undecided, ask again after the steps',
+      'Trigger|When does it run?|By hand: node lib/workflow.mjs run|After a hook event, run by hand from the event line|By a cron the operator arms, never by this command|Typed under Other',
+      'Steps|How many steps?|Three|One|Up to twelve, the cap|Typed under Other',
+      'Ceiling|Which ceiling per step?|300 seconds, the default|60 seconds|Typed per step under Other|3600 seconds, the maximum',
+      'Failure|What happens when a step fails?|Stop at the first failing step, the rest skipped|Continue and fail the run at the end|Typed under Other|Undecided, stop',
+    ],
+  },
 ];
 
 const AUDIT = {
@@ -105,6 +117,12 @@ const AUDIT = {
     text: () => 'every task read for its verify command and expected exit (P1), every phase for its exit criterion (P2), no task allowed to summon a subagent or background a process (P3), and the file walked as run-plan-dtd walks it, every segment found (P4)',
     fault: 'a task whose verify command is removed',
     codes: 'P1 to P4',
+  },
+  workflow: {
+    rules: 'the workflow rules W1 to W4',
+    text: () => 'node lib/workflow.mjs validate on the file written, sound (W1); a dry run listing every step with its ceiling (W2); every step read for a closed stdin, a ceiling within WORKFLOW.ceiling.max and none of WORKFLOW.forbidden (W3); and a live run under the ceilings when the Proof answer chose it, the exit of every step read directly (W4)',
+    fault: 'a step whose run ends in an ampersand',
+    codes: 'W1 to W4',
   },
   mcp: {
     rules: 'the server rules M1 to M4',
@@ -127,8 +145,8 @@ function creator(c) {
   entities[`ASK.${P}.10`] = 'Proof|How is it proven?|Plant one fault in a scratch copy and show the audit refuse it|Read back only|None, which this command refuses|Typed under Other';
   return [c.key, {
     new: true, to: `src/commands/${c.key}-dtd.md`, root: c.root, sigil: s,
-    include: ['cc-args', 'cc-form', 'cc-license', 'cc-ask'],
-    description: `DTD-native: create ${c.what} through twelve questions in three rounds that are never skipped, a curated SPDX license, an emoji and a form; the ${c.skill} skill writes ${c.artifact} with the answers as known slots; every file is read back, guarded and audited here in the foreground (${A.rules}, one rule per code, no subagent), and a planted fault proves the audit`,
+    include: ['cc-args', 'cc-form', 'cc-license', ...(c.extraInclude || []), 'cc-ask'],
+    description: `DTD-native: create ${c.what} through twelve questions in three rounds that are never skipped, a curated SPDX license, an emoji and a form; ${c.skill ? 'the ' + c.skill + ' skill writes' : 'this command writes'} ${c.artifact}${c.skill ? ' with the answers as known slots' : ' from the answers'}; every file is read back, guarded and audited here in the foreground (${A.rules}, one rule per code, no subagent), and a planted fault proves the audit`,
     argumentHint: `[what the ${c.what.replace(/^an? /, '')} is for, or leave blank; --no-gate for autonomous defaults; --verbose prints the files as written]`,
     model: [
       `${c.root} (args, intake, plan, license, invocation, written, guards, audit, proof, assumption_made*)`,
@@ -143,7 +161,9 @@ function creator(c) {
     entities,
     laws: {
       [`${P}.1`]: 'Round one always runs before anything is written, even when the argument reads complete; --no-gate alone skips the rounds, and then every answer is an assumption_made (LAW.ASK.10).',
-      [`${P}.2`]: `The ${c.skill} skill is invoked once, through the Skill tool, with the purpose, then ARG.end, then the answers as known slots (name=, and one word per question answered); the skill writes ${c.artifact} and this command reads it back; nothing is written before that invocation.`,
+      [`${P}.2`]: c.skill
+        ? `The ${c.skill} skill is invoked once, through the Skill tool, with the purpose, then ARG.end, then the answers as known slots (name=, and one word per question answered); the skill writes ${c.artifact} and this command reads it back; nothing is written before that invocation.`
+        : `This command writes ${c.artifact} itself, under ${c.dir}, from the answers, UTF-8 LF without BOM, and validates it before anything else is reported; nothing is written before the gate chose start.`,
       [`${P}.3`]: 'Every file written is re-read and rendered with its path and bytes, passes the cc-form guards of its kind, and is headed by the license expression where its format allows a comment, headed no otherwise (LAW.LICENSE.1, LAW.LICENSE.2, LAW.FORM.2).',
       [`${P}.4`]: `The audit runs here, in the foreground, under a 60 second ceiling with stdin closed: ${A.text(c)}; one rule element per code with pass, fail or skipped; a fail is a failed answer; no subagent is summoned for it.`,
       [`${P}.5`]: `The proof plants one fault in a scratch copy (${A.fault}) and shows the audit refuse it; a proof that did not trip stops the command before the report.`,
@@ -157,8 +177,10 @@ This command is the door in front of the ${c.skill} skill. It asks the twelve qu
       `Round 1 of 3: ask ASK.${P}.1 to ASK.${P}.4 as one AskUserQuestion call, four options each plus Other; render the round.`,
       `Present the gate; on more, round 2 of 3 with ASK.${P}.5, ASK.${P}.6, ASK.LICENSE.1 and ASK.FORM.1 (multi-select); on more again, round 3 of 3 with ASK.${P}.7 to ASK.${P}.10; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
       'Render the `plan`: the artifact, its path, the emoji and the form chosen; render the `license`: the expression checked against LICENSE.list, its count (single, double or triple) and listed yes; an expression outside the list is refused with the list printed and ASK.LICENSE.1 asked again (LAW.LICENSE.1).',
-      `Render the \`invocation\`: one Skill call to ${c.skill} with the argument made of the purpose, then ARG.end, then the known slots; then make that call (LAW.${P}.2).`,
-      'Read back: render `written` with one `file` per file the skill wrote, its path, its bytes and headed yes or no; run the cc-form guards on each file of a guarded kind with node lib/form.mjs and render one `guard` per line printed under `guards`; a guard that did not hold stops the command.',
+      c.skill
+        ? `Render the \`invocation\`: one Skill call to ${c.skill} with the argument made of the purpose, then ARG.end, then the known slots; then make that call (LAW.${P}.2).`
+        : `Render the \`invocation\`: none, this command writes ${c.artifact} itself under ${c.dir} from the answers, then runs node lib/workflow.mjs validate on it (LAW.${P}.2).`,
+      'Read back: render `written` with one `file` per file written, its path, its bytes and headed yes or no; run the cc-form guards on each file of a guarded kind with node lib/form.mjs and render one `guard` per line printed under `guards`; a guard that did not hold stops the command.',
       `Run the audit here, in the foreground, under a 60 second ceiling with stdin closed (LAW.${P}.4): ${A.text(c)}; render the \`audit\` with one \`rule\` per code, result pass, fail or skipped; a fail stops the command before the report.`,
       `Run the proof: plant one fault in a scratch copy (${A.fault}) and run the audit on it; render the \`proof\` with the fault, the rule that refused it and tripped yes (LAW.${P}.5).`,
       'When the artifact lands in this repository, register the emoji in dtd/sigils.json after checking no other key carries the glyph (LAW.' + P + '.6); record the run under artifacts with this command\'s generated filename and report.',
@@ -168,7 +190,7 @@ This command is the door in front of the ${c.skill} skill. It asks the twelve qu
       intake: `**${s} Intake**, each \`round\` n of 3 with its questions and the labels or Other text chosen, the \`impactful\` selections when asked for, the gate choice`,
       plan: `**${s} Plan**, the artifact, its path, the emoji, the form`,
       license: `**${s} License**, the expression, single, double or triple, listed yes`,
-      invocation: `**${s} Invocation**, the one Skill call to ${c.skill} with its argument`,
+      invocation: c.skill ? `**${s} Invocation**, the one Skill call to ${c.skill} with its argument` : `**${s} Invocation**, none: the file this command wrote itself and its validation line`,
       written: `**${s} Written**, one line per file with path, bytes and headed yes or no, and the file itself under --verbose`,
       guards: `**${s} Guards**, one line per guard with held yes or no`,
       audit: `**${s} Audit**, one line per rule (${A.codes}) with pass, fail or skipped`,
@@ -196,7 +218,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]; known slots
 
 ### ${s} Invocation
 
-Skill ${c.skill} with "[purpose] -- name=[name] [one word per answer]"
+${c.skill ? `Skill ${c.skill} with "[purpose] -- name=[name] [one word per answer]"` : 'none: wrote `[path]` from the answers; validate: sound'}
 
 ### ${s} Written
 
@@ -219,7 +241,7 @@ planted [the fault]: refused by [code]; tripped yes
 - [each unasked question, first option taken]`,
     success: [
       'Round one ran before anything was written',
-      `${c.skill} was invoked once with the known slots and asked none of them again`,
+      c.skill ? `${c.skill} was invoked once with the known slots and asked none of them again` : 'The file was written from the answers and validate found it sound',
       'Every file was read back, guarded, and headed by a listed license where its format allows',
       `The audit ran in the foreground, one rule per code, and no subagent was summoned`,
       'The planted fault was refused',
