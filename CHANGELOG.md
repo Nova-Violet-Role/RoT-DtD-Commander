@@ -51,6 +51,16 @@ counts are re-measured.
   to 4, LAW.FORM.1 to 8. `lib/form.mjs` reads the caps and the callout types
   from the file and trips seven guards on fixtures (`npm run controls:form`,
   in the gate). Skill `dtd-forms-dtd` (🪢) carries the catalogue and examples.
+- `dtd/cc-args.dtd`: the embedding classes ARG.embed.* (pcdata, cdata, ndata,
+  section, and pentity as the one never granted), the `arg_guard` element,
+  LAW.ARGS.5 and 6. `lib/args.mjs` walks an argument string the way the laws
+  say (quotes kept, flags removed, the end token) and applies four guards read
+  from the DTD: evaluation, traversal, system, pentity; controls in the gate.
+- `dtd/cc-lexicon.dtd`: the verb list lifted out of `lib/ai-slop.mjs` as
+  LEX.verb.* (272), 35 paraphrases printed beside a hit, a glossary of
+  24 terms with a locator each, the library of 16 Phantom-book files, the
+  `text_desc` profile; LAW.LEX.1 to 5. The slop controls hold the classifier's
+  verb set equal to the declared one, in both directions.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

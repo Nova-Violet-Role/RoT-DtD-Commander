@@ -51,12 +51,13 @@
     "doctor": "node bin/adiutor.mjs doctor",
     "watch": "node bin/rot-dtd-commander.mjs watch",
     "sweep": "bash checker/spdx-sweep.sh && bash checker/crlf-sweep.sh",
-    "gate": "npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep && npm run controls:ordinals && npm run controls:slop && npm run controls:ceiling && npm run controls:form && npm run sweep:slop",
+    "gate": "npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep && npm run controls:ordinals && npm run controls:slop && npm run controls:ceiling && npm run controls:form && npm run controls:args && npm run sweep:slop",
     "install-home": "node bin/rot-dtd-commander.mjs install --yes",
     "controls:ordinals": "node lib/ordinals.mjs controls",
     "controls:slop": "node lib/ai-slop.mjs controls",
     "controls:ceiling": "bash checker/ceiling-controls.sh",
     "controls:form": "node lib/form.mjs controls",
+    "controls:args": "node lib/args.mjs controls",
     "sweep:slop": "node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 18"
   },
   "keywords": [

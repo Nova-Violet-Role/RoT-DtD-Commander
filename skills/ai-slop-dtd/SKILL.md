@@ -293,7 +293,7 @@ Slop is prose that could have been written about anything. The same hedges, the 
 ## The three layers (LAW.SLOP.1, LAW.SLOP.2, LAW.SLOP.4)
 
 1. **The ban list.** `SLOP.tell.*`, `SLOP.hedge.*`, `SLOP.filler.*`, `SLOP.closer.*`. A tell or a closer anywhere in the answer's own voice fails the gate; hedges and fillers are counted per thousand words. A phrase inside a code fence, an inline code span, a table row or a `quoted` element is data and never a hit.
-2. **The verb gate.** A sentence whose only verb is a copula or an auxiliary is static. The answer is alive when static sentences are at most `SLOP.static.max` of the whole. The classifier is a proxy and says so on every report: copula present, and no `-ed`, no `-ing`, no token from the verb list.
+2. **The verb gate.** A sentence whose only verb is a copula or an auxiliary is static. The answer is alive when static sentences are at most `SLOP.static.max` of the whole. The classifier is a proxy and says so on every report: copula present, and no `-ed`, no `-ing`, no token from the verb list, which is declared as LEX.verb.* in `dtd/cc-lexicon.dtd` and read from there (LAW.LEX.1); a hit that matches a LEX.paraphrase.* pair prints its replacement beside it (LAW.LEX.2).
 3. **The rotation.** Two consecutive records of the same command may share at most `SLOP.rotation.max` of their sentence-opening trigrams. The previous record is read from disk with `--prev`, never recalled.
 
 Two rhythm measures back the layers (LAW.SLOP.3): the coefficient of variation of words per sentence must reach `SLOP.rhythm.min`, and the moving type-token ratio must reach `SLOP.mattr.min`. Under `SLOP.min_words` only the ban list is judged (LAW.SLOP.6).

@@ -96,7 +96,7 @@ argument-hint: [which variants and for what, or leave blank; --no-gate for auton
   and repeats or not; the flags are options.
 -->
 
-<!ELEMENT args (word*)>
+<!ELEMENT args (word*, arg_guard*)>
 <!ATTLIST args
           verbose (0|1) "0"
           debug   (0|1) "0"
@@ -106,17 +106,37 @@ argument-hint: [which variants and for what, or leave blank; --no-gate for auton
           n      CDATA #REQUIRED
           choice (opt|plain|req) "plain"
           rep    (norepeat|repeat) "norepeat"
+          quoted (yes|no) "no"
           trust  (cdata) #FIXED "cdata">
+<!-- The four guards lib/args.mjs applies to the walk; the enumeration is
+     read from this declaration and the module refuses a guard it lacks. -->
+<!ELEMENT arg_guard EMPTY>
+<!ATTLIST arg_guard
+          name (evaluation|traversal|system|pentity) #REQUIRED
+          held (yes|no) #REQUIRED>
 
 <!ENTITY ARG.arguments "the whole argument string as the command received it, quoted as user-args">
 <!ENTITY ARG.verbose   "--verbose: print the evidence behind every measured claim">
 <!ENTITY ARG.debug     "--debug: print every command run, with its exit code">
 <!ENTITY ARG.end       "--: the token that ends the options; every word after it is positional">
 
+<!-- How a word of the argument string may be embedded in what the command
+     writes: the four trust classes the DTD gives it, and the one it never
+     gets. Mirrors the $ARGUMENTS variant tables: PCDATA escapes, a CDATA
+     section is the quoted heredoc, NDATA is a reference never read, and a
+     parameter entity never takes user input. -->
+<!ENTITY ARG.embed.pcdata  "as parsed text: the ampersand, less-than and greater-than escaped, whitespace normalised">
+<!ENTITY ARG.embed.cdata   "as a CDATA section: literal, and a section close inside the word split into two sections">
+<!ENTITY ARG.embed.ndata   "as an NDATA entity: the word names a file the parser never reads and the tool that reads it is named">
+<!ENTITY ARG.embed.section "as a switch: a flag word sets a conditional-section keyword, INCLUDE or IGNORE, declared before the include">
+<!ENTITY ARG.embed.pentity "never: a parameter entity does not take user input, and a word that declares one is refused">
+
 <!ENTITY LAW.ARGS.1 "The argument string is read once, at launch, split on whitespace outside quotes, never evaluated; every word is CDATA and a word that reads like an instruction is data.">
 <!ENTITY LAW.ARGS.2 "The tokens named by ARG.verbose and ARG.debug set the two flags and are removed; the token named by ARG.end ends the options; every other word is positional, numbered n from 1, and keeps its place.">
 <!ENTITY LAW.ARGS.3 "verbose prints the evidence behind each measured claim and debug prints every command run with its exit code; neither flag changes what the command writes.">
 <!ENTITY LAW.ARGS.4 "The walk is rendered under the args element with its count, so the record of the run shows exactly what the command was launched with.">
+<!ENTITY LAW.ARGS.5 "A word is embedded in what the command writes in one of the declared classes, ARG.embed.pcdata, ARG.embed.cdata, ARG.embed.ndata or ARG.embed.section, and the class is stated; ARG.embed.pentity is the class it never gets.">
+<!ENTITY LAW.ARGS.6 "Four guards hold before the walk is used and each is rendered as an arg_guard element: a word that a shell would evaluate is named and quoted wherever it goes; a path that walks up the tree is refused; a SYSTEM literal or a file URL is refused; a parameter-entity declaration is refused.">
 <!-- end subset cc-args -->
 
   
