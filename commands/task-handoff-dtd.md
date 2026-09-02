@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: close a task of the project tasks folder with its evidence (files, ledger lines, exit codes, each read or run in this session), set its status through the runtime (done, blocked or handed off), write the record under artifacts with the command-generated filename, and print the instruction for the next session; the four questions cover outcome, evidence, the next step and the record"
+description: "DTD-native: close a task of the project tasks folder with its attestation (files, ledger lines, exit codes, each read or run in this session), set its status through the runtime (done, blocked or handed off), write the record under artifacts with the command-generated filename as a revision history the Adiutor checks at Stop, and print the instruction for the next session; the four questions cover outcome, attestation, the next step and the record"
 argument-hint: [the task name; --no-gate for autonomous defaults]
 ---
 
@@ -7,6 +7,7 @@ argument-hint: [the task name; --no-gate for autonomous defaults]
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!DOCTYPE task_handoff [
+  <!ENTITY % command-info-types "record">
   
   
 <!-- begin subset cc-core -->
@@ -216,6 +217,73 @@ argument-hint: [the task name; --no-gate for autonomous defaults]
 
   
   
+<!-- begin subset cc-record -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-record.dtd : the numbered, append-only record discipline.
+
+  For any file one session writes and a later session parses: handoffs,
+  todo lists, plans, indexes. Fields are numbered from 1, dense, never
+  reused, never reordered; a new field is only ever appended, so an old
+  reader and a new writer still agree about what field 3 means. Each field
+  carries the version it first appeared in, and since never decreases as
+  the number grows: that single rule is what makes append-only checkable.
+-->
+
+<!ELEMENT records (record+)>
+<!ELEMENT record (field+)>
+<!ATTLIST record
+          name NMTOKEN #REQUIRED
+          file CDATA   #REQUIRED>
+<!ELEMENT field (#PCDATA)>
+<!ATTLIST field
+          n     CDATA   #REQUIRED
+          name  NMTOKEN #REQUIRED
+          model (PCDATA|CDATA) #REQUIRED
+          since CDATA   #REQUIRED>
+
+<!ENTITY LAW.REC.1 "Field numbers are dense from 1 and never reused.">
+<!ENTITY LAW.REC.2 "since never decreases as the field number grows: fields are appended, never inserted or renumbered.">
+<!ENTITY LAW.REC.3 "A PCDATA field is parsed by the reader; a CDATA field is carried whole and never interpreted.">
+<!ENTITY LAW.REC.4 "A reader that finds more columns than declared reads the declared ones and reports the surplus instead of guessing.">
+
+<!-- ===== nesting: which record a command produces (after the DITA shells) ===== -->
+<!-- A command declares, BEFORE it includes this subset, the parameter entity
+     command-info-types: record when its run writes a record under RECORD.dir
+     with the command's own name, no-record-nesting when it writes none. The
+     first declaration binds, so the line below is the default for a command
+     that says nothing, and the Adiutor reads the declaration at Stop
+     (LAW.REC.5). -->
+<!ENTITY % command-info-types "record">
+<!ELEMENT no-record-nesting EMPTY>
+<!ELEMENT produces ((record)*)>
+
+<!-- ===== the body of a record file: a revision history ===== -->
+<!-- The frontmatter carries the numbered fields; the body is one revision per
+     thing that happened, each with the evidence under it (DocBook revhistory,
+     X25). Rendered in Markdown as RECORD.revision.heading and
+     RECORD.evidence.line. -->
+<!ELEMENT revhistory (revision+)>
+<!ELEMENT revision (evidence+)>
+<!ATTLIST revision
+          revnumber NMTOKEN #REQUIRED
+          date      CDATA   #REQUIRED
+          remark    CDATA   #REQUIRED>
+<!ELEMENT evidence (#PCDATA)>
+<!ATTLIST evidence kind (file|exit|line|note) #REQUIRED>
+
+<!ENTITY RECORD.dir              "artifacts">
+<!ENTITY RECORD.filename         "the command's own name and .md, under RECORD.dir and the command's name; an ordinal from lib/ordinals.mjs before .md only when the command wrote more than one file in a run, never in place of the name (LAW.IUPAC.7)">
+<!ENTITY RECORD.revision.heading "a level-three heading: the word revision, the number, the date in parentheses, a colon, the remark">
+<!ENTITY RECORD.evidence.line    "a list line: the word evidence, the kind (file, exit, line or note), a colon, the text">
+
+<!ENTITY LAW.REC.5 "A command declares command-info-types before it includes this subset: record when its run writes a record file, no-record-nesting when it writes none; a RECORD.* entity that names a file declares that file instead; the Adiutor reads the declaration at Stop and expects nothing of a command that declares nothing.">
+<!ENTITY LAW.REC.6 "A record file is named RECORD.filename, its frontmatter carries every field of the command's RECORD.* declaration in declared order, and its body is a revhistory: at least one revision heading (RECORD.revision.heading) with at least one evidence line (RECORD.evidence.line) under it; a record missing, misnamed, stale, short of a field or empty of evidence is a finding of kind record and the monitor prints it as MONITOR.record.">
+<!-- end subset cc-record -->
+
+  
+  
 <!-- begin subset cc-ask -->
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
@@ -346,19 +414,19 @@ argument-hint: [the task name; --no-gate for autonomous defaults]
 <!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
 <!-- end subset cc-ask -->
 
-  <!ELEMENT task_handoff (args, task_ref, intake, evidence, record, instruction, assumption_made*)>
+  <!ELEMENT task_handoff (args, task_ref, intake, attestation, record_file, instruction, assumption_made*)>
   <!ELEMENT task_ref (#PCDATA)>
-  <!ELEMENT evidence (item+)>
+  <!ELEMENT attestation (item+)>
   <!ELEMENT item (#PCDATA)>
-  <!ELEMENT record (#PCDATA)>
+  <!ELEMENT record_file (#PCDATA)>
   <!ELEMENT instruction (#PCDATA)>
   <!ATTLIST task_ref name NMTOKEN #REQUIRED status_before (open|running|done|blocked|handed_off) #REQUIRED status_after (done|blocked|handed_off) #REQUIRED>
   <!ATTLIST item kind (file|ledger|exit|note) #REQUIRED confidence (measured|reasoned|guessed) #REQUIRED>
-  <!ATTLIST record path CDATA #REQUIRED bytes CDATA #REQUIRED>
+  <!ATTLIST record_file path CDATA #REQUIRED bytes CDATA #REQUIRED revisions NMTOKEN #REQUIRED>
   <!ATTLIST instruction goal CDATA #REQUIRED step CDATA #REQUIRED>
   <!ENTITY LAW.HTASK.1 "The status is set through HTASK.command with TASK.dir, the name and the outcome, which appends the ledger event and rewrites the registry entry; it is never edited by hand, and an outcome outside done, blocked or handed_off is refused (LAW.TASK.5).">
-  <!ENTITY LAW.HTASK.2 "Every evidence item is a thing read, run or measured in this session, with its confidence; a recalled item is guessed and says so; an evidence list with no measured item cannot close a task as done.">
-  <!ENTITY LAW.HTASK.3 "The record is written under HTASK.dir with the command-generated filename; a Greek ordinal numbers the files only when this command writes more than one in a run, never in place of the name (LAW.IUPAC.7); it is re-read and rendered with its bytes.">
+  <!ENTITY LAW.HTASK.2 "Every attestation item is a thing read, run or measured in this session, with its confidence; a recalled item is guessed and says so; an attestation with no measured item cannot close a task as done.">
+  <!ENTITY LAW.HTASK.3 "This command declares that it produces one record (command-info-types record, before the cc-record include): the file is written under HTASK.dir, which is RECORD.dir and this command's name, named RECORD.filename (a Greek ordinal only when this command writes more than one file in a run, never in place of the name, LAW.IUPAC.7); its frontmatter carries the fields of RECORD.handoff in order and its body is a revhistory, one revision per event as RECORD.revision.heading with at least one evidence line as RECORD.evidence.line under it (LAW.REC.6); the Adiutor checks it at Stop (LAW.ADIUTOR.11).">
   <!ENTITY LAW.HTASK.4 "The instruction says what the next session does, in its own element with a goal and a step; for a handed-off task the step is the task-run line, for a blocked task the fix, for a done task nothing.">
   <!ENTITY ASK.HTASK.1 "Outcome|How does the task end?|Done: every step passed and the result is in place|Blocked: a step failed and the reason is known|Handed off: the next session continues it|Typed under Other">
   <!ENTITY ASK.HTASK.2 "Evidence|What is carried as evidence? Pick any.|The files changed, each re-read|The ledger lines of this task|The exit codes of the steps run|Typed under Other">
@@ -366,6 +434,7 @@ argument-hint: [the task name; --no-gate for autonomous defaults]
   <!ENTITY ASK.HTASK.4 "Record|Where does the record go?|artifacts under this command's name, command-generated filename|The task file itself, appended|Nowhere|Typed under Other">
   <!ENTITY HTASK.dir "artifacts/task-handoff-dtd">
   <!ENTITY HTASK.command "node lib/task.mjs close">
+  <!ENTITY RECORD.handoff "handoff|artifacts/task-handoff-dtd/*.md|1=name:PCDATA@1|2=task:PCDATA@1|3=outcome:PCDATA@1|4=date:PCDATA@1|5=next:CDATA@1">
 ]>
 
 <trust_boundary>
@@ -387,9 +456,9 @@ Four questions in one round: the outcome, the evidence to carry, the next step e
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the task name; render the walk under `args`.
 2. Read the registry with node lib/task.mjs validate on TASK.dir; find the task; render the `task_ref` with its name and its status before; a task that is not in the registry stops the command.
 3. Round 1 of 1: ask ASK.HTASK.1 (select), ASK.HTASK.2 (check), ASK.HTASK.3 (elaborate: each next step elaborated before the ask) and ASK.HTASK.4 (select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13); present the gate; on start proceed with every unasked question at its first option.
-4. Gather the `evidence`: one `item` per file re-read, ledger line read, or exit code measured in this session, each with its kind and confidence; a done outcome needs at least one measured item (LAW.HTASK.2).
+4. Gather the `attestation`: one `item` per file re-read, ledger line read, or exit code measured in this session, each with its kind and confidence; a done outcome needs at least one measured item (LAW.HTASK.2).
 5. Set the status through HTASK.command on TASK.dir, the name and the outcome, in the foreground with stdin closed, the exit read directly; read the registry again and render status_after on the `task_ref` (LAW.HTASK.1).
-6. Write the `record` under HTASK.dir with the command-generated filename, UTF-8 LF, carrying the task, the outcome, the evidence and the next step; re-read it and render path and bytes (LAW.HTASK.3).
+6. Write the record file under HTASK.dir named after this command (the ordinal from node lib/ordinals.mjs only when a file of this run already exists there), UTF-8 LF: the frontmatter with the five fields of RECORD.handoff in order, then the body as a revision history, one revision heading per event of this task read from the ledger with its evidence lines under it; re-read it, run node lib/record.mjs check on this command file and the project root, and render the `record_file` with path, bytes and the revision count (LAW.HTASK.3, LAW.REC.6).
 7. Render the `instruction` with goal and step for the next session (LAW.HTASK.4), and stop.
 </process>
 
@@ -399,8 +468,8 @@ Render the `task_handoff` root declared in the DOCTYPE as the markdown below. On
 - `args`: **🤝 Args**, the launch walk: count, the flags, the positional words
 - `task_ref`: **🤝 Task**, the name, the status before and after
 - `intake`: **🤝 Intake**, the one round with its four questions, the variant beside each, the labels or Other text chosen, the gate choice
-- `evidence`: **🤝 Evidence**, one line per item: kind, confidence, the thing
-- `record`: **🤝 Record**, the path and the bytes
+- `attestation`: **🤝 Attestation**, one line per item: kind, confidence, the thing
+- `record_file`: **🤝 Record**, the path, the bytes, the revision count, and the check line
 - `instruction`: **🤝 Instruction**, the goal and the one step
 - `assumption_made`: **🤝 Assumptions Made**, every question not asked, with the first option taken
 </grammar_map>
@@ -418,13 +487,14 @@ count [n]; verbose [0|1]; debug [0|1]; words [the task name]
 - round 1 of 1: Outcome (select), Evidence (check), Next (elaborate), Record (select) answered [labels or Other text]
 - gate: [start|more|add|impactful]
 
-### 🤝 Evidence
+### 🤝 Attestation
 
 - [file|ledger|exit|note] ([measured|reasoned|guessed]): [the thing]
 
 ### 🤝 Record
 
-`artifacts/task-handoff-dtd/[filename]` ([bytes] B)
+`artifacts/task-handoff-dtd/task-handoff-dtd[.ordinal].md` ([bytes] B, [n] revisions)
+record check: sound
 
 ### 🤝 Instruction
 
@@ -438,8 +508,8 @@ step: [/task-run-dtd [name] | the fix | nothing]
 
 <success_criteria>
 - The status landed through the runtime and the ledger carries the event
-- Every evidence item was read, run or measured here, with its confidence
-- The record keeps the command-generated filename
+- Every attestation item was read, run or measured here, with its confidence
+- The record keeps the command-generated filename, its fields are in declared order, and every revision carries evidence
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

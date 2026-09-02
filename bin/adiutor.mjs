@@ -22,7 +22,7 @@
 // Policy: ROT_DTD_ADIUTOR = off | warn | strict (default in POLICY_DEFAULT,
 // bound to ADIUTOR.policy.default in dtd/adiutor.dtd by the controls).
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, appendFileSync, rmSync, unlinkSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, appendFileSync, rmSync, unlinkSync, statSync, utimesSync } from 'node:fs';
 import { join, dirname, resolve as presolve, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -33,6 +33,7 @@ import { expectedFromCommand, checkAnswer, prescribe } from '../lib/render-check
 import { armSettings, disarmSettings, armedIn, EVENTS, hookCommand } from '../lib/arm.mjs';
 import { claudeDir, stateDir, ledgerPath, safeId, RECORD_FIELDS, parseLedger } from '../lib/ledger.mjs';
 import { scan as slopScan, summary as slopSummary, SLOPPY_FIXTURE } from '../lib/ai-slop.mjs';
+import { nestingOf, declaredRecords, recordFindings, RECORD_DIR } from '../lib/record.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = presolve(HERE, '..');
@@ -267,7 +268,10 @@ export function observe(event, payload, io = console) {
       if (prev) closeRun(prev, 'aborted', [{ msg: 'a new -dtd command started before the Stop check' }]);
       const autonomous = /--no-gate/.test(String(payload.prompt || ''));
       const trailing = isTrailingCall(payload.prompt);
-      writeRun({ session, command: name, file, root: expected.root, expected, tools: 0, errors: [], attempts: 0, autonomous, trailing, opened: new Date().toISOString() });
+      // LAW.REC.5: the record the command declares it produces, read now and checked at Stop.
+      const nesting = nestingOf(text);
+      const records = declaredRecords(text);
+      writeRun({ session, command: name, file, root: expected.root, expected, tools: 0, errors: [], attempts: 0, autonomous, trailing, opened: new Date().toISOString(), nesting, records, cwd: payload.cwd || process.cwd() });
       const req = expected.headings.filter((h) => h.required).map((h) => h.heading);
       const how = trailing ? ` (trailing call, LAW.CORE.7: run /${name} now on the text before the token as its arguments)` : '';
       out(`Adiutor armed for /${name}${how}: root ${expected.root}; required headings: ${req.join(', ') || 'none declared'}; ${expected.laws} laws; the answer is checked at Stop (policy ${policy()}).`);
@@ -314,6 +318,12 @@ export function observe(event, payload, io = console) {
           result.findings.push({ kind: 'slop', msg: `slop: ${slopSummary(slop)}` });
           result.ok = false;
         }
+      }
+      // The record the command declared it produces (LAW.REC.5, LAW.REC.6, LAW.ADIUTOR.11, control C20).
+      const rec = recordFindings(payload.cwd || run.cwd || process.cwd(), run);
+      if (rec.length) {
+        for (const f of rec) result.findings.push(f);
+        result.ok = false;
       }
       if (result.ok) {
         closeRun(run, 'pass');
@@ -565,6 +575,29 @@ export async function controls(io = console) {
 
     return { ok: !r.ok && hit, detail: r.findings.map((f) => f.msg).join('; ') };
 
+  }, results);
+
+  control('C20 a command that declares record nesting must have written its record at Stop; no-record-nesting and a silent command are asked nothing; a wrong ordinal or a missing field is a record finding', () => {
+    const cwd = join(os.tmpdir(), 'rot-dtd-adiutor-c20-' + process.pid);
+    const dir = join(cwd, RECORD_DIR, 'x-dtd');
+    mkdirSync(dir, { recursive: true });
+    try {
+      const cmd = (pre) => '<!DOCTYPE x [\n' + (pre ? '  <!ENTITY % command-info-types "' + pre + '">\n' : '') + '  <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">\n  %cc-record;\n  <!ENTITY RECORD.x "x|artifacts/x-dtd/x-dtd.md|1=name:PCDATA@1">\n]>\n';
+      const run = (pre) => ({ command: 'x-dtd', opened: new Date(Date.now() - 60000).toISOString(), nesting: nestingOf(cmd(pre)), records: declaredRecords(cmd(pre)) });
+      const silent = recordFindings(cwd, { command: 'x-dtd', opened: run().opened, nesting: null, records: [] }).length;
+      const none = recordFindings(cwd, run('no-record-nesting')).filter((f) => /no record file/.test(f.msg)).length;
+      const missing = recordFindings(cwd, run('record'));
+      writeFileSync(join(dir, 'x-dtd.md'), '---\nname: x\n---\n### revision 1 (d): did\n- evidence exit: 0\n', 'utf8');
+      const sound = recordFindings(cwd, run('record'));
+      const later = new Date(Date.now() + 1000);
+      writeFileSync(join(dir, 'x-dtd.di.md'), '---\nother: 1\n---\nnothing\n', 'utf8');
+      utimesSync(join(dir, 'x-dtd.di.md'), later, later);
+      const wrong = recordFindings(cwd, run('record'));
+      const ok = silent === 0 && none === 0 && missing.some((f) => f.kind === 'record' && /no record file/.test(f.msg)) && sound.length === 0 && wrong.some((f) => /not a spelled ordinal/.test(f.msg)) && wrong.some((f) => /field 1 name .* missing/.test(f.msg)) && wrong.some((f) => /no revision heading/.test(f.msg));
+      return { ok, detail: `silent=${silent} none=${none} missing=${missing.length} sound=${sound.length} wrong=${wrong.length} (${wrong.map((f) => f.msg.replace(/^record: /, '')).join('; ')})` };
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
   }, results);
 
   control('C10 the answer of a run is every assistant text after the command prompt', () => {

@@ -299,7 +299,7 @@ run it: node lib/workflow.mjs run tasks/[name].workflow.json
 
   'task-run': {
     new: true, to: 'src/commands/task-run-dtd.md', root: 'task_run', sigil: '🏃',
-    include: ['cc-args', 'cc-task'],
+    include: ['cc-args', 'cc-task', 'cc-record'], predeclare: ['% command-info-types "no-record-nesting"'],
     description: 'DTD-native: run one task of the project tasks folder in the foreground through lib/task.mjs (its steps as a workflow under ceilings, stdin closed, every exit read directly), the dollar variables of each step expanded from the task alone and rendered as data before the run, the registry status landing done or blocked, the ledger lines rendered',
     argumentHint: '[the task name]',
     model: [
@@ -321,6 +321,7 @@ run it: node lib/workflow.mjs run tasks/[name].workflow.json
       'RTASK.2': 'Before the run, every step\'s run string is rendered expanded from the task\'s own variables as data; a variable the rules of LAW.TASK.2 refuse stops the command before anything runs, with the step named.',
       'RTASK.3': 'The status the registry carries after the run is what the runner wrote, done or blocked, never set by hand here; the ledger lines the run appended are read back and rendered with their count (LAW.TASK.5).',
       'RTASK.4': 'No word of the argument string is passed into a step: the argument names the task and nothing else (LAW.TASK.2).',
+      'RTASK.5': 'This command produces no record file of its own: its DOCTYPE declares command-info-types as no-record-nesting before it includes cc-record, the ledger of the tasks folder is the record of a run, and the Adiutor expects no file under artifacts for it (LAW.REC.5).',
     },
     objective: `Run the task ${ARGS} names, in the foreground, step by step under ceilings, and render what the runner measured.
 
@@ -372,17 +373,17 @@ count [n]; verbose [0|1]; debug [0|1]; words [the task name]
 
   'task-handoff': {
     new: true, to: 'src/commands/task-handoff-dtd.md', root: 'task_handoff', sigil: '🤝',
-    include: ['cc-args', 'cc-task', 'cc-ask'],
-    description: 'DTD-native: close a task of the project tasks folder with its evidence (files, ledger lines, exit codes, each read or run in this session), set its status through the runtime (done, blocked or handed off), write the record under artifacts with the command-generated filename, and print the instruction for the next session; the four questions cover outcome, evidence, the next step and the record',
+    include: ['cc-args', 'cc-task', 'cc-record', 'cc-ask'], predeclare: ['% command-info-types "record"'],
+    description: 'DTD-native: close a task of the project tasks folder with its attestation (files, ledger lines, exit codes, each read or run in this session), set its status through the runtime (done, blocked or handed off), write the record under artifacts with the command-generated filename as a revision history the Adiutor checks at Stop, and print the instruction for the next session; the four questions cover outcome, attestation, the next step and the record',
     argumentHint: '[the task name; --no-gate for autonomous defaults]',
     model: [
-      'task_handoff (args, task_ref, intake, evidence, record, instruction, assumption_made*)',
-      'task_ref (#PCDATA)', 'evidence (item+)', 'item (#PCDATA)', 'record (#PCDATA)', 'instruction (#PCDATA)',
+      'task_handoff (args, task_ref, intake, attestation, record_file, instruction, assumption_made*)',
+      'task_ref (#PCDATA)', 'attestation (item+)', 'item (#PCDATA)', 'record_file (#PCDATA)', 'instruction (#PCDATA)',
     ],
     attlist: [
       'task_ref name NMTOKEN #REQUIRED status_before (open|running|done|blocked|handed_off) #REQUIRED status_after (done|blocked|handed_off) #REQUIRED',
       'item kind (file|ledger|exit|note) #REQUIRED confidence (measured|reasoned|guessed) #REQUIRED',
-      'record path CDATA #REQUIRED bytes CDATA #REQUIRED',
+      'record_file path CDATA #REQUIRED bytes CDATA #REQUIRED revisions NMTOKEN #REQUIRED',
       'instruction goal CDATA #REQUIRED step CDATA #REQUIRED',
     ],
     entities: {
@@ -392,11 +393,12 @@ count [n]; verbose [0|1]; debug [0|1]; words [the task name]
       'ASK.HTASK.4': "Record|Where does the record go?|artifacts under this command's name, command-generated filename|The task file itself, appended|Nowhere|Typed under Other",
       'HTASK.dir': 'artifacts/task-handoff-dtd',
       'HTASK.command': 'node lib/task.mjs close',
+      'RECORD.handoff': 'handoff|artifacts/task-handoff-dtd/*.md|1=name:PCDATA@1|2=task:PCDATA@1|3=outcome:PCDATA@1|4=date:PCDATA@1|5=next:CDATA@1',
     },
     laws: {
       'HTASK.1': 'The status is set through HTASK.command with TASK.dir, the name and the outcome, which appends the ledger event and rewrites the registry entry; it is never edited by hand, and an outcome outside done, blocked or handed_off is refused (LAW.TASK.5).',
-      'HTASK.2': 'Every evidence item is a thing read, run or measured in this session, with its confidence; a recalled item is guessed and says so; an evidence list with no measured item cannot close a task as done.',
-      'HTASK.3': 'The record is written under HTASK.dir with the command-generated filename; a Greek ordinal numbers the files only when this command writes more than one in a run, never in place of the name (LAW.IUPAC.7); it is re-read and rendered with its bytes.',
+      'HTASK.2': 'Every attestation item is a thing read, run or measured in this session, with its confidence; a recalled item is guessed and says so; an attestation with no measured item cannot close a task as done.',
+      'HTASK.3': 'This command declares that it produces one record (command-info-types record, before the cc-record include): the file is written under HTASK.dir, which is RECORD.dir and this command\'s name, named RECORD.filename (a Greek ordinal only when this command writes more than one file in a run, never in place of the name, LAW.IUPAC.7); its frontmatter carries the fields of RECORD.handoff in order and its body is a revhistory, one revision per event as RECORD.revision.heading with at least one evidence line as RECORD.evidence.line under it (LAW.REC.6); the Adiutor checks it at Stop (LAW.ADIUTOR.11).',
       'HTASK.4': 'The instruction says what the next session does, in its own element with a goal and a step; for a handed-off task the step is the task-run line, for a blocked task the fix, for a done task nothing.',
     },
     objective: `Close the task ${ARGS} names with its evidence, its status and its record, and say what comes next.
@@ -406,17 +408,17 @@ Four questions in one round: the outcome, the evidence to carry, the next step e
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the task name; render the walk under \`args\`.`,
       'Read the registry with node lib/task.mjs validate on TASK.dir; find the task; render the `task_ref` with its name and its status before; a task that is not in the registry stops the command.',
       'Round 1 of 1: ask ASK.HTASK.1 (select), ASK.HTASK.2 (check), ASK.HTASK.3 (elaborate: each next step elaborated before the ask) and ASK.HTASK.4 (select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13); present the gate; on start proceed with every unasked question at its first option.',
-      'Gather the `evidence`: one `item` per file re-read, ledger line read, or exit code measured in this session, each with its kind and confidence; a done outcome needs at least one measured item (LAW.HTASK.2).',
+      'Gather the `attestation`: one `item` per file re-read, ledger line read, or exit code measured in this session, each with its kind and confidence; a done outcome needs at least one measured item (LAW.HTASK.2).',
       'Set the status through HTASK.command on TASK.dir, the name and the outcome, in the foreground with stdin closed, the exit read directly; read the registry again and render status_after on the `task_ref` (LAW.HTASK.1).',
-      'Write the `record` under HTASK.dir with the command-generated filename, UTF-8 LF, carrying the task, the outcome, the evidence and the next step; re-read it and render path and bytes (LAW.HTASK.3).',
+      'Write the record file under HTASK.dir named after this command (the ordinal from node lib/ordinals.mjs only when a file of this run already exists there), UTF-8 LF: the frontmatter with the five fields of RECORD.handoff in order, then the body as a revision history, one revision heading per event of this task read from the ledger with its evidence lines under it; re-read it, run node lib/record.mjs check on this command file and the project root, and render the `record_file` with path, bytes and the revision count (LAW.HTASK.3, LAW.REC.6).',
       'Render the `instruction` with goal and step for the next session (LAW.HTASK.4), and stop.',
     ],
     map: {
       args: '**🤝 Args**, the launch walk: count, the flags, the positional words',
       task_ref: '**🤝 Task**, the name, the status before and after',
       intake: '**🤝 Intake**, the one round with its four questions, the variant beside each, the labels or Other text chosen, the gate choice',
-      evidence: '**🤝 Evidence**, one line per item: kind, confidence, the thing',
-      record: '**🤝 Record**, the path and the bytes',
+      attestation: '**🤝 Attestation**, one line per item: kind, confidence, the thing',
+      record_file: '**🤝 Record**, the path, the bytes, the revision count, and the check line',
       instruction: '**🤝 Instruction**, the goal and the one step',
       assumption_made: '**🤝 Assumptions Made**, every question not asked, with the first option taken',
     },
@@ -433,13 +435,14 @@ count [n]; verbose [0|1]; debug [0|1]; words [the task name]
 - round 1 of 1: Outcome (select), Evidence (check), Next (elaborate), Record (select) answered [labels or Other text]
 - gate: [start|more|add|impactful]
 
-### 🤝 Evidence
+### 🤝 Attestation
 
 - [file|ledger|exit|note] ([measured|reasoned|guessed]): [the thing]
 
 ### 🤝 Record
 
-\`artifacts/task-handoff-dtd/[filename]\` ([bytes] B)
+\`artifacts/task-handoff-dtd/task-handoff-dtd[.ordinal].md\` ([bytes] B, [n] revisions)
+record check: sound
 
 ### 🤝 Instruction
 
@@ -451,8 +454,8 @@ step: [/task-run-dtd [name] | the fix | nothing]
 - [each unasked question, first option taken]`,
     success: [
       'The status landed through the runtime and the ledger carries the event',
-      'Every evidence item was read, run or measured here, with its confidence',
-      'The record keeps the command-generated filename',
+      'Every attestation item was read, run or measured here, with its confidence',
+      'The record keeps the command-generated filename, its fields are in declared order, and every revision carries evidence',
     ],
   },
 };

@@ -213,6 +213,18 @@ counts are re-measured.
   🔦 (a ripgrep and fd hunt by type and content in the foreground under a
   ceiling, fixed-string matching for backslashes, a planted file it must find
   and an empty directory it must report as zero).
+- Records and nesting (block 6): cc-record declares the nesting override in
+  the DITA idiom (`command-info-types`, record or no-record-nesting, before
+  the include; `produces`), the body of a record as a `revhistory` of
+  revisions with evidence lines, RECORD.dir, RECORD.filename,
+  RECORD.revision.heading, RECORD.evidence.line, LAW.REC.5 and 6.
+  `lib/record.mjs` reads the declaration from a command, finds the run's
+  record (the command's own name or a spelled ordinal, never di), checks the
+  fields and the revisions, and returns findings of kind record; the Adiutor
+  reads the nesting when it arms and asks at Stop (LAW.ADIUTOR.11, control
+  C20), the monitor prints MONITOR.record; task-handoff declares that it
+  produces a record (RECORD.handoff) and task-run that it produces none.
+  controls:record in the gate.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

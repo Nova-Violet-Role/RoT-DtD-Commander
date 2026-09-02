@@ -111,6 +111,39 @@ allowed-tools:
 <!ENTITY LAW.REC.2 "since never decreases as the field number grows: fields are appended, never inserted or renumbered.">
 <!ENTITY LAW.REC.3 "A PCDATA field is parsed by the reader; a CDATA field is carried whole and never interpreted.">
 <!ENTITY LAW.REC.4 "A reader that finds more columns than declared reads the declared ones and reports the surplus instead of guessing.">
+
+<!-- ===== nesting: which record a command produces (after the DITA shells) ===== -->
+<!-- A command declares, BEFORE it includes this subset, the parameter entity
+     command-info-types: record when its run writes a record under RECORD.dir
+     with the command's own name, no-record-nesting when it writes none. The
+     first declaration binds, so the line below is the default for a command
+     that says nothing, and the Adiutor reads the declaration at Stop
+     (LAW.REC.5). -->
+<!ENTITY % command-info-types "record">
+<!ELEMENT no-record-nesting EMPTY>
+<!ELEMENT produces ((record)*)>
+
+<!-- ===== the body of a record file: a revision history ===== -->
+<!-- The frontmatter carries the numbered fields; the body is one revision per
+     thing that happened, each with the evidence under it (DocBook revhistory,
+     X25). Rendered in Markdown as RECORD.revision.heading and
+     RECORD.evidence.line. -->
+<!ELEMENT revhistory (revision+)>
+<!ELEMENT revision (evidence+)>
+<!ATTLIST revision
+          revnumber NMTOKEN #REQUIRED
+          date      CDATA   #REQUIRED
+          remark    CDATA   #REQUIRED>
+<!ELEMENT evidence (#PCDATA)>
+<!ATTLIST evidence kind (file|exit|line|note) #REQUIRED>
+
+<!ENTITY RECORD.dir              "artifacts">
+<!ENTITY RECORD.filename         "the command's own name and .md, under RECORD.dir and the command's name; an ordinal from lib/ordinals.mjs before .md only when the command wrote more than one file in a run, never in place of the name (LAW.IUPAC.7)">
+<!ENTITY RECORD.revision.heading "a level-three heading: the word revision, the number, the date in parentheses, a colon, the remark">
+<!ENTITY RECORD.evidence.line    "a list line: the word evidence, the kind (file, exit, line or note), a colon, the text">
+
+<!ENTITY LAW.REC.5 "A command declares command-info-types before it includes this subset: record when its run writes a record file, no-record-nesting when it writes none; a RECORD.* entity that names a file declares that file instead; the Adiutor reads the declaration at Stop and expects nothing of a command that declares nothing.">
+<!ENTITY LAW.REC.6 "A record file is named RECORD.filename, its frontmatter carries every field of the command's RECORD.* declaration in declared order, and its body is a revhistory: at least one revision heading (RECORD.revision.heading) with at least one evidence line (RECORD.evidence.line) under it; a record missing, misnamed, stale, short of a field or empty of evidence is a finding of kind record and the monitor prints it as MONITOR.record.">
 <!-- end subset cc-record -->
 
   <!ELEMENT todo_add (context_capture, entry)>

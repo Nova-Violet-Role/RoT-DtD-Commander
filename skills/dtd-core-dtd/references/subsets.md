@@ -1622,6 +1622,39 @@ The numbered, append-only field discipline for any file one session writes and a
 <!ENTITY LAW.REC.2 "since never decreases as the field number grows: fields are appended, never inserted or renumbered.">
 <!ENTITY LAW.REC.3 "A PCDATA field is parsed by the reader; a CDATA field is carried whole and never interpreted.">
 <!ENTITY LAW.REC.4 "A reader that finds more columns than declared reads the declared ones and reports the surplus instead of guessing.">
+
+<!-- ===== nesting: which record a command produces (after the DITA shells) ===== -->
+<!-- A command declares, BEFORE it includes this subset, the parameter entity
+     command-info-types: record when its run writes a record under RECORD.dir
+     with the command's own name, no-record-nesting when it writes none. The
+     first declaration binds, so the line below is the default for a command
+     that says nothing, and the Adiutor reads the declaration at Stop
+     (LAW.REC.5). -->
+<!ENTITY % command-info-types "record">
+<!ELEMENT no-record-nesting EMPTY>
+<!ELEMENT produces ((%command-info-types;)*)>
+
+<!-- ===== the body of a record file: a revision history ===== -->
+<!-- The frontmatter carries the numbered fields; the body is one revision per
+     thing that happened, each with the evidence under it (DocBook revhistory,
+     X25). Rendered in Markdown as RECORD.revision.heading and
+     RECORD.evidence.line. -->
+<!ELEMENT revhistory (revision+)>
+<!ELEMENT revision (evidence+)>
+<!ATTLIST revision
+          revnumber NMTOKEN #REQUIRED
+          date      CDATA   #REQUIRED
+          remark    CDATA   #REQUIRED>
+<!ELEMENT evidence (#PCDATA)>
+<!ATTLIST evidence kind (file|exit|line|note) #REQUIRED>
+
+<!ENTITY RECORD.dir              "artifacts">
+<!ENTITY RECORD.filename         "the command's own name and .md, under RECORD.dir and the command's name; an ordinal from lib/ordinals.mjs before .md only when the command wrote more than one file in a run, never in place of the name (LAW.IUPAC.7)">
+<!ENTITY RECORD.revision.heading "a level-three heading: the word revision, the number, the date in parentheses, a colon, the remark">
+<!ENTITY RECORD.evidence.line    "a list line: the word evidence, the kind (file, exit, line or note), a colon, the text">
+
+<!ENTITY LAW.REC.5 "A command declares command-info-types before it includes this subset: record when its run writes a record file, no-record-nesting when it writes none; a RECORD.* entity that names a file declares that file instead; the Adiutor reads the declaration at Stop and expects nothing of a command that declares nothing.">
+<!ENTITY LAW.REC.6 "A record file is named RECORD.filename, its frontmatter carries every field of the command's RECORD.* declaration in declared order, and its body is a revhistory: at least one revision heading (RECORD.revision.heading) with at least one evidence line (RECORD.evidence.line) under it; a record missing, misnamed, stale, short of a field or empty of evidence is a finding of kind record and the monitor prints it as MONITOR.record.">
 ```
 
 ## adiutor.dtd
@@ -1669,7 +1702,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ELEMENT error (#PCDATA)>
 <!ATTLIST error tool CDATA #REQUIRED>
 <!ELEMENT finding (#PCDATA)>
-<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer|slop) #REQUIRED>
+<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer|slop|record) #REQUIRED>
 <!ELEMENT prescription (charm, rite)>
 <!ELEMENT charm (#PCDATA)>
 <!ELEMENT rite (#PCDATA)>
@@ -1679,7 +1712,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ELEMENT monitor (emit*)>
 <!ATTLIST monitor name NMTOKEN #FIXED "commander-adiutor">
 <!ELEMENT emit (#PCDATA)>
-<!ATTLIST emit kind (fail|malformed) #REQUIRED>
+<!ATTLIST emit kind (fail|malformed|record) #REQUIRED>
 
 <!ENTITY ADIUTOR.policy.default "warn">
 <!ENTITY ADIUTOR.strict.max_blocks "1">
@@ -1690,6 +1723,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ENTITY MONITOR.name      "commander-adiutor">
 <!ENTITY MONITOR.fail      "Adiutor: /%command% failed at Stop: %finding%. Run /RoT-DtD-Commander-Adiutor.">
 <!ENTITY MONITOR.malformed "Adiutor: ledger line %line% malformed (%columns% fields, expected 10). Run rdc doctor.">
+<!ENTITY MONITOR.record    "Adiutor: /%command% closed without a sound record: %finding%. Write it under artifacts/%command%/ with the command's own name (LAW.REC.6).">
 
 <!ENTITY LAW.ADIUTOR.1 "A run opens only for a slash command or skill whose installed file carries a DOCTYPE, named by a token that opens the prompt or, under LAW.CORE.7, ends it; the expected headings are derived from that file's grammar_map, never typed twice.">
 <!ENTITY LAW.ADIUTOR.2 "The answer judged is every assistant text of the transcript after the entry that invoked the command, none from a sidechain, completed by the Stop payload's last_assistant_message when the transcript has not carried it yet; a torn last line is tolerated and never a finding.">
@@ -1700,6 +1734,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ENTITY LAW.ADIUTOR.7 "The monitor reads the ledger and nothing else: one MONITOR.fail line per run closed as fail, one MONITOR.malformed line per line the reader refuses, nothing for a pass, and never a line for a run that closed before it started.">
 <!ENTITY LAW.ADIUTOR.8 "A file that declares no rendered heading is still judged by the shared laws: a non-empty answer, every heading carrying the sigil with a blank line before and after it, an Assumptions Made heading when the run had no gate, and every reference resolved; no run closes as skipped.">
 <!ENTITY LAW.ADIUTOR.10 "The Adiutor and its monitor run only when the operator runs them: no plugin manifest arms a hook, no loader file starts the monitor, an install arms nothing unless --arm is given, and every run of either ends at a 300 second ceiling (the Stop hook timeout when armed, the delegate timeout of rdc doctor and rdc controls, and --secs of rdc watch).">
+<!ENTITY LAW.ADIUTOR.11 "At Stop the Adiutor reads the record nesting the command declared (LAW.REC.5): a command whose command-info-types is record must have written its record under RECORD.dir with the command's own name or a spelled ordinal, its declared fields dense and at least one revision with evidence (LAW.REC.6); a RECORD.* entity that names a file must find that file written in the run; a fault is a finding of kind record, closes the run as fail, and the monitor prints it as MONITOR.record; a command that declares nothing is asked nothing.">
 <!ENTITY LAW.ADIUTOR.9 "Every answer is measured by the AI_SLOP gate of ai-slop.dtd at Stop, after the grammar check; a gate that does not hold is a finding of kind slop, closes the run as fail like any other finding, and its prescription names the measure that failed (control C19).">
 ```
 

@@ -44,6 +44,10 @@ export function failLine(command, finding) {
 export function malformedLine(line, columns) {
   return `Adiutor: ledger line ${line} malformed (${columns} fields, expected ${RECORD_FIELDS.length}). Run rdc doctor.`;
 }
+// MONITOR.record: a run that closed on a record finding (LAW.REC.6, LAW.ADIUTOR.11).
+export function recordLine(command, finding) {
+  return `Adiutor: /${command} closed without a sound record: ${finding}. Write it under artifacts/${command}/ with the command's own name (LAW.REC.6).`;
+}
 
 const args = process.argv.slice(2);
 const opt = (name, dflt) => {
@@ -90,7 +94,8 @@ function consume(text) {
     if (r.bad) emit(malformedLine(lineNo, r.bad.columns));
     else if (r.row.status === 'fail') {
       const first = String(r.row.findings || '').split(' || ')[0].trim() || 'no finding recorded';
-      emit(failLine(r.row.command, first));
+      if (first.startsWith('record: ')) emit(recordLine(r.row.command, first.slice(8)));
+      else emit(failLine(r.row.command, first));
     }
   }
 }

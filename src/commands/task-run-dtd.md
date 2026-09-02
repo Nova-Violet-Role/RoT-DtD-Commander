@@ -7,12 +7,15 @@ argument-hint: [the task name]
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!DOCTYPE task_run [
+  <!ENTITY % command-info-types "no-record-nesting">
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
   <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
   %cc-args;
   <!ENTITY % cc-task SYSTEM "../../dtd/cc-task.dtd">
   %cc-task;
+  <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
+  %cc-record;
   <!ELEMENT task_run (args, task_ref, expansion, execution, ledger_lines, verdict)>
   <!ELEMENT task_ref (#PCDATA)>
   <!ELEMENT expansion (expanded+)>
@@ -30,6 +33,7 @@ argument-hint: [the task name]
   <!ENTITY LAW.RTASK.2 "Before the run, every step's run string is rendered expanded from the task's own variables as data; a variable the rules of LAW.TASK.2 refuse stops the command before anything runs, with the step named.">
   <!ENTITY LAW.RTASK.3 "The status the registry carries after the run is what the runner wrote, done or blocked, never set by hand here; the ledger lines the run appended are read back and rendered with their count (LAW.TASK.5).">
   <!ENTITY LAW.RTASK.4 "No word of the argument string is passed into a step: the argument names the task and nothing else (LAW.TASK.2).">
+  <!ENTITY LAW.RTASK.5 "This command produces no record file of its own: its DOCTYPE declares command-info-types as no-record-nesting before it includes cc-record, the ledger of the tasks folder is the record of a run, and the Adiutor expects no file under artifacts for it (LAW.REC.5).">
   <!ENTITY RTASK.command "node lib/task.mjs run">
 ]>
 
