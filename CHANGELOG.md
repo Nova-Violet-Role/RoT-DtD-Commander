@@ -117,6 +117,17 @@ counts are re-measured.
   wrote, so the schema proof is a measurement. Four controls: among other
   keys passes, a dropped required part fails, a swapped order fails, an
   absent optional part passes.
+- Block 5, the creators amplified: `dtd/creators-v5.spec.mjs` generates
+  create-agent-skill, create-hook, create-slash-command, create-subagent,
+  create-plan (dispatch wrappers before) and create-mcp (new, 🔌) from one
+  anatomy: twelve questions in three rounds never skipped, ASK.LICENSE.1 from
+  the new `dtd/cc-license.dtd` (the curated SPDX list, 50 identifiers, single,
+  double or triple), an emoji registered in sigils.json and refused on a
+  collision, ASK.FORM.1, the expert skill invoked once with the answers as
+  known slots after the end token, every file read back and guarded, the
+  audit run by the creator itself in the foreground under a ceiling with one
+  rule per code (C1 to C14 and the auditor style areas, or H1 to H4, P1 to
+  P4, M1 to M4), and a planted fault the audit refuses; LAW.<PREFIX>.1 to 6.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

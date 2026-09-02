@@ -1251,6 +1251,41 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY LAW.SCHEMA.10 "A launcher that hands a prompt to a creator asks the schematic through ASK.SCHEMATIC.1 and ASK.SCHEMATIC.2, the schemas through ASK.SCHEMA.1 and ASK.SCHEMA.2 and the forms through ASK.FORM.1 and ASK.FORM.2 before the hand-off, names the creator as SCHEMA.creator.prompt or SCHEMA.creator.meta followed by a hyphen, the schematic and -dtd, and writes every choice into the hand-off as a known slot, so the creator never asks it again (LAW.ASK.1).">
 ```
 
+## cc-license.dtd
+
+The curated SPDX list (LICENSE.list, LICENSE.count), the default, the join rule, the license element, ASK.LICENSE.1, LAW.LICENSE.1 and 2. Included by every creator that writes a headed file.
+
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-license.dtd : the curated SPDX list every creator picks from.
+
+  A creator asks which license heads the files it writes; the answer is one
+  identifier of LICENSE.list, or a compound expression joining listed
+  identifiers with OR or AND (a double or a triple license). An identifier
+  outside the list is refused with the list printed and the question asked
+  again. The list is the one create-plugin declared first; the definitions
+  per identifier are a later addition (a data file, deferred).
+-->
+
+<!ELEMENT license (#PCDATA)>
+<!ATTLIST license
+          expression CDATA #REQUIRED
+          count      (single|double|triple) "single"
+          listed     (yes|no) #REQUIRED>
+
+<!ENTITY LICENSE.count "50">
+<!ENTITY LICENSE.list "0BSD, AFL-3.0, AGPL-3.0-only, AGPL-3.0-or-later, Apache-2.0, Artistic-2.0, BSD-2-Clause, BSD-3-Clause, BSD-3-Clause-Clear, BSD-4-Clause, BSL-1.0, CC-BY-4.0, CC-BY-SA-4.0, CC0-1.0, CECILL-2.1, CERN-OHL-P-2.0, CERN-OHL-S-2.0, CERN-OHL-W-2.0, ECL-2.0, EPL-1.0, EPL-2.0, EUPL-1.1, EUPL-1.2, GFDL-1.3, GPL-2.0-only, GPL-2.0-or-later, GPL-3.0-only, GPL-3.0-or-later, ISC, LGPL-2.1-only, LGPL-2.1-or-later, LGPL-3.0-only, LGPL-3.0-or-later, LPPL-1.3c, MIT, MIT-0, MPL-2.0, MS-PL, MS-RL, MulanPSL-2.0, NCSA, ODbL-1.0, OFL-1.1, OSL-3.0, PostgreSQL, Unlicense, UPL-1.0, Vim, WTFPL, Zlib">
+<!ENTITY LICENSE.default "AGPL-3.0-or-later OR EUPL-1.2">
+<!ENTITY LICENSE.join "OR or AND, upper case, one space each side">
+
+<!ENTITY ASK.LICENSE.1 "License|Which SPDX license heads the files? A double or triple joins two or three with OR or AND.|AGPL-3.0-or-later OR EUPL-1.2, the license of this repository|MIT|Apache-2.0|An identifier or a compound expression from LICENSE.list, typed under Other">
+
+<!ENTITY LAW.LICENSE.1 "The license is one identifier of LICENSE.list or a compound expression of listed identifiers joined by LICENSE.join; anything else is refused with the list printed and ASK.LICENSE.1 asked again; the license element renders the expression, its count and listed yes.">
+<!ENTITY LAW.LICENSE.2 "The chosen expression heads every file written whose format allows a comment, as an SPDX-License-Identifier line before any other content; a file whose format allows no comment is named in the answer as unheaded.">
+```
+
 ## cc-report.dtd
 
 The research report: a strategic summary, named sections that may quote, the claude_context block, one next action, and sources with a kind. Included by the research commands and deep-dive.
