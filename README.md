@@ -10,7 +10,7 @@
 
 **Commands that carry their own grammar, and a doctor that reads it**
 
-*68 Claude Code slash commands, 19 skills and 4 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it*
+*68 Claude Code slash commands, 19 skills and 5 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it*
 
 [![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/saimonokuma)
 [![Nova-Violet Role](https://img.shields.io/badge/Nova--Violet-Role-9b59b6?style=for-the-badge)](https://github.com/Nova-Violet-Role)
@@ -104,6 +104,13 @@ commands carry their lens emoji); the rule is `LAW.CORE.6`, checker rule
 C13 refuses a template whose headings touch or lack the sigil, and the
 Adiutor flags a crammed answer at Stop as a `spacing` finding. Nothing runs
 together, and an answer is recognisable at a glance.
+
+A command is also runnable from the end of a prompt: `LAW.CORE.7` declares
+that a `/name-dtd` token that ends a prompt, with or without a trailing `<-`,
+invokes that command on the text before it as its arguments. Claude Code
+expands a slash command only at the head of a prompt; the Adiutor arms the
+run on the trailing token too (control C14) and its armed line tells the
+model to run the command, so the call is as complete as a leading one.
 
 ### 🤝 It **improves** Claude Code; it does not replace it
 
@@ -241,7 +248,10 @@ contract), `dtd-forge-dtd` (make a new command), `dtd-audit-dtd`,
 `ask-gate-dtd`, `phantom-library-dtd`, `records-dtd`, `dtd-eval-dtd`, and
 `rot-lenses-dtd` (the nine lenses' rows, bands and hybrid law). Four
 agents audit the set: `slash-command-auditor-dtd`, `skill-auditor-dtd`,
-`subagent-auditor-dtd`, `dtd-contract-auditor`.
+`subagent-auditor-dtd`, `dtd-contract-auditor`. A fifth,
+`dtd-command-inventory`, audits nothing: it holds Read, Grep and Glob only
+and reports which `-dtd` commands are installed on the machine, from which
+root, with the DOCTYPE root element and law count each file declares.
 
 ### The Adiutor, decoded
 
@@ -351,7 +361,7 @@ and the rite (how the fix is verified). Under `ROT_DTD_ADIUTOR=strict` the
 Stop is blocked once with that prescription as the reason.
 
 <details>
-<summary><b>Watch: twelve guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding, C10 the answer of a run is every assistant text after the command prompt, C11 prune-plugin refuses while registered and removes the leftover, C12 the monitor prints one line per failed run and per malformed line, nothing for a pass or for history, in the DTD's words)</summary>
+<summary><b>Watch: seventeen guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding, C10 the answer of a run is every assistant text after the command prompt, C11 prune-plugin refuses while registered and removes the leftover, C12 the monitor prints one line per failed run and per malformed line, nothing for a pass or for history, in the DTD's words, C13 narration before a lagging answer is completed from the Stop payload's <code>last_assistant_message</code>: the same transcript fails without it and passes with it, C14 a trailing <code>/name-dtd</code> token arms the run with or without <code>&lt;-</code>, a token in the middle does not, and an installed -dtd skill arms it too, C15 a heading inside narration does not end the wait and a payload answer skips it, C16 a reference is judged only inside the id families the answer defines, C17 a file that declares no heading is still judged by the shared laws and no run closes as skipped)</summary>
 
 ![controls](docs/gifs/adiutor-fail.gif)
 
@@ -397,12 +407,12 @@ while the plugin is still registered.
 
 | claim | instrument | last measured |
 |---|---|---|
-| 68 commands, 19 skills, 4 agents carry a DOCTYPE | `rdc list` | 2026-09-02 |
+| 68 commands, 19 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-02 |
 | every source passes rules C1 to C14 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
 | the committed resolved tree equals a fresh build | `rdc build --check`: `223 targets, 0 drifted` | 2026-09-02 |
 | the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil and a front-matter value YAML would misread | `bash checker/checker-controls.sh` | 2026-09-02 |
 | every declaration in the five subsets and the Adiutor contract is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `161 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
-| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, reads the whole turn after the command prompt, and its monitor prints one line per failed run and one per malformed ledger line in the DTD's words, nothing for a pass and nothing for history | `node bin/adiutor.mjs controls`: `12 run, 0 failing` | 2026-09-02 |
+| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, reads the whole turn after the command prompt, and its monitor prints one line per failed run and one per malformed ledger line in the DTD's words, nothing for a pass and nothing for history, and an answer that lags behind narration at Stop is completed from the payload's `last_assistant_message`, a prompt that ends with a `/name-dtd` token arms the run (LAW.CORE.7) and a -dtd skill arms it like a command, a reference is judged only inside the id families the answer defines, and a file with no heading is judged by the shared laws, never skipped | `node bin/adiutor.mjs controls`: `17 run, 0 failing` | 2026-09-02 |
 | `rdc install` writes the monitor as `skills/rot-dtd-commander-adiutor/` (a `.claude-plugin/plugin.json` and a `monitors/monitors.json` running the copied script), the doctor's `monitor` row is green, and `rdc uninstall` leaves `skills/` empty | `rdc install --yes --target <scratch> --only pareto-dtd`: `written 17`; `CLAUDE_CONFIG_DIR=<scratch> node bin/adiutor.mjs doctor`: `11 checks, 0 failing`; `rdc uninstall --yes --target <scratch>`: `removed 17  kept 0` | 2026-09-02 |
 | the repository is a valid plugin with its monitor declared | `claude plugin validate .`: `Validation passed` | 2026-09-02 |
 | a live `/pareto-dtd` turn in a fresh headless session, through the armed hooks, closes as `pass` in the ledger | `MSYS_NO_PATHCONV=1 claude -p "/pareto-dtd ..." --dangerously-skip-permissions`, then `rdc ledger --last 1` | 2026-09-02 |
@@ -426,13 +436,13 @@ cd RoT-DtD-Commander
 npm run gate; echo "exit=$?"
 ```
 
-`gate` runs `build --check`, `check`, the twelve Adiutor controls, the contract audit, the checker controls and the
+`gate` runs `build --check`, `check`, the seventeen Adiutor controls, the contract audit, the checker controls and the
 two sweeps; each ends with a line of counts, and the exit code is read
 directly. Then break it:
 
 ```sh
 bash checker/checker-controls.sh      # six mutations and one untouched file, each asserted present, each refused
-node bin/adiutor.mjs controls         # twelve guards; C3 is the strict block, once and never twice; C12 is the monitor, tripped live
+node bin/adiutor.mjs controls         # seventeen guards; C3 is the strict block, once and never twice; C12 the monitor, tripped live; C13 the lagging answer, C14 the trailing call, C17 the heading-less file judged
 rdc watch --once                      # the monitor over your own ledger: one line per failed run, silence for a pass
 ```
 

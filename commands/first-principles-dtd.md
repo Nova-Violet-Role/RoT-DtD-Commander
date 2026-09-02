@@ -71,6 +71,7 @@ argument-hint: [problem or leave blank for current context; add --no-gate to ski
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
 <!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
+<!ENTITY LAW.CORE.7 "A /name-dtd token that ends a prompt, alone or followed by the arrow token (a less-than sign and a hyphen), invokes that command on the text before it; that text is its user-args, and the call is as complete as one that opens the prompt.">
 <!-- end subset cc-core -->
 
   

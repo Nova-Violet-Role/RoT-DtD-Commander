@@ -110,6 +110,13 @@ function commandDirs(cwd) {
   }
   return dirs;
 }
+// A -dtd skill is a command file too: Claude Code exposes an installed skill
+// as /<name>, and its SKILL.md carries the same DOCTYPE and grammar_map.
+function skillFiles(name, cwd) {
+  const bases = [claudeDir()];
+  if (cwd) bases.unshift(join(cwd, '.claude'));
+  return bases.map((b) => join(b, 'skills', name, 'SKILL.md'));
+}
 function findCommandFile(name, cwd) {
   for (const d of commandDirs(cwd)) {
     const p = join(d, `${name}.md`);
@@ -119,6 +126,7 @@ function findCommandFile(name, cwd) {
       if (hit) return join(d, hit);
     }
   }
+  for (const p of skillFiles(name, cwd)) if (existsSync(p)) return p;
   return null;
 }
 
@@ -166,19 +174,43 @@ export function lastAssistantText(transcriptPath, command = null) {
   return (sinceCommand && sinceCommand.length ? sinceCommand : texts).join('\n\n');
 }
 
-// At Stop the transcript can lag the final message by a moment; read again a
-// few times before concluding there is no text.
+// At Stop the transcript can lag the final message by a moment, and the
+// text already there may be narration from earlier in the turn, so a
+// non-empty read is not proof that the answer landed. The payload's own
+// copy of the last assistant message IS the answer whenever it is there
+// (Claude Code sends it as last_assistant_message; control C13), so read
+// it first and do not wait at all. It is optional in the Stop schema and
+// the CLI drops it when the final message trims to empty, so when it is
+// absent read the transcript again while it is still growing. The break
+// is growth, never the presence of a heading: narration carries headings
+// too, so a heading is no proof the answer landed, and testing for one
+// forfeited the whole wait in exactly the case the wait exists for
+// (control C15).
+const flat = (s) => String(s || '').replace(/\s+/g, ' ').trim();
 function answerAtStop(payload, command) {
   const wait = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
-  let text = '';
-  for (let i = 0; i < 6; i++) {
-    text = lastAssistantText(payload.transcript_path, command);
-    if (text.trim()) break;
-    wait(250);
+  const last = typeof payload.last_assistant_message === 'string' ? payload.last_assistant_message : '';
+  let text = lastAssistantText(payload.transcript_path, command);
+  if (!last.trim()) {
+    let grew = false;
+    for (let i = 0; i < 6; i++) {
+      wait(250);
+      const again = lastAssistantText(payload.transcript_path, command);
+      if (again.length > text.length) {
+        text = again;
+        grew = true;
+        continue;
+      }
+      if (grew) break;
+    }
   }
-  if (!text.trim() && typeof payload.last_assistant_message === 'string') text = payload.last_assistant_message;
+  let source = 'transcript';
+  if (last.trim() && !flat(text).includes(flat(last))) {
+    source = text.trim() ? 'transcript+payload' : 'payload';
+    text = text.trim() ? `${text.replace(/\s+$/, '')}\n\n${last}` : last;
+  }
   const p = payload.transcript_path;
-  const detail = `transcript ${p ? (existsSync(p) ? 'present' : 'missing') : 'not given'}; payload keys ${Object.keys(payload).join(',')}`;
+  const detail = `transcript ${p ? (existsSync(p) ? 'present' : 'missing') : 'not given'}; answer from ${source}; payload keys ${Object.keys(payload).join(',')}`;
   return { text, detail };
 }
 
@@ -193,10 +225,20 @@ function readStdinJson() {
   }
 }
 
+// A command is named at the head of the prompt (expanded by Claude Code, or
+// a bare leading token) or, under LAW.CORE.7, by a -dtd token that ends the
+// prompt with or without a trailing <-. A token in the middle names nothing.
+const TRAILING_CALL = /(?:^|\s)\/([A-Za-z0-9_.:-]+-dtd)\s*(?:<-)?\s*$/i;
 function slashCommandIn(prompt) {
   const s = String(prompt || '');
   const m = /<command-name>\s*\/([^<\s]+)\s*<\/command-name>/.exec(s) || /^\s*\/([A-Za-z0-9_.:-]+)/.exec(s);
-  return m ? m[1] : null;
+  if (m) return m[1];
+  const t = TRAILING_CALL.exec(s);
+  return t ? t[1] : null;
+}
+function isTrailingCall(prompt) {
+  const s = String(prompt || '');
+  return !/<command-name>/.test(s) && !/^\s*\//.test(s) && TRAILING_CALL.test(s);
 }
 
 export function observe(event, payload, io = console) {
@@ -223,9 +265,11 @@ export function observe(event, payload, io = console) {
       const prev = readRun(session);
       if (prev) closeRun(prev, 'aborted', [{ msg: 'a new -dtd command started before the Stop check' }]);
       const autonomous = /--no-gate/.test(String(payload.prompt || ''));
-      writeRun({ session, command: name, file, root: expected.root, expected, tools: 0, errors: [], attempts: 0, autonomous, opened: new Date().toISOString() });
+      const trailing = isTrailingCall(payload.prompt);
+      writeRun({ session, command: name, file, root: expected.root, expected, tools: 0, errors: [], attempts: 0, autonomous, trailing, opened: new Date().toISOString() });
       const req = expected.headings.filter((h) => h.required).map((h) => h.heading);
-      out(`Adiutor armed for /${name}: root ${expected.root}; required headings: ${req.join(', ') || 'none declared'}; ${expected.laws} laws; the answer is checked at Stop (policy ${policy()}).`);
+      const how = trailing ? ` (trailing call, LAW.CORE.7: run /${name} now on the text before the token as its arguments)` : '';
+      out(`Adiutor armed for /${name}${how}: root ${expected.root}; required headings: ${req.join(', ') || 'none declared'}; ${expected.laws} laws; the answer is checked at Stop (policy ${policy()}).`);
       return;
     }
     case 'PreToolUse': {
@@ -256,6 +300,9 @@ export function observe(event, payload, io = console) {
       if (payload.stop_hook_active) return;
       const run = readRun(session);
       if (!run) return;
+      // A file that declares no rendered heading (every installed skill,
+      // measured: 20 of 20) is judged like any other by the shared laws;
+      // no run closes as skipped (LAW.ADIUTOR.8, control C17).
       const { text: answer, detail } = answerAtStop(payload, run.command);
       const result = checkAnswer(answer, run.expected, { autonomous: run.autonomous });
       for (const f of result.findings) if (f.kind === 'no_answer') f.msg += ` (${detail})`;
@@ -528,6 +575,173 @@ export async function controls(io = console) {
 
     return { ok: joined && stanzaLast && r.ok, detail: `joined=${joined} stanzaLast=${stanzaLast} pass=${r.ok}` };
 
+  }, results);
+
+  control('C13 narration before a lagging answer: the Stop payload completes the transcript', () => {
+    // The turn so far: the command, a narration text, a tool call, a second
+    // narration text; the answer is not flushed to the transcript yet. Read
+    // alone, the narration is a non-empty text with no heading and the run
+    // must fail (the trip). With the payload's last_assistant_message
+    // carrying the answer, the same transcript must pass, and the ledger
+    // must hold both verdicts in that order.
+    const p = join(tmp, 'lag.jsonl');
+    const L = (o) => JSON.stringify(o);
+    writeFileSync(p, [
+      L({ type: 'user', message: { content: '/pareto-dtd what first' } }),
+      L({ type: 'assistant', message: { content: [{ type: 'text', text: 'Reading the sources before ranking.' }] } }),
+      L({ type: 'assistant', message: { content: [{ type: 'tool_use', name: 'Read', input: {} }] } }),
+      L({ type: 'user', message: { content: [{ type: 'tool_result', content: 'x' }] } }),
+      L({ type: 'assistant', message: { content: [{ type: 'text', text: 'Two files read; the ranking follows.' }] } }),
+    ].join('\n') + '\n', 'utf8');
+    const seen = lastAssistantText(p, 'pareto-dtd');
+    if (!seen.trim() || /(^|\n)#{1,6}\s/.test(seen)) return { ok: false, detail: 'mutation did not land: the transcript must hold narration and no heading' };
+    const open = (s) => writeFileSync(join(tmp, 'runs', `${s}.json`), JSON.stringify({ session: s, command: 'pareto-dtd', root: 'pareto', expected, tools: 1, errors: [], attempts: 0, autonomous: false }), 'utf8');
+    const lp = ledgerPath();
+    const before = existsSync(lp) ? parseLedger(readFileSync(lp, 'utf8')).rows.length : 0;
+    open('S13a');
+    const ioA = capture();
+    observe('Stop', { session_id: 'S13a', transcript_path: p, stop_hook_active: false }, ioA);
+    const tripped = ioA.lines.some((l) => l.includes('failed its grammar')) && !existsSync(join(tmp, 'runs', 'S13a.json'));
+    open('S13b');
+    const ioB = capture();
+    observe('Stop', { session_id: 'S13b', transcript_path: p, stop_hook_active: false, last_assistant_message: good }, ioB);
+    const passed = ioB.lines.length === 0 && !existsSync(join(tmp, 'runs', 'S13b.json'));
+    const rows = parseLedger(readFileSync(lp, 'utf8')).rows.slice(before);
+    const ledgerOk = rows.length === 2 && rows[0].session === 'S13a' && rows[0].status === 'fail' && rows[1].session === 'S13b' && rows[1].status === 'pass';
+    return { ok: tripped && passed && ledgerOk, detail: `narration-only fail=${tripped} payload-completed pass=${passed} ledger=${rows.map((r) => `${r.session}:${r.status}`).join(',')}` };
+  }, results);
+
+  control('C15 a heading in narration does not end the wait, and a payload answer skips it', () => {
+    // The break used to be "the read holds a heading", which narration
+    // satisfies: the wait was forfeited in exactly the case it exists for.
+    // Trip it with narration carrying a heading and no last_assistant_message
+    // -- the read must still spend the window. With the payload carrying the
+    // answer there must be no wait at all.
+    const p = join(tmp, 'c15.jsonl');
+    const L = (o) => JSON.stringify(o);
+    writeFileSync(p, [
+      L({ type: 'user', message: { content: '/pareto-dtd what first' } }),
+      L({ type: 'assistant', message: { content: [{ type: 'text', text: 'Reading the sources.\n\n### Plan\n\nRank them next.\n' }] } }),
+    ].join('\n') + '\n', 'utf8');
+    const seen = lastAssistantText(p, 'pareto-dtd');
+    if (!/(^|\n)#{1,6}\s/.test(seen)) return { ok: false, detail: 'mutation did not land: the narration must carry a heading' };
+    const open = (s) => writeFileSync(join(tmp, 'runs', `${s}.json`), JSON.stringify({ session: s, command: 'pareto-dtd', root: 'pareto', expected, tools: 1, errors: [], attempts: 0, autonomous: false }), 'utf8');
+    open('S15a');
+    const t0 = Date.now();
+    observe('Stop', { session_id: 'S15a', transcript_path: p, stop_hook_active: false }, capture());
+    const waited = Date.now() - t0;
+    open('S15b');
+    const t1 = Date.now();
+    const ioB = capture();
+    observe('Stop', { session_id: 'S15b', transcript_path: p, stop_hook_active: false, last_assistant_message: good }, ioB);
+    const instant = Date.now() - t1;
+    const passed = ioB.lines.length === 0;
+    return { ok: waited >= 1000 && instant < 250 && passed, detail: `narration-heading waited ${waited}ms, payload answered in ${instant}ms, payload pass=${passed}` };
+  }, results);
+
+  control('C16 a reference is judged inside the id families the answer defines: "by C3" and "by R11b" pass, "from T7" fails', () => {
+    // Measured on two live runs: answers that defined T1..T5 and A1..A8 said
+    // "verified by C3" (the repository control) and "by R11b" (a ledger row)
+    // and closed as fail on a dangling reference. The rule now counts a
+    // reference only in a family the answer defines, and an id followed by
+    // a letter is another token. The trip: a reference in a defined family
+    // to an id that is not there must still fail.
+    const fpText = readText(join(ROOT, existsSync(join(ROOT, 'commands', 'first-principles-dtd.md')) ? 'commands/first-principles-dtd.md' : 'src/commands/first-principles-dtd.md'));
+    const fp = expectedFromCommand(resolveFile(fpText, join(ROOT, 'commands')).text);
+    if (!fp || !fp.hasRefs) return { ok: false, detail: 'mutation did not land: first-principles-dtd declares no refs' };
+    // only the dangling_ref kind is asserted below; the sigil is irrelevant here
+    const body = (refs) => fp.headings.map((h) => `### 🧱 ${h.heading}\n\n- T1 one\n- T2 two\n- A1 base\n\n${refs}\n`).join('\n');
+    const outside = checkAnswer(body('holds from T1, A1; verified by C3; measured by R11b'), fp, {});
+    const inside = checkAnswer(body('holds from T1, T7'), fp, {});
+    const outsideOk = outside.findings.every((f) => f.kind !== 'dangling_ref');
+    const insideTripped = inside.findings.some((f) => f.kind === 'dangling_ref' && f.msg.includes('T7') && !f.msg.includes('C3'));
+    return { ok: outsideOk && insideTripped, detail: `outside-family refs pass=${outsideOk} in-family missing id fails=${insideTripped}${outsideOk ? '' : ' (' + outside.findings.map((f) => f.msg).join('; ') + ')'}` };
+  }, results);
+
+  control('C17 a file that declares no heading is still judged by the shared laws: crammed or unsigiled headings and a missing Assumptions Made fail, a clean answer passes, and no run closes as skipped', () => {
+    // Measured: every installed -dtd skill declares zero rendered headings,
+    // and the first skill through the sweep closed as fail on the autonomous
+    // rule for an "Assumptions Made" heading it wrote at H1 with more words.
+    // Nothing declared means nothing missing or out of order, but LAW.CORE.6
+    // and LAW.CORE.5 still hold on the headings the answer chose. Trip both
+    // sides: a crammed, unsigiled, assumption-less answer fails on all three;
+    // the same content spaced, sigiled and with its assumptions passes.
+    const bare = { ...expected, headings: [], required: [], autonomousAware: true, sigil: '🎯' };
+    const bad = '# Plan\n- one\n## Detail\ntwo\n';
+    // the fenced block carries shell comments that look like headings and are
+    // not (measured on a live hook answer: seven false crammed headings)
+    const goodRef = '# 🎯 Plan\n\n- one\n\n```sh\n#!/usr/bin/env bash\n# PostToolUse hook: append one line per call\n# Guard 1: not JSON -> nothing written\n```\n\n## 🎯 Autonomous Rules, Assumptions Made\n\n- assumed the scope\n';
+    const rBad = checkAnswer(bad, bare, { autonomous: true });
+    const kinds = new Set(rBad.findings.map((f) => f.kind));
+    const tripped = !rBad.ok && kinds.has('spacing') && kinds.has('sigil') && kinds.has('missing_assumptions') && !kinds.has('missing_heading') && !kinds.has('order');
+    const rGood = checkAnswer(goodRef, bare, { autonomous: true });
+    writeFileSync(join(tmp, 'runs', 'S17a.json'), JSON.stringify({ session: 'S17a', command: 'reference-dtd', root: 'reference', expected: bare, tools: 0, errors: [], attempts: 0, autonomous: true }), 'utf8');
+    const ioA = capture();
+    observe('Stop', { session_id: 'S17a', transcript_path: transcript(goodRef), stop_hook_active: false, last_assistant_message: goodRef }, ioA);
+    const row = parseLedger(readFileSync(ledgerPath(), 'utf8')).rows.find((r) => r.session === 'S17a');
+    const judgedPass = !!row && row.status === 'pass' && ioA.lines.length === 0;
+    const neverSkipped = !readFileSync(ledgerPath(), 'utf8').split('\n').some((l) => l.split('\t')[7] === 'skipped');
+    return { ok: tripped && rGood.ok && judgedPass && neverSkipped, detail: `bad answer fails on ${[...kinds].join('+')}=${tripped} good answer passes=${rGood.ok} live Stop closed pass=${judgedPass} no skipped row=${neverSkipped}` };
+  }, results);
+
+  control('C18 narration before the answer is not judged as the answer', () => {
+    // The run's answer is every assistant text block since the command,
+    // joined in order (C10), so a heading previewed in a plan, a declared
+    // heading crammed into narration, and an id named in passing all reached
+    // checkAnswer as part of the answer and closed correct runs as fail.
+    // The answer is now anchored at the LAST rendering of its first declared
+    // heading. The trip: the same three joined texts judged with the anchor
+    // disabled -- a first heading the answer never renders -- must still fail.
+    const off = { ...expected, headings: [{ element: 'none', heading: 'Anchor Not Rendered', required: false }, ...expected.headings] };
+    const join2 = (a, b) => a + '\n\n' + b;
+    const later = expected.headings[expected.headings.length - 1].heading;
+    const preview = 'Before ranking, the close will read:\n\n### 🎯 ' + later + '\n\nthe one to do first.';
+    const cram = 'Plan:\n### 🎯 ' + expected.headings[0].heading + '\nthen the rest.';
+    const fpText = readText(join(ROOT, existsSync(join(ROOT, 'commands', 'first-principles-dtd.md')) ? 'commands/first-principles-dtd.md' : 'src/commands/first-principles-dtd.md'));
+    const fp = expectedFromCommand(resolveFile(fpText, join(ROOT, 'commands')).text);
+    const fpOff = { ...fp, headings: [{ element: 'none', heading: 'Anchor Not Rendered', required: false }, ...fp.headings] };
+    const fpAnswer = fp.headings.map((h) => '### 🧱 ' + h.heading + '\n\n- T1 one\n\nholds from T1.\n').join('\n');
+    const chatter = 'The ranking so far comes from T7 in the earlier pass.';
+    const kinds = (t, e) => new Set(checkAnswer(t, e, {}).findings.map((f) => f.kind));
+    const trip1 = kinds(join2(preview, good), off).has('order');
+    const trip2 = kinds(join2(cram, good), off).has('spacing');
+    const trip3 = fp.hasRefs && kinds(join2(chatter, fpAnswer), fpOff).has('dangling_ref');
+    const pass1 = checkAnswer(join2(preview, good), expected, {}).ok;
+    const pass2 = checkAnswer(join2(cram, good), expected, {}).ok;
+    const pass3 = checkAnswer(join2(chatter, fpAnswer), fp, {}).ok;
+    const tripped = trip1 && trip2 && trip3;
+    return { ok: tripped && pass1 && pass2 && pass3, detail: 'anchor-off trips order/spacing/ref=' + trip1 + '/' + trip2 + '/' + trip3 + ' anchored passes=' + pass1 + '/' + pass2 + '/' + pass3 };
+  }, results);
+  control('C14 a trailing /name-dtd token arms the run, with or without <-, a token in the middle does not, and an installed -dtd skill arms it too', () => {
+    // Claude Code expands a slash command only at the head of a prompt. Under
+    // LAW.CORE.7 a prompt that ends with the token must still open a run and
+    // the armed line must tell the model to run it on the text before the
+    // token; the same token in the middle of a sentence names nothing. A
+    // skill directory whose SKILL.md carries a DOCTYPE is a command file too.
+    const cwd = join(tmp, 'cwd14');
+    const cmds = join(cwd, '.claude', 'commands');
+    mkdirSync(cmds, { recursive: true });
+    const source = resolveFile(cmdText, join(ROOT, 'commands')).text;
+    writeFileSync(join(cmds, 'pareto-dtd.md'), source, 'utf8');
+    const skill = join(cwd, '.claude', 'skills', 'pareto-skill-dtd');
+    mkdirSync(skill, { recursive: true });
+    writeFileSync(join(skill, 'SKILL.md'), source, 'utf8');
+    const open = (s) => existsSync(join(tmp, 'runs', `${s}.json`));
+    const io1 = capture();
+    observe('UserPromptSubmit', { session_id: 'S14a', cwd, prompt: 'rank what to fix first in this install\n/pareto-dtd <-' }, io1);
+    const arrowOpened = open('S14a') && io1.lines.length === 1 && io1.lines[0].includes('trailing call') && io1.lines[0].includes('LAW.CORE.7');
+    const io2 = capture();
+    observe('UserPromptSubmit', { session_id: 'S14b', cwd, prompt: 'rank what to fix first in this install /pareto-dtd' }, io2);
+    const bareOpened = open('S14b') && io2.lines.length === 1 && io2.lines[0].includes('trailing call');
+    const io3 = capture();
+    observe('UserPromptSubmit', { session_id: 'S14c', cwd, prompt: 'rank it with /pareto-dtd and then explain the ranking' }, io3);
+    const middleIgnored = !open('S14c') && io3.lines.length === 0;
+    const io4 = capture();
+    observe('UserPromptSubmit', { session_id: 'S14d', cwd, prompt: '/pareto-skill-dtd what first' }, io4);
+    const run4 = open('S14d') ? JSON.parse(readFileSync(join(tmp, 'runs', 'S14d.json'), 'utf8')) : null;
+    const skillOpened = !!run4 && /SKILL\.md$/.test(run4.file) && io4.lines.length === 1 && !io4.lines[0].includes('trailing call');
+    for (const s of ['S14a', 'S14b', 'S14d']) rmSync(join(tmp, 'runs', `${s}.json`), { force: true });
+    return { ok: arrowOpened && bareOpened && middleIgnored && skillOpened, detail: `trailing with <- opened=${arrowOpened} bare trailing opened=${bareOpened} middle ignored=${middleIgnored} skill opened=${skillOpened}` };
   }, results);
 
   control('C11 prune-plugin refuses while the plugin is registered, then removes the leftover', () => {

@@ -74,5 +74,7 @@
   "dtd-contract-auditor": "📐",
   "slash-command-auditor": "🛡️",
   "skill-auditor": "🎖️",
-  "subagent-auditor": "🪖"
+  "subagent-auditor": "🪖",
+  "dtd-command-inventory": "🗂️",
+  "coin-flip": "🪙"
 }

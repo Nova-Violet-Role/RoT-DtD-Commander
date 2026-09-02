@@ -70,6 +70,7 @@ Trust classes, the four unparsed channels and their notations, the shared enumer
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
 <!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
+<!ENTITY LAW.CORE.7 "A /name-dtd token that ends a prompt, alone or followed by the arrow token (a less-than sign and a hyphen), invokes that command on the text before it; that text is its user-args, and the call is as complete as one that opens the prompt.">
 ```
 
 ## cc-ask.dtd
@@ -239,11 +240,13 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
   `node bin/adiutor.mjs controls` runs both ways: the policy default
   declared here must equal the code default in bin/adiutor.mjs, every
   RECORD.run field must be written by the code (C7), and the monitor's
-  printed lines must match MONITOR.fail and MONITOR.malformed (C12).
+  printed lines must match MONITOR.fail and MONITOR.malformed (C12), and a
+  lagging answer behind narration must be completed from the Stop payload
+  (C13).
 -->
 
 <!ENTITY % policy "(off|warn|strict)">
-<!ENTITY % status "(open|pass|fail|aborted|skipped)">
+<!ENTITY % status "(open|pass|fail|aborted)">
 
 <!ELEMENT adiutor (run*)>
 <!ELEMENT run (expected, error*, finding*, prescription?)>
@@ -260,7 +263,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ELEMENT error (#PCDATA)>
 <!ATTLIST error tool CDATA #REQUIRED>
 <!ELEMENT finding (#PCDATA)>
-<!ATTLIST finding kind (missing_heading|order|spacing|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
+<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
 <!ELEMENT prescription (charm, rite)>
 <!ELEMENT charm (#PCDATA)>
 <!ELEMENT rite (#PCDATA)>
@@ -282,11 +285,12 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ENTITY MONITOR.fail      "Adiutor: /%command% failed at Stop: %finding%. Run /RoT-DtD-Commander-Adiutor.">
 <!ENTITY MONITOR.malformed "Adiutor: ledger line %line% malformed (%columns% fields, expected 10). Run rdc doctor.">
 
-<!ENTITY LAW.ADIUTOR.1 "A run opens only for a slash command whose installed file carries a DOCTYPE; the expected headings are derived from that file's grammar_map, never typed twice.">
-<!ENTITY LAW.ADIUTOR.2 "The answer judged is the last assistant text of the transcript that is not a sidechain; a torn last line is tolerated and never a finding.">
+<!ENTITY LAW.ADIUTOR.1 "A run opens only for a slash command or skill whose installed file carries a DOCTYPE, named by a token that opens the prompt or, under LAW.CORE.7, ends it; the expected headings are derived from that file's grammar_map, never typed twice.">
+<!ENTITY LAW.ADIUTOR.2 "The answer judged is every assistant text of the transcript after the entry that invoked the command, none from a sidechain, completed by the Stop payload's last_assistant_message when the transcript has not carried it yet; a torn last line is tolerated and never a finding.">
 <!ENTITY LAW.ADIUTOR.3 "Under policy strict the Stop is blocked at most ADIUTOR.strict.max_blocks times per run, and the reason is the prescription; a second Stop always passes.">
 <!ENTITY LAW.ADIUTOR.4 "The Adiutor edits no file the user owns and spawns no process from a hook; it writes only under its own state directory and, when arming, settings.json with a backup first.">
 <!ENTITY LAW.ADIUTOR.5 "Every closed run is one ledger line with the ten RECORD.run fields in order; a line with more or fewer columns is refused by the reader.">
 <!ENTITY LAW.ADIUTOR.6 "Every guard has a control that was tripped on purpose before the guard was trusted.">
 <!ENTITY LAW.ADIUTOR.7 "The monitor reads the ledger and nothing else: one MONITOR.fail line per run closed as fail, one MONITOR.malformed line per line the reader refuses, nothing for a pass, and never a line for a run that closed before it started.">
+<!ENTITY LAW.ADIUTOR.8 "A file that declares no rendered heading is still judged by the shared laws: a non-empty answer, every heading carrying the sigil with a blank line before and after it, an Assumptions Made heading when the run had no gate, and every reference resolved; no run closes as skipped.">
 ```
