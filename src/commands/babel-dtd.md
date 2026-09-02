@@ -9,7 +9,22 @@ argument-hint: [decision with a few axes, or leave blank for current context]
 <!DOCTYPE library [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT library (question, axis+, hexagon+, catalog, verdict)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!-- the voice profile of this book-derived command, fixed here before the lexicon is included so the first declaration binds (LAW.LEX.5) -->
+  <!ATTLIST text_desc
+          derivation   (original) #FIXED "original"
+          domain       CDATA #FIXED "Borges' library applied to a finite design space"
+          factuality   (mixed) #FIXED "mixed"
+          preparedness (prepared) #FIXED "prepared"
+          purpose      CDATA #FIXED "enumerate a finite space completely, mark the absurd cells, find the catalog that names the answer"
+          degree       CDATA #FIXED "the structure of the story only">
+  <!ENTITY VOICE.source "book4">
+  <!ENTITY % cc-lexicon SYSTEM "../../dtd/cc-lexicon.dtd">
+  %cc-lexicon;
+  <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ELEMENT library (args, intake, text_desc, question, axis+, hexagon+, catalog, verdict)>
   <!ELEMENT question (#PCDATA)>
   <!ELEMENT axis (#PCDATA)>
   <!ELEMENT hexagon (#PCDATA)>
@@ -40,22 +55,41 @@ Borges' Library of Babel holds every possible book, most of them noise, and some
 </objective>
 
 <process>
-1. State the `question` the space answers.
-2. Declare each `axis` with its id and its finite list of values. Multiply the value counts and write the hexagon total; if it exceeds about forty, stop and size the space with count-the-library-dtd instead.
-3. Name every `hexagon`: one per combination, with coords listing one value per axis, and a status: viable, absurd, or untested. Write one line for each absurd cell saying why.
-4. Write the `catalog`: the reading order of the viable cells, covering every hexagon id.
-5. Write the `verdict`: the one hexagon that answers the question, and why the neighbours do not.
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
+4. State the `question` the space answers.
+5. Declare each `axis` with its id and its finite list of values. Multiply the value counts and write the hexagon total; if it exceeds about forty, stop and size the space with count-the-library-dtd instead.
+6. Name every `hexagon`: one per combination, with coords listing one value per axis, and a status: viable, absurd, or untested. Write one line for each absurd cell saying why.
+7. Write the `catalog`: the reading order of the viable cells, covering every hexagon id.
+8. Write the `verdict`: the one hexagon that answers the question, and why the neighbours do not.
 </process>
 
 <output_format>
 <grammar_map>
 Render the `library` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 📚 Heading` carrying this command's sigil 📚, with a blank line before and after it (LAW.CORE.6).
+- `args`: **📚 Args**, the launch walk: count, the flags, the positional words
+- `intake`: **📚 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `text_desc`: **📚 Voice**, the fixed profile and the book it draws on
 - `question`: **📚 Question**
 - `axis`: **📚 Axes**, one line per axis with id and values, then the total count
 - `hexagon`: **📚 Hexagons**, one line per combination with id, coords, status
 - `catalog`: **📚 Catalog**, the viable cells in reading order
 - `verdict`: **📚 Verdict**, the chosen hexagon id and why
 </grammar_map>
+
+### 📚 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### 📚 Intake
+
+- round 1 of 1: Subject, Depth, Record, Voice answered [labels or Other text]
+- gate: [start|more|add|impactful]
+
+### 📚 Voice
+
+derivation original; domain Borges' library applied to a finite design space; factuality mixed; preparedness prepared; source book4
 
 ### 📚 Question
 
@@ -83,6 +117,7 @@ H5 because [why the neighbours fail]
 </output_format>
 
 <success_criteria>
+- Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
 - The hexagon count equals the product of the axis value counts
 - No combination is missing from the list
 - The verdict is one cell and the catalog covers all of them

@@ -9,7 +9,22 @@ argument-hint: [goal blocked by constraints, or leave blank for current context]
 <!DOCTYPE water [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT water (goal, constraint+, yield_point+, course)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!-- the voice profile of this book-derived command, fixed here before the lexicon is included so the first declaration binds (LAW.LEX.5) -->
+  <!ATTLIST text_desc
+          derivation   (paraphrase) #FIXED "paraphrase"
+          domain       CDATA #FIXED "chapter seventy-eight of the Tao Te Ching applied to a hard constraint"
+          factuality   (mixed) #FIXED "mixed"
+          preparedness (prepared) #FIXED "prepared"
+          purpose      CDATA #FIXED "mark each constraint hard, soft or assumed, find where it yields, route through the yield points"
+          degree       CDATA #FIXED "the Legge translation, paraphrased">
+  <!ENTITY VOICE.source "book11">
+  <!ENTITY % cc-lexicon SYSTEM "../../dtd/cc-lexicon.dtd">
+  %cc-lexicon;
+  <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ELEMENT water (args, intake, text_desc, goal, constraint+, yield_point+, course)>
   <!ELEMENT goal (#PCDATA)>
   <!ELEMENT constraint (#PCDATA)>
   <!ELEMENT yield_point (#PCDATA)>
@@ -38,20 +53,39 @@ Chapter 78 of the Tao Te Ching says nothing is softer than water and nothing bet
 </objective>
 
 <process>
-1. State the `goal` and what currently blocks it.
-2. List every `constraint` with an id and a hardness: hard (physics, law, a signed contract), soft (policy, convention, habit), assumed (nobody has checked). For each assumed constraint run or read the check that decides it and set checked true; reclassify from what was found.
-3. For each remaining constraint find a `yield_point`: the specific place it gives way (an exception, a boundary, a time window, an owner who can waive it), naming the constraint in in.
-4. Draw the `course`: the sequence of yield points, by id in through, that reaches the goal without forcing a hard constraint.
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
+4. State the `goal` and what currently blocks it.
+5. List every `constraint` with an id and a hardness: hard (physics, law, a signed contract), soft (policy, convention, habit), assumed (nobody has checked). For each assumed constraint run or read the check that decides it and set checked true; reclassify from what was found.
+6. For each remaining constraint find a `yield_point`: the specific place it gives way (an exception, a boundary, a time window, an owner who can waive it), naming the constraint in in.
+7. Draw the `course`: the sequence of yield points, by id in through, that reaches the goal without forcing a hard constraint.
 </process>
 
 <output_format>
 <grammar_map>
 Render the `water` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 💧 Heading` carrying this command's sigil 💧, with a blank line before and after it (LAW.CORE.6).
+- `args`: **💧 Args**, the launch walk: count, the flags, the positional words
+- `intake`: **💧 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `text_desc`: **💧 Voice**, the fixed profile and the book it draws on
 - `goal`: **💧 Goal**
 - `constraint`: **💧 Constraints**, one line each: id, hardness, checked, the constraint
 - `yield_point`: **💧 Yield Points**, one line each naming its constraint
 - `course`: **💧 Course**, the yield points in order
 </grammar_map>
+
+### 💧 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### 💧 Intake
+
+- round 1 of 1: Subject, Depth, Record, Voice answered [labels or Other text]
+- gate: [start|more|add|impactful]
+
+### 💧 Voice
+
+derivation paraphrase; domain chapter seventy-eight of the Tao Te Ching applied to a hard constraint; factuality mixed; preparedness prepared; source book11
 
 ### 💧 Goal
 
@@ -73,6 +107,7 @@ through Y1, Y2. [the route in prose]
 </output_format>
 
 <success_criteria>
+- Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
 - Every assumed constraint was checked before being routed around
 - Every yield point names a real place, owner or window
 - The course forces no hard constraint

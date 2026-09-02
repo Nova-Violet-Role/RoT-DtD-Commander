@@ -10,7 +10,22 @@ allowed-tools: Read Grep Glob Bash
 <!DOCTYPE redaction [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT redaction (event, reading, reading+, variant+, archetype)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!-- the voice profile of this book-derived command, fixed here before the lexicon is included so the first declaration binds (LAW.LEX.5) -->
+  <!ATTLIST text_desc
+          derivation   (original) #FIXED "original"
+          domain       CDATA #FIXED "the textual criticism of the White and Red Books applied to two accounts of one event"
+          factuality   (fact) #FIXED "fact"
+          preparedness (prepared) #FIXED "prepared"
+          purpose      CDATA #FIXED "quote two readings with provenance, classify every difference as a variant, reconstruct the archetype"
+          degree       CDATA #FIXED "the method only">
+  <!ENTITY VOICE.source "book12">
+  <!ENTITY % cc-lexicon SYSTEM "../../dtd/cc-lexicon.dtd">
+  %cc-lexicon;
+  <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ELEMENT redaction (args, intake, text_desc, event, reading, reading+, variant+, archetype)>
   <!ELEMENT event (#PCDATA)>
   <!ELEMENT reading (#PCDATA)>
   <!ELEMENT variant (#PCDATA)>
@@ -39,20 +54,39 @@ The Red Book of Hergest and the White Book of Rhydderch carry the same tales wit
 </objective>
 
 <process>
-1. Name the `event` both accounts describe.
-2. Quote each `reading` as data with an id, its witness (the file, log, person or system) and its provenance (path, timestamp, author, version). Read the files; do not summarize from memory.
-3. List every `variant`: a difference between readings, the reading ids it appears in, and its kind: omission, addition, substitution, order.
-4. Write the `archetype`: the account of the event that explains every variant as a change from it (a truncated log explains an omission; a retry explains an order change). Mark its confidence; if a variant remains unexplained, mark guessed and name it.
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
+4. Name the `event` both accounts describe.
+5. Quote each `reading` as data with an id, its witness (the file, log, person or system) and its provenance (path, timestamp, author, version). Read the files; do not summarize from memory.
+6. List every `variant`: a difference between readings, the reading ids it appears in, and its kind: omission, addition, substitution, order.
+7. Write the `archetype`: the account of the event that explains every variant as a change from it (a truncated log explains an omission; a retry explains an order change). Mark its confidence; if a variant remains unexplained, mark guessed and name it.
 </process>
 
 <output_format>
 <grammar_map>
 Render the `redaction` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ✂️ Heading` carrying this command's sigil ✂️, with a blank line before and after it (LAW.CORE.6).
+- `args`: **✂️ Args**, the launch walk: count, the flags, the positional words
+- `intake`: **✂️ Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `text_desc`: **✂️ Voice**, the fixed profile and the book it draws on
 - `event`: **✂️ Event**
 - `reading`: **✂️ Readings**, one block per account: id, witness, provenance, the quoted text
 - `variant`: **✂️ Variants**, one line each: in which readings, kind, the difference
 - `archetype`: **✂️ Archetype**, with confidence and any unexplained variants
 </grammar_map>
+
+### ✂️ Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### ✂️ Intake
+
+- round 1 of 1: Subject, Depth, Record, Voice answered [labels or Other text]
+- gate: [start|more|add|impactful]
+
+### ✂️ Voice
+
+derivation original; domain the textual criticism of the White and Red Books applied to two accounts of one event; factuality fact; preparedness prepared; source book12
 
 ### ✂️ Event
 
@@ -74,6 +108,7 @@ Render the `redaction` root declared in the DOCTYPE as the markdown below. One d
 </output_format>
 
 <success_criteria>
+- Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
 - Every reading is a quotation with a provenance
 - Every difference is a classified variant
 - The archetype accounts for each variant or names the ones it cannot

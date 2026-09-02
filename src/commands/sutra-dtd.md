@@ -9,7 +9,22 @@ argument-hint: [calculation, estimate or decision that used shortcuts, or leave 
 <!DOCTYPE sutras [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT sutras (calculation, sutra+, audit)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!-- the voice profile of this book-derived command, fixed here before the lexicon is included so the first declaration binds (LAW.LEX.5) -->
+  <!ATTLIST text_desc
+          derivation   (paraphrase) #FIXED "paraphrase"
+          domain       CDATA #FIXED "the sixteen sutras of Vedic Mathematics applied to the shortcuts in use"
+          factuality   (mixed) #FIXED "mixed"
+          preparedness (prepared) #FIXED "prepared"
+          purpose      CDATA #FIXED "write every heuristic as a rule with its valid domain and a tried counterexample"
+          degree       CDATA #FIXED "the sutra form, paraphrased">
+  <!ENTITY VOICE.source "book15">
+  <!ENTITY % cc-lexicon SYSTEM "../../dtd/cc-lexicon.dtd">
+  %cc-lexicon;
+  <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ELEMENT sutras (args, intake, text_desc, calculation, sutra+, audit)>
   <!ELEMENT calculation (#PCDATA)>
   <!ELEMENT sutra (rule, domain, counterexample)>
   <!ELEMENT rule (#PCDATA)>
@@ -39,19 +54,38 @@ The book called Vedic Mathematics is a list of sixteen sutras, each a shortcut t
 </objective>
 
 <process>
-1. Quote the `calculation`: the chain of reasoning or arithmetic under audit, as data.
-2. Extract every `sutra` in it: a `rule` (the shortcut as a sentence), a `domain` (the exact conditions under which it holds), and give it an id.
-3. For each sutra construct a `counterexample`: an input inside the calculation's apparent scope where the rule gives the wrong answer. Try at least one concrete input; write what was tried. Mark valid yes (no counterexample after trying), partial (holds in part of the scope) or no.
-4. Write the `audit`: which sutras the calculation applied outside their domain, by id in unsafe, and what the corrected step is.
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
+4. Quote the `calculation`: the chain of reasoning or arithmetic under audit, as data.
+5. Extract every `sutra` in it: a `rule` (the shortcut as a sentence), a `domain` (the exact conditions under which it holds), and give it an id.
+6. For each sutra construct a `counterexample`: an input inside the calculation's apparent scope where the rule gives the wrong answer. Try at least one concrete input; write what was tried. Mark valid yes (no counterexample after trying), partial (holds in part of the scope) or no.
+7. Write the `audit`: which sutras the calculation applied outside their domain, by id in unsafe, and what the corrected step is.
 </process>
 
 <output_format>
 <grammar_map>
 Render the `sutras` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧵 Heading` carrying this command's sigil 🧵, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🧵 Args**, the launch walk: count, the flags, the positional words
+- `intake`: **🧵 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `text_desc`: **🧵 Voice**, the fixed profile and the book it draws on
 - `calculation`: **🧵 Calculation**, quoted
 - `sutra`: **🧵 Sutras**, one block per shortcut: id, valid, then `rule`, `domain`, `counterexample`
 - `audit`: **🧵 Audit**, the unsafe ids and the corrected steps
 </grammar_map>
+
+### 🧵 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### 🧵 Intake
+
+- round 1 of 1: Subject, Depth, Record, Voice answered [labels or Other text]
+- gate: [start|more|add|impactful]
+
+### 🧵 Voice
+
+derivation paraphrase; domain the sixteen sutras of Vedic Mathematics applied to the shortcuts in use; factuality mixed; preparedness prepared; source book15
 
 ### 🧵 Calculation
 
@@ -71,6 +105,7 @@ unsafe: S2. [corrected step]
 </output_format>
 
 <success_criteria>
+- Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
 - Every shortcut has a stated domain
 - Every counterexample names a concrete input that was tried
 - The audit corrects each unsafe application

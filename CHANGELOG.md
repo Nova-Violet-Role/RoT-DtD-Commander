@@ -151,6 +151,14 @@ counts are re-measured.
   agent file as data for its style areas and checks them itself, renders
   findings with file, line, severity and confidence, and one verdict;
   LAW.AUD.1 to 5. The auditor agents stay for a hand summons.
+- The nineteen Phantom-book commands amplified: each walks its argument
+  (cc-args), runs one intake round of ASK.LEX.1 to 4 that is never skipped
+  (LAW.ASK.10 extended to book-derived commands, LAW.LEX.6), and fixes its
+  voice profile as text_desc attribute defaults before the lexicon include
+  (the first declaration binds), naming its book as VOICE.source with a
+  LEX.bibl id. The slop sweep reads the profile of every command the shelf
+  names and refuses a missing profile, a paraphrase without a source or a
+  source outside the library; its controls fire LAW.LEX.5 on purpose.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

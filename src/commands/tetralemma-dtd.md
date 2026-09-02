@@ -9,7 +9,22 @@ argument-hint: [proposition or leave blank for current context]
 <!DOCTYPE tetralemma [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT tetralemma (proposition, corner, corner, corner, corner, dependence+, resolution)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!-- the voice profile of this book-derived command, fixed here before the lexicon is included so the first declaration binds (LAW.LEX.5) -->
+  <!ATTLIST text_desc
+          derivation   (original) #FIXED "original"
+          domain       CDATA #FIXED "the catuskoti of the Mulamadhyamakakarika applied to an engineering claim"
+          factuality   (mixed) #FIXED "mixed"
+          preparedness (prepared) #FIXED "prepared"
+          purpose      CDATA #FIXED "examine a proposition as affirmed, denied, both and neither, then name what it depends on"
+          degree       CDATA #FIXED "the structure only, no verse quoted">
+  <!ENTITY VOICE.source "book9">
+  <!ENTITY % cc-lexicon SYSTEM "../../dtd/cc-lexicon.dtd">
+  %cc-lexicon;
+  <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ELEMENT tetralemma (args, intake, text_desc, proposition, corner, corner, corner, corner, dependence+, resolution)>
   <!ELEMENT proposition (#PCDATA)>
   <!ELEMENT corner (#PCDATA)>
   <!ELEMENT dependence (#PCDATA)>
@@ -38,23 +53,42 @@ The four-cornered analysis of the Mulamadhyamakakarika examines a proposition as
 </objective>
 
 <process>
-1. State the `proposition` in one sentence that could be true or false.
-2. Write the affirm `corner`: the case where it holds, with the evidence, and mark holds yes, partial or no.
-3. Write the deny corner: the case where it does not hold, with evidence, and mark it.
-4. Write the both corner: the case where it holds and fails at once, usually across two scopes or two times; mark it.
-5. Write the neither corner: the case where the question is malformed, the terms are undefined, or the frame is wrong; mark it.
-6. List every `dependence` the corners revealed: a condition, scope, time or definition the truth turns on. Give each an id.
-7. Write the `resolution`: what is actually true, under which dependences, listed in depends_on.
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
+4. State the `proposition` in one sentence that could be true or false.
+5. Write the affirm `corner`: the case where it holds, with the evidence, and mark holds yes, partial or no.
+6. Write the deny corner: the case where it does not hold, with evidence, and mark it.
+7. Write the both corner: the case where it holds and fails at once, usually across two scopes or two times; mark it.
+8. Write the neither corner: the case where the question is malformed, the terms are undefined, or the frame is wrong; mark it.
+9. List every `dependence` the corners revealed: a condition, scope, time or definition the truth turns on. Give each an id.
+10. Write the `resolution`: what is actually true, under which dependences, listed in depends_on.
 </process>
 
 <output_format>
 <grammar_map>
 Render the `tetralemma` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔲 Heading` carrying this command's sigil 🔲, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🔲 Args**, the launch walk: count, the flags, the positional words
+- `intake`: **🔲 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `text_desc`: **🔲 Voice**, the fixed profile and the book it draws on
 - `proposition`: **🔲 Proposition**
 - `corner`: **🔲 Affirm**, **🔲 Deny**, **🔲 Both**, **🔲 Neither**, each with its evidence and its holds verdict
 - `dependence`: **🔲 Depends On**, one line per dependence with its id
 - `resolution`: **🔲 Resolution**, ending with depends on: D1, D2
 </grammar_map>
+
+### 🔲 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### 🔲 Intake
+
+- round 1 of 1: Subject, Depth, Record, Voice answered [labels or Other text]
+- gate: [start|more|add|impactful]
+
+### 🔲 Voice
+
+derivation original; domain the catuskoti of the Mulamadhyamakakarika applied to an engineering claim; factuality mixed; preparedness prepared; source book9
 
 ### 🔲 Proposition
 
@@ -87,6 +121,7 @@ holds [yes|partial|no]. [why the question may be malformed]
 </output_format>
 
 <success_criteria>
+- Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
 - All four corners are filled with evidence, none skipped as obvious
 - The dependences are conditions someone could check
 - The resolution is conditional where the evidence is, and unconditional only with a dependence saying so

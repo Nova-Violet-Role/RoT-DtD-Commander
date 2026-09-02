@@ -180,7 +180,7 @@ The AskUserQuestion grammar: an intake with a context analysis, up to four quest
 <!ENTITY LAW.ASK.7 "Every question is bilateral: the tool's automatic ASK.other stands beside its at most ASK.max_options declared options, so the five variants are four declared plus Other, and text typed into Other is an answer element.">
 <!ENTITY LAW.ASK.8 "An option's preview is rendered twice from one preview element: cut to ASK.preview.cut_lines lines inside the widget, and expanded in the transcript before the call with the answer the model predicts for that choice.">
 <!ENTITY LAW.ASK.9 "On gate choice impactful the model renders an impactful element of one to four selections ranked 1 to 4, each with its provenance, drawn from the context, the ledger, the codebase or the command; the reply selects one as an answer and the gate runs again.">
-<!ENTITY LAW.ASK.10 "A command whose name starts with create- and includes this subset runs at least one round before it writes anything, unless --no-gate is present; context fills slots, it never skips the gate; a create- command that does not include this subset is outside the gate and must not claim it.">
+<!ENTITY LAW.ASK.10 "A command whose name starts with create- and includes this subset, and a book-derived command that includes cc-lexicon, runs at least one round before it writes or analyses anything, unless --no-gate is present; context fills slots, it never skips the gate; a create- command that does not include this subset is outside the gate and must not claim it.">
 <!ENTITY LAW.ASK.11 "A command raises its rounds only by declaring ask.rounds, ask.of, ASK.rounds_per_prompt and ASK.max_total before it includes this subset; the first declaration binds, a declaration after the include is ignored, and the raised count is still an enumeration the checker reads.">
 <!ENTITY LAW.ASK.12 "The token ASK.back typed into Other returns to the question just asked, which is asked again without loss of the answers already taken; it is a navigation token, never an answer.">
 ```
@@ -787,7 +787,14 @@ The lexicon behind the voice gate: the verb list the static classifier reads (LE
 <!ENTITY LAW.LEX.2 "A paraphrase is a declared pair, from and to; when a hit matches a from, the report prints the to beside it, and an empty to means the phrase is cut.">
 <!ENTITY LAW.LEX.3 "A glossary entry carries its term, its definition and a locator that names the file, and where useful the declaration, it was drawn from; an entry without a locator is not an entry.">
 <!ENTITY LAW.LEX.4 "A library entry names a file by its path; the controls check every path that lies inside the workspace and say which they could not check.">
+<!-- the one intake round of a book-derived command (LAW.LEX.6) -->
+<!ENTITY ASK.LEX.1 "Subject|What is examined?|The argument as given|The open question of this section|A file or a discussion named under Other|Typed under Other">
+<!ENTITY ASK.LEX.2 "Depth|How far does the book's structure go?|The whole structure, every part filled|A short pass, the required parts only|The structure applied twice, to compare|Typed under Other">
+<!ENTITY ASK.LEX.3 "Record|Where does this run record?|artifacts under this command's name, command-generated filename|Nowhere|Typed under Other|Undecided">
+<!ENTITY ASK.LEX.4 "Voice|Which voice?|The profile fixed in the DOCTYPE|The book paraphrased more closely, cited|Spontaneous, for a first pass|Typed under Other">
+
 <!ENTITY LAW.LEX.5 "A Phantom-book command declares one text_desc in its DOCTYPE, and the gate reads it: a derivation of paraphrase or translation names its source in a bibl, and a preparedness of spontaneous lowers no bound.">
+<!ENTITY LAW.LEX.6 "A Phantom-book command fixes its text_desc as attribute defaults before it includes this subset, so the first declaration binds, names the book it draws on as VOICE.source with a LEX.bibl id, and runs one round of ASK.LEX.1 to ASK.LEX.4 before its analysis, never skipped on the strength of context (LAW.ASK.10); the sweep refuses a book-derived command with no profile or a source outside the library.">
 ```
 
 ## cc-schematic.dtd

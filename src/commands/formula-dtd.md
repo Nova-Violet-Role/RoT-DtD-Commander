@@ -10,7 +10,22 @@ allowed-tools: Read Grep Glob Bash
 <!DOCTYPE formula_layer [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT formula_layer (subject, formula+, derivation+, drift)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!-- the voice profile of this book-derived command, fixed here before the lexicon is included so the first declaration binds (LAW.LEX.5) -->
+  <!ATTLIST text_desc
+          derivation   (paraphrase) #FIXED "paraphrase"
+          domain       CDATA #FIXED "the formulas of the Phantom Books applied to the numbers a command or document relies on"
+          factuality   (fact) #FIXED "fact"
+          preparedness (prepared) #FIXED "prepared"
+          purpose      CDATA #FIXED "declare the computed layer: every number a formula with a term, a derivation and a drift count"
+          degree       CDATA #FIXED "the formulas, paraphrased">
+  <!ENTITY VOICE.source "book16">
+  <!ENTITY % cc-lexicon SYSTEM "../../dtd/cc-lexicon.dtd">
+  %cc-lexicon;
+  <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ELEMENT formula_layer (args, intake, text_desc, subject, formula+, derivation+, drift)>
   <!ELEMENT subject (#PCDATA)>
   <!ELEMENT formula (#PCDATA)>
   <!ELEMENT derivation (#PCDATA)>
@@ -39,20 +54,39 @@ The formulas that run through Dantalian no Shoka, with their sigma and gamma and
 </objective>
 
 <process>
-1. Name the `subject` and read it; list every number it states or relies on.
-2. Write each as a `formula` with an id, its term (the expression or the name of the constant) and the value the subject states.
-3. For each formula write a `derivation`: the source (a file and line, a command, a measurement) that produces the real value, the value that came out, and a confidence: measured only when the source was read or run this session.
-4. Write `drift`: the count of formulas whose derived value differs from the stated one, naming each and the side to correct.
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
+4. Name the `subject` and read it; list every number it states or relies on.
+5. Write each as a `formula` with an id, its term (the expression or the name of the constant) and the value the subject states.
+6. For each formula write a `derivation`: the source (a file and line, a command, a measurement) that produces the real value, the value that came out, and a confidence: measured only when the source was read or run this session.
+7. Write `drift`: the count of formulas whose derived value differs from the stated one, naming each and the side to correct.
 </process>
 
 <output_format>
 <grammar_map>
 Render the `formula_layer` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧮 Heading` carrying this command's sigil 🧮, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🧮 Args**, the launch walk: count, the flags, the positional words
+- `intake`: **🧮 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `text_desc`: **🧮 Voice**, the fixed profile and the book it draws on
 - `subject`: **🧮 Subject**
 - `formula`: **🧮 Formulas**, a fenced block with one line per formula: id, term, stated value
 - `derivation`: **🧮 Derivations**, one line each: for which formula, source, derived value, confidence
 - `drift`: **🧮 Drift**, the count and the named formulas
 </grammar_map>
+
+### 🧮 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### 🧮 Intake
+
+- round 1 of 1: Subject, Depth, Record, Voice answered [labels or Other text]
+- gate: [start|more|add|impactful]
+
+### 🧮 Voice
+
+derivation paraphrase; domain the formulas of the Phantom Books applied to the numbers a command or document relies on; factuality fact; preparedness prepared; source book16
 
 ### 🧮 Subject
 
@@ -79,6 +113,7 @@ Render the `formula_layer` root declared in the DOCTYPE as the markdown below. O
 </output_format>
 
 <success_criteria>
+- Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
 - Every number in the subject has a formula
 - Every derivation names an executable source
 - Drift is a number and each drifted formula is named
