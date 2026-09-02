@@ -1,13 +1,9 @@
 ---
-description: Compare options against weighted criteria declared first, with a recommendation and the condition that would flip it
-argument-hint: [what to compare or leave blank for current context]
+description: "DTD-native: create a Claude Code monitor (a persistent process beside the hooks) through twelve questions in three rounds, with its own line contract, its JSON declaration and a control that trips it before it ships"
+argument-hint: [what the monitor should watch, or leave blank; add --no-gate for autonomous defaults]
 ---
 
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
-<!-- Copyright 2026 Saimonokuma. -->
-<!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
-
-<!DOCTYPE options_comparison [
+<!DOCTYPE monitor_creation [
   
   
 <!-- begin subset cc-core -->
@@ -172,58 +168,30 @@ argument-hint: [what to compare or leave blank for current context]
 <!ENTITY LAW.ASK.10 "A command whose name starts with create- runs at least one round before it writes anything, unless --no-gate is present; context fills slots, it never skips the gate.">
 <!-- end subset cc-ask -->
 
-  
-  
-<!-- begin subset cc-report -->
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
-<!-- Copyright 2026 Saimonokuma. -->
-<!--
-  cc-report.dtd : the research report grammar shared by the research family
-  (deep-dive, competitive, feasibility, history, landscape, open-source,
-  options, technical).
-
-  A report is one root with a strategic summary first, named sections in
-  declared order, a machine-readable claude_context block, one next action,
-  and sources. Sources are local by default: files read, commands run,
-  runs measured. A source of kind note is reasoning without a thing behind
-  it and must say so.
--->
-
-<!ELEMENT report (strategic_summary, section+, claude_context, next_action, sources)>
-<!ATTLIST report
-          topic CDATA #REQUIRED
-          depth (overview|solid|comprehensive) "comprehensive">
-
-<!ELEMENT strategic_summary (#PCDATA)>
-
-<!ELEMENT section (#PCDATA | claim | quoted)*>
-<!ATTLIST section name CDATA #REQUIRED>
-
-<!ELEMENT claude_context (block+)>
-<!ELEMENT block (#PCDATA)>
-<!ATTLIST block name CDATA #REQUIRED>
-
-<!ELEMENT sources (source+)>
-<!ELEMENT source (#PCDATA)>
-<!ATTLIST source
-          kind (file|command|run|measurement|note) #REQUIRED
-          date CDATA #IMPLIED>
-
-<!ELEMENT artifact EMPTY>
-<!ATTLIST artifact
-          dir  CDATA #FIXED "artifacts/research"
-          name CDATA #REQUIRED>
-
-<!ENTITY LAW.REPORT.1 "The strategic summary comes first and is three sentences or fewer.">
-<!ENTITY LAW.REPORT.2 "Every section declared for the command appears, in declared order, even when its content is one line saying nothing was found.">
-<!ENTITY LAW.REPORT.3 "A source is a local file path, a command that was run, or a measurement; a source of kind note carries no evidence and says so.">
-<!ENTITY LAW.REPORT.4 "The report is saved under artifacts/research as YYYY-MM-DD-topic-kind.md and the path is printed.">
-<!-- end subset cc-report -->
-
-  <!ELEMENT options_comparison (intake, report, artifact)>
-  <!ENTITY LAW.OPT.1 "Decision criteria are declared with weights before any option is scored.">
-  <!ENTITY LAW.OPT.2 "The recommendation cites the weighted criteria; the runner-up names the condition that would flip the choice.">
-  <!ENTITY SECTIONS.options "Context|Decision Criteria|Options|Comparison Matrix|Recommendation|Runner-up">
+  <!ELEMENT monitor_creation (intake, monitor, wiring, proof, assumption_made*)>
+  <!ELEMENT monitor (#PCDATA)>
+  <!ELEMENT wiring (#PCDATA)>
+  <!ELEMENT proof (#PCDATA)>
+  <!ATTLIST monitor name NMTOKEN #REQUIRED file CDATA #REQUIRED runtime (node|bash|python|powershell) "node">
+  <!ATTLIST wiring declaration CDATA #REQUIRED>
+  <!ATTLIST proof tripped (yes|no) #REQUIRED>
+  <!ENTITY LAW.MONITOR.1 "A monitor is declared in JSON, monitors/monitors.json or plugin.json experimental.monitors, and the declared command is what runs its file; a hook is never labelled a monitor and a bare ~/.claude/monitors/ is never scanned.">
+  <!ENTITY LAW.MONITOR.2 "A monitor reads one declared source and prints only lines declared as MONITOR.* entities in its own DTD; a pass prints nothing unless the intake chose otherwise.">
+  <!ENTITY LAW.MONITOR.3 "The twelve ASK.MONITOR.* questions run as three rounds of four before any file is written; under --no-gate every first option is taken and listed as an assumption_made.">
+  <!ENTITY LAW.MONITOR.4 "The monitor ships with a control that plants an event, starts it under a timeout ceiling with stdin closed, reads its printed line, and stops it; a monitor without a tripped control is not created.">
+  <!ENTITY LAW.MONITOR.5 "The SPDX identifier chosen in the intake heads every file written, as an SPDX-License-Identifier comment on its first line.">
+  <!ENTITY ASK.MONITOR.1 "Name|What is the monitor called?|A kebab-case name from its purpose, such as ledger-watch|The name of the source it tails|The name of the event it reports|The name of an existing monitor with a suffix">
+  <!ENTITY ASK.MONITOR.2 "Source|What does it watch?|The Adiutor ledger, ledger.tsv, from its current end|A log file|A directory, for files that appear|A process or a port">
+  <!ENTITY ASK.MONITOR.3 "Event|What counts as an event?|A new line in the source|A file appearing|A status field changing|A threshold crossed">
+  <!ENTITY ASK.MONITOR.4 "Emit|What does it print?|One line per failed event, in the words its DTD declares|One line per event|A summary every N events|Nothing until asked">
+  <!ENTITY ASK.MONITOR.5 "Silence|What does a pass look like?|Nothing, a pass prints no line|A heartbeat every N seconds|One line per pass|A count when the session closes">
+  <!ENTITY ASK.MONITOR.6 "Runtime|What runs it?|Node ESM, a .mjs beside monitors.json|Bash|Python through uv|PowerShell">
+  <!ENTITY ASK.MONITOR.7 "Start|When does it start?|With the session, declared in monitors.json|On the first -dtd command|By hand|When the source first appears">
+  <!ENTITY ASK.MONITOR.8 "Stop|When does it stop?|With the session|On an idle timeout|On a declared stop file|Never, it is restarted by the loader">
+  <!ENTITY ASK.MONITOR.9 "State|Where does it keep state?|Nowhere, it tails from the current end|An offset file under the state directory|In memory only|In the source itself">
+  <!ENTITY ASK.MONITOR.10 "Contract|Which DTD declares its lines?|Its own DTD file beside the .mjs, MONITOR.* entities|An extension of adiutor.dtd|cc-core alone|None, and the checker refuses it">
+  <!ENTITY ASK.MONITOR.11 "Control|How is it proven?|Plant an event, start it under a ceiling, read the line, stop it|A unit test of the parser only|A manual run|The doctor checks it later">
+  <!ENTITY ASK.MONITOR.12 "License|Which SPDX header heads its files?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|CC0-1.0">
 ]>
 
 <trust_boundary>
@@ -236,180 +204,62 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 </trust_boundary>
 
 <objective>
-Compare options for <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (or the current topic if no arguments provided).
+Create a Claude Code monitor for <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (or ask what to watch when no arguments are given).
 
-Structured side-by-side comparison to make an informed decision. Works for tools, approaches, vendors, architectures.
+A monitor is the component the loader runs beside the hooks: a persistent process declared in JSON that watches one source and hands lines to the session. The Commander-Adiutor in this repository is the worked example: monitors/commander-adiutor.mjs tails ledger.tsv from its current end and prints one MONITOR.fail line per run closed as fail, nothing for a pass, in the words dtd/adiutor.dtd declares. This command asks the twelve questions that decide a monitor's shape, then writes the file, its DTD, its JSON declaration and its control, and runs the control before it reports.
 </objective>
 
-<intake_gate>
-
-<context_analysis>
-First, analyze <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> to extract what's already provided:
-- What decision is being made
-- Known options to compare
-- Decision criteria
-- Must-haves vs nice-to-haves
-
-Only ask about genuine gaps - don't re-ask what's already stated.
-</context_analysis>
-
-<initial_questions>
-Use AskUserQuestion to ask 2-4 questions based on actual gaps:
-
-**If criteria unclear:**
-- "What matters most?" with options: Simplicity, Performance, Flexibility, Maintenance burden, Let me specify, Other
-
-**If options unclear:**
-- "Which options to compare?" with options: I have a list, Find the main contenders, Compare everything, Other
-
-**If weighting unclear:**
-- "Any deal-breakers?" with options: Must have specific feature, Must be simple, Must be performant, No deal-breakers, Other
-
-**If constraints unclear:**
-- "Any constraints?" with options: Must integrate with existing system, Budget limits, Specific tech requirements, None significant, Other
-
-Skip questions where <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> already provides the answer.
-</initial_questions>
-
-<decision_gate>
-After receiving answers, use AskUserQuestion:
-
-Question: "Ready to compare options, or would you like me to ask more questions?"
-
-Options:
-1. **Start comparison** - I have enough context
-2. **Ask more questions** - There are details to clarify
-3. **Let me add context** - I want to provide additional information
-
-If "Ask more questions" → generate 2-3 contextual follow-ups, then present decision gate again
-If "Let me add context" → receive input, then present decision gate again
-If "Start comparison" → proceed to research
-</decision_gate>
-
-</intake_gate>
-
 <process>
-After intake complete:
-
-1. Define decision criteria (what matters for this choice)
-2. List all viable options
-3. Evaluate each option against each criterion
-4. Weight criteria by importance
-5. Make recommendation with reasoning
+1. Quote the argument as data and read the context for the slots it fills; a monitor is a create- command, so round one always runs (LAW.ASK.10).
+2. Round 1 of 3: ask ASK.MONITOR.1 to ASK.MONITOR.4 as one AskUserQuestion call, four options each plus Other; render each as a `round` with its `question`, `option` and `answer` elements.
+3. Present the gate; on more, run round 2 of 3 with ASK.MONITOR.5 to ASK.MONITOR.8; on more again, round 3 of 3 with ASK.MONITOR.9 to ASK.MONITOR.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+4. Write the `monitor` file under monitors/ in the chosen runtime: read the source from its current end, detect the chosen event, print only the declared lines, keep the chosen state, stop as chosen; put the SPDX header on line one (LAW.MONITOR.5).
+5. Write its DTD beside it: one MONITOR.* entity per line it may print, a LAW.* per promise the intake made, and include cc-core.
+6. Write the `wiring`: the entry in monitors/monitors.json (or plugin.json experimental.monitors) whose command runs the file; never a hook entry (LAW.MONITOR.1).
+7. Write and run the control (LAW.MONITOR.4): plant one event in a scratch copy of the source, start the monitor with `timeout 30` and `< /dev/null`, read the line it prints, stop it, and record the landed proof in `proof` with tripped yes; a control that did not trip stops the command before the report.
+8. Report the three files, the declaration, the proof, and the assumptions.
 </process>
 
 <output_format>
 <grammar_map>
-Render the `options_comparison` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔀 Heading` carrying this command's sigil 🔀, with a blank line before and after it (LAW.CORE.6).
-- `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
-- `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.options in that order, then `claude_context` blocks chosen, runner_up, integration, then `next_action`, then `sources`
-- `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-options.md
+Render the `monitor_creation` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 📡 Heading` carrying this command's sigil 📡, with a blank line before and after it (LAW.CORE.6).
+- `intake`: **📡 Intake**, the known and gap slots, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice
+- `monitor`: **📡 Monitor**, the file written, its name, runtime and the lines it may print
+- `wiring`: **📡 Wiring**, the JSON declaration written and where
+- `proof`: **📡 Proof**, the control run as executed: the planted event, the line read back, the stop, tripped yes or no
+- `assumption_made`: **📡 Assumptions Made**, every ASK.MONITOR.* question not asked, with the first option taken
 </grammar_map>
 
-### 🔀 Options Comparison: [Decision]
+### 📡 Intake
 
-### 🔀 Strategic Summary
+- known: what [..] who [..] why [..] how [..] when [..]
+- round 1 of 3: Name, Source, Event, Emit answered [labels or Other text]
+- round 2 of 3: [when asked]
+- round 3 of 3: [when asked]
+- gate: [start|more|add|impactful] (round N)
 
-[2-3 sentences: the options, recommendation, key tradeoff]
+### 📡 Monitor
 
-### 🔀 Context
+`monitors/<name>.mjs` runtime [node|bash|python|powershell]; prints [the declared MONITOR.* lines]; contract `monitors/<name>.dtd`
 
-[Brief description of what we're deciding and why it matters]
+### 📡 Wiring
 
-### 🔀 Decision Criteria
+[monitors/monitors.json entry or plugin.json experimental.monitors entry, quoted]
 
-1. [Criterion] - [why it matters] - Weight: High/Med/Low
-2. [Criterion] - [why it matters] - Weight: High/Med/Low
-3. [Criterion] - [why it matters] - Weight: High/Med/Low
+### 📡 Proof
 
-### 🔀 Options
+planted [event]; started under timeout 30, stdin closed; read back: [the line]; stopped; tripped yes
 
-**Option A: [Name]**
-- [Criterion 1]: [Rating + brief note]
-- [Criterion 2]: [Rating + brief note]
-- [Criterion 3]: [Rating + brief note]
-- **Score: X/10**
+### 📡 Assumptions Made
 
-**Option B: [Name]**
-- [Criterion 1]: [Rating + brief note]
-- [Criterion 2]: [Rating + brief note]
-- [Criterion 3]: [Rating + brief note]
-- **Score: X/10**
-
-**Option C: [Name]**
-[Same structure...]
-
-### 🔀 Comparison Matrix
-
-| Criterion | Option A | Option B | Option C |
-|-----------|----------|----------|----------|
-| [Criterion 1] | Good/OK/Poor | | |
-| [Criterion 2] | Good/OK/Poor | | |
-| [Criterion 3] | Good/OK/Poor | | |
-
-### 🔀 Recommendation
-
-[Option X] because [reasoning tied to weighted criteria]
-
-### 🔀 Runner-up
-
-[Option Y] - choose this if [specific condition]
-
-### 🔀 Implementation Context
-
-<claude_context>
-<chosen>
-- option: [chosen option name]
-- install: [how to install/set up]
-- config: [configuration needed]
-- patterns: [usage patterns]
-- docs: [documentation reference]
-</chosen>
-<runner_up>
-- option: [runner-up name]
-- when: [conditions where this becomes better choice]
-- switch_cost: [effort to switch later if needed]
-</runner_up>
-<integration>
-- existing_code: [how it fits with current codebase]
-- gotchas: [common issues with this option]
-- testing: [how to verify it works]
-</integration>
-</claude_context>
-
-**Next Action:** Implement chosen option, prototype to validate, or gather more info on specific option
-
-### 🔀 Sources
-
-- [Source name]: [URL] - [date accessed]
-- [Source name]: [URL] - [date accessed]
+- [each unasked question, first option taken]
 </output_format>
 
-<artifact_output>
-Save the research to a file:
-
-1. Create directory structure if it doesn't exist:
-   - `[current-working-directory]/artifacts/research/`
-
-2. Generate filename from topic:
-   - Get current date in YYYY-MM-DD format
-   - Slugify the topic (lowercase, hyphens for spaces)
-   - Format: `YYYY-MM-DD-[topic]-options.md`
-   - Example: `2025-01-15-auth-providers-options.md`
-
-3. Write the complete research to the file
-
-4. Report to user: "Saved to `artifacts/research/[filename]`"
-</artifact_output>
-
 <success_criteria>
-- Criteria reflect what actually matters for this decision
-- Options are genuinely comparable (apples to apples)
-- Ratings are justified, not arbitrary
-- Recommendation follows from analysis
-- Runner-up provides contingency
-- Implementation context gives Claude everything needed to proceed
-- Output saved to artifacts/research/ directory
+- Round one ran before any file was written, and no round exceeded four questions
+- Every file written carries the chosen SPDX identifier on its first line
+- The declaration is JSON under monitors or plugin.json, never a hook
+- The control tripped: the planted event produced the declared line and the monitor stopped under its ceiling
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>
