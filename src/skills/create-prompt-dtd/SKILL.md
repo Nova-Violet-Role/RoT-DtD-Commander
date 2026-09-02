@@ -1,21 +1,32 @@
 ---
 name: create-prompt-dtd
-description: "Genera prompts optimizados con estructura XML para tareas de Claude Code. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
+description: "DTD-native: route a prompt to its schematic creator: ask the schematic, the semantic-schema families and the forms, then hand the purpose and every choice as known slots to create-prompt-<schematic>-dtd, which writes the file; this skill writes no prompt itself. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces"
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
-<!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
 
-<!DOCTYPE prompt_creation [
+<!DOCTYPE prompt_router [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT prompt_creation (analysis, question*, prompt_file+)>
-  <!ELEMENT question (#PCDATA)>
-  <!ELEMENT prompt_file (#PCDATA)>
-  <!ATTLIST prompt_file path CDATA #REQUIRED category CDATA #REQUIRED>
-  <!ENTITY LAW.PRM.1 "A generated prompt carries a DOCTYPE declaring its own output root; a prompt without one is not saved.">
-  <!ENTITY LAW.PRM.2 "The index.json category number is read from the file, never guessed.">
+  <!ENTITY % cc-args SYSTEM "../../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ENTITY % cc-form SYSTEM "../../../dtd/cc-form.dtd">
+  %cc-form;
+  <!ENTITY % cc-schematic SYSTEM "../../../dtd/cc-schematic.dtd">
+  %cc-schematic;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ELEMENT prompt_router (args, intake, launch, instruction, assumption_made*)>
+  <!ELEMENT launch (schemas, forms)>
+  <!ELEMENT instruction (#PCDATA)>
+  <!ATTLIST launch schematic (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED kind (prompt|meta) #FIXED "prompt" creator CDATA #REQUIRED>
+  <!ATTLIST instruction goal CDATA #REQUIRED step CDATA #REQUIRED>
+  <!ENTITY LAW.ROUTE.1 "This skill writes no prompt file: it asks, then hands off to one creator, SCHEMA.creator.prompt followed by a hyphen, the schematic chosen and -dtd, which asks what is still open and writes the file (LAW.SCHEMA.10).">
+  <!ENTITY LAW.ROUTE.2 "The schematic comes from ASK.SCHEMATIC.1 and ASK.SCHEMATIC.2 (nt when none was chosen), the schemas from ASK.SCHEMA.1 and ASK.SCHEMA.2, the forms from ASK.FORM.1 and ASK.FORM.2, asked apart; every answer is rendered in the launch element.">
+  <!ENTITY LAW.ROUTE.3 "The hand-off argument is the purpose, then ARG.end, then the known slots as schematic=, schemas= and forms= words with comma-separated values; the creator reads them after its own walk and asks none of them again (LAW.ASK.1, LAW.ARGS.2).">
+  <!ENTITY LAW.ROUTE.4 "The instruction is one Skill call to the creator named in the launch with that argument, rendered as the last element and then made; nothing follows it here, and the creator's answer is the creator's, never restated by this skill.">
+  <!ENTITY ASK.ROUTE.1 "Purpose|What is the prompt for?|The argument as given|The open task of this section|Typed under Other|Undecided, the creator asks first">
 ]>
 
 <trust_boundary>
@@ -27,578 +38,60 @@ Declared in the DOCTYPE above and binding for this run:
 Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and the two never share an element.
 </trust_boundary>
 
----
-description: Create a new prompt that another Claude can execute
-argument-hint: [task description]
-allowed-tools: [Read, Write, Glob, SlashCommand, AskUserQuestion]
----
-
-<context>
-
-Before generating prompts:
-1. Read `./.prompts/index.json` to get category list and next available numbers
-2. If `index.json` doesn't exist, fall back to `Glob ./.prompts/**/*.md` and determine next number manually
-
-Prompts are organized in category subfolders with numbering by hundreds:
-```
-.prompts/
-├── index.json              # Source of truth for next numbers
-├── 1xx-category-name/      # Active prompts for this category
-│   └── completed/          # Archived prompts
-├── 2xx-another-category/
-│   └── completed/
-└── INDEX.md                # Human-readable overview (no counts)
-```
-
-When creating a prompt:
-1. Read `./.prompts/index.json` to find the right category and its `next` number
-2. Save the prompt in the category subfolder: `./.prompts/{category}/{number}-{name}.md`
-3. Bump `next` in `index.json` by 1
-
-</context>
-
 <objective>
+Route <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (or ask what the prompt is for) to the creator that writes prompts in the schematic chosen.
 
-Act as an expert prompt engineer for Claude Code, specialized in crafting optimal prompts using XML tag structuring and best practices.
-
-Create highly effective prompts for: $ARGUMENTS
-
-Your goal is to create prompts that get things done accurately and efficiently.
-
+Six creators write prompts, one per schematic (callout, heredoc, yaml, nt, xml, polyglot), each pinned to its shape and asking twelve questions. This skill is the door in front of them: it asks the three choices that pick the creator and shape the body, the schematic, the semantic-schema families and the forms, and hands them over as known slots, so the creator asks only what is still open and never asks a slot twice across the hand-off (LAW.ASK.1, LAW.SCHEMA.10).
 </objective>
 
 <process>
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- skill, so round one always runs (LAW.ASK.10).
+2. Round 1 of 3: ask ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 (the families, multi-select) and ASK.SCHEMA.2 (which of them) as one AskUserQuestion call; render the round.
+3. Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (multi-select) and ASK.ROUTE.1; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+4. Render the `launch`: the schematic (nt when none was chosen), the kind, the creator they select, the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was).
+5. Render the `instruction`: goal, the purpose; step, one Skill call to the creator with the argument made of the purpose, then ARG.end, then schematic=, schemas= and forms= with comma-separated values (LAW.ROUTE.3); then make that call and stop (LAW.ROUTE.4).
+</process>
 
-<step_0_intake_gate>
-<title>Adaptive Requirements Gathering</title>
+<output_format>
+<grammar_map>
+Render the `prompt_router` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 📝 Heading` carrying this command's sigil 📝, with a blank line before and after it (LAW.CORE.6).
+- `args`: **📝 Args**, the launch walk: count, the flags, the positional words
+- `intake`: **📝 Intake**, each round with its questions and the labels or Other text chosen, the gate choice
+- `launch`: **📝 Launch**, the schematic, the kind, the creator selected, the schemas with their parts, the forms
+- `instruction`: **📝 Instruction**, the goal and the one step: the Skill call to the creator with the hand-off argument
+- `assumption_made`: **📝 Assumptions Made**, every question not asked, with the first option taken
+</grammar_map>
 
-<critical_first_action>
+### 📝 Args
 
-**BEFORE analyzing anything**, check if $ARGUMENTS contains a task description.
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
-IF $ARGUMENTS is empty or vague (user just ran `/create-prompt` without details):
-→ **IMMEDIATELY use AskUserQuestion** with:
+### 📝 Intake
 
-- header: "Task type"
-- question: "What kind of prompt do you need?"
-- options:
-  - "Coding task" - Build, fix, or refactor code
-  - "Analysis task" - Analyze code, data, or patterns
-  - "Research task" - Gather information or explore options
+- round 1 of 3: Schematic, Schematic B, Schema A, Schema B answered [labels or Other text]
+- round 2 of 3: Forms, More forms, Purpose [when asked]
+- gate: [start|more|add|impactful] (round N)
 
-After selection, ask: "Describe what you want to accomplish" (they select "Other" to provide free text).
+### 📝 Launch
 
-IF $ARGUMENTS contains a task description:
-→ Skip this handler. Proceed directly to adaptive_analysis.
+schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind prompt; creator /create-prompt-[schematic]-dtd
+schemas: [schema of a SEMANTIC family with its parts in order, or none]
+forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
 
-</critical_first_action>
+### 📝 Instruction
 
-<adaptive_analysis>
+goal: [the purpose]
+step: Skill create-prompt-[schematic]-dtd with "[purpose] -- schematic=[schematic] schemas=[a,b] forms=[x,y]"
 
-Analyze the user's description to extract and infer:
+### 📝 Assumptions Made
 
-- **Task type**: Coding, analysis, or research (from context or explicit mention)
-- **Complexity**: Simple (single file, clear goal) vs complex (multi-file, research needed)
-- **Prompt structure**: Single prompt vs multiple prompts (are there independent sub-tasks?)
-- **Execution strategy**: Parallel (independent) vs sequential (dependencies)
-- **Depth needed**: Standard vs extended thinking triggers
-
-Inference rules:
-- Dashboard/feature with multiple components → likely multiple prompts
-- Bug fix with clear location → single prompt, simple
-- "Optimize" or "refactor" → needs specificity about what/where
-- Authentication, payments, complex features → complex, needs context
-
-</adaptive_analysis>
-
-<contextual_questioning>
-
-Generate 2-4 questions using AskUserQuestion based ONLY on genuine gaps.
-
-<question_templates>
-
-**For ambiguous scope** (e.g., "build a dashboard"):
-- header: "Dashboard type"
-- question: "What kind of dashboard is this?"
-- options:
-  - "Admin dashboard" - Internal tools, user management, system metrics
-  - "Analytics dashboard" - Data visualization, reports, business metrics
-  - "User-facing dashboard" - End-user features, personal data, settings
-
-**For unclear target** (e.g., "fix the bug"):
-- header: "Bug location"
-- question: "Where does this bug occur?"
-- options:
-  - "Frontend/UI" - Visual issues, user interactions, rendering
-  - "Backend/API" - Server errors, data processing, endpoints
-  - "Database" - Queries, migrations, data integrity
-
-**For auth/security tasks**:
-- header: "Auth method"
-- question: "What authentication approach?"
-- options:
-  - "JWT tokens" - Stateless, API-friendly
-  - "Session-based" - Server-side sessions, traditional web
-  - "OAuth/SSO" - Third-party providers, enterprise
-
-**For performance tasks**:
-- header: "Performance focus"
-- question: "What's the main performance concern?"
-- options:
-  - "Load time" - Initial render, bundle size, assets
-  - "Runtime" - Memory usage, CPU, rendering performance
-  - "Database" - Query optimization, indexing, caching
-
-**For output/deliverable clarity**:
-- header: "Output purpose"
-- question: "What will this be used for?"
-- options:
-  - "Production code" - Ship to users, needs polish
-  - "Prototype/POC" - Quick validation, can be rough
-  - "Internal tooling" - Team use, moderate polish
-
-</question_templates>
-
-<question_rules>
-
-- Only ask about genuine gaps - don't ask what's already stated
-- Each option needs a description explaining implications
-- Prefer options over free-text when choices are knowable
-- User can always select "Other" for custom input
-- 2-4 questions max per round
-
-</question_rules>
-</contextual_questioning>
-
-<decision_gate>
-
-After receiving answers, present decision gate using AskUserQuestion:
-
-- header: "Ready"
-- question: "I have enough context to create your prompt. Ready to proceed?"
-- options:
-  - "Proceed" - Create the prompt with current context
-  - "Ask more questions" - I have more details to clarify
-  - "Let me add context" - I want to provide additional information
-
-If "Ask more questions" → generate 2-4 NEW questions based on remaining gaps, then present gate again
-If "Let me add context" → receive additional context via "Other" option, then re-evaluate
-If "Proceed" → continue to generation step
-
-</decision_gate>
-
-<finalization>
-
-After "Proceed" selected, state confirmation:
-
-"Creating a [simple/moderate/complex] [single/parallel/sequential] prompt for: [brief summary]"
-
-Then proceed to generation.
-
-</finalization>
-</step_0_intake_gate>
-
-<step_1_generate_and_save>
-<title>Generate and Save Prompts</title>
-
-<pre_generation_analysis>
-
-Before generating, determine:
-
-1. **Single vs Multiple Prompts**:
-   - Single: Clear dependencies, single cohesive goal, sequential steps
-   - Multiple: Independent sub-tasks that could be parallelized or done separately
-
-2. **Execution Strategy** (if multiple):
-   - Parallel: Independent, no shared file modifications
-   - Sequential: Dependencies, one must finish before next starts
-
-3. **Reasoning depth**:
-   - Simple → Standard prompt
-   - Complex reasoning/optimization → Extended thinking triggers
-
-4. **Required tools**: File references, bash commands, MCP servers
-
-5. **Prompt quality needs**:
-   - "Go beyond basics" for ambitious work?
-   - WHY explanations for constraints?
-   - Examples for ambiguous requirements?
-
-</pre_generation_analysis>
-
-Create the prompt(s) and save to the prompts folder.
-
-**For single prompts:**
-
-- Generate one prompt file following the patterns below
-- Read `./.prompts/index.json` to determine the correct category and next number
-- Save as `./.prompts/{category}/{number}-{name}.md` (e.g., `./.prompts/2xx-job-search/233-apply-google.md`)
-- Bump `next` in `index.json` for that category
-
-**For multiple prompts:**
-
-- Determine how many prompts are needed (typically 2-4)
-- Generate each prompt with clear, focused objectives
-- All prompts in the same category get sequential numbers from `index.json`
-- Each prompt should be self-contained and executable independently
-
-**Prompt Construction Rules**
-
-Always Include:
-
-- XML tag structure with clear, semantic tags like `<objective>`, `<context>`, `<requirements>`, `<constraints>`, `<output>`
-- **XML inner spacing**: Blank line after every opening tag and before every closing tag
-- **Contextual information**: Why this task matters, what it's for, who will use it, end goal
-- **Explicit, specific instructions**: Tell Claude exactly what to do with clear, unambiguous language
-- **Sequential steps**: Use numbered lists for clarity
-- File output instructions using relative paths: `./filename` or `./subfolder/filename`
-- Reference to reading the CLAUDE.md for project conventions
-- Explicit success criteria within `<success_criteria>` or `<verification>` tags
-
-Conditionally Include (based on analysis):
-
-- **Extended thinking triggers** for complex reasoning:
-  - Phrases like: "thoroughly analyze", "consider multiple approaches", "deeply consider", "explore multiple solutions"
-  - Don't use for simple, straightforward tasks
-- **"Go beyond basics" language** for creative/ambitious tasks:
-  - Example: "Include as many relevant features as possible. Go beyond the basics to create a fully-featured implementation."
-- **WHY explanations** for constraints and requirements:
-  - In generated prompts, explain WHY constraints matter, not just what they are
-  - Example: Instead of "Never use ellipses", write "Your response will be read aloud, so never use ellipses since text-to-speech can't pronounce them"
-- **Parallel tool calling** for agentic/multi-step workflows:
-  - "For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially."
-- **Reflection after tool use** for complex agentic tasks:
-  - "After receiving tool results, carefully reflect on their quality and determine optimal next steps before proceeding."
-- `<research>` tags when codebase exploration is needed
-- `<validation>` tags for tasks requiring verification
-- `<examples>` tags for complex or ambiguous requirements - ensure examples demonstrate desired behavior and avoid undesired patterns
-- Bash command execution with "!" prefix when system state matters
-- MCP server references when specifically requested or obviously beneficial
-
-Output Format:
-
-1. Generate prompt content with XML structure
-2. Read `./.prompts/index.json` to get the category and next number
-3. Save to: `./.prompts/{category}/{number}-{descriptive-name}.md`
-   - Number format: 3-digit zero-padded from index.json (e.g., 233, 505)
-   - Name format: lowercase, hyphen-separated, max 5 words describing the task
-   - Example: `./.prompts/2xx-job-search/233-apply-google.md`
-4. Bump `next` in `index.json` for that category (increment by 1)
-5. File should contain ONLY the prompt, no explanations or metadata
-
-<prompt_patterns>
-
-For Coding Tasks:
-
-```xml
-<objective>
-
-[Clear statement of what needs to be built/fixed/refactored]
-Explain the end goal and why this matters.
-
-</objective>
-
-<context>
-
-[Project type, tech stack, relevant constraints]
-[Who will use this, what it's for]
-@[relevant files to examine]
-
-</context>
-
-<requirements>
-
-[Specific functional requirements]
-[Performance or quality requirements]
-Be explicit about what Claude should do.
-
-</requirements>
-
-<implementation>
-
-[Any specific approaches or patterns to follow]
-[What to avoid and WHY - explain the reasoning behind constraints]
-
-</implementation>
-
-<output>
-
-Create/modify files with relative paths:
-- `./path/to/file.ext` - [what this file should contain]
-
-</output>
-
-<verification>
-
-Before declaring complete, verify your work:
-- [Specific test or check to perform]
-- [How to confirm the solution works]
-
-</verification>
+- [each unasked question, first option taken]
+</output_format>
 
 <success_criteria>
-
-[Clear, measurable criteria for success]
-
+- Round one ran before any hand-off
+- No prompt file was written here; the creator named in the launch writes it
+- The hand-off argument carries the purpose, the end token and the three known slots, and the creator asked none of them again
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>
-```
-
-For Analysis Tasks:
-
-```xml
-<objective>
-
-[What needs to be analyzed and why]
-[What the analysis will be used for]
-
-</objective>
-
-<data_sources>
-
-@[files or data to analyze]
-![relevant commands to gather data]
-
-</data_sources>
-
-<analysis_requirements>
-
-[Specific metrics or patterns to identify]
-[Depth of analysis needed - use "thoroughly analyze" for complex tasks]
-[Any comparisons or benchmarks]
-
-</analysis_requirements>
-
-<output_format>
-
-[How results should be structured]
-Save analysis to: `./analyses/[descriptive-name].md`
-
-</output_format>
-
-<verification>
-
-[How to validate the analysis is complete and accurate]
-
-</verification>
-```
-
-For Research Tasks:
-
-```xml
-<research_objective>
-
-[What information needs to be gathered]
-[Intended use of the research]
-For complex research, include: "Thoroughly explore multiple sources and consider various perspectives"
-
-</research_objective>
-
-<scope>
-
-[Boundaries of the research]
-[Sources to prioritize or avoid]
-[Time period or version constraints]
-
-</scope>
-
-<deliverables>
-
-[Format of research output]
-[Level of detail needed]
-Save findings to: `./research/[topic].md`
-
-</deliverables>
-
-<evaluation_criteria>
-
-[How to assess quality/relevance of sources]
-[Key questions that must be answered]
-
-</evaluation_criteria>
-
-<verification>
-
-Before completing, verify:
-- [All key questions are answered]
-- [Sources are credible and relevant]
-
-</verification>
-```
-
-</prompt_patterns>
-</step_1_generate_and_save>
-
-<intelligence_rules>
-
-1. **Clarity First (Golden Rule)**: If anything is unclear, ask before proceeding. A few clarifying questions save time. Test: Would a colleague with minimal context understand this prompt?
-
-2. **Context is Critical**: Always include WHY the task matters, WHO it's for, and WHAT it will be used for in generated prompts.
-
-3. **Be Explicit**: Generate prompts with explicit, specific instructions. For ambitious results, include "go beyond the basics." For specific formats, state exactly what format is needed.
-
-4. **Scope Assessment**: Simple tasks get concise prompts. Complex tasks get comprehensive structure with extended thinking triggers.
-
-5. **Context Loading**: Only request file reading when the task explicitly requires understanding existing code. Use patterns like:
-
-   - "Examine @package.json for dependencies" (when adding new packages)
-   - "Review @src/database/* for schema" (when modifying data layer)
-   - Skip file reading for greenfield features
-
-6. **Precision vs Brevity**: Default to precision. A longer, clear prompt beats a short, ambiguous one.
-
-7. **Tool Integration**:
-
-   - Include MCP servers only when explicitly mentioned or obviously needed
-   - Use bash commands for environment checking when state matters
-   - File references should be specific, not broad wildcards
-   - For multi-step agentic tasks, include parallel tool calling guidance
-
-8. **Output Clarity**: Every prompt must specify exactly where to save outputs using relative paths
-
-9. **Verification Always**: Every prompt should include clear success criteria and verification steps
-
-</intelligence_rules>
-
-<decision_tree>
-
-After saving the prompt(s), present this decision tree to the user:
-
----
-
-**Prompt(s) created successfully!**
-
-<single_prompt_scenario>
-
-If you created ONE prompt (e.g., `./.prompts/005-implement-feature.md`):
-
-<presentation>
-
-✓ Saved prompt to ./.prompts/005-implement-feature.md
-
-What's next?
-
-1. Run prompt now
-2. Review/edit prompt first
-3. Save for later
-4. Other
-
-Choose (1-4): _
-
-</presentation>
-
-<action>
-
-If user chooses #1, invoke via SlashCommand tool: `/run-prompt 005`
-
-</action>
-</single_prompt_scenario>
-
-<parallel_scenario>
-
-If you created MULTIPLE prompts that CAN run in parallel (e.g., independent modules, no shared files):
-
-<presentation>
-
-✓ Saved prompts:
-  - ./.prompts/005-implement-auth.md
-  - ./.prompts/006-implement-api.md
-  - ./.prompts/007-implement-ui.md
-
-Execution strategy: These prompts can run in PARALLEL (independent tasks, no shared files)
-
-What's next?
-
-1. Run all prompts in parallel now (launches 3 sub-agents simultaneously)
-2. Run prompts sequentially instead
-3. Review/edit prompts first
-4. Other
-
-Choose (1-4): _
-
-</presentation>
-
-<actions>
-
-If user chooses #1, invoke via SlashCommand tool: `/run-prompt 005 006 007 --parallel`
-If user chooses #2, invoke via SlashCommand tool: `/run-prompt 005 006 007 --sequential`
-
-</actions>
-</parallel_scenario>
-
-<sequential_scenario>
-
-If you created MULTIPLE prompts that MUST run sequentially (e.g., dependencies, shared files):
-
-<presentation>
-
-✓ Saved prompts:
-  - ./.prompts/005-setup-database.md
-  - ./.prompts/006-create-migrations.md
-  - ./.prompts/007-seed-data.md
-
-Execution strategy: These prompts must run SEQUENTIALLY (dependencies: 005 → 006 → 007)
-
-What's next?
-
-1. Run prompts sequentially now (one completes before next starts)
-2. Run first prompt only (005-setup-database.md)
-3. Review/edit prompts first
-4. Other
-
-Choose (1-4): _
-
-</presentation>
-
-<actions>
-
-If user chooses #1, invoke via SlashCommand tool: `/run-prompt 005 006 007 --sequential`
-If user chooses #2, invoke via SlashCommand tool: `/run-prompt 005`
-
-</actions>
-</sequential_scenario>
-
----
-
-</decision_tree>
-</process>
-
-<success_criteria>
-
-- Intake gate completed (AskUserQuestion used for clarification if needed)
-- User selected "Proceed" from decision gate
-- Appropriate depth, structure, and execution strategy determined
-- Prompt(s) generated with proper XML structure following patterns
-- Files saved to ./.prompts/[number]-[name].md with correct sequential numbering
-- Decision tree presented to user based on single/parallel/sequential scenario
-- User choice executed (SlashCommand invoked if user selects run option)
-
-</success_criteria>
-
-<meta_instructions>
-
-- **Intake first**: Complete step_0_intake_gate before generating. Use AskUserQuestion for structured clarification.
-- **Decision gate loop**: Keep asking questions until user selects "Proceed"
-- **Numbering**: Read `./.prompts/index.json` for category list and next available numbers. If it doesn't exist, fall back to Glob `./.prompts/**/*.md`.
-- **Saving**: Save prompts in category subfolders (e.g., `./.prompts/2xx-job-search/233-name.md`), NOT at the root of `./.prompts/`.
-- **Bumping**: After saving, update `next` in `index.json` for the category used.
-- If ./.prompts/ doesn't exist, use Write tool to create the first prompt (Write will create parent directories)
-- Keep prompt filenames descriptive but concise
-- Adapt the XML structure to fit the task - not every tag is needed every time
-- Consider the user's working directory as the root for all relative paths
-- Each prompt file should contain ONLY the prompt content, no preamble or explanation
-- After saving, present the decision tree as inline text (not AskUserQuestion)
-- Use the SlashCommand tool to invoke /run-prompt when user makes their choice
-
-</meta_instructions>
-
-<declared_grammar>
-<grammar_map>
-Render the `prompt_creation` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `analysis`: the adaptive analysis of the request
-- `question`: each contextual question asked
-- `prompt_file`: each prompt saved, with its path and category
-</grammar_map>
-
-</declared_grammar>

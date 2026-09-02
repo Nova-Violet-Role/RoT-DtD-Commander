@@ -833,7 +833,7 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
   <!ENTITY LAW.META.2 "The sections are those of SCHEMA.meta.sections, rendered in that order; the argument words are embedded through SCHEMA.callout.reference and SCHEMA.callout.literal in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).">
   <!ENTITY LAW.META.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.">
   <!ENTITY LAW.META.4 "The file takes the extension SCHEMA.ext.callout, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).">
-  <!ENTITY LAW.META.5 "The proof reads the file back, runs the guards, checks the sections and the schema parts are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
+  <!ENTITY LAW.META.5 "The proof reads the file back, runs the guards, runs node lib/schematic.mjs check for every schema chosen, one line per schema with its parts read back by form in order, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a FAIL line or a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
   <!ENTITY LAW.META.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by its cell for callout, the SEMANTIC entity named by the schema and then callout, whose skeleton node lib/schematic.mjs render prints; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8, LAW.SCHEMA.9).">
   <!ENTITY LAW.META.7 "The forms a written meta-prompt may take for its own answers are those chosen by ASK.FORM.1 and ASK.FORM.2, asked apart from the schemas and from this command's schematic, rendered as a forms element with one form per kind chosen, its variant named and expansion no, the default nt when none was chosen; a kind not chosen is not offered to the written meta-prompt (LAW.FORM.2, LAW.FORM.4).">
   <!ENTITY LAW.META.8 "A written meta-prompt carries its checks as numbered laws, one per promise it makes about the prompts it writes, and every prompt it writes inherits them as success criteria.">
@@ -863,13 +863,13 @@ The schematic is pinned: a quoted line under a typed callout, one of the five ty
 </objective>
 
 <process>
-1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; words after ARG.end that read schematic=, schemas= or forms= are known slots placed by a router and fill those questions without asking (LAW.ASK.1); render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.META.1 to ASK.META.4 as one AskUserQuestion call, four options each plus Other; render the round.
 3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, multi-select), ASK.SCHEMA.2 (which of them), ASK.FORM.1 and ASK.FORM.2 (multi-select), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.META.5 to ASK.META.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `sections`: one `section` per name of SCHEMA.meta.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for callout: print its skeleton with node lib/schematic.mjs render, the schema name and callout, and fill the bracketed words in place (LAW.META.6); render the `forms`: one `form` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.META.7); render the `embedding`: the reference syntax SCHEMA.callout.reference, the literal syntax SCHEMA.callout.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.md: the GitHub callout shape, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.META.4).
 6. Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
-7. Run the proof: the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with tripped yes (LAW.SCHEMA.5).
+7. Run the proof: node lib/schematic.mjs check on the file, callout and the schemas chosen comma-separated prints one line per schema with its parts read back by form in order, and a FAIL line stops the command; the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with one line per schema and tripped yes (LAW.SCHEMA.5).
 8. Record the run under artifacts with this command's generated filename and report.
 </process>
 
@@ -884,7 +884,7 @@ Render the `meta_forge` root declared in the DOCTYPE as the markdown below. One 
 - `embedding`: **🗯️ Embedding**, the reference syntax, the literal syntax, the class
 - `file`: **🗯️ File**, the path and the bytes, and the file itself under --verbose
 - `guards`: **🗯️ Guards**, one line per guard with held yes or no
-- `proof`: **🗯️ Proof**, the sections check, the planted syntax and its refusal, tripped yes or no
+- `proof`: **🗯️ Proof**, one line per schema from the check, the sections check, the planted syntax and its refusal, tripped yes or no
 - `assumption_made`: **🗯️ Assumptions Made**, every ASK.META.* question not asked, with the first option taken
 </grammar_map>
 
@@ -925,6 +925,7 @@ reference: [SCHEMA.callout.reference]; literal: [SCHEMA.callout.literal]; class 
 
 ### 🗯️ Proof
 
+schema [name]: [parts] parts, [n] read back in order: ok [one line per schema from lib/schematic.mjs check, or: none]
 sections in order: yes; planted [the out-of-table syntax]: refused by [guard or check]; tripped yes
 
 ### 🗯️ Assumptions Made
@@ -938,7 +939,7 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
 - The argument words are embedded in a declared class and never evaluated
 - Every schema chosen carries its parts in order as its cell for this schematic renders them, and no required part is missing
 - The forms were asked apart from the schemas, and the guards of every kind chosen held on the file
-- Every guard held, the sections are in order, and the planted syntax was refused
+- Every guard held, every schema chosen read back in order under node lib/schematic.mjs check, the sections are in order, and the planted syntax was refused
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

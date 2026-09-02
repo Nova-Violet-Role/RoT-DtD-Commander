@@ -1,20 +1,32 @@
 ---
-description: Invoke create-meta-prompts-dtd for research, plan and implement prompts that hand records to each other
-argument-hint: [task description]
-allowed-tools: Skill(create-meta-prompts-dtd)
+description: "DTD-native: route a meta-prompt to its schematic creator: ask the schematic, the semantic-schema families and the forms, then hand the purpose and every choice as known slots to create-meta-prompt-<schematic>-dtd, which writes the file; this command writes no meta-prompt itself"
+argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for autonomous defaults]
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
-<!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
 
-<!DOCTYPE dispatch [
+<!DOCTYPE meta_router [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT dispatch (request, invocation)>
-  <!ELEMENT request (#PCDATA)>
-  <!ELEMENT invocation (#PCDATA)>
-  <!ENTITY LAW.DISP.1 "The wrapper adds nothing: the request is quoted and the named skill is invoked once.">
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ENTITY % cc-form SYSTEM "../../dtd/cc-form.dtd">
+  %cc-form;
+  <!ENTITY % cc-schematic SYSTEM "../../dtd/cc-schematic.dtd">
+  %cc-schematic;
+  <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ELEMENT meta_router (args, intake, launch, instruction, assumption_made*)>
+  <!ELEMENT launch (schemas, forms)>
+  <!ELEMENT instruction (#PCDATA)>
+  <!ATTLIST launch schematic (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED kind (prompt|meta) #FIXED "meta" creator CDATA #REQUIRED>
+  <!ATTLIST instruction goal CDATA #REQUIRED step CDATA #REQUIRED>
+  <!ENTITY LAW.MROUTE.1 "This command writes no meta-prompt file: it asks, then hands off to one creator, SCHEMA.creator.meta followed by a hyphen, the schematic chosen and -dtd, which asks what is still open and writes the file (LAW.SCHEMA.10).">
+  <!ENTITY LAW.MROUTE.2 "The schematic comes from ASK.SCHEMATIC.1 and ASK.SCHEMATIC.2 (nt when none was chosen), the schemas from ASK.SCHEMA.1 and ASK.SCHEMA.2, the forms from ASK.FORM.1 and ASK.FORM.2, asked apart; every answer is rendered in the launch element.">
+  <!ENTITY LAW.MROUTE.3 "The hand-off argument is the purpose, then ARG.end, then the known slots as schematic=, schemas= and forms= words with comma-separated values; the creator reads them after its own walk and asks none of them again (LAW.ASK.1, LAW.ARGS.2).">
+  <!ENTITY LAW.MROUTE.4 "The instruction is one Skill call to the creator named in the launch with that argument, rendered as the last element and then made; nothing follows it here, and the creator's answer is the creator's, never restated by this command.">
+  <!ENTITY ASK.MROUTE.1 "Purpose|What is the meta-prompt for?|The argument as given|The open task of this section|Typed under Other|Undecided, the creator asks first">
 ]>
 
 <trust_boundary>
@@ -26,18 +38,60 @@ Declared in the DOCTYPE above and binding for this run:
 Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and the two never share an element.
 </trust_boundary>
 
-Invoke the create-meta-prompts skill for: <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>
+<objective>
+Route <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (or ask what the meta-prompt is for) to the creator that writes meta-prompts in the schematic chosen.
+
+Six creators write meta-prompts, one per schematic (callout, heredoc, yaml, nt, xml, polyglot), each pinned to its shape and asking twelve questions. This command is the door in front of them: it asks the three choices that pick the creator and shape the body, the schematic, the semantic-schema families and the forms, and hands them over as known slots, so the creator asks only what is still open and never asks a slot twice across the hand-off (LAW.ASK.1, LAW.SCHEMA.10).
+</objective>
+
+<process>
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
+2. Round 1 of 3: ask ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 (the families, multi-select) and ASK.SCHEMA.2 (which of them) as one AskUserQuestion call; render the round.
+3. Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (multi-select) and ASK.MROUTE.1; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+4. Render the `launch`: the schematic (nt when none was chosen), the kind, the creator they select, the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was).
+5. Render the `instruction`: goal, the purpose; step, one Skill call to the creator with the argument made of the purpose, then ARG.end, then schematic=, schemas= and forms= with comma-separated values (LAW.MROUTE.3); then make that call and stop (LAW.MROUTE.4).
+</process>
 
 <output_format>
 <grammar_map>
-Render the `dispatch` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🪞 Heading` carrying this command's sigil 🪞, with a blank line before and after it (LAW.CORE.6).
-- `request`: the request as given, quoted
-- `invocation`: one Skill call to create-meta-prompts-dtd
+Render the `meta_router` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🪞 Heading` carrying this command's sigil 🪞, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🪞 Args**, the launch walk: count, the flags, the positional words
+- `intake`: **🪞 Intake**, each round with its questions and the labels or Other text chosen, the gate choice
+- `launch`: **🪞 Launch**, the schematic, the kind, the creator selected, the schemas with their parts, the forms
+- `instruction`: **🪞 Instruction**, the goal and the one step: the Skill call to the creator with the hand-off argument
+- `assumption_made`: **🪞 Assumptions Made**, every question not asked, with the first option taken
 </grammar_map>
 
+### 🪞 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### 🪞 Intake
+
+- round 1 of 3: Schematic, Schematic B, Schema A, Schema B answered [labels or Other text]
+- round 2 of 3: Forms, More forms, Purpose [when asked]
+- gate: [start|more|add|impactful] (round N)
+
+### 🪞 Launch
+
+schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind meta; creator /create-meta-prompt-[schematic]-dtd
+schemas: [schema of a SEMANTIC family with its parts in order, or none]
+forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
+
+### 🪞 Instruction
+
+goal: [the purpose]
+step: Skill create-meta-prompt-[schematic]-dtd with "[purpose] -- schematic=[schematic] schemas=[a,b] forms=[x,y]"
+
+### 🪞 Assumptions Made
+
+- [each unasked question, first option taken]
 </output_format>
 
 <success_criteria>
+- Round one ran before any hand-off
+- No prompt file was written here; the creator named in the launch writes it
+- The hand-off argument carries the purpose, the end token and the three known slots, and the creator asked none of them again
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

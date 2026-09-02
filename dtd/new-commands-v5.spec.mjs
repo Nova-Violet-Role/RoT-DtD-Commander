@@ -86,7 +86,7 @@ function promptCreator(schematic, meta) {
       [`${prefix}.2`]: `The sections are those of ${sectionsEnt}, rendered in that order; the argument words are embedded through SCHEMA.${schematic}.reference and SCHEMA.${schematic}.literal in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).`,
       [`${prefix}.3`]: 'Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.',
       [`${prefix}.4`]: `The file takes the extension SCHEMA.ext.${schematic}, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).`,
-      [`${prefix}.5`]: 'The proof reads the file back, runs the guards, checks the sections and the schema parts are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a proof that did not trip stops the command before the report (LAW.SCHEMA.5).',
+      [`${prefix}.5`]: 'The proof reads the file back, runs the guards, runs node lib/schematic.mjs check for every schema chosen, one line per schema with its parts read back by form in order, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a FAIL line or a proof that did not trip stops the command before the report (LAW.SCHEMA.5).',
       [`${prefix}.6`]: `Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by its cell for ${schematic}, the SEMANTIC entity named by the schema and then ${schematic}, whose skeleton node lib/schematic.mjs render prints; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8, LAW.SCHEMA.9).`,
       [`${prefix}.7`]: `The forms a written ${kind} may take for its own answers are those chosen by ASK.FORM.1 and ASK.FORM.2, asked apart from the schemas and from this command's schematic, rendered as a forms element with one form per kind chosen, its variant named and expansion no, the default nt when none was chosen; a kind not chosen is not offered to the written ${kind} (LAW.FORM.2, LAW.FORM.4).`,
       [`${prefix}.8`]: meta ? 'A written meta-prompt carries its checks as numbered laws, one per promise it makes about the prompts it writes, and every prompt it writes inherits them as success criteria.' : 'A written prompt keeps its own voice under three hundred words unless the argument says otherwise; the sections, the schema parts and the forms declared do not count.',
@@ -95,13 +95,13 @@ function promptCreator(schematic, meta) {
 
 The schematic is pinned: ${s.example}. What a literal is, what expands, how a value is referenced, defined, escaped, commented, included or made conditional, is read from the SCHEMA.${schematic}.* table of cc-schematic.dtd, the table cut from the argument-variant references: the quoted heredoc is the CDATA section is the strip block scalar is the NestedText multiline string, and the argument string is always the quoted whole. The sections are ${sectionsEnt}. The file is guarded by cc-form before it is reported and proven by a planted out-of-table syntax that the proof refuses.`,
     process: [
-      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; render the walk under \`args\`. This is a create- command, so round one always runs (LAW.ASK.10).`,
+      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; words after ARG.end that read schematic=, schemas= or forms= are known slots placed by a router and fill those questions without asking (LAW.ASK.1); render the walk under \`args\`. This is a create- command, so round one always runs (LAW.ASK.10).`,
       `Round 1 of 3: ask ASK.${prefix}.1 to ASK.${prefix}.4 as one AskUserQuestion call, four options each plus Other; render the round.`,
       `Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, multi-select), ASK.SCHEMA.2 (which of them), ASK.FORM.1 and ASK.FORM.2 (multi-select), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.${prefix}.5 to ASK.${prefix}.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
       `Render the \`sections\`: one \`section\` per name of ${sectionsEnt}, in order, each with its text; render the \`schemas\`: one \`semantic\` per schema chosen, its \`part\` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for ${schematic}: print its skeleton with node lib/schematic.mjs render, the schema name and ${schematic}, and fill the bracketed words in place (LAW.${prefix}.6); render the \`forms\`: one \`form\` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.${prefix}.7); render the \`embedding\`: the reference syntax SCHEMA.${schematic}.reference, the literal syntax SCHEMA.${schematic}.literal, and the cc-args class chosen for the argument words.`,
       `Write the \`file\` <name>.<schematic>.${s.ext}: ${s.label}, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.${prefix}.4).`,
       `Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one \`guard\` per line printed, held yes or no; a guard that did not hold stops the command.`,
-      'Run the proof: the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with tripped yes (LAW.SCHEMA.5).',
+      `Run the proof: node lib/schematic.mjs check on the file, ${schematic} and the schemas chosen comma-separated prints one line per schema with its parts read back by form in order, and a FAIL line stops the command; the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the \`proof\` with one line per schema and tripped yes (LAW.SCHEMA.5).`,
       'Record the run under artifacts with this command\'s generated filename and report.',
     ],
     map: {
@@ -113,7 +113,7 @@ The schematic is pinned: ${s.example}. What a literal is, what expands, how a va
       embedding: `**${sigil} Embedding**, the reference syntax, the literal syntax, the class`,
       file: `**${sigil} File**, the path and the bytes, and the file itself under --verbose`,
       guards: `**${sigil} Guards**, one line per guard with held yes or no`,
-      proof: `**${sigil} Proof**, the sections check, the planted syntax and its refusal, tripped yes or no`,
+      proof: `**${sigil} Proof**, one line per schema from the check, the sections check, the planted syntax and its refusal, tripped yes or no`,
       assumption_made: `**${sigil} Assumptions Made**, every ASK.${prefix}.* question not asked, with the first option taken`,
     },
     template: `### ${sigil} Args
@@ -153,6 +153,7 @@ reference: [SCHEMA.${schematic}.reference]; literal: [SCHEMA.${schematic}.litera
 
 ### ${sigil} Proof
 
+schema [name]: [parts] parts, [n] read back in order: ok [one line per schema from lib/schematic.mjs check, or: none]
 sections in order: yes; planted [the out-of-table syntax]: refused by [guard or check]; tripped yes
 
 ### ${sigil} Assumptions Made
@@ -164,7 +165,7 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
       'The argument words are embedded in a declared class and never evaluated',
       'Every schema chosen carries its parts in order as its cell for this schematic renders them, and no required part is missing',
       'The forms were asked apart from the schemas, and the guards of every kind chosen held on the file',
-      'Every guard held, the sections are in order, and the planted syntax was refused',
+      'Every guard held, every schema chosen read back in order under node lib/schematic.mjs check, the sections are in order, and the planted syntax was refused',
     ],
   }];
 }
@@ -172,6 +173,89 @@ const PROMPT_CREATORS = Object.fromEntries([
   ...Object.keys(SCHEMATICS).map((s) => promptCreator(s, false)),
   ...Object.keys(SCHEMATICS).map((s) => promptCreator(s, true)),
 ]);
+
+// The two generic creators become routers: create-prompt-dtd (the skill) and
+// create-meta-prompt-dtd (the command) ask the schematic, the schema families
+// and the forms, then hand the purpose and every choice to the matching
+// per-schematic creator as known slots after the end token (LAW.SCHEMA.10).
+function promptRouter(meta) {
+  const kind = meta ? 'meta-prompt' : 'prompt';
+  const key = meta ? 'create-meta-prompt' : 'create-prompt';
+  const sigil = meta ? '🪞' : '📝';
+  const root = meta ? 'meta_router' : 'prompt_router';
+  const prefix = meta ? 'MROUTE' : 'ROUTE';
+  const creatorEnt = meta ? 'SCHEMA.creator.meta' : 'SCHEMA.creator.prompt';
+  const creator = meta ? 'create-meta-prompt' : 'create-prompt';
+  const self = meta ? 'command' : 'skill';
+  return [key, {
+    new: true, to: meta ? 'src/commands/create-meta-prompt-dtd.md' : 'src/skills/create-prompt-dtd/SKILL.md', root, sigil,
+    ...(meta ? {} : { name: 'create-prompt-dtd' }),
+    include: ['cc-args', 'cc-form', 'cc-schematic', 'cc-ask'],
+    description: `DTD-native: route a ${kind} to its schematic creator: ask the schematic, the semantic-schema families and the forms, then hand the purpose and every choice as known slots to ${creator}-<schematic>-dtd, which writes the file; this ${self} writes no ${kind} itself${meta ? '' : '. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces'}`,
+    ...(meta ? { argumentHint: '[what the meta-prompt is for, or leave blank; --no-gate for autonomous defaults]' } : {}),
+    model: [`${root} (args, intake, launch, instruction, assumption_made*)`, 'launch (schemas, forms)', 'instruction (#PCDATA)'],
+    attlist: [
+      `launch schematic (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED kind (prompt|meta) #FIXED "${meta ? 'meta' : 'prompt'}" creator CDATA #REQUIRED`,
+      'instruction goal CDATA #REQUIRED step CDATA #REQUIRED',
+    ],
+    entities: {
+      [`ASK.${prefix}.1`]: `Purpose|What is the ${kind} for?|The argument as given|The open task of this section|Typed under Other|Undecided, the creator asks first`,
+    },
+    laws: {
+      [`${prefix}.1`]: `This ${self} writes no ${kind} file: it asks, then hands off to one creator, ${creatorEnt} followed by a hyphen, the schematic chosen and -dtd, which asks what is still open and writes the file (LAW.SCHEMA.10).`,
+      [`${prefix}.2`]: 'The schematic comes from ASK.SCHEMATIC.1 and ASK.SCHEMATIC.2 (nt when none was chosen), the schemas from ASK.SCHEMA.1 and ASK.SCHEMA.2, the forms from ASK.FORM.1 and ASK.FORM.2, asked apart; every answer is rendered in the launch element.',
+      [`${prefix}.3`]: 'The hand-off argument is the purpose, then ARG.end, then the known slots as schematic=, schemas= and forms= words with comma-separated values; the creator reads them after its own walk and asks none of them again (LAW.ASK.1, LAW.ARGS.2).',
+      [`${prefix}.4`]: `The instruction is one Skill call to the creator named in the launch with that argument, rendered as the last element and then made; nothing follows it here, and the creator's answer is the creator's, never restated by this ${self}.`,
+    },
+    objective: `Route ${ARGS} (or ask what the ${kind} is for) to the creator that writes ${kind}s in the schematic chosen.
+
+Six creators write ${kind}s, one per schematic (callout, heredoc, yaml, nt, xml, polyglot), each pinned to its shape and asking twelve questions. This ${self} is the door in front of them: it asks the three choices that pick the creator and shape the body, the schematic, the semantic-schema families and the forms, and hands them over as known slots, so the creator asks only what is still open and never asks a slot twice across the hand-off (LAW.ASK.1, LAW.SCHEMA.10).`,
+    process: [
+      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; render the walk under \`args\`. This is a create- ${self}, so round one always runs (LAW.ASK.10).`,
+      'Round 1 of 3: ask ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 (the families, multi-select) and ASK.SCHEMA.2 (which of them) as one AskUserQuestion call; render the round.',
+      `Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (multi-select) and ASK.${prefix}.1; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
+      'Render the \`launch\`: the schematic (nt when none was chosen), the kind, the creator they select, the \`schemas\` with one \`semantic\` per schema chosen and its \`part\` elements from the SEMANTIC entity of that schema, and the \`forms\` with one \`form\` per kind chosen (nt alone when none was).',
+      `Render the \`instruction\`: goal, the purpose; step, one Skill call to the creator with the argument made of the purpose, then ARG.end, then schematic=, schemas= and forms= with comma-separated values (LAW.${prefix}.3); then make that call and stop (LAW.${prefix}.4).`,
+    ],
+    map: {
+      args: `**${sigil} Args**, the launch walk: count, the flags, the positional words`,
+      intake: `**${sigil} Intake**, each round with its questions and the labels or Other text chosen, the gate choice`,
+      launch: `**${sigil} Launch**, the schematic, the kind, the creator selected, the schemas with their parts, the forms`,
+      instruction: `**${sigil} Instruction**, the goal and the one step: the Skill call to the creator with the hand-off argument`,
+      assumption_made: `**${sigil} Assumptions Made**, every question not asked, with the first option taken`,
+    },
+    template: `### ${sigil} Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### ${sigil} Intake
+
+- round 1 of 3: Schematic, Schematic B, Schema A, Schema B answered [labels or Other text]
+- round 2 of 3: Forms, More forms, Purpose [when asked]
+- gate: [start|more|add|impactful] (round N)
+
+### ${sigil} Launch
+
+schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind ${meta ? 'meta' : 'prompt'}; creator /${creator}-[schematic]-dtd
+schemas: [schema of a SEMANTIC family with its parts in order, or none]
+forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
+
+### ${sigil} Instruction
+
+goal: [the purpose]
+step: Skill ${creator}-[schematic]-dtd with "[purpose] -- schematic=[schematic] schemas=[a,b] forms=[x,y]"
+
+### ${sigil} Assumptions Made
+
+- [each unasked question, first option taken]`,
+    success: [
+      'Round one ran before any hand-off',
+      'No prompt file was written here; the creator named in the launch writes it',
+      'The hand-off argument carries the purpose, the end token and the three known slots, and the creator asked none of them again',
+    ],
+  }];
+}
+const PROMPT_ROUTERS = Object.fromEntries([promptRouter(false), promptRouter(true)]);
 
 // The three repository commands share one anatomy: a measured analysis of
 // probes, an intake of up to thirty questions in eight rounds, a plan, the
@@ -1534,4 +1618,5 @@ tripped yes
   },
 
   ...PROMPT_CREATORS,
+  ...PROMPT_ROUTERS,
 };

@@ -104,6 +104,19 @@ counts are re-measured.
   ASK.SCHEMA.1 and 2, so the question count stays; the matrix regenerated at
   21 schemas by 9 forms, 189 cells, the families held to the enumeration by
   a control.
+- The generic creators become routers: `create-prompt-dtd` (the skill) and
+  `create-meta-prompt-dtd` (the command) ask the schematic, the families and
+  the forms, render a `launch` element, and hand the purpose plus
+  `schematic=`, `schemas=` and `forms=` after the end token to the matching
+  per-schematic creator through one Skill call; LAW.ROUTE.1 to 4 and
+  LAW.MROUTE.1 to 4. The creators read those known slots after their walk
+  and ask none of them again.
+- `node lib/schematic.mjs check <file> <form> <schema,schema>`: one line per
+  schema, its parts read back by form in order, missing and absent parts
+  named, exit 1 on a FAIL; the creators' proof runs it on the file they
+  wrote, so the schema proof is a measurement. Four controls: among other
+  keys passes, a dropped required part fails, a swapped order fails, an
+  absent optional part passes.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,
