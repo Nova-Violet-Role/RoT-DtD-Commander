@@ -1,0 +1,35 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<deep_dive>
+  <intake mode="autonomous">
+    <context_analysis>
+      <known slot="what">the DTD overhaul</known>
+      <known slot="depth">comprehensive</known>
+    </context_analysis>
+    <gate choice="start" round="1"/>
+  </intake>
+  <report topic="dtd overhaul" depth="comprehensive">
+    <strategic_summary>The installer is the DTD processor.</strategic_summary>
+    <section name="Key Questions">What does the loader read?</section>
+    <section name="Overview">One file per command. <claim confidence="measured">npx wrote LF files into .claude/commands.</claim></section>
+    <section name="How It Works">Two-pass resolution.</section>
+    <section name="History and Context">Two local contract generations.</section>
+    <section name="Patterns and Best Practices">Declare once, read by the enforcer.</section>
+    <section name="Limitations and Edge Cases">Soft in the prompt.</section>
+    <section name="Current State and Trends">Commands move into skills.</section>
+    <section name="Key Takeaways">Build the installer first.</section>
+    <section name="Remaining Unknowns">Namespace form (assumed: suffix).</section>
+    <claude_context>
+      <block name="application">when a command has a fixed section order</block>
+      <block name="technical">xmlstarlet val -e -d</block>
+      <block name="integration">rot-dtd-goal idioms</block>
+    </claude_context>
+    <next_action>build cc-dtd-core</next_action>
+    <sources>
+      <source kind="file" date="2026-09-02">cc-resources/DTD_GUIDE.md</source>
+      <source kind="measurement" date="2026-09-02">xmlstarlet exit 1 on bad.xml</source>
+    </sources>
+  </report>
+  <artifact name="2026-09-02-dtd-overhaul-deep-dive.md"/>
+  <assumption_made>depth comprehensive</assumption_made>
+</deep_dive>

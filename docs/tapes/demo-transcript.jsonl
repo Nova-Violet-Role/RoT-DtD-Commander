@@ -1,0 +1,2 @@
+{"type":"user","message":{"role":"user","content":"<command-name>/pareto-dtd</command-name>"}}
+{"type":"assistant","isSidechain":false,"message":{"role":"assistant","content":[{"type":"text","text":"**Vital Few (focus here):**\n- Factor 1: the installer, because it checks every other file; write it first\n- Factor 2: the shared subsets, because every DOCTYPE includes them; keep them small\n\n**Trivial Many (deprioritize):**\n- renaming the docs folder\n\n**Bottom Line:**\nShip the installer, then the reference command."}]}}

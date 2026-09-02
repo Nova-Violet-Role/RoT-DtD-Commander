@@ -1,0 +1,16 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<first_principles depth="solid">
+  <problem>commands must carry their own grammar</problem>
+  <assumption id="A1" origin="convention" verdict="false" held="false">
+    <statement>a prompt cannot be validated</statement>
+    <challenge confidence="measured">xmlstarlet validated a rendered answer against the DOCTYPE this session</challenge>
+  </assumption>
+  <assumption id="A2" origin="necessity" verdict="true" held="true">
+    <statement>a command is one file</statement>
+    <challenge confidence="measured">the loader reads commands/name.md and nothing beside it</challenge>
+  </assumption>
+  <truth id="T1" irreducible_because="the loader would have to read a second file">a command file must be self-contained</truth>
+  <rebuild stands_on="T1">the shared grammar is inlined at install time</rebuild>
+  <possibility freed_by="A1">a Stop hook can validate an answer</possibility>
+</first_principles>

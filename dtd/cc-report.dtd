@@ -1,0 +1,43 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-report.dtd : the research report grammar shared by the research family
+  (deep-dive, competitive, feasibility, history, landscape, open-source,
+  options, technical).
+
+  A report is one root with a strategic summary first, named sections in
+  declared order, a machine-readable claude_context block, one next action,
+  and sources. Sources are local by default: files read, commands run,
+  runs measured. A source of kind note is reasoning without a thing behind
+  it and must say so.
+-->
+
+<!ELEMENT report (strategic_summary, section+, claude_context, next_action, sources)>
+<!ATTLIST report
+          topic CDATA #REQUIRED
+          depth %depth; "comprehensive">
+
+<!ELEMENT strategic_summary (#PCDATA)>
+
+<!ELEMENT section (#PCDATA | claim | quoted)*>
+<!ATTLIST section name CDATA #REQUIRED>
+
+<!ELEMENT claude_context (block+)>
+<!ELEMENT block (#PCDATA)>
+<!ATTLIST block name CDATA #REQUIRED>
+
+<!ELEMENT sources (source+)>
+<!ELEMENT source (#PCDATA)>
+<!ATTLIST source
+          kind (file|command|run|measurement|note) #REQUIRED
+          date CDATA #IMPLIED>
+
+<!ELEMENT artifact EMPTY>
+<!ATTLIST artifact
+          dir  CDATA #FIXED "artifacts/research"
+          name CDATA #REQUIRED>
+
+<!ENTITY LAW.REPORT.1 "The strategic summary comes first and is three sentences or fewer.">
+<!ENTITY LAW.REPORT.2 "Every section declared for the command appears, in declared order, even when its content is one line saying nothing was found.">
+<!ENTITY LAW.REPORT.3 "A source is a local file path, a command that was run, or a measurement; a source of kind note carries no evidence and says so.">
+<!ENTITY LAW.REPORT.4 "The report is saved under artifacts/research as YYYY-MM-DD-topic-kind.md and the path is printed.">

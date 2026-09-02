@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+name: Proposal
+description: A new command, a new book to draw from, a new rule for the checker, or a change to the Adiutor's contract.
+title: "proposal: "
+labels: ["proposal"]
+body:
+  - type: textarea
+    id: shape
+    attributes:
+      label: The shape of the problem it answers
+      description: For a command, the grammar first (root, children, cardinality, laws). For a rule, the mutation it would catch.
+    validations:
+      required: true
+  - type: textarea
+    id: cost
+    attributes:
+      label: What it costs
+      description: Tokens per invocation, a new subset declaration, a new hook event, a breaking change to a record.
+    validations:
+      required: true
+  - type: textarea
+    id: control
+    attributes:
+      label: How it would be shown to fail
+      description: The control you would write, with the mutation it asserts present.
+    validations:
+      required: true

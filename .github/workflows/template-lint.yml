@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+name: template lint
+on:
+  push:
+    paths:
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/workflows/template-lint.yml'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  title-not-empty:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # GitHub rejects a form whose `title:` is present but empty. A YAML
+      # parser does not catch it: `title: ""` is valid YAML and invalid schema.
+      - name: title must be absent or a non-empty string
+        run: |
+          rc=0
+          for f in .github/ISSUE_TEMPLATE/*.yml; do
+            [ -f "$f" ] || continue
+            line=$(grep -n '^title:' "$f" | head -1) || true
+            if [ -z "$line" ]; then echo "ok   $f (no title: key)"; continue; fi
+            val=$(printf '%s' "$line" | sed 's/^[0-9]*:title:[[:space:]]*//; s/^"//; s/"$//; s/^ *//; s/ *$//')
+            if [ -z "$val" ]; then echo "FAIL $f: title present but EMPTY"; rc=1
+            else echo "ok   $f title=\"$val\""; fi
+          done
+          exit $rc
+      - name: the check must be able to FAIL
+        run: |
+          mkdir -p /tmp/ctl && printf 'title: ""\nbody: []\n' > /tmp/ctl/bad.yml
+          line=$(grep -n '^title:' /tmp/ctl/bad.yml | head -1)
+          val=$(printf '%s' "$line" | sed 's/^[0-9]*:title:[[:space:]]*//; s/^"//; s/"$//; s/^ *//; s/ *$//')
+          if [ -z "$val" ]; then echo "PASS: control rejected as designed"; else
+            echo "FAIL: the control was NOT rejected; this lint proves nothing"; exit 1; fi

@@ -1,0 +1,8 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<pareto depth="solid">
+  <vital rank="1" impact="high"><factor>the installer</factor><why>it resolves and checks every other file</why><action>write bin/cc-dtd.mjs first</action></vital>
+  <vital rank="2" impact="medium"><factor>the shared subsets</factor><why>every DOCTYPE includes them</why><action>keep cc-core.dtd small</action></vital>
+  <trivial>renaming docs/</trivial>
+  <bottom_line>ship the installer, then the reference command</bottom_line>
+</pareto>

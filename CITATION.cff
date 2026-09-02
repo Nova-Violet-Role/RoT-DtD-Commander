@@ -1,0 +1,38 @@
+# This file is part of RoT DtD Commander.
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+cff-version: 1.2.0
+title: "RoT DtD Commander - Claude Code commands that carry their own DTD, an NPX installer, and the Adiutor Stop-hook doctor"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - name: "Saimonokuma"
+    website: "https://github.com/Nova-Violet-Role"
+repository-code: "https://github.com/Nova-Violet-Role/RoT-DtD-Commander"
+license:
+  - AGPL-3.0-or-later
+  - EUPL-1.2
+version: 1.0.0
+date-released: 2026-09-02
+abstract: >-
+  Fifty-seven Claude Code slash commands, eighteen skills and four agents whose
+  answer grammar, verdict vocabulary, laws and trust boundary are declared in a
+  validating XML DTD inside each file, with the shared subsets inlined at build
+  time by a two-pass parameter-entity resolver. A checker holds every file to
+  its own DOCTYPE in both directions (rules C1 to C12), six declared grammars
+  are validated against example instances with xmlstarlet, and a guided NPX
+  installer writes the set into ~/.claude with a manifest and a verified
+  byte-level re-read. The Adiutor is a Stop hook plus a ledger plus a doctor
+  command: it reads the DOCTYPE of the command that produced an answer, checks
+  the rendered answer against it, records every run under a numbered
+  append-only record, and prescribes. Eight controls trip every guard on
+  purpose before the guard is trusted.
+keywords:
+  - "claude-code"
+  - "dtd"
+  - "xml"
+  - "hooks"
+  - "stop-hook"
+  - "prompt-engineering"
+  - "installer"
+  - "trust-boundary"

@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability (private)
+    url: https://github.com/Nova-Violet-Role/RoT-DtD-Commander/security/advisories/new
+    about: Gate evasion, ledger forgery, fence escape, an installer writing outside its target. Never a public issue.
+  - name: Ask a question
+    url: https://github.com/Nova-Violet-Role/RoT-DtD-Commander/discussions
+    about: Questions are never noise here. An unanswerable question is usually our defect.
+  - name: How to contribute
+    url: https://github.com/Nova-Violet-Role/RoT-DtD-Commander/blob/main/CONTRIBUTING.md
+    about: Run the gate. Watch a control fail. Say what you could not verify.
+  - name: Code of Conduct
+    url: https://github.com/Nova-Violet-Role/.github/blob/main/CODE_OF_CONDUCT.md
+    about: Attacking the claims is the work. Attacking people is not.

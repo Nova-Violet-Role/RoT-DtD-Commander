@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+name: gate
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: xmlstarlet
+        run: sudo apt-get update -q && sudo apt-get install -y -q xmlstarlet
+      - name: build drift (committed resolved tree equals a fresh resolve of src/)
+        run: node bin/rot-dtd-commander.mjs build --check; echo "exit=$?"; node bin/rot-dtd-commander.mjs build --check
+      - name: checker C1..C12 plus xmlstarlet on every example
+        run: |
+          node bin/rot-dtd-commander.mjs check --xml | tee check.log
+          test "${PIPESTATUS[0]}" -eq 0
+          grep -q 'xml-run 6' check.log
+      - name: adiutor controls (eight guards tripped on purpose)
+        run: node bin/adiutor.mjs controls
+      - name: checker controls (three mutations and one broken instance refused)
+        run: bash checker/checker-controls.sh
+      - name: spdx sweep
+        run: bash checker/spdx-sweep.sh
+      - name: crlf sweep
+        run: bash checker/crlf-sweep.sh
+      - name: every tape has a committed GIF under 2 MB
+        run: |
+          rc=0
+          for t in docs/tapes/*.tape; do
+            g="docs/gifs/$(basename "$t" .tape).gif"
+            if [ ! -f "$g" ]; then echo "MISSING $g"; rc=1; continue; fi
+            s=$(stat -c %s "$g"); echo "$g $s bytes"
+            [ "$s" -le 2097152 ] || { echo "TOO LARGE $g"; rc=1; }
+          done
+          exit $rc
+      - name: executable bits in the index
+        run: |
+          bad=$(git ls-files -s bin/ checker/*.sh | grep -v '^100755' || true)
+          if [ -n "$bad" ]; then echo "$bad"; exit 1; fi
+          echo "ok: every script is executable in the index"
+
+  install-roundtrip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: install into a scratch target, doctor, uninstall to zero
+        run: |
+          T=$(mktemp -d)
+          node bin/rot-dtd-commander.mjs install --yes --target "$T" | tail -3
+          test -f "$T/.rot-dtd-commander-manifest.json"
+          CLAUDE_CONFIG_DIR="$T" node bin/adiutor.mjs doctor || true
+          node bin/rot-dtd-commander.mjs uninstall --yes --target "$T" | tail -1
+          left=$(find "$T" -type f | wc -l)
+          echo "files left: $left"
+          test "$left" -eq 0

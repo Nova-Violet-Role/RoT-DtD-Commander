@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+name: Something is broken
+description: A reproducible defect in the installer, a command, a skill, an agent or the Adiutor.
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where
+      options:
+        - the installer (rdc install / uninstall / arm / disarm)
+        - the checker or the build (rdc check / build)
+        - a -dtd command, skill or agent (name it below)
+        - the Adiutor hooks, ledger or doctor
+        - the documentation
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: The exact command and its exit code
+      description: Read the exit code directly; `cmd; echo "exit=$?"`.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and what actually happened
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `rdc doctor` and, for a run, `rdc ledger --last 1`
+      render: shell
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: OS, Node version, commit or tag
+      placeholder: "Windows 11, node v26.7.0, v1.0.0"
+    validations:
+      required: true

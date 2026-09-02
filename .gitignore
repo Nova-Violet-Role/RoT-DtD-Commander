@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+
+# Private notes and material that is not ours to publish (see NOTICE.md)
+DTD_GUIDE.md
+DTD_SIMPLE_EXAMPLES.md
+Phantom-Books-Real-Books/
+.dtd-file-examples/
+docs/upstream/
+
+# Anything that is not a -dtd artifact under the resolved trees
+# (the originals of the MIT upstream are never committed here)
+commands/*
+!commands/*-dtd.md
+!commands/RoT-DtD-Commander-Adiutor.md
+skills/*
+!skills/*-dtd/
+agents/*
+!agents/*-dtd.md
+!agents/dtd-contract-auditor.md
+
+# Tooling
+node_modules/
+*.tgz
+.DS_Store
+Thumbs.db
+desktop.ini
+*.rot-dtd-commander.*.bak

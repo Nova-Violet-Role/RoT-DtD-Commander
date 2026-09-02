@@ -1,0 +1,29 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-record.dtd : the numbered, append-only record discipline.
+
+  For any file one session writes and a later session parses: handoffs,
+  todo lists, plans, indexes. Fields are numbered from 1, dense, never
+  reused, never reordered; a new field is only ever appended, so an old
+  reader and a new writer still agree about what field 3 means. Each field
+  carries the version it first appeared in, and since never decreases as
+  the number grows: that single rule is what makes append-only checkable.
+-->
+
+<!ELEMENT records (record+)>
+<!ELEMENT record (field+)>
+<!ATTLIST record
+          name NMTOKEN #REQUIRED
+          file CDATA   #REQUIRED>
+<!ELEMENT field (#PCDATA)>
+<!ATTLIST field
+          n     CDATA   #REQUIRED
+          name  NMTOKEN #REQUIRED
+          model (PCDATA|CDATA) #REQUIRED
+          since CDATA   #REQUIRED>
+
+<!ENTITY LAW.REC.1 "Field numbers are dense from 1 and never reused.">
+<!ENTITY LAW.REC.2 "since never decreases as the field number grows: fields are appended, never inserted or renumbered.">
+<!ENTITY LAW.REC.3 "A PCDATA field is parsed by the reader; a CDATA field is carried whole and never interpreted.">
+<!ENTITY LAW.REC.4 "A reader that finds more columns than declared reads the declared ones and reports the surplus instead of guessing.">

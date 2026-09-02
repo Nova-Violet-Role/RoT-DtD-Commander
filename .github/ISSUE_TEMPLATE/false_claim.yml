@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+name: A claim in our docs is false
+description: Something the README, NOTICE, CHANGELOG or a command's laws assert does not hold. The most welcome report there is.
+title: "false claim: "
+labels: ["false-claim"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This repository's documentation makes **measurable** claims on purpose: file counts,
+        rule numbers, exit codes, "this guard has a control". Any of them can be wrong.
+        A report that falsifies one is a defect in the documentation, not an attack, and it
+        is credited in the changelog.
+  - type: input
+    id: where
+    attributes:
+      label: Where the claim is
+      description: File and line if you have it.
+      placeholder: "README.md:88, \"checked 80  failed 0  xml-run 6\""
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: The claim, quoted exactly
+    validations:
+      required: true
+  - type: textarea
+    id: contradiction
+    attributes:
+      label: The measurement that contradicts it
+      description: A command and its real output. Read exit codes directly, never through a pipe.
+      render: shell
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of wrong is it?
+      options:
+        - The claim is simply false
+        - The claim is true but weaker than it sounds (overclaim)
+        - The claim was true and has expired (a snapshot presented as a standing property)
+        - The claim cannot be checked at all as written
+        - The claim is true but the thing it measures is vacuous
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Where you measured it
+      description: OS, Node version, and the commit hash or tag.
+    validations:
+      required: false

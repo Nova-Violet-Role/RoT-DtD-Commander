@@ -1,0 +1,13 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<second_order>
+  <action>inline the shared DTD subset into every installed command</action>
+  <effect id="E1" order="1" sign="plus" horizon="now" confidence="measured">each installed file is self-contained</effect>
+  <effect id="E2" order="1" sign="minus" horizon="now" confidence="measured">each invocation carries the subset's tokens</effect>
+  <effect id="E3" order="2" causes="E1" sign="plus" horizon="months" confidence="reasoned">a command survives a moved or missing dtd directory</effect>
+  <effect id="E4" order="2" causes="E2" sign="minus" horizon="months" confidence="reasoned">authors grow the subset and every command pays</effect>
+  <effect id="E5" order="3" causes="E4" sign="mixed" horizon="years" confidence="guessed">a size cap on the subset becomes a rule</effect>
+  <loop between="E4 E5" kind="balancing">growth raises cost until the cap pushes back</loop>
+  <delayed effect="E4" surfaces_after="the tenth shared declaration">the cost is invisible until the subset is large</delayed>
+  <assessment worth="yes" decided_by="E1 E3">self-containment outweighs the token cost while the subset stays under about 1.5 KB</assessment>
+</second_order>

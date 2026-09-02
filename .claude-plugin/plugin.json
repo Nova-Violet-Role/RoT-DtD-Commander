@@ -1,0 +1,16 @@
+{
+  "name": "rot-dtd-commander",
+  "version": "1.0.0",
+  "description": "RoT DtD Commander: 58 Claude Code commands, 18 skills and 4 agents that carry their own DTD grammar, verdict vocabulary, laws and trust boundary; plus the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it and prescribes on failure. Checked in both directions by rules C1 to C12, six grammars validated with xmlstarlet, eight guards tripped on purpose.",
+  "author": {
+    "name": "Saimonokuma",
+    "url": "https://github.com/Nova-Violet-Role"
+  },
+  "license": "AGPL-3.0-or-later OR EUPL-1.2",
+  "homepage": "https://github.com/Nova-Violet-Role/RoT-DtD-Commander",
+  "repository": "https://github.com/Nova-Violet-Role/RoT-DtD-Commander",
+  "keywords": [
+    "dtd", "xml", "claude-code", "hooks", "stop-hook", "prompt-engineering",
+    "trust-boundary", "installer", "npx", "thinking-models", "research"
+  ]
+}

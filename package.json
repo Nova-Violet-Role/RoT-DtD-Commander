@@ -1,0 +1,70 @@
+{
+  "name": "rot-dtd-commander",
+  "version": "1.0.0",
+  "description": "RoT DtD Commander: 57 Claude Code commands, 18 skills and 4 agents that carry their own DTD grammar and trust boundary, a guided NPX installer into ~/.claude, and the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it.",
+  "type": "module",
+  "license": "AGPL-3.0-or-later OR EUPL-1.2",
+  "author": {
+    "name": "Saimonokuma",
+    "url": "https://github.com/Nova-Violet-Role"
+  },
+  "homepage": "https://github.com/Nova-Violet-Role/RoT-DtD-Commander#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nova-Violet-Role/RoT-DtD-Commander.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nova-Violet-Role/RoT-DtD-Commander/issues"
+  },
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/saimonokuma"
+  },
+  "bin": {
+    "rot-dtd-commander": "bin/rot-dtd-commander.mjs",
+    "rdc": "bin/rot-dtd-commander.mjs"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "dtd",
+    "hooks",
+    "commands",
+    "skills",
+    "agents",
+    "examples",
+    "checker",
+    "docs",
+    "README.md",
+    "NOTICE.md",
+    "LICENSE",
+    "LICENSE-EUPL-1.2",
+    "LICENSE-MIT-taches-cc-resources"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node bin/rot-dtd-commander.mjs build",
+    "build:check": "node bin/rot-dtd-commander.mjs build --check",
+    "check": "node bin/rot-dtd-commander.mjs check --xml",
+    "controls": "node bin/adiutor.mjs controls",
+    "doctor": "node bin/adiutor.mjs doctor",
+    "sweep": "bash checker/spdx-sweep.sh && bash checker/crlf-sweep.sh",
+    "gate": "npm run build:check && npm run check && npm run controls && npm run sweep",
+    "install-home": "node bin/rot-dtd-commander.mjs install --yes"
+  },
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "dtd",
+    "xml",
+    "hooks",
+    "stop-hook",
+    "prompt-engineering",
+    "installer",
+    "npx",
+    "agpl",
+    "eupl"
+  ]
+}
