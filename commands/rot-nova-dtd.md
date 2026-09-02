@@ -133,7 +133,7 @@ argument-hint: [question or decision; blank for the current discussion; --no-gat
   
   
 <!-- begin subset cc-rot -->
-🧭|🜏|⬜|🔮|🩸|🕷️|⚪|🎷|⚜️|<!--
+<!--
   SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
   Copyright 2026 Saimonokuma.
 

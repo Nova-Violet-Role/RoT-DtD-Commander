@@ -12,7 +12,7 @@ repository-code: "https://github.com/Nova-Violet-Role/RoT-DtD-Commander"
 license:
   - AGPL-3.0-or-later
   - EUPL-1.2
-version: 3.1.0
+version: 3.2.0
 date-released: 2026-09-02
 abstract: >-
   Sixty-eight Claude Code slash commands (the nine RoT MoE lenses and their ELEVATE among them), nineteen skills and four agents whose

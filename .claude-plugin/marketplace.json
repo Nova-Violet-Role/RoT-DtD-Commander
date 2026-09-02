@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Nova-Violet Role: RoT DtD Commander. Claude Code commands, skills and agents with a declared DTD grammar and trust boundary, and the Adiutor Stop-hook doctor.",
-    "version": "3.1.0"
+    "version": "3.2.0"
   },
   "plugins": [
     {
       "name": "rot-dtd-commander",
       "source": "./",
       "description": "68 -dtd commands (the nine RoT MoE lenses and ELEVATE among them), 19 skills, 4 agents, and the Adiutor: a Stop hook that checks every -dtd answer against the DOCTYPE of the command that produced it, a ledger, and the /RoT-DtD-Commander-Adiutor doctor.",
-      "version": "3.1.0",
+      "version": "3.2.0",
       "strict": true
     }
   ]

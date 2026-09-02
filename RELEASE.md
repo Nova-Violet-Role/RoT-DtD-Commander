@@ -18,6 +18,14 @@
 
 ---
 
+## v3.2.0 — the lens commands render clean
+
+The SPDX header showed as text on GitHub in the ten `rot-*-dtd.md` files:
+line 1 of `dtd/cc-rot.dtd` had a stray prefix before `<!--`, left by an
+earlier patch, so the inlined comment never opened as an HTML comment block.
+One line restored, ten files rebuilt, verified with GitHub's own rendering.
+Every number is in [CHANGELOG.md](CHANGELOG.md). The tag is `v3.2.0`.
+
 ## v3.1.0 — the front matter parses
 
 GitHub showed `Error in user YAML ... at line 1 column 32` on

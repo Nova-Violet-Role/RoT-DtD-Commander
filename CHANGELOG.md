@@ -7,6 +7,33 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 3.2.0 (2026-09-02)
+
+The lens commands render clean on GitHub again.
+
+- Reported: the SPDX header was visible on github.com in the ten
+  `rot-*-dtd.md` files and hidden in every other command. Measured with
+  GitHub's own rendering (`gh api .../contents/<file>` with the HTML media
+  type): one visible `SPDX-License-Identifier` in the resolved
+  `commands/rot-nova-dtd.md`, none in `commands/tetralemma-dtd.md`, none in
+  either source file.
+- Cause: line 1 of `dtd/cc-rot.dtd` had become
+  `🧭|🜏|⬜|🔮|🩸|🕷️|⚪|🎷|⚜️|<!--`. The first, inline version of the
+  3.0.0 lens-row patch matched an empty string at the start of the file and
+  prepended each sigil there, in reverse order, before the second script
+  patched the real rows. With `<!--` no longer at the start of its line,
+  CommonMark does not open an HTML comment block, so when the build inlined
+  the subset into the ten lens commands GitHub printed the whole header as
+  text. Every other subset opens its comment at column 0 and stays hidden.
+  The checker did not notice: no rule refuses stray text inside a DOCTYPE,
+  and the DTD parser reads declarations by pattern and skips the rest.
+- Fix: the line restored to `<!--`; the ten lens files rebuilt. Verified
+  after the push with the same rendering call on all ten resolved lens
+  files: 0 visible SPDX occurrences. No new checker rule, by choice; the
+  gap is known and named here.
+- Numbers on the day: `rdc check`: `checked 91  failed 0`; `rdc build
+  --check`: `223 targets, 0 drifted, 0 failing`; `npm run gate`: exit 0.
+
 ## 3.1.0 (2026-09-02)
 
 The front matter of every source parses as YAML.

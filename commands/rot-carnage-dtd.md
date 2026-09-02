@@ -133,7 +133,7 @@ argument-hint: [the problem to detonate; blank for the current discussion; --no-
   
   
 <!-- begin subset cc-rot -->
-🧭|🜏|⬜|🔮|🩸|🕷️|⚪|🎷|⚜️|<!--
+<!--
   SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
   Copyright 2026 Saimonokuma.
 
