@@ -176,6 +176,15 @@ counts are re-measured.
   consequence; LAW.ASK.13 and 14. Every generated round names the variant
   beside each question (forty commands re-forged); ask-me-questions,
   ask-me-many-questions and ask-me-preview carry the rule.
+- The alarm schematic and its polyglot: cc-form kinds `alarm` and `polyalarm`
+  with the house callout vocabulary FORM.alarm.types (ALARM, ANSWER,
+  QUESTION, LAW, FRAMEWORK, OUTPUT, PROMPT, CHECKS and the five GitHub
+  types), guard `alarm`, LAW.FORM.7 amended; two schematic rows in the
+  equivalence table, SEMANTIC.alarm.types, two more form columns in the
+  matrix (231 cells), rendered, guarded and read back; four more prompt
+  creators (create-prompt-alarm 🚨, create-prompt-polyalarm 🎪,
+  create-meta-prompt-alarm 📯, create-meta-prompt-polyalarm 🪅); the
+  routers and the launcher offer the alarm shape.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

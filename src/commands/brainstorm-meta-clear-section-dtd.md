@@ -24,7 +24,7 @@ argument-hint: [topic or the prompt to carry over; --verbose prints the ideas di
   <!ELEMENT transmigration (#PCDATA)>
   <!ELEMENT instruction (#PCDATA)>
   <!ATTLIST idea rank CDATA #REQUIRED kept (yes|no) #REQUIRED>
-  <!ATTLIST launch schematic (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED kind (prompt|meta) #REQUIRED creator CDATA #REQUIRED>
+  <!ATTLIST launch schematic (callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm) #REQUIRED kind (prompt|meta) #REQUIRED creator CDATA #REQUIRED>
   <!ATTLIST transmigration path CDATA #REQUIRED bytes CDATA #REQUIRED>
   <!ATTLIST instruction goal CDATA #REQUIRED step CDATA #REQUIRED>
   <!ENTITY LAW.CLEAR.1 "This command never runs the clear command itself; it writes the handoff file and prints an instruction element whose goal and step tell the operator to clear and how to resume.">
@@ -100,7 +100,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🌀 Launch
 
-schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind [prompt|meta]; creator /[create-prompt|create-meta-prompt]-[schematic]-dtd
+schematic [callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm]; kind [prompt|meta]; creator /[create-prompt|create-meta-prompt]-[schematic]-dtd
 schemas: [schema of a SEMANTIC family with its parts in order, or none]
 forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
 

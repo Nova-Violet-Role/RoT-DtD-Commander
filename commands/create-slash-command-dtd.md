@@ -168,6 +168,7 @@ argument-hint: [what the slash command is for, or leave blank; --no-gate for aut
 <!NOTATION juliamd    SYSTEM "text/x-juliamd; fenced julia chunks with chunk options">
 <!NOTATION xml        SYSTEM "application/xml; a DOCTYPE with an internal subset; CDATA for raw text">
 <!NOTATION markdown   SYSTEM "text/markdown; GitHub callouts of five types">
+<!NOTATION alarm      SYSTEM "text/markdown; callouts of the house vocabulary FORM.alarm.types, a title after the type">
 <!NOTATION json       SYSTEM "application/json; also YAML flow style">
 <!NOTATION toml       SYSTEM "application/toml; sections map onto nested maps">
 
@@ -175,13 +176,13 @@ argument-hint: [what the slash command is for, or leave blank; --no-gate for aut
 <!ELEMENT forms (form+)>
 <!ELEMENT form (#PCDATA)>
 <!ATTLIST form
-          kind      (heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot) #REQUIRED
+          kind      (heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot|alarm|polyalarm) #REQUIRED
           variant   NMTOKEN #REQUIRED
           expansion (yes|no) "no"
           trust     (cdata) #FIXED "cdata">
 <!ELEMENT guard (#PCDATA)>
 <!ATTLIST guard
-          name (yaml_tags|cdata_end|tabs|depth|aliases|heredoc|callout) #REQUIRED
+          name (yaml_tags|cdata_end|tabs|depth|aliases|heredoc|callout|alarm) #REQUIRED
           held (yes|no) #REQUIRED>
 
 <!-- ===== HEREDOC, five variants (expansion and indentation) ===== -->
@@ -221,6 +222,11 @@ argument-hint: [what the slash command is for, or leave blank; --no-gate for aut
 <!ENTITY FORM.md.warning   "WARNING">
 <!ENTITY FORM.md.caution   "CAUTION">
 
+<!-- the alarm form: the house callout vocabulary, the five GitHub types among it; a title may follow the type, a colon may end it -->
+<!ENTITY FORM.alarm.types "ALARM, ANSWER, QUESTION, LAW, FRAMEWORK, OUTPUT, PROMPT, CHECKS, NOTE, TIP, IMPORTANT, WARNING, CAUTION">
+<!ENTITY FORM.alarm.title "the callout title follows the type inside the bracket line, as in an alarm followed by its name">
+<!ENTITY FORM.polyalarm  "a polyglot whose Markdown layer is the alarm form: YAML front matter, then house callouts">
+
 <!-- ===== Polyglots: one text, more than one parser ===== -->
 <!ENTITY FORM.poly.md_yaml       "Markdown with YAML front matter: two parsers, two layers">
 <!ENTITY FORM.poly.yaml_nt       "a YAML block scalar holding NestedText: the scalar is a string to YAML, a tree to NestedText">
@@ -247,7 +253,7 @@ argument-hint: [what the slash command is for, or leave blank; --no-gate for aut
 <!ENTITY LAW.FORM.4 "NestedText is the form where none was chosen (FORM.default): three types, no implicit typing, no tag, no anchor, no code path.">
 <!ENTITY LAW.FORM.5 "A YAML text carrying a tag that names a language object or a function is refused (guard yaml_tags); anchors and aliases are counted and refused above FORM.max_aliases (guard aliases); nesting is refused above FORM.max_depth (guard depth); a tab in YAML or NestedText indentation is refused (guard tabs).">
 <!ENTITY LAW.FORM.6 "An untrusted value written into a heredoc goes into a quoted delimiter, never an expanding one, and every nesting level has its own delimiter (guard heredoc); a double bracket greater-than inside a CDATA section is split into two sections (guard cdata_end).">
-<!ENTITY LAW.FORM.7 "A Markdown callout the command writes is one of the five GitHub types, FORM.md.note to FORM.md.caution; an ALARM or any other type is refused (guard callout).">
+<!ENTITY LAW.FORM.7 "A Markdown callout the command writes in the md kind is one of the five GitHub types, FORM.md.note to FORM.md.caution, and any other type is refused (guard callout); in the alarm and polyalarm kinds a callout is one of FORM.alarm.types, the house vocabulary, and a type outside it is refused (guard alarm).">
 <!ENTITY LAW.FORM.8 "The two form questions are multi-select and every form chosen is rendered as its own form element; the variant and the expansion questions are asked once per kind chosen.">
 <!-- end subset cc-form -->
 

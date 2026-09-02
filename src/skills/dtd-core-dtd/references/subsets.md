@@ -305,6 +305,7 @@ The forms a text may take and the guards between an untrusted text and a parser:
 <!NOTATION juliamd    SYSTEM "text/x-juliamd; fenced julia chunks with chunk options">
 <!NOTATION xml        SYSTEM "application/xml; a DOCTYPE with an internal subset; CDATA for raw text">
 <!NOTATION markdown   SYSTEM "text/markdown; GitHub callouts of five types">
+<!NOTATION alarm      SYSTEM "text/markdown; callouts of the house vocabulary FORM.alarm.types, a title after the type">
 <!NOTATION json       SYSTEM "application/json; also YAML flow style">
 <!NOTATION toml       SYSTEM "application/toml; sections map onto nested maps">
 
@@ -312,13 +313,13 @@ The forms a text may take and the guards between an untrusted text and a parser:
 <!ELEMENT forms (form+)>
 <!ELEMENT form (#PCDATA)>
 <!ATTLIST form
-          kind      (heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot) #REQUIRED
+          kind      (heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot|alarm|polyalarm) #REQUIRED
           variant   NMTOKEN #REQUIRED
           expansion (yes|no) "no"
           trust     (cdata) #FIXED "cdata">
 <!ELEMENT guard (#PCDATA)>
 <!ATTLIST guard
-          name (yaml_tags|cdata_end|tabs|depth|aliases|heredoc|callout) #REQUIRED
+          name (yaml_tags|cdata_end|tabs|depth|aliases|heredoc|callout|alarm) #REQUIRED
           held (yes|no) #REQUIRED>
 
 <!-- ===== HEREDOC, five variants (expansion and indentation) ===== -->
@@ -358,6 +359,11 @@ The forms a text may take and the guards between an untrusted text and a parser:
 <!ENTITY FORM.md.warning   "WARNING">
 <!ENTITY FORM.md.caution   "CAUTION">
 
+<!-- the alarm form: the house callout vocabulary, the five GitHub types among it; a title may follow the type, a colon may end it -->
+<!ENTITY FORM.alarm.types "ALARM, ANSWER, QUESTION, LAW, FRAMEWORK, OUTPUT, PROMPT, CHECKS, NOTE, TIP, IMPORTANT, WARNING, CAUTION">
+<!ENTITY FORM.alarm.title "the callout title follows the type inside the bracket line, as in an alarm followed by its name">
+<!ENTITY FORM.polyalarm  "a polyglot whose Markdown layer is the alarm form: YAML front matter, then house callouts">
+
 <!-- ===== Polyglots: one text, more than one parser ===== -->
 <!ENTITY FORM.poly.md_yaml       "Markdown with YAML front matter: two parsers, two layers">
 <!ENTITY FORM.poly.yaml_nt       "a YAML block scalar holding NestedText: the scalar is a string to YAML, a tree to NestedText">
@@ -384,7 +390,7 @@ The forms a text may take and the guards between an untrusted text and a parser:
 <!ENTITY LAW.FORM.4 "NestedText is the form where none was chosen (FORM.default): three types, no implicit typing, no tag, no anchor, no code path.">
 <!ENTITY LAW.FORM.5 "A YAML text carrying a tag that names a language object or a function is refused (guard yaml_tags); anchors and aliases are counted and refused above FORM.max_aliases (guard aliases); nesting is refused above FORM.max_depth (guard depth); a tab in YAML or NestedText indentation is refused (guard tabs).">
 <!ENTITY LAW.FORM.6 "An untrusted value written into a heredoc goes into a quoted delimiter, never an expanding one, and every nesting level has its own delimiter (guard heredoc); a double bracket greater-than inside a CDATA section is split into two sections (guard cdata_end).">
-<!ENTITY LAW.FORM.7 "A Markdown callout the command writes is one of the five GitHub types, FORM.md.note to FORM.md.caution; an ALARM or any other type is refused (guard callout).">
+<!ENTITY LAW.FORM.7 "A Markdown callout the command writes in the md kind is one of the five GitHub types, FORM.md.note to FORM.md.caution, and any other type is refused (guard callout); in the alarm and polyalarm kinds a callout is one of FORM.alarm.types, the house vocabulary, and a type outside it is refused (guard alarm).">
 <!ENTITY LAW.FORM.8 "The two form questions are multi-select and every form chosen is rendered as its own form element; the variant and the expansion questions are asked once per kind chosen.">
 ```
 
@@ -848,7 +854,7 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 -->
 
 <!ELEMENT schematic (concept+)>
-<!ATTLIST schematic name (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED>
+<!ATTLIST schematic name (callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm) #REQUIRED>
 <!ELEMENT concept EMPTY>
 <!ATTLIST concept
           name   (literal|expanded|reference|definition|escape|comment|include|conditional|type|binary) #REQUIRED
@@ -933,6 +939,30 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SCHEMA.polyglot.type       "each layer's type, and every guard of every layer">
 <!ENTITY SCHEMA.polyglot.binary     "the outermost layer's binary form">
 
+<!-- ===== alarm: Markdown with the house callout vocabulary (FORM.alarm.types) ===== -->
+<!ENTITY SCHEMA.alarm.literal "a code fence inside the callout body">
+<!ENTITY SCHEMA.alarm.expanded "the callout body, one quoted line after another">
+<!ENTITY SCHEMA.alarm.reference "the argument word as a placeholder in angle brackets, named once under a PROMPT callout">
+<!ENTITY SCHEMA.alarm.definition "a LAW callout holding name colon value lines">
+<!ENTITY SCHEMA.alarm.escape "a backslash before a bracket or an asterisk">
+<!ENTITY SCHEMA.alarm.comment "an HTML comment line">
+<!ENTITY SCHEMA.alarm.include "a link to the file inside a FRAMEWORK callout">
+<!ENTITY SCHEMA.alarm.conditional "one callout per case, typed from FORM.alarm.types">
+<!ENTITY SCHEMA.alarm.type "the bracket, the exclamation mark, one of FORM.alarm.types and a title after it">
+<!ENTITY SCHEMA.alarm.binary "an image link">
+
+<!-- ===== polyalarm: a polyglot whose Markdown layer is the alarm form ===== -->
+<!ENTITY SCHEMA.polyalarm.literal "the layer that owns the value names its literal form; the alarm layer a code fence">
+<!ENTITY SCHEMA.polyalarm.expanded "the outermost layer expands, every inner layer is literal to it">
+<!ENTITY SCHEMA.polyalarm.reference "the outermost layer's reference; the alarm layer sees the expanded text">
+<!ENTITY SCHEMA.polyalarm.definition "the outermost layer's definition, or a LAW callout in the alarm layer">
+<!ENTITY SCHEMA.polyalarm.escape "each layer's escape applied from the inside out">
+<!ENTITY SCHEMA.polyalarm.comment "each layer's comment, valid to that layer alone">
+<!ENTITY SCHEMA.polyalarm.include "the outermost layer's include">
+<!ENTITY SCHEMA.polyalarm.conditional "one house callout per case in the alarm layer">
+<!ENTITY SCHEMA.polyalarm.type "each layer's type, the alarm layer's from FORM.alarm.types, and every guard of every layer">
+<!ENTITY SCHEMA.polyalarm.binary "the outermost layer's binary form">
+
 <!-- ===== the file a prompt lands in ===== -->
 <!ENTITY SCHEMA.ext.callout  "md">
 <!ENTITY SCHEMA.ext.heredoc  "sh">
@@ -940,6 +970,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SCHEMA.ext.nt       "nt">
 <!ENTITY SCHEMA.ext.xml      "md">
 <!ENTITY SCHEMA.ext.polyglot "md">
+<!ENTITY SCHEMA.ext.alarm "md">
+<!ENTITY SCHEMA.ext.polyalarm "md">
 
 <!-- ===== THE SEMANTIC SCHEMAS, in every form =====
      A schema says what parts a body carries and in what order, after the
@@ -1028,6 +1060,13 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.polyglot.part  "the outermost layer's part rule, the inner layers literal to it">
 <!ENTITY SEMANTIC.polyglot.many  "the outermost layer's many rule">
 <!ENTITY SEMANTIC.polyglot.label "the outermost layer's label rule">
+<!ENTITY SEMANTIC.alarm.part   "one house callout per part, its type by SEMANTIC.alarm.types, the part name as its title">
+<!ENTITY SEMANTIC.alarm.many   "one callout per occurrence, numbered in the title">
+<!ENTITY SEMANTIC.alarm.label  "the callout title, after the type">
+<!ENTITY SEMANTIC.alarm.types  "QUESTION for a question, ANSWER for an answer, a result or a resolution, LAW for a constraint, a prerequisite or a rule, OUTPUT for an example, PROMPT for a step, a command or a synopsis, CHECKS for a check, FRAMEWORK for a title or a name, ALARM for any other required part, NOTE for a descriptive part">
+<!ENTITY SEMANTIC.polyalarm.part  "YAML front matter naming the schema and its parts, then the alarm rendering of the same parts as the body">
+<!ENTITY SEMANTIC.polyalarm.many  "the alarm many rule">
+<!ENTITY SEMANTIC.polyalarm.label "the alarm label rule">
 
 <!-- the three cc-form kinds beyond the six schematics; md is the callout schematic -->
 <!ENTITY SEMANTIC.jmd.part      "one heading per part, the part's text under it, code in a fenced julia chunk">
@@ -1049,7 +1088,7 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
      skeleton, runs the cc-form guards on it, reads the parts back in
      order, and its controls hold this text and the code to each other
      in both directions. -->
-<!ENTITY SEMANTIC.forms "callout, heredoc, yaml, nt, xml, polyglot, jmd, json, toml">
+<!ENTITY SEMANTIC.forms "callout, heredoc, yaml, nt, xml, polyglot, jmd, json, toml, alarm, polyalarm">
 
 <!ENTITY SEMANTIC.biblioentry.callout "callouts in order: NOTE author, one per occurrence numbered in the title; IMPORTANT title; NOTE publisher, when given; IMPORTANT date; NOTE edition, when given; NOTE biblioid, when given; NOTE abstract, when given">
 <!ENTITY SEMANTIC.biblioentry.heredoc "quoted heredocs in order: AUTHOR as an indexed array, one quoted heredoc per occurrence; TITLE; PUBLISHER when given; DATE; EDITION when given; BIBLIOID when given; ABSTRACT when given">
@@ -1060,6 +1099,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.biblioentry.jmd "headings in order: author, one heading per occurrence numbered; title; publisher when given; date; edition when given; biblioid when given; abstract when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.biblioentry.json "keys in order: author an array of strings; title a string; publisher a string when given; date a string; edition a string when given; biblioid a string when given; abstract a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.biblioentry.toml "keys in order: author an array of multi-line basic strings; title a multi-line basic string; publisher a multi-line basic string when given; date a multi-line basic string; edition a multi-line basic string when given; biblioid a multi-line basic string when given; abstract a multi-line basic string when given">
+<!ENTITY SEMANTIC.biblioentry.alarm "house callouts in order: NOTE author, one per occurrence numbered in the title; FRAMEWORK title; NOTE publisher, when given; ALARM date; NOTE edition, when given; NOTE biblioid, when given; NOTE abstract, when given">
+<!ENTITY SEMANTIC.biblioentry.polyalarm "YAML front matter with schema biblioentry and the parts list author, title, publisher, date, edition, biblioid, abstract, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.certainty.callout "callouts in order: IMPORTANT target; IMPORTANT locus; IMPORTANT degree; NOTE asserted_value, when given; NOTE resp, when given">
 <!ENTITY SEMANTIC.certainty.heredoc "quoted heredocs in order: TARGET; LOCUS; DEGREE; ASSERTED_VALUE when given; RESP when given">
@@ -1070,6 +1111,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.certainty.jmd "headings in order: target; locus; degree; asserted_value when given; resp when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.certainty.json "keys in order: target a string; locus a string; degree a string; asserted_value a string when given; resp a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.certainty.toml "keys in order: target a multi-line basic string; locus a multi-line basic string; degree a multi-line basic string; asserted_value a multi-line basic string when given; resp a multi-line basic string when given">
+<!ENTITY SEMANTIC.certainty.alarm "house callouts in order: ALARM target; ALARM locus; ALARM degree; NOTE asserted_value, when given; NOTE resp, when given">
+<!ENTITY SEMANTIC.certainty.polyalarm "YAML front matter with schema certainty and the parts list target, locus, degree, asserted_value, resp, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.cmdsynopsis.callout "callouts in order: IMPORTANT command; NOTE arg, one per occurrence numbered in the title; NOTE group, when given; NOTE synopfragment, when given">
 <!ENTITY SEMANTIC.cmdsynopsis.heredoc "quoted heredocs in order: COMMAND; ARG as an indexed array, one quoted heredoc per occurrence; GROUP when given; SYNOPFRAGMENT when given">
@@ -1080,6 +1123,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.cmdsynopsis.jmd "headings in order: command; arg, one heading per occurrence numbered; group when given; synopfragment when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.cmdsynopsis.json "keys in order: command a string; arg an array of strings; group a string when given; synopfragment a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.cmdsynopsis.toml "keys in order: command a multi-line basic string; arg an array of multi-line basic strings; group a multi-line basic string when given; synopfragment a multi-line basic string when given">
+<!ENTITY SEMANTIC.cmdsynopsis.alarm "house callouts in order: PROMPT command; NOTE arg, one per occurrence numbered in the title; NOTE group, when given; NOTE synopfragment, when given">
+<!ENTITY SEMANTIC.cmdsynopsis.polyalarm "YAML front matter with schema cmdsynopsis and the parts list command, arg, group, synopfragment, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.concept.callout "callouts in order: IMPORTANT title; NOTE shortdesc, when given; IMPORTANT conbody; NOTE related_links, when given">
 <!ENTITY SEMANTIC.concept.heredoc "quoted heredocs in order: TITLE; SHORTDESC when given; CONBODY; RELATED_LINKS when given">
@@ -1090,6 +1135,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.concept.jmd "headings in order: title; shortdesc when given; conbody; related_links when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.concept.json "keys in order: title a string; shortdesc a string when given; conbody a string; related_links a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.concept.toml "keys in order: title a multi-line basic string; shortdesc a multi-line basic string when given; conbody a multi-line basic string; related_links a multi-line basic string when given">
+<!ENTITY SEMANTIC.concept.alarm "house callouts in order: FRAMEWORK title; NOTE shortdesc, when given; ALARM conbody; NOTE related_links, when given">
+<!ENTITY SEMANTIC.concept.polyalarm "YAML front matter with schema concept and the parts list title, shortdesc, conbody, related_links, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.example.callout "callouts in order: IMPORTANT title; IMPORTANT programlisting; NOTE caption, when given">
 <!ENTITY SEMANTIC.example.heredoc "quoted heredocs in order: TITLE; PROGRAMLISTING; CAPTION when given">
@@ -1100,6 +1147,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.example.jmd "headings in order: title; programlisting; caption when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.example.json "keys in order: title a string; programlisting a string; caption a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.example.toml "keys in order: title a multi-line basic string; programlisting a multi-line basic string; caption a multi-line basic string when given">
+<!ENTITY SEMANTIC.example.alarm "house callouts in order: FRAMEWORK title; ALARM programlisting; NOTE caption, when given">
+<!ENTITY SEMANTIC.example.polyalarm "YAML front matter with schema example and the parts list title, programlisting, caption, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.glossary.callout "callouts in order: IMPORTANT term; NOTE acronym, when given; NOTE definition, one per occurrence numbered in the title; NOTE see_also, when given; IMPORTANT locator">
 <!ENTITY SEMANTIC.glossary.heredoc "quoted heredocs in order: TERM; ACRONYM when given; DEFINITION as an indexed array, one quoted heredoc per occurrence; SEE_ALSO when given; LOCATOR">
@@ -1110,6 +1159,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.glossary.jmd "headings in order: term; acronym when given; definition, one heading per occurrence numbered; see_also when given; locator; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.glossary.json "keys in order: term a string; acronym a string when given; definition an array of strings; see_also a string when given; locator a string; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.glossary.toml "keys in order: term a multi-line basic string; acronym a multi-line basic string when given; definition an array of multi-line basic strings; see_also a multi-line basic string when given; locator a multi-line basic string">
+<!ENTITY SEMANTIC.glossary.alarm "house callouts in order: FRAMEWORK term; NOTE acronym, when given; NOTE definition, one per occurrence numbered in the title; NOTE see_also, when given; ALARM locator">
+<!ENTITY SEMANTIC.glossary.polyalarm "YAML front matter with schema glossary and the parts list term, acronym, definition, see_also, locator, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.glossentry.callout "callouts in order: IMPORTANT glossterm; IMPORTANT glossdef; NOTE part_of_speech, when given; NOTE usage, when given; NOTE scope_note, when given; NOTE alt, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.glossentry.heredoc "quoted heredocs in order: GLOSSTERM; GLOSSDEF; PART_OF_SPEECH when given; USAGE when given; SCOPE_NOTE when given; ALT as an indexed array, one quoted heredoc per occurrence">
@@ -1120,6 +1171,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.glossentry.jmd "headings in order: glossterm; glossdef; part_of_speech when given; usage when given; scope_note when given; alt, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.glossentry.json "keys in order: glossterm a string; glossdef a string; part_of_speech a string when given; usage a string when given; scope_note a string when given; alt an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.glossentry.toml "keys in order: glossterm a multi-line basic string; glossdef a multi-line basic string; part_of_speech a multi-line basic string when given; usage a multi-line basic string when given; scope_note a multi-line basic string when given; alt an array of multi-line basic strings">
+<!ENTITY SEMANTIC.glossentry.alarm "house callouts in order: FRAMEWORK glossterm; ALARM glossdef; NOTE part_of_speech, when given; NOTE usage, when given; NOTE scope_note, when given; NOTE alt, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.glossentry.polyalarm "YAML front matter with schema glossentry and the parts list glossterm, glossdef, part_of_speech, usage, scope_note, alt, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.interp.callout "callouts in order: IMPORTANT type; NOTE inst, when given; NOTE interp, one per occurrence numbered in the title; NOTE span, when given">
 <!ENTITY SEMANTIC.interp.heredoc "quoted heredocs in order: TYPE; INST when given; INTERP as an indexed array, one quoted heredoc per occurrence; SPAN when given">
@@ -1130,6 +1183,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.interp.jmd "headings in order: type; inst when given; interp, one heading per occurrence numbered; span when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.interp.json "keys in order: type a string; inst a string when given; interp an array of strings; span a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.interp.toml "keys in order: type a multi-line basic string; inst a multi-line basic string when given; interp an array of multi-line basic strings; span a multi-line basic string when given">
+<!ENTITY SEMANTIC.interp.alarm "house callouts in order: ALARM type; NOTE inst, when given; NOTE interp, one per occurrence numbered in the title; NOTE span, when given">
+<!ENTITY SEMANTIC.interp.polyalarm "YAML front matter with schema interp and the parts list type, inst, interp, span, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.item.callout "callouts in order: IMPORTANT title; IMPORTANT link; IMPORTANT description; NOTE guid, when given; NOTE pubdate, when given; NOTE category, when given; NOTE enclosure, when given; NOTE source, when given">
 <!ENTITY SEMANTIC.item.heredoc "quoted heredocs in order: TITLE; LINK; DESCRIPTION; GUID when given; PUBDATE when given; CATEGORY when given; ENCLOSURE when given; SOURCE when given">
@@ -1140,6 +1195,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.item.jmd "headings in order: title; link; description; guid when given; pubdate when given; category when given; enclosure when given; source when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.item.json "keys in order: title a string; link a string; description a string; guid a string when given; pubdate a string when given; category a string when given; enclosure a string when given; source a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.item.toml "keys in order: title a multi-line basic string; link a multi-line basic string; description a multi-line basic string; guid a multi-line basic string when given; pubdate a multi-line basic string when given; category a multi-line basic string when given; enclosure a multi-line basic string when given; source a multi-line basic string when given">
+<!ENTITY SEMANTIC.item.alarm "house callouts in order: FRAMEWORK title; ALARM link; ALARM description; NOTE guid, when given; NOTE pubdate, when given; NOTE category, when given; NOTE enclosure, when given; NOTE source, when given">
+<!ENTITY SEMANTIC.item.polyalarm "YAML front matter with schema item and the parts list title, link, description, guid, pubdate, category, enclosure, source, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.key.callout "callouts in order: IMPORTANT name; IMPORTANT type; IMPORTANT default; NOTE summary, when given; NOTE description, when given; NOTE range, when given; NOTE choices, when given; NOTE aliases, when given">
 <!ENTITY SEMANTIC.key.heredoc "quoted heredocs in order: NAME; TYPE; DEFAULT; SUMMARY when given; DESCRIPTION when given; RANGE when given; CHOICES when given; ALIASES when given">
@@ -1150,6 +1207,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.key.jmd "headings in order: name; type; default; summary when given; description when given; range when given; choices when given; aliases when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.key.json "keys in order: name a string; type a string; default a string; summary a string when given; description a string when given; range a string when given; choices a string when given; aliases a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.key.toml "keys in order: name a multi-line basic string; type a multi-line basic string; default a multi-line basic string; summary a multi-line basic string when given; description a multi-line basic string when given; range a multi-line basic string when given; choices a multi-line basic string when given; aliases a multi-line basic string when given">
+<!ENTITY SEMANTIC.key.alarm "house callouts in order: FRAMEWORK name; ALARM type; ALARM default; NOTE summary, when given; NOTE description, when given; NOTE range, when given; NOTE choices, when given; NOTE aliases, when given">
+<!ENTITY SEMANTIC.key.polyalarm "YAML front matter with schema key and the parts list name, type, default, summary, description, range, choices, aliases, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.msgset.callout "callouts in order: IMPORTANT message; IMPORTANT level; NOTE origin, when given; NOTE audience, when given; NOTE explanation, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.msgset.heredoc "quoted heredocs in order: MESSAGE; LEVEL; ORIGIN when given; AUDIENCE when given; EXPLANATION as an indexed array, one quoted heredoc per occurrence">
@@ -1160,6 +1219,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.msgset.jmd "headings in order: message; level; origin when given; audience when given; explanation, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.msgset.json "keys in order: message a string; level a string; origin a string when given; audience a string when given; explanation an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.msgset.toml "keys in order: message a multi-line basic string; level a multi-line basic string; origin a multi-line basic string when given; audience a multi-line basic string when given; explanation an array of multi-line basic strings">
+<!ENTITY SEMANTIC.msgset.alarm "house callouts in order: ALARM message; ALARM level; NOTE origin, when given; NOTE audience, when given; NOTE explanation, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.msgset.polyalarm "YAML front matter with schema msgset and the parts list message, level, origin, audience, explanation, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.procedure.callout "callouts in order: IMPORTANT title; WARNING prerequisite, when given; NOTE step, one per occurrence numbered in the title; NOTE substeps, when given; NOTE alternatives, when given; IMPORTANT result">
 <!ENTITY SEMANTIC.procedure.heredoc "quoted heredocs in order: TITLE; PREREQUISITE when given; STEP as an indexed array, one quoted heredoc per occurrence; SUBSTEPS when given; ALTERNATIVES when given; RESULT">
@@ -1170,6 +1231,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.procedure.jmd "headings in order: title; prerequisite when given; step, one heading per occurrence numbered; substeps when given; alternatives when given; result; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.procedure.json "keys in order: title a string; prerequisite a string when given; step an array of strings; substeps a string when given; alternatives a string when given; result a string; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.procedure.toml "keys in order: title a multi-line basic string; prerequisite a multi-line basic string when given; step an array of multi-line basic strings; substeps a multi-line basic string when given; alternatives a multi-line basic string when given; result a multi-line basic string">
+<!ENTITY SEMANTIC.procedure.alarm "house callouts in order: FRAMEWORK title; LAW prerequisite, when given; PROMPT step, one per occurrence numbered in the title; PROMPT substeps, when given; NOTE alternatives, when given; ANSWER result">
+<!ENTITY SEMANTIC.procedure.polyalarm "YAML front matter with schema procedure and the parts list title, prerequisite, step, substeps, alternatives, result, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.productionset.callout "callouts in order: IMPORTANT lhs; IMPORTANT rhs; WARNING constraint, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.productionset.heredoc "quoted heredocs in order: LHS; RHS; CONSTRAINT as an indexed array, one quoted heredoc per occurrence">
@@ -1180,6 +1243,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.productionset.jmd "headings in order: lhs; rhs; constraint, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.productionset.json "keys in order: lhs a string; rhs a string; constraint an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.productionset.toml "keys in order: lhs a multi-line basic string; rhs a multi-line basic string; constraint an array of multi-line basic strings">
+<!ENTITY SEMANTIC.productionset.alarm "house callouts in order: ALARM lhs; ALARM rhs; LAW constraint, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.productionset.polyalarm "YAML front matter with schema productionset and the parts list lhs, rhs, constraint, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.qandaset.callout "callouts in order: NOTE label, when given; IMPORTANT question; NOTE answer, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.qandaset.heredoc "quoted heredocs in order: LABEL when given; QUESTION; ANSWER as an indexed array, one quoted heredoc per occurrence">
@@ -1190,6 +1255,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.qandaset.jmd "headings in order: label when given; question; answer, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.qandaset.json "keys in order: label a string when given; question a string; answer an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.qandaset.toml "keys in order: label a multi-line basic string when given; question a multi-line basic string; answer an array of multi-line basic strings">
+<!ENTITY SEMANTIC.qandaset.alarm "house callouts in order: NOTE label, when given; QUESTION question; ANSWER answer, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.qandaset.polyalarm "YAML front matter with schema qandaset and the parts list label, question, answer, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.refentry.callout "callouts in order: IMPORTANT refname; IMPORTANT refpurpose; IMPORTANT synopsis; IMPORTANT description; NOTE options, one per occurrence numbered in the title; TIP examples, when given; NOTE see_also, when given">
 <!ENTITY SEMANTIC.refentry.heredoc "quoted heredocs in order: REFNAME; REFPURPOSE; SYNOPSIS; DESCRIPTION; OPTIONS as an indexed array, one quoted heredoc per occurrence; EXAMPLES when given; SEE_ALSO when given">
@@ -1200,6 +1267,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.refentry.jmd "headings in order: refname; refpurpose; synopsis; description; options, one heading per occurrence numbered; examples when given; see_also when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.refentry.json "keys in order: refname a string; refpurpose a string; synopsis a string; description a string; options an array of strings; examples a string when given; see_also a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.refentry.toml "keys in order: refname a multi-line basic string; refpurpose a multi-line basic string; synopsis a multi-line basic string; description a multi-line basic string; options an array of multi-line basic strings; examples a multi-line basic string when given; see_also a multi-line basic string when given">
+<!ENTITY SEMANTIC.refentry.alarm "house callouts in order: FRAMEWORK refname; ALARM refpurpose; PROMPT synopsis; ALARM description; NOTE options, one per occurrence numbered in the title; OUTPUT examples, when given; NOTE see_also, when given">
+<!ENTITY SEMANTIC.refentry.polyalarm "YAML front matter with schema refentry and the parts list refname, refpurpose, synopsis, description, options, examples, see_also, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.revhistory.callout "callouts in order: NOTE title, when given; NOTE revision, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.revhistory.heredoc "quoted heredocs in order: TITLE when given; REVISION as an indexed array, one quoted heredoc per occurrence">
@@ -1210,6 +1279,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.revhistory.jmd "headings in order: title when given; revision, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.revhistory.json "keys in order: title a string when given; revision an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.revhistory.toml "keys in order: title a multi-line basic string when given; revision an array of multi-line basic strings">
+<!ENTITY SEMANTIC.revhistory.alarm "house callouts in order: FRAMEWORK title, when given; NOTE revision, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.revhistory.polyalarm "YAML front matter with schema revhistory and the parts list title, revision, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.table.callout "callouts in order: IMPORTANT title; NOTE colspec, one per occurrence numbered in the title; NOTE head, when given; NOTE row, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.table.heredoc "quoted heredocs in order: TITLE; COLSPEC as an indexed array, one quoted heredoc per occurrence; HEAD when given; ROW as an indexed array, one quoted heredoc per occurrence">
@@ -1220,6 +1291,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.table.jmd "headings in order: title; colspec, one heading per occurrence numbered; head when given; row, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.table.json "keys in order: title a string; colspec an array of strings; head a string when given; row an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.table.toml "keys in order: title a multi-line basic string; colspec an array of multi-line basic strings; head a multi-line basic string when given; row an array of multi-line basic strings">
+<!ENTITY SEMANTIC.table.alarm "house callouts in order: FRAMEWORK title; NOTE colspec, one per occurrence numbered in the title; NOTE head, when given; NOTE row, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.table.polyalarm "YAML front matter with schema table and the parts list title, colspec, head, row, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.task.callout "callouts in order: IMPORTANT title; NOTE shortdesc, when given; WARNING prereq, when given; NOTE context, when given; NOTE step, one per occurrence numbered in the title; NOTE result, when given; TIP example, when given; NOTE postreq, when given">
 <!ENTITY SEMANTIC.task.heredoc "quoted heredocs in order: TITLE; SHORTDESC when given; PREREQ when given; CONTEXT when given; STEP as an indexed array, one quoted heredoc per occurrence; RESULT when given; EXAMPLE when given; POSTREQ when given">
@@ -1230,6 +1303,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.task.jmd "headings in order: title; shortdesc when given; prereq when given; context when given; step, one heading per occurrence numbered; result when given; example when given; postreq when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.task.json "keys in order: title a string; shortdesc a string when given; prereq a string when given; context a string when given; step an array of strings; result a string when given; example a string when given; postreq a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.task.toml "keys in order: title a multi-line basic string; shortdesc a multi-line basic string when given; prereq a multi-line basic string when given; context a multi-line basic string when given; step an array of multi-line basic strings; result a multi-line basic string when given; example a multi-line basic string when given; postreq a multi-line basic string when given">
+<!ENTITY SEMANTIC.task.alarm "house callouts in order: FRAMEWORK title; NOTE shortdesc, when given; LAW prereq, when given; NOTE context, when given; PROMPT step, one per occurrence numbered in the title; ANSWER result, when given; OUTPUT example, when given; NOTE postreq, when given">
+<!ENTITY SEMANTIC.task.polyalarm "YAML front matter with schema task and the parts list title, shortdesc, prereq, context, step, result, example, postreq, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.textdesc.callout "callouts in order: IMPORTANT derivation; IMPORTANT domain; IMPORTANT factuality; IMPORTANT preparedness; IMPORTANT purpose; NOTE degree, when given">
 <!ENTITY SEMANTIC.textdesc.heredoc "quoted heredocs in order: DERIVATION; DOMAIN; FACTUALITY; PREPAREDNESS; PURPOSE; DEGREE when given">
@@ -1240,6 +1315,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.textdesc.jmd "headings in order: derivation; domain; factuality; preparedness; purpose; degree when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.textdesc.json "keys in order: derivation a string; domain a string; factuality a string; preparedness a string; purpose a string; degree a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.textdesc.toml "keys in order: derivation a multi-line basic string; domain a multi-line basic string; factuality a multi-line basic string; preparedness a multi-line basic string; purpose a multi-line basic string; degree a multi-line basic string when given">
+<!ENTITY SEMANTIC.textdesc.alarm "house callouts in order: ALARM derivation; ALARM domain; ALARM factuality; ALARM preparedness; ALARM purpose; NOTE degree, when given">
+<!ENTITY SEMANTIC.textdesc.polyalarm "YAML front matter with schema textdesc and the parts list derivation, domain, factuality, preparedness, purpose, degree, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.topic.callout "callouts in order: IMPORTANT title; NOTE shortdesc, when given; IMPORTANT body; NOTE related_links, when given">
 <!ENTITY SEMANTIC.topic.heredoc "quoted heredocs in order: TITLE; SHORTDESC when given; BODY; RELATED_LINKS when given">
@@ -1250,6 +1327,8 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.topic.jmd "headings in order: title; shortdesc when given; body; related_links when given; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.topic.json "keys in order: title a string; shortdesc a string when given; body a string; related_links a string when given; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.topic.toml "keys in order: title a multi-line basic string; shortdesc a multi-line basic string when given; body a multi-line basic string; related_links a multi-line basic string when given">
+<!ENTITY SEMANTIC.topic.alarm "house callouts in order: FRAMEWORK title; NOTE shortdesc, when given; ALARM body; NOTE related_links, when given">
+<!ENTITY SEMANTIC.topic.polyalarm "YAML front matter with schema topic and the parts list title, shortdesc, body, related_links, then the alarm rendering of the same parts as the body">
 
 <!ENTITY SEMANTIC.variablelist.callout "callouts in order: NOTE title, when given; NOTE varlistentry, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.variablelist.heredoc "quoted heredocs in order: TITLE when given; VARLISTENTRY as an indexed array, one quoted heredoc per occurrence">
@@ -1260,11 +1339,13 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SEMANTIC.variablelist.jmd "headings in order: title when given; varlistentry, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
 <!ENTITY SEMANTIC.variablelist.json "keys in order: title a string when given; varlistentry an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.variablelist.toml "keys in order: title a multi-line basic string when given; varlistentry an array of multi-line basic strings">
+<!ENTITY SEMANTIC.variablelist.alarm "house callouts in order: FRAMEWORK title, when given; NOTE varlistentry, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.variablelist.polyalarm "YAML front matter with schema variablelist and the parts list title, varlistentry, then the alarm rendering of the same parts as the body">
 
 <!ENTITY ASK.SCHEMA.1 "Schema A|Which families of semantic schemas shape the body? Pick any.|DocBook: refentry, qandaset, procedure, glossary, biblioentry, example, table, cmdsynopsis, variablelist, revhistory|DITA: concept, task, topic, glossentry|TEI and the voice: certainty, interp, textdesc|Data: item, key, msgset, productionset">
 <!ENTITY ASK.SCHEMA.2 "Schema B|Which schemas of the families chosen?|The ones named under Other, by their names|The first schema of each family chosen|Every schema of the families chosen|None, the sections alone">
 <!ENTITY ASK.SCHEMATIC.1 "Schematic|In which schematic is the prompt written?|The GitHub callout shape, a markdown file|A shell here-document, a sh file|A YAML document|A NestedText document">
-<!ENTITY ASK.SCHEMATIC.2 "Schematic B|Or one of these instead?|Keep the first choice|An XML document with a DOCTYPE|A polyglot of more than one parser|Typed under Other">
+<!ENTITY ASK.SCHEMATIC.2 "Schematic B|Or one of these instead?|Keep the first choice|An XML document with a DOCTYPE|A polyglot of more than one parser|The alarm shape, Markdown with the house callouts, alone or as a polyglot">
 <!ENTITY SCHEMA.creator.prompt "create-prompt">
 <!ENTITY SCHEMA.creator.meta   "create-meta-prompt">
 
@@ -1274,7 +1355,7 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY LAW.SCHEMA.4 "The file written passes the cc-form guards of its kind before it is reported, and its extension is the SCHEMA.ext entity of its schematic; a callout prompt uses only the five GitHub types.">
 <!ENTITY LAW.SCHEMA.5 "The creator writes the prompt and its record and runs the proof; the proof reads the file back, runs the guards, checks the sections are present in order, and plants one out-of-table syntax to show it refused.">
 <!ENTITY LAW.SCHEMA.6 "A body may carry any number of semantic schemas, chosen by ASK.SCHEMA.1 (the families, any of them) and ASK.SCHEMA.2 (which schemas of those families, named under Other, the first of each, every one, or none) independently of the schematic; each chosen schema is rendered as a semantic element whose parts are those of its SEMANTIC.*.parts entity, in that order, with occurs one, optional or many as declared; the four families are SEMANTIC.family.docbook, dita, tei and data, and their union is the whole enumeration.">
-<!ENTITY LAW.SCHEMA.7 "A schema renders in a form by its cell, the SEMANTIC entity named by the schema and then the form, one per schema per form of SEMANTIC.forms, which lists the six schematics and every cc-form kind beyond them; the cell names every part in that form's spelling under the form's three rules SEMANTIC.form.part, SEMANTIC.form.many and SEMANTIC.form.label; in the callout form the type of each part follows SEMANTIC.callout.types; a part rendered outside its cell is a failed answer.">
+<!ENTITY LAW.SCHEMA.7 "A schema renders in a form by its cell, the SEMANTIC entity named by the schema and then the form, one per schema per form of SEMANTIC.forms, which lists the eight schematics, the alarm shape and its polyglot among them, and every cc-form kind beyond them; the cell names every part in that form's spelling under the form's three rules SEMANTIC.form.part, SEMANTIC.form.many and SEMANTIC.form.label; in the callout form the type of each part follows SEMANTIC.callout.types; a part rendered outside its cell is a failed answer.">
 <!ENTITY LAW.SCHEMA.8 "A part that occurs one and is missing is a failed answer; a part that occurs optional may be absent; a part that occurs many carries at least one occurrence, each rendered by the many rule.">
 <!ENTITY LAW.SCHEMA.9 "The skeleton of a cell is what node lib/schematic.mjs render prints for the schema and the form; its controls render every cell, run the cc-form guards of the form on the rendering, read the parts back in order, hold SEMANTIC.forms to the kinds cc-form declares, and hold references/semantic-schemas.md to a fresh render; a cell the code cannot render, guard or read back is a failed contract.">
 <!ENTITY LAW.SCHEMA.10 "A launcher that hands a prompt to a creator asks the schematic through ASK.SCHEMATIC.1 and ASK.SCHEMATIC.2, the schemas through ASK.SCHEMA.1 and ASK.SCHEMA.2 and the forms through ASK.FORM.1 and ASK.FORM.2 before the hand-off, names the creator as SCHEMA.creator.prompt or SCHEMA.creator.meta followed by a hyphen, the schematic and -dtd, and writes every choice into the hand-off as a known slot, so the creator never asks it again (LAW.ASK.1).">

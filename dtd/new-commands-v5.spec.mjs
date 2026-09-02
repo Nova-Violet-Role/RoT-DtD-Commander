@@ -31,8 +31,10 @@ const SCHEMATICS = {
   nt: { sigil: '🪜', label: 'a NestedText document', ext: 'nt', example: 'each section a key with a multiline string, an angle bracket per line' },
   xml: { sigil: '🏷️', label: 'an XML document with a DOCTYPE', ext: 'md', example: 'a DOCTYPE with the six sections as elements, argument words in CDATA sections' },
   polyglot: { sigil: '🎴', label: 'a polyglot of more than one parser', ext: 'md', example: 'Markdown with YAML front matter holding a NestedText block, each layer literal to the one outside it' },
+  alarm: { sigil: '🚨', label: 'the alarm shape, Markdown with the house callout vocabulary', ext: 'md', example: 'a quoted line under a house callout, one of FORM.alarm.types with a title after it, an ALARM for what must be acted on' },
+  polyalarm: { sigil: '🎪', label: 'a polyglot whose Markdown layer is the alarm shape', ext: 'md', example: 'YAML front matter naming the parts, then house callouts, each layer literal to the one outside it' },
 };
-const META_SIGILS = { callout: '🗯️', heredoc: '🧬', yaml: '🧶', nt: '🪆', xml: '🔖', polyglot: '🎩' };
+const META_SIGILS = { callout: '🗯️', heredoc: '🧬', yaml: '🧶', nt: '🪆', xml: '🔖', polyglot: '🎩', alarm: '📯', polyalarm: '🪅' };
 
 function promptCreator(schematic, meta) {
   const s = SCHEMATICS[schematic];
@@ -195,7 +197,7 @@ function promptRouter(meta) {
     ...(meta ? { argumentHint: '[what the meta-prompt is for, or leave blank; --no-gate for autonomous defaults]' } : {}),
     model: [`${root} (args, intake, launch, instruction, assumption_made*)`, 'launch (schemas, forms)', 'instruction (#PCDATA)'],
     attlist: [
-      `launch schematic (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED kind (prompt|meta) #FIXED "${meta ? 'meta' : 'prompt'}" creator CDATA #REQUIRED`,
+      `launch schematic (callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm) #REQUIRED kind (prompt|meta) #FIXED "${meta ? 'meta' : 'prompt'}" creator CDATA #REQUIRED`,
       'instruction goal CDATA #REQUIRED step CDATA #REQUIRED',
     ],
     entities: {
@@ -209,7 +211,7 @@ function promptRouter(meta) {
     },
     objective: `Route ${ARGS} (or ask what the ${kind} is for) to the creator that writes ${kind}s in the schematic chosen.
 
-Six creators write ${kind}s, one per schematic (callout, heredoc, yaml, nt, xml, polyglot), each pinned to its shape and asking twelve questions. This ${self} is the door in front of them: it asks the three choices that pick the creator and shape the body, the schematic, the semantic-schema families and the forms, and hands them over as known slots, so the creator asks only what is still open and never asks a slot twice across the hand-off (LAW.ASK.1, LAW.SCHEMA.10).`,
+Eight creators write ${kind}s, one per schematic (callout, heredoc, yaml, nt, xml, polyglot, alarm, polyalarm), each pinned to its shape and asking twelve questions. This ${self} is the door in front of them: it asks the three choices that pick the creator and shape the body, the schematic, the semantic-schema families and the forms, and hands them over as known slots, so the creator asks only what is still open and never asks a slot twice across the hand-off (LAW.ASK.1, LAW.SCHEMA.10).`,
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; render the walk under \`args\`. This is a create- ${self}, so round one always runs (LAW.ASK.10).`,
       'Round 1 of 3: ask ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (which of them, select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13).',
@@ -236,7 +238,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### ${sigil} Launch
 
-schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind ${meta ? 'meta' : 'prompt'}; creator /${creator}-[schematic]-dtd
+schematic [callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm]; kind ${meta ? 'meta' : 'prompt'}; creator /${creator}-[schematic]-dtd
 schemas: [schema of a SEMANTIC family with its parts in order, or none]
 forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
 
@@ -613,7 +615,7 @@ perfect [yes|partial|no]; short: [probes still not yes]
     description: 'DTD-native: brainstorm a topic, choose the schematic, the semantic schemas and the forms the bigger prompt will be written in, transmigrate that prompt into a handoff file for the next context section, and print the instruction to clear and resume through the matching create-prompt or create-meta-prompt creator; the command never runs /clear itself',
     argumentHint: '[topic or the prompt to carry over; --verbose prints the ideas discarded, --debug prints the file bytes]',
     model: ['clear_section (args, intake, brainstorm, launch, transmigration, instruction, assumption_made*)', 'brainstorm (idea+)', 'idea (#PCDATA)', 'launch (schemas, forms)', 'transmigration (#PCDATA)', 'instruction (#PCDATA)'],
-    attlist: ['idea rank CDATA #REQUIRED kept (yes|no) #REQUIRED', 'launch schematic (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED kind (prompt|meta) #REQUIRED creator CDATA #REQUIRED', 'transmigration path CDATA #REQUIRED bytes CDATA #REQUIRED', 'instruction goal CDATA #REQUIRED step CDATA #REQUIRED'],
+    attlist: ['idea rank CDATA #REQUIRED kept (yes|no) #REQUIRED', 'launch schematic (callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm) #REQUIRED kind (prompt|meta) #REQUIRED creator CDATA #REQUIRED', 'transmigration path CDATA #REQUIRED bytes CDATA #REQUIRED', 'instruction goal CDATA #REQUIRED step CDATA #REQUIRED'],
     entities: {
       'ASK.CLEAR.1': 'Topic|What is brainstormed?|The argument as given|The open question of the current section|A section of the plan that is stalling|Something typed under Other',
       'ASK.CLEAR.2': 'Carry|What travels to the next section?|The goal, the state, the files touched, the next step, and the bigger prompt whole|The bigger prompt only|A three-line summary|Nothing but the topic',
@@ -673,7 +675,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🌀 Launch
 
-schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind [prompt|meta]; creator /[create-prompt|create-meta-prompt]-[schematic]-dtd
+schematic [callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm]; kind [prompt|meta]; creator /[create-prompt|create-meta-prompt]-[schematic]-dtd
 schemas: [schema of a SEMANTIC family with its parts in order, or none]
 forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
 

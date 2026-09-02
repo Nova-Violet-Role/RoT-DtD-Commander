@@ -20,7 +20,7 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
   <!ELEMENT meta_router (args, intake, launch, instruction, assumption_made*)>
   <!ELEMENT launch (schemas, forms)>
   <!ELEMENT instruction (#PCDATA)>
-  <!ATTLIST launch schematic (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED kind (prompt|meta) #FIXED "meta" creator CDATA #REQUIRED>
+  <!ATTLIST launch schematic (callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm) #REQUIRED kind (prompt|meta) #FIXED "meta" creator CDATA #REQUIRED>
   <!ATTLIST instruction goal CDATA #REQUIRED step CDATA #REQUIRED>
   <!ENTITY LAW.MROUTE.1 "This command writes no meta-prompt file: it asks, then hands off to one creator, SCHEMA.creator.meta followed by a hyphen, the schematic chosen and -dtd, which asks what is still open and writes the file (LAW.SCHEMA.10).">
   <!ENTITY LAW.MROUTE.2 "The schematic comes from ASK.SCHEMATIC.1 and ASK.SCHEMATIC.2 (nt when none was chosen), the schemas from ASK.SCHEMA.1 and ASK.SCHEMA.2, the forms from ASK.FORM.1 and ASK.FORM.2, asked apart; every answer is rendered in the launch element.">
@@ -41,7 +41,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 <objective>
 Route <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (or ask what the meta-prompt is for) to the creator that writes meta-prompts in the schematic chosen.
 
-Six creators write meta-prompts, one per schematic (callout, heredoc, yaml, nt, xml, polyglot), each pinned to its shape and asking twelve questions. This command is the door in front of them: it asks the three choices that pick the creator and shape the body, the schematic, the semantic-schema families and the forms, and hands them over as known slots, so the creator asks only what is still open and never asks a slot twice across the hand-off (LAW.ASK.1, LAW.SCHEMA.10).
+Eight creators write meta-prompts, one per schematic (callout, heredoc, yaml, nt, xml, polyglot, alarm, polyalarm), each pinned to its shape and asking twelve questions. This command is the door in front of them: it asks the three choices that pick the creator and shape the body, the schematic, the semantic-schema families and the forms, and hands them over as known slots, so the creator asks only what is still open and never asks a slot twice across the hand-off (LAW.ASK.1, LAW.SCHEMA.10).
 </objective>
 
 <process>
@@ -74,7 +74,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🪞 Launch
 
-schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind meta; creator /create-meta-prompt-[schematic]-dtd
+schematic [callout|heredoc|yaml|nt|xml|polyglot|alarm|polyalarm]; kind meta; creator /create-meta-prompt-[schematic]-dtd
 schemas: [schema of a SEMANTIC family with its parts in order, or none]
 forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
 

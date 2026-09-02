@@ -106,5 +106,9 @@
   "create-meta-prompt-xml": "🔖",
   "create-meta-prompt-polyglot": "🎩",
   "create-mcp": "🔌",
-  "create-workflowjson": "🧰"
+  "create-workflowjson": "🧰",
+  "create-prompt-alarm": "🚨",
+  "create-prompt-polyalarm": "🎪",
+  "create-meta-prompt-alarm": "📯",
+  "create-meta-prompt-polyalarm": "🪅"
 }
