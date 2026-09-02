@@ -3,7 +3,7 @@
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
 # Milestone Entry Template
 
-Add this entry to `.planning/MILESTONES.md` when completing a milestone:
+Add this entry to `.planning/MILESTONES.md` when a milestone completes, one entry per milestone with the newest at the top, the git range and the stats filled from the log rather than from memory:
 
 ```markdown
 ## v[X.Y] [Name] (Shipped: YYYY-MM-DD)

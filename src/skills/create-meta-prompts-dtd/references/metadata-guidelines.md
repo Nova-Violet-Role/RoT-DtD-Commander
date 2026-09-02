@@ -3,7 +3,7 @@
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
 <overview>
 
-Standard metadata structure for research and plan outputs. Include in all research, plan, and refine prompts.
+Standard metadata structure for research and plan outputs. Include it in every research, plan and refine prompt, so the next stage reads the confidence, the dependencies, the open questions and the assumptions from one block instead of hunting for them across the answer.
 
 </overview>
 

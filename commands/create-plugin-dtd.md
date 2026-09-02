@@ -141,6 +141,39 @@ argument-hint: [plugin name or purpose, or leave blank; --no-gate for autonomous
 
   
   
+<!-- begin subset cc-license -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-license.dtd : the curated SPDX list every creator picks from.
+
+  A creator asks which license heads the files it writes; the answer is one
+  identifier of LICENSE.list, or a compound expression joining listed
+  identifiers with OR or AND (a double or a triple license). An identifier
+  outside the list is refused with the list printed and the question asked
+  again. The list is the one create-plugin declared first; the definitions
+  per identifier are a later addition (a data file, deferred).
+-->
+
+<!ELEMENT license (#PCDATA)>
+<!ATTLIST license
+          expression CDATA #REQUIRED
+          count      (single|double|triple) "single"
+          listed     (yes|no) #REQUIRED>
+
+<!ENTITY LICENSE.count "50">
+<!ENTITY LICENSE.list "0BSD, AFL-3.0, AGPL-3.0-only, AGPL-3.0-or-later, Apache-2.0, Artistic-2.0, BSD-2-Clause, BSD-3-Clause, BSD-3-Clause-Clear, BSD-4-Clause, BSL-1.0, CC-BY-4.0, CC-BY-SA-4.0, CC0-1.0, CECILL-2.1, CERN-OHL-P-2.0, CERN-OHL-S-2.0, CERN-OHL-W-2.0, ECL-2.0, EPL-1.0, EPL-2.0, EUPL-1.1, EUPL-1.2, GFDL-1.3, GPL-2.0-only, GPL-2.0-or-later, GPL-3.0-only, GPL-3.0-or-later, ISC, LGPL-2.1-only, LGPL-2.1-or-later, LGPL-3.0-only, LGPL-3.0-or-later, LPPL-1.3c, MIT, MIT-0, MPL-2.0, MS-PL, MS-RL, MulanPSL-2.0, NCSA, ODbL-1.0, OFL-1.1, OSL-3.0, PostgreSQL, Unlicense, UPL-1.0, Vim, WTFPL, Zlib">
+<!ENTITY LICENSE.default "AGPL-3.0-or-later OR EUPL-1.2">
+<!ENTITY LICENSE.join "OR or AND, upper case, one space each side">
+
+<!ENTITY ASK.LICENSE.1 "License|Which SPDX license heads the files? A double or triple joins two or three with OR or AND.|AGPL-3.0-or-later OR EUPL-1.2, the license of this repository|MIT|Apache-2.0|An identifier or a compound expression from LICENSE.list, typed under Other">
+
+<!ENTITY LAW.LICENSE.1 "The license is one identifier of LICENSE.list or a compound expression of listed identifiers joined by LICENSE.join; anything else is refused with the list printed and ASK.LICENSE.1 asked again; the license element renders the expression, its count and listed yes.">
+<!ENTITY LAW.LICENSE.2 "The chosen expression heads every file written whose format allows a comment, as an SPDX-License-Identifier line before any other content; a file whose format allows no comment is named in the answer as unheaded.">
+<!-- end subset cc-license -->
+
+  
+  
 <!-- begin subset cc-ask -->
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
@@ -256,7 +289,6 @@ argument-hint: [plugin name or purpose, or leave blank; --no-gate for autonomous
   <!ELEMENT component (#PCDATA)>
   <!ELEMENT manifests (manifest, manifest?)>
   <!ELEMENT manifest (#PCDATA)>
-  <!ELEMENT license (#PCDATA)>
   <!ELEMENT instruction (#PCDATA)>
   <!ELEMENT proof (#PCDATA)>
   <!ATTLIST domain name (monitor|moe|router|ot|db|mcp|workflow|skill|hook|command|agent) #REQUIRED included (INCLUDE|IGNORE) #REQUIRED>
@@ -268,16 +300,16 @@ argument-hint: [plugin name or purpose, or leave blank; --no-gate for autonomous
   <!ENTITY LAW.PLUGIN.1 "The shell DTD follows the shell anatomy: a header comment naming PLUGIN.shell.header, one parameter entity per creation whose value is INCLUDE or IGNORE as the intake chose, one conditional section per creation keyed by that entity, a nesting override naming what may nest in what, the element integration last; it includes cc-core and passes rdc check.">
   <!ENTITY LAW.PLUGIN.2 "Which creations are in is decided by the intake alone and written as the keyword of each section; a creation under IGNORE appears in no manifest, no directory and no README line, and the proof shows the absence.">
   <!ENTITY LAW.PLUGIN.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made; the three creation questions are multi-select and All of them selects every creation.">
-  <!ENTITY LAW.PLUGIN.4 "The SPDX identifier is one of PLUGIN.licenses or a compound expression joining its identifiers with OR or AND; an identifier outside the list is refused with the list printed; the chosen expression heads every file whose format allows a comment and fills the license field of every manifest written.">
+  <!ENTITY LAW.PLUGIN.4 "The SPDX identifier is one of LICENSE.list or a compound expression joining its identifiers with LICENSE.join, a double or a triple; an identifier outside the list is refused with the list printed (LAW.LICENSE.1); the chosen expression heads every file whose format allows a comment (LAW.LICENSE.2), rendered as the license element.">
   <!ENTITY LAW.PLUGIN.5 "Manifests are rendered, never typed: plugin.json and the marketplace.json entry are written from the shell declarations, name, version, description and components, and parsed back before they are reported.">
-  <!ENTITY LAW.PLUGIN.6 "Each chosen creation is handed to its creator command by one instruction element naming the command, its arguments and the plugin root; this command writes the shell, the manifests, the directories, the license and the records, and never forges a monitor, a lens roster, a router, a database, an MCP server, a workflow, a skill, a hook, a command or an agent itself.">
+  <!ENTITY LAW.PLUGIN.6 "Each chosen creation is handed to its creator command by one instruction element naming the command, its arguments and the plugin root; the arguments carry the purpose, then ARG.end, then name=, emoji= and license= as known slots the creator reads without asking (LAW.ASK.1); this command writes the shell, the manifest and the documents itself and never the creations.">
   <!ENTITY LAW.PLUGIN.7 "The proof runs rdc check on every file written, parses every manifest back, and shows one creation under IGNORE absent from the bundle; a proof that did not trip stops the command before the report.">
   <!ENTITY LAW.PLUGIN.8 "The plugin records its runs under artifacts at its root with command-generated names; an ordinal appears only where one command produced many files.">
   <!ENTITY ASK.PLUGIN.1 "Name|What is the plugin called?|A kebab-case name from the argument or the purpose|The name of the repository it lives in|A name typed under Other|Undecided, ask again after the creations">
   <!ENTITY ASK.PLUGIN.2 "Creations A|Which creations are in? Pick any, this is one of three lists.|All of them, every creation this command knows|A monitor, through create-monitor|A mixture of lenses, through create-moe|A router, through create-router">
   <!ENTITY ASK.PLUGIN.3 "Creations B|Which creations are in? Second list.|X-of-Thought variants, through create-ot-variants|A database layer, through create-db|An MCP server, through create-mcp|A workflow JSON, through create-workflowjson">
   <!ENTITY ASK.PLUGIN.4 "Creations C|Which creations are in? Third list.|Skills, through create-skill|Hooks, through create-hook|Commands, through create-slash-command|Agents, through create-subagent">
-  <!ENTITY ASK.PLUGIN.5 "License|Which SPDX license?|AGPL-3.0-or-later OR EUPL-1.2, the license of this repository|MIT|Apache-2.0|An identifier or a compound expression from PLUGIN.licenses, typed under Other">
+  <!ENTITY ASK.PLUGIN.5 "License|Which SPDX license?|AGPL-3.0-or-later OR EUPL-1.2, the license of this repository|MIT|Apache-2.0|An identifier or a compound expression from LICENSE.list, typed under Other">
   <!ENTITY ASK.PLUGIN.6 "Layout|How is the tree laid out?|src with rdc build rendering commands, skills and agents|Flat, every file where the loader reads it|A monorepo package|Typed under Other">
   <!ENTITY ASK.PLUGIN.7 "Manifests|Which manifests?|plugin.json and a marketplace.json entry, both rendered|plugin.json only|marketplace.json only|Typed under Other">
   <!ENTITY ASK.PLUGIN.8 "Contract|How is the DTD shell built?|Its own shell DTD including cc-core, one conditional section per creation|cc-core alone, no shell|One DTD per component, no shell|None, which this command refuses">
@@ -285,7 +317,6 @@ argument-hint: [plugin name or purpose, or leave blank; --no-gate for autonomous
   <!ENTITY ASK.PLUGIN.10 "Records|Where do its runs record?|artifacts under the plugin root, command-generated names, ordinals for series only|The repository artifacts tree|Nowhere|Typed under Other">
   <!ENTITY ASK.PLUGIN.11 "Control|How is it proven?|rdc check on every file, both manifests parsed back, one excluded creation shown absent|rdc check only|A manual read|Typed under Other">
   <!ENTITY ASK.PLUGIN.12 "Version|Which first version?|0.1.0 with a CHANGELOG entry|1.0.0|A date stamp|Typed under Other">
-  <!ENTITY PLUGIN.licenses "0BSD, AFL-3.0, AGPL-3.0-only, AGPL-3.0-or-later, Apache-2.0, Artistic-2.0, BSD-2-Clause, BSD-3-Clause, BSD-3-Clause-Clear, BSD-4-Clause, BSL-1.0, CC-BY-4.0, CC-BY-SA-4.0, CC0-1.0, CECILL-2.1, CERN-OHL-P-2.0, CERN-OHL-S-2.0, CERN-OHL-W-2.0, ECL-2.0, EPL-1.0, EPL-2.0, EUPL-1.1, EUPL-1.2, GFDL-1.3, GPL-2.0-only, GPL-2.0-or-later, GPL-3.0-only, GPL-3.0-or-later, ISC, LGPL-2.1-only, LGPL-2.1-or-later, LGPL-3.0-only, LGPL-3.0-or-later, LPPL-1.3c, MIT, MIT-0, MPL-2.0, MS-PL, MS-RL, MulanPSL-2.0, NCSA, ODbL-1.0, OFL-1.1, OSL-3.0, PostgreSQL, Unlicense, UPL-1.0, Vim, WTFPL, Zlib">
   <!ENTITY PLUGIN.license.default "AGPL-3.0-or-later OR EUPL-1.2">
   <!ENTITY PLUGIN.shell.header "MODULE, VERSION, DATE">
 ]>
@@ -309,7 +340,7 @@ The shell is built the way the DITA shells are built: a header, a declaration pe
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the name or purpose; render the walk under `args`. A plugin is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.PLUGIN.1 to ASK.PLUGIN.4 as one AskUserQuestion call, four options each plus Other, questions 2 to 4 multi-select (LAW.PLUGIN.3); render the round.
 3. Present the gate; on more, round 2 of 3 with ASK.PLUGIN.5 to ASK.PLUGIN.8; on more again, round 3 of 3 with ASK.PLUGIN.9 to ASK.PLUGIN.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
-4. Check the license against PLUGIN.licenses (LAW.PLUGIN.4): an identifier in the list, or a compound expression of listed identifiers joined by OR or AND, passes; anything else is refused with the list printed and the question asked again.
+4. Check the license against LICENSE.list (LAW.PLUGIN.4, LAW.LICENSE.1): an identifier in the list, or a compound expression of listed identifiers joined by LICENSE.join, passes; anything else is refused with the list printed and ASK.PLUGIN.5 asked again; render the `license` with the expression, its count and listed yes.
 5. Write the `shell`: dtd/<name>.dtd at the plugin root with the header (PLUGIN.shell.header), one parameter entity per creation set to INCLUDE or IGNORE, one conditional section per creation declaring that creation's domain elements and entities, the nesting override, the element integration, and the cc-core include; render one `domain` per creation with its keyword (LAW.PLUGIN.1, LAW.PLUGIN.2).
 6. Write the tree in the chosen layout: the directories the loader reads for every creation under INCLUDE and none for one under IGNORE, a README with the roster, a CHANGELOG with the first version, the license file for the chosen expression; render one `component` per file with its kind, path and bytes; every file UTF-8 LF without BOM with the SPDX header where a comment is allowed.
 7. Render the `manifests`: one `manifest` for plugin.json and, when chosen, one for the marketplace.json entry, each written from the shell declarations and parsed back (LAW.PLUGIN.5); render the `license` with its expression and its source.

@@ -162,7 +162,11 @@ counts are re-measured.
 - The voice pass: forty-one rewrites in fifteen files of the slop baseline (a
   banned word each: leverage, robust, seamless, key takeaways, kind of, just,
   actually), so the sweep baseline falls from 18 to 3 and the gate holds it
-  there; the three that remain are rhythm alone.
+  there. Then the three rhythm files got one longer opening sentence each,
+  and the baseline is 0: every file under src passes the gate.
+- create-plugin includes cc-license and drops its private list; LAW.PLUGIN.4
+  cites LICENSE.list and LICENSE.join, and LAW.PLUGIN.6 hands name=, emoji=
+  and license= to each creator as known slots after the end token.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

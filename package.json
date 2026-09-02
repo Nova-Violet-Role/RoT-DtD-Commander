@@ -60,7 +60,7 @@
     "controls:args": "node lib/args.mjs controls",
     "controls:schematic": "node lib/schematic.mjs controls",
     "controls:workflow": "node lib/workflow.mjs controls",
-    "sweep:slop": "node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 3"
+    "sweep:slop": "node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0"
   },
   "keywords": [
     "claude-code",

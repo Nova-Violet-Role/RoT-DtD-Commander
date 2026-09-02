@@ -3,7 +3,7 @@
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
 # Validation Checkpoints
 
-Reusable validation commands for each step.
+Reusable validation commands, one block per step. Run the block before the step it names, in the foreground with stdin closed, and read the exit code directly; go on only when it is zero, and when it is not, the log the block names says why.
 
 ## api-research
 
