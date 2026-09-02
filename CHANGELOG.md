@@ -78,6 +78,18 @@ counts are re-measured.
   and form are chosen independently; ASK.SCHEMA.1 and 2 multi-select;
   LAW.SCHEMA.6 to 8. The twelve prompt creators ask the schema in place of
   the sections and examples questions and render a `schemas` child.
+- The semantic matrix: one `SEMANTIC.<schema>.<form>` cell per schema per
+  form of `SEMANTIC.forms` (the six schematics and the cc-form kinds jmd,
+  json and toml, md being callout), sixty-three in all, each naming every
+  part in the form's spelling; LAW.SCHEMA.9. The twelve creators ask
+  ASK.FORM.1 and 2 in the same round as ASK.SCHEMA.1 and 2, schema and
+  form apart, and render a `forms` child (the length and checks questions
+  became laws so the count stays twelve). `lib/schematic.mjs` renders a cell as a skeleton, runs the
+  cc-form guards on it, reads the parts back in order, trips on a dropped
+  part, a dropped rendering, a sixth callout type and a planted CDATA close,
+  and pins `references/semantic-schemas.md` (every cell rendered) to a fresh
+  render; `controls:schematic` in the gate; the creators print a schema's
+  skeleton with `node lib/schematic.mjs render` and fill it in place.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

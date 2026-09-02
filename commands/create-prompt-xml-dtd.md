@@ -417,6 +417,98 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY SEMANTIC.polyglot.many  "the outermost layer's many rule">
 <!ENTITY SEMANTIC.polyglot.label "the outermost layer's label rule">
 
+<!-- the three cc-form kinds beyond the six schematics; md is the callout schematic -->
+<!ENTITY SEMANTIC.jmd.part      "one heading per part, the part's text under it, code in a fenced julia chunk">
+<!ENTITY SEMANTIC.jmd.many      "one heading per occurrence, numbered">
+<!ENTITY SEMANTIC.jmd.label     "the heading, the part name">
+<!ENTITY SEMANTIC.json.part     "one key per part with a string value">
+<!ENTITY SEMANTIC.json.many     "an array of strings under the key, one per occurrence">
+<!ENTITY SEMANTIC.json.label    "the key, the part name">
+<!ENTITY SEMANTIC.toml.part     "one key per part with a multi-line basic string">
+<!ENTITY SEMANTIC.toml.many     "an array of multi-line basic strings under the key">
+<!ENTITY SEMANTIC.toml.label    "the key, the part name">
+
+<!-- ===== every schema in every form: SEMANTIC.<schema>.<form> =====
+     The forms are SEMANTIC.forms: the six schematics and the cc-form
+     kinds beyond them (md is the callout schematic), so every kind
+     cc-form declares has a column. One cell per schema per form, each
+     naming every part of the schema in the spelling of the form under
+     the three rules of that form. lib/schematic.mjs renders a cell as a
+     skeleton, runs the cc-form guards on it, reads the parts back in
+     order, and its controls hold this text and the code to each other
+     in both directions. -->
+<!ENTITY SEMANTIC.forms "callout, heredoc, yaml, nt, xml, polyglot, jmd, json, toml">
+
+<!ENTITY SEMANTIC.refentry.callout "callouts in order: IMPORTANT refname; IMPORTANT refpurpose; IMPORTANT synopsis; IMPORTANT description; NOTE options, one per occurrence numbered in the title; TIP examples, when given; NOTE see_also, when given">
+<!ENTITY SEMANTIC.refentry.heredoc "quoted heredocs in order: REFNAME; REFPURPOSE; SYNOPSIS; DESCRIPTION; OPTIONS as an indexed array, one quoted heredoc per occurrence; EXAMPLES when given; SEE_ALSO when given">
+<!ENTITY SEMANTIC.refentry.yaml "keys in order: refname a strip block scalar; refpurpose a strip block scalar; synopsis a strip block scalar; description a strip block scalar; options a sequence of strip block scalars; examples a strip block scalar when given; see_also a strip block scalar when given">
+<!ENTITY SEMANTIC.refentry.nt "keys in order: refname a multiline string; refpurpose a multiline string; synopsis a multiline string; description a multiline string; options a list of multiline strings; examples a multiline string when given; see_also a multiline string when given">
+<!ENTITY SEMANTIC.refentry.xml "a DOCTYPE declaring refentry as the sequence refname, refpurpose, synopsis, description, options with a plus, examples with a question mark, see_also with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.refentry.polyglot "YAML front matter with schema refentry and the parts list refname, refpurpose, synopsis, description, options, examples, see_also, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.refentry.jmd "headings in order: refname; refpurpose; synopsis; description; options, one heading per occurrence numbered; examples when given; see_also when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.refentry.json "keys in order: refname a string; refpurpose a string; synopsis a string; description a string; options an array of strings; examples a string when given; see_also a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.refentry.toml "keys in order: refname a multi-line basic string; refpurpose a multi-line basic string; synopsis a multi-line basic string; description a multi-line basic string; options an array of multi-line basic strings; examples a multi-line basic string when given; see_also a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.qandaset.callout "callouts in order: NOTE label, when given; IMPORTANT question; NOTE answer, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.qandaset.heredoc "quoted heredocs in order: LABEL when given; QUESTION; ANSWER as an indexed array, one quoted heredoc per occurrence">
+<!ENTITY SEMANTIC.qandaset.yaml "keys in order: label a strip block scalar when given; question a strip block scalar; answer a sequence of strip block scalars">
+<!ENTITY SEMANTIC.qandaset.nt "keys in order: label a multiline string when given; question a multiline string; answer a list of multiline strings">
+<!ENTITY SEMANTIC.qandaset.xml "a DOCTYPE declaring qandaset as the sequence label with a question mark, question, answer with a plus; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.qandaset.polyglot "YAML front matter with schema qandaset and the parts list label, question, answer, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.qandaset.jmd "headings in order: label when given; question; answer, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.qandaset.json "keys in order: label a string when given; question a string; answer an array of strings; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.qandaset.toml "keys in order: label a multi-line basic string when given; question a multi-line basic string; answer an array of multi-line basic strings">
+
+<!ENTITY SEMANTIC.procedure.callout "callouts in order: IMPORTANT title; WARNING prerequisite, when given; NOTE step, one per occurrence numbered in the title; NOTE substeps, when given; NOTE alternatives, when given; IMPORTANT result">
+<!ENTITY SEMANTIC.procedure.heredoc "quoted heredocs in order: TITLE; PREREQUISITE when given; STEP as an indexed array, one quoted heredoc per occurrence; SUBSTEPS when given; ALTERNATIVES when given; RESULT">
+<!ENTITY SEMANTIC.procedure.yaml "keys in order: title a strip block scalar; prerequisite a strip block scalar when given; step a sequence of strip block scalars; substeps a strip block scalar when given; alternatives a strip block scalar when given; result a strip block scalar">
+<!ENTITY SEMANTIC.procedure.nt "keys in order: title a multiline string; prerequisite a multiline string when given; step a list of multiline strings; substeps a multiline string when given; alternatives a multiline string when given; result a multiline string">
+<!ENTITY SEMANTIC.procedure.xml "a DOCTYPE declaring procedure as the sequence title, prerequisite with a question mark, step with a plus, substeps with a question mark, alternatives with a question mark, result; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.procedure.polyglot "YAML front matter with schema procedure and the parts list title, prerequisite, step, substeps, alternatives, result, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.procedure.jmd "headings in order: title; prerequisite when given; step, one heading per occurrence numbered; substeps when given; alternatives when given; result; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.procedure.json "keys in order: title a string; prerequisite a string when given; step an array of strings; substeps a string when given; alternatives a string when given; result a string; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.procedure.toml "keys in order: title a multi-line basic string; prerequisite a multi-line basic string when given; step an array of multi-line basic strings; substeps a multi-line basic string when given; alternatives a multi-line basic string when given; result a multi-line basic string">
+
+<!ENTITY SEMANTIC.glossary.callout "callouts in order: IMPORTANT term; NOTE acronym, when given; NOTE definition, one per occurrence numbered in the title; NOTE see_also, when given; IMPORTANT locator">
+<!ENTITY SEMANTIC.glossary.heredoc "quoted heredocs in order: TERM; ACRONYM when given; DEFINITION as an indexed array, one quoted heredoc per occurrence; SEE_ALSO when given; LOCATOR">
+<!ENTITY SEMANTIC.glossary.yaml "keys in order: term a strip block scalar; acronym a strip block scalar when given; definition a sequence of strip block scalars; see_also a strip block scalar when given; locator a strip block scalar">
+<!ENTITY SEMANTIC.glossary.nt "keys in order: term a multiline string; acronym a multiline string when given; definition a list of multiline strings; see_also a multiline string when given; locator a multiline string">
+<!ENTITY SEMANTIC.glossary.xml "a DOCTYPE declaring glossary as the sequence term, acronym with a question mark, definition with a plus, see_also with a question mark, locator; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.glossary.polyglot "YAML front matter with schema glossary and the parts list term, acronym, definition, see_also, locator, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.glossary.jmd "headings in order: term; acronym when given; definition, one heading per occurrence numbered; see_also when given; locator; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.glossary.json "keys in order: term a string; acronym a string when given; definition an array of strings; see_also a string when given; locator a string; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.glossary.toml "keys in order: term a multi-line basic string; acronym a multi-line basic string when given; definition an array of multi-line basic strings; see_also a multi-line basic string when given; locator a multi-line basic string">
+
+<!ENTITY SEMANTIC.textdesc.callout "callouts in order: IMPORTANT derivation; IMPORTANT domain; IMPORTANT factuality; IMPORTANT preparedness; IMPORTANT purpose; NOTE degree, when given">
+<!ENTITY SEMANTIC.textdesc.heredoc "quoted heredocs in order: DERIVATION; DOMAIN; FACTUALITY; PREPAREDNESS; PURPOSE; DEGREE when given">
+<!ENTITY SEMANTIC.textdesc.yaml "keys in order: derivation a strip block scalar; domain a strip block scalar; factuality a strip block scalar; preparedness a strip block scalar; purpose a strip block scalar; degree a strip block scalar when given">
+<!ENTITY SEMANTIC.textdesc.nt "keys in order: derivation a multiline string; domain a multiline string; factuality a multiline string; preparedness a multiline string; purpose a multiline string; degree a multiline string when given">
+<!ENTITY SEMANTIC.textdesc.xml "a DOCTYPE declaring textdesc as the sequence derivation, domain, factuality, preparedness, purpose, degree with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.textdesc.polyglot "YAML front matter with schema textdesc and the parts list derivation, domain, factuality, preparedness, purpose, degree, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.textdesc.jmd "headings in order: derivation; domain; factuality; preparedness; purpose; degree when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.textdesc.json "keys in order: derivation a string; domain a string; factuality a string; preparedness a string; purpose a string; degree a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.textdesc.toml "keys in order: derivation a multi-line basic string; domain a multi-line basic string; factuality a multi-line basic string; preparedness a multi-line basic string; purpose a multi-line basic string; degree a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.msgset.callout "callouts in order: IMPORTANT message; IMPORTANT level; NOTE origin, when given; NOTE audience, when given; NOTE explanation, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.msgset.heredoc "quoted heredocs in order: MESSAGE; LEVEL; ORIGIN when given; AUDIENCE when given; EXPLANATION as an indexed array, one quoted heredoc per occurrence">
+<!ENTITY SEMANTIC.msgset.yaml "keys in order: message a strip block scalar; level a strip block scalar; origin a strip block scalar when given; audience a strip block scalar when given; explanation a sequence of strip block scalars">
+<!ENTITY SEMANTIC.msgset.nt "keys in order: message a multiline string; level a multiline string; origin a multiline string when given; audience a multiline string when given; explanation a list of multiline strings">
+<!ENTITY SEMANTIC.msgset.xml "a DOCTYPE declaring msgset as the sequence message, level, origin with a question mark, audience with a question mark, explanation with a plus; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.msgset.polyglot "YAML front matter with schema msgset and the parts list message, level, origin, audience, explanation, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.msgset.jmd "headings in order: message; level; origin when given; audience when given; explanation, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.msgset.json "keys in order: message a string; level a string; origin a string when given; audience a string when given; explanation an array of strings; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.msgset.toml "keys in order: message a multi-line basic string; level a multi-line basic string; origin a multi-line basic string when given; audience a multi-line basic string when given; explanation an array of multi-line basic strings">
+
+<!ENTITY SEMANTIC.productionset.callout "callouts in order: IMPORTANT lhs; IMPORTANT rhs; WARNING constraint, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.productionset.heredoc "quoted heredocs in order: LHS; RHS; CONSTRAINT as an indexed array, one quoted heredoc per occurrence">
+<!ENTITY SEMANTIC.productionset.yaml "keys in order: lhs a strip block scalar; rhs a strip block scalar; constraint a sequence of strip block scalars">
+<!ENTITY SEMANTIC.productionset.nt "keys in order: lhs a multiline string; rhs a multiline string; constraint a list of multiline strings">
+<!ENTITY SEMANTIC.productionset.xml "a DOCTYPE declaring productionset as the sequence lhs, rhs, constraint with a plus; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.productionset.polyglot "YAML front matter with schema productionset and the parts list lhs, rhs, constraint, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.productionset.jmd "headings in order: lhs; rhs; constraint, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.productionset.json "keys in order: lhs a string; rhs a string; constraint an array of strings; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.productionset.toml "keys in order: lhs a multi-line basic string; rhs a multi-line basic string; constraint an array of multi-line basic strings">
+
 <!ENTITY ASK.SCHEMA.1 "Schema A|Which semantic schema shapes the body? Pick any.|None, the six sections alone|A refentry, a manual page|A qandaset, questions and answers|A procedure, numbered steps">
 <!ENTITY ASK.SCHEMA.2 "Schema B|Which more? Pick any.|A glossary, terms with definitions and locators|A textdesc, the voice profile|A msgset, a catalogue of messages|A productionset, a grammar">
 
@@ -426,8 +518,9 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY LAW.SCHEMA.4 "The file written passes the cc-form guards of its kind before it is reported, and its extension is the SCHEMA.ext entity of its schematic; a callout prompt uses only the five GitHub types.">
 <!ENTITY LAW.SCHEMA.5 "The creator writes the prompt and its record and runs the proof; the proof reads the file back, runs the guards, checks the sections are present in order, and plants one out-of-table syntax to show it refused.">
 <!ENTITY LAW.SCHEMA.6 "A body may carry any number of semantic schemas, chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 independently of the schematic; each chosen schema is rendered as a semantic element whose parts are those of its SEMANTIC.*.parts entity, in that order, with occurs one, optional or many as declared.">
-<!ENTITY LAW.SCHEMA.7 "A schema's parts render by the form's three rules, SEMANTIC.form.part, SEMANTIC.form.many and SEMANTIC.form.label, where form is the schematic name; in the callout form the type of each part follows SEMANTIC.callout.types; a part rendered outside those rules is a failed answer.">
+<!ENTITY LAW.SCHEMA.7 "A schema renders in a form by its cell, the SEMANTIC entity named by the schema and then the form, one per schema per form of SEMANTIC.forms, which lists the six schematics and every cc-form kind beyond them; the cell names every part in that form's spelling under the form's three rules SEMANTIC.form.part, SEMANTIC.form.many and SEMANTIC.form.label; in the callout form the type of each part follows SEMANTIC.callout.types; a part rendered outside its cell is a failed answer.">
 <!ENTITY LAW.SCHEMA.8 "A part that occurs one and is missing is a failed answer; a part that occurs optional may be absent; a part that occurs many carries at least one occurrence, each rendered by the many rule.">
+<!ENTITY LAW.SCHEMA.9 "The skeleton of a cell is what node lib/schematic.mjs render prints for the schema and the form; its controls render every cell, run the cc-form guards of the form on the rendering, read the parts back in order, hold SEMANTIC.forms to the kinds cc-form declares, and hold references/semantic-schemas.md to a fresh render; a cell the code cannot render, guard or read back is a failed contract.">
 <!-- end subset cc-schematic -->
 
   
@@ -540,7 +633,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY LAW.ASK.12 "The token ASK.back typed into Other returns to the question just asked, which is asked again without loss of the answers already taken; it is a navigation token, never an answer.">
 <!-- end subset cc-ask -->
 
-  <!ELEMENT prompt_forge (args, intake, sections, schemas, embedding, file, guards, proof, assumption_made*)>
+  <!ELEMENT prompt_forge (args, intake, sections, schemas, forms, embedding, file, guards, proof, assumption_made*)>
   <!ELEMENT embedding (#PCDATA)>
   <!ELEMENT file (#PCDATA)>
   <!ELEMENT guards (guard+)>
@@ -554,17 +647,17 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
   <!ENTITY LAW.PROMPT.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.">
   <!ENTITY LAW.PROMPT.4 "The file takes the extension SCHEMA.ext.xml, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).">
   <!ENTITY LAW.PROMPT.5 "The proof reads the file back, runs the guards, checks the sections and the schema parts are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
-  <!ENTITY LAW.PROMPT.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by the rules SEMANTIC.xml.part, SEMANTIC.xml.many and SEMANTIC.xml.label; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8).">
+  <!ENTITY LAW.PROMPT.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by its cell for xml, the SEMANTIC entity named by the schema and then xml, whose skeleton node lib/schematic.mjs render prints; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8, LAW.SCHEMA.9).">
+  <!ENTITY LAW.PROMPT.7 "The forms a written prompt may take for its own answers are those chosen by ASK.FORM.1 and ASK.FORM.2, asked apart from the schemas and from this command's schematic, rendered as a forms element with one form per kind chosen, its variant named and expansion no, the default nt when none was chosen; a kind not chosen is not offered to the written prompt (LAW.FORM.2, LAW.FORM.4).">
+  <!ENTITY LAW.PROMPT.8 "A written prompt keeps its own voice under three hundred words unless the argument says otherwise; the sections, the schema parts and the forms declared do not count.">
   <!ENTITY ASK.PROMPT.1 "Name|What is the prompt called?|A kebab-case name from the argument|The name of the task it performs|A name typed under Other|Undecided, ask again after the objective">
   <!ENTITY ASK.PROMPT.2 "Objective|What does the prompt make its reader do?|The one task named in the argument, stated as a verb and an object|A judgement with a declared verdict vocabulary|A transformation of an input into an output form|Typed under Other">
   <!ENTITY ASK.PROMPT.3 "Reader|Who reads it?|A Claude Code session, as a slash command|A model called through an API|A person, as a checklist|Typed under Other">
   <!ENTITY ASK.PROMPT.4 "Arguments|How does it read its arguments?|The cc-args walk: flags removed, the end token, positional words quoted whole|A single free sentence|Named options only|None">
   <!ENTITY ASK.PROMPT.5 "Voice|Which voice profile?|Original, prepared, factual, the text_desc defaults|Paraphrase of a named source, cited|Spontaneous|Typed under Other">
-  <!ENTITY ASK.PROMPT.6 "Length|How long?|Under three hundred words of the prompt's own voice|Under one hundred|As long as the sections need|Typed under Other">
-  <!ENTITY ASK.PROMPT.7 "Output|In which form does it render its answer?|NestedText, the default form|Markdown with the five callouts|YAML block scalars|Typed under Other">
-  <!ENTITY ASK.PROMPT.8 "Record|Where does a run record?|artifacts under the prompt name, command-generated filename|Nowhere|Typed under Other|Undecided">
-  <!ENTITY ASK.PROMPT.9 "Proof|How is it proven?|Read back, guards run, sections and schema parts in order, one out-of-table syntax planted and refused|Read back only|None, which this command refuses|Typed under Other">
-  <!ENTITY ASK.PROMPT.10 "License|Which SPDX header heads the file?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other">
+  <!ENTITY ASK.PROMPT.6 "Record|Where does a run record?|artifacts under the prompt name, command-generated filename|Nowhere|Typed under Other|Undecided">
+  <!ENTITY ASK.PROMPT.7 "Proof|How is it proven?|Read back, guards run, sections, schema parts and forms in order, one out-of-table syntax planted and refused|Read back only|None, which this command refuses|Typed under Other">
+  <!ENTITY ASK.PROMPT.8 "License|Which SPDX header heads the file?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other">
 ]>
 
 <trust_boundary>
@@ -585,10 +678,10 @@ The schematic is pinned: a DOCTYPE with the six sections as elements, argument w
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.PROMPT.1 to ASK.PROMPT.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 and ASK.SCHEMA.2 (both multi-select) then ASK.PROMPT.5 and ASK.PROMPT.6; on more again, round 3 of 3 with ASK.PROMPT.7 to ASK.PROMPT.10; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
-4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered by SEMANTIC.xml.part, SEMANTIC.xml.many and SEMANTIC.xml.label (LAW.PROMPT.6); render the `embedding`: the reference syntax SCHEMA.xml.reference, the literal syntax SCHEMA.xml.literal, and the cc-args class chosen for the argument words.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1, ASK.SCHEMA.2, ASK.FORM.1 and ASK.FORM.2 (all four multi-select, the schemas and the forms asked apart); on more again, round 3 of 3 with ASK.PROMPT.5 to ASK.PROMPT.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for xml: print its skeleton with node lib/schematic.mjs render, the schema name and xml, and fill the bracketed words in place (LAW.PROMPT.6); render the `forms`: one `form` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.PROMPT.7); render the `embedding`: the reference syntax SCHEMA.xml.reference, the literal syntax SCHEMA.xml.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.md: an XML document with a DOCTYPE, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.PROMPT.4).
-6. Run the cc-form guards on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
+6. Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
 7. Run the proof: the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with tripped yes (LAW.SCHEMA.5).
 8. Record the run under artifacts with this command's generated filename and report.
 </process>
@@ -600,6 +693,7 @@ Render the `prompt_forge` root declared in the DOCTYPE as the markdown below. On
 - `intake`: **🏷️ Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice
 - `sections`: **🏷️ Sections**, one line per section in order with its first line
 - `schemas`: **🏷️ Schemas**, one line per semantic schema chosen with its parts in order, or one line saying none
+- `forms`: **🏷️ Forms**, one line per form chosen with its kind, variant and expansion, or one line saying nt, the default
 - `embedding`: **🏷️ Embedding**, the reference syntax, the literal syntax, the class
 - `file`: **🏷️ File**, the path and the bytes, and the file itself under --verbose
 - `guards`: **🏷️ Guards**, one line per guard with held yes or no
@@ -624,7 +718,11 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🏷️ Schemas
 
-- [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset]: parts [in order, occurs one, optional or many], rendered by the xml part, many and label rules; or: none, the sections alone
+- [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset]: parts [in order, occurs one, optional or many], rendered from its xml cell; or: none, the sections alone
+
+### 🏷️ Forms
+
+- [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot]: variant [name], expansion no; or: nt, the default
 
 ### 🏷️ Embedding
 
@@ -651,7 +749,8 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
 - Round one ran before any file was written
 - Every syntax in the file is one the SCHEMA.xml.* table declares
 - The argument words are embedded in a declared class and never evaluated
-- Every schema chosen carries its parts in order by the form rules, and no required part is missing
+- Every schema chosen carries its parts in order as its cell for this schematic renders them, and no required part is missing
+- The forms were asked apart from the schemas, and the guards of every kind chosen held on the file
 - Every guard held, the sections are in order, and the planted syntax was refused
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
