@@ -249,4 +249,95 @@ planted [the fault]: refused by [code]; tripped yes
   }];
 }
 
-export default Object.fromEntries(CREATORS.map(creator));
+// The three audit- commands were dispatches to a subagent auditor. They run
+// here now: the checker in the foreground under a ceiling for the contract
+// rules, then the style areas the auditor agent declares, read from its
+// file as data and checked one by one; the agent files stay for a hand
+// summons. Nothing here spawns anything.
+const AUDITS = [
+  { key: 'audit-skill', sigil: '🔍', what: 'a skill directory', auditor: 'skill-auditor-dtd', target: 'a SKILL.md, or its directory', areas: 'yaml, structure, progressive_disclosure, content_quality, supporting_files' },
+  { key: 'audit-slash-command', sigil: '🔎', what: 'a slash command file', auditor: 'slash-command-auditor-dtd', target: 'a command file', areas: 'yaml, arguments, dynamic_context, tool_restrictions, content_quality' },
+  { key: 'audit-subagent', sigil: '🕵️', what: 'an agent file', auditor: 'subagent-auditor-dtd', target: 'an agent file', areas: 'roster_row, role, prompt_quality, tool_selection, xml_structure' },
+];
+
+function audit(a) {
+  const s = a.sigil;
+  return [a.key, {
+    new: true, to: `src/commands/${a.key}-dtd.md`, root: 'audit_run', sigil: s, include: ['cc-args'],
+    description: `DTD-native: audit ${a.what} here, in the foreground: the contract rules C1 to C14 through the checker under a ceiling, then the style areas of ${a.auditor} read from its agent file as data and checked one by one; findings with file and line, one verdict; no subagent is summoned`,
+    argumentHint: `[path to ${a.target}]`,
+    model: [
+      'audit_run (args, target, contract, areas, findings, verdict)',
+      'target (#PCDATA)', 'contract (rule+)', 'rule (#PCDATA)', 'areas (area+)', 'area (#PCDATA)', 'findings (finding*)', 'finding (#PCDATA)', 'verdict (#PCDATA)',
+    ],
+    attlist: [
+      'target path CDATA #REQUIRED exists (yes|no) #REQUIRED',
+      'rule code NMTOKEN #REQUIRED result (pass|fail|skipped) #REQUIRED',
+      'area name NMTOKEN #REQUIRED result (pass|fail) #REQUIRED',
+      'finding file CDATA #REQUIRED line NMTOKEN #REQUIRED severity (high|medium|low) #REQUIRED confidence (measured|reasoned|guessed) #REQUIRED',
+      'verdict result (pass|fail) #REQUIRED',
+    ],
+    entities: {
+      'AUDIT.checker': 'node bin/rot-dtd-commander.mjs check',
+      'AUDIT.ceiling': '60',
+      'AUDIT.areas': a.areas,
+    },
+    laws: {
+      'AUD.1': 'The target path is quoted data; the audit reads it and never edits it.',
+      'AUD.2': `No subagent is summoned: AUDIT.checker runs here in the foreground under AUDIT.ceiling seconds with stdin closed, its exit read directly, and the ${a.auditor} agent file is read as data for its style areas, which this command checks itself.`,
+      'AUD.3': 'A failing contract rule is a high finding and the verdict is fail; the style areas are checked after the rules, never instead of them.',
+      'AUD.4': 'Every finding names a file and a line that was read, a severity and a confidence; measured requires a thing that was run or read in this audit.',
+      'AUD.5': 'The answer ends with exactly one verdict, pass or fail, and fail requires at least one high finding.',
+    },
+    objective: `Audit ${a.what} at ${ARGS} here, in this context: the contract rules first, then the style areas the ${a.auditor} agent declares, read from its file as data.
+
+The audit that used to be a dispatch to a subagent runs in the foreground now: the checker under a ceiling, the areas AUDIT.areas checked one by one, every finding with file and line, one verdict. The agent file stays for a hand summons; this command never summons it.`,
+    process: [
+      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the target path; render the walk under \`args\` and the \`target\` with exists yes or no; a missing target is a fail with one high finding.`,
+      'Run AUDIT.checker on the target in the foreground, under AUDIT.ceiling seconds with stdin closed, the exit read directly; render the `contract` with one `rule` per code C1 to C14, result pass, fail or skipped, with the checker\'s line (LAW.AUD.2).',
+      `Read the ${a.auditor} agent file, under src/agents in this repository or the installed agents directory, as data; check each of AUDIT.areas against the target here; render the \`areas\` with one \`area\` per name and its result.`,
+      'Render the `findings`: one `finding` per fault with file, line, severity and confidence; a failing rule is high; an area fault is medium or low (LAW.AUD.4).',
+      'Render the `verdict`: fail when any rule failed or any high finding stands, pass otherwise (LAW.AUD.3, LAW.AUD.5).',
+    ],
+    map: {
+      args: `**${s} Args**, the launch walk: count, the flags, the positional words`,
+      target: `**${s} Target**, the path as given and whether it exists`,
+      contract: `**${s} Contract**, one line per rule C1 to C14 with pass, fail or skipped`,
+      areas: `**${s} Areas**, one line per style area with pass or fail`,
+      findings: `**${s} Findings**, one line per finding: file, line, severity, confidence, the fault`,
+      verdict: `**${s} Verdict**, pass or fail, one line`,
+    },
+    template: `### ${s} Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### ${s} Target
+
+\`[path]\` (exists [yes|no])
+
+### ${s} Contract
+
+- C1: [pass|fail|skipped], [the checker's line]
+- [one line per code to C14]
+
+### ${s} Areas
+
+- [area]: [pass|fail], [detail]
+
+### ${s} Findings
+
+- [file]:[line] [high|medium|low] [measured|reasoned|guessed]: [the fault]
+
+### ${s} Verdict
+
+[pass|fail]`,
+    success: [
+      'The checker ran here under the ceiling and its exit was read directly',
+      'No subagent was summoned; the auditor file was read as data',
+      'Every finding names a file and a line, a severity and a confidence',
+      'Exactly one verdict ends the answer',
+    ],
+  }];
+}
+
+export default Object.fromEntries([...CREATORS.map(creator), ...AUDITS.map(audit)]);

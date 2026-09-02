@@ -120,7 +120,7 @@ Split into multiple plans by:
 - Subsystem (01-01: Database, 01-02: API, 01-03: UI, 01-04: Frontend)
 - Dependency (01-01: Setup, 01-02: Core, 01-03: Features, 01-04: Testing)
 - Complexity (01-01: Layout, 01-02: Data fetch, 01-03: Visualization)
-- Autonomous vs Interactive (group auto tasks for subagent execution)
+- Autonomous vs Interactive (group auto tasks into one segment)
 
 **Each plan must be:**
 - 2-3 tasks maximum
@@ -128,9 +128,9 @@ Split into multiple plans by:
 - Independently committable
 
 **Autonomous plan optimization:**
-- Plans with NO checkpoints → will execute via subagent (fresh context)
-- Plans with checkpoints → execute in main context (user interaction required)
-- Try to group autonomous work together for maximum fresh contexts
+- Plans with NO checkpoints → run as one segment in the foreground
+- Plans with checkpoints → run segment by segment in the foreground, each checkpoint blocking
+- Group autonomous work together so a segment is one uninterrupted run
 
 See references/scope-estimation.md for complete splitting guidance and quality degradation analysis.
 
@@ -149,7 +149,7 @@ Here's the proposed breakdown for Phase [X]:
 2. [Task name] - [brief description] [type: auto/checkpoint]
 [3. [Task name] - [brief description] [type: auto/checkpoint]] (optional 3rd task if small)
 
-Autonomous: [yes/no] (no checkpoints = subagent execution with fresh context)
+Autonomous: [yes/no] (no checkpoints = one segment, run in the foreground)
 
 Does this breakdown look right? (yes / adjust / start over)
 ```

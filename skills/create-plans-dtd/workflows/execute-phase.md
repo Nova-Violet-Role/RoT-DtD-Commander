@@ -45,118 +45,31 @@ Proceed with execution?
 
 <step name="parse_segments">
 
-**Intelligent segmentation: Parse plan into execution segments.**
+**Segmentation: parse the plan into segments, every one of which runs here.**
 
-Plans are divided into segments by checkpoints. Each segment is routed to optimal execution context (subagent or main).
+Plans are divided into segments by checkpoints. Every segment runs in this context, in the foreground; nothing is routed to a subagent (LAW.RUN.3 of run-plan-dtd).
 
-**1. Check for checkpoints:**
+**1. Find the checkpoints:**
 ```bash
-# Find all checkpoints and their types
 grep -n "type=\"checkpoint" .planning/phases/XX-name/{phase}-{plan}-PLAN.md
 ```
 
-**2. Analyze execution strategy:**
+**2. Cut the segments:**
 
-**If NO checkpoints found:**
-- **Fully autonomous plan** - spawn single subagent for entire plan
-- Subagent gets fresh 200k context, executes all tasks, creates SUMMARY, commits
-- Main context: Just orchestration (~5% usage)
+A segment is the run of auto tasks between two checkpoints (or from the start to the first checkpoint, or from the last checkpoint to the end). A plan with no checkpoint is one segment.
 
-**If checkpoints found, parse into segments:**
-
-Segment = tasks between checkpoints (or start→first checkpoint, or last checkpoint→end)
-
-**For each segment, determine routing:**
-
+**3. Execution pattern, the same for every plan:**
 ```
-Segment routing rules:
-
-IF segment has no prior checkpoint:
-  → SUBAGENT (first segment, nothing to depend on)
-
-IF segment follows checkpoint:human-verify:
-  → SUBAGENT (verification is just confirmation, doesn't affect next work)
-
-IF segment follows checkpoint:decision OR checkpoint:human-action:
-  → MAIN CONTEXT (next tasks need the decision/result)
+For each segment, in order:
+  For each auto task: execute it here with the native tools; every command in the foreground under a timeout, stdin closed, exit code read directly; track deviations
+  At the checkpoint that ends the segment: present it (action, verify or decision), wait for the answer; it blocks, it is never skipped
+  Render the segment as done, blocked or skipped with its reason
+After the last segment: aggregate, create SUMMARY.md, update ROADMAP.md, commit
 ```
 
-**3. Execution pattern:**
+**4. A fresh context:**
 
-**Pattern A: Fully autonomous (no checkpoints)**
-```
-Spawn subagent → execute all tasks → SUMMARY → commit → report back
-```
-
-**Pattern B: Segmented with verify-only checkpoints**
-```
-Segment 1 (tasks 1-3): Spawn subagent → execute → report back
-Checkpoint 4 (human-verify): Main context → you verify → continue
-Segment 2 (tasks 5-6): Spawn NEW subagent → execute → report back
-Checkpoint 7 (human-verify): Main context → you verify → continue
-Aggregate results → SUMMARY → commit
-```
-
-**Pattern C: Decision-dependent (must stay in main)**
-```
-Checkpoint 1 (decision): Main context → you decide → continue in main
-Tasks 2-5: Main context (need decision from checkpoint 1)
-No segmentation benefit - execute entirely in main
-```
-
-**4. Why this works:**
-
-**Segmentation benefits:**
-- Fresh context for each autonomous segment (0% start every time)
-- Main context only for checkpoints (~10-20% total)
-- Can handle 10+ task plans if properly segmented
-- Quality impossible to degrade in autonomous segments
-
-**When segmentation provides no benefit:**
-- Checkpoint is decision/human-action and following tasks depend on outcome
-- Better to execute sequentially in main than break flow
-
-**5. Implementation:**
-
-**For fully autonomous plans:**
-```
-Use Task tool with subagent_type="general-purpose":
-
-Prompt: "Execute plan at .planning/phases/{phase}-{plan}-PLAN.md
-
-This is an autonomous plan (no checkpoints). Execute all tasks, create SUMMARY.md in phase directory, commit with message following plan's commit guidance.
-
-Follow all deviation rules and authentication gate protocols from the plan.
-
-When complete, report: plan name, tasks completed, SUMMARY path, commit hash."
-```
-
-**For segmented plans (has verify-only checkpoints):**
-```
-Execute segment-by-segment:
-
-For each autonomous segment:
-  Spawn subagent with prompt: "Execute tasks [X-Y] from plan at .planning/phases/{phase}-{plan}-PLAN.md. Read the plan for full context and deviation rules. Do NOT create SUMMARY or commit - just execute these tasks and report results."
-
-  Wait for subagent completion
-
-For each checkpoint:
-  Execute in main context
-  Wait for user interaction
-  Continue to next segment
-
-After all segments complete:
-  Aggregate all results
-  Create SUMMARY.md
-  Commit with all changes
-```
-
-**For decision-dependent plans:**
-```
-Execute in main context (standard flow below)
-No subagent routing
-Quality maintained through small scope (2-3 tasks per plan)
-```
+When the context fills before the plan ends, write the handoff through brainstorm-meta-clear-section naming the plan path and the next segment number, let the operator run the clear command, and resume from that segment. A fresh context comes from the clear and the handoff, never from a Task call; no subagent is summoned for a segment or for a plan, and no segment runs in parallel with another.
 
 See step name="segment_execution" for detailed segment execution loop.
 
@@ -186,45 +99,19 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
 
 2. For each segment in order:
 
-   A. Determine routing (apply rules from parse_segments):
-      - No prior checkpoint? → Subagent
-      - Prior checkpoint was human-verify? → Subagent
-      - Prior checkpoint was decision/human-action? → Main context
+   A. Execute the segment here, in this context, with the standard execution flow (step name="execute"):
+      - Every auto task with the native tools; every command in the foreground under a timeout, stdin closed, exit code read directly
+      - Track files created or modified and every deviation, for the Summary
+      - Do not create SUMMARY.md and do not commit until every segment is done
 
-   B. If routing = Subagent:
-      ```
-      Spawn Task tool with subagent_type="general-purpose":
+   B. At the checkpoint that ends the segment:
+      Present it (action, verify or decision) and wait for the answer; it blocks
 
-      Prompt: "Execute tasks [task numbers/names] from plan at [plan path].
+   C. When the context fills before the plan ends:
+      Write the handoff through brainstorm-meta-clear-section naming the plan path and the next segment number; the operator runs the clear command; resume from that segment
 
-      **Context:**
-      - Read the full plan for objective, context files, and deviation rules
-      - You are executing a SEGMENT of this plan (not the full plan)
-      - Other segments will be executed separately
-
-      **Your responsibilities:**
-      - Execute only the tasks assigned to you
-      - Follow all deviation rules and authentication gate protocols
-      - Track deviations for later Summary
-      - DO NOT create SUMMARY.md (will be created after all segments complete)
-      - DO NOT commit (will be done after all segments complete)
-
-      **Report back:**
-      - Tasks completed
-      - Files created/modified
-      - Deviations encountered
-      - Any issues or blockers"
-
-      Wait for subagent to complete
-      Capture results (files changed, deviations, etc.)
-      ```
-
-   C. If routing = Main context:
-      Execute tasks in main using standard execution flow (step name="execute")
-      Track results locally
-
-   D. After segment completes (whether subagent or main):
-      Continue to next checkpoint/segment
+   D. After the segment completes:
+      Render it done, blocked or skipped with its reason, and continue to the next checkpoint or segment
 
 3. After ALL segments complete:
 
@@ -238,13 +125,13 @@ For Pattern A (fully autonomous) and Pattern C (decision-dependent), skip this s
       - Use aggregated results
       - Document all work from all segments
       - Include deviations from all segments
-      - Note which segments were subagented
+      - Note where a clear and a handoff split the run, if one did
 
    C. Commit:
       - Stage all files from all segments
       - Stage SUMMARY.md
       - Commit with message following plan guidance
-      - Include note about segmented execution if relevant
+      - Include a note about the split, if the run was split by a clear
 
    D. Report completion
 
@@ -260,16 +147,9 @@ Parsing segments...
 - Checkpoint 7: human-verify
 - Segment 3: Task 8 (autonomous)
 
-Routing analysis:
-- Segment 1: No prior checkpoint → SUBAGENT ✓
-- Checkpoint 4: Verify only → MAIN (required)
-- Segment 2: After verify → SUBAGENT ✓
-- Checkpoint 7: Verify only → MAIN (required)
-- Segment 3: After verify → SUBAGENT ✓
-
-Execution:
-[1] Spawning subagent for tasks 1-3...
-    → Subagent completes: 3 files modified, 0 deviations
+Execution, all in this context:
+[1] Executing tasks 1-3 in the foreground...
+    → 3 files modified, 0 deviations
 [2] Executing checkpoint 4 (human-verify)...
     ════════════════════════════════════════
     CHECKPOINT: Verification Required
@@ -278,30 +158,28 @@ Execution:
     How to verify: Check src/db/schema.ts for correct types
     ════════════════════════════════════════
     User: "approved"
-[3] Spawning subagent for tasks 5-6...
-    → Subagent completes: 2 files modified, 1 deviation (added error handling)
+[3] Executing tasks 5-6 in the foreground...
+    → 2 files modified, 1 deviation (added error handling)
 [4] Executing checkpoint 7 (human-verify)...
     User: "approved"
-[5] Spawning subagent for task 8...
-    → Subagent completes: 1 file modified, 0 deviations
+[5] Executing task 8 in the foreground...
+    → 1 file modified, 0 deviations
 
 Aggregating results...
 - Total files: 6 modified
 - Total deviations: 1
-- Segmented execution: 3 subagents, 2 checkpoints
+- Segmented execution: 3 segments, 2 checkpoints, no subagent
 
 Creating SUMMARY.md...
 Committing...
 ✓ Complete
 ```
 
-**Benefits of this pattern:**
-- Main context usage: ~20% (just orchestration + checkpoints)
-- Subagent 1: Fresh 0-30% (tasks 1-3)
-- Subagent 2: Fresh 0-30% (tasks 5-6)
-- Subagent 3: Fresh 0-20% (task 8)
-- All autonomous work: Peak quality
-- Can handle large plans with many tasks if properly segmented
+**What this pattern gives:**
+- One context, one operator, every command's exit code read directly
+- Checkpoints as the only pauses, each one blocking
+- A large plan survives a full context through a clear with a handoff, resumed at the segment number
+- No subagent to summon, wait for, or lose a result in
 
 **When NOT to use segmentation:**
 - Plan has decision/human-action checkpoints that affect following tasks

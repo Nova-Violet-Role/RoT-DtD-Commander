@@ -194,25 +194,25 @@ Complex work gets its own plan with full context budget.
   → Ends with checkpoint:human-verify "check xyz.vercel.app loads"
 
 - 06-02-PLAN.md: Environment config (secrets via CLI, env vars)
-  → Autonomous (no checkpoints) → subagent execution
+  → Autonomous (no checkpoints) → one segment, run in the foreground
 
 - 06-03-PLAN.md: CI/CD (GitHub Actions, preview deploys)
   → Ends with checkpoint:human-verify "check PR preview works"
 ```
 
-Verification checkpoints create natural boundaries. Autonomous plans between checkpoints execute via subagent with fresh context.
+Verification checkpoints create natural boundaries. The segments between them run in the foreground, one after another; a fresh context, when needed, comes from a clear carried by a handoff.
 
 ## Autonomous vs Interactive Plans
 
-**Critical optimization:** Plans without checkpoints don't need main context.
+**Every plan runs in the main context**, in the foreground, segment by segment; a plan without checkpoints is one segment.
 
 ### Autonomous Plans (No Checkpoints)
 - Contains only `type="auto"` tasks
 - No user interaction needed
-- **Execute via subagent with fresh 200k context**
-- Impossible to degrade (always starts at 0%)
+- Executes as one segment in the foreground
+- A fresh context, when needed, comes from a clear carried by a handoff
 - Creates SUMMARY, commits, reports back
-- Can run in parallel (multiple subagents)
+- Runs one after another, never in parallel
 
 ### Interactive Plans (Has Checkpoints)
 - Contains `checkpoint:human-verify` or `checkpoint:decision` tasks
@@ -221,15 +221,15 @@ Verification checkpoints create natural boundaries. Autonomous plans between che
 - Still target 50% context (2-3 tasks)
 
 **Planning guidance:** If splitting a phase, try to:
-- Group autonomous work together (→ subagent)
+- Group autonomous work together (one segment)
 - Separate interactive work (→ main context)
 - Maximize autonomous plans (more fresh contexts)
 
 Example:
 ```
 Phase: Feature X
-- 07-01-PLAN.md: Backend (autonomous) → subagent
-- 07-02-PLAN.md: Frontend (autonomous) → subagent
+- 07-01-PLAN.md: Backend (autonomous) → one segment
+- 07-02-PLAN.md: Frontend (autonomous) → one segment
 - 07-03-PLAN.md: Integration test (has checkpoint:human-verify) → main context
 ```
 
@@ -411,7 +411,7 @@ Each commit tells a story. Each is reviewable. Each is revertable. This is craft
 - All tasks: Peak quality
 - Git: Atomic, surgical commits
 - Quality: Consistent excellence
-- Autonomous plans: Subagent execution (fresh context)
+- Autonomous plans: one segment each, in the foreground
 
 **The principle:** Aggressive atomicity. More plans, smaller scope, consistent quality.
 

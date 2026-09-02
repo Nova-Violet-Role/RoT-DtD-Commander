@@ -139,6 +139,18 @@ counts are re-measured.
   hanging step at its ceiling (exit 124), a failing step under stop, and
   every refusal by name; `controls:workflow` in the gate; W1 to W4 as the
   creator's audit.
+- Foreground-only plans: run-plan-dtd loses its three routing strategies and
+  the Task calls; every segment runs in the operator's context, each
+  checkpoint blocks, a fresh context comes from a clear with a handoff written
+  by brainstorm-meta-clear-section, never from a subagent; LAW.RUN.3. The
+  create-plans-dtd skill (SKILL.md, workflows/execute-phase.md,
+  workflows/plan-phase.md, references/scope-estimation.md) says the same.
+- The audits absorbed: audit-skill, audit-slash-command and audit-subagent no
+  longer dispatch to a subagent; each runs the checker here under a 60 s
+  ceiling with stdin closed (one rule per code C1 to C14), reads the auditor
+  agent file as data for its style areas and checks them itself, renders
+  findings with file, line, severity and confidence, and one verdict;
+  LAW.AUD.1 to 5. The auditor agents stay for a hand summons.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

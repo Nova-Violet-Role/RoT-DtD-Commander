@@ -82,7 +82,7 @@ Each plan is independently executable, verifiable, and scoped to **2-3 tasks max
 
 **Atomic task principle:** Better to have 10 small, high-quality plans than 3 large, degraded plans. Each commit should be surgical, focused, and maintainable.
 
-**Autonomous execution:** Plans without checkpoints execute via subagent with fresh context - impossible to degrade.
+**Foreground execution:** Plans run in the foreground by run-plan-dtd, segment by segment, in the operator's context; a fresh context between segments comes from a clear carried by a handoff, never from a subagent.
 
 See: references/scope-estimation.md
 
