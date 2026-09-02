@@ -41,6 +41,14 @@ out=$(run "$T/commands/m5.md"); echo "$out" | grep -q -E 'ERR +C13 .*no sigil' &
 node -e "const fs=require('fs');const t=fs.readFileSync('commands/pareto-dtd.md','utf8');const u=t.replace(/^description: \"(.*)\"\$/m,'description: \$1');if(u===t){process.exit(3)};fs.writeFileSync(process.argv[1],u)" "$T/commands/m6.md" || { echo "M6 mutation did not land"; fail=1; }
 grep -q '^description: Find the vital few: ' "$T/commands/m6.md" || { echo "M6 mutation did not land"; fail=1; }
 out=$(run "$T/commands/m6.md"); echo "$out" | grep -q -E 'ERR +C14' && echo "PASS M6 bare colon in front matter -> C14" || { echo "FAIL M6"; echo "$out" | tail -3; fail=1; }
+# M7: a declaration inside an IGNORE conditional section is gone -> C4
+node -e "const fs=require('fs');const t=fs.readFileSync('commands/pareto-dtd.md','utf8');const u=t.replace('  <!ELEMENT factor (#PCDATA)>','  <![ IGNORE [\n  <!ELEMENT factor (#PCDATA)>\n  ]]>');if(u===t){process.exit(3)};fs.writeFileSync(process.argv[1],u)" "$T/commands/m7.md" || { echo "M7 mutation did not land"; fail=1; }
+grep -q -F '<![ IGNORE [' "$T/commands/m7.md" || { echo "M7 mutation did not land"; fail=1; }
+out=$(run "$T/commands/m7.md"); echo "$out" | grep -q 'ERR  C4' && echo "PASS M7 declaration under IGNORE -> C4" || { echo "FAIL M7"; echo "$out" | tail -3; fail=1; }
+# M8: the same declaration inside an INCLUDE section keyed by a parameter entity -> pass
+node -e "const fs=require('fs');const t=fs.readFileSync('commands/pareto-dtd.md','utf8');const u=t.replace('  <!ELEMENT factor (#PCDATA)>','  <!ENTITY % keep \"INCLUDE\">\n  <![ %keep; [\n  <!ELEMENT factor (#PCDATA)>\n  ]]>');if(u===t){process.exit(3)};fs.writeFileSync(process.argv[1],u)" "$T/commands/m8.md" || { echo "M8 mutation did not land"; fail=1; }
+grep -q -F '<![ %keep; [' "$T/commands/m8.md" || { echo "M8 mutation did not land"; fail=1; }
+out=$(run "$T/commands/m8.md"); echo "$out" | grep -q 'failed 0' && echo "PASS M8 declaration under INCLUDE keyed by %keep; -> pass" || { echo "FAIL M8"; echo "$out" | tail -3; fail=1; }
 # Untouched -> pass
 out=$(run "$T/commands/pareto-dtd.md"); echo "$out" | grep -q 'failed 0' && echo "PASS M0 untouched file passes" || { echo "FAIL M0"; echo "$out" | tail -3; fail=1; }
 

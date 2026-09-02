@@ -27,7 +27,14 @@ counts are re-measured.
   LAW.ARGS.1 to 4).
 - `lib/dtd.mjs`: the first declaration of an entity binds, as XML 1.0
   section 4.2 has it, in the resolver and the parser; `forgeNew` takes
-  `predeclare` for driver-file overrides.
+  `predeclare` for driver-file overrides. Conditional sections
+  (`<![ INCLUDE [ ]]>`, `<![ IGNORE [ ]]>`, keyed by a parameter entity)
+  are flattened innermost first by the resolver and the parser, and the
+  DOCTYPE close skips a section close; mutations M7 and M8 in
+  `checker/checker-controls.sh` trip it.
+- `create-plugin-dtd`: the plugin creator in the DITA shell anatomy, one
+  conditional section per creation, a curated SPDX list (`PLUGIN.licenses`),
+  rendered manifests, one instruction per creation naming its creator.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

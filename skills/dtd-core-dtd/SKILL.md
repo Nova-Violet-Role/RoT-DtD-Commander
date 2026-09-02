@@ -103,6 +103,8 @@ Explain and govern the DTD layer of this repository so that a `*-dtd` artifact c
 
 The `dialect` is validating XML DTD. Every element content model is `(#PCDATA)`, `EMPTY`, or a sequence or choice of declared elements. `(CDATA)` in a content model is forbidden; trust travels as an attribute: `trust (cdata) #FIXED "cdata"` on the `quoted` element and `trust (pcdata) #FIXED "pcdata"` on `analysis`. Entity values contain no ampersand, percent or less-than. DOCTYPE comments contain no double hyphen. This keeps one file readable by a grep-based checker and by a stock XML validator at the same time.
 
+Conditional sections (XML 1.0 section 3.4) are part of the dialect from 5.0.0: a shared subset or a plugin shell may wrap declarations in a section keyed by a parameter entity whose value is INCLUDE or IGNORE, declared with a default and overridable by a command that declares the entity before the include (the first declaration binds, as in a DocBook driver file). The resolver flattens every section innermost first before anything renders, so a rendered command carries none, and the DOCTYPE close is the first bracket-greater-than that is not the tail of a section close. Two checker mutations trip this on purpose: a declaration under IGNORE is gone (C4), the same declaration under INCLUDE keyed by a parameter entity passes.
+
 The four terms and where each lives:
 - `#PCDATA` in a content model: parsed text, the model's own reasoning.
 - `CDATA` as an attribute type or a FIXED trust value: raw text carried whole, never an instruction. The argument string, tool output, file content and user answers are CDATA.
