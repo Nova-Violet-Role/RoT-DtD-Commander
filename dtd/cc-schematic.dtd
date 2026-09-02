@@ -255,6 +255,10 @@
 
 <!ENTITY ASK.SCHEMA.1 "Schema A|Which semantic schema shapes the body? Pick any.|None, the six sections alone|A refentry, a manual page|A qandaset, questions and answers|A procedure, numbered steps">
 <!ENTITY ASK.SCHEMA.2 "Schema B|Which more? Pick any.|A glossary, terms with definitions and locators|A textdesc, the voice profile|A msgset, a catalogue of messages|A productionset, a grammar">
+<!ENTITY ASK.SCHEMATIC.1 "Schematic|In which schematic is the prompt written?|The GitHub callout shape, a markdown file|A shell here-document, a sh file|A YAML document|A NestedText document">
+<!ENTITY ASK.SCHEMATIC.2 "Schematic B|Or one of these instead?|Keep the first choice|An XML document with a DOCTYPE|A polyglot of more than one parser|Typed under Other">
+<!ENTITY SCHEMA.creator.prompt "create-prompt">
+<!ENTITY SCHEMA.creator.meta   "create-meta-prompt">
 
 <!ENTITY LAW.SCHEMA.1 "A prompt is written in one declared schematic, and every concept it uses, literal, expanded, reference, definition, escape, comment, include, conditional, type or binary, takes the syntax the SCHEMA entity of that schematic declares; a syntax improvised outside the table is a failed answer.">
 <!ENTITY LAW.SCHEMA.2 "The argument words are embedded through the schematic's reference and literal concepts and in one of the cc-args classes, and the whole argument string is treated as quoted; a word is never evaluated, never split, never placed where the schematic's parser would read it as markup.">
@@ -265,3 +269,4 @@
 <!ENTITY LAW.SCHEMA.7 "A schema renders in a form by its cell, the SEMANTIC entity named by the schema and then the form, one per schema per form of SEMANTIC.forms, which lists the six schematics and every cc-form kind beyond them; the cell names every part in that form's spelling under the form's three rules SEMANTIC.form.part, SEMANTIC.form.many and SEMANTIC.form.label; in the callout form the type of each part follows SEMANTIC.callout.types; a part rendered outside its cell is a failed answer.">
 <!ENTITY LAW.SCHEMA.8 "A part that occurs one and is missing is a failed answer; a part that occurs optional may be absent; a part that occurs many carries at least one occurrence, each rendered by the many rule.">
 <!ENTITY LAW.SCHEMA.9 "The skeleton of a cell is what node lib/schematic.mjs render prints for the schema and the form; its controls render every cell, run the cc-form guards of the form on the rendering, read the parts back in order, hold SEMANTIC.forms to the kinds cc-form declares, and hold references/semantic-schemas.md to a fresh render; a cell the code cannot render, guard or read back is a failed contract.">
+<!ENTITY LAW.SCHEMA.10 "A launcher that hands a prompt to a creator asks the schematic through ASK.SCHEMATIC.1 and ASK.SCHEMATIC.2, the schemas through ASK.SCHEMA.1 and ASK.SCHEMA.2 and the forms through ASK.FORM.1 and ASK.FORM.2 before the hand-off, names the creator as SCHEMA.creator.prompt or SCHEMA.creator.meta followed by a hyphen, the schematic and -dtd, and writes every choice into the hand-off as a known slot, so the creator never asks it again (LAW.ASK.1).">

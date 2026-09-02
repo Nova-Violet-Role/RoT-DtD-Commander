@@ -90,6 +90,12 @@ counts are re-measured.
   and pins `references/semantic-schemas.md` (every cell rendered) to a fresh
   render; `controls:schematic` in the gate; the creators print a schema's
   skeleton with `node lib/schematic.mjs render` and fill it in place.
+- brainstorm-meta-clear-section as the schematic launcher: ASK.SCHEMATIC.1 and 2,
+  SCHEMA.creator.prompt and SCHEMA.creator.meta, LAW.SCHEMA.10 in cc-schematic;
+  the command asks the schematic, the schemas, the kind and the forms before
+  the clear (eleven questions in three rounds), renders a `launch` element
+  naming the matching creator, carries every choice in the handoff as a known
+  slot, and its launch line hands the handoff to that creator; LAW.CLEAR.6.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,
