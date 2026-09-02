@@ -92,5 +92,17 @@
   "create-router": "🚦",
   "create-db": "🗄️",
   "create-ot-variants": "🧠",
-  "dtd-forms": "🪢"
+  "dtd-forms": "🪢",
+  "create-prompt-callout": "📣",
+  "create-prompt-heredoc": "🧾",
+  "create-prompt-yaml": "🧷",
+  "create-prompt-nt": "🪜",
+  "create-prompt-xml": "🏷️",
+  "create-prompt-polyglot": "🎴",
+  "create-meta-prompt-callout": "🗯️",
+  "create-meta-prompt-heredoc": "🧬",
+  "create-meta-prompt-yaml": "🧶",
+  "create-meta-prompt-nt": "🪆",
+  "create-meta-prompt-xml": "🔖",
+  "create-meta-prompt-polyglot": "🎩"
 }

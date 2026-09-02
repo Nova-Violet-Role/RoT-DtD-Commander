@@ -61,6 +61,16 @@ counts are re-measured.
   24 terms with a locator each, the library of 16 Phantom-book files, the
   `text_desc` profile; LAW.LEX.1 to 5. The slop controls hold the classifier's
   verb set equal to the declared one, in both directions.
+- `dtd/cc-schematic.dtd`: the schematics a prompt may be written in and the
+  table that maps every DTD concept onto each (the equivalence table of the
+  argument-variant references, cut into SCHEMA.<schematic>.<concept>
+  entities), the six prompt sections and the six meta-prompt sections,
+  LAW.SCHEMA.1 to 5. Twelve creators generated from one function,
+  `create-prompt-<schematic>-dtd` and `create-meta-prompt-<schematic>-dtd`
+  for callout, heredoc, yaml, nt, xml and polyglot, each pinning its
+  schematic as a fixed attribute of its root, embedding the argument words
+  in a declared class, guarding the file with cc-form, and proving itself
+  by a planted out-of-table syntax.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

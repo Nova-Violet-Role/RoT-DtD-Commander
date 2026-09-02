@@ -790,6 +790,135 @@ The lexicon behind the voice gate: the verb list the static classifier reads (LE
 <!ENTITY LAW.LEX.5 "A Phantom-book command declares one text_desc in its DOCTYPE, and the gate reads it: a derivation of paraphrase or translation names its source in a bibl, and a preparedness of spontaneous lowers no bound.">
 ```
 
+## cc-schematic.dtd
+
+The schematics a prompt may be written in and how every DTD concept maps onto each: the schematic and concept elements, the SCHEMA.<schematic>.<concept> table for callout, heredoc, yaml, nt, xml and polyglot, the sections and section elements with the six prompt sections and the six meta-prompt sections, the SCHEMA.ext.* file extensions, LAW.SCHEMA.1 to 5. Read by the twelve create-prompt and create-meta-prompt creators, one per schematic, whose root pins the schematic as a fixed attribute.
+
+```
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-schematic.dtd : the schematics a prompt may be written in, and how every
+  DTD concept maps onto each of them.
+
+  A schematic is a named way to write a prompt: the GitHub callout shape
+  the operator writes specs in, a shell heredoc, a YAML document, a
+  NestedText document, an XML document with a DOCTYPE, or a polyglot that
+  is valid in more than one of them at once. The table cut from the
+  $ARGUMENTS variant references says, for each schematic, what a literal
+  string is, what an expanded one is, how a value is referenced, defined,
+  escaped, commented, included, made conditional, typed, or left unparsed.
+  Each cell is a SCHEMA entity, so a creator that writes a prompt in a
+  schematic reads the syntax it must use from here and never improvises
+  it, and the embedding of the argument words follows cc-args (the class)
+  and cc-form (the guards).
+
+  The six prompt sections and the six meta-prompt sections are declared
+  once too: a prompt in any schematic carries the same parts in the same
+  order, and a meta-prompt, a prompt that writes prompts, carries its own.
+-->
+
+<!ELEMENT schematic (concept+)>
+<!ATTLIST schematic name (callout|heredoc|yaml|nt|xml|polyglot) #REQUIRED>
+<!ELEMENT concept EMPTY>
+<!ATTLIST concept
+          name   (literal|expanded|reference|definition|escape|comment|include|conditional|type|binary) #REQUIRED
+          syntax CDATA #REQUIRED>
+
+<!-- The parts of a prompt and of a meta-prompt, in order. -->
+<!ELEMENT sections (section+)>
+<!ELEMENT section (#PCDATA)>
+<!ATTLIST section name (role|objective|arguments|process|output|success|target|schematic|questions|template|checks|record) #REQUIRED>
+<!ENTITY SCHEMA.prompt.sections "role, objective, arguments, process, output, success">
+<!ENTITY SCHEMA.meta.sections   "target, schematic, arguments, questions, template, checks">
+
+<!-- ===== callout: the GitHub alert shape ===== -->
+<!ENTITY SCHEMA.callout.literal     "a code fence inside the callout body">
+<!ENTITY SCHEMA.callout.expanded    "the callout body, one quoted line after another">
+<!ENTITY SCHEMA.callout.reference   "the argument word written as a placeholder in angle brackets, named once under arguments">
+<!ENTITY SCHEMA.callout.definition  "a line of the form name colon value at the top of the body">
+<!ENTITY SCHEMA.callout.escape      "a backslash before a bracket or an asterisk">
+<!ENTITY SCHEMA.callout.comment     "an HTML comment line">
+<!ENTITY SCHEMA.callout.include     "a link to the file">
+<!ENTITY SCHEMA.callout.conditional "one callout per case, typed NOTE, TIP, IMPORTANT, WARNING or CAUTION">
+<!ENTITY SCHEMA.callout.type        "the bracket, the exclamation mark and one of the five type names">
+<!ENTITY SCHEMA.callout.binary      "an image link">
+
+<!-- ===== heredoc: a shell here-document ===== -->
+<!ENTITY SCHEMA.heredoc.literal     "a quoted delimiter: nothing expands">
+<!ENTITY SCHEMA.heredoc.expanded    "an unquoted delimiter: parameters expand">
+<!ENTITY SCHEMA.heredoc.reference   "a dollar sign and the position, always inside double quotes">
+<!ENTITY SCHEMA.heredoc.definition  "name, equals sign, value, no spaces">
+<!ENTITY SCHEMA.heredoc.escape      "printf with the q format, or a backslash before the dollar sign">
+<!ENTITY SCHEMA.heredoc.comment     "a hash to the end of the line">
+<!ENTITY SCHEMA.heredoc.include     "source and the file">
+<!ENTITY SCHEMA.heredoc.conditional "case on the word, or if on a test">
+<!ENTITY SCHEMA.heredoc.type        "none: a shell has no types">
+<!ENTITY SCHEMA.heredoc.binary      "cat of the file, never inside the document">
+
+<!-- ===== yaml ===== -->
+<!ENTITY SCHEMA.yaml.literal        "a block scalar with the strip indicator">
+<!ENTITY SCHEMA.yaml.expanded       "a plain scalar">
+<!ENTITY SCHEMA.yaml.reference      "an alias: an asterisk and the anchor name">
+<!ENTITY SCHEMA.yaml.definition     "an anchor: an ampersand and the name, on the value it names">
+<!ENTITY SCHEMA.yaml.escape         "double quotes around the value">
+<!ENTITY SCHEMA.yaml.comment        "a hash to the end of the line">
+<!ENTITY SCHEMA.yaml.include        "none">
+<!ENTITY SCHEMA.yaml.conditional    "none">
+<!ENTITY SCHEMA.yaml.type           "a tag, which the yaml_tags guard refuses when it names a language object">
+<!ENTITY SCHEMA.yaml.binary         "none">
+
+<!-- ===== nt: NestedText ===== -->
+<!ENTITY SCHEMA.nt.literal          "a multiline string: an angle bracket per line">
+<!ENTITY SCHEMA.nt.expanded         "none: every value is a string">
+<!ENTITY SCHEMA.nt.reference        "none">
+<!ENTITY SCHEMA.nt.definition       "none">
+<!ENTITY SCHEMA.nt.escape           "none needed: no character is special inside a value">
+<!ENTITY SCHEMA.nt.comment          "a hash to the end of the line">
+<!ENTITY SCHEMA.nt.include          "none">
+<!ENTITY SCHEMA.nt.conditional      "none">
+<!ENTITY SCHEMA.nt.type             "none: dictionaries, lists and strings only">
+<!ENTITY SCHEMA.nt.binary           "none">
+
+<!-- ===== xml: a document with a DOCTYPE ===== -->
+<!ENTITY SCHEMA.xml.literal         "a CDATA section">
+<!ENTITY SCHEMA.xml.expanded        "parsed text: entities resolved, markup recognised">
+<!ENTITY SCHEMA.xml.reference       "an ampersand, the entity name and a semicolon">
+<!ENTITY SCHEMA.xml.definition      "an ENTITY declaration in the internal subset">
+<!ENTITY SCHEMA.xml.escape          "the three escapes in text, five in an attribute value">
+<!ENTITY SCHEMA.xml.comment         "a comment with no double hyphen inside">
+<!ENTITY SCHEMA.xml.include         "an external parameter entity with a SYSTEM identifier, never from an argument">
+<!ENTITY SCHEMA.xml.conditional     "a conditional section keyed by a parameter entity">
+<!ENTITY SCHEMA.xml.type            "an ATTLIST type, or a NOTATION for a stream">
+<!ENTITY SCHEMA.xml.binary          "an NDATA entity under a NOTATION, never read by the parser">
+
+<!-- ===== polyglot: one text, more than one parser ===== -->
+<!ENTITY SCHEMA.polyglot.literal    "the layer that owns the value names its literal form">
+<!ENTITY SCHEMA.polyglot.expanded   "the outermost layer expands, every inner layer is literal to it">
+<!ENTITY SCHEMA.polyglot.reference  "the outermost layer's reference; an inner layer sees the expanded text">
+<!ENTITY SCHEMA.polyglot.definition "the outermost layer's definition">
+<!ENTITY SCHEMA.polyglot.escape     "each layer's escape applied from the inside out">
+<!ENTITY SCHEMA.polyglot.comment    "each layer's comment, valid to that layer alone">
+<!ENTITY SCHEMA.polyglot.include    "the outermost layer's include">
+<!ENTITY SCHEMA.polyglot.conditional "the outermost layer's conditional">
+<!ENTITY SCHEMA.polyglot.type       "each layer's type, and every guard of every layer">
+<!ENTITY SCHEMA.polyglot.binary     "the outermost layer's binary form">
+
+<!-- ===== the file a prompt lands in ===== -->
+<!ENTITY SCHEMA.ext.callout  "md">
+<!ENTITY SCHEMA.ext.heredoc  "sh">
+<!ENTITY SCHEMA.ext.yaml     "yaml">
+<!ENTITY SCHEMA.ext.nt       "nt">
+<!ENTITY SCHEMA.ext.xml      "md">
+<!ENTITY SCHEMA.ext.polyglot "md">
+
+<!ENTITY LAW.SCHEMA.1 "A prompt is written in one declared schematic, and every concept it uses, literal, expanded, reference, definition, escape, comment, include, conditional, type or binary, takes the syntax the SCHEMA entity of that schematic declares; a syntax improvised outside the table is a failed answer.">
+<!ENTITY LAW.SCHEMA.2 "The argument words are embedded through the schematic's reference and literal concepts and in one of the cc-args classes, and the whole argument string is treated as quoted; a word is never evaluated, never split, never placed where the schematic's parser would read it as markup.">
+<!ENTITY LAW.SCHEMA.3 "A prompt carries the six sections of SCHEMA.prompt.sections in that order, and a meta-prompt the six of SCHEMA.meta.sections; a section with nothing to say still appears, with one line saying so.">
+<!ENTITY LAW.SCHEMA.4 "The file written passes the cc-form guards of its kind before it is reported, and its extension is the SCHEMA.ext entity of its schematic; a callout prompt uses only the five GitHub types.">
+<!ENTITY LAW.SCHEMA.5 "The creator writes the prompt and its record and runs the proof; the proof reads the file back, runs the guards, checks the sections are present in order, and plants one out-of-table syntax to show it refused.">
+```
+
 ## cc-report.dtd
 
 The research report: a strategic summary, named sections that may quote, the claude_context block, one next action, and sources with a kind. Included by the research commands and deep-dive.

@@ -20,6 +20,152 @@ const ARGS = '<quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>';
 
 const MANY_ROUNDS = ['% ask.rounds "(1|2|3|4|5|6|7|8)"', '% ask.of "(8)"', 'ASK.rounds_per_prompt "8"', 'ASK.max_total "30"'];
 
+// One creator per schematic, for prompts and for meta-prompts. The schematic
+// is pinned in the DOCTYPE as a fixed attribute of the root, so the command
+// cannot drift to another shape; the syntax it must use comes from the
+// SCHEMA.<schematic>.* entities of cc-schematic.dtd (LAW.SCHEMA.1).
+const SCHEMATICS = {
+  callout: { sigil: '📣', label: 'the GitHub callout shape', ext: 'md', example: 'a quoted line under a typed callout, one of the five types per case' },
+  heredoc: { sigil: '🧾', label: 'a shell here-document', ext: 'sh', example: 'a quoted delimiter around the prompt, so a dollar sign inside it stays a dollar sign' },
+  yaml: { sigil: '🧷', label: 'a YAML document', ext: 'yaml', example: 'each section a key with a block scalar, the strip indicator on every literal' },
+  nt: { sigil: '🪜', label: 'a NestedText document', ext: 'nt', example: 'each section a key with a multiline string, an angle bracket per line' },
+  xml: { sigil: '🏷️', label: 'an XML document with a DOCTYPE', ext: 'md', example: 'a DOCTYPE with the six sections as elements, argument words in CDATA sections' },
+  polyglot: { sigil: '🎴', label: 'a polyglot of more than one parser', ext: 'md', example: 'Markdown with YAML front matter holding a NestedText block, each layer literal to the one outside it' },
+};
+const META_SIGILS = { callout: '🗯️', heredoc: '🧬', yaml: '🧶', nt: '🪆', xml: '🔖', polyglot: '🎩' };
+
+function promptCreator(schematic, meta) {
+  const s = SCHEMATICS[schematic];
+  const sigil = meta ? META_SIGILS[schematic] : s.sigil;
+  const kind = meta ? 'meta-prompt' : 'prompt';
+  const key = `create-${kind}-${schematic}`;
+  const root = meta ? 'meta_forge' : 'prompt_forge';
+  const prefix = meta ? 'META' : 'PROMPT';
+  const sectionsEnt = meta ? 'SCHEMA.meta.sections' : 'SCHEMA.prompt.sections';
+  const what = meta ? 'a meta-prompt, a prompt that writes prompts' : 'a prompt';
+  const q = meta
+    ? {
+        1: 'Name|What is the meta-prompt called?|A kebab-case name from the argument|The name of the prompts it will write, with meta in front|A name typed under Other|Undecided, ask again after the target',
+        2: 'Target|What prompts does it write?|Prompts of one declared schematic, this one|Prompts of any schematic, the schematic asked first|Prompts for one task family named under Other|Undecided',
+        3: 'Questions|How many questions does a written prompt ask its user?|Up to twelve in three rounds, the cc-ask shape|Four, one round|None, it takes its arguments and runs|Typed under Other',
+        4: 'Arguments|How does a written prompt read its arguments?|The cc-args walk: flags removed, the end token, positional words quoted whole|A single free sentence|Named options only|Typed under Other',
+        5: 'Template|What template does every written prompt follow?|The six sections of SCHEMA.prompt.sections, in order|The six sections plus examples|A template typed under Other|Undecided',
+        6: 'Checks|What checks does a written prompt carry?|Success criteria as numbered laws, one per promise|A checklist of five boxes|None|Typed under Other',
+        7: 'Voice|Which voice profile?|Original, prepared, factual, the text_desc defaults|Paraphrase of a named source, cited|Spontaneous, for brainstorming prompts|Typed under Other',
+        8: 'Examples|How many worked examples does it show the written prompt?|One|Three|None|Typed under Other',
+        9: 'Output|In which form does a written prompt render its answer?|NestedText, the default form|Markdown with the five callouts|YAML block scalars|Typed under Other',
+        10: 'Record|Where does a run record?|artifacts under the prompt name, command-generated filename|Nowhere|Typed under Other|Undecided',
+        11: 'Proof|How is it proven?|Read back, guards run, sections in order, one out-of-table syntax planted and refused|Read back only|None, which this command refuses|Typed under Other',
+        12: 'License|Which SPDX header heads the file?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other',
+      }
+    : {
+        1: 'Name|What is the prompt called?|A kebab-case name from the argument|The name of the task it performs|A name typed under Other|Undecided, ask again after the objective',
+        2: 'Objective|What does the prompt make its reader do?|The one task named in the argument, stated as a verb and an object|A judgement with a declared verdict vocabulary|A transformation of an input into an output form|Typed under Other',
+        3: 'Reader|Who reads it?|A Claude Code session, as a slash command|A model called through an API|A person, as a checklist|Typed under Other',
+        4: 'Arguments|How does it read its arguments?|The cc-args walk: flags removed, the end token, positional words quoted whole|A single free sentence|Named options only|None',
+        5: 'Sections|Which sections does it carry?|The six of SCHEMA.prompt.sections, in order|The six plus worked examples|Objective and process only, the rest one line each|Typed under Other',
+        6: 'Voice|Which voice profile?|Original, prepared, factual, the text_desc defaults|Paraphrase of a named source, cited|Spontaneous|Typed under Other',
+        7: 'Length|How long?|Under three hundred words of the prompt\'s own voice|Under one hundred|As long as the sections need|Typed under Other',
+        8: 'Examples|How many worked examples?|One|Three|None|Typed under Other',
+        9: 'Output|In which form does it render its answer?|NestedText, the default form|Markdown with the five callouts|YAML block scalars|Typed under Other',
+        10: 'Record|Where does a run record?|artifacts under the prompt name, command-generated filename|Nowhere|Typed under Other|Undecided',
+        11: 'Proof|How is it proven?|Read back, guards run, sections in order, one out-of-table syntax planted and refused|Read back only|None, which this command refuses|Typed under Other',
+        12: 'License|Which SPDX header heads the file?|AGPL-3.0-or-later OR EUPL-1.2, the repository license|MIT|Apache-2.0|Typed under Other',
+      };
+  const entities = {};
+  for (const [n, v] of Object.entries(q)) entities[`ASK.${prefix}.${n}`] = v;
+  return [key, {
+    new: true, to: `src/commands/${key}-dtd.md`, root, include: ['cc-args', 'cc-form', 'cc-schematic', 'cc-ask'],
+    description: `DTD-native: create ${what} written in ${s.label} through twelve questions in three rounds; every syntax comes from the SCHEMA.${schematic}.* table, the argument words are embedded in a declared class, the file passes the form guards, and a proof plants one out-of-table syntax and shows it refused`,
+    argumentHint: `[what the ${kind} is for, or leave blank; --no-gate for autonomous defaults; --verbose prints the file as written]`,
+    model: [
+      `${root} (args, intake, sections, embedding, file, guards, proof, assumption_made*)`,
+      'embedding (#PCDATA)', 'file (#PCDATA)', 'guards (guard+)', 'proof (#PCDATA)',
+    ],
+    attlist: [
+      `${root} schematic (${schematic}) #FIXED "${schematic}"`,
+      'embedding reference CDATA #REQUIRED literal CDATA #REQUIRED class (pcdata|cdata|ndata|section) #REQUIRED',
+      'file path CDATA #REQUIRED bytes CDATA #REQUIRED',
+      'proof tripped (yes|no) #REQUIRED',
+    ],
+    entities,
+    laws: {
+      [`${prefix}.1`]: `The schematic of this command is ${schematic}, fixed in its DOCTYPE; the file it writes is ${s.label} and every syntax in it comes from a SCHEMA.${schematic}.* entity (LAW.SCHEMA.1).`,
+      [`${prefix}.2`]: `The sections are those of ${sectionsEnt}, rendered in that order; the argument words are embedded through SCHEMA.${schematic}.reference and SCHEMA.${schematic}.literal in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).`,
+      [`${prefix}.3`]: 'Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.',
+      [`${prefix}.4`]: `The file takes the extension SCHEMA.ext.${schematic}, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).`,
+      [`${prefix}.5`]: 'The proof reads the file back, runs the guards, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a proof that did not trip stops the command before the report (LAW.SCHEMA.5).',
+    },
+    objective: `Create ${what} for ${ARGS} (or ask what it is for), written in ${s.label}.
+
+The schematic is pinned: ${s.example}. What a literal is, what expands, how a value is referenced, defined, escaped, commented, included or made conditional, is read from the SCHEMA.${schematic}.* table of cc-schematic.dtd, the table cut from the argument-variant references: the quoted heredoc is the CDATA section is the strip block scalar is the NestedText multiline string, and the argument string is always the quoted whole. The sections are ${sectionsEnt}. The file is guarded by cc-form before it is reported and proven by a planted out-of-table syntax that the proof refuses.`,
+    process: [
+      `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; render the walk under \`args\`. This is a create- command, so round one always runs (LAW.ASK.10).`,
+      `Round 1 of 3: ask ASK.${prefix}.1 to ASK.${prefix}.4 as one AskUserQuestion call, four options each plus Other; render the round.`,
+      `Present the gate; on more, round 2 of 3 with ASK.${prefix}.5 to ASK.${prefix}.8; on more again, round 3 of 3 with ASK.${prefix}.9 to ASK.${prefix}.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
+      `Render the \`sections\`: one \`section\` per name of ${sectionsEnt}, in order, each with its text; render the \`embedding\`: the reference syntax SCHEMA.${schematic}.reference, the literal syntax SCHEMA.${schematic}.literal, and the cc-args class chosen for the argument words.`,
+      `Write the \`file\` <name>.<schematic>.${s.ext}: ${s.label}, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.${prefix}.4).`,
+      `Run the cc-form guards on the file with node lib/form.mjs and render one \`guard\` per line printed, held yes or no; a guard that did not hold stops the command.`,
+      'Run the proof: the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with tripped yes (LAW.SCHEMA.5).',
+      'Record the run under artifacts with this command\'s generated filename and report.',
+    ],
+    map: {
+      args: `**${sigil} Args**, the launch walk: count, the flags, the positional words`,
+      intake: `**${sigil} Intake**, each \`round\` n of 3 with its questions and the labels or Other text chosen, the \`impactful\` selections when asked for, the gate choice`,
+      sections: `**${sigil} Sections**, one line per section in order with its first line`,
+      embedding: `**${sigil} Embedding**, the reference syntax, the literal syntax, the class`,
+      file: `**${sigil} File**, the path and the bytes, and the file itself under --verbose`,
+      guards: `**${sigil} Guards**, one line per guard with held yes or no`,
+      proof: `**${sigil} Proof**, the sections check, the planted syntax and its refusal, tripped yes or no`,
+      assumption_made: `**${sigil} Assumptions Made**, every ASK.${prefix}.* question not asked, with the first option taken`,
+    },
+    template: `### ${sigil} Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
+
+### ${sigil} Intake
+
+- round 1 of 3: [headers] answered [labels or Other text]
+- round 2 of 3: [when asked]
+- round 3 of 3: [when asked]
+- gate: [start|more|add|impactful] (round N)
+
+### ${sigil} Sections
+
+- [section]: [its first line]
+
+### ${sigil} Embedding
+
+reference: [SCHEMA.${schematic}.reference]; literal: [SCHEMA.${schematic}.literal]; class [pcdata|cdata|ndata|section]
+
+### ${sigil} File
+
+\`<name>.${schematic}.${s.ext}\` ([bytes] B, LF, no BOM)
+
+### ${sigil} Guards
+
+- [guard]: held [yes|no], [detail]
+
+### ${sigil} Proof
+
+sections in order: yes; planted [the out-of-table syntax]: refused by [guard or check]; tripped yes
+
+### ${sigil} Assumptions Made
+
+- [each unasked question, first option taken]`,
+    success: [
+      'Round one ran before any file was written',
+      `Every syntax in the file is one the SCHEMA.${schematic}.* table declares`,
+      'The argument words are embedded in a declared class and never evaluated',
+      'Every guard held, the sections are in order, and the planted syntax was refused',
+    ],
+  }];
+}
+const PROMPT_CREATORS = Object.fromEntries([
+  ...Object.keys(SCHEMATICS).map((s) => promptCreator(s, false)),
+  ...Object.keys(SCHEMATICS).map((s) => promptCreator(s, true)),
+]);
+
 // The three repository commands share one anatomy: a measured analysis of
 // probes, an intake of up to thirty questions in eight rounds, a plan, the
 // writes, a verdict per probe. Only the probe list, the question bank and
@@ -1366,4 +1512,6 @@ tripped yes
       'The control walked the fixture through every variant and the skipped step was refused',
     ],
   },
+
+  ...PROMPT_CREATORS,
 };
