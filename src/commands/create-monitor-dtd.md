@@ -20,7 +20,7 @@ argument-hint: [what the monitor should watch, or leave blank; add --no-gate for
   <!ATTLIST proof tripped (yes|no) #REQUIRED>
   <!ENTITY LAW.MONITOR.1 "A monitor is declared in JSON, monitors/monitors.json or plugin.json experimental.monitors, and the declared command is what runs its file; a hook is never labelled a monitor and a bare ~/.claude/monitors/ is never scanned.">
   <!ENTITY LAW.MONITOR.2 "A monitor reads one declared source and prints only lines declared as MONITOR.* entities in its own DTD; a pass prints nothing unless the intake chose otherwise.">
-  <!ENTITY LAW.MONITOR.3 "The twelve ASK.MONITOR.* questions run as three rounds of four before any file is written; under --no-gate every first option is taken and listed as an assumption_made.">
+  <!ENTITY LAW.MONITOR.3 "The twelve ASK.MONITOR.* questions are offered as three rounds of four; no file is written before the gate chose start; every question not reached before that choice, and every question under --no-gate, takes its first option and is listed as an assumption_made.">
   <!ENTITY LAW.MONITOR.4 "The monitor ships with a control that plants an event, starts it under a timeout ceiling with stdin closed, reads its printed line, and stops it; a monitor without a tripped control is not created.">
   <!ENTITY LAW.MONITOR.5 "The SPDX identifier chosen in the intake heads every file written, as an SPDX-License-Identifier comment on its first line.">
   <!ENTITY ASK.MONITOR.1 "Name|What is the monitor called?|A kebab-case name from its purpose, such as ledger-watch|The name of the source it tails|The name of the event it reports|The name of an existing monitor with a suffix">

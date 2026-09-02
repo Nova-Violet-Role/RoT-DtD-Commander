@@ -22,15 +22,18 @@ while IFS= read -r f; do
   if [ "$bom" = "efbbbf" ]; then echo "BOM $f"; bad=$((bad+1)); fi
 done < <({ git ls-files && git ls-files --others --exclude-standard; } 2>/dev/null || find src bin lib dtd checker examples docs .github -type f)
 
-# negative control: a planted CR must be counted
-ctl=$(mktemp)
+# negative control: an UNTRACKED file inside the tree with a planted CR must be enumerated and counted
+ctl="checker/zz-crlf-control.md"
 printf 'line\r\n' > "$ctl"
-cr=$(tr -dc '\r' < "$ctl" | wc -c | tr -d ' ')
+seen=0
+while IFS= read -r f; do
+  if [ "$f" = "$ctl" ]; then c=$(tr -dc '\r' < "$f" | wc -c | tr -d ' '); [ "$c" = "1" ] && seen=1; fi
+done < <({ git ls-files && git ls-files --others --exclude-standard; } 2>/dev/null)
 rm -f "$ctl"
-if [ "$cr" != "1" ]; then
-  echo "CONTROL FAIL: a planted CR was not counted (got $cr)"
+if [ "$seen" -ne 1 ]; then
+  echo "CONTROL FAIL: a planted untracked CR file was not enumerated and counted"
   exit 1
 fi
-echo "control: a planted CR is counted"
+echo "control: a planted untracked CR file is enumerated and counted"
 echo "crlf-sweep: $checked files checked, $bad bad"
 [ "$bad" -eq 0 ]

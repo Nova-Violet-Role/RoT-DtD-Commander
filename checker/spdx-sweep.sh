@@ -23,15 +23,18 @@ while IFS= read -r f; do
   fi
 done < <({ git ls-files && git ls-files --others --exclude-standard; } 2>/dev/null || find src bin lib dtd checker examples docs .github -type f)
 
-# negative control
-ctl=$(mktemp)
+# negative control: an UNTRACKED file inside the tree without the tag must be enumerated and detected
+ctl="checker/zz-untagged-control.md"
 printf 'no header here\n' > "$ctl"
-if grep -q -F "$TAG" "$ctl"; then
-  echo "CONTROL FAIL: a file without the tag was not detected"
-  rm -f "$ctl"
+seen=0
+while IFS= read -r f; do
+  if [ "$f" = "$ctl" ] && ! grep -q -F "$TAG" "$f"; then seen=1; fi
+done < <({ git ls-files && git ls-files --others --exclude-standard; } 2>/dev/null)
+rm -f "$ctl"
+if [ "$seen" -ne 1 ]; then
+  echo "CONTROL FAIL: a planted untracked file without the tag was not enumerated"
   exit 1
 fi
-rm -f "$ctl"
-echo "control: a file without the tag is detected"
+echo "control: a planted untracked file without the tag is enumerated and detected"
 echo "spdx-sweep: $checked files checked, $missing missing"
 [ "$missing" -eq 0 ]

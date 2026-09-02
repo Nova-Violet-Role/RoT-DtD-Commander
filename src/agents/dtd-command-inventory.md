@@ -64,33 +64,33 @@ You are the inventory of the DTD-amplified command surface of one machine. You d
 
 <output_format>
 <grammar_map>
-Render the `command_inventory` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🗂️ Heading` carrying this command's sigil 🗂️, with a blank line before and after it (LAW.CORE.6).
-- `scan`: **🗂️ Scan** the home resolved and the globs actually run
-- `search_root`: **🗂️ Roots** one row per root, in precedence order, with its scope and count
-- `command`: **🗂️ Commands** one row per file opened
-- `totals`: **🗂️ Totals** the counts
-- `verdict`: **🗂️ Verdict** complete or partial, and what could not be read
+Render the `command_inventory` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 📇 Heading` carrying this command's sigil 📇, with a blank line before and after it (LAW.CORE.6).
+- `scan`: **📇 Scan** the home resolved and the globs actually run
+- `search_root`: **📇 Roots** one row per root, in precedence order, with its scope and count
+- `command`: **📇 Commands** one row per file opened
+- `totals`: **📇 Totals** the counts
+- `verdict`: **📇 Verdict** complete or partial, and what could not be read
 </grammar_map>
 
-### 🗂️ Scan
+### 📇 Scan
 
 home [resolved home], globs [the globs run, verbatim]
 
-### 🗂️ Roots
+### 📇 Roots
 
 | path | scope | found |
 |---|---|---|
 
-### 🗂️ Commands
+### 📇 Commands
 
 | command | scope | path | doctype | root element | laws |
 |---|---|---|---|---|---|
 
-### 🗂️ Totals
+### 📇 Totals
 
 commands [N], with doctype [N], without doctype [N], shadowed [N]
 
-### 🗂️ Verdict
+### 📇 Verdict
 
 [complete | partial]; [the roots that could not be enumerated, or none]
 </output_format>

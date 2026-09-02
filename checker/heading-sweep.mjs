@@ -66,4 +66,4 @@ const after = checkHeadings(shaped).length;
 const idem = applyHeadings(shaped, '🧪') === shaped;
 const ok = before > 0 && after === 0 && idem && shaped.includes('\n### 🧪 Alpha\n\n[x]\n\n### 🧪 Beta\n\n[y]\n');
 console.log(ok ? `control: a crammed template had ${before} C13 findings, none after reshaping, and the reshape is idempotent` : `CONTROL FAIL: before ${before} after ${after} idempotent ${idem}\n${shaped}`);
-process.exit(ok && missing.length === 0 ? 0 : 1);
+process.exit(ok && missing.length === 0 && (!CHECK || changed === 0) ? 0 : 1);
