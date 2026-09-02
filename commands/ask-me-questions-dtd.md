@@ -100,7 +100,7 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   that no create- command skips its gate.
 -->
 
-<!ELEMENT intake (context_analysis, (round | (ask, answer+))*, impactful?, gate)>
+<!ELEMENT intake (context_analysis, (round | (ask, answer+) | (impactful, answer))*, gate)>
 <!ATTLIST intake mode (guided|autonomous) "guided">
 
 <!ELEMENT context_analysis (known*, gap*)>
@@ -113,8 +113,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
      number out of the rounds this prompt may chain. -->
 <!ELEMENT round (ask, answer+)>
 <!ATTLIST round
-          n  CDATA #REQUIRED
-          of CDATA "3">
+          n  (1|2|3) #REQUIRED
+          of (3) #FIXED "3">
 
 <!ELEMENT ask (question, (question, (question, question?)?)?)>
 <!ELEMENT question (option, option, (option, option?)?)>
@@ -168,7 +168,7 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
 <!ENTITY LAW.ASK.7 "Every question is bilateral: the tool's automatic ASK.other stands beside its at most ASK.max_options declared options, so the five variants are four declared plus Other, and text typed into Other is an answer element.">
 <!ENTITY LAW.ASK.8 "An option's preview is rendered twice from one preview element: cut to ASK.preview.cut_lines lines inside the widget, and expanded in the transcript before the call with the answer the model predicts for that choice.">
 <!ENTITY LAW.ASK.9 "On gate choice impactful the model renders an impactful element of one to four selections ranked 1 to 4, each with its provenance, drawn from the context, the ledger, the codebase or the command; the reply selects one as an answer and the gate runs again.">
-<!ENTITY LAW.ASK.10 "A command whose name starts with create- runs at least one round before it writes anything, unless --no-gate is present; context fills slots, it never skips the gate.">
+<!ENTITY LAW.ASK.10 "A command whose name starts with create- and includes this subset runs at least one round before it writes anything, unless --no-gate is present; context fills slots, it never skips the gate; a create- command that does not include this subset is outside the gate and must not claim it.">
 <!-- end subset cc-ask -->
 
   <!ELEMENT intake_session (task, intake, execution, assumption_made*)>

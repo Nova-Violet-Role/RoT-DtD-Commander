@@ -69,8 +69,7 @@ fs.writeFileSync(process.argv[2], result.replace(/\r/g, "") + (result.endsWith("
 const meta = j ? `turns=${j.num_turns} cost_usd=${j.total_cost_usd} duration_ms=${j.duration_ms} is_error=${j.is_error} subtype=${j.subtype}` : "no json parsed";
 console.log("companion: " + meta + " answer_bytes=" + Buffer.byteLength(result));
 ' "$raw" "$log"
-last="$(grep -v '^[[:space:]]*
- "$log" | tail -1)"
+last="$(grep -v '^[[:space:]]*$' "$log" | tail -1)"
 nverdict=$(grep -c '^COMPANION VERDICT' "$log")
 nhigh=$(grep -c 'severity="high"' "$log")
 scope_ok=$(grep -c "^phase=$phase range=$range model=$model\$" "$log")

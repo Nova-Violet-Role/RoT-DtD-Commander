@@ -3,6 +3,9 @@ description: "DTD-native: create a Claude Code monitor (a persistent process bes
 argument-hint: [what the monitor should watch, or leave blank; add --no-gate for autonomous defaults]
 ---
 
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
 <!DOCTYPE monitor_creation [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;

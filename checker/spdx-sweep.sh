@@ -21,7 +21,7 @@ while IFS= read -r f; do
     echo "MISSING $f"
     missing=$((missing+1))
   fi
-done < <(git ls-files 2>/dev/null || find src bin lib dtd checker examples docs .github -type f)
+done < <({ git ls-files && git ls-files --others --exclude-standard; } 2>/dev/null || find src bin lib dtd checker examples docs .github -type f)
 
 # negative control
 ctl=$(mktemp)

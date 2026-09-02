@@ -20,7 +20,7 @@ while IFS= read -r f; do
   bom=$(head -c 3 "$f" | od -An -tx1 | tr -d ' \n')
   if [ "$cr" != "0" ]; then echo "CR $cr $f"; bad=$((bad+1)); fi
   if [ "$bom" = "efbbbf" ]; then echo "BOM $f"; bad=$((bad+1)); fi
-done < <(git ls-files 2>/dev/null || find src bin lib dtd checker examples docs .github -type f)
+done < <({ git ls-files && git ls-files --others --exclude-standard; } 2>/dev/null || find src bin lib dtd checker examples docs .github -type f)
 
 # negative control: a planted CR must be counted
 ctl=$(mktemp)
