@@ -60,7 +60,7 @@ The shape is borrowed from the instruction channel of the RoT DTD GOAL trust con
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the topic or the prompt; render the walk under `args`.
 2. Round 1 of 3: ask ASK.CLEAR.1 to ASK.CLEAR.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 and ASK.SCHEMA.2 (the last two multi-select); on more again, round 3 of 3 with ASK.CLEAR.5, ASK.FORM.1 and ASK.FORM.2 (the last two multi-select); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 (the families, multi-select) and ASK.SCHEMA.2 (which of them); on more again, round 3 of 3 with ASK.CLEAR.5, ASK.FORM.1 and ASK.FORM.2 (the last two multi-select); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `brainstorm`: the chosen count of `idea` elements, ranked, the kept ones marked; the ideas come from the topic, the conversation and the files named in it, each idea one sentence with a verb.
 5. Render the `launch`: the schematic chosen (nt when none was), the kind (prompt when none was), the creator they select, then the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was) (LAW.CLEAR.6).
 6. Compose the bigger prompt: the goal, the state as of this run, the files touched, the next step, the kept ideas folded into the prompt the operator gave, whole, and a known-slots block naming the schematic, the schemas, the kind and the forms chosen (LAW.CLEAR.2, LAW.CLEAR.3, LAW.CLEAR.6).
@@ -101,7 +101,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 ### 🌀 Launch
 
 schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind [prompt|meta]; creator /[create-prompt|create-meta-prompt]-[schematic]-dtd
-schemas: [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset with its parts in order, or none]
+schemas: [schema of a SEMANTIC family with its parts in order, or none]
 forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
 
 ### 🌀 Transmigration

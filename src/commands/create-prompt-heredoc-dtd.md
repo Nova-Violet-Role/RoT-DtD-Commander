@@ -62,7 +62,7 @@ The schematic is pinned: a quoted delimiter around the prompt, so a dollar sign 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.PROMPT.1 to ASK.PROMPT.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1, ASK.SCHEMA.2, ASK.FORM.1 and ASK.FORM.2 (all four multi-select, the schemas and the forms asked apart); on more again, round 3 of 3 with ASK.PROMPT.5 to ASK.PROMPT.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, multi-select), ASK.SCHEMA.2 (which of them), ASK.FORM.1 and ASK.FORM.2 (multi-select), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.PROMPT.5 to ASK.PROMPT.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for heredoc: print its skeleton with node lib/schematic.mjs render, the schema name and heredoc, and fill the bracketed words in place (LAW.PROMPT.6); render the `forms`: one `form` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.PROMPT.7); render the `embedding`: the reference syntax SCHEMA.heredoc.reference, the literal syntax SCHEMA.heredoc.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.sh: a shell here-document, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.PROMPT.4).
 6. Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
@@ -102,7 +102,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🧾 Schemas
 
-- [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset]: parts [in order, occurs one, optional or many], rendered from its heredoc cell; or: none, the sections alone
+- [schema, one of the SEMANTIC families docbook, dita, tei or data]: parts [in order, occurs one, optional or many], rendered from its heredoc cell; or: none, the sections alone
 
 ### 🧾 Forms
 

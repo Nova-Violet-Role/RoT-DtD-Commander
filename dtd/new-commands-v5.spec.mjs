@@ -97,7 +97,7 @@ The schematic is pinned: ${s.example}. What a literal is, what expands, how a va
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the purpose; render the walk under \`args\`. This is a create- command, so round one always runs (LAW.ASK.10).`,
       `Round 1 of 3: ask ASK.${prefix}.1 to ASK.${prefix}.4 as one AskUserQuestion call, four options each plus Other; render the round.`,
-      `Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1, ASK.SCHEMA.2, ASK.FORM.1 and ASK.FORM.2 (all four multi-select, the schemas and the forms asked apart); on more again, round 3 of 3 with ASK.${prefix}.5 to ASK.${prefix}.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
+      `Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, multi-select), ASK.SCHEMA.2 (which of them), ASK.FORM.1 and ASK.FORM.2 (multi-select), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.${prefix}.5 to ASK.${prefix}.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.`,
       `Render the \`sections\`: one \`section\` per name of ${sectionsEnt}, in order, each with its text; render the \`schemas\`: one \`semantic\` per schema chosen, its \`part\` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for ${schematic}: print its skeleton with node lib/schematic.mjs render, the schema name and ${schematic}, and fill the bracketed words in place (LAW.${prefix}.6); render the \`forms\`: one \`form\` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.${prefix}.7); render the \`embedding\`: the reference syntax SCHEMA.${schematic}.reference, the literal syntax SCHEMA.${schematic}.literal, and the cc-args class chosen for the argument words.`,
       `Write the \`file\` <name>.<schematic>.${s.ext}: ${s.label}, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.${prefix}.4).`,
       `Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one \`guard\` per line printed, held yes or no; a guard that did not hold stops the command.`,
@@ -133,7 +133,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### ${sigil} Schemas
 
-- [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset]: parts [in order, occurs one, optional or many], rendered from its ${schematic} cell; or: none, the sections alone
+- [schema, one of the SEMANTIC families docbook, dita, tei or data]: parts [in order, occurs one, optional or many], rendered from its ${schematic} cell; or: none, the sections alone
 
 ### ${sigil} Forms
 
@@ -553,7 +553,7 @@ The shape is borrowed from the instruction channel of the RoT DTD GOAL trust con
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the flags and the topic or the prompt; render the walk under \`args\`.`,
       'Round 1 of 3: ask ASK.CLEAR.1 to ASK.CLEAR.4 as one AskUserQuestion call, four options each plus Other; render the round.',
-      'Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 and ASK.SCHEMA.2 (the last two multi-select); on more again, round 3 of 3 with ASK.CLEAR.5, ASK.FORM.1 and ASK.FORM.2 (the last two multi-select); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
+      'Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1, ASK.SCHEMATIC.2, ASK.SCHEMA.1 (the families, multi-select) and ASK.SCHEMA.2 (which of them); on more again, round 3 of 3 with ASK.CLEAR.5, ASK.FORM.1 and ASK.FORM.2 (the last two multi-select); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.',
       'Render the `brainstorm`: the chosen count of `idea` elements, ranked, the kept ones marked; the ideas come from the topic, the conversation and the files named in it, each idea one sentence with a verb.',
       'Render the `launch`: the schematic chosen (nt when none was), the kind (prompt when none was), the creator they select, then the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was) (LAW.CLEAR.6).',
       'Compose the bigger prompt: the goal, the state as of this run, the files touched, the next step, the kept ideas folded into the prompt the operator gave, whole, and a known-slots block naming the schematic, the schemas, the kind and the forms chosen (LAW.CLEAR.2, LAW.CLEAR.3, LAW.CLEAR.6).',
@@ -590,7 +590,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 ### 🌀 Launch
 
 schematic [callout|heredoc|yaml|nt|xml|polyglot]; kind [prompt|meta]; creator /[create-prompt|create-meta-prompt]-[schematic]-dtd
-schemas: [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset with its parts in order, or none]
+schemas: [schema of a SEMANTIC family with its parts in order, or none]
 forms: [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot, or nt, the default]
 
 ### 🌀 Transmigration

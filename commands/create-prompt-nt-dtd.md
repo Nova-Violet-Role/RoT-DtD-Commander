@@ -382,7 +382,9 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
      the schema's parts render by those rules. -->
 <!ELEMENT schemas (semantic*)>
 <!ELEMENT semantic (part+)>
-<!ATTLIST semantic name (refentry|qandaset|procedure|glossary|textdesc|msgset|productionset) #REQUIRED>
+<!ATTLIST semantic
+          name   (biblioentry|certainty|cmdsynopsis|concept|example|glossary|glossentry|interp|item|key|msgset|procedure|productionset|qandaset|refentry|revhistory|table|task|textdesc|topic|variablelist) #REQUIRED
+          family (docbook|dita|tei|data) #IMPLIED>
 <!ELEMENT part EMPTY>
 <!ATTLIST part
           name   NMTOKEN #REQUIRED
@@ -395,6 +397,46 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY SEMANTIC.textdesc.parts      "derivation, domain, factuality, preparedness, purpose, degree (optional)">
 <!ENTITY SEMANTIC.msgset.parts        "message, level, origin (optional), audience (optional), explanation (many)">
 <!ENTITY SEMANTIC.productionset.parts "lhs, rhs, constraint (many)">
+
+<!-- Fourteen more, from the examples folder. The DITA and TEI files there
+     are shells and modules that declare no element themselves, so their
+     parts follow the DITA 1.3 and TEI P5 models the shells include, cited by
+     the research record row (X-number); the DocBook, CALS, RSS and GSettings
+     parts are read from the example files at the lines named. -->
+<!-- concept: DITA 1.3 concept, the shell concept.dtd (X35); the model is in the concept module the shell includes -->
+<!ENTITY SEMANTIC.concept.parts      "title, shortdesc (optional), conbody, related_links (optional)">
+<!-- task: DITA 1.3 task, the shell generalTask.dtd (X34) -->
+<!ENTITY SEMANTIC.task.parts         "title, shortdesc (optional), prereq (optional), context (optional), step (many), result (optional), example (optional), postreq (optional)">
+<!-- topic: DITA 1.3 topic, the shell basetopic.dtd (X30) -->
+<!ENTITY SEMANTIC.topic.parts        "title, shortdesc (optional), body, related_links (optional)">
+<!-- glossentry: DITA 1.3 glossentry, the shell glossentry.dtd (X37): glossterm, glossdef, glossBody with glossPartOfSpeech, glossUsage, glossScopeNote, glossAlt -->
+<!ENTITY SEMANTIC.glossentry.parts   "glossterm, glossdef, part_of_speech (optional), usage (optional), scope_note (optional), alt (many)">
+<!-- biblioentry: DocBook 5 biblioentry, docbook.dtd line 2137, a bag of fields written here in citation order -->
+<!ENTITY SEMANTIC.biblioentry.parts  "author (many), title, publisher (optional), date, edition (optional), biblioid (optional), abstract (optional)">
+<!-- example: DocBook 5 example, docbook.dtd line 426: a title then blocks -->
+<!ENTITY SEMANTIC.example.parts      "title, programlisting, caption (optional)">
+<!-- table: CALS table, calstblx.dtd lines 95 to 214 and docbook.dtd line 2872: table, tgroup (colspec*, thead?, tbody (row+)) -->
+<!ENTITY SEMANTIC.table.parts        "title, colspec (many), head (optional), row (many)">
+<!-- cmdsynopsis: DocBook 5 cmdsynopsis, docbook.dtd line 3670: (info?, (command|arg|group|sbr)+, synopfragment*) -->
+<!ENTITY SEMANTIC.cmdsynopsis.parts  "command, arg (many), group (optional), synopfragment (optional)">
+<!-- variablelist: DocBook 5 variablelist, docbook.dtd lines 394 and 406: varlistentry (term+, listitem); an occurrence is one term and its item -->
+<!ENTITY SEMANTIC.variablelist.parts "title (optional), varlistentry (many)">
+<!-- revhistory: DocBook 5 revhistory, docbook.dtd lines 1252 and 1262: revision (revnumber?, date, authorinitials*, revremark?); an occurrence is one revision on one line -->
+<!ENTITY SEMANTIC.revhistory.parts   "title (optional), revision (many)">
+<!-- certainty: TEI P5 certainty, the module certainty.dtd (X17): target, locus, degree, assertedValue, and respons -->
+<!ENTITY SEMANTIC.certainty.parts    "target, locus, degree, asserted_value (optional), resp (optional)">
+<!-- interp: TEI P5 analysis, the module analysis.dtd (X20): interpGrp type, interp inst, span from to -->
+<!ENTITY SEMANTIC.interp.parts       "type, inst (optional), interp (many), span (optional)">
+<!-- item: RSS 2.0 item, rss.dtd line 43 -->
+<!ENTITY SEMANTIC.item.parts         "title, link, description, guid (optional), pubdate (optional), category (optional), enclosure (optional), source (optional)">
+<!-- key: GSettings key, gschema.dtd line 25: (default|summary?|description?|range?|choices?|aliases?) -->
+<!ENTITY SEMANTIC.key.parts          "name, type, default, summary (optional), description (optional), range (optional), choices (optional), aliases (optional)">
+
+<!-- the four families behind ASK.SCHEMA.1; their union is the semantic name enumeration, held by lib/schematic.mjs controls -->
+<!ENTITY SEMANTIC.family.docbook "refentry, qandaset, procedure, glossary, biblioentry, example, table, cmdsynopsis, variablelist, revhistory">
+<!ENTITY SEMANTIC.family.dita    "concept, task, topic, glossentry">
+<!ENTITY SEMANTIC.family.tei     "certainty, interp, textdesc">
+<!ENTITY SEMANTIC.family.data    "item, key, msgset, productionset">
 
 <!-- how one part, a repeated part and a label render, per form -->
 <!ENTITY SEMANTIC.callout.part   "one typed callout per part, its body the part's text">
@@ -439,35 +481,55 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
      in both directions. -->
 <!ENTITY SEMANTIC.forms "callout, heredoc, yaml, nt, xml, polyglot, jmd, json, toml">
 
-<!ENTITY SEMANTIC.refentry.callout "callouts in order: IMPORTANT refname; IMPORTANT refpurpose; IMPORTANT synopsis; IMPORTANT description; NOTE options, one per occurrence numbered in the title; TIP examples, when given; NOTE see_also, when given">
-<!ENTITY SEMANTIC.refentry.heredoc "quoted heredocs in order: REFNAME; REFPURPOSE; SYNOPSIS; DESCRIPTION; OPTIONS as an indexed array, one quoted heredoc per occurrence; EXAMPLES when given; SEE_ALSO when given">
-<!ENTITY SEMANTIC.refentry.yaml "keys in order: refname a strip block scalar; refpurpose a strip block scalar; synopsis a strip block scalar; description a strip block scalar; options a sequence of strip block scalars; examples a strip block scalar when given; see_also a strip block scalar when given">
-<!ENTITY SEMANTIC.refentry.nt "keys in order: refname a multiline string; refpurpose a multiline string; synopsis a multiline string; description a multiline string; options a list of multiline strings; examples a multiline string when given; see_also a multiline string when given">
-<!ENTITY SEMANTIC.refentry.xml "a DOCTYPE declaring refentry as the sequence refname, refpurpose, synopsis, description, options with a plus, examples with a question mark, see_also with a question mark; each part an element holding a CDATA section">
-<!ENTITY SEMANTIC.refentry.polyglot "YAML front matter with schema refentry and the parts list refname, refpurpose, synopsis, description, options, examples, see_also, then the callout rendering of the same parts as the body">
-<!ENTITY SEMANTIC.refentry.jmd "headings in order: refname; refpurpose; synopsis; description; options, one heading per occurrence numbered; examples when given; see_also when given; code under a heading in a fenced julia chunk">
-<!ENTITY SEMANTIC.refentry.json "keys in order: refname a string; refpurpose a string; synopsis a string; description a string; options an array of strings; examples a string when given; see_also a string when given; no comment, an optional part absent when not given">
-<!ENTITY SEMANTIC.refentry.toml "keys in order: refname a multi-line basic string; refpurpose a multi-line basic string; synopsis a multi-line basic string; description a multi-line basic string; options an array of multi-line basic strings; examples a multi-line basic string when given; see_also a multi-line basic string when given">
+<!ENTITY SEMANTIC.biblioentry.callout "callouts in order: NOTE author, one per occurrence numbered in the title; IMPORTANT title; NOTE publisher, when given; IMPORTANT date; NOTE edition, when given; NOTE biblioid, when given; NOTE abstract, when given">
+<!ENTITY SEMANTIC.biblioentry.heredoc "quoted heredocs in order: AUTHOR as an indexed array, one quoted heredoc per occurrence; TITLE; PUBLISHER when given; DATE; EDITION when given; BIBLIOID when given; ABSTRACT when given">
+<!ENTITY SEMANTIC.biblioentry.yaml "keys in order: author a sequence of strip block scalars; title a strip block scalar; publisher a strip block scalar when given; date a strip block scalar; edition a strip block scalar when given; biblioid a strip block scalar when given; abstract a strip block scalar when given">
+<!ENTITY SEMANTIC.biblioentry.nt "keys in order: author a list of multiline strings; title a multiline string; publisher a multiline string when given; date a multiline string; edition a multiline string when given; biblioid a multiline string when given; abstract a multiline string when given">
+<!ENTITY SEMANTIC.biblioentry.xml "a DOCTYPE declaring biblioentry as the sequence author with a plus, title, publisher with a question mark, date, edition with a question mark, biblioid with a question mark, abstract with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.biblioentry.polyglot "YAML front matter with schema biblioentry and the parts list author, title, publisher, date, edition, biblioid, abstract, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.biblioentry.jmd "headings in order: author, one heading per occurrence numbered; title; publisher when given; date; edition when given; biblioid when given; abstract when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.biblioentry.json "keys in order: author an array of strings; title a string; publisher a string when given; date a string; edition a string when given; biblioid a string when given; abstract a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.biblioentry.toml "keys in order: author an array of multi-line basic strings; title a multi-line basic string; publisher a multi-line basic string when given; date a multi-line basic string; edition a multi-line basic string when given; biblioid a multi-line basic string when given; abstract a multi-line basic string when given">
 
-<!ENTITY SEMANTIC.qandaset.callout "callouts in order: NOTE label, when given; IMPORTANT question; NOTE answer, one per occurrence numbered in the title">
-<!ENTITY SEMANTIC.qandaset.heredoc "quoted heredocs in order: LABEL when given; QUESTION; ANSWER as an indexed array, one quoted heredoc per occurrence">
-<!ENTITY SEMANTIC.qandaset.yaml "keys in order: label a strip block scalar when given; question a strip block scalar; answer a sequence of strip block scalars">
-<!ENTITY SEMANTIC.qandaset.nt "keys in order: label a multiline string when given; question a multiline string; answer a list of multiline strings">
-<!ENTITY SEMANTIC.qandaset.xml "a DOCTYPE declaring qandaset as the sequence label with a question mark, question, answer with a plus; each part an element holding a CDATA section">
-<!ENTITY SEMANTIC.qandaset.polyglot "YAML front matter with schema qandaset and the parts list label, question, answer, then the callout rendering of the same parts as the body">
-<!ENTITY SEMANTIC.qandaset.jmd "headings in order: label when given; question; answer, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
-<!ENTITY SEMANTIC.qandaset.json "keys in order: label a string when given; question a string; answer an array of strings; no comment, an optional part absent when not given">
-<!ENTITY SEMANTIC.qandaset.toml "keys in order: label a multi-line basic string when given; question a multi-line basic string; answer an array of multi-line basic strings">
+<!ENTITY SEMANTIC.certainty.callout "callouts in order: IMPORTANT target; IMPORTANT locus; IMPORTANT degree; NOTE asserted_value, when given; NOTE resp, when given">
+<!ENTITY SEMANTIC.certainty.heredoc "quoted heredocs in order: TARGET; LOCUS; DEGREE; ASSERTED_VALUE when given; RESP when given">
+<!ENTITY SEMANTIC.certainty.yaml "keys in order: target a strip block scalar; locus a strip block scalar; degree a strip block scalar; asserted_value a strip block scalar when given; resp a strip block scalar when given">
+<!ENTITY SEMANTIC.certainty.nt "keys in order: target a multiline string; locus a multiline string; degree a multiline string; asserted_value a multiline string when given; resp a multiline string when given">
+<!ENTITY SEMANTIC.certainty.xml "a DOCTYPE declaring certainty as the sequence target, locus, degree, asserted_value with a question mark, resp with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.certainty.polyglot "YAML front matter with schema certainty and the parts list target, locus, degree, asserted_value, resp, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.certainty.jmd "headings in order: target; locus; degree; asserted_value when given; resp when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.certainty.json "keys in order: target a string; locus a string; degree a string; asserted_value a string when given; resp a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.certainty.toml "keys in order: target a multi-line basic string; locus a multi-line basic string; degree a multi-line basic string; asserted_value a multi-line basic string when given; resp a multi-line basic string when given">
 
-<!ENTITY SEMANTIC.procedure.callout "callouts in order: IMPORTANT title; WARNING prerequisite, when given; NOTE step, one per occurrence numbered in the title; NOTE substeps, when given; NOTE alternatives, when given; IMPORTANT result">
-<!ENTITY SEMANTIC.procedure.heredoc "quoted heredocs in order: TITLE; PREREQUISITE when given; STEP as an indexed array, one quoted heredoc per occurrence; SUBSTEPS when given; ALTERNATIVES when given; RESULT">
-<!ENTITY SEMANTIC.procedure.yaml "keys in order: title a strip block scalar; prerequisite a strip block scalar when given; step a sequence of strip block scalars; substeps a strip block scalar when given; alternatives a strip block scalar when given; result a strip block scalar">
-<!ENTITY SEMANTIC.procedure.nt "keys in order: title a multiline string; prerequisite a multiline string when given; step a list of multiline strings; substeps a multiline string when given; alternatives a multiline string when given; result a multiline string">
-<!ENTITY SEMANTIC.procedure.xml "a DOCTYPE declaring procedure as the sequence title, prerequisite with a question mark, step with a plus, substeps with a question mark, alternatives with a question mark, result; each part an element holding a CDATA section">
-<!ENTITY SEMANTIC.procedure.polyglot "YAML front matter with schema procedure and the parts list title, prerequisite, step, substeps, alternatives, result, then the callout rendering of the same parts as the body">
-<!ENTITY SEMANTIC.procedure.jmd "headings in order: title; prerequisite when given; step, one heading per occurrence numbered; substeps when given; alternatives when given; result; code under a heading in a fenced julia chunk">
-<!ENTITY SEMANTIC.procedure.json "keys in order: title a string; prerequisite a string when given; step an array of strings; substeps a string when given; alternatives a string when given; result a string; no comment, an optional part absent when not given">
-<!ENTITY SEMANTIC.procedure.toml "keys in order: title a multi-line basic string; prerequisite a multi-line basic string when given; step an array of multi-line basic strings; substeps a multi-line basic string when given; alternatives a multi-line basic string when given; result a multi-line basic string">
+<!ENTITY SEMANTIC.cmdsynopsis.callout "callouts in order: IMPORTANT command; NOTE arg, one per occurrence numbered in the title; NOTE group, when given; NOTE synopfragment, when given">
+<!ENTITY SEMANTIC.cmdsynopsis.heredoc "quoted heredocs in order: COMMAND; ARG as an indexed array, one quoted heredoc per occurrence; GROUP when given; SYNOPFRAGMENT when given">
+<!ENTITY SEMANTIC.cmdsynopsis.yaml "keys in order: command a strip block scalar; arg a sequence of strip block scalars; group a strip block scalar when given; synopfragment a strip block scalar when given">
+<!ENTITY SEMANTIC.cmdsynopsis.nt "keys in order: command a multiline string; arg a list of multiline strings; group a multiline string when given; synopfragment a multiline string when given">
+<!ENTITY SEMANTIC.cmdsynopsis.xml "a DOCTYPE declaring cmdsynopsis as the sequence command, arg with a plus, group with a question mark, synopfragment with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.cmdsynopsis.polyglot "YAML front matter with schema cmdsynopsis and the parts list command, arg, group, synopfragment, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.cmdsynopsis.jmd "headings in order: command; arg, one heading per occurrence numbered; group when given; synopfragment when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.cmdsynopsis.json "keys in order: command a string; arg an array of strings; group a string when given; synopfragment a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.cmdsynopsis.toml "keys in order: command a multi-line basic string; arg an array of multi-line basic strings; group a multi-line basic string when given; synopfragment a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.concept.callout "callouts in order: IMPORTANT title; NOTE shortdesc, when given; IMPORTANT conbody; NOTE related_links, when given">
+<!ENTITY SEMANTIC.concept.heredoc "quoted heredocs in order: TITLE; SHORTDESC when given; CONBODY; RELATED_LINKS when given">
+<!ENTITY SEMANTIC.concept.yaml "keys in order: title a strip block scalar; shortdesc a strip block scalar when given; conbody a strip block scalar; related_links a strip block scalar when given">
+<!ENTITY SEMANTIC.concept.nt "keys in order: title a multiline string; shortdesc a multiline string when given; conbody a multiline string; related_links a multiline string when given">
+<!ENTITY SEMANTIC.concept.xml "a DOCTYPE declaring concept as the sequence title, shortdesc with a question mark, conbody, related_links with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.concept.polyglot "YAML front matter with schema concept and the parts list title, shortdesc, conbody, related_links, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.concept.jmd "headings in order: title; shortdesc when given; conbody; related_links when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.concept.json "keys in order: title a string; shortdesc a string when given; conbody a string; related_links a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.concept.toml "keys in order: title a multi-line basic string; shortdesc a multi-line basic string when given; conbody a multi-line basic string; related_links a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.example.callout "callouts in order: IMPORTANT title; IMPORTANT programlisting; NOTE caption, when given">
+<!ENTITY SEMANTIC.example.heredoc "quoted heredocs in order: TITLE; PROGRAMLISTING; CAPTION when given">
+<!ENTITY SEMANTIC.example.yaml "keys in order: title a strip block scalar; programlisting a strip block scalar; caption a strip block scalar when given">
+<!ENTITY SEMANTIC.example.nt "keys in order: title a multiline string; programlisting a multiline string; caption a multiline string when given">
+<!ENTITY SEMANTIC.example.xml "a DOCTYPE declaring example as the sequence title, programlisting, caption with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.example.polyglot "YAML front matter with schema example and the parts list title, programlisting, caption, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.example.jmd "headings in order: title; programlisting; caption when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.example.json "keys in order: title a string; programlisting a string; caption a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.example.toml "keys in order: title a multi-line basic string; programlisting a multi-line basic string; caption a multi-line basic string when given">
 
 <!ENTITY SEMANTIC.glossary.callout "callouts in order: IMPORTANT term; NOTE acronym, when given; NOTE definition, one per occurrence numbered in the title; NOTE see_also, when given; IMPORTANT locator">
 <!ENTITY SEMANTIC.glossary.heredoc "quoted heredocs in order: TERM; ACRONYM when given; DEFINITION as an indexed array, one quoted heredoc per occurrence; SEE_ALSO when given; LOCATOR">
@@ -479,15 +541,45 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY SEMANTIC.glossary.json "keys in order: term a string; acronym a string when given; definition an array of strings; see_also a string when given; locator a string; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.glossary.toml "keys in order: term a multi-line basic string; acronym a multi-line basic string when given; definition an array of multi-line basic strings; see_also a multi-line basic string when given; locator a multi-line basic string">
 
-<!ENTITY SEMANTIC.textdesc.callout "callouts in order: IMPORTANT derivation; IMPORTANT domain; IMPORTANT factuality; IMPORTANT preparedness; IMPORTANT purpose; NOTE degree, when given">
-<!ENTITY SEMANTIC.textdesc.heredoc "quoted heredocs in order: DERIVATION; DOMAIN; FACTUALITY; PREPAREDNESS; PURPOSE; DEGREE when given">
-<!ENTITY SEMANTIC.textdesc.yaml "keys in order: derivation a strip block scalar; domain a strip block scalar; factuality a strip block scalar; preparedness a strip block scalar; purpose a strip block scalar; degree a strip block scalar when given">
-<!ENTITY SEMANTIC.textdesc.nt "keys in order: derivation a multiline string; domain a multiline string; factuality a multiline string; preparedness a multiline string; purpose a multiline string; degree a multiline string when given">
-<!ENTITY SEMANTIC.textdesc.xml "a DOCTYPE declaring textdesc as the sequence derivation, domain, factuality, preparedness, purpose, degree with a question mark; each part an element holding a CDATA section">
-<!ENTITY SEMANTIC.textdesc.polyglot "YAML front matter with schema textdesc and the parts list derivation, domain, factuality, preparedness, purpose, degree, then the callout rendering of the same parts as the body">
-<!ENTITY SEMANTIC.textdesc.jmd "headings in order: derivation; domain; factuality; preparedness; purpose; degree when given; code under a heading in a fenced julia chunk">
-<!ENTITY SEMANTIC.textdesc.json "keys in order: derivation a string; domain a string; factuality a string; preparedness a string; purpose a string; degree a string when given; no comment, an optional part absent when not given">
-<!ENTITY SEMANTIC.textdesc.toml "keys in order: derivation a multi-line basic string; domain a multi-line basic string; factuality a multi-line basic string; preparedness a multi-line basic string; purpose a multi-line basic string; degree a multi-line basic string when given">
+<!ENTITY SEMANTIC.glossentry.callout "callouts in order: IMPORTANT glossterm; IMPORTANT glossdef; NOTE part_of_speech, when given; NOTE usage, when given; NOTE scope_note, when given; NOTE alt, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.glossentry.heredoc "quoted heredocs in order: GLOSSTERM; GLOSSDEF; PART_OF_SPEECH when given; USAGE when given; SCOPE_NOTE when given; ALT as an indexed array, one quoted heredoc per occurrence">
+<!ENTITY SEMANTIC.glossentry.yaml "keys in order: glossterm a strip block scalar; glossdef a strip block scalar; part_of_speech a strip block scalar when given; usage a strip block scalar when given; scope_note a strip block scalar when given; alt a sequence of strip block scalars">
+<!ENTITY SEMANTIC.glossentry.nt "keys in order: glossterm a multiline string; glossdef a multiline string; part_of_speech a multiline string when given; usage a multiline string when given; scope_note a multiline string when given; alt a list of multiline strings">
+<!ENTITY SEMANTIC.glossentry.xml "a DOCTYPE declaring glossentry as the sequence glossterm, glossdef, part_of_speech with a question mark, usage with a question mark, scope_note with a question mark, alt with a plus; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.glossentry.polyglot "YAML front matter with schema glossentry and the parts list glossterm, glossdef, part_of_speech, usage, scope_note, alt, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.glossentry.jmd "headings in order: glossterm; glossdef; part_of_speech when given; usage when given; scope_note when given; alt, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.glossentry.json "keys in order: glossterm a string; glossdef a string; part_of_speech a string when given; usage a string when given; scope_note a string when given; alt an array of strings; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.glossentry.toml "keys in order: glossterm a multi-line basic string; glossdef a multi-line basic string; part_of_speech a multi-line basic string when given; usage a multi-line basic string when given; scope_note a multi-line basic string when given; alt an array of multi-line basic strings">
+
+<!ENTITY SEMANTIC.interp.callout "callouts in order: IMPORTANT type; NOTE inst, when given; NOTE interp, one per occurrence numbered in the title; NOTE span, when given">
+<!ENTITY SEMANTIC.interp.heredoc "quoted heredocs in order: TYPE; INST when given; INTERP as an indexed array, one quoted heredoc per occurrence; SPAN when given">
+<!ENTITY SEMANTIC.interp.yaml "keys in order: type a strip block scalar; inst a strip block scalar when given; interp a sequence of strip block scalars; span a strip block scalar when given">
+<!ENTITY SEMANTIC.interp.nt "keys in order: type a multiline string; inst a multiline string when given; interp a list of multiline strings; span a multiline string when given">
+<!ENTITY SEMANTIC.interp.xml "a DOCTYPE declaring interp as the sequence type, inst with a question mark, interp with a plus, span with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.interp.polyglot "YAML front matter with schema interp and the parts list type, inst, interp, span, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.interp.jmd "headings in order: type; inst when given; interp, one heading per occurrence numbered; span when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.interp.json "keys in order: type a string; inst a string when given; interp an array of strings; span a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.interp.toml "keys in order: type a multi-line basic string; inst a multi-line basic string when given; interp an array of multi-line basic strings; span a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.item.callout "callouts in order: IMPORTANT title; IMPORTANT link; IMPORTANT description; NOTE guid, when given; NOTE pubdate, when given; NOTE category, when given; NOTE enclosure, when given; NOTE source, when given">
+<!ENTITY SEMANTIC.item.heredoc "quoted heredocs in order: TITLE; LINK; DESCRIPTION; GUID when given; PUBDATE when given; CATEGORY when given; ENCLOSURE when given; SOURCE when given">
+<!ENTITY SEMANTIC.item.yaml "keys in order: title a strip block scalar; link a strip block scalar; description a strip block scalar; guid a strip block scalar when given; pubdate a strip block scalar when given; category a strip block scalar when given; enclosure a strip block scalar when given; source a strip block scalar when given">
+<!ENTITY SEMANTIC.item.nt "keys in order: title a multiline string; link a multiline string; description a multiline string; guid a multiline string when given; pubdate a multiline string when given; category a multiline string when given; enclosure a multiline string when given; source a multiline string when given">
+<!ENTITY SEMANTIC.item.xml "a DOCTYPE declaring item as the sequence title, link, description, guid with a question mark, pubdate with a question mark, category with a question mark, enclosure with a question mark, source with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.item.polyglot "YAML front matter with schema item and the parts list title, link, description, guid, pubdate, category, enclosure, source, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.item.jmd "headings in order: title; link; description; guid when given; pubdate when given; category when given; enclosure when given; source when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.item.json "keys in order: title a string; link a string; description a string; guid a string when given; pubdate a string when given; category a string when given; enclosure a string when given; source a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.item.toml "keys in order: title a multi-line basic string; link a multi-line basic string; description a multi-line basic string; guid a multi-line basic string when given; pubdate a multi-line basic string when given; category a multi-line basic string when given; enclosure a multi-line basic string when given; source a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.key.callout "callouts in order: IMPORTANT name; IMPORTANT type; IMPORTANT default; NOTE summary, when given; NOTE description, when given; NOTE range, when given; NOTE choices, when given; NOTE aliases, when given">
+<!ENTITY SEMANTIC.key.heredoc "quoted heredocs in order: NAME; TYPE; DEFAULT; SUMMARY when given; DESCRIPTION when given; RANGE when given; CHOICES when given; ALIASES when given">
+<!ENTITY SEMANTIC.key.yaml "keys in order: name a strip block scalar; type a strip block scalar; default a strip block scalar; summary a strip block scalar when given; description a strip block scalar when given; range a strip block scalar when given; choices a strip block scalar when given; aliases a strip block scalar when given">
+<!ENTITY SEMANTIC.key.nt "keys in order: name a multiline string; type a multiline string; default a multiline string; summary a multiline string when given; description a multiline string when given; range a multiline string when given; choices a multiline string when given; aliases a multiline string when given">
+<!ENTITY SEMANTIC.key.xml "a DOCTYPE declaring key as the sequence name, type, default, summary with a question mark, description with a question mark, range with a question mark, choices with a question mark, aliases with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.key.polyglot "YAML front matter with schema key and the parts list name, type, default, summary, description, range, choices, aliases, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.key.jmd "headings in order: name; type; default; summary when given; description when given; range when given; choices when given; aliases when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.key.json "keys in order: name a string; type a string; default a string; summary a string when given; description a string when given; range a string when given; choices a string when given; aliases a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.key.toml "keys in order: name a multi-line basic string; type a multi-line basic string; default a multi-line basic string; summary a multi-line basic string when given; description a multi-line basic string when given; range a multi-line basic string when given; choices a multi-line basic string when given; aliases a multi-line basic string when given">
 
 <!ENTITY SEMANTIC.msgset.callout "callouts in order: IMPORTANT message; IMPORTANT level; NOTE origin, when given; NOTE audience, when given; NOTE explanation, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.msgset.heredoc "quoted heredocs in order: MESSAGE; LEVEL; ORIGIN when given; AUDIENCE when given; EXPLANATION as an indexed array, one quoted heredoc per occurrence">
@@ -499,6 +591,16 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY SEMANTIC.msgset.json "keys in order: message a string; level a string; origin a string when given; audience a string when given; explanation an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.msgset.toml "keys in order: message a multi-line basic string; level a multi-line basic string; origin a multi-line basic string when given; audience a multi-line basic string when given; explanation an array of multi-line basic strings">
 
+<!ENTITY SEMANTIC.procedure.callout "callouts in order: IMPORTANT title; WARNING prerequisite, when given; NOTE step, one per occurrence numbered in the title; NOTE substeps, when given; NOTE alternatives, when given; IMPORTANT result">
+<!ENTITY SEMANTIC.procedure.heredoc "quoted heredocs in order: TITLE; PREREQUISITE when given; STEP as an indexed array, one quoted heredoc per occurrence; SUBSTEPS when given; ALTERNATIVES when given; RESULT">
+<!ENTITY SEMANTIC.procedure.yaml "keys in order: title a strip block scalar; prerequisite a strip block scalar when given; step a sequence of strip block scalars; substeps a strip block scalar when given; alternatives a strip block scalar when given; result a strip block scalar">
+<!ENTITY SEMANTIC.procedure.nt "keys in order: title a multiline string; prerequisite a multiline string when given; step a list of multiline strings; substeps a multiline string when given; alternatives a multiline string when given; result a multiline string">
+<!ENTITY SEMANTIC.procedure.xml "a DOCTYPE declaring procedure as the sequence title, prerequisite with a question mark, step with a plus, substeps with a question mark, alternatives with a question mark, result; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.procedure.polyglot "YAML front matter with schema procedure and the parts list title, prerequisite, step, substeps, alternatives, result, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.procedure.jmd "headings in order: title; prerequisite when given; step, one heading per occurrence numbered; substeps when given; alternatives when given; result; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.procedure.json "keys in order: title a string; prerequisite a string when given; step an array of strings; substeps a string when given; alternatives a string when given; result a string; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.procedure.toml "keys in order: title a multi-line basic string; prerequisite a multi-line basic string when given; step an array of multi-line basic strings; substeps a multi-line basic string when given; alternatives a multi-line basic string when given; result a multi-line basic string">
+
 <!ENTITY SEMANTIC.productionset.callout "callouts in order: IMPORTANT lhs; IMPORTANT rhs; WARNING constraint, one per occurrence numbered in the title">
 <!ENTITY SEMANTIC.productionset.heredoc "quoted heredocs in order: LHS; RHS; CONSTRAINT as an indexed array, one quoted heredoc per occurrence">
 <!ENTITY SEMANTIC.productionset.yaml "keys in order: lhs a strip block scalar; rhs a strip block scalar; constraint a sequence of strip block scalars">
@@ -509,8 +611,88 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY SEMANTIC.productionset.json "keys in order: lhs a string; rhs a string; constraint an array of strings; no comment, an optional part absent when not given">
 <!ENTITY SEMANTIC.productionset.toml "keys in order: lhs a multi-line basic string; rhs a multi-line basic string; constraint an array of multi-line basic strings">
 
-<!ENTITY ASK.SCHEMA.1 "Schema A|Which semantic schema shapes the body? Pick any.|None, the six sections alone|A refentry, a manual page|A qandaset, questions and answers|A procedure, numbered steps">
-<!ENTITY ASK.SCHEMA.2 "Schema B|Which more? Pick any.|A glossary, terms with definitions and locators|A textdesc, the voice profile|A msgset, a catalogue of messages|A productionset, a grammar">
+<!ENTITY SEMANTIC.qandaset.callout "callouts in order: NOTE label, when given; IMPORTANT question; NOTE answer, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.qandaset.heredoc "quoted heredocs in order: LABEL when given; QUESTION; ANSWER as an indexed array, one quoted heredoc per occurrence">
+<!ENTITY SEMANTIC.qandaset.yaml "keys in order: label a strip block scalar when given; question a strip block scalar; answer a sequence of strip block scalars">
+<!ENTITY SEMANTIC.qandaset.nt "keys in order: label a multiline string when given; question a multiline string; answer a list of multiline strings">
+<!ENTITY SEMANTIC.qandaset.xml "a DOCTYPE declaring qandaset as the sequence label with a question mark, question, answer with a plus; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.qandaset.polyglot "YAML front matter with schema qandaset and the parts list label, question, answer, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.qandaset.jmd "headings in order: label when given; question; answer, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.qandaset.json "keys in order: label a string when given; question a string; answer an array of strings; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.qandaset.toml "keys in order: label a multi-line basic string when given; question a multi-line basic string; answer an array of multi-line basic strings">
+
+<!ENTITY SEMANTIC.refentry.callout "callouts in order: IMPORTANT refname; IMPORTANT refpurpose; IMPORTANT synopsis; IMPORTANT description; NOTE options, one per occurrence numbered in the title; TIP examples, when given; NOTE see_also, when given">
+<!ENTITY SEMANTIC.refentry.heredoc "quoted heredocs in order: REFNAME; REFPURPOSE; SYNOPSIS; DESCRIPTION; OPTIONS as an indexed array, one quoted heredoc per occurrence; EXAMPLES when given; SEE_ALSO when given">
+<!ENTITY SEMANTIC.refentry.yaml "keys in order: refname a strip block scalar; refpurpose a strip block scalar; synopsis a strip block scalar; description a strip block scalar; options a sequence of strip block scalars; examples a strip block scalar when given; see_also a strip block scalar when given">
+<!ENTITY SEMANTIC.refentry.nt "keys in order: refname a multiline string; refpurpose a multiline string; synopsis a multiline string; description a multiline string; options a list of multiline strings; examples a multiline string when given; see_also a multiline string when given">
+<!ENTITY SEMANTIC.refentry.xml "a DOCTYPE declaring refentry as the sequence refname, refpurpose, synopsis, description, options with a plus, examples with a question mark, see_also with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.refentry.polyglot "YAML front matter with schema refentry and the parts list refname, refpurpose, synopsis, description, options, examples, see_also, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.refentry.jmd "headings in order: refname; refpurpose; synopsis; description; options, one heading per occurrence numbered; examples when given; see_also when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.refentry.json "keys in order: refname a string; refpurpose a string; synopsis a string; description a string; options an array of strings; examples a string when given; see_also a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.refentry.toml "keys in order: refname a multi-line basic string; refpurpose a multi-line basic string; synopsis a multi-line basic string; description a multi-line basic string; options an array of multi-line basic strings; examples a multi-line basic string when given; see_also a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.revhistory.callout "callouts in order: NOTE title, when given; NOTE revision, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.revhistory.heredoc "quoted heredocs in order: TITLE when given; REVISION as an indexed array, one quoted heredoc per occurrence">
+<!ENTITY SEMANTIC.revhistory.yaml "keys in order: title a strip block scalar when given; revision a sequence of strip block scalars">
+<!ENTITY SEMANTIC.revhistory.nt "keys in order: title a multiline string when given; revision a list of multiline strings">
+<!ENTITY SEMANTIC.revhistory.xml "a DOCTYPE declaring revhistory as the sequence title with a question mark, revision with a plus; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.revhistory.polyglot "YAML front matter with schema revhistory and the parts list title, revision, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.revhistory.jmd "headings in order: title when given; revision, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.revhistory.json "keys in order: title a string when given; revision an array of strings; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.revhistory.toml "keys in order: title a multi-line basic string when given; revision an array of multi-line basic strings">
+
+<!ENTITY SEMANTIC.table.callout "callouts in order: IMPORTANT title; NOTE colspec, one per occurrence numbered in the title; NOTE head, when given; NOTE row, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.table.heredoc "quoted heredocs in order: TITLE; COLSPEC as an indexed array, one quoted heredoc per occurrence; HEAD when given; ROW as an indexed array, one quoted heredoc per occurrence">
+<!ENTITY SEMANTIC.table.yaml "keys in order: title a strip block scalar; colspec a sequence of strip block scalars; head a strip block scalar when given; row a sequence of strip block scalars">
+<!ENTITY SEMANTIC.table.nt "keys in order: title a multiline string; colspec a list of multiline strings; head a multiline string when given; row a list of multiline strings">
+<!ENTITY SEMANTIC.table.xml "a DOCTYPE declaring table as the sequence title, colspec with a plus, head with a question mark, row with a plus; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.table.polyglot "YAML front matter with schema table and the parts list title, colspec, head, row, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.table.jmd "headings in order: title; colspec, one heading per occurrence numbered; head when given; row, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.table.json "keys in order: title a string; colspec an array of strings; head a string when given; row an array of strings; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.table.toml "keys in order: title a multi-line basic string; colspec an array of multi-line basic strings; head a multi-line basic string when given; row an array of multi-line basic strings">
+
+<!ENTITY SEMANTIC.task.callout "callouts in order: IMPORTANT title; NOTE shortdesc, when given; WARNING prereq, when given; NOTE context, when given; NOTE step, one per occurrence numbered in the title; NOTE result, when given; TIP example, when given; NOTE postreq, when given">
+<!ENTITY SEMANTIC.task.heredoc "quoted heredocs in order: TITLE; SHORTDESC when given; PREREQ when given; CONTEXT when given; STEP as an indexed array, one quoted heredoc per occurrence; RESULT when given; EXAMPLE when given; POSTREQ when given">
+<!ENTITY SEMANTIC.task.yaml "keys in order: title a strip block scalar; shortdesc a strip block scalar when given; prereq a strip block scalar when given; context a strip block scalar when given; step a sequence of strip block scalars; result a strip block scalar when given; example a strip block scalar when given; postreq a strip block scalar when given">
+<!ENTITY SEMANTIC.task.nt "keys in order: title a multiline string; shortdesc a multiline string when given; prereq a multiline string when given; context a multiline string when given; step a list of multiline strings; result a multiline string when given; example a multiline string when given; postreq a multiline string when given">
+<!ENTITY SEMANTIC.task.xml "a DOCTYPE declaring task as the sequence title, shortdesc with a question mark, prereq with a question mark, context with a question mark, step with a plus, result with a question mark, example with a question mark, postreq with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.task.polyglot "YAML front matter with schema task and the parts list title, shortdesc, prereq, context, step, result, example, postreq, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.task.jmd "headings in order: title; shortdesc when given; prereq when given; context when given; step, one heading per occurrence numbered; result when given; example when given; postreq when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.task.json "keys in order: title a string; shortdesc a string when given; prereq a string when given; context a string when given; step an array of strings; result a string when given; example a string when given; postreq a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.task.toml "keys in order: title a multi-line basic string; shortdesc a multi-line basic string when given; prereq a multi-line basic string when given; context a multi-line basic string when given; step an array of multi-line basic strings; result a multi-line basic string when given; example a multi-line basic string when given; postreq a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.textdesc.callout "callouts in order: IMPORTANT derivation; IMPORTANT domain; IMPORTANT factuality; IMPORTANT preparedness; IMPORTANT purpose; NOTE degree, when given">
+<!ENTITY SEMANTIC.textdesc.heredoc "quoted heredocs in order: DERIVATION; DOMAIN; FACTUALITY; PREPAREDNESS; PURPOSE; DEGREE when given">
+<!ENTITY SEMANTIC.textdesc.yaml "keys in order: derivation a strip block scalar; domain a strip block scalar; factuality a strip block scalar; preparedness a strip block scalar; purpose a strip block scalar; degree a strip block scalar when given">
+<!ENTITY SEMANTIC.textdesc.nt "keys in order: derivation a multiline string; domain a multiline string; factuality a multiline string; preparedness a multiline string; purpose a multiline string; degree a multiline string when given">
+<!ENTITY SEMANTIC.textdesc.xml "a DOCTYPE declaring textdesc as the sequence derivation, domain, factuality, preparedness, purpose, degree with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.textdesc.polyglot "YAML front matter with schema textdesc and the parts list derivation, domain, factuality, preparedness, purpose, degree, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.textdesc.jmd "headings in order: derivation; domain; factuality; preparedness; purpose; degree when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.textdesc.json "keys in order: derivation a string; domain a string; factuality a string; preparedness a string; purpose a string; degree a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.textdesc.toml "keys in order: derivation a multi-line basic string; domain a multi-line basic string; factuality a multi-line basic string; preparedness a multi-line basic string; purpose a multi-line basic string; degree a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.topic.callout "callouts in order: IMPORTANT title; NOTE shortdesc, when given; IMPORTANT body; NOTE related_links, when given">
+<!ENTITY SEMANTIC.topic.heredoc "quoted heredocs in order: TITLE; SHORTDESC when given; BODY; RELATED_LINKS when given">
+<!ENTITY SEMANTIC.topic.yaml "keys in order: title a strip block scalar; shortdesc a strip block scalar when given; body a strip block scalar; related_links a strip block scalar when given">
+<!ENTITY SEMANTIC.topic.nt "keys in order: title a multiline string; shortdesc a multiline string when given; body a multiline string; related_links a multiline string when given">
+<!ENTITY SEMANTIC.topic.xml "a DOCTYPE declaring topic as the sequence title, shortdesc with a question mark, body, related_links with a question mark; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.topic.polyglot "YAML front matter with schema topic and the parts list title, shortdesc, body, related_links, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.topic.jmd "headings in order: title; shortdesc when given; body; related_links when given; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.topic.json "keys in order: title a string; shortdesc a string when given; body a string; related_links a string when given; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.topic.toml "keys in order: title a multi-line basic string; shortdesc a multi-line basic string when given; body a multi-line basic string; related_links a multi-line basic string when given">
+
+<!ENTITY SEMANTIC.variablelist.callout "callouts in order: NOTE title, when given; NOTE varlistentry, one per occurrence numbered in the title">
+<!ENTITY SEMANTIC.variablelist.heredoc "quoted heredocs in order: TITLE when given; VARLISTENTRY as an indexed array, one quoted heredoc per occurrence">
+<!ENTITY SEMANTIC.variablelist.yaml "keys in order: title a strip block scalar when given; varlistentry a sequence of strip block scalars">
+<!ENTITY SEMANTIC.variablelist.nt "keys in order: title a multiline string when given; varlistentry a list of multiline strings">
+<!ENTITY SEMANTIC.variablelist.xml "a DOCTYPE declaring variablelist as the sequence title with a question mark, varlistentry with a plus; each part an element holding a CDATA section">
+<!ENTITY SEMANTIC.variablelist.polyglot "YAML front matter with schema variablelist and the parts list title, varlistentry, then the callout rendering of the same parts as the body">
+<!ENTITY SEMANTIC.variablelist.jmd "headings in order: title when given; varlistentry, one heading per occurrence numbered; code under a heading in a fenced julia chunk">
+<!ENTITY SEMANTIC.variablelist.json "keys in order: title a string when given; varlistentry an array of strings; no comment, an optional part absent when not given">
+<!ENTITY SEMANTIC.variablelist.toml "keys in order: title a multi-line basic string when given; varlistentry an array of multi-line basic strings">
+
+<!ENTITY ASK.SCHEMA.1 "Schema A|Which families of semantic schemas shape the body? Pick any.|DocBook: refentry, qandaset, procedure, glossary, biblioentry, example, table, cmdsynopsis, variablelist, revhistory|DITA: concept, task, topic, glossentry|TEI and the voice: certainty, interp, textdesc|Data: item, key, msgset, productionset">
+<!ENTITY ASK.SCHEMA.2 "Schema B|Which schemas of the families chosen?|The ones named under Other, by their names|The first schema of each family chosen|Every schema of the families chosen|None, the sections alone">
 <!ENTITY ASK.SCHEMATIC.1 "Schematic|In which schematic is the prompt written?|The GitHub callout shape, a markdown file|A shell here-document, a sh file|A YAML document|A NestedText document">
 <!ENTITY ASK.SCHEMATIC.2 "Schematic B|Or one of these instead?|Keep the first choice|An XML document with a DOCTYPE|A polyglot of more than one parser|Typed under Other">
 <!ENTITY SCHEMA.creator.prompt "create-prompt">
@@ -521,7 +703,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY LAW.SCHEMA.3 "A prompt carries the six sections of SCHEMA.prompt.sections in that order, and a meta-prompt the six of SCHEMA.meta.sections; a section with nothing to say still appears, with one line saying so.">
 <!ENTITY LAW.SCHEMA.4 "The file written passes the cc-form guards of its kind before it is reported, and its extension is the SCHEMA.ext entity of its schematic; a callout prompt uses only the five GitHub types.">
 <!ENTITY LAW.SCHEMA.5 "The creator writes the prompt and its record and runs the proof; the proof reads the file back, runs the guards, checks the sections are present in order, and plants one out-of-table syntax to show it refused.">
-<!ENTITY LAW.SCHEMA.6 "A body may carry any number of semantic schemas, chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 independently of the schematic; each chosen schema is rendered as a semantic element whose parts are those of its SEMANTIC.*.parts entity, in that order, with occurs one, optional or many as declared.">
+<!ENTITY LAW.SCHEMA.6 "A body may carry any number of semantic schemas, chosen by ASK.SCHEMA.1 (the families, any of them) and ASK.SCHEMA.2 (which schemas of those families, named under Other, the first of each, every one, or none) independently of the schematic; each chosen schema is rendered as a semantic element whose parts are those of its SEMANTIC.*.parts entity, in that order, with occurs one, optional or many as declared; the four families are SEMANTIC.family.docbook, dita, tei and data, and their union is the whole enumeration.">
 <!ENTITY LAW.SCHEMA.7 "A schema renders in a form by its cell, the SEMANTIC entity named by the schema and then the form, one per schema per form of SEMANTIC.forms, which lists the six schematics and every cc-form kind beyond them; the cell names every part in that form's spelling under the form's three rules SEMANTIC.form.part, SEMANTIC.form.many and SEMANTIC.form.label; in the callout form the type of each part follows SEMANTIC.callout.types; a part rendered outside its cell is a failed answer.">
 <!ENTITY LAW.SCHEMA.8 "A part that occurs one and is missing is a failed answer; a part that occurs optional may be absent; a part that occurs many carries at least one occurrence, each rendered by the many rule.">
 <!ENTITY LAW.SCHEMA.9 "The skeleton of a cell is what node lib/schematic.mjs render prints for the schema and the form; its controls render every cell, run the cc-form guards of the form on the rendering, read the parts back in order, hold SEMANTIC.forms to the kinds cc-form declares, and hold references/semantic-schemas.md to a fresh render; a cell the code cannot render, guard or read back is a failed contract.">
@@ -683,7 +865,7 @@ The schematic is pinned: each section a key with a multiline string, an angle br
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.PROMPT.1 to ASK.PROMPT.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1, ASK.SCHEMA.2, ASK.FORM.1 and ASK.FORM.2 (all four multi-select, the schemas and the forms asked apart); on more again, round 3 of 3 with ASK.PROMPT.5 to ASK.PROMPT.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, multi-select), ASK.SCHEMA.2 (which of them), ASK.FORM.1 and ASK.FORM.2 (multi-select), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.PROMPT.5 to ASK.PROMPT.8; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for nt: print its skeleton with node lib/schematic.mjs render, the schema name and nt, and fill the bracketed words in place (LAW.PROMPT.6); render the `forms`: one `form` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.PROMPT.7); render the `embedding`: the reference syntax SCHEMA.nt.reference, the literal syntax SCHEMA.nt.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.nt: a NestedText document, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.PROMPT.4).
 6. Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
@@ -723,7 +905,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🪜 Schemas
 
-- [refentry|qandaset|procedure|glossary|textdesc|msgset|productionset]: parts [in order, occurs one, optional or many], rendered from its nt cell; or: none, the sections alone
+- [schema, one of the SEMANTIC families docbook, dita, tei or data]: parts [in order, occurs one, optional or many], rendered from its nt cell; or: none, the sections alone
 
 ### 🪜 Forms
 

@@ -96,6 +96,14 @@ counts are re-measured.
   the clear (eleven questions in three rounds), renders a `launch` element
   naming the matching creator, carries every choice in the handoff as a known
   slot, and its launch line hands the handoff to that creator; LAW.CLEAR.6.
+- Fourteen more semantic schemas from the examples folder: DITA concept,
+  task, topic and glossentry; DocBook biblioentry, example, table (CALS),
+  cmdsynopsis, variablelist and revhistory; TEI certainty and interp; RSS
+  item; GSettings key, each with its parts in order and its source named in
+  the DTD. Four families (SEMANTIC.family.docbook, dita, tei, data) behind
+  ASK.SCHEMA.1 and 2, so the question count stays; the matrix regenerated at
+  21 schemas by 9 forms, 189 cells, the families held to the enumeration by
+  a control.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,
