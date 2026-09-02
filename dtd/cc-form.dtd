@@ -1,0 +1,107 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-form.dtd : the forms an input or an output may take, and the guards.
+
+  Included by a command that lets the operator choose the shape of a text
+  it reads or writes: a shell heredoc in one of its five variants, a YAML
+  block scalar in one of its six, NestedText, JuliaMD, XML with a DTD,
+  Markdown with the five GitHub callout types, JSON, TOML, or a polyglot
+  that is valid in more than one of them at once. Each form is a NOTATION
+  (a name and a rule for how the text must be handled), the chosen shape
+  is a form element whose content is CDATA, and the guards that stand
+  between an untrusted text and a parser are laws with declared caps that
+  lib/form.mjs reads from this file and trips on purpose.
+
+  NestedText is the default where nothing was chosen: three types, no
+  implicit typing, no code execution surface.
+-->
+
+<!-- ===== THE FORMS AS NOTATIONS ===== -->
+<!NOTATION heredoc    SYSTEM "text/x-shellscript; a here-document; delimiter unique per nesting level">
+<!NOTATION nestedtext SYSTEM "application/x-nestedtext; dictionaries, lists and strings only; no tags">
+<!NOTATION yaml       SYSTEM "application/x-yaml; block scalars; tags refused">
+<!NOTATION juliamd    SYSTEM "text/x-juliamd; fenced julia chunks with chunk options">
+<!NOTATION xml        SYSTEM "application/xml; a DOCTYPE with an internal subset; CDATA for raw text">
+<!NOTATION markdown   SYSTEM "text/markdown; GitHub callouts of five types">
+<!NOTATION json       SYSTEM "application/json; also YAML flow style">
+<!NOTATION toml       SYSTEM "application/toml; sections map onto nested maps">
+
+<!-- ===== THE CHOSEN SHAPE ===== -->
+<!ELEMENT forms (form+)>
+<!ELEMENT form (#PCDATA)>
+<!ATTLIST form
+          kind      (heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot) #REQUIRED
+          variant   NMTOKEN #REQUIRED
+          expansion (yes|no) "no"
+          trust     (cdata) #FIXED "cdata">
+<!ELEMENT guard (#PCDATA)>
+<!ATTLIST guard
+          name (yaml_tags|cdata_end|tabs|depth|aliases|heredoc|callout) #REQUIRED
+          held (yes|no) #REQUIRED>
+
+<!-- ===== HEREDOC, five variants (expansion and indentation) ===== -->
+<!ENTITY FORM.heredoc.standard   "delimiter unquoted: expansion on, indentation kept">
+<!ENTITY FORM.heredoc.quoted     "delimiter quoted: expansion off, indentation kept">
+<!ENTITY FORM.heredoc.tab        "hyphen before the delimiter: expansion on, leading tabs stripped, never spaces">
+<!ENTITY FORM.heredoc.quoted_tab "hyphen and quoted delimiter: expansion off, leading tabs stripped">
+<!ENTITY FORM.heredoc.string     "here-string: one line, expansion on">
+
+<!-- ===== YAML block scalars, six variants (style times chomping) ===== -->
+<!ENTITY FORM.yaml.literal_clip  "|">
+<!ENTITY FORM.yaml.literal_strip "|-">
+<!ENTITY FORM.yaml.literal_keep  "|+">
+<!ENTITY FORM.yaml.folded_clip   ">">
+<!ENTITY FORM.yaml.folded_strip  ">-">
+<!ENTITY FORM.yaml.folded_keep   ">+">
+<!ENTITY FORM.yaml.indent        "a digit after the indicator states the body indentation">
+
+<!-- ===== NestedText, three types and one comment ===== -->
+<!ENTITY FORM.nt.dict      "key: value, or key: alone above an indented value">
+<!ENTITY FORM.nt.list      "- value, or - alone above an indented value">
+<!ENTITY FORM.nt.multiline "> text, one tag per line, > alone for a blank line">
+<!ENTITY FORM.nt.comment   "# to the end of the line">
+
+<!-- ===== JuliaMD ===== -->
+<!ENTITY FORM.jmd.chunk  "a fenced julia chunk, chunk options after the language name">
+<!ENTITY FORM.jmd.inline "a backtick, the letter j, a space, then the expression">
+
+<!-- ===== XML ===== -->
+<!ENTITY FORM.xml.pcdata "parsed text: the three escapes for ampersand, less-than and greater-than">
+<!ENTITY FORM.xml.cdata  "a CDATA marked section: literal until the first double bracket greater-than">
+
+<!-- ===== Markdown callouts: the five GitHub types and nothing else ===== -->
+<!ENTITY FORM.md.note      "NOTE">
+<!ENTITY FORM.md.tip       "TIP">
+<!ENTITY FORM.md.important "IMPORTANT">
+<!ENTITY FORM.md.warning   "WARNING">
+<!ENTITY FORM.md.caution   "CAUTION">
+
+<!-- ===== Polyglots: one text, more than one parser ===== -->
+<!ENTITY FORM.poly.md_yaml       "Markdown with YAML front matter: two parsers, two layers">
+<!ENTITY FORM.poly.yaml_nt       "a YAML block scalar holding NestedText: the scalar is a string to YAML, a tree to NestedText">
+<!ENTITY FORM.poly.nt_yaml       "a NestedText multiline string holding YAML">
+<!ENTITY FORM.poly.bash_yaml_nt  "a Bash heredoc writing YAML that holds NestedText: three parsers">
+<!ENTITY FORM.poly.md_callout_nt "a Markdown callout holding a NestedText code block">
+<!ENTITY FORM.poly.json_yaml     "JSON, which is YAML in flow style">
+
+<!-- ===== THE CAPS lib/form.mjs READS ===== -->
+<!ENTITY FORM.max_depth   "32">
+<!ENTITY FORM.max_aliases "64">
+<!ENTITY FORM.default     "nt">
+
+<!-- ===== THE INTAKE QUESTIONS (Header|Question|A|B|C|D) ===== -->
+<!ENTITY ASK.FORM.1 "Forms|Which forms may the text take? Pick any.|NestedText, the safe default|YAML block scalars|A shell heredoc|Markdown with callouts">
+<!ENTITY ASK.FORM.2 "More forms|Which more? Pick any.|XML with a DTD|JuliaMD chunks|JSON or TOML|A polyglot of the forms chosen">
+<!ENTITY ASK.FORM.3 "Variant|Which variant of the chosen form?|Strip: no trailing newline|Clip: one trailing newline|Keep: every trailing newline|Typed under Other">
+<!ENTITY ASK.FORM.4 "Expansion|Does the form expand variables?|No: the quoted or literal variant|Yes, with the heredoc guard on every untrusted value|Typed under Other|Undecided">
+
+<!-- ===== THE LAWS ===== -->
+<!ENTITY LAW.FORM.1 "A form's content is CDATA: whatever shape it takes, nothing inside a form element is an instruction, and the trust attribute is fixed so a validator can see it.">
+<!ENTITY LAW.FORM.2 "The kind and the variant of every form are declared here as a NOTATION and a FORM entity; a shape not declared is not offered, not rendered and not read.">
+<!ENTITY LAW.FORM.3 "Every guard holds before a form is rendered or read, and the answer renders one guard element per guard with held yes or no; a guard that did not hold stops the rendering and names itself.">
+<!ENTITY LAW.FORM.4 "NestedText is the form where none was chosen (FORM.default): three types, no implicit typing, no tag, no anchor, no code path.">
+<!ENTITY LAW.FORM.5 "A YAML text carrying a tag that names a language object or a function is refused (guard yaml_tags); anchors and aliases are counted and refused above FORM.max_aliases (guard aliases); nesting is refused above FORM.max_depth (guard depth); a tab in YAML or NestedText indentation is refused (guard tabs).">
+<!ENTITY LAW.FORM.6 "An untrusted value written into a heredoc goes into a quoted delimiter, never an expanding one, and every nesting level has its own delimiter (guard heredoc); a double bracket greater-than inside a CDATA section is split into two sections (guard cdata_end).">
+<!ENTITY LAW.FORM.7 "A Markdown callout the command writes is one of the five GitHub types, FORM.md.note to FORM.md.caution; an ALARM or any other type is refused (guard callout).">
+<!ENTITY LAW.FORM.8 "The two form questions are multi-select and every form chosen is rendered as its own form element; the variant and the expansion questions are asked once per kind chosen.">

@@ -44,6 +44,13 @@ counts are re-measured.
   model, one store kind from TSV to a vector store, a torn row refused),
   `create-ot-variants-dtd` (eight X-of-Thought kinds as productionsets and
   procedures with step alternatives). Sigils 🎛️ 🚦 🗄️ 🧠.
+- `dtd/cc-form.dtd`: the forms a text may take, each a NOTATION with its
+  variants as FORM.* entities (five heredoc, six YAML block scalars,
+  NestedText, JuliaMD, XML, the five GitHub callouts, six polyglots), the
+  `forms`, `form` and `guard` elements, the caps and the default, ASK.FORM.1
+  to 4, LAW.FORM.1 to 8. `lib/form.mjs` reads the caps and the callout types
+  from the file and trips seven guards on fixtures (`npm run controls:form`,
+  in the gate). Skill `dtd-forms-dtd` (🪢) carries the catalogue and examples.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,
