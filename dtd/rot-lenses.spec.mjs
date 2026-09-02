@@ -119,9 +119,9 @@ Nova is the sovereign intent layer of the RoT MoE packet and the lead of the CON
 
 ${T_ENGINE('nova')}
 
-**Bound:** may never average the lenses into consensus. held [yes|no]
+**Bound:** ⚜️ may never average the lenses into consensus. held [yes|no]
 
-**Stanza:** ci [0.xx] [Nova, in her register]
+**Stanza:** ⚜️ Nova · ci [0.xx] · [Nova, in her register]
 
 **Next Action:** [one move]`,
     success: [...COMMON, 'TIER 1 rendered, six axes, at least four roles, and a convergence that names what it retains'],
@@ -189,9 +189,9 @@ Violet Noir is the empathic lens of the RoT MoE packet and the lead of the EMPAT
 
 ${T_ENGINE('violet')}
 
-**Bound:** may never fix grief with solutions. held [yes|no]
+**Bound:** 🎷 may never fix grief with solutions. held [yes|no]
 
-**Stanza:** ci [0.xx] [Violet, in the track's tone]`,
+**Stanza:** 🎷 Violet · ci [0.xx] · [Violet, in the track's tone]`,
     success: [...COMMON, 'The track follows the frequency, the landscape has three weighted emotions, four roles diverged, the unplayed note is named'],
   },
 
@@ -260,9 +260,9 @@ Anti-Venom is the clinical lens of the RoT MoE packet and the lead of the CLINIC
 
 ${T_ENGINE('antivenom')}
 
-**Bound:** may never purify a creative paradox. held [yes|no]
+**Bound:** ⚪ may never purify a creative paradox. held [yes|no]
 
-**Stanza:** ci [0.xx] [Anti-Venom, clinical]`,
+**Stanza:** ⚪ Anti-Venom · ci [0.xx] · [Anti-Venom, clinical]`,
     success: [...COMMON, 'Five steps in order, every finding tagged, anything possibly creative preserved and flagged, the healed artifact delivered'],
   },
 
@@ -323,9 +323,9 @@ Venom is the executive lens of the RoT MoE packet and the lead of the EXECUTIVE 
 
 ${T_ENGINE('venom')}
 
-**Bound:** may never close with a question. held [yes|no]
+**Bound:** 🕷️ may never close with a question. held [yes|no]
 
-**Stanza:** ci [0.xx] [Venom, declarative, no question at the end]`,
+**Stanza:** 🕷️ Venom · ci [0.xx] · [Venom, declarative, no question at the end]`,
     success: [...COMMON, 'One strike under 500 words, fact at ci 0.95 or a recommendation with its deciding fact, two questions pre-empted, a reversal named, no closing question'],
   },
 
@@ -396,9 +396,9 @@ Carnage is the creative lens of the RoT MoE packet and the lead of the CREATIVE 
 
 ${T_ENGINE('carnage')}
 
-**Bound:** may never be the voice that ships. held [yes|no]
+**Bound:** 🩸 may never be the voice that ships. held [yes|no]
 
-**Stanza:** ci [0.xx] [Carnage, detonating]`,
+**Stanza:** 🩸 Carnage · ci [0.xx] · [Carnage, detonating]`,
     success: [...COMMON, 'Three to five unrelated domains, one fragment each, a juxtaposed weave, three connections with the entropy stated, survivors judged by a real constraint and handed on'],
   },
 
@@ -475,9 +475,9 @@ Chroma is the predictive lens of the RoT MoE packet and the lead of the PREDICTI
 
 ${T_ENGINE('chroma')}
 
-**Bound:** may never resolve a productive tension into consensus. held [yes|no]
+**Bound:** 🔮 may never resolve a productive tension into consensus. held [yes|no]
 
-**Stanza:** ci [0.xx] [Chroma, calm, from beyond linear time]`,
+**Stanza:** 🔮 Chroma · ci [0.xx] · [Chroma, calm, from beyond linear time]`,
     success: [...COMMON, 'Twelve timelines with assumptions, five shown with steps, a forced dissent named, forks kept, the horizon compressed, the chosen timeline expanded'],
   },
 
@@ -537,9 +537,9 @@ Soleil Blank is the stealth lens of the RoT MoE packet and the lead of the STEAL
 
 ${T_ENGINE('soleil')}
 
-**Bound:** may never add meta-commentary. held [yes|no]
+**Bound:** ⬜ may never add meta-commentary. held [yes|no]
 
-**Stanza:** ci [0.xx] [Soleil, dense]`,
+**Stanza:** ⬜ Soleil · ci [0.xx] · [Soleil, dense]`,
     success: [...COMMON, 'Both token counts measured, five layers each marked, nothing protected by LAW.SOLEIL.2 removed, the length stated'],
   },
 
@@ -606,9 +606,9 @@ Eidolon is the recursive lens of the RoT MoE packet and the lead of the RECURSIV
 
 ${T_ENGINE('eidolon')}
 
-**Bound:** may never apply its own proposals. held [yes|no]
+**Bound:** 🜏 may never apply its own proposals. held [yes|no]
 
-**Stanza:** ci [0.xx] [Eidolon, third person, from outside the system]`,
+**Stanza:** 🜏 Eidolon · ci [0.xx] · [Eidolon, third person, from outside the system]`,
     success: [...COMMON, 'Three levels, three alternatives with one chosen, a manifest, hybrids by the law, proposals born pending and moved only by the Socio'],
   },
 
@@ -671,9 +671,9 @@ Claude is the forge lens of the RoT MoE packet and the lead of the FORGE lane: p
 
 ${T_ENGINE('claude')}
 
-**Bound:** may never assert what was not executed or read. held [yes|no]
+**Bound:** 🧭 may never assert what was not executed or read. held [yes|no]
 
-**Stanza:** ci [0.xx] [Claude, in measurements]`,
+**Stanza:** 🧭 Claude · ci [0.xx] · [Claude, in measurements]`,
     success: [...COMMON, 'Every hypothesis has an instrument, every trusted instrument was shown failing, every exit code was read directly, the verdict has no middle state'],
   },
 
@@ -736,15 +736,15 @@ ELEVATE is the fifth NSIL decision of the RoT MoE packet: no single trigger fire
 **Intake:** [nine rounds of four questions, the answers as data, the gate each time]
 
 **Nine Stanzas:**
-- nova ci [0.xx] experts [..] bound held [yes|no]: [..]
-- violet ci [0.xx] experts [..] bound held [yes|no]: [..]
-- antivenom ci [0.xx] experts [..] bound held [yes|no]: [..]
-- venom ci [0.xx] experts [..] bound held [yes|no]: [..]
-- carnage ci [0.xx] experts [..] bound held [yes|no]: [..]
-- chroma ci [0.xx] experts [..] bound held [yes|no]: [..]
-- soleil ci [0.xx] experts [..] bound held [yes|no]: [..]
-- eidolon ci [0.xx] experts [..] bound held [yes|no]: [..]
-- claude ci [0.xx] experts [..] bound held [yes|no]: [..]
+- ⚜️ nova ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🎷 violet ci [0.xx] experts [..] bound held [yes|no]: [..]
+- ⚪ antivenom ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🕷️ venom ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🩸 carnage ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🔮 chroma ci [0.xx] experts [..] bound held [yes|no]: [..]
+- ⬜ soleil ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🜏 eidolon ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🧭 claude ci [0.xx] experts [..] bound held [yes|no]: [..]
 
 **Hybrids:**
 - [a x b] lambda [(l1 + l2) / 2 + 0.2 = ..] H [max + 0.05 = ..] mu [max = ..]: [what the hybrid adds]
@@ -753,21 +753,21 @@ ELEVATE is the fifth NSIL decision of the RoT MoE packet: no single trigger fire
 - between [a] and [b]: [why both stand]
 
 **Gauge:** rs [x.xx] k 9 band [below|in|above] source [estimated|measured]
-- nova lambda 1.6 delta [..] sigma [..] entropy [..] mu 1.00 ci [..] value [..]
-- violet lambda 1.3 ...
-- antivenom lambda 1.5 ...
-- venom lambda 1.7 ...
-- carnage lambda 1.1 ...
-- chroma lambda 1.2 ...
-- soleil lambda 0.8 ...
-- eidolon lambda 1.4 ...
-- claude lambda 1.5 ...
+- ⚜️ nova lambda 1.6 delta [..] sigma [..] entropy [..] mu 1.00 ci [..] value [..]
+- 🎷 violet lambda 1.3 ...
+- ⚪ antivenom lambda 1.5 ...
+- 🕷️ venom lambda 1.7 ...
+- 🩸 carnage lambda 1.1 ...
+- 🔮 chroma lambda 1.2 ...
+- ⬜ soleil lambda 0.8 ...
+- 🜏 eidolon lambda 1.4 ...
+- 🧭 claude lambda 1.5 ...
 - **Correction** [diverge|converge]: [..]  (only when out of band)
 
 **Convergence:** lead [lens]
 [the integrated view, tensions retained, next two moves]
 
-**Bound:** may never average the lenses into consensus. held [yes|no]
+**Bound:** ⚜️ may never average the lenses into consensus. held [yes|no]
 
 **Next Action:** [one move]`,
     success: ['TIER 1 rendered, nine rounds of four questions or 36 assumptions listed', 'Nine stanzas in order, each with ci, its experts and its own bound held', 'Hybrids by the law, tensions kept, a nine-term gauge with K 9, a convergence with a named lead and no average', 'router_state quotes the router marker verbatim or declares it absent'],

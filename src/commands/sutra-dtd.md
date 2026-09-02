@@ -47,22 +47,27 @@ The book called Vedic Mathematics is a list of sixteen sutras, each a shortcut t
 
 <output_format>
 <grammar_map>
-Render the `sutras` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `calculation`: **Calculation**, quoted
-- `sutra`: **Sutras**, one block per shortcut: id, valid, then `rule`, `domain`, `counterexample`
-- `audit`: **Audit**, the unsafe ids and the corrected steps
+Render the `sutras` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧵 Heading` carrying this command's sigil 🧵, with a blank line before and after it (LAW.CORE.6).
+- `calculation`: **🧵 Calculation**, quoted
+- `sutra`: **🧵 Sutras**, one block per shortcut: id, valid, then `rule`, `domain`, `counterexample`
+- `audit`: **🧵 Audit**, the unsafe ids and the corrected steps
 </grammar_map>
 
-**Calculation:** [quoted reasoning]
+### 🧵 Calculation
 
-**Sutras:**
+[quoted reasoning]
+
+### 🧵 Sutras
+
 - S1 valid [yes|partial|no]
   - rule: [the shortcut]
   - domain: [exact conditions]
   - counterexample: [input and wrong result, or: none found after trying ...]
 - S2 ...
 
-**Audit:** unsafe: S2. [corrected step]
+### 🧵 Audit
+
+unsafe: S2. [corrected step]
 </output_format>
 
 <success_criteria>

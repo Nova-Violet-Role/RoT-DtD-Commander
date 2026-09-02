@@ -18,7 +18,7 @@ description: Measure whether a *-dtd command's answers conform to its declared g
   <!ELEMENT ledger_line (#PCDATA)>
   <!ATTLIST ledger_line status (pass|fail|aborted) #REQUIRED>
   <!ELEMENT mutation (#PCDATA)>
-  <!ATTLIST mutation kind (missing_heading|order|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
+  <!ATTLIST mutation kind (missing_heading|order|spacing|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
   <!ELEMENT result (#PCDATA)>
   <!ATTLIST result control_tripped (true|false) #REQUIRED positive_pass (true|false) #REQUIRED>
   <!ENTITY LAW.EVAL.1 "An evaluation has one real run and one mutated answer; a pass that was never seen failing proves nothing about the check.">
@@ -58,7 +58,7 @@ Render `eval_session` as: **Target** (path and root), **Fixture**, **Run** (the 
 
 <additional_resources>
 
-- `node bin/adiutor.mjs controls` runs the eight built-in guards in a temporary state directory; C1 is the same missing-heading check this skill trips by hand
+- `node bin/adiutor.mjs controls` runs the nine built-in guards in a temporary state directory; C1 is the same missing-heading check this skill trips by hand
 
 </additional_resources>
 

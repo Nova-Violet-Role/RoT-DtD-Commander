@@ -1,5 +1,5 @@
 ---
-description: Send a command file to slash-command-auditor-dtd: contract rules C1 to C12 first, then YAML, arguments, tools and content
+description: Send a command file to slash-command-auditor-dtd: contract rules C1 to C13 first, then YAML, arguments, tools and content
 argument-hint: <command-path>
 ---
 
@@ -47,7 +47,7 @@ This ensures commands follow security, clarity, and effectiveness standards.
 
 <output_format>
 <grammar_map>
-Render the `audit_dispatch` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `audit_dispatch` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔎 Heading` carrying this command's sigil 🔎, with a blank line before and after it (LAW.CORE.6).
 - `target`: the path as given, quoted
 - `invocation`: one subagent call to slash-command-auditor-dtd
 </grammar_map>

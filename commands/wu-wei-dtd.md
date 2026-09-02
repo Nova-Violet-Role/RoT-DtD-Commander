@@ -70,6 +70,7 @@ argument-hint: [proposed action or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT wu_wei (situation, branch, branch, cost, cost, choice)>
@@ -110,22 +111,36 @@ The Tao Te Ching returns again and again to wu wei, acting by not forcing, and t
 
 <output_format>
 <grammar_map>
-Render the `wu_wei` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `situation`: **Situation**
-- `branch`: **If We Act** and **If We Refrain**, each a full account
-- `cost`: **Cost of Acting** and **Cost of Refraining**, same unit, horizon, confidence
-- `choice`: **Choice**, act, refrain or wait until
+Render the `wu_wei` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🍃 Heading` carrying this command's sigil 🍃, with a blank line before and after it (LAW.CORE.6).
+- `situation`: **🍃 Situation**
+- `branch`: **🍃 If We Act** and **🍃 If We Refrain**, each a full account
+- `cost`: **🍃 Cost of Acting** and **🍃 Cost of Refraining**, same unit, horizon, confidence
+- `choice`: **🍃 Choice**, act, refrain or wait until
 </grammar_map>
 
-**Situation:** [as it is now]
+### 🍃 Situation
 
-**If We Act:** [what the proposal does and what follows]
-**If We Refrain:** [what happens if nobody acts, at the same horizon]
+[as it is now]
 
-**Cost of Acting:** [number unit] at [horizon] ([confidence])
-**Cost of Refraining:** [number unit] at [horizon] ([confidence])
+### 🍃 If We Act
 
-**Choice:** [act|refrain|wait] [until: condition]
+[what the proposal does and what follows]
+
+### 🍃 If We Refrain
+
+[what happens if nobody acts, at the same horizon]
+
+### 🍃 Cost of Acting
+
+[number unit] at [horizon] ([confidence])
+
+### 🍃 Cost of Refraining
+
+[number unit] at [horizon] ([confidence])
+
+### 🍃 Choice
+
+[act|refrain|wait] [until: condition]
 </output_format>
 
 <success_criteria>

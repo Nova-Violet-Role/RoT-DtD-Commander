@@ -62,42 +62,55 @@ Ask "and then what?" until the chain is declared, not implied. First-order think
 
 <output_format>
 <grammar_map>
-Render the `second_order` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `action`: **Action**
-- `effect`: **First-Order Effects**, **Second-Order Effects** and **Third-Order Effects**, one line per effect with id, causes, sign, horizon, confidence
+Render the `second_order` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌊 Heading` carrying this command's sigil 🌊, with a blank line before and after it (LAW.CORE.6).
+- `action`: **🌊 Action**
+- `effect`: **🌊 First-Order Effects**, **🌊 Second-Order Effects** and **🌊 Third-Order Effects**, one line per effect with id, causes, sign, horizon, confidence
 - `intake`: the chain gate, one AskUserQuestion round, shown as the ids chosen
-- `loop`: **Feedback Loops**, one line per loop with kind and the ids in between
-- `delayed`: **Delayed Consequences**, one line per item with its effect id and surfaces_after
-- `assessment`: **Revised Assessment**, with worth and decided_by
-- `assumption_made`: **Assumptions Made**, autonomous mode only
+- `loop`: **🌊 Feedback Loops**, one line per loop with kind and the ids in between
+- `delayed`: **🌊 Delayed Consequences**, one line per item with its effect id and surfaces_after
+- `assessment`: **🌊 Revised Assessment**, with worth and decided_by
+- `assumption_made`: **🌊 Assumptions Made**, autonomous mode only
 </grammar_map>
 
-**Action:** [what is being considered]
+### 🌊 Action
 
-**First-Order Effects:** (immediate)
+[what is being considered]
+
+### 🌊 First-Order Effects
+
+(immediate)
 - E1 [+|-|±] [now|months|years] [measured|reasoned|guessed]: [effect]
 - E2 ...
 
 **Traced to third order (gate):** [ids chosen, or "gate skipped"]
 
-**Second-Order Effects:** (and then what?)
+### 🌊 Second-Order Effects
+
+(and then what?)
 - E4 from E1 [+|-|±] [horizon] [confidence]: [consequence]
 - E5 from E2 ...
 
-**Third-Order Effects:** (and then?)
+### 🌊 Third-Order Effects
+
+(and then?)
 - E7 from E4 [+|-|±] [horizon] [confidence]: [consequence]
 
-**Feedback Loops:**
+### 🌊 Feedback Loops
+
 - L1 [reinforcing|balancing] between E2, E5: [how they feed each other]
 
-**Delayed Consequences:**
+### 🌊 Delayed Consequences
+
 - E5 surfaces after [horizon or trigger]: [why it is not obvious now]
 
-**Revised Assessment:**
+### 🌊 Revised Assessment
+
 worth: [yes|partial|no] decided by: E2, E5, E7
 [reasoning that cites those ids]
 
-**Assumptions Made:** (autonomous mode only)
+### 🌊 Assumptions Made
+
+(autonomous mode only)
 - [each gap filled without asking]
 </output_format>
 

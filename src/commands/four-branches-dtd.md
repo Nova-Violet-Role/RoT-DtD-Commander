@@ -46,20 +46,34 @@ The Mabinogion, preserved in the White Book of Rhydderch and the Red Book of Her
 
 <output_format>
 <grammar_map>
-Render the `branches` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `change`: **Change**
-- `branch`: **The User**, **The Operator**, **The Attacker**, **The Maintainer**, each a tale in its own voice
-- `crossing`: **Crossings**, one line each: the two voices, where they contradict, the cost to resolve
+Render the `branches` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌳 Heading` carrying this command's sigil 🌳, with a blank line before and after it (LAW.CORE.6).
+- `change`: **🌳 Change**
+- `branch`: **🌳 The User**, **🌳 The Operator**, **🌳 The Attacker**, **🌳 The Maintainer**, each a tale in its own voice
+- `crossing`: **🌳 Crossings**, one line each: the two voices, where they contradict, the cost to resolve
 </grammar_map>
 
-**Change:** [neutral description]
+### 🌳 Change
 
-**The User:** [tale]
-**The Operator:** [tale]
-**The Attacker:** [first move ... where it is stopped or wins]
-**The Maintainer:** [tale]
+[neutral description]
 
-**Crossings:**
+### 🌳 The User
+
+[tale]
+
+### 🌳 The Operator
+
+[tale]
+
+### 🌳 The Attacker
+
+[first move ... where it is stopped or wins]
+
+### 🌳 The Maintainer
+
+[tale]
+
+### 🌳 Crossings
+
 - user and operator at [place]: [contradiction], resolve by [cost]
 - attacker and maintainer at [place]: ...
 </output_format>

@@ -71,6 +71,7 @@ argument-hint: [goal or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT one_thing (goal, candidate+, the_one, why_this, next_action)>
@@ -110,28 +111,34 @@ Ask: "What's the ONE thing I can do such that by doing it everything else will b
 
 <output_format>
 <grammar_map>
-Render the `one_thing` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `goal`: **Goal**
-- `candidate`: **Candidate Actions**, one `candidate` each with its downstream effect
-- `the_one`: **The One Thing**
-- `why_this`: **Why This One**
-- `next_action`: **Next Action**
+Render the `one_thing` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔑 Heading` carrying this command's sigil 🔑, with a blank line before and after it (LAW.CORE.6).
+- `goal`: **🔑 Goal**
+- `candidate`: **🔑 Candidate Actions**, one `candidate` each with its downstream effect
+- `the_one`: **🔑 The One Thing**
+- `why_this`: **🔑 Why This One**
+- `next_action`: **🔑 Next Action**
 </grammar_map>
 
-**Goal:** [what you're trying to achieve]
+### 🔑 Goal
 
-**Candidate Actions:**
+[what you're trying to achieve]
+
+### 🔑 Candidate Actions
+
 - Action 1: [downstream effect]
 - Action 2: [downstream effect]
 - Action 3: [downstream effect]
 
-**The One Thing:**
+### 🔑 The One Thing
+
 [The action that enables or eliminates the most other actions]
 
-**Why This One:**
+### 🔑 Why This One
+
 By doing this, [specific things] become easier or unnecessary because...
 
-**Next Action:**
+### 🔑 Next Action
+
 [Specific, concrete first step to take right now]
 </output_format>
 

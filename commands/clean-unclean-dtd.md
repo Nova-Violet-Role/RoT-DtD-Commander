@@ -71,6 +71,7 @@ allowed-tools: Read Grep Glob Bash
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT purity (subject, channel+, rite+, verdict)>
@@ -111,23 +112,29 @@ Leviticus spends chapters on what is clean, what is unclean, and the rite that m
 
 <output_format>
 <grammar_map>
-Render the `purity` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `subject`: **Subject**
-- `channel`: **Channels**, one line per channel: id, source, status
-- `rite`: **Rites**, one line per rite: for which channel, kind, tripped, the landed proof
-- `verdict`: **Verdict**
+Render the `purity` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧼 Heading` carrying this command's sigil 🧼, with a blank line before and after it (LAW.CORE.6).
+- `subject`: **🧼 Subject**
+- `channel`: **🧼 Channels**, one line per channel: id, source, status
+- `rite`: **🧼 Rites**, one line per rite: for which channel, kind, tripped, the landed proof
+- `verdict`: **🧼 Verdict**
 </grammar_map>
 
-**Subject:** [what was audited, path]
+### 🧼 Subject
 
-**Channels:**
+[what was audited, path]
+
+### 🧼 Channels
+
 - C1 [source] unclean
 - C2 [source] clean because [reason]
 
-**Rites:**
+### 🧼 Rites
+
 - for C1: [fence|validate|reject|quarantine], tripped [true|false|untested]: fed [the unclean input], observed [what happened]
 
-**Verdict:** [clean|unclean] [if unclean: the channel without a proven rite]
+### 🧼 Verdict
+
+[clean|unclean] [if unclean: the channel without a proven rite]
 </output_format>
 
 <success_criteria>

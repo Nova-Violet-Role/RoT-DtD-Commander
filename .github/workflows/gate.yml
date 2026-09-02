@@ -16,16 +16,18 @@ jobs:
           node-version: 20
       - name: build drift (committed resolved tree equals a fresh resolve of src/)
         run: node bin/rot-dtd-commander.mjs build --check; echo "exit=$?"; node bin/rot-dtd-commander.mjs build --check
-      - name: checker C1..C12 on every source
+      - name: checker C1..C13 on every source
         run: |
           node bin/rot-dtd-commander.mjs check | tee check.log
           test "${PIPESTATUS[0]}" -eq 0
           grep -q 'failed 0' check.log
-      - name: adiutor controls (eight guards tripped on purpose)
+      - name: heading shape (every grammar_map heading is a sigil heading with blank lines; the sweep is a no-op)
+        run: node checker/heading-sweep.mjs --check
+      - name: adiutor controls (nine guards tripped on purpose)
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, with its planted control)
         run: node checker/contract-audit.mjs
-      - name: checker controls (three mutations and two broken instances refused)
+      - name: checker controls (five mutations refused, the untouched file passes)
         run: bash checker/checker-controls.sh
       - name: spdx sweep
         run: bash checker/spdx-sweep.sh

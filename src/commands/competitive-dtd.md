@@ -98,21 +98,23 @@ After intake complete:
 
 <output_format>
 <grammar_map>
-Render the `competitive_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `competitive_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🏁 Heading` carrying this command's sigil 🏁, with a blank line before and after it (LAW.CORE.6).
 - `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.competitive in that order, then `claude_context` blocks insights, technical, positioning, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-competitive.md
 </grammar_map>
 
-## Competitive Research: [Space/Problem]
+### 🏁 Competitive Research: [Space/Problem]
 
-### Strategic Summary
+### 🏁 Strategic Summary
+
 [2-3 sentences: the competitive landscape, key insight, main opportunity]
 
-### Problem Being Solved
+### 🏁 Problem Being Solved
+
 [What job are all these products doing for users]
 
-### Competitors
+### 🏁 Competitors
 
 **[Competitor 1]**
 - **Solution:** [How they solve it]
@@ -127,25 +129,30 @@ Render the `competitive_research` root declared in the DOCTYPE as the markdown b
 **[Competitor 3]**
 [Same structure...]
 
-### Comparison Matrix
+### 🏁 Comparison Matrix
+
 | Aspect | Comp 1 | Comp 2 | Comp 3 |
 |--------|--------|--------|--------|
 | [Key feature] | Y/N | Y/N | Y/N |
 | [Key feature] | Y/N | Y/N | Y/N |
 | [Key feature] | Y/N | Y/N | Y/N |
 
-### Patterns
+### 🏁 Patterns
+
 [What most/all competitors do - table stakes]
 
-### Gaps & Opportunities
+### 🏁 Gaps & Opportunities
+
 - [Gap]: [Why it's underserved, opportunity]
 - [Gap]: [Why it's underserved, opportunity]
 
-### Differentiation Options
+### 🏁 Differentiation Options
+
 1. [Way to differentiate]: [tradeoff]
 2. [Way to differentiate]: [tradeoff]
 
-### Implementation Context
+### 🏁 Implementation Context
+
 <claude_context>
 <insights>
 - table_stakes: [features we must have to compete]
@@ -165,7 +172,8 @@ Render the `competitive_research` root declared in the DOCTYPE as the markdown b
 
 **Next Action:** Deep dive on specific competitor, validate gaps with user research, or run /plan/brief to define our approach
 
-### Sources
+### 🏁 Sources
+
 - [Source name]: [URL] - [date accessed]
 - [Source name]: [URL] - [date accessed]
 </output_format>

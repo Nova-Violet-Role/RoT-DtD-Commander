@@ -83,7 +83,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 
 <output_format>
 <grammar_map>
-Render the `todo_add` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `todo_add` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ➕ Heading` carrying this command's sigil ➕, with a blank line before and after it (LAW.CORE.6).
 - `context_capture`: what was captured from the conversation, quoted
 - `entry`: the entry appended to TO-DOS.md under the RECORD.todo field order
 </grammar_map>

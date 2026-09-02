@@ -71,6 +71,7 @@ argument-hint: [subject or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT swot (subject, strengths, weaknesses, opportunities, threats, moves)>
@@ -115,30 +116,37 @@ Map internal factors (strengths/weaknesses) and external factors (opportunities/
 
 <output_format>
 <grammar_map>
-Render the `swot` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `subject`: **Subject**
-- `strengths`: **Strengths (Internal +)**, `item` locus internal sign plus
-- `weaknesses`: **Weaknesses (Internal -)**, `item` locus internal sign minus
-- `opportunities`: **Opportunities (External +)**
-- `threats`: **Threats (External -)**
-- `moves`: **Strategic Moves**, exactly four `move` elements: SO, WO, ST, WT
+Render the `swot` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚖️ Heading` carrying this command's sigil ⚖️, with a blank line before and after it (LAW.CORE.6).
+- `subject`: **⚖️ Subject**
+- `strengths`: **⚖️ Strengths (Internal +)**, `item` locus internal sign plus
+- `weaknesses`: **⚖️ Weaknesses (Internal -)**, `item` locus internal sign minus
+- `opportunities`: **⚖️ Opportunities (External +)**
+- `threats`: **⚖️ Threats (External -)**
+- `moves`: **⚖️ Strategic Moves**, exactly four `move` elements: SO, WO, ST, WT
 </grammar_map>
 
-**Subject:** [what's being analyzed]
+### ⚖️ Subject
 
-**Strengths (Internal +)**
+[what's being analyzed]
+
+### ⚖️ Strengths (Internal +)
+
 - [Strength]: How to leverage...
 
-**Weaknesses (Internal -)**
+### ⚖️ Weaknesses (Internal -)
+
 - [Weakness]: How to mitigate...
 
-**Opportunities (External +)**
+### ⚖️ Opportunities (External +)
+
 - [Opportunity]: How to capture...
 
-**Threats (External -)**
+### ⚖️ Threats (External -)
+
 - [Threat]: How to defend...
 
-**Strategic Moves:**
+### ⚖️ Strategic Moves
+
 - **SO Strategy:** Use [strength] to capture [opportunity]
 - **WO Strategy:** Address [weakness] to enable [opportunity]
 - **ST Strategy:** Use [strength] to counter [threat]

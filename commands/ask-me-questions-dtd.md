@@ -70,6 +70,7 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   
@@ -211,26 +212,32 @@ After the answers, one AskUserQuestion with header "Gate", question GATE.questio
 
 <output_format>
 <grammar_map>
-Render the `intake_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `task`: **Task**, with its kind when it came from TASK.question
-- `intake`: **Intake**, the known and gap slots, then each round as its questions and answers, then the gate choice and round number
-- `execution`: **Execution**, opening with the restatement, then the work itself
-- `assumption_made`: **Assumptions Made**, autonomous mode only
+Render the `intake_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ❓ Heading` carrying this command's sigil ❓, with a blank line before and after it (LAW.CORE.6).
+- `task`: **❓ Task**, with its kind when it came from TASK.question
+- `intake`: **❓ Intake**, the known and gap slots, then each round as its questions and answers, then the gate choice and round number
+- `execution`: **❓ Execution**, opening with the restatement, then the work itself
+- `assumption_made`: **❓ Assumptions Made**, autonomous mode only
 </grammar_map>
 
-**Task:** [the task, kind: write|build|figure|other]
+### ❓ Task
 
-**Intake:**
+[the task, kind: write|build|figure|other]
+
+### ❓ Intake
+
 - known: what [..] who [..] why [..] how [..] when [..]
 - gaps: [slots asked about]
 - round 1: [question headers] answered [labels chosen]
 - gate: [start|more|add] (round N)
 
-**Execution:**
+### ❓ Execution
+
 Restating what was asked: [every known slot and every answer]
 [the work]
 
-**Assumptions Made:** (autonomous mode only)
+### ❓ Assumptions Made
+
+(autonomous mode only)
 - [each gap filled without asking]
 </output_format>
 

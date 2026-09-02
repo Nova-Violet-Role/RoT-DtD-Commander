@@ -70,6 +70,7 @@ argument-hint: [topic or leave blank for current context; add --no-gate for auto
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   
@@ -234,48 +235,59 @@ Autonomous mode: when the argument contains --no-gate or the session is non-inte
 
 <output_format>
 <grammar_map>
-Render the `deep_dive` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `deep_dive` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🤿 Heading` carrying this command's sigil 🤿, with a blank line before and after it (LAW.CORE.6).
 - `intake`: the intake gate: known and gap slots, each round's questions and answers, the gate choice; or the list of assumptions in autonomous mode
 - `report`: `strategic_summary` first (three sentences or fewer), then one `section` per name in SECTIONS.deep_dive in that order, then `claude_context` with one `block` per name in BLOCKS.deep_dive, then `next_action`, then `sources` with one `source` per item carrying its kind (file, command, run, measurement, note)
 - `artifact`: the saved file, name YYYY-MM-DD-topic-deep-dive.md under artifacts/research
-- `assumption_made`: **Assumptions Made**, autonomous mode only
+- `assumption_made`: **🤿 Assumptions Made**, autonomous mode only
 </grammar_map>
 
-## Deep Dive: [Topic]
+### 🤿 Deep Dive: [Topic]
 
-### Strategic Summary
+### 🤿 Strategic Summary
+
 [2-3 sentences: what this is, key insight, main implication for our work]
 
-### Key Questions
+### 🤿 Key Questions
+
 - [Question this research answers]
 
-### Overview
+### 🤿 Overview
+
 [2-3 paragraph synthesis of what this is and why it matters]
 
-### How It Works
+### 🤿 How It Works
+
 [Mechanics, architecture or process; each claim marked measured, reasoned or guessed]
 
-### History and Context
+### 🤿 History and Context
+
 [Why it exists, what problem it solved, how it evolved]
 
-### Patterns and Best Practices
+### 🤿 Patterns and Best Practices
+
 - [Pattern]: [when and why]
 
-### Limitations and Edge Cases
+### 🤿 Limitations and Edge Cases
+
 - [Limitation]: [workaround or mitigation]
 
-### Current State and Trends
+### 🤿 Current State and Trends
+
 [Where things are heading, from the evidence at hand]
 
-### Key Takeaways
+### 🤿 Key Takeaways
+
 1. [Most important insight]
 2. [Second]
 3. [Third]
 
-### Remaining Unknowns
+### 🤿 Remaining Unknowns
+
 - [ ] [Question] (assumed: [the assumption taken])
 
-### Implementation Context
+### 🤿 Implementation Context
+
 <claude_context>
 <application>
 - when_to_use: [situations where this applies]
@@ -296,8 +308,13 @@ Render the `deep_dive` root declared in the DOCTYPE as the markdown below. One d
 
 **Next Action:** [apply, research deeper, or plan]
 
-### Sources
+### 🤿 Sources
+
 - [kind: file|command|run|measurement|note] [path or command] - [date]
+
+### 🤿 Assumptions Made
+
+(autonomous run only) one line per assumption made
 </output_format>
 
 <artifact_output>

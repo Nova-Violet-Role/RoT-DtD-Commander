@@ -70,6 +70,7 @@ argument-hint: [proposal or clever solution, or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT wisdom (proposal, clever+, wise+, violation*, counsel)>
@@ -111,28 +112,35 @@ The Book of Wisdom sets wisdom against cleverness: the clever move wins the mome
 
 <output_format>
 <grammar_map>
-Render the `wisdom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `proposal`: **Proposal**
-- `clever`: **Clever Moves**, one line each: id, gains
-- `wise`: **Wise Constraints**, one line each: id, protects
-- `violation`: **Violations**, one line each pairing a clever id and a wise id
-- `counsel`: **Counsel**
+Render the `wisdom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🦉 Heading` carrying this command's sigil 🦉, with a blank line before and after it (LAW.CORE.6).
+- `proposal`: **🦉 Proposal**
+- `clever`: **🦉 Clever Moves**, one line each: id, gains
+- `wise`: **🦉 Wise Constraints**, one line each: id, protects
+- `violation`: **🦉 Violations**, one line each pairing a clever id and a wise id
+- `counsel`: **🦉 Counsel**
 </grammar_map>
 
-**Proposal:** [one paragraph]
+### 🦉 Proposal
 
-**Clever Moves:**
+[one paragraph]
+
+### 🦉 Clever Moves
+
 - K1 [move] gains: [what it wins]
 - K2 ...
 
-**Wise Constraints:**
+### 🦉 Wise Constraints
+
 - W1 [constraint] protects: [what it guards]
 - W2 ...
 
-**Violations:**
+### 🦉 Violations
+
 - K2 against W1: [what breaks]
 
-**Counsel:** keep K1; K2 costs [price], replace with [plainer move]
+### 🦉 Counsel
+
+keep K1; K2 costs [price], replace with [plainer move]
 </output_format>
 
 <success_criteria>

@@ -99,24 +99,27 @@ After intake complete:
 
 <output_format>
 <grammar_map>
-Render the `open_source_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `open_source_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌐 Heading` carrying this command's sigil 🌐, with a blank line before and after it (LAW.CORE.6).
 - `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.open_source in that order, then `claude_context` blocks if_use, if_build, integration, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-open-source.md
 </grammar_map>
 
-## Open Source Research: [Need]
+### 🌐 Open Source Research: [Need]
 
-### Strategic Summary
+### 🌐 Strategic Summary
+
 [2-3 sentences: what's available, recommendation, key consideration]
 
-### What we need
+### 🌐 What we need
+
 [Problem to solve, key requirements]
 
-### License requirements
+### 🌐 License requirements
+
 [MIT/Apache/GPL-compatible/etc.]
 
-### Options Found
+### 🌐 Options Found
 
 **[Option 1: package-name]**
 - **Repo:** [GitHub URL]
@@ -135,7 +138,8 @@ Render the `open_source_research` root declared in the DOCTYPE as the markdown b
 **[Option 3: package-name]**
 [Same structure...]
 
-### Comparison
+### 🌐 Comparison
+
 | Aspect | Option 1 | Option 2 | Option 3 |
 |--------|----------|----------|----------|
 | Solves problem | Y/Partial/N | | |
@@ -143,7 +147,8 @@ Render the `open_source_research` root declared in the DOCTYPE as the markdown b
 | License OK | Y/N | | |
 | Easy to integrate | Y/N | | |
 
-### Build vs. Use Analysis
+### 🌐 Build vs. Use Analysis
+
 **Use existing:**
 - Pros: [Proven solution, community support, faster start]
 - Cons: [Less control, potential bloat, dependency risk]
@@ -155,7 +160,8 @@ Render the `open_source_research` root declared in the DOCTYPE as the markdown b
 **Recommendation:**
 [Use Option X / Build custom] because [reasoning]
 
-### Implementation Context
+### 🌐 Implementation Context
+
 <claude_context>
 <if_use>
 - package: [exact package name and version]
@@ -179,7 +185,8 @@ Render the `open_source_research` root declared in the DOCTYPE as the markdown b
 
 **Next Action:** Prototype with chosen library, evaluate deeper, or spec out custom build
 
-### Sources
+### 🌐 Sources
+
 - [Source name/package]: [URL] - [date accessed]
 - [Source name/package]: [URL] - [date accessed]
 </output_format>

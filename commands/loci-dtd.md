@@ -71,6 +71,7 @@ allowed-tools: Read Glob Grep
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT palace (subject, room+, walk, recall_test)>
@@ -111,25 +112,33 @@ The method of loci places facts at imagined locations along a fixed route so the
 
 <output_format>
 <grammar_map>
-Render the `palace` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `subject`: **Subject**
-- `room`: **Rooms**, one heading per room with id, name, maps_to, then its loci
+Render the `palace` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🏛️ Heading` carrying this command's sigil 🏛️, with a blank line before and after it (LAW.CORE.6).
+- `subject`: **🏛️ Subject**
+- `room`: **🏛️ Rooms**, one heading per room with id, name, maps_to, then its loci
 - `locus`: one line per locus: id, image, path, the fact
-- `walk`: **The Walk**, the room ids in order
-- `recall_test`: **Recall Test**, three locus ids with their expected content
+- `walk`: **🏛️ The Walk**, the room ids in order
+- `recall_test`: **🏛️ Recall Test**, three locus ids with their expected content
 </grammar_map>
 
-**Subject:** [what the palace holds]
+### 🏛️ Subject
 
-**Rooms:**
-### R1 [name] (maps to [path or phase])
+[what the palace holds]
+
+### 🏛️ Rooms
+
+### 🏛️ R1 [name] (maps to [path or phase])
+
 - L1 [image]: [the fact] ([path])
 - L2 ...
-### R2 ...
 
-**The Walk:** R1, R2, R3
+### 🏛️ R2 ...
 
-**Recall Test:**
+### 🏛️ The Walk
+
+R1, R2, R3
+
+### 🏛️ Recall Test
+
 - L3: [what should come to mind]
 - L7: ...
 - L9: ...

@@ -70,6 +70,7 @@ argument-hint: [goal blocked by constraints, or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT water (goal, constraint+, yield_point+, course)>
@@ -109,24 +110,30 @@ Chapter 78 of the Tao Te Ching says nothing is softer than water and nothing bet
 
 <output_format>
 <grammar_map>
-Render the `water` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `goal`: **Goal**
-- `constraint`: **Constraints**, one line each: id, hardness, checked, the constraint
-- `yield_point`: **Yield Points**, one line each naming its constraint
-- `course`: **Course**, the yield points in order
+Render the `water` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 💧 Heading` carrying this command's sigil 💧, with a blank line before and after it (LAW.CORE.6).
+- `goal`: **💧 Goal**
+- `constraint`: **💧 Constraints**, one line each: id, hardness, checked, the constraint
+- `yield_point`: **💧 Yield Points**, one line each naming its constraint
+- `course`: **💧 Course**, the yield points in order
 </grammar_map>
 
-**Goal:** [what is blocked]
+### 💧 Goal
 
-**Constraints:**
+[what is blocked]
+
+### 💧 Constraints
+
 - C1 [hard|soft|assumed] checked [true|false]: [the constraint] [what the check found]
 - C2 ...
 
-**Yield Points:**
+### 💧 Yield Points
+
 - Y1 in C2: [where it gives way]
 - Y2 in C3: ...
 
-**Course:** through Y1, Y2. [the route in prose]
+### 💧 Course
+
+through Y1, Y2. [the route in prose]
 </output_format>
 
 <success_criteria>

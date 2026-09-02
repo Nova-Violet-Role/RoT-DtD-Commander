@@ -47,24 +47,35 @@ Keep asking "why" until you hit the root cause, not just symptoms.
 
 <output_format>
 <grammar_map>
-Render the `five_whys` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `problem`: **Problem**
-- `why`: **Why 1** through **Why 5**, one `why` each with n set; three minimum, five maximum
-- `root_cause`: **Root Cause**
-- `intervention`: **Intervention**
+Render the `five_whys` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔁 Heading` carrying this command's sigil 🔁, with a blank line before and after it (LAW.CORE.6).
+- `problem`: **🔁 Problem**
+- `why`: **🔁 Why 1** through **🔁 Why 5**, one `why` each with n set; three minimum, five maximum
+- `root_cause`: **🔁 Root Cause**
+- `intervention`: **🔁 Intervention**
 </grammar_map>
 
-**Problem:** [clear statement]
+### 🔁 Problem
 
-**Why 1:** [surface cause]
+[clear statement]
+
+### 🔁 Why 1
+
+[surface cause]
 **Why 2:** [deeper cause]
 **Why 3:** [even deeper]
 **Why 4:** [approaching root]
-**Why 5:** [root cause]
 
-**Root Cause:** [the actual thing to fix]
+### 🔁 Why 5
 
-**Intervention:** [specific action at the root level]
+[root cause]
+
+### 🔁 Root Cause
+
+[the actual thing to fix]
+
+### 🔁 Intervention
+
+[specific action at the root level]
 </output_format>
 
 <success_criteria>

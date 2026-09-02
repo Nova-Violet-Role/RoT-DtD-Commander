@@ -1,2 +1,2 @@
 {"type":"user","message":{"role":"user","content":"<command-name>/pareto-dtd</command-name>"}}
-{"type":"assistant","isSidechain":false,"message":{"role":"assistant","content":[{"type":"text","text":"**Vital Few (focus here):**\n- Factor 1: the installer\n\n**Trivial Many (deprioritize):**\n- renaming the docs folder"}]}}
+{"type":"assistant","isSidechain":false,"message":{"role":"assistant","content":[{"type":"text","text":"### 🎯 Vital Few (focus here)\n\n- Factor 1: the installer\n\n### 🎯 Trivial Many (deprioritize)\n\n- renaming the docs folder"}]}}

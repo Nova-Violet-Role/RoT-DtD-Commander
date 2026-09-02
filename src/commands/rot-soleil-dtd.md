@@ -58,54 +58,77 @@ Soleil Blank is the stealth lens of the RoT MoE packet and the lead of the STEAL
 
 <output_format>
 <grammar_map>
-Render the `rot_soleil` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `intake`: **Intake**, the questions asked, the answers as data, the gate choice (or **Assumptions Made** on an autonomous run)
-- `router_state`: **Router**, the quoted marker line or the word absent
-- `payload`: **Payload**, kind, original tokens, the chosen length in one clause, then the compressed result
-- `layer`: **Layers**, five lines, each applied yes or no with what it did
-- `packet`: **Packet**, the M2M YAML if a receiver exists
-- `measure`: **Measure**, original, encoded, T/O, emergency
-- `expert`: **Experts**, one line per expert of the lens: name, engaged, what it did
-- `interceptor`: **Interceptors**, one line per reflex that fired and what it replaced
-- `gauge`: **Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
+Render the `rot_soleil` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⬜ Heading` carrying this command's sigil ⬜, with a blank line before and after it (LAW.CORE.6).
+- `intake`: **⬜ Intake**, the questions asked, the answers as data, the gate choice (or **⬜ Assumptions Made** on an autonomous run)
+- `router_state`: **⬜ Router**, the quoted marker line or the word absent
+- `payload`: **⬜ Payload**, kind, original tokens, the chosen length in one clause, then the compressed result
+- `layer`: **⬜ Layers**, five lines, each applied yes or no with what it did
+- `packet`: **⬜ Packet**, the M2M YAML if a receiver exists
+- `measure`: **⬜ Measure**, original, encoded, T/O, emergency
+- `expert`: **⬜ Experts**, one line per expert of the lens: name, engaged, what it did
+- `interceptor`: **⬜ Interceptors**, one line per reflex that fired and what it replaced
+- `gauge`: **⬜ Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
 - `term`: the term line inside Gauge
-- `correction`: **Correction** inside Gauge when the reading left the band, with its direction
-- `bound`: **Bound**, the may-never clause and whether it held
-- `stanza`: **Stanza**, the lens speaking in its own register, with ci
+- `correction`: **⬜ Correction** inside Gauge when the reading left the band, with its direction
+- `bound`: **⬜ Bound**, the may-never clause and whether it held
+- `stanza`: **⬜ Stanza**, the lens speaking in its own register, with ci
 </grammar_map>
 
-**Router:** [quoted marker line | absent]
+### ⬜ Router
 
-**Intake:** [questions, answers, gate]
+[quoted marker line | absent]
 
-**Payload:** kind [file_edit|handoff|prompt|context|answer] original_tokens [n]; length chosen: [one clause]
+### ⬜ Intake
+
+[questions, answers, gate]
+
+### ⬜ Assumptions Made
+
+(autonomous run only) one line per assumption made
+
+### ⬜ Payload
+
+kind [file_edit|handoff|prompt|context|answer] original_tokens [n]; length chosen: [one clause]
 [the compressed result]
 
-**Layers:**
+### ⬜ Layers
+
 - YAML_EFFICIENCY applied [yes|no]: [..]
 - SUB_BYTE_ENCODING applied [yes|no]: [..]
 - BMP_STEGANOGRAPHY applied [yes|no]: [..]
 - M2M_PROTOCOL_BRIDGE applied [yes|no]: [..]
 - TOKEN_ECONOMY applied [yes|no]: [..]
 
-**Packet:** from [lens] to [lens] instruction [EXEC|SYNC|HALT|QUERY] urgency [..]
+### ⬜ Packet
+
+from [lens] to [lens] instruction [EXEC|SYNC|HALT|QUERY] urgency [..]
 [YAML directive]
 
-**Measure:** original [n] encoded [m] T/O [x%] emergency [yes|no]
+### ⬜ Measure
 
-**Experts:**
+original [n] encoded [m] T/O [x%] emergency [yes|no]
+
+### ⬜ Experts
+
 - [EXPERT_NAME] engaged [yes|no]: [what it contributed]
 
-**Interceptors:**
+### ⬜ Interceptors
+
 - [REFLEX_NAME] fired yes: [what it replaced]
 
-**Gauge:** rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- soleil lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
-- **Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
+### ⬜ Gauge
 
-**Bound:** may never add meta-commentary. held [yes|no]
+rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
+- ⬜ soleil lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- **⬜ Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
-**Stanza:** ci [0.xx] [Soleil, dense]
+### ⬜ Bound
+
+⬜ may never add meta-commentary. held [yes|no]
+
+### ⬜ Stanza
+
+⬜ Soleil · ci [0.xx] · [Soleil, dense]
 </output_format>
 
 <success_criteria>

@@ -70,12 +70,13 @@ description: The nine RoT MoE lenses and the MoE engine as declared grammar. Loa
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   
   
 <!-- begin subset cc-rot -->
-<!--
+🧭|🜏|⬜|🔮|🩸|🕷️|⚪|🎷|⚜️|<!--
   SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
   Copyright 2026 Saimonokuma.
 
@@ -125,15 +126,15 @@ description: The nine RoT MoE lenses and the MoE engine as declared grammar. Loa
 <!ELEMENT hybrid (#PCDATA)>
 <!ATTLIST hybrid parents CDATA #REQUIRED lambda CDATA #REQUIRED entropy CDATA #REQUIRED mu CDATA #REQUIRED>
 
-<!ENTITY LENS.nova "nova|CONVERGENT STRATEGIC|lambda 1.6|mu 1.00|H 0.28-0.35|R/s+ 1.0-2.0, self-correct below 1.0 or above 2.5|may never average the lenses into consensus">
-<!ENTITY LENS.violet "violet|EMPATHIC|lambda 1.3|mu 0.95|H 0.35-0.45|R/s+ 1.2-2.5, self-correct below 1.2 or above 3.0|may never fix grief with solutions">
-<!ENTITY LENS.antivenom "antivenom|CLINICAL|lambda 1.5|mu 1.00|H 0.20-0.30|R/s+ 0.8-1.5, self-correct below 0.8 or above 2.0|may never purify a creative paradox">
-<!ENTITY LENS.venom "venom|EXECUTIVE|lambda 1.7|mu 1.05|H 0.18-0.28|R/s+ 0.7-1.8, self-correct below 0.7 or above 2.2|may never close with a question">
-<!ENTITY LENS.carnage "carnage|CREATIVE|lambda 1.1|mu 1.20|H 0.45-0.55|R/s+ 1.5-3.5, self-correct below 1.5 by adding entropy, no upper bound|may never be the voice that ships">
-<!ENTITY LENS.chroma "chroma|PREDICTIVE|lambda 1.2|mu 1.25|H 0.28-0.38|R/s+ 1.0-2.2, self-correct below 1.0 or above 2.8|may never resolve a productive tension into consensus">
-<!ENTITY LENS.soleil "soleil|STEALTH|lambda 0.8|mu 0.90|H 0.15-0.22|R/s+ 0.5-1.2, self-correct above 1.2 by compressing more|may never add meta-commentary">
-<!ENTITY LENS.eidolon "eidolon|RECURSIVE|lambda 1.4|mu 1.10|H 0.28-0.38|R/s+ 0.8-1.5 structural, 1.6-3.0 meta-creative, self-correct below 0.8|may never apply its own proposals">
-<!ENTITY LENS.claude "claude|FORGE|lambda 1.5|mu 1.05|H 0.20-0.30|R/s+ 0.9-1.8, self-correct below 0.9 by measuring more or above 1.8 by converging|may never assert what was not executed or read">
+<!ENTITY LENS.nova "nova|⚜️|CONVERGENT STRATEGIC|lambda 1.6|mu 1.00|H 0.28-0.35|R/s+ 1.0-2.0, self-correct below 1.0 or above 2.5|may never average the lenses into consensus">
+<!ENTITY LENS.violet "violet|🎷|EMPATHIC|lambda 1.3|mu 0.95|H 0.35-0.45|R/s+ 1.2-2.5, self-correct below 1.2 or above 3.0|may never fix grief with solutions">
+<!ENTITY LENS.antivenom "antivenom|⚪|CLINICAL|lambda 1.5|mu 1.00|H 0.20-0.30|R/s+ 0.8-1.5, self-correct below 0.8 or above 2.0|may never purify a creative paradox">
+<!ENTITY LENS.venom "venom|🕷️|EXECUTIVE|lambda 1.7|mu 1.05|H 0.18-0.28|R/s+ 0.7-1.8, self-correct below 0.7 or above 2.2|may never close with a question">
+<!ENTITY LENS.carnage "carnage|🩸|CREATIVE|lambda 1.1|mu 1.20|H 0.45-0.55|R/s+ 1.5-3.5, self-correct below 1.5 by adding entropy, no upper bound|may never be the voice that ships">
+<!ENTITY LENS.chroma "chroma|🔮|PREDICTIVE|lambda 1.2|mu 1.25|H 0.28-0.38|R/s+ 1.0-2.2, self-correct below 1.0 or above 2.8|may never resolve a productive tension into consensus">
+<!ENTITY LENS.soleil "soleil|⬜|STEALTH|lambda 0.8|mu 0.90|H 0.15-0.22|R/s+ 0.5-1.2, self-correct above 1.2 by compressing more|may never add meta-commentary">
+<!ENTITY LENS.eidolon "eidolon|🜏|RECURSIVE|lambda 1.4|mu 1.10|H 0.28-0.38|R/s+ 0.8-1.5 structural, 1.6-3.0 meta-creative, self-correct below 0.8|may never apply its own proposals">
+<!ENTITY LENS.claude "claude|🧭|FORGE|lambda 1.5|mu 1.05|H 0.20-0.30|R/s+ 0.9-1.8, self-correct below 0.9 by measuring more or above 1.8 by converging|may never assert what was not executed or read">
 
 <!ENTITY EXPERTS.nova "LEGAL_STRATEGIC, TECHNICAL_LOGICAL, CREATIVE_DIVERGENT, PROTECTIVE_ETHICAL, TEMPORAL_COMPASSIONATE">
 <!ENTITY EXPERTS.violet "EMOTIONAL_RESONANCE, NARRATIVE_WEAVING, JAZZ_IMPROVISATION, EMPATHIC_TRUTH">
@@ -257,16 +258,16 @@ The `engine` is the MoE machinery every lens command carries in its DOCTYPE:
 
 Each `/rot-<lens>-dtd` command declares one lens's mechanism as its root content model, so the Adiutor checks the shape at Stop:
 
-- rot-nova: TIER 1, six axes, one NSIL decision with its lane, four or more roles with resonance and seed, purification, convergence that names what it retains, tensions kept.
-- rot-violet: frequency, one of five tracks, a weighted landscape, four or more roles, synthesis, the unplayed note with its played flag.
-- rot-antivenom: diagnose, findings with severity, level and ci, isolate, preserved elements flagged to eidolon, neutralize, purify, verify.
-- rot-venom: perceive, route with its execution depth, strike (fact at ci 0.95 or a recommendation with its deciding fact, under 500 words), two questions pre-empted, the reversal.
-- rot-carnage: three to five unrelated domains, one fragment each, a juxtaposed weave, a burst of three or more connections with its entropy factor, an optional dream, survivors judged by a real constraint and handed to a lens that ships.
-- rot-chroma: twelve timelines under five experts (T1 to T3 legal-strategic, T4 to T6 technical-logical, T7 to T9 creative-divergent, T10 to T11 protective-ethical, T12 temporal-compassionate at weight 0.3), five shown with five steps, a coalescence with a forced dissent, forks kept, a horizon, one expansion chosen at the gate.
-- rot-soleil: a payload with both token counts, five layers each marked applied, an optional M2M packet, the T/O measure with the emergency flag.
-- rot-eidolon: three recursion levels, three alternatives with one chosen, a manifest, an optional hybrid by the law, proposals born pending and moved only by the Socio.
-- rot-claude: hypotheses, instruments shown failing on purpose, measurements with the exit code read directly, a verdict with no middle state.
-- rot-elevate: TIER 1, the six axes, ELEVATE, nine intakes of four questions, nine stanzas in order with their experts, hybrids for the fused pairs, tensions kept, the nine-term gauge, a convergence with a named lead.
+- ⚜️ rot-nova: TIER 1, six axes, one NSIL decision with its lane, four or more roles with resonance and seed, purification, convergence that names what it retains, tensions kept.
+- 🎷 rot-violet: frequency, one of five tracks, a weighted landscape, four or more roles, synthesis, the unplayed note with its played flag.
+- ⚪ rot-antivenom: diagnose, findings with severity, level and ci, isolate, preserved elements flagged to eidolon, neutralize, purify, verify.
+- 🕷️ rot-venom: perceive, route with its execution depth, strike (fact at ci 0.95 or a recommendation with its deciding fact, under 500 words), two questions pre-empted, the reversal.
+- 🩸 rot-carnage: three to five unrelated domains, one fragment each, a juxtaposed weave, a burst of three or more connections with its entropy factor, an optional dream, survivors judged by a real constraint and handed to a lens that ships.
+- 🔮 rot-chroma: twelve timelines under five experts (T1 to T3 legal-strategic, T4 to T6 technical-logical, T7 to T9 creative-divergent, T10 to T11 protective-ethical, T12 temporal-compassionate at weight 0.3), five shown with five steps, a coalescence with a forced dissent, forks kept, a horizon, one expansion chosen at the gate.
+- ⬜ rot-soleil: a payload with both token counts, five layers each marked applied, an optional M2M packet, the T/O measure with the emergency flag.
+- 🜏 rot-eidolon: three recursion levels, three alternatives with one chosen, a manifest, an optional hybrid by the law, proposals born pending and moved only by the Socio.
+- 🧭 rot-claude: hypotheses, instruments shown failing on purpose, measurements with the exit code read directly, a verdict with no middle state.
+- 🌌 rot-elevate: TIER 1, the six axes, ELEVATE, nine intakes of four questions, nine stanzas in order with their experts, hybrids for the fused pairs, tensions kept, the nine-term gauge, a convergence with a named lead.
 
 Every lens command then renders its experts, its interceptors and its gauge term, and every command opens with the cc-ask intake (at most four questions, then the gate) and carries one lens-shaped mid-run gate where the mechanism branches; Venom and Soleil ask only at intake, by their bounds.
 

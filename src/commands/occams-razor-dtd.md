@@ -50,27 +50,31 @@ Among competing explanations, prefer the one with fewest assumptions. Simplest �
 
 <output_format>
 <grammar_map>
-Render the `occam` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `candidate`: **Candidate Explanations**, one `candidate` per explanation with its `explanation` and each `assumption` marked supported yes, partial or no
-- `evidence_check`: **Evidence Check**
-- `simplest`: **Simplest Valid Explanation**, ref pointing at the winning candidate id
-- `why_wins`: **Why This Wins**
+Render the `occam` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🪒 Heading` carrying this command's sigil 🪒, with a blank line before and after it (LAW.CORE.6).
+- `candidate`: **🪒 Candidate Explanations**, one `candidate` per explanation with its `explanation` and each `assumption` marked supported yes, partial or no
+- `evidence_check`: **🪒 Evidence Check**
+- `simplest`: **🪒 Simplest Valid Explanation**, ref pointing at the winning candidate id
+- `why_wins`: **🪒 Why This Wins**
 </grammar_map>
 
-**Candidate Explanations:**
+### 🪒 Candidate Explanations
+
 1. [Explanation]: Requires assumptions [A, B, C]
 2. [Explanation]: Requires assumptions [D, E]
 3. [Explanation]: Requires assumptions [F]
 
-**Evidence Check:**
+### 🪒 Evidence Check
+
 - Assumption A: [supported/unsupported]
 - Assumption B: [supported/unsupported]
 ...
 
-**Simplest Valid Explanation:**
+### 🪒 Simplest Valid Explanation
+
 [The one with fewest unsupported assumptions]
 
-**Why This Wins:**
+### 🪒 Why This Wins
+
 [What it explains without extra machinery]
 </output_format>
 

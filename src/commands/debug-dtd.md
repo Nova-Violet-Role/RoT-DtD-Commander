@@ -48,7 +48,7 @@ This applies systematic debugging methodology with evidence gathering, hypothesi
 
 <output_format>
 <grammar_map>
-Render the `debug_dispatch` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `debug_dispatch` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🐛 Heading` carrying this command's sigil 🐛, with a blank line before and after it (LAW.CORE.6).
 - `issue`: the issue as given, quoted
 - `invocation`: the single Skill call to debug-like-expert-dtd
 </grammar_map>

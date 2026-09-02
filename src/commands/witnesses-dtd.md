@@ -49,27 +49,34 @@ The golden plates come with two signed statements: three witnesses who say what 
 
 <output_format>
 <grammar_map>
-Render the `attestation` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `claim_text`: **Claim**, quoted
-- `witness`: **Witnesses**, one line each: id, kind, saw, conditions
-- `attested`: **Attested**, one line each with its witness ids
-- `inferred`: **Inferred**, one line each with its from ids or unsupported
-- `verdict`: **Verdict**, standing and deciding witnesses
+Render the `attestation` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 👁️ Heading` carrying this command's sigil 👁️, with a blank line before and after it (LAW.CORE.6).
+- `claim_text`: **👁️ Claim**, quoted
+- `witness`: **👁️ Witnesses**, one line each: id, kind, saw, conditions
+- `attested`: **👁️ Attested**, one line each with its witness ids
+- `inferred`: **👁️ Inferred**, one line each with its from ids or unsupported
+- `verdict`: **👁️ Verdict**, standing and deciding witnesses
 </grammar_map>
 
-**Claim:** [quoted]
+### 👁️ Claim
 
-**Witnesses:**
+[quoted]
+
+### 👁️ Witnesses
+
 - W1 [read|ran|measured|told]: saw [what], conditions [when, version, input]
 - W2 ...
 
-**Attested:**
+### 👁️ Attested
+
 - [statement] by W1, W2
 
-**Inferred:**
+### 👁️ Inferred
+
 - [statement] from W1 (or: unsupported)
 
-**Verdict:** [attested|inferred|unsupported], decided by W1, W2
+### 👁️ Verdict
+
+[attested|inferred|unsupported], decided by W1, W2
 </output_format>
 
 <success_criteria>

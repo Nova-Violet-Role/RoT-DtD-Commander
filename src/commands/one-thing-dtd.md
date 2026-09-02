@@ -47,28 +47,34 @@ Ask: "What's the ONE thing I can do such that by doing it everything else will b
 
 <output_format>
 <grammar_map>
-Render the `one_thing` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `goal`: **Goal**
-- `candidate`: **Candidate Actions**, one `candidate` each with its downstream effect
-- `the_one`: **The One Thing**
-- `why_this`: **Why This One**
-- `next_action`: **Next Action**
+Render the `one_thing` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔑 Heading` carrying this command's sigil 🔑, with a blank line before and after it (LAW.CORE.6).
+- `goal`: **🔑 Goal**
+- `candidate`: **🔑 Candidate Actions**, one `candidate` each with its downstream effect
+- `the_one`: **🔑 The One Thing**
+- `why_this`: **🔑 Why This One**
+- `next_action`: **🔑 Next Action**
 </grammar_map>
 
-**Goal:** [what you're trying to achieve]
+### 🔑 Goal
 
-**Candidate Actions:**
+[what you're trying to achieve]
+
+### 🔑 Candidate Actions
+
 - Action 1: [downstream effect]
 - Action 2: [downstream effect]
 - Action 3: [downstream effect]
 
-**The One Thing:**
+### 🔑 The One Thing
+
 [The action that enables or eliminates the most other actions]
 
-**Why This One:**
+### 🔑 Why This One
+
 By doing this, [specific things] become easier or unnecessary because...
 
-**Next Action:**
+### 🔑 Next Action
+
 [Specific, concrete first step to take right now]
 </output_format>
 

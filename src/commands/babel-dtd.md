@@ -49,28 +49,37 @@ Borges' Library of Babel holds every possible book, most of them noise, and some
 
 <output_format>
 <grammar_map>
-Render the `library` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `question`: **Question**
-- `axis`: **Axes**, one line per axis with id and values, then the total count
-- `hexagon`: **Hexagons**, one line per combination with id, coords, status
-- `catalog`: **Catalog**, the viable cells in reading order
-- `verdict`: **Verdict**, the chosen hexagon id and why
+Render the `library` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 📚 Heading` carrying this command's sigil 📚, with a blank line before and after it (LAW.CORE.6).
+- `question`: **📚 Question**
+- `axis`: **📚 Axes**, one line per axis with id and values, then the total count
+- `hexagon`: **📚 Hexagons**, one line per combination with id, coords, status
+- `catalog`: **📚 Catalog**, the viable cells in reading order
+- `verdict`: **📚 Verdict**, the chosen hexagon id and why
 </grammar_map>
 
-**Question:** [what the space answers]
+### 📚 Question
 
-**Axes:** (total [N] hexagons)
+[what the space answers]
+
+### 📚 Axes
+
+(total [N] hexagons)
 - A1 [name]: [v1 | v2 | v3]
 - A2 [name]: [v1 | v2]
 
-**Hexagons:**
+### 📚 Hexagons
+
 - H1 (A1=v1, A2=v1) viable: [one line]
 - H2 (A1=v1, A2=v2) absurd: [why]
 - ...
 
-**Catalog:** H1, H3, H5, H6
+### 📚 Catalog
 
-**Verdict:** H5 because [why the neighbours fail]
+H1, H3, H5, H6
+
+### 📚 Verdict
+
+H5 because [why the neighbours fail]
 </output_format>
 
 <success_criteria>

@@ -71,6 +71,7 @@ allowed-tools: Read Grep Glob Bash
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT formula_layer (subject, formula+, derivation+, drift)>
@@ -110,16 +111,19 @@ The formulas that run through Dantalian no Shoka, with their sigma and gamma and
 
 <output_format>
 <grammar_map>
-Render the `formula_layer` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `subject`: **Subject**
-- `formula`: **Formulas**, a fenced block with one line per formula: id, term, stated value
-- `derivation`: **Derivations**, one line each: for which formula, source, derived value, confidence
-- `drift`: **Drift**, the count and the named formulas
+Render the `formula_layer` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧮 Heading` carrying this command's sigil 🧮, with a blank line before and after it (LAW.CORE.6).
+- `subject`: **🧮 Subject**
+- `formula`: **🧮 Formulas**, a fenced block with one line per formula: id, term, stated value
+- `derivation`: **🧮 Derivations**, one line each: for which formula, source, derived value, confidence
+- `drift`: **🧮 Drift**, the count and the named formulas
 </grammar_map>
 
-**Subject:** [what was read]
+### 🧮 Subject
 
-**Formulas:**
+[what was read]
+
+### 🧮 Formulas
+
 ```yaml
 - id: F1
   term: [expression or constant name]
@@ -128,11 +132,14 @@ Render the `formula_layer` root declared in the DOCTYPE as the markdown below. O
   term: ...
 ```
 
-**Derivations:**
+### 🧮 Derivations
+
 - F1 from [file:line or command]: derived [value] ([confidence])
 - F2 ...
 
-**Drift:** [N]. [F2 stated X, derived Y; correct the document]
+### 🧮 Drift
+
+[N]. [F2 stated X, derived Y; correct the document]
 </output_format>
 
 <success_criteria>

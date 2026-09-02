@@ -49,28 +49,38 @@ In the Library of Babel there must be a catalog of the library, and a catalog of
 
 <output_format>
 <grammar_map>
-Render the `catalog_check` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `directory`: **Directory**
-- `index`: **Index**
-- `entry`: **Entries**, one line each: path, declared, present
-- `missing`: **Missing**, declared but absent from disk
-- `orphan`: **Orphans**, on disk but never declared
-- `verdict`: **Verdict**, drift as a number
+Render the `catalog_check` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🗃️ Heading` carrying this command's sigil 🗃️, with a blank line before and after it (LAW.CORE.6).
+- `directory`: **🗃️ Directory**
+- `index`: **🗃️ Index**
+- `entry`: **🗃️ Entries**, one line each: path, declared, present
+- `missing`: **🗃️ Missing**, declared but absent from disk
+- `orphan`: **🗃️ Orphans**, on disk but never declared
+- `verdict`: **🗃️ Verdict**, drift as a number
 </grammar_map>
 
-**Directory:** [path]
-**Index:** [path]
+### 🗃️ Directory
 
-**Entries:**
+[path]
+
+### 🗃️ Index
+
+[path]
+
+### 🗃️ Entries
+
 - [path] declared [true|false] present [true|false]
 
-**Missing:**
+### 🗃️ Missing
+
 - [path]
 
-**Orphans:**
+### 🗃️ Orphans
+
 - [path]
 
-**Verdict:** drift [N]. [what to add or remove]
+### 🗃️ Verdict
+
+drift [N]. [what to add or remove]
 </output_format>
 
 <success_criteria>

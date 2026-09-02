@@ -49,29 +49,36 @@ The Eleusinian Mysteries had lesser rites before greater ones, and what was show
 
 <output_format>
 <grammar_map>
-Render the `mysteries` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `candidate`: **Candidate**
-- `stage`: **Lesser Mysteries** and **Greater Mysteries**, each listing its teachings
+Render the `mysteries` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🚪 Heading` carrying this command's sigil 🚪, with a blank line before and after it (LAW.CORE.6).
+- `candidate`: **🚪 Candidate**
+- `stage`: **🚪 Lesser Mysteries** and **🚪 Greater Mysteries**, each listing its teachings
 - `teaching`: one line per teaching with its id
-- `gate`: **Gates**, one line per gate: after which teaching, the test, passed
-- `revelation`: **Revelation**, ending with requires: the gate list
+- `gate`: **🚪 Gates**, one line per gate: after which teaching, the test, passed
+- `revelation`: **🚪 Revelation**, ending with requires: the gate list
 </grammar_map>
 
-**Candidate:** [who, arriving with ...]
+### 🚪 Candidate
 
-**Lesser Mysteries:**
+[who, arriving with ...]
+
+### 🚪 Lesser Mysteries
+
 - T1 [teaching]
 - T2 ...
 
-**Greater Mysteries:**
+### 🚪 Greater Mysteries
+
 - T5 [teaching]
 - ...
 
-**Gates:**
+### 🚪 Gates
+
 - after T2: test [what they must do], passed [true|false|pending]
 - after T4: ...
 
-**Revelation:** [what only makes sense now] requires: gates after T2, T4
+### 🚪 Revelation
+
+[what only makes sense now] requires: gates after T2, T4
 </output_format>
 
 <success_criteria>

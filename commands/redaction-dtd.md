@@ -71,6 +71,7 @@ allowed-tools: Read Grep Glob Bash
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT redaction (event, reading, reading+, variant+, archetype)>
@@ -110,24 +111,30 @@ The Red Book of Hergest and the White Book of Rhydderch carry the same tales wit
 
 <output_format>
 <grammar_map>
-Render the `redaction` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `event`: **Event**
-- `reading`: **Readings**, one block per account: id, witness, provenance, the quoted text
-- `variant`: **Variants**, one line each: in which readings, kind, the difference
-- `archetype`: **Archetype**, with confidence and any unexplained variants
+Render the `redaction` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ✂️ Heading` carrying this command's sigil ✂️, with a blank line before and after it (LAW.CORE.6).
+- `event`: **✂️ Event**
+- `reading`: **✂️ Readings**, one block per account: id, witness, provenance, the quoted text
+- `variant`: **✂️ Variants**, one line each: in which readings, kind, the difference
+- `archetype`: **✂️ Archetype**, with confidence and any unexplained variants
 </grammar_map>
 
-**Event:** [what both describe]
+### ✂️ Event
 
-**Readings:**
+[what both describe]
+
+### ✂️ Readings
+
 - R1 [witness] ([provenance]): "[quoted]"
 - R2 [witness] ([provenance]): "[quoted]"
 
-**Variants:**
+### ✂️ Variants
+
 - V1 in R1, R2 [omission|addition|substitution|order]: [the difference]
 - V2 ...
 
-**Archetype** ([confidence]): [the reconstructed account] [unexplained: V3]
+### ✂️ Archetype
+
+([confidence]): [the reconstructed account] [unexplained: V3]
 </output_format>
 
 <success_criteria>

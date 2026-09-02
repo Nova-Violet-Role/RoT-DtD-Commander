@@ -47,22 +47,36 @@ The Tao Te Ching returns again and again to wu wei, acting by not forcing, and t
 
 <output_format>
 <grammar_map>
-Render the `wu_wei` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `situation`: **Situation**
-- `branch`: **If We Act** and **If We Refrain**, each a full account
-- `cost`: **Cost of Acting** and **Cost of Refraining**, same unit, horizon, confidence
-- `choice`: **Choice**, act, refrain or wait until
+Render the `wu_wei` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🍃 Heading` carrying this command's sigil 🍃, with a blank line before and after it (LAW.CORE.6).
+- `situation`: **🍃 Situation**
+- `branch`: **🍃 If We Act** and **🍃 If We Refrain**, each a full account
+- `cost`: **🍃 Cost of Acting** and **🍃 Cost of Refraining**, same unit, horizon, confidence
+- `choice`: **🍃 Choice**, act, refrain or wait until
 </grammar_map>
 
-**Situation:** [as it is now]
+### 🍃 Situation
 
-**If We Act:** [what the proposal does and what follows]
-**If We Refrain:** [what happens if nobody acts, at the same horizon]
+[as it is now]
 
-**Cost of Acting:** [number unit] at [horizon] ([confidence])
-**Cost of Refraining:** [number unit] at [horizon] ([confidence])
+### 🍃 If We Act
 
-**Choice:** [act|refrain|wait] [until: condition]
+[what the proposal does and what follows]
+
+### 🍃 If We Refrain
+
+[what happens if nobody acts, at the same horizon]
+
+### 🍃 Cost of Acting
+
+[number unit] at [horizon] ([confidence])
+
+### 🍃 Cost of Refraining
+
+[number unit] at [horizon] ([confidence])
+
+### 🍃 Choice
+
+[act|refrain|wait] [until: condition]
 </output_format>
 
 <success_criteria>

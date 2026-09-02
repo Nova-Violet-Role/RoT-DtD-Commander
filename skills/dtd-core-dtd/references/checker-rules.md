@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
-# Checker rules C1 to C12
+# Checker rules C1 to C13
 
 Applied by `lib/dtd.mjs check()` to the RESOLVED text of a file (includes inlined). An error fails the file; a warning is printed and does not.
 
@@ -18,6 +18,7 @@ Applied by `lib/dtd.mjs check()` to the RESOLVED text of a file (includes inline
 | C10 | LAW.* entities declared, and the body invokes them (the string `LAW.` appears) | Add the success criterion line |
 | C11 | Entity values contain no `&`, `%` or `<` | Rephrase the value |
 | C12 | No `--` inside a DOCTYPE comment | Rephrase the comment |
+| C13 | Every grammar_map heading carries the command's sigil (one sigil per file), the map invokes LAW.CORE.6, every declared heading is rendered in the template as `### <sigil> Heading` (or as bold with the sigil when nested), and every `###` line has a blank line before and after | Run `node checker/heading-sweep.mjs` |
 
 Elements declared by an included subset are exempt from C5 in the including file; they are checked across the corpus by the dtd-contract-auditor agent instead.
 

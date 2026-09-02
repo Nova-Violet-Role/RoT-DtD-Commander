@@ -140,7 +140,7 @@ Write to `whats-next.md` in the current working directory using the format below
 
 <output_format>
 <grammar_map>
-Render the `handoff` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `handoff` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⏭️ Heading` carrying this command's sigil ⏭️, with a blank line before and after it (LAW.CORE.6).
 - `original_task`: Original Task
 - `work_completed`: Work Completed
 - `work_remaining`: Work Remaining

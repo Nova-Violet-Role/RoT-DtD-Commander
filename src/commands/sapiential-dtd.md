@@ -48,28 +48,35 @@ The Book of Wisdom sets wisdom against cleverness: the clever move wins the mome
 
 <output_format>
 <grammar_map>
-Render the `wisdom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `proposal`: **Proposal**
-- `clever`: **Clever Moves**, one line each: id, gains
-- `wise`: **Wise Constraints**, one line each: id, protects
-- `violation`: **Violations**, one line each pairing a clever id and a wise id
-- `counsel`: **Counsel**
+Render the `wisdom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🦉 Heading` carrying this command's sigil 🦉, with a blank line before and after it (LAW.CORE.6).
+- `proposal`: **🦉 Proposal**
+- `clever`: **🦉 Clever Moves**, one line each: id, gains
+- `wise`: **🦉 Wise Constraints**, one line each: id, protects
+- `violation`: **🦉 Violations**, one line each pairing a clever id and a wise id
+- `counsel`: **🦉 Counsel**
 </grammar_map>
 
-**Proposal:** [one paragraph]
+### 🦉 Proposal
 
-**Clever Moves:**
+[one paragraph]
+
+### 🦉 Clever Moves
+
 - K1 [move] gains: [what it wins]
 - K2 ...
 
-**Wise Constraints:**
+### 🦉 Wise Constraints
+
 - W1 [constraint] protects: [what it guards]
 - W2 ...
 
-**Violations:**
+### 🦉 Violations
+
 - K2 against W1: [what breaks]
 
-**Counsel:** keep K1; K2 costs [price], replace with [plainer move]
+### 🦉 Counsel
+
+keep K1; K2 costs [price], replace with [plainer move]
 </output_format>
 
 <success_criteria>

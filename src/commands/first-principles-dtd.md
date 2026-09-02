@@ -64,19 +64,22 @@ Strip away assumptions, conventions and analogies to identify fundamental truths
 
 <output_format>
 <grammar_map>
-Render the `first_principles` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `problem`: **Problem**
-- `assumption`: **Current Assumptions**, one block per assumption: id, origin, held, the `statement`, then its `challenge` with verdict and confidence
+Render the `first_principles` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧱 Heading` carrying this command's sigil 🧱, with a blank line before and after it (LAW.CORE.6).
+- `problem`: **🧱 Problem**
+- `assumption`: **🧱 Current Assumptions**, one block per assumption: id, origin, held, the `statement`, then its `challenge` with verdict and confidence
 - `intake`: the assumption gate, one AskUserQuestion round, shown as the ids chosen
-- `truth`: **Fundamental Truths**, one line per truth with its irreducible_because
-- `rebuild`: **Rebuilt Understanding**, ending with the stands_on ids
-- `possibility`: **New Possibilities**, each ending with its freed_by id
-- `assumption_made`: **Assumptions Made**, autonomous mode only
+- `truth`: **🧱 Fundamental Truths**, one line per truth with its irreducible_because
+- `rebuild`: **🧱 Rebuilt Understanding**, ending with the stands_on ids
+- `possibility`: **🧱 New Possibilities**, each ending with its freed_by id
+- `assumption_made`: **🧱 Assumptions Made**, autonomous mode only
 </grammar_map>
 
-**Problem:** [one sentence]
+### 🧱 Problem
 
-**Current Assumptions:**
+[one sentence]
+
+### 🧱 Current Assumptions
+
 - A1 [convention|analogy|measurement|necessity] held: [true|false|unknown]
   [statement]
   challenge: [is it true, how would we know] verdict: [true|false|partial] confidence: [measured|reasoned|guessed]
@@ -84,19 +87,24 @@ Render the `first_principles` root declared in the DOCTYPE as the markdown below
 
 **Held (gate):** [ids chosen, or "gate skipped"]
 
-**Fundamental Truths:**
+### 🧱 Fundamental Truths
+
 - T1 [statement] irreducible because: [what would have to be false]
 - T2 ...
 
-**Rebuilt Understanding:**
+### 🧱 Rebuilt Understanding
+
 [what follows from the truths alone]
 stands on: T1, T2
 
-**New Possibilities:**
+### 🧱 New Possibilities
+
 - [option] freed by: A2
 - [option] freed by: A4
 
-**Assumptions Made:** (autonomous mode only)
+### 🧱 Assumptions Made
+
+(autonomous mode only)
 - [each gap filled without asking]
 </output_format>
 

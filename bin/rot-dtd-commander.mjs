@@ -36,6 +36,7 @@ import { stdin, stdout } from 'node:process';
 import os from 'node:os';
 import { readText, resolveFile, check, extractDtd, forge, forgeNew, writeLF, verifyFile, normalize } from '../lib/dtd.mjs';
 import { armSettings, disarmSettings, EVENTS } from '../lib/arm.mjs';
+import { applyHeadings, sigilFor } from '../lib/headings.mjs';
 
 const ROOT = presolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PKG = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
@@ -44,7 +45,7 @@ const NAME = 'rot-dtd-commander';
 const TEXT_EXT = new Set(['.md', '.dtd', '.sh', '.mjs', '.js', '.json', '.yml', '.yaml', '.txt', '.tsv', '.csv', '.ps1', '.nu', '.py', '.toml', '.tape']);
 const JUNK = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
 const MANIFEST = `.${NAME}-manifest.json`;
-const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/arm.mjs', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd'];
+const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd'];
 
 // ---------- args ----------
 
@@ -520,7 +521,9 @@ async function cmdForge(o) {
     const up = '../'.repeat(depth);
     const refs = { coreRef: `${up}dtd/cc-core.dtd`, includeRef: (i) => `${up}dtd/${i}.dtd` };
     const text = entry.new ? forgeNew(entry, refs) : forge(readText(presolve(ROOT, entry.from)), entry, refs);
-    writeLF(to, text);
+    const sigil = entry.sigil || sigilFor(to);
+    if (!sigil) die(`no sigil for ${entry.to} in dtd/sigils.json (LAW.CORE.6)`);
+    writeLF(to, applyHeadings(text, sigil));
     const from = entry.from ? presolve(ROOT, entry.from) : null;
     if (entry.copyDir && from) {
       const srcDir = dirname(from);

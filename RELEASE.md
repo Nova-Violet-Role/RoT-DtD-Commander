@@ -18,6 +18,19 @@
 
 ---
 
+## v3.0.0 — every answer in one shape
+
+A full audit of the 68 commands: every heading an answer carries is now a
+markdown heading with the command's own sigil and a blank line on each side
+(`LAW.CORE.6`, checker rule C13, the Adiutor's `spacing` finding), so no
+answer runs together and every command is recognisable at a glance. The nine
+lens commands carry their lens emoji where the lens speaks: the stanza, the
+bound, the gauge term, the roll-call. `dtd/sigils.json` declares the 75
+sigils once; `checker/heading-sweep.mjs` proves the tree is in shape with
+its own planted control. Every number is in [CHANGELOG.md](CHANGELOG.md)
+beside the command that measured it. Install and verify exactly as below;
+the tag is `v3.0.0`.
+
 ## v2.0.0 — the nine lenses, at full power
 
 Ten commands carry the RoT MoE lenses as declared grammar: nine lenses, each

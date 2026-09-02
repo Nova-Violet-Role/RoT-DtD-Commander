@@ -70,6 +70,7 @@ argument-hint: [proposition or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT tetralemma (proposition, corner, corner, corner, corner, dependence+, resolution)>
@@ -112,25 +113,41 @@ The four-cornered analysis of the Mulamadhyamakakarika examines a proposition as
 
 <output_format>
 <grammar_map>
-Render the `tetralemma` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `proposition`: **Proposition**
-- `corner`: **Affirm**, **Deny**, **Both**, **Neither**, each with its evidence and its holds verdict
-- `dependence`: **Depends On**, one line per dependence with its id
-- `resolution`: **Resolution**, ending with depends on: D1, D2
+Render the `tetralemma` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔲 Heading` carrying this command's sigil 🔲, with a blank line before and after it (LAW.CORE.6).
+- `proposition`: **🔲 Proposition**
+- `corner`: **🔲 Affirm**, **🔲 Deny**, **🔲 Both**, **🔲 Neither**, each with its evidence and its holds verdict
+- `dependence`: **🔲 Depends On**, one line per dependence with its id
+- `resolution`: **🔲 Resolution**, ending with depends on: D1, D2
 </grammar_map>
 
-**Proposition:** [one sentence]
+### 🔲 Proposition
 
-**Affirm:** holds [yes|partial|no]. [the case and its evidence]
-**Deny:** holds [yes|partial|no]. [the case and its evidence]
-**Both:** holds [yes|partial|no]. [where it holds and fails at once]
-**Neither:** holds [yes|partial|no]. [why the question may be malformed]
+[one sentence]
 
-**Depends On:**
+### 🔲 Affirm
+
+holds [yes|partial|no]. [the case and its evidence]
+
+### 🔲 Deny
+
+holds [yes|partial|no]. [the case and its evidence]
+
+### 🔲 Both
+
+holds [yes|partial|no]. [where it holds and fails at once]
+
+### 🔲 Neither
+
+holds [yes|partial|no]. [why the question may be malformed]
+
+### 🔲 Depends On
+
 - D1 [condition, scope, time or definition]
 - D2 ...
 
-**Resolution:** [what is true and when] depends on: D1, D2
+### 🔲 Resolution
+
+[what is true and when] depends on: D1, D2
 </output_format>
 
 <success_criteria>

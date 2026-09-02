@@ -47,24 +47,35 @@ Each of the nineteen commands in BOOKS answers one shape of problem. This comman
 
 <output_format>
 <grammar_map>
-Render the `phantom_route` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `problem`: **Problem**
-- `shape`: **Shape**
-- `candidate`: **Candidates**, one line each: command, fit, why
-- `route`: **Route**, one command
-- `reason`: **Reason**
+Render the `phantom_route` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 👻 Heading` carrying this command's sigil 👻, with a blank line before and after it (LAW.CORE.6).
+- `problem`: **👻 Problem**
+- `shape`: **👻 Shape**
+- `candidate`: **👻 Candidates**, one line each: command, fit, why
+- `route`: **👻 Route**, one command
+- `reason`: **👻 Reason**
 </grammar_map>
 
-**Problem:** [one sentence]
-**Shape:** [one phrase]
+### 👻 Problem
 
-**Candidates:**
+[one sentence]
+
+### 👻 Shape
+
+[one phrase]
+
+### 👻 Candidates
+
 - [command] fit [yes|partial|no]: [why]
 - [command] fit ...
 - [command] fit ...
 
-**Route:** /[command] [the argument to pass]
-**Reason:** [the shape that chose it; what the runner-up lacked]
+### 👻 Route
+
+/[command] [the argument to pass]
+
+### 👻 Reason
+
+[the shape that chose it; what the runner-up lacked]
 </output_format>
 
 <success_criteria>

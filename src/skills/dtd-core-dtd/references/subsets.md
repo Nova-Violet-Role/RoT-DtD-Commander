@@ -69,6 +69,7 @@ Trust classes, the four unparsed channels and their notations, the shared enumer
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 ```
 
 ## cc-ask.dtd
@@ -253,7 +254,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ELEMENT error (#PCDATA)>
 <!ATTLIST error tool CDATA #REQUIRED>
 <!ELEMENT finding (#PCDATA)>
-<!ATTLIST finding kind (missing_heading|order|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
+<!ATTLIST finding kind (missing_heading|order|spacing|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
 <!ELEMENT prescription (charm, rite)>
 <!ELEMENT charm (#PCDATA)>
 <!ELEMENT rite (#PCDATA)>

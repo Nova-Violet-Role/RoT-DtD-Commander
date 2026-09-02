@@ -30,7 +30,7 @@
 <!ELEMENT error (#PCDATA)>
 <!ATTLIST error tool CDATA #REQUIRED>
 <!ELEMENT finding (#PCDATA)>
-<!ATTLIST finding kind (missing_heading|order|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
+<!ATTLIST finding kind (missing_heading|order|spacing|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
 <!ELEMENT prescription (charm, rite)>
 <!ELEMENT charm (#PCDATA)>
 <!ELEMENT rite (#PCDATA)>

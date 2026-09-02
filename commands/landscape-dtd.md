@@ -71,6 +71,7 @@ argument-hint: [domain/space or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   
@@ -259,21 +260,23 @@ After intake complete:
 
 <output_format>
 <grammar_map>
-Render the `landscape_map` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `landscape_map` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌄 Heading` carrying this command's sigil 🌄, with a blank line before and after it (LAW.CORE.6).
 - `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.landscape in that order, then `claude_context` blocks positioning, technical, trends, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-landscape.md
 </grammar_map>
 
-## Landscape Map: [Domain/Space]
+### 🌄 Landscape Map: [Domain/Space]
 
-### Strategic Summary
+### 🌄 Strategic Summary
+
 [2-3 sentences: shape of the space, key trend, main opportunity]
 
-### Scope
+### 🌄 Scope
+
 [What's included and excluded from this landscape]
 
-### Categories
+### 🌄 Categories
 
 **[Category 1: e.g., "Data Storage"]**
 - **Established players:** [Names]
@@ -287,7 +290,8 @@ Render the `landscape_map` root declared in the DOCTYPE as the markdown below. O
 **[Category 3: e.g., "Visualization"]**
 [Same structure...]
 
-### Landscape Map
+### 🌄 Landscape Map
+
 ```
 [Visual representation - can be ASCII or description]
 
@@ -298,25 +302,30 @@ Player B            Player E            Player H
 Player C            Player F
 ```
 
-### Trends
+### 🌄 Trends
+
 - **[Trend 1]:** [What's happening, implications]
 - **[Trend 2]:** [What's happening, implications]
 - **[Trend 3]:** [What's happening, implications]
 
-### Gaps & White Space
+### 🌄 Gaps & White Space
+
 - **[Gap]:** [Why it's underserved, opportunity size]
 - **[Gap]:** [Why it's underserved, opportunity size]
 
-### Key Insights
+### 🌄 Key Insights
+
 1. [Strategic insight about the space]
 2. [Strategic insight about the space]
 3. [Strategic insight about the space]
 
-### Implications for Us
+### 🌄 Implications for Us
+
 - [What this means for our strategy/project]
 - [Where we might fit/compete/differentiate]
 
-### Implementation Context
+### 🌄 Implementation Context
+
 <claude_context>
 <positioning>
 - opportunities: [where we could enter/compete]
@@ -337,7 +346,8 @@ Player C            Player F
 
 **Next Action:** Deep dive on specific area, competitive research on key players, or run /plan/brief to define our approach
 
-### Sources
+### 🌄 Sources
+
 - [Source name]: [URL] - [date accessed]
 - [Source name]: [URL] - [date accessed]
 </output_format>

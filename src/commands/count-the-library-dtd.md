@@ -46,21 +46,32 @@ The Unimaginable Mathematics of Borges' Library of Babel works out how large the
 
 <output_format>
 <grammar_map>
-Render the `count` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `space`: **Space**
-- `bound`: **Lower Bound** and **Upper Bound**, each with its arithmetic and confidence
-- `method`: **Method**, the check and its rate
-- `feasibility`: **Feasibility**, the division and the verdict
+Render the `count` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔢 Heading` carrying this command's sigil 🔢, with a blank line before and after it (LAW.CORE.6).
+- `space`: **🔢 Space**
+- `bound`: **🔢 Lower Bound** and **🔢 Upper Bound**, each with its arithmetic and confidence
+- `method`: **🔢 Method**, the check and its rate
+- `feasibility`: **🔢 Feasibility**, the division and the verdict
 </grammar_map>
 
-**Space:** [one element is ..., what varies is ...]
+### 🔢 Space
 
-**Lower Bound:** [N] = [arithmetic] ([confidence])
-**Upper Bound:** [N] = [arithmetic] ([confidence])
+[one element is ..., what varies is ...]
 
-**Method:** [how one element is checked], [rate] per minute ([measured|reasoned])
+### 🔢 Lower Bound
 
-**Feasibility:** [upper] / [rate] = [minutes] against [time available]: enumerable [yes|partial|no]. [If no: what to sample and how]
+[N] = [arithmetic] ([confidence])
+
+### 🔢 Upper Bound
+
+[N] = [arithmetic] ([confidence])
+
+### 🔢 Method
+
+[how one element is checked], [rate] per minute ([measured|reasoned])
+
+### 🔢 Feasibility
+
+[upper] / [rate] = [minutes] against [time available]: enumerable [yes|partial|no]. [If no: what to sample and how]
 </output_format>
 
 <success_criteria>

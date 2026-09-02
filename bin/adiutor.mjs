@@ -314,7 +314,7 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
       const r = check(resolveFile(t, dirname(f.path)).text, {});
       if (!r.ok) failed++;
     }
-    row('checker', failed === 0, `${mains.length} installed main files, ${failed} failing C1..C12`);
+    row('checker', failed === 0, `${mains.length} installed main files, ${failed} failing C1..C13`);
   } else {
     row('manifest', false, `no manifest at ${manifestPath}; run rdc install`);
   }
@@ -414,8 +414,9 @@ export function controls(io = console) {
   const results = [];
   const cmdText = readText(join(ROOT, existsSync(join(ROOT, 'commands', 'pareto-dtd.md')) ? 'commands/pareto-dtd.md' : 'src/commands/pareto-dtd.md'));
   const expected = expectedFromCommand(resolveFile(cmdText, join(ROOT, 'commands')).text);
-  const good = '**Vital Few (focus here):**\n- Factor 1\n\n**Trivial Many (deprioritize):**\n- x\n\n**Bottom Line:**\none sentence\n';
-  const badAnswer = good.replace('**Bottom Line:**\none sentence\n', '');
+  const good = '### 🎯 Vital Few (focus here)\n\n- Factor 1\n\n### 🎯 Trivial Many (deprioritize)\n\n- x\n\n### 🎯 Bottom Line\n\none sentence\n';
+  const badAnswer = good.replace('### 🎯 Bottom Line\n\none sentence\n', '');
+  const crammed = good.replace(/\n\n### /g, '\n### ');
   const transcript = (text) => {
     const p = join(tmp, 'transcript.jsonl');
     writeFileSync(p, JSON.stringify({ type: 'assistant', message: { content: [{ type: 'text', text }] } }) + '\n' + '{"type":"assistant","message":{"content":[{"type":"text","te', 'utf8');
@@ -436,6 +437,18 @@ export function controls(io = console) {
   control('C2 complete answer passes', () => {
     const r = checkAnswer(good, expected);
     return { ok: r.ok, detail: r.ok ? 'pass' : r.findings.map((f) => f.msg).join('; ') };
+  }, results);
+
+  control('C9 crammed headings are a spacing finding', () => {
+
+    if (crammed === good) return { ok: false, detail: 'mutation did not land' };
+
+    const r = checkAnswer(crammed, expected);
+
+    const hit = r.findings.some((f) => f.kind === 'spacing');
+
+    return { ok: !r.ok && hit, detail: r.findings.map((f) => f.msg).join('; ') };
+
   }, results);
 
   control('C3 Stop under strict blocks once, then passes', () => {

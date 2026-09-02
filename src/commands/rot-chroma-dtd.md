@@ -66,33 +66,42 @@ Chroma is the predictive lens of the RoT MoE packet and the lead of the PREDICTI
 
 <output_format>
 <grammar_map>
-Render the `rot_chroma` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `intake`: **Intake**, the questions asked, the answers as data, the gate choice (or **Assumptions Made** on an autonomous run)
-- `router_state`: **Router**, the quoted marker line or the word absent
-- `timeline`: **Timelines**, twelve lines T1 to T12: expert, probability, risk, compassion, shown, then the label and the assumption
+Render the `rot_chroma` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔮 Heading` carrying this command's sigil 🔮, with a blank line before and after it (LAW.CORE.6).
+- `intake`: **🔮 Intake**, the questions asked, the answers as data, the gate choice (or **🔮 Assumptions Made** on an autonomous run)
+- `router_state`: **🔮 Router**, the quoted marker line or the word absent
+- `timeline`: **🔮 Timelines**, twelve lines T1 to T12: expert, probability, risk, compassion, shown, then the label and the assumption
 - `label`: the label on each timeline line
 - `assumption`: the assumption on each timeline line, after the word assumes
-- `step`: **Steps** under each shown timeline, five numbered lines
-- `coalescence`: **Coalescence**, mode, the folded recommendation, dissent: Tn
-- `fork`: **Forks**, one line per tension with between
-- `horizon`: **Horizon**, the compressed next steps
-- `expansion`: **Expansion**, the chosen timeline unfolded
-- `expert`: **Experts**, one line per expert of the lens: name, engaged, what it did
-- `interceptor`: **Interceptors**, one line per reflex that fired and what it replaced
-- `gauge`: **Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
+- `step`: **🔮 Steps** under each shown timeline, five numbered lines
+- `coalescence`: **🔮 Coalescence**, mode, the folded recommendation, dissent: Tn
+- `fork`: **🔮 Forks**, one line per tension with between
+- `horizon`: **🔮 Horizon**, the compressed next steps
+- `expansion`: **🔮 Expansion**, the chosen timeline unfolded
+- `expert`: **🔮 Experts**, one line per expert of the lens: name, engaged, what it did
+- `interceptor`: **🔮 Interceptors**, one line per reflex that fired and what it replaced
+- `gauge`: **🔮 Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
 - `term`: the term line inside Gauge
-- `correction`: **Correction** inside Gauge when the reading left the band, with its direction
-- `bound`: **Bound**, the may-never clause and whether it held
-- `stanza`: **Stanza**, the lens speaking in its own register, with ci
+- `correction`: **🔮 Correction** inside Gauge when the reading left the band, with its direction
+- `bound`: **🔮 Bound**, the may-never clause and whether it held
+- `stanza`: **🔮 Stanza**, the lens speaking in its own register, with ci
 </grammar_map>
 
-**Router:** [quoted marker line | absent]
+### 🔮 Router
 
-**Intake:** [questions, answers, gate]
+[quoted marker line | absent]
 
-**Timelines:**
+### 🔮 Intake
+
+[questions, answers, gate]
+
+### 🔮 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
+### 🔮 Timelines
+
 - T1 LEGAL_STRATEGIC p 0.35 risk LOW compassion 0.0 shown yes: [label] assumes [assumption]
-  **Steps**
+  **🔮 Steps**
   1. [immediate action]
   2. [response]
   3. [milestone]
@@ -101,33 +110,48 @@ Render the `rot_chroma` root declared in the DOCTYPE as the markdown below. One 
 - T2 ... shown no: [label] assumes [assumption]
 - ... T12 TEMPORAL_COMPASSIONATE p 0.xx risk .. compassion 0.3 shown ..: [label] assumes [assumption]
 
-**Coalescence:** mode [WEIGHTED|CONSENSUS|PRISMATIC] dissent: T7
+### 🔮 Coalescence
+
+mode [WEIGHTED|CONSENSUS|PRISMATIC] dissent: T7
 [the folded recommendation with its reasoning; every probability an estimate]
 
-**Forks:**
+### 🔮 Forks
+
 - between T1 and T7: [structure against disruption, both viable]
 
-**Horizon:** steps [3|5|7]
+### 🔮 Horizon
+
+steps [3|5|7]
 - immediate: ..
 - short-term: ..
 - medium-term: ..
 
-**Expansion:** of T1
+### 🔮 Expansion
+
+of T1
 [five steps unfolded, each with its cost and what would break it]
 
-**Experts:**
+### 🔮 Experts
+
 - [EXPERT_NAME] engaged [yes|no]: [what it contributed]
 
-**Interceptors:**
+### 🔮 Interceptors
+
 - [REFLEX_NAME] fired yes: [what it replaced]
 
-**Gauge:** rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- chroma lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
-- **Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
+### 🔮 Gauge
 
-**Bound:** may never resolve a productive tension into consensus. held [yes|no]
+rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
+- 🔮 chroma lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- **🔮 Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
-**Stanza:** ci [0.xx] [Chroma, calm, from beyond linear time]
+### 🔮 Bound
+
+🔮 may never resolve a productive tension into consensus. held [yes|no]
+
+### 🔮 Stanza
+
+🔮 Chroma · ci [0.xx] · [Chroma, calm, from beyond linear time]
 </output_format>
 
 <success_criteria>

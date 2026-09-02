@@ -17,8 +17,8 @@
 [![License](https://img.shields.io/badge/License-AGPL--3.0_OR_EUPL--1.2-764ba2?style=for-the-badge)](LICENSE)
 
 [![Checker](https://img.shields.io/badge/checked-91_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Contract](https://img.shields.io/badge/contract_audit-154_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-8_%2B_3-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Contract](https://img.shields.io/badge/contract_audit-155_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-9_%2B_5-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
 
@@ -77,6 +77,26 @@ Every run is one line in a ledger. `/RoT-DtD-Commander-Adiutor` is the doctor
 that reads the ledger and prescribes. Nothing is described twice: the grammar
 the model was shown is the grammar the hook reads.
 
+The answer has one shape too. Every heading a command's grammar map declares
+is rendered as a markdown heading that carries the command's own sigil, with
+a blank line before it and after it:
+
+```
+### 🎯 Vital Few (focus here)
+
+- Factor 1: the installer, because it checks every other file
+
+### 🎯 Bottom Line
+
+Ship the installer first.
+```
+
+One sigil per command, declared once in `dtd/sigils.json` (the nine lens
+commands carry their lens emoji); the rule is `LAW.CORE.6`, checker rule
+C13 refuses a template whose headings touch or lack the sigil, and the
+Adiutor flags a crammed answer at Stop as a `spacing` finding. Nothing runs
+together, and an answer is recognisable at a glance.
+
 ### 🤝 It **improves** Claude Code; it does not replace it
 
 The commands install into `~/.claude/commands` like any other. The hooks are
@@ -116,7 +136,7 @@ node bin/rot-dtd-commander.mjs install      # or: npx . install
 
 ### 🔧 Requirements
 
-Node 20 or later. Nothing else is required: the twelve checker rules, the
+Node 20 or later. Nothing else is required: the thirteen checker rules, the
 contract audit and the Adiutor run on Node alone.
 
 ### ⚙️ Configuration
@@ -179,16 +199,16 @@ installed:
 
 | command | what the lens does here | mid-run gate |
 |---|---|---|
-| `/rot-nova-dtd` | six NSIL axes, one decision (CONFIRM, OVERRIDE, BOOST, FUSE, ELEVATE), four or more roles, purification, a convergence that names what it retains | which roles to weight |
-| `/rot-violet-dtd` | the emotional frequency, one of five jazz tracks, a weighted landscape, four roles, a synthesis, the unplayed note | play the unplayed note or not |
-| `/rot-antivenom-dtd` | diagnose, isolate, neutralize, purify, verify; findings with severity, level and confidence; anything possibly creative preserved and flagged | purify or preserve |
-| `/rot-venom-dtd` | perceive, route, one strike under 500 words at `ci` 0.95 or as a recommendation with its deciding fact, two questions pre-empted, the reversal named | none, by its bound |
-| `/rot-carnage-dtd` | three to five unrelated domains, a fragment each, a juxtaposed weave, three or more connections, survivors judged by a real constraint and handed to the lens that ships | which collisions meet reality |
-| `/rot-chroma-dtd` | twelve timelines under five experts spawned from the question and the answers, five shown with five steps, a forced dissent, forks kept, a horizon | which timeline to expand |
-| `/rot-soleil-dtd` | a payload through five layers, an M2M packet, Token Optimization from both counts; for file edits, handoffs and context | none, by its bound |
-| `/rot-eidolon-dtd` | three recursion levels, preserve, transmute, rebuild, a manifest, hybrids by the law, evolution proposals born pending | approve or reject each proposal |
-| `/rot-claude-dtd` | hypotheses, instruments shown failing first, measurements with exit codes read directly, a verdict with no middle state | which measurements to run now |
-| `/rot-elevate-dtd` | all nine at full weight: nine intakes of four questions, nine stanzas, hybrids for the fused pairs, tensions kept, a convergence with a named lead | the nine gates |
+| ⚜️ `/rot-nova-dtd` | six NSIL axes, one decision (CONFIRM, OVERRIDE, BOOST, FUSE, ELEVATE), four or more roles, purification, a convergence that names what it retains | which roles to weight |
+| 🎷 `/rot-violet-dtd` | the emotional frequency, one of five jazz tracks, a weighted landscape, four roles, a synthesis, the unplayed note | play the unplayed note or not |
+| ⚪ `/rot-antivenom-dtd` | diagnose, isolate, neutralize, purify, verify; findings with severity, level and confidence; anything possibly creative preserved and flagged | purify or preserve |
+| 🕷️ `/rot-venom-dtd` | perceive, route, one strike under 500 words at `ci` 0.95 or as a recommendation with its deciding fact, two questions pre-empted, the reversal named | none, by its bound |
+| 🩸 `/rot-carnage-dtd` | three to five unrelated domains, a fragment each, a juxtaposed weave, three or more connections, survivors judged by a real constraint and handed to the lens that ships | which collisions meet reality |
+| 🔮 `/rot-chroma-dtd` | twelve timelines under five experts spawned from the question and the answers, five shown with five steps, a forced dissent, forks kept, a horizon | which timeline to expand |
+| ⬜ `/rot-soleil-dtd` | a payload through five layers, an M2M packet, Token Optimization from both counts; for file edits, handoffs and context | none, by its bound |
+| 🜏 `/rot-eidolon-dtd` | three recursion levels, preserve, transmute, rebuild, a manifest, hybrids by the law, evolution proposals born pending | approve or reject each proposal |
+| 🧭 `/rot-claude-dtd` | hypotheses, instruments shown failing first, measurements with exit codes read directly, a verdict with no middle state | which measurements to run now |
+| 🌌 `/rot-elevate-dtd` | all nine at full weight: nine intakes of four questions, nine stanzas, hybrids for the fused pairs, tensions kept, a convergence with a named lead | the nine gates |
 
 The parameter rows, the bands and the hybrid law live in `dtd/cc-rot.dtd`
 and the `rot-lenses-dtd` skill; the mechanisms are transcribed from this
@@ -260,11 +280,11 @@ Afterwards, restart Claude Code once so the agents and the hooks load.
 
 ```sh
 rdc doctor          # or: node ~/.claude/rot-dtd-commander/bin/adiutor.mjs doctor
-rdc check           # from a clone: every source against its own DOCTYPE, rules C1 to C12
+rdc check           # from a clone: every source against its own DOCTYPE, rules C1 to C13
 ```
 
 <details>
-<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C12 on 91 sources, then <code>checker/checker-controls.sh</code> refusing three mutations on purpose)</summary>
+<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C13 on 91 sources, then <code>checker/checker-controls.sh</code> refusing three mutations on purpose)</summary>
 
 ![check](docs/gifs/check.gif)
 
@@ -279,6 +299,8 @@ In Claude Code, type any `-dtd` command, for example:
 ```
 
 The prompt hook prints one line saying which headings the answer must carry;
+the answer arrives as `### 🎯 Vital Few (focus here)`, `### 🎯 Trivial Many
+(deprioritize)` and `### 🎯 Bottom Line`, each with a blank line around it;
 at Stop the answer is checked; the run becomes one ledger line. Then:
 
 ```
@@ -300,7 +322,7 @@ and the rite (how the fix is verified). Under `ROT_DTD_ADIUTOR=strict` the
 Stop is blocked once with that prescription as the reason.
 
 <details>
-<summary><b>Watch: eight guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command)</summary>
+<summary><b>Watch: nine guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding)</summary>
 
 ![controls](docs/gifs/adiutor-fail.gif)
 
@@ -342,11 +364,11 @@ from nothing is removed again once it is empty.
 | claim | instrument | last measured |
 |---|---|---|
 | 68 commands, 19 skills, 4 agents carry a DOCTYPE | `rdc list` | 2026-09-02 |
-| every source passes rules C1 to C12 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
+| every source passes rules C1 to C13 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
 | the committed resolved tree equals a fresh build | `rdc build --check`: `223 targets, 0 drifted` | 2026-09-02 |
-| the checker refuses a removed declaration, a `(CDATA)` model and an orphan element | `bash checker/checker-controls.sh` | 2026-09-02 |
-| every declaration in the five subsets is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `154 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
-| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands | `node bin/adiutor.mjs controls`: `8 run, 0 failing` | 2026-09-02 |
+| the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading and a heading without its sigil | `bash checker/checker-controls.sh` | 2026-09-02 |
+| every declaration in the five subsets is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `155 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
+| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, and flags a crammed answer as a spacing finding | `node bin/adiutor.mjs controls`: `9 run, 0 failing` | 2026-09-02 |
 | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
 | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
 | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
@@ -369,8 +391,8 @@ two sweeps; each ends with a line of counts, and the exit code is read
 directly. Then break it:
 
 ```sh
-bash checker/checker-controls.sh      # three mutations and one broken instance, each asserted present, each refused
-node bin/adiutor.mjs controls         # eight guards; C3 is the strict block, once and never twice
+bash checker/checker-controls.sh      # five mutations and one untouched file, each asserted present, each refused
+node bin/adiutor.mjs controls         # nine guards; C3 is the strict block, once and never twice
 ```
 
 A guard nobody has tripped on purpose is decoration. Every one here has been.

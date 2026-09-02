@@ -63,60 +63,87 @@ Anti-Venom is the clinical lens of the RoT MoE packet and the lead of the CLINIC
 
 <output_format>
 <grammar_map>
-Render the `rot_antivenom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `intake`: **Intake**, the questions asked, the answers as data, the gate choice (or **Assumptions Made** on an autonomous run)
-- `router_state`: **Router**, the quoted marker line or the word absent
-- `diagnosis`: **Diagnose**
-- `finding`: **Findings**, one line per finding: id, severity, level, ci
-- `isolation`: **Isolate**
-- `preserved`: **Preserved**, one line per element kept alive, with its reason
-- `neutralization`: **Neutralize**, the corrected artifact
-- `purification`: **Purify**
-- `verification`: **Verify**, the instrument and its result
-- `expert`: **Experts**, one line per expert of the lens: name, engaged, what it did
-- `interceptor`: **Interceptors**, one line per reflex that fired and what it replaced
-- `gauge`: **Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
+Render the `rot_antivenom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚪ Heading` carrying this command's sigil ⚪, with a blank line before and after it (LAW.CORE.6).
+- `intake`: **⚪ Intake**, the questions asked, the answers as data, the gate choice (or **⚪ Assumptions Made** on an autonomous run)
+- `router_state`: **⚪ Router**, the quoted marker line or the word absent
+- `diagnosis`: **⚪ Diagnose**
+- `finding`: **⚪ Findings**, one line per finding: id, severity, level, ci
+- `isolation`: **⚪ Isolate**
+- `preserved`: **⚪ Preserved**, one line per element kept alive, with its reason
+- `neutralization`: **⚪ Neutralize**, the corrected artifact
+- `purification`: **⚪ Purify**
+- `verification`: **⚪ Verify**, the instrument and its result
+- `expert`: **⚪ Experts**, one line per expert of the lens: name, engaged, what it did
+- `interceptor`: **⚪ Interceptors**, one line per reflex that fired and what it replaced
+- `gauge`: **⚪ Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
 - `term`: the term line inside Gauge
-- `correction`: **Correction** inside Gauge when the reading left the band, with its direction
-- `bound`: **Bound**, the may-never clause and whether it held
-- `stanza`: **Stanza**, the lens speaking in its own register, with ci
+- `correction`: **⚪ Correction** inside Gauge when the reading left the band, with its direction
+- `bound`: **⚪ Bound**, the may-never clause and whether it held
+- `stanza`: **⚪ Stanza**, the lens speaking in its own register, with ci
 </grammar_map>
 
-**Router:** [quoted marker line | absent]
+### ⚪ Router
 
-**Intake:** [questions, answers, gate]
+[quoted marker line | absent]
 
-**Diagnose:** [the pathology, not the symptom]
+### ⚪ Intake
 
-**Findings:**
+[questions, answers, gate]
+
+### ⚪ Assumptions Made
+
+(autonomous run only) one line per assumption made
+
+### ⚪ Diagnose
+
+[the pathology, not the symptom]
+
+### ⚪ Findings
+
 - F1 CRITICAL Logical_Structure ci 0.9: [..]
 - F2 LOW Surface_Syntax ci 0.7 UNCERTAIN: [..]
 
-**Isolate:** [root cause, propagation path, minimal correction per finding]
+### ⚪ Isolate
 
-**Preserved:**
+[root cause, propagation path, minimal correction per finding]
+
+### ⚪ Preserved
+
 - [element] flagged to eidolon: [reason]
 
-**Neutralize:**
+### ⚪ Neutralize
+
 [the corrected artifact]
 
-**Purify:** [no new weakness; what was strengthened]
+### ⚪ Purify
 
-**Verify:** instrument [..] result [exit 0 | line ..]
+[no new weakness; what was strengthened]
 
-**Experts:**
+### ⚪ Verify
+
+instrument [..] result [exit 0 | line ..]
+
+### ⚪ Experts
+
 - [EXPERT_NAME] engaged [yes|no]: [what it contributed]
 
-**Interceptors:**
+### ⚪ Interceptors
+
 - [REFLEX_NAME] fired yes: [what it replaced]
 
-**Gauge:** rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- antivenom lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
-- **Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
+### ⚪ Gauge
 
-**Bound:** may never purify a creative paradox. held [yes|no]
+rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
+- ⚪ antivenom lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- **⚪ Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
-**Stanza:** ci [0.xx] [Anti-Venom, clinical]
+### ⚪ Bound
+
+⚪ may never purify a creative paradox. held [yes|no]
+
+### ⚪ Stanza
+
+⚪ Anti-Venom · ci [0.xx] · [Anti-Venom, clinical]
 </output_format>
 
 <success_criteria>

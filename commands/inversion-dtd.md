@@ -71,6 +71,7 @@ argument-hint: [goal or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT inversion (goal, failure_mode+, anti_goal+, success_by_avoidance, remaining_risk)>
@@ -112,29 +113,35 @@ Instead of asking "How do I succeed?", ask "What would guarantee failure?" then 
 
 <output_format>
 <grammar_map>
-Render the `inversion` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `goal`: **Goal**
-- `failure_mode`: **Guaranteed Failure Modes**, one `failure_mode` per line with `way` and `avoid`
-- `anti_goal`: **Anti-Goals (Never Do)**
-- `success_by_avoidance`: **Success By Avoidance**
-- `remaining_risk`: **Remaining Risk**
+Render the `inversion` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔃 Heading` carrying this command's sigil 🔃, with a blank line before and after it (LAW.CORE.6).
+- `goal`: **🔃 Goal**
+- `failure_mode`: **🔃 Guaranteed Failure Modes**, one `failure_mode` per line with `way` and `avoid`
+- `anti_goal`: **🔃 Anti-Goals (Never Do)**
+- `success_by_avoidance`: **🔃 Success By Avoidance**
+- `remaining_risk`: **🔃 Remaining Risk**
 </grammar_map>
 
-**Goal:** [what success looks like]
+### 🔃 Goal
 
-**Guaranteed Failure Modes:**
+[what success looks like]
+
+### 🔃 Guaranteed Failure Modes
+
 1. [Way to fail]: Avoid by [specific action]
 2. [Way to fail]: Avoid by [specific action]
 3. [Way to fail]: Avoid by [specific action]
 
-**Anti-Goals (Never Do):**
+### 🔃 Anti-Goals (Never Do)
+
 - [Behavior to eliminate]
 - [Behavior to eliminate]
 
-**Success By Avoidance:**
+### 🔃 Success By Avoidance
+
 By simply not doing [X, Y, Z], success becomes much more likely because...
 
-**Remaining Risk:**
+### 🔃 Remaining Risk
+
 [What's left after avoiding obvious failures]
 </output_format>
 

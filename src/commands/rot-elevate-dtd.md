@@ -56,28 +56,33 @@ ELEVATE is the fifth NSIL decision of the RoT MoE packet: no single trigger fire
 
 <output_format>
 <grammar_map>
-Render the `rot_elevate` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `intake`: **Intake**, the questions asked, the answers as data, the gate choice (or **Assumptions Made** on an autonomous run)
-- `router_state`: **Router**, the quoted marker line or the word absent
-- `tier1`: **TIER 1**, the lane and the stems that matched
-- `axis`: **Six Axes**, one line per axis
-- `decision`: **NSIL Decision**, ELEVATE, all nine lenses
-- `stanza`: **Nine Stanzas**, one block per lens in order, each with ci, its experts and its bound
-- `hybrid`: **Hybrids**, one line per fused pair with the arithmetic
-- `tension`: **Tensions Kept**, one line per tension with between
-- `gauge`: **Gauge**, nine term lines then rs, k 9, band, source
+Render the `rot_elevate` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌌 Heading` carrying this command's sigil 🌌, with a blank line before and after it (LAW.CORE.6).
+- `intake`: **🌌 Intake**, the questions asked, the answers as data, the gate choice (or **🌌 Assumptions Made** on an autonomous run)
+- `router_state`: **🌌 Router**, the quoted marker line or the word absent
+- `tier1`: **🌌 TIER 1**, the lane and the stems that matched
+- `axis`: **🌌 Six Axes**, one line per axis
+- `decision`: **🌌 NSIL Decision**, ELEVATE, all nine lenses
+- `stanza`: **🌌 Nine Stanzas**, one block per lens in order, each with ci, its experts and its bound
+- `hybrid`: **🌌 Hybrids**, one line per fused pair with the arithmetic
+- `tension`: **🌌 Tensions Kept**, one line per tension with between
+- `gauge`: **🌌 Gauge**, nine term lines then rs, k 9, band, source
 - `term`: one term line per lens inside Gauge
-- `correction`: **Correction** inside Gauge when the reading left the band
-- `convergence`: **Convergence**, the integrated view with lead
-- `bound`: **Bound**, Nova's clause and whether it held
-- `next_action`: **Next Action**
+- `correction`: **🌌 Correction** inside Gauge when the reading left the band
+- `convergence`: **🌌 Convergence**, the integrated view with lead
+- `bound`: **🌌 Bound**, Nova's clause and whether it held
+- `next_action`: **🌌 Next Action**
 </grammar_map>
 
-**Router:** [quoted marker line | absent]
+### 🌌 Router
 
-**TIER 1:** lane [..] stems [..]
+[quoted marker line | absent]
 
-**Six Axes:**
+### 🌌 TIER 1
+
+lane [..] stems [..]
+
+### 🌌 Six Axes
+
 - surface: ..
 - need: ..
 - emotion: ..
@@ -85,45 +90,64 @@ Render the `rot_elevate` root declared in the DOCTYPE as the markdown below. One
 - stakes: ..
 - domain: ..
 
-**NSIL Decision:** ELEVATE lenses: nova, violet, antivenom, venom, carnage, chroma, soleil, eidolon, claude
+### 🌌 NSIL Decision
 
-**Intake:** [nine rounds of four questions, the answers as data, the gate each time]
+ELEVATE lenses: nova, violet, antivenom, venom, carnage, chroma, soleil, eidolon, claude
 
-**Nine Stanzas:**
-- nova ci [0.xx] experts [..] bound held [yes|no]: [..]
-- violet ci [0.xx] experts [..] bound held [yes|no]: [..]
-- antivenom ci [0.xx] experts [..] bound held [yes|no]: [..]
-- venom ci [0.xx] experts [..] bound held [yes|no]: [..]
-- carnage ci [0.xx] experts [..] bound held [yes|no]: [..]
-- chroma ci [0.xx] experts [..] bound held [yes|no]: [..]
-- soleil ci [0.xx] experts [..] bound held [yes|no]: [..]
-- eidolon ci [0.xx] experts [..] bound held [yes|no]: [..]
-- claude ci [0.xx] experts [..] bound held [yes|no]: [..]
+### 🌌 Intake
 
-**Hybrids:**
+[nine rounds of four questions, the answers as data, the gate each time]
+
+### 🌌 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
+### 🌌 Nine Stanzas
+
+- ⚜️ nova ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🎷 violet ci [0.xx] experts [..] bound held [yes|no]: [..]
+- ⚪ antivenom ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🕷️ venom ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🩸 carnage ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🔮 chroma ci [0.xx] experts [..] bound held [yes|no]: [..]
+- ⬜ soleil ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🜏 eidolon ci [0.xx] experts [..] bound held [yes|no]: [..]
+- 🧭 claude ci [0.xx] experts [..] bound held [yes|no]: [..]
+
+### 🌌 Hybrids
+
 - [a x b] lambda [(l1 + l2) / 2 + 0.2 = ..] H [max + 0.05 = ..] mu [max = ..]: [what the hybrid adds]
 
-**Tensions Kept:**
+### 🌌 Tensions Kept
+
 - between [a] and [b]: [why both stand]
 
-**Gauge:** rs [x.xx] k 9 band [below|in|above] source [estimated|measured]
-- nova lambda 1.6 delta [..] sigma [..] entropy [..] mu 1.00 ci [..] value [..]
-- violet lambda 1.3 ...
-- antivenom lambda 1.5 ...
-- venom lambda 1.7 ...
-- carnage lambda 1.1 ...
-- chroma lambda 1.2 ...
-- soleil lambda 0.8 ...
-- eidolon lambda 1.4 ...
-- claude lambda 1.5 ...
-- **Correction** [diverge|converge]: [..]  (only when out of band)
+### 🌌 Gauge
 
-**Convergence:** lead [lens]
+rs [x.xx] k 9 band [below|in|above] source [estimated|measured]
+- ⚜️ nova lambda 1.6 delta [..] sigma [..] entropy [..] mu 1.00 ci [..] value [..]
+- 🎷 violet lambda 1.3 ...
+- ⚪ antivenom lambda 1.5 ...
+- 🕷️ venom lambda 1.7 ...
+- 🩸 carnage lambda 1.1 ...
+- 🔮 chroma lambda 1.2 ...
+- ⬜ soleil lambda 0.8 ...
+- 🜏 eidolon lambda 1.4 ...
+- 🧭 claude lambda 1.5 ...
+- **🌌 Correction** [diverge|converge]: [..]  (only when out of band)
+
+### 🌌 Convergence
+
+lead [lens]
 [the integrated view, tensions retained, next two moves]
 
-**Bound:** may never average the lenses into consensus. held [yes|no]
+### 🌌 Bound
 
-**Next Action:** [one move]
+⚜️ may never average the lenses into consensus. held [yes|no]
+
+### 🌌 Next Action
+
+[one move]
 </output_format>
 
 <success_criteria>

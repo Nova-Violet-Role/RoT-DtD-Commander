@@ -52,30 +52,37 @@ Map internal factors (strengths/weaknesses) and external factors (opportunities/
 
 <output_format>
 <grammar_map>
-Render the `swot` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `subject`: **Subject**
-- `strengths`: **Strengths (Internal +)**, `item` locus internal sign plus
-- `weaknesses`: **Weaknesses (Internal -)**, `item` locus internal sign minus
-- `opportunities`: **Opportunities (External +)**
-- `threats`: **Threats (External -)**
-- `moves`: **Strategic Moves**, exactly four `move` elements: SO, WO, ST, WT
+Render the `swot` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚖️ Heading` carrying this command's sigil ⚖️, with a blank line before and after it (LAW.CORE.6).
+- `subject`: **⚖️ Subject**
+- `strengths`: **⚖️ Strengths (Internal +)**, `item` locus internal sign plus
+- `weaknesses`: **⚖️ Weaknesses (Internal -)**, `item` locus internal sign minus
+- `opportunities`: **⚖️ Opportunities (External +)**
+- `threats`: **⚖️ Threats (External -)**
+- `moves`: **⚖️ Strategic Moves**, exactly four `move` elements: SO, WO, ST, WT
 </grammar_map>
 
-**Subject:** [what's being analyzed]
+### ⚖️ Subject
 
-**Strengths (Internal +)**
+[what's being analyzed]
+
+### ⚖️ Strengths (Internal +)
+
 - [Strength]: How to leverage...
 
-**Weaknesses (Internal -)**
+### ⚖️ Weaknesses (Internal -)
+
 - [Weakness]: How to mitigate...
 
-**Opportunities (External +)**
+### ⚖️ Opportunities (External +)
+
 - [Opportunity]: How to capture...
 
-**Threats (External -)**
+### ⚖️ Threats (External -)
+
 - [Threat]: How to defend...
 
-**Strategic Moves:**
+### ⚖️ Strategic Moves
+
 - **SO Strategy:** Use [strength] to capture [opportunity]
 - **WO Strategy:** Address [weakness] to enable [opportunity]
 - **ST Strategy:** Use [strength] to counter [threat]

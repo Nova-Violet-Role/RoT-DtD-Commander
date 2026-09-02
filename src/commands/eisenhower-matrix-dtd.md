@@ -47,24 +47,33 @@ Categorize items by urgency and importance to clarify what to do now, schedule, 
 
 <output_format>
 <grammar_map>
-Render the `eisenhower` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `quadrant`: the four headings **Q1: Do First**, **Q2: Schedule**, **Q3: Delegate**, **Q4: Eliminate**, each one `quadrant` with its `item` lines
-- `focus`: **Immediate Focus**
+Render the `eisenhower` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🗂️ Heading` carrying this command's sigil 🗂️, with a blank line before and after it (LAW.CORE.6).
+- `quadrant`: the four headings **🗂️ Q1: Do First**, **🗂️ Q2: Schedule**, **🗂️ Q3: Delegate**, **🗂️ Q4: Eliminate**, each one `quadrant` with its `item` lines
+- `focus`: **🗂️ Immediate Focus**
 </grammar_map>
 
-**Q1: Do First** (Important + Urgent)
+### 🗂️ Q1: Do First
+
+(Important + Urgent)
 - Item: [specific action, deadline if applicable]
 
-**Q2: Schedule** (Important + Not Urgent)
+### 🗂️ Q2: Schedule
+
+(Important + Not Urgent)
 - Item: [when to do it, why it matters long-term]
 
-**Q3: Delegate** (Not Important + Urgent)
+### 🗂️ Q3: Delegate
+
+(Not Important + Urgent)
 - Item: [who/what can handle it, or how to minimize time spent]
 
-**Q4: Eliminate** (Not Important + Not Urgent)
+### 🗂️ Q4: Eliminate
+
+(Not Important + Not Urgent)
 - Item: [why it's noise, permission to drop it]
 
-**Immediate Focus:**
+### 🗂️ Immediate Focus
+
 Single sentence on what to tackle right now.
 </output_format>
 

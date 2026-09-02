@@ -98,21 +98,23 @@ After intake complete:
 
 <output_format>
 <grammar_map>
-Render the `history_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `history_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🕰️ Heading` carrying this command's sigil 🕰️, with a blank line before and after it (LAW.CORE.6).
 - `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.history in that order, then `claude_context` blocks adopt, avoid, changed, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-history.md
 </grammar_map>
 
-## History Research: [Problem/Approach]
+### 🕰️ History Research: [Problem/Approach]
 
-### Strategic Summary
+### 🕰️ Strategic Summary
+
 [2-3 sentences: key historical pattern, main lesson, what's different now]
 
-### What we're investigating
+### 🕰️ What we're investigating
+
 [The problem or approach we want to learn from]
 
-### Past Attempts
+### 🕰️ Past Attempts
 
 **[Attempt 1: Name/Company/Project]**
 - **When:** [Timeframe]
@@ -127,7 +129,7 @@ Render the `history_research` root declared in the DOCTYPE as the markdown below
 **[Attempt 3: Name/Company/Project]**
 [Same structure...]
 
-### Patterns
+### 🕰️ Patterns
 
 **Common success factors:**
 - [Factor that correlates with success]
@@ -137,11 +139,13 @@ Render the `history_research` root declared in the DOCTYPE as the markdown below
 - [Why things typically fail]
 - [Why things typically fail]
 
-### What's Different Now
+### 🕰️ What's Different Now
+
 - [Technology/market/context change]: [implication]
 - [Technology/market/context change]: [implication]
 
-### Lessons to Apply
+### 🕰️ Lessons to Apply
+
 **Do:**
 - [Lesson to adopt]
 - [Lesson to adopt]
@@ -153,7 +157,8 @@ Render the `history_research` root declared in the DOCTYPE as the markdown below
 **Open question:**
 [What we still don't know from history]
 
-### Implementation Context
+### 🕰️ Implementation Context
+
 <claude_context>
 <adopt>
 - patterns: [successful patterns to follow]
@@ -174,7 +179,8 @@ Render the `history_research` root declared in the DOCTYPE as the markdown below
 
 **Next Action:** Apply lessons to planning, research specific aspect deeper, or validate key assumptions
 
-### Sources
+### 🕰️ Sources
+
 - [Source name]: [URL] - [date accessed]
 - [Source name]: [URL] - [date accessed]
 </output_format>

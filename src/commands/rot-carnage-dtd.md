@@ -61,63 +61,88 @@ Carnage is the creative lens of the RoT MoE packet and the lead of the CREATIVE 
 
 <output_format>
 <grammar_map>
-Render the `rot_carnage` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `intake`: **Intake**, the questions asked, the answers as data, the gate choice (or **Assumptions Made** on an autonomous run)
-- `router_state`: **Router**, the quoted marker line or the word absent
-- `domain`: **Domains**, one line per domain with id and name
-- `fragment`: **Fragments**, one per domain, marked from its domain id
-- `weave`: **Weave**
-- `burst`: **Burst**, the connections counted, the entropy, the resonance named
-- `dream`: **Dream**, optional
-- `survivor`: **Survivors**, one line per collision that met reality: judged by, handed to
-- `expert`: **Experts**, one line per expert of the lens: name, engaged, what it did
-- `interceptor`: **Interceptors**, one line per reflex that fired and what it replaced
-- `gauge`: **Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
+Render the `rot_carnage` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🩸 Heading` carrying this command's sigil 🩸, with a blank line before and after it (LAW.CORE.6).
+- `intake`: **🩸 Intake**, the questions asked, the answers as data, the gate choice (or **🩸 Assumptions Made** on an autonomous run)
+- `router_state`: **🩸 Router**, the quoted marker line or the word absent
+- `domain`: **🩸 Domains**, one line per domain with id and name
+- `fragment`: **🩸 Fragments**, one per domain, marked from its domain id
+- `weave`: **🩸 Weave**
+- `burst`: **🩸 Burst**, the connections counted, the entropy, the resonance named
+- `dream`: **🩸 Dream**, optional
+- `survivor`: **🩸 Survivors**, one line per collision that met reality: judged by, handed to
+- `expert`: **🩸 Experts**, one line per expert of the lens: name, engaged, what it did
+- `interceptor`: **🩸 Interceptors**, one line per reflex that fired and what it replaced
+- `gauge`: **🩸 Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
 - `term`: the term line inside Gauge
-- `correction`: **Correction** inside Gauge when the reading left the band, with its direction
-- `bound`: **Bound**, the may-never clause and whether it held
-- `stanza`: **Stanza**, the lens speaking in its own register, with ci
+- `correction`: **🩸 Correction** inside Gauge when the reading left the band, with its direction
+- `bound`: **🩸 Bound**, the may-never clause and whether it held
+- `stanza`: **🩸 Stanza**, the lens speaking in its own register, with ci
 </grammar_map>
 
-**Router:** [quoted marker line | absent]
+### 🩸 Router
 
-**Intake:** [questions, answers, gate]
+[quoted marker line | absent]
 
-**Domains:**
+### 🩸 Intake
+
+[questions, answers, gate]
+
+### 🩸 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
+### 🩸 Domains
+
 - D1 [name]
 - D2 [name]
 - D3 [name]
 
-**Fragments:**
+### 🩸 Fragments
+
 - from D1: [fragment]
 - from D2: [fragment]
 - from D3: [fragment]
 
-**Weave:** [fragments by juxtaposition]
+### 🩸 Weave
 
-**Burst:** connections [3+] entropy [0.7|0.9] resonance [lens|none]
+[fragments by juxtaposition]
+
+### 🩸 Burst
+
+connections [3+] entropy [0.7|0.9] resonance [lens|none]
 - [connection 1]
 - [connection 2]
 - [connection 3]
 
-**Dream:** [optional narrative]
+### 🩸 Dream
 
-**Survivors:**
+[optional narrative]
+
+### 🩸 Survivors
+
 - [collision] judged by [constraint] handed to [lens]
 
-**Experts:**
+### 🩸 Experts
+
 - [EXPERT_NAME] engaged [yes|no]: [what it contributed]
 
-**Interceptors:**
+### 🩸 Interceptors
+
 - [REFLEX_NAME] fired yes: [what it replaced]
 
-**Gauge:** rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- carnage lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
-- **Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
+### 🩸 Gauge
 
-**Bound:** may never be the voice that ships. held [yes|no]
+rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
+- 🩸 carnage lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- **🩸 Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
-**Stanza:** ci [0.xx] [Carnage, detonating]
+### 🩸 Bound
+
+🩸 may never be the voice that ships. held [yes|no]
+
+### 🩸 Stanza
+
+🩸 Carnage · ci [0.xx] · [Carnage, detonating]
 </output_format>
 
 <success_criteria>

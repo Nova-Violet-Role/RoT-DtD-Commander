@@ -50,25 +50,31 @@ The Atharvaveda is the Veda of remedies: for a named ailment, a charm, the rite 
 
 <output_format>
 <grammar_map>
-Render the `remedies` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `ailment`: **Ailment**, class and symptom
-- `remedy`: **Remedies**, one block per remedy: id, tried, then `charm` and `rite`
-- `contraindication`: **Contraindications**, one line each naming a remedy id
-- `dosage`: **Dosage**, the remedy id, the amount, the rite
+Render the `remedies` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🪄 Heading` carrying this command's sigil 🪄, with a blank line before and after it (LAW.CORE.6).
+- `ailment`: **🪄 Ailment**, class and symptom
+- `remedy`: **🪄 Remedies**, one block per remedy: id, tried, then `charm` and `rite`
+- `contraindication`: **🪄 Contraindications**, one line each naming a remedy id
+- `dosage`: **🪄 Dosage**, the remedy id, the amount, the rite
 </grammar_map>
 
-**Ailment:** class [family], symptom [quoted observation]
+### 🪄 Ailment
 
-**Remedies:**
+class [family], symptom [quoted observation]
+
+### 🪄 Remedies
+
 - R1 tried [true|false]
   - charm: [the change]
   - rite: [command or check], exit [code] means gone
 - R2 ...
 
-**Contraindications:**
+### 🪄 Contraindications
+
 - R2 when [condition]: [the harm]
 
-**Dosage:** R1, [smallest amount], confirmed by [rite]
+### 🪄 Dosage
+
+R1, [smallest amount], confirmed by [rite]
 </output_format>
 
 <success_criteria>

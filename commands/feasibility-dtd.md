@@ -71,6 +71,7 @@ argument-hint: [idea/project or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   
@@ -265,56 +266,65 @@ After intake complete:
 
 <output_format>
 <grammar_map>
-Render the `feasibility_assessment` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `feasibility_assessment` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧪 Heading` carrying this command's sigil 🧪, with a blank line before and after it (LAW.CORE.6).
 - `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.feasibility in that order, then `claude_context` blocks if_go, risks, alternatives, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-feasibility.md
 </grammar_map>
 
-## Feasibility Assessment: [Project/Idea]
+### 🧪 Feasibility Assessment: [Project/Idea]
 
-### Strategic Summary
+### 🧪 Strategic Summary
+
 [2-3 sentences: verdict, main concern, key condition for success]
 
-### What we're assessing
+### 🧪 What we're assessing
+
 [Clear description of the proposed project/feature]
 
-### Technical Feasibility
+### 🧪 Technical Feasibility
+
 **Can we build it?**
 - Known approaches: [Yes/Partial/No] - [details]
 - Technology maturity: [Proven/Emerging/Experimental]
 - Technical risks: [List with severity]
 - **Technical verdict:** Feasible / Risky / Not feasible
 
-### Resource Feasibility
+### 🧪 Resource Feasibility
+
 **Do we have what we need?**
 - Skills: [Have/Need to learn]
 - Budget: [Sufficient/Tight/Insufficient]
 - Tools/infrastructure: [Have/Need to acquire]
 - **Resource verdict:** Feasible / Risky / Not feasible
 
-### External Dependency Feasibility
+### 🧪 External Dependency Feasibility
+
 **Are external factors reliable?**
 - APIs/services: [Available/Reliable/Rate limits]
 - Third-party integrations: [Stable/Risky]
 - External data: [Accessible/Restricted]
 - **External verdict:** Feasible / Risky / Not feasible
 
-### Blockers
+### 🧪 Blockers
+
 | Blocker | Severity | Mitigation |
 |---------|----------|------------|
 | [Blocker] | High/Med/Low | [How to address] |
 
-### De-risking Options
+### 🧪 De-risking Options
+
 - [Option]: [How it reduces risk, what it costs]
 - [Option]: [How it reduces risk, what it costs]
 
-### Overall Verdict
+### 🧪 Overall Verdict
+
 **[Go / Go with conditions / No-go]**
 
 [Reasoning and key conditions]
 
-### Implementation Context
+### 🧪 Implementation Context
+
 <claude_context>
 <if_go>
 - approach: [recommended technical approach]
@@ -334,7 +344,8 @@ Render the `feasibility_assessment` root declared in the DOCTYPE as the markdown
 
 **Next Action:** Address blockers, reduce scope, prototype critical path, or proceed to /plan/project
 
-### Sources
+### 🧪 Sources
+
 - [Source name]: [URL] - [date accessed]
 - [Source name]: [URL] - [date accessed]
 </output_format>

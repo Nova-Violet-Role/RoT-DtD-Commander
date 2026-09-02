@@ -59,30 +59,37 @@ The Adiutor watches every `-dtd` command through hooks: at prompt time it reads 
 
 <output_format>
 <grammar_map>
-Render the `adiutor_report` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `doctor`: **Doctor**, one `check` per line: name, OK or FAIL, detail, quoted from the tool
-- `ledger_review`: **Ledger**, one `run` per line with command and status
-- `prescription`: **Prescriptions**, one block per failed run with `charm` and `rite`
-- `gate`: **Next**, the four options offered and the choice made
+Render the `adiutor_report` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🩺 Heading` carrying this command's sigil 🩺, with a blank line before and after it (LAW.CORE.6).
+- `doctor`: **🩺 Doctor**, one `check` per line: name, OK or FAIL, detail, quoted from the tool
+- `ledger_review`: **🩺 Ledger**, one `run` per line with command and status
+- `prescription`: **🩺 Prescriptions**, one block per failed run with `charm` and `rite`
+- `gate`: **🩺 Next**, the four options offered and the choice made
 </grammar_map>
 
-## RoT DtD Commander Adiutor
+### 🩺 RoT DtD Commander Adiutor
 
-**Doctor:** (runtime: [home|plugin] at [path])
+### 🩺 Doctor
+
+(runtime: [home|plugin] at [path])
 - OK   manifest        [detail]
 - FAIL hooks           [detail]
 - ...
 
-**Ledger:** (last N)
+### 🩺 Ledger
+
+(last N)
 - [ts] pass /pareto-dtd
 - [ts] fail /second-order-dtd findings: [...]
 
-**Prescriptions:**
+### 🩺 Prescriptions
+
 - /second-order-dtd
   - charm: [what to change]
   - rite: [how it is verified]
 
-**Next:** [rerun | edit | strict | dismiss]
+### 🩺 Next
+
+[rerun | edit | strict | dismiss]
 </output_format>
 
 <success_criteria>

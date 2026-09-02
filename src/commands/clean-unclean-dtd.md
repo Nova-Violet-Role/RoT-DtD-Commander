@@ -48,23 +48,29 @@ Leviticus spends chapters on what is clean, what is unclean, and the rite that m
 
 <output_format>
 <grammar_map>
-Render the `purity` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `subject`: **Subject**
-- `channel`: **Channels**, one line per channel: id, source, status
-- `rite`: **Rites**, one line per rite: for which channel, kind, tripped, the landed proof
-- `verdict`: **Verdict**
+Render the `purity` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧼 Heading` carrying this command's sigil 🧼, with a blank line before and after it (LAW.CORE.6).
+- `subject`: **🧼 Subject**
+- `channel`: **🧼 Channels**, one line per channel: id, source, status
+- `rite`: **🧼 Rites**, one line per rite: for which channel, kind, tripped, the landed proof
+- `verdict`: **🧼 Verdict**
 </grammar_map>
 
-**Subject:** [what was audited, path]
+### 🧼 Subject
 
-**Channels:**
+[what was audited, path]
+
+### 🧼 Channels
+
 - C1 [source] unclean
 - C2 [source] clean because [reason]
 
-**Rites:**
+### 🧼 Rites
+
 - for C1: [fence|validate|reject|quarantine], tripped [true|false|untested]: fed [the unclean input], observed [what happened]
 
-**Verdict:** [clean|unclean] [if unclean: the channel without a proven rite]
+### 🧼 Verdict
+
+[clean|unclean] [if unclean: the channel without a proven rite]
 </output_format>
 
 <success_criteria>

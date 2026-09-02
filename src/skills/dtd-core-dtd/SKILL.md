@@ -49,7 +49,7 @@ The four terms and where each lives:
 <subsets>
 
 The `subsets` under dtd/ are the external subsets a source file includes with `<!ENTITY % cc-core SYSTEM "../dtd/cc-core.dtd"> %cc-core;` inside its DOCTYPE. Paths are relative to the source file under src/: `../../dtd/` from src/commands/ and src/agents/, `../../../dtd/` from src/skills/name/. The resolved files under commands/, skills/ and agents/ carry the text inline and no path.
-- cc-core.dtd: trust classes, the four channels, common enumerations (%depth; %verdict3; %severity; %confidence; %horizon;), next_action, bottom_line, claim, assumption_made, LAW.CORE.1 to 5.
+- cc-core.dtd: trust classes, the four channels, common enumerations (%depth; %verdict3; %severity; %confidence; %horizon;), next_action, bottom_line, claim, assumption_made, LAW.CORE.1 to 6.
 - cc-ask.dtd: the AskUserQuestion grammar (intake, context_analysis, known, gap, ask, question, option, label, description, preview, answer, gate), the GATE.* strings, LAW.ASK.1 to 5.
 - cc-report.dtd: report, strategic_summary, section, claude_context, block, sources, source, artifact, LAW.REPORT.1 to 4.
 - cc-record.dtd: records, record, field with numbered append-only attributes, LAW.REC.1 to 4.
@@ -60,7 +60,7 @@ For the full text read [references/subsets.md](references/subsets.md).
 
 <checker>
 
-The `checker` is `node bin/rot-dtd-commander.mjs check [paths]` in the repository, backed by lib/dtd.mjs. It resolves the includes in two passes (file inclusion, then internal %name; substitution) and applies rules C1 to C12 to the resolved text; the exact list is in [references/checker-rules.md](references/checker-rules.md). Beside it, checker/contract-audit.mjs proves every declaration in the shared subsets is used and every law is numbered densely, and the Adiutor judges the rendered answer at Stop. A rule that cannot fail is not a rule: the checker was tripped on purpose with a removed declaration, a (CDATA) content model and an orphan element before its green was trusted.
+The `checker` is `node bin/rot-dtd-commander.mjs check [paths]` in the repository, backed by lib/dtd.mjs. It resolves the includes in two passes (file inclusion, then internal %name; substitution) and applies rules C1 to C13 to the resolved text; the exact list is in [references/checker-rules.md](references/checker-rules.md). Beside it, checker/contract-audit.mjs proves every declaration in the shared subsets is used and every law is numbered densely, and the Adiutor judges the rendered answer at Stop. A rule that cannot fail is not a rule: the checker was tripped on purpose with a removed declaration, a (CDATA) content model, an orphan element, a crammed heading and a heading without its sigil before its green was trusted.
 
 </checker>
 
@@ -79,7 +79,7 @@ To `extension` the contract: add the declaration to the right subset, use it in 
 <additional_resources>
 
 - [references/subsets.md](references/subsets.md): the four subsets, verbatim, with commentary
-- [references/checker-rules.md](references/checker-rules.md): rules C1 to C12 with the fix for each
+- [references/checker-rules.md](references/checker-rules.md): rules C1 to C13 with the fix for each
 - [references/context-handoff.md](references/context-handoff.md), [references/meta-prompting.md](references/meta-prompting.md), [references/todo-management.md](references/todo-management.md): the original design notes for handoffs, meta-prompting and todos, folded here because their records are now declared under cc-record
 
 </additional_resources>

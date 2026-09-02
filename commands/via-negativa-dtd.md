@@ -71,6 +71,7 @@ argument-hint: [situation or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT via_negativa (current_state, candidate+, keep*, after, say_no+)>
@@ -112,29 +113,34 @@ Instead of asking "What should I add?", ask "What should I remove?" Subtraction 
 
 <output_format>
 <grammar_map>
-Render the `via_negativa` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `current_state`: **Current State**
-- `candidate`: **Subtraction Candidates**, one `candidate` with `item`, `reason`, `impact`
-- `keep`: **Keep (Passed the Test)**
-- `after`: **After Subtraction**
-- `say_no`: **What to Say No To**
+Render the `via_negativa` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ➖ Heading` carrying this command's sigil ➖, with a blank line before and after it (LAW.CORE.6).
+- `current_state`: **➖ Current State**
+- `candidate`: **➖ Subtraction Candidates**, one `candidate` with `item`, `reason`, `impact`
+- `keep`: **➖ Keep (Passed the Test)**
+- `after`: **➖ After Subtraction**
+- `say_no`: **➖ What to Say No To**
 </grammar_map>
 
-**Current State:**
+### ➖ Current State
+
 [What exists now - activities, features, commitments]
 
-**Subtraction Candidates:**
+### ➖ Subtraction Candidates
+
 - [Item]: Remove because [reason] → Impact: [what improves]
 - [Item]: Remove because [reason] → Impact: [what improves]
 - [Item]: Remove because [reason] → Impact: [what improves]
 
-**Keep (Passed the Test):**
+### ➖ Keep (Passed the Test)
+
 - [Item]: Keep because [genuine value]
 
-**After Subtraction:**
+### ➖ After Subtraction
+
 [Description of leaner, better state]
 
-**What to Say No To:**
+### ➖ What to Say No To
+
 [Future additions to reject]
 </output_format>
 

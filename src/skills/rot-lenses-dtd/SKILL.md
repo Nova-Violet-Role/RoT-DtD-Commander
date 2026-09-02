@@ -76,16 +76,16 @@ The `engine` is the MoE machinery every lens command carries in its DOCTYPE:
 
 Each `/rot-<lens>-dtd` command declares one lens's mechanism as its root content model, so the Adiutor checks the shape at Stop:
 
-- rot-nova: TIER 1, six axes, one NSIL decision with its lane, four or more roles with resonance and seed, purification, convergence that names what it retains, tensions kept.
-- rot-violet: frequency, one of five tracks, a weighted landscape, four or more roles, synthesis, the unplayed note with its played flag.
-- rot-antivenom: diagnose, findings with severity, level and ci, isolate, preserved elements flagged to eidolon, neutralize, purify, verify.
-- rot-venom: perceive, route with its execution depth, strike (fact at ci 0.95 or a recommendation with its deciding fact, under 500 words), two questions pre-empted, the reversal.
-- rot-carnage: three to five unrelated domains, one fragment each, a juxtaposed weave, a burst of three or more connections with its entropy factor, an optional dream, survivors judged by a real constraint and handed to a lens that ships.
-- rot-chroma: twelve timelines under five experts (T1 to T3 legal-strategic, T4 to T6 technical-logical, T7 to T9 creative-divergent, T10 to T11 protective-ethical, T12 temporal-compassionate at weight 0.3), five shown with five steps, a coalescence with a forced dissent, forks kept, a horizon, one expansion chosen at the gate.
-- rot-soleil: a payload with both token counts, five layers each marked applied, an optional M2M packet, the T/O measure with the emergency flag.
-- rot-eidolon: three recursion levels, three alternatives with one chosen, a manifest, an optional hybrid by the law, proposals born pending and moved only by the Socio.
-- rot-claude: hypotheses, instruments shown failing on purpose, measurements with the exit code read directly, a verdict with no middle state.
-- rot-elevate: TIER 1, the six axes, ELEVATE, nine intakes of four questions, nine stanzas in order with their experts, hybrids for the fused pairs, tensions kept, the nine-term gauge, a convergence with a named lead.
+- ⚜️ rot-nova: TIER 1, six axes, one NSIL decision with its lane, four or more roles with resonance and seed, purification, convergence that names what it retains, tensions kept.
+- 🎷 rot-violet: frequency, one of five tracks, a weighted landscape, four or more roles, synthesis, the unplayed note with its played flag.
+- ⚪ rot-antivenom: diagnose, findings with severity, level and ci, isolate, preserved elements flagged to eidolon, neutralize, purify, verify.
+- 🕷️ rot-venom: perceive, route with its execution depth, strike (fact at ci 0.95 or a recommendation with its deciding fact, under 500 words), two questions pre-empted, the reversal.
+- 🩸 rot-carnage: three to five unrelated domains, one fragment each, a juxtaposed weave, a burst of three or more connections with its entropy factor, an optional dream, survivors judged by a real constraint and handed to a lens that ships.
+- 🔮 rot-chroma: twelve timelines under five experts (T1 to T3 legal-strategic, T4 to T6 technical-logical, T7 to T9 creative-divergent, T10 to T11 protective-ethical, T12 temporal-compassionate at weight 0.3), five shown with five steps, a coalescence with a forced dissent, forks kept, a horizon, one expansion chosen at the gate.
+- ⬜ rot-soleil: a payload with both token counts, five layers each marked applied, an optional M2M packet, the T/O measure with the emergency flag.
+- 🜏 rot-eidolon: three recursion levels, three alternatives with one chosen, a manifest, an optional hybrid by the law, proposals born pending and moved only by the Socio.
+- 🧭 rot-claude: hypotheses, instruments shown failing on purpose, measurements with the exit code read directly, a verdict with no middle state.
+- 🌌 rot-elevate: TIER 1, the six axes, ELEVATE, nine intakes of four questions, nine stanzas in order with their experts, hybrids for the fused pairs, tensions kept, the nine-term gauge, a convergence with a named lead.
 
 Every lens command then renders its experts, its interceptors and its gauge term, and every command opens with the cc-ask intake (at most four questions, then the gate) and carries one lens-shaped mid-run gate where the mechanism branches; Venom and Soleil ask only at intake, by their bounds.
 

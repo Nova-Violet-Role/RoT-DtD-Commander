@@ -71,6 +71,7 @@ argument-hint: [what to compare or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   
@@ -258,26 +259,29 @@ After intake complete:
 
 <output_format>
 <grammar_map>
-Render the `options_comparison` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `options_comparison` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔀 Heading` carrying this command's sigil 🔀, with a blank line before and after it (LAW.CORE.6).
 - `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.options in that order, then `claude_context` blocks chosen, runner_up, integration, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-options.md
 </grammar_map>
 
-## Options Comparison: [Decision]
+### 🔀 Options Comparison: [Decision]
 
-### Strategic Summary
+### 🔀 Strategic Summary
+
 [2-3 sentences: the options, recommendation, key tradeoff]
 
-### Context
+### 🔀 Context
+
 [Brief description of what we're deciding and why it matters]
 
-### Decision Criteria
+### 🔀 Decision Criteria
+
 1. [Criterion] - [why it matters] - Weight: High/Med/Low
 2. [Criterion] - [why it matters] - Weight: High/Med/Low
 3. [Criterion] - [why it matters] - Weight: High/Med/Low
 
-### Options
+### 🔀 Options
 
 **Option A: [Name]**
 - [Criterion 1]: [Rating + brief note]
@@ -294,20 +298,24 @@ Render the `options_comparison` root declared in the DOCTYPE as the markdown bel
 **Option C: [Name]**
 [Same structure...]
 
-### Comparison Matrix
+### 🔀 Comparison Matrix
+
 | Criterion | Option A | Option B | Option C |
 |-----------|----------|----------|----------|
 | [Criterion 1] | Good/OK/Poor | | |
 | [Criterion 2] | Good/OK/Poor | | |
 | [Criterion 3] | Good/OK/Poor | | |
 
-### Recommendation
+### 🔀 Recommendation
+
 [Option X] because [reasoning tied to weighted criteria]
 
-### Runner-up
+### 🔀 Runner-up
+
 [Option Y] - choose this if [specific condition]
 
-### Implementation Context
+### 🔀 Implementation Context
+
 <claude_context>
 <chosen>
 - option: [chosen option name]
@@ -330,7 +338,8 @@ Render the `options_comparison` root declared in the DOCTYPE as the markdown bel
 
 **Next Action:** Implement chosen option, prototype to validate, or gather more info on specific option
 
-### Sources
+### 🔀 Sources
+
 - [Source name]: [URL] - [date accessed]
 - [Source name]: [URL] - [date accessed]
 </output_format>

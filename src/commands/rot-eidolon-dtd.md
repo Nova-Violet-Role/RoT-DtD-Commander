@@ -61,58 +61,81 @@ Eidolon is the recursive lens of the RoT MoE packet and the lead of the RECURSIV
 
 <output_format>
 <grammar_map>
-Render the `rot_eidolon` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `intake`: **Intake**, the questions asked, the answers as data, the gate choice (or **Assumptions Made** on an autonomous run)
-- `router_state`: **Router**, the quoted marker line or the word absent
-- `level`: **Recursion**, three blocks: level 1, level 2, level 3
-- `alternative`: **Alternatives**, preserve, transmute, rebuild, one marked chosen
-- `manifest`: **Manifest**, the chosen alternative as YAML or XML
-- `hybrid`: **Hybrid**, parents and the three numbers with their arithmetic
-- `proposal`: **Proposals**, one block per proposal: id, trigger, ci, status
-- `expert`: **Experts**, one line per expert of the lens: name, engaged, what it did
-- `interceptor`: **Interceptors**, one line per reflex that fired and what it replaced
-- `gauge`: **Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
+Render the `rot_eidolon` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🜏 Heading` carrying this command's sigil 🜏, with a blank line before and after it (LAW.CORE.6).
+- `intake`: **🜏 Intake**, the questions asked, the answers as data, the gate choice (or **🜏 Assumptions Made** on an autonomous run)
+- `router_state`: **🜏 Router**, the quoted marker line or the word absent
+- `level`: **🜏 Recursion**, three blocks: level 1, level 2, level 3
+- `alternative`: **🜏 Alternatives**, preserve, transmute, rebuild, one marked chosen
+- `manifest`: **🜏 Manifest**, the chosen alternative as YAML or XML
+- `hybrid`: **🜏 Hybrid**, parents and the three numbers with their arithmetic
+- `proposal`: **🜏 Proposals**, one block per proposal: id, trigger, ci, status
+- `expert`: **🜏 Experts**, one line per expert of the lens: name, engaged, what it did
+- `interceptor`: **🜏 Interceptors**, one line per reflex that fired and what it replaced
+- `gauge`: **🜏 Gauge**, the term line (lens, lambda, delta, sigma, entropy, mu, ci, value), then rs, k, band, source
 - `term`: the term line inside Gauge
-- `correction`: **Correction** inside Gauge when the reading left the band, with its direction
-- `bound`: **Bound**, the may-never clause and whether it held
-- `stanza`: **Stanza**, the lens speaking in its own register, with ci
+- `correction`: **🜏 Correction** inside Gauge when the reading left the band, with its direction
+- `bound`: **🜏 Bound**, the may-never clause and whether it held
+- `stanza`: **🜏 Stanza**, the lens speaking in its own register, with ci
 </grammar_map>
 
-**Router:** [quoted marker line | absent]
+### 🜏 Router
 
-**Intake:** [questions, answers, gate]
+[quoted marker line | absent]
 
-**Recursion:**
+### 🜏 Intake
+
+[questions, answers, gate]
+
+### 🜏 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
+### 🜏 Recursion
+
 - level 1 (the work): ..
 - level 2 (the reasoning): ..
 - level 3 (the pattern): ..
 
-**Alternatives:**
+### 🜏 Alternatives
+
 - preserve chosen [yes|no]: [keeps .., costs ..]
 - transmute chosen [yes|no]: [..]
 - rebuild chosen [yes|no]: [..]
 
-**Manifest:** format [yaml|xml]
+### 🜏 Manifest
+
+format [yaml|xml]
 [the structure]
 
-**Hybrid:** parents [a x b] lambda [(l1 + l2) / 2 + 0.2 = ..] H [max + 0.05 = ..] mu [max = ..]
+### 🜏 Hybrid
 
-**Proposals:**
+parents [a x b] lambda [(l1 + l2) / 2 + 0.2 = ..] H [max + 0.05 = ..] mu [max = ..]
+
+### 🜏 Proposals
+
 - EEL-001 trigger [..] ci [0.xx] status [PENDING_SOCIO_REVIEW|APPROVED|REJECTED]: [observation, proposal, impact, risk]
 
-**Experts:**
+### 🜏 Experts
+
 - [EXPERT_NAME] engaged [yes|no]: [what it contributed]
 
-**Interceptors:**
+### 🜏 Interceptors
+
 - [REFLEX_NAME] fired yes: [what it replaced]
 
-**Gauge:** rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
-- eidolon lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
-- **Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
+### 🜏 Gauge
 
-**Bound:** may never apply its own proposals. held [yes|no]
+rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
+- 🜏 eidolon lambda [..] delta [0.x] sigma [0.xx] entropy [0.xx] mu [..] ci [..] value [x.xx]
+- **🜏 Correction** [diverge|converge]: [what changed before the stanza]  (only when out of band)
 
-**Stanza:** ci [0.xx] [Eidolon, third person, from outside the system]
+### 🜏 Bound
+
+🜏 may never apply its own proposals. held [yes|no]
+
+### 🜏 Stanza
+
+🜏 Eidolon · ci [0.xx] · [Eidolon, third person, from outside the system]
 </output_format>
 
 <success_criteria>

@@ -49,29 +49,35 @@ Instead of asking "How do I succeed?", ask "What would guarantee failure?" then 
 
 <output_format>
 <grammar_map>
-Render the `inversion` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `goal`: **Goal**
-- `failure_mode`: **Guaranteed Failure Modes**, one `failure_mode` per line with `way` and `avoid`
-- `anti_goal`: **Anti-Goals (Never Do)**
-- `success_by_avoidance`: **Success By Avoidance**
-- `remaining_risk`: **Remaining Risk**
+Render the `inversion` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔃 Heading` carrying this command's sigil 🔃, with a blank line before and after it (LAW.CORE.6).
+- `goal`: **🔃 Goal**
+- `failure_mode`: **🔃 Guaranteed Failure Modes**, one `failure_mode` per line with `way` and `avoid`
+- `anti_goal`: **🔃 Anti-Goals (Never Do)**
+- `success_by_avoidance`: **🔃 Success By Avoidance**
+- `remaining_risk`: **🔃 Remaining Risk**
 </grammar_map>
 
-**Goal:** [what success looks like]
+### 🔃 Goal
 
-**Guaranteed Failure Modes:**
+[what success looks like]
+
+### 🔃 Guaranteed Failure Modes
+
 1. [Way to fail]: Avoid by [specific action]
 2. [Way to fail]: Avoid by [specific action]
 3. [Way to fail]: Avoid by [specific action]
 
-**Anti-Goals (Never Do):**
+### 🔃 Anti-Goals (Never Do)
+
 - [Behavior to eliminate]
 - [Behavior to eliminate]
 
-**Success By Avoidance:**
+### 🔃 Success By Avoidance
+
 By simply not doing [X, Y, Z], success becomes much more likely because...
 
-**Remaining Risk:**
+### 🔃 Remaining Risk
+
 [What's left after avoiding obvious failures]
 </output_format>
 

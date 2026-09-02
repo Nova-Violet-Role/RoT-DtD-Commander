@@ -70,6 +70,7 @@ description: Measure whether a *-dtd command's answers conform to its declared g
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT eval_session (target, fixture, run, ledger_line, mutation, result)>
@@ -81,7 +82,7 @@ description: Measure whether a *-dtd command's answers conform to its declared g
   <!ELEMENT ledger_line (#PCDATA)>
   <!ATTLIST ledger_line status (pass|fail|aborted) #REQUIRED>
   <!ELEMENT mutation (#PCDATA)>
-  <!ATTLIST mutation kind (missing_heading|order|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
+  <!ATTLIST mutation kind (missing_heading|order|spacing|dangling_ref|missing_assumptions|no_answer) #REQUIRED>
   <!ELEMENT result (#PCDATA)>
   <!ATTLIST result control_tripped (true|false) #REQUIRED positive_pass (true|false) #REQUIRED>
   <!ENTITY LAW.EVAL.1 "An evaluation has one real run and one mutated answer; a pass that was never seen failing proves nothing about the check.">
@@ -121,7 +122,7 @@ Render `eval_session` as: **Target** (path and root), **Fixture**, **Run** (the 
 
 <additional_resources>
 
-- `node bin/adiutor.mjs controls` runs the eight built-in guards in a temporary state directory; C1 is the same missing-heading check this skill trips by hand
+- `node bin/adiutor.mjs controls` runs the nine built-in guards in a temporary state directory; C1 is the same missing-heading check this skill trips by hand
 
 </additional_resources>
 

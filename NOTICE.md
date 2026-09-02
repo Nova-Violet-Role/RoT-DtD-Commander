@@ -112,9 +112,9 @@ process in this repository's own words.
 This repository makes measurable claims and each one names its instrument;
 the same discipline applies to what the instruments do **not** cover.
 
-- The checker (`rdc check`, rules C1 to C12) proves that a file's DOCTYPE and
+- The checker (`rdc check`, rules C1 to C13) proves that a file's DOCTYPE and
   its prose agree: every declared element is named, every named channel is
-  fenced, no entity is unresolved, the dialect validates. It does not prove
+  fenced, no entity is unresolved, the dialect validates, and every heading of the answer template carries the command's sigil with a blank line on each side (C13). It does not prove
   that a model will obey the grammar.
 - `checker/contract-audit.mjs` proves that every element, entity and
   parameter entity declared in the five shared subsets is used by at least
@@ -122,7 +122,7 @@ the same discipline applies to what the instruments do **not** cover.
   plants an unused declaration and requires it to be reported. No static
   example instance is committed (2.0.0 removed them and the `xmlstarlet`
   step): the instrument for a rendered answer is the Adiutor's Stop check,
-  which reads headings, order and dangling short ids.
+  which reads headings, their order, their spacing and dangling short ids.
 - The Adiutor's Stop check judges the **rendered markdown** of an answer: the
   presence and order of the headings the grammar map declares, the presence of
   an assumptions section on an autonomous run, and that every short id an

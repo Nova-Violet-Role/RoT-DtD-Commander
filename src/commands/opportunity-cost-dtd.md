@@ -51,31 +51,37 @@ Every yes is a no to something else. What's the true cost of this choice?
 
 <output_format>
 <grammar_map>
-Render the `opportunity_cost` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `choice`: **Choice**
-- `resources`: **Resources Required**, one `resource` per kind
-- `alternatives`: **Best Alternative Uses**, one `alternative` per resource kind
-- `true_cost`: **True Cost**
-- `verdict`: **Verdict**
+Render the `opportunity_cost` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 💱 Heading` carrying this command's sigil 💱, with a blank line before and after it (LAW.CORE.6).
+- `choice`: **💱 Choice**
+- `resources`: **💱 Resources Required**, one `resource` per kind
+- `alternatives`: **💱 Best Alternative Uses**, one `alternative` per resource kind
+- `true_cost`: **💱 True Cost**
+- `verdict`: **💱 Verdict**
 </grammar_map>
 
-**Choice:** [what you're considering doing]
+### 💱 Choice
 
-**Resources Required:**
+[what you're considering doing]
+
+### 💱 Resources Required
+
 - Time: [hours/days/weeks]
 - Money: [amount]
 - Energy/Attention: [cognitive load]
 - Other: [relationships, reputation, etc.]
 
-**Best Alternative Uses:**
+### 💱 Best Alternative Uses
+
 - With that time, could instead: [alternative + value]
 - With that money, could instead: [alternative + value]
 - With that energy, could instead: [alternative + value]
 
-**True Cost:**
+### 💱 True Cost
+
 Choosing this means NOT doing [best alternative], which would have provided [value].
 
-**Verdict:**
+### 💱 Verdict
+
 [Is the chosen option worth more than the best alternative?]
 </output_format>
 

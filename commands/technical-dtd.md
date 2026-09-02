@@ -71,6 +71,7 @@ argument-hint: [what to implement or leave blank for current context]
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   
@@ -263,22 +264,25 @@ After intake complete:
 
 <output_format>
 <grammar_map>
-Render the `technical_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
+Render the `technical_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚙️ Heading` carrying this command's sigil ⚙️, with a blank line before and after it (LAW.CORE.6).
 - `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.technical in that order, then `claude_context` blocks chosen_approach, architecture, files, implementation, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-technical.md
 </grammar_map>
 
-## Technical Research: [Topic]
+### ⚙️ Technical Research: [Topic]
 
-### Strategic Summary
+### ⚙️ Strategic Summary
+
 [2-3 sentences: the approaches, recommendation, key tradeoff]
 
-### Requirements
+### ⚙️ Requirements
+
 - [Key requirement/constraint]
 - [Key requirement/constraint]
 
-### Approach 1: [Name]
+### ⚙️ Approach 1: [Name]
+
 **How it works:** [Brief explanation]
 **Libraries/tools:** [Specific packages, versions]
 **Pros:**
@@ -290,23 +294,28 @@ Render the `technical_research` root declared in the DOCTYPE as the markdown bel
 **Best when:** [Use case fit]
 **Complexity:** S/M/L
 
-### Approach 2: [Name]
+### ⚙️ Approach 2: [Name]
+
 [Same structure...]
 
-### Approach 3: [Name]
+### ⚙️ Approach 3: [Name]
+
 [Same structure...]
 
-### Comparison
+### ⚙️ Comparison
+
 | Aspect | Approach 1 | Approach 2 | Approach 3 |
 |--------|------------|------------|------------|
 | Complexity | S/M/L | | |
 | Performance | Good/OK/Poor | | |
 | Maintainability | Good/OK/Poor | | |
 
-### Recommendation
+### ⚙️ Recommendation
+
 [Which approach and why, given the specific context]
 
-### Implementation Context
+### ⚙️ Implementation Context
+
 <claude_context>
 <chosen_approach>
 - name: [approach name]
@@ -333,7 +342,8 @@ Render the `technical_research` root declared in the DOCTYPE as the markdown bel
 
 **Next Action:** Prototype chosen approach, deeper research on specific aspect, or begin implementation
 
-### Sources
+### ⚙️ Sources
+
 - [Source name]: [URL] - [date accessed]
 - [Source name]: [URL] - [date accessed]
 </output_format>

@@ -47,24 +47,31 @@ In the Voluspa of the Codex Regius the seeress tells the end of the world first 
 
 <output_format>
 <grammar_map>
-Render the `prophecy` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `end_state`: **The End**, with its horizon
-- `stanza`: **Stanzas**, numbered backwards from the end, each with leads_to and confidence
-- `ragnarok`: **Ragnarok**, the stanza number and why
-- `after`: **After**
+Render the `prophecy` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌋 Heading` carrying this command's sigil 🌋, with a blank line before and after it (LAW.CORE.6).
+- `end_state`: **🌋 The End**, with its horizon
+- `stanza`: **🌋 Stanzas**, numbered backwards from the end, each with leads_to and confidence
+- `ragnarok`: **🌋 Ragnarok**, the stanza number and why
+- `after`: **🌋 After**
 </grammar_map>
 
-**The End** ([now|months|years]): [as already happened]
+### 🌋 The End
 
-**Stanzas:**
+([now|months|years]): [as already happened]
+
+### 🌋 Stanzas
+
 - S5 [what happened just before] leads to: the end ([confidence])
 - S4 [before that] leads to: S5
 - S3 ...
 - S1 [something true today] leads to: S2
 
-**Ragnarok:** S3, because [why it became irreversible there]
+### 🌋 Ragnarok
 
-**After:** [what stands, what was learned]
+S3, because [why it became irreversible there]
+
+### 🌋 After
+
+[what stands, what was learned]
 </output_format>
 
 <success_criteria>

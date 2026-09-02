@@ -46,24 +46,30 @@ Chapter 78 of the Tao Te Ching says nothing is softer than water and nothing bet
 
 <output_format>
 <grammar_map>
-Render the `water` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `goal`: **Goal**
-- `constraint`: **Constraints**, one line each: id, hardness, checked, the constraint
-- `yield_point`: **Yield Points**, one line each naming its constraint
-- `course`: **Course**, the yield points in order
+Render the `water` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 💧 Heading` carrying this command's sigil 💧, with a blank line before and after it (LAW.CORE.6).
+- `goal`: **💧 Goal**
+- `constraint`: **💧 Constraints**, one line each: id, hardness, checked, the constraint
+- `yield_point`: **💧 Yield Points**, one line each naming its constraint
+- `course`: **💧 Course**, the yield points in order
 </grammar_map>
 
-**Goal:** [what is blocked]
+### 💧 Goal
 
-**Constraints:**
+[what is blocked]
+
+### 💧 Constraints
+
 - C1 [hard|soft|assumed] checked [true|false]: [the constraint] [what the check found]
 - C2 ...
 
-**Yield Points:**
+### 💧 Yield Points
+
 - Y1 in C2: [where it gives way]
 - Y2 in C3: ...
 
-**Course:** through Y1, Y2. [the route in prose]
+### 💧 Course
+
+through Y1, Y2. [the route in prose]
 </output_format>
 
 <success_criteria>

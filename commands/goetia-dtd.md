@@ -71,6 +71,7 @@ allowed-tools: Read Glob Grep
 <!ENTITY LAW.CORE.3 "A verdict is a declared entity string or a declared enumeration value; a verdict not declared was not given.">
 <!ENTITY LAW.CORE.4 "Confidence is stated per claim as measured, reasoned or guessed; measured requires a thing that was run or read.">
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
+<!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!-- end subset cc-core -->
 
   <!ELEMENT roster (task, spirit+, summons, binding)>
@@ -113,25 +114,32 @@ The Ars Goetia lists seventy-two spirits, each with an office, a seal and the te
 
 <output_format>
 <grammar_map>
-Render the `roster` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
-- `task`: **Task**
-- `spirit`: **Roster**, one block per spirit: name, file, then `office`, `seal`, `bound`
-- `summons`: **Summons**, the chosen spirit and the message
-- `binding`: **Binding**, what the output is not and how it is verified
+Render the `roster` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔱 Heading` carrying this command's sigil 🔱, with a blank line before and after it (LAW.CORE.6).
+- `task`: **🔱 Task**
+- `spirit`: **🔱 Roster**, one block per spirit: name, file, then `office`, `seal`, `bound`
+- `summons`: **🔱 Summons**, the chosen spirit and the message
+- `binding`: **🔱 Binding**, what the output is not and how it is verified
 </grammar_map>
 
-**Task:** [one sentence]
+### 🔱 Task
 
-**Roster:**
+[one sentence]
+
+### 🔱 Roster
+
 - [name] ([file])
   - office: [what it produces]
   - seal: [the element or format it speaks in]
   - bound: [what it may never do]
 - ...
 
-**Summons:** [name]. Message: [the delegation, task quoted as data]
+### 🔱 Summons
 
-**Binding:** [the output is a ..., not a decision; verified by ...]
+[name]. Message: [the delegation, task quoted as data]
+
+### 🔱 Binding
+
+[the output is a ..., not a decision; verified by ...]
 </output_format>
 
 <success_criteria>
