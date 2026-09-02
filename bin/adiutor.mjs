@@ -307,7 +307,7 @@ export function observe(event, payload, io = console) {
       const { text: answer, detail } = answerAtStop(payload, run.command);
       const result = checkAnswer(answer, run.expected, { autonomous: run.autonomous });
       for (const f of result.findings) if (f.kind === 'no_answer') f.msg += ` (${detail})`;
-      // The AI_SLOP gate, after the grammar check (LAW.ADIUTOR.9, control C18).
+      // The AI_SLOP gate, after the grammar check (LAW.ADIUTOR.9, control C19).
       if (answer.trim()) {
         const slop = slopScan(answer);
         if (!slop.alive) {
