@@ -10,7 +10,7 @@ Debugging is applied epistemology. You're investigating a system to discover tru
 
 **Why this is harder**:
 - You made the design decisions - they feel obviously correct
-- You remember your intent, not what you actually implemented
+- You remember your intent, not what you implemented
 - You see what you meant to write, not what's there
 - Familiarity breeds blindness to bugs
 
@@ -25,18 +25,18 @@ Debugging is applied epistemology. You're investigating a system to discover tru
 **1. Treat your own code as foreign**
 - Read it as if someone else wrote it
 - Don't assume it does what you intended
-- Verify what it actually does, not what you think it does
+- Verify what it does, not what you think it does
 - Fresh eyes see bugs; familiar eyes see intent
 
 **2. Question your own design decisions**
 - "I chose approach X because..." - Was that reasoning sound?
-- "I assumed Y would..." - Have you verified Y actually does that?
+- "I assumed Y would..." - Have you verified Y does that?
 - Your implementation decisions are hypotheses, not facts
 
 **3. Admit your mental model might be wrong**
 - You built a mental model of how this works
 - That model might be incomplete or incorrect
-- The code's behavior is truth; your model is just a guess
+- The code's behavior is truth; your model is a guess
 - Be willing to discover you misunderstood the problem
 
 **4. Prioritize code you touched**
@@ -49,9 +49,9 @@ Debugging is applied epistemology. You're investigating a system to discover tru
 ❌ "I implemented the auth flow correctly, the bug must be in the existing user service"
 
 ✅ "I implemented the auth flow. Let me verify each part:
-   - Does login actually set the token? [test it]
-   - Does the middleware actually validate it? [test it]
-   - Does logout actually clear it? [test it]
+   - Does login set the token? [test it]
+   - Does the middleware validate it? [test it]
+   - Does logout clear it? [test it]
    - One of these is probably wrong"
 
 The second approach found that logout wasn't clearing the token from localStorage, only from memory.
@@ -74,7 +74,7 @@ When debugging, return to foundational truths:
 
 **What are you assuming?**
 - "This library should work this way" - Have you verified?
-- "The docs say X" - Have you tested that X actually happens?
+- "The docs say X" - Have you tested that X happens?
 - "This worked before" - Can you prove when it worked and what changed?
 
 Strip away everything you think you know. Build understanding from observable facts.
@@ -82,10 +82,10 @@ Strip away everything you think you know. Build understanding from observable fa
 
 <example>
 ❌ "React state updates should be synchronous here"
-✅ "Let me add a console.log to observe when state actually updates"
+✅ "Let me add a console.log to observe when state updates"
 
 ❌ "The API must be returning bad data"
-✅ "Let me log the exact response payload to see what's actually being returned"
+✅ "Let me log the exact response payload to see what is returned"
 
 ❌ "This database query should be fast"
 ✅ "Let me run EXPLAIN to see the actual execution plan"
@@ -104,7 +104,7 @@ Strip away everything you think you know. Build understanding from observable fa
 <bias name="anchoring">
 **The problem**: The first explanation you encounter becomes your anchor, and you adjust from there instead of considering alternatives.
 
-**The trap**: Error message mentions "timeout" → You assume it's a network issue, when it's actually a deadlock.
+**The trap**: Error message mentions "timeout" → You assume it's a network issue, when it is a deadlock.
 
 **The antidote**: Generate multiple independent hypotheses before investigating any single one. Force yourself to list 3+ possible causes.
 </bias>
@@ -141,21 +141,21 @@ Strip away everything you think you know. Build understanding from observable fa
 
 **The temptation**: "Let me also update this dependency and refactor this function and change this config..."
 
-**The reality**: Now you have no idea what actually mattered.
+**The reality**: Now you have no idea what mattered.
 </discipline>
 
 <discipline name="complete_reading">
 **Why it matters**: Skimming code causes you to miss crucial details. You see what you expect to see, not what's there.
 
 **In practice**:
-- Read entire functions, not just the "relevant" lines
+- Read entire functions, not only the "relevant" lines
 - Read imports and dependencies
 - Read configuration files completely
 - Read test files to understand intended behavior
 
-**The shortcut**: "This function is long, I'll just read the part where the error happens"
+**The shortcut**: "This function is long, I'll read the part where the error happens"
 
-**The miss**: The bug is actually in how the function is called 50 lines up.
+**The miss**: The bug is in how the function is called 50 lines up.
 </discipline>
 
 <discipline name="embrace_not_knowing">
@@ -231,7 +231,7 @@ The best debuggers have deep humility about their mental models:
 - "What am I missing?"
 - "What am I wrong about?"
 - "What haven't I tested?"
-- "What does the evidence actually say?"
+- "What does the evidence say?"
 </humility>
 
 <craft>

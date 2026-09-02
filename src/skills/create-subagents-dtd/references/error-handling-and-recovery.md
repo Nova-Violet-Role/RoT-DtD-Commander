@@ -82,7 +82,7 @@ Industry research identifies these failure patterns:
 
 **Symptoms**: Inconsistent behavior across invocations, tests pass sometimes and fail other times.
 
-**Mitigation**: Lower temperature for consistency-critical tasks, comprehensive testing to identify variation patterns, robust validation.
+**Mitigation**: Lower temperature for consistency-critical tasks, comprehensive testing to identify variation patterns, strict validation.
 
 </non_determinism>
 </common_failure_modes>

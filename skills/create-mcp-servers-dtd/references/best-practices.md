@@ -4,7 +4,7 @@
 # MCP Server Best Practices
 
 <overview>
-Production-ready MCP servers require attention to security, reliability, performance, and maintainability. This guide covers essential best practices for building robust servers.
+Production-ready MCP servers require attention to security, reliability, performance, and maintainability. This guide covers essential best practices for building sound servers.
 </overview>
 
 ## Security
@@ -602,7 +602,7 @@ pip install mcp aiohttp pydantic
 python -m venv ~/.mcp-shared-env
 ~/.mcp-shared-env/bin/pip install mcp server1-deps server2-deps
 ```
-**Why it breaks**: Same problem as global installs, just in a different location. Version conflicts still cascade.
+**Why it breaks**: Same problem as global installs, in a different location. Version conflicts still cascade.
 
 **✅ Always use `uv --directory` pattern**:
 ```json

@@ -79,7 +79,7 @@ By doing this, [specific things] become easier or unnecessary because...
 </output_format>
 
 <success_criteria>
-- Identifies genuine leverage point, not just important task
+- Names the point where one action moves the most, not an important task alone
 - Shows causal chain (this enables that)
 - Reduces overwhelm to single focus
 - Next action is immediately actionable

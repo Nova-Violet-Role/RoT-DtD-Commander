@@ -6,11 +6,11 @@ Create structured handoff documents to continue work in a fresh context without 
 
 ## The Problem
 
-You're deep in a conversation, made significant progress, but need to start a fresh chat (context getting full, switching tasks, or just want a clean slate). You lose all the context about what was done, what remains, and why decisions were made.
+You're deep in a conversation, made significant progress, but need to start a fresh chat (context getting full, switching tasks, or want a clean slate). You lose all the context about what was done, what remains, and why decisions were made.
 
 ## The Solution
 
-`/whats-next` analyzes the current conversation and creates a structured handoff document (`whats-next.md`) in your working directory. In your next chat, reference it with `@whats-next.md` to continue seamlessly.
+`/whats-next` analyzes the current conversation and creates a structured handoff document (`whats-next.md`) in your working directory. In your next chat, reference it with `@whats-next.md` to continue without loss.
 
 ## Command
 
@@ -158,7 +158,7 @@ Continuing from src/components/Dashboard.tsx:67..."
 ## Tips
 
 - Use `/whats-next` when context feels full or cluttered
-- Reference with `@whats-next.md` in new chats for seamless continuation
+- Reference with `@whats-next.md` in new chats to continue where it stopped
 - The file is overwritten each time - it's a snapshot, not a log
 - Delete `whats-next.md` when work is complete
 - Works great with `/add-to-todos` for long-term task tracking

@@ -47,7 +47,7 @@ Map internal factors (strengths/weaknesses) and external factors (opportunities/
 3. Identify internal weaknesses (disadvantages you control)
 4. Identify external opportunities (favorable conditions you don't control)
 5. Identify external threats (unfavorable conditions you don't control)
-6. Develop strategies that leverage strengths toward opportunities while mitigating weaknesses and threats
+6. Develop strategies that turn strengths toward opportunities while weaknesses and threats are contained
 </process>
 
 <output_format>
@@ -67,7 +67,7 @@ Render the `swot` root declared in the DOCTYPE as the markdown below. One declar
 
 ### ⚖️ Strengths (Internal +)
 
-- [Strength]: How to leverage...
+- [Strength]: How to put it to use...
 
 ### ⚖️ Weaknesses (Internal -)
 

@@ -6,7 +6,7 @@
 <overview>
 **Achieving 98% Context Reduction Through On-Demand Operation Loading**
 
-When wrapping large APIs (50+ operations) in MCP servers, traditional architecture consumes 15,000-30,000 tokens just loading tool definitions. This pattern reduces that overhead to ~300 tokens while maintaining full functionality.
+When wrapping large APIs (50+ operations) in MCP servers, traditional architecture consumes 15,000-30,000 tokens loading tool definitions. This pattern reduces that overhead to ~300 tokens while maintaining full functionality.
 
 This guide explains the architectural pattern used in production servers to achieve 90-98% context reduction.
 </overview>
@@ -439,7 +439,7 @@ def chunk_by_tokens(data: dict, chunk_size: int = 15000) -> list[dict]:
 4. Total: 3 tool calls vs 1 in traditional approach
 
 **Subsequent operations:**
-1. Claude already knows operations, just calls `execute`
+1. Claude already knows the operations and calls `execute`
 2. Total: 1 tool call (same as traditional)
 
 **Net result:** Small overhead on first operation, massive context savings overall.
@@ -450,7 +450,7 @@ def chunk_by_tokens(data: dict, chunk_size: int = 15000) -> list[dict]:
 <use_when>
 ### ✅ Use resources-based architecture when:
 
-- **You have 3+ operations** - Context is precious at every scale, not just large APIs
+- **You have 3+ operations** - Context is precious at every scale, not only large APIs
 - **Operations are grouped logically** - Natural hierarchy exists (CRUD, categories)
 - **Not all operations used per conversation** - Most conversations only use 2-5 operations
 - **Context window is precious** - You need maximum space for actual conversation
@@ -683,7 +683,7 @@ The resources-based MCP pattern achieves dramatic context reduction by:
 
 1. **Lazy loading** - Only fetch operation schemas when needed
 2. **Meta-tools** - Minimal upfront tool definitions for discovery/execution
-3. **MCP resources** - Leverage MCP's resource API for on-demand schema retrieval
+3. **MCP resources** - Use MCP's resource API for on-demand schema retrieval
 4. **Smart dispatch** - Route operation strings to implementations
 
 **When you have 20+ operations, this pattern can save 90-98% of context overhead while maintaining full functionality.**

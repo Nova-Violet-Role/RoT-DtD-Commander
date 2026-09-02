@@ -45,7 +45,7 @@ Handoff goes in the current phase directory.
 
 <step name="gather_context">
 
-Collect everything needed for seamless resumption:
+Collect everything needed for a clean resumption:
 
 1. **Current position**: Which phase, which task
 2. **Work completed**: What's done this session

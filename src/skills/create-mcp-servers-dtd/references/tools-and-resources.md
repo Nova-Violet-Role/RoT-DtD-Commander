@@ -112,7 +112,7 @@ class EmailSearchArgs(BaseModel):
     )
 ```
 
-**Key takeaways**:
+**What to keep**:
 - Use `.describe()` / `description=` on every field
 - Set sensible limits (min/max length, ranges)
 - Provide defaults for optional parameters
@@ -730,7 +730,7 @@ async def read_large_resource(uri: str, offset: int = 0, limit: int = 100) -> st
 
 The patterns above work well for small to medium servers (< 20 tools). However, if you're wrapping a large API (GitHub, Stripe, Slack, etc.), each tool definition consumes tokens in Claude's context window.
 
-**Problem:** 50+ tools can consume 8,000-15,000 tokens just in tool definitions, before any actual conversation begins.
+**Problem:** 50+ tools can consume 8,000-15,000 tokens in tool definitions alone, before any conversation begins.
 
 **Solution:** Use the **meta-tools + resources pattern** to achieve 90-98% context reduction by loading operation schemas on-demand instead of upfront.
 

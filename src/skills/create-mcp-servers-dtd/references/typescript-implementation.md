@@ -4,7 +4,7 @@
 # TypeScript MCP Server Implementation
 
 <overview>
-TypeScript implementation using @modelcontextprotocol/sdk provides full type safety, excellent IDE support, and robust async patterns. This guide covers TypeScript-specific features and best practices.
+TypeScript implementation using @modelcontextprotocol/sdk provides full type safety, excellent IDE support, and sound async patterns. This guide covers TypeScript-specific features and best practices.
 </overview>
 
 ## Project Setup

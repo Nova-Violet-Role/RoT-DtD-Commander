@@ -152,9 +152,9 @@ Choosing this means NOT doing [best alternative], which would have provided [val
 
 <success_criteria>
 - Makes hidden costs explicit
-- Compares to best alternative, not just any alternative
-- Accounts for all resource types (not just money)
-- Reveals when "affordable" things are actually expensive
+- Compares to the best alternative, never to any alternative
+- Accounts for every resource type, money among them
+- Reveals when an "affordable" thing is expensive
 - Enables genuine comparison of value
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

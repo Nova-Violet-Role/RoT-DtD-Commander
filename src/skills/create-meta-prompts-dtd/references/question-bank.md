@@ -283,7 +283,7 @@ options:
 
 <feedback_type>
 
-What kind of improvement:
+Which improvement:
 ```yaml
 header: "Improvement"
 question: "What needs improvement?"

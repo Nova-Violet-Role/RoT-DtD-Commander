@@ -136,7 +136,7 @@ First time setup:
 ./loop-docker.sh --build-image
 ```
 
-Then just run `./loop-docker.sh` - switches seamlessly between Docker and direct mode.
+Then run `./loop-docker.sh`, which switches between Docker and direct mode.
 
 ## Writing Good Specs
 

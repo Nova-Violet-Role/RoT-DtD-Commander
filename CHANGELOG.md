@@ -159,6 +159,10 @@ counts are re-measured.
   LEX.bibl id. The slop sweep reads the profile of every command the shelf
   names and refuses a missing profile, a paraphrase without a source or a
   source outside the library; its controls fire LAW.LEX.5 on purpose.
+- The voice pass: forty-one rewrites in fifteen files of the slop baseline (a
+  banned word each: leverage, robust, seamless, key takeaways, kind of, just,
+  actually), so the sweep baseline falls from 18 to 3 and the gate holds it
+  there; the three that remain are rhythm alone.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

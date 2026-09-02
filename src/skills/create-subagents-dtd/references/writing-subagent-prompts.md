@@ -336,7 +336,7 @@ description: Handles current billing statements and payment processing. Use when
 
 **Optimization tips**:
 - Include **trigger keywords** that match common user requests
-- Specify **when to use** (not just what it does)
+- Specify **when to use** (not only what it does)
 - **Differentiate** from similar agents (what this one does vs others)
 - Include **proactive triggers** if agent should be invoked automatically
 
@@ -513,7 +513,7 @@ Output: [what the subagent should produce]
 
 <practice name="extended_thinking">
 
-For complex reasoning tasks, leverage extended thinking:
+For complex reasoning tasks, use extended thinking:
 
 ```markdown
 <thinking_approach>
