@@ -38,3 +38,4 @@
 <!ENTITY LAW.COMPANION.3 "A finding names a file and a line it read, its severity and its confidence; measured requires a thing that was run or read in this audit.">
 <!ENTITY LAW.COMPANION.4 "The answer ends with exactly one verdict line, COMPANION.verdict.pass or COMPANION.verdict.fail, and fail requires at least one high finding.">
 <!ENTITY LAW.COMPANION.5 "A ceiling that fires (exit 124) is a result: the phase is recorded as unaudited, never as passed.">
+<!ENTITY LAW.COMPANION.6 "The scope opens with one line carrying the three attributes of companion_audit, phase= range= model=, and the runner refuses an answer whose line does not match the run it launched.">

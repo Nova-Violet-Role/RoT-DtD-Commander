@@ -31,6 +31,9 @@ mkdir -p "$out"
 raw="$out/companion-$phase.json"
 log="$out/companion-$phase.md"
 contract="$(cat "$here/checker/companion-audit.dtd")"
+vpass="$(grep -o 'COMPANION.verdict.pass *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
+vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
+[ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
 stat="$(git -C "$here" diff --stat "$range" | tail -40)"
 files="$(git -C "$here" diff --name-only "$range")"
 
@@ -39,7 +42,7 @@ Answer in the grammar declared here, one markdown heading per element in declare
 
 $contract
 
-Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run must start with 'timeout 60 ' and end with ' < /dev/null'; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'timeout 60 node lib/ai-slop.mjs controls < /dev/null' and 'timeout 60 node lib/ordinals.mjs controls < /dev/null' yourself. The very last line of your answer must be exactly 'COMPANION VERDICT: pass' or 'COMPANION VERDICT: fail' and nothing may follow it.
+Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run must start with 'timeout 60 ' and end with ' < /dev/null'; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'timeout 60 node $here/lib/ai-slop.mjs controls < /dev/null' and 'timeout 60 node $here/lib/ordinals.mjs controls < /dev/null' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
 
 Diff stat:
 $stat
@@ -66,10 +69,17 @@ fs.writeFileSync(process.argv[2], result.replace(/\r/g, "") + (result.endsWith("
 const meta = j ? `turns=${j.num_turns} cost_usd=${j.total_cost_usd} duration_ms=${j.duration_ms} is_error=${j.is_error} subtype=${j.subtype}` : "no json parsed";
 console.log("companion: " + meta + " answer_bytes=" + Buffer.byteLength(result));
 ' "$raw" "$log"
-last="$(grep -v '^[[:space:]]*$' "$log" | tail -1)"
-echo "companion: last line: $last"
-case "$last" in
-  "COMPANION VERDICT: pass") echo "companion: $phase PASS"; exit 0 ;;
-  "COMPANION VERDICT: fail") echo "companion: $phase FAIL"; exit 1 ;;
-  *) echo "companion: no verdict on the last line of $log"; exit 1 ;;
-esac
+last="$(grep -v '^[[:space:]]*
+ "$log" | tail -1)"
+nverdict=$(grep -c '^COMPANION VERDICT' "$log")
+nhigh=$(grep -c 'severity="high"' "$log")
+scope_ok=$(grep -c "^phase=$phase range=$range model=$model\$" "$log")
+echo "companion: last line: $last; verdict lines=$nverdict; high findings=$nhigh; scope line=$scope_ok"
+[ "$nverdict" -eq 1 ] || { echo "companion: LAW.COMPANION.4 broken, $nverdict verdict lines"; exit 1; }
+[ "$scope_ok" -eq 1 ] || { echo "companion: LAW.COMPANION.6 broken, the scope line does not match this run"; exit 1; }
+if [ "$last" = "$vpass" ]; then echo "companion: $phase PASS"; exit 0; fi
+if [ "$last" = "$vfail" ]; then
+  [ "$nhigh" -ge 1 ] || { echo "companion: LAW.COMPANION.4 broken, a fail with no high finding"; exit 1; }
+  echo "companion: $phase FAIL"; exit 1
+fi
+echo "companion: no verdict on the last line of $log"; exit 1

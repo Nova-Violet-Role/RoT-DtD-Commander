@@ -543,9 +543,11 @@ export async function controls(io = console) {
     const bad = stop('S18a', sloppy);
     const fine = stop('S18b', good);
     const badFindings = bad.row ? JSON.stringify(bad.row.findings) : '';
-    const tripped = !!bad.row && bad.row.status === 'fail' && /slop:/.test(badFindings) && /slop:/.test(bad.lines.join(' '));
+    const rx = bad.row ? String(bad.row.prescription || '') : '';
+    const named = rx.includes('The AI_SLOP gate failed on');
+    const tripped = !!bad.row && bad.row.status === 'fail' && /slop:/.test(badFindings) && /slop:/.test(bad.lines.join(' ')) && named;
     const passed = !!fine.row && fine.row.status === 'pass';
-    return { ok: tripped && passed, detail: `sloppy closed ${bad.row ? bad.row.status : 'no row'} ${badFindings.slice(0, 140)}; clean closed ${fine.row ? fine.row.status : 'no row'}` };
+    return { ok: tripped && passed, detail: `sloppy closed ${bad.row ? bad.row.status : 'no row'} ${badFindings.slice(0, 140)}; prescription names the gate=${named}; clean closed ${fine.row ? fine.row.status : 'no row'}` };
   }, results);
 
   control('C9 crammed headings are a spacing finding', () => {
