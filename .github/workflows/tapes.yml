@@ -26,8 +26,8 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: '1.22'
-      - name: ffmpeg, fonts, xmlstarlet
-        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core xmlstarlet
+      - name: ffmpeg, fonts
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg fonts-dejavu-core
       - name: ttyd 1.7.7
         run: |
           curl -fsSL -o /usr/local/bin/ttyd https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.x86_64

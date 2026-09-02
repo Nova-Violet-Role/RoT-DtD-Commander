@@ -320,8 +320,6 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
   }
   const node = process.versions.node;
   row('node', Number(node.split('.')[0]) >= 20, `node ${node}`);
-  const xs = ver('xmlstarlet', ['--version']);
-  row('xmlstarlet', true, xs ? `xmlstarlet ${xs}` : 'absent (optional: examples are not validated; rules C1..C12 still run)');
   const settings = join(target, 'settings.json');
   let parsed = true;
   try {

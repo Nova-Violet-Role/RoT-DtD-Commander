@@ -19,7 +19,7 @@ const DRY = process.argv.includes('--dry-run');
 const TAG = 'SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2';
 const COPY = 'Copyright 2026 Saimonokuma.';
 const MIT = 'Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md.';
-const DIRS = ['src', 'bin', 'lib', 'dtd', 'checker', 'examples', 'docs/tapes', '.github'];
+const DIRS = ['src', 'bin', 'lib', 'dtd', 'checker', 'docs/tapes', '.github'];
 const SKIP = new Set(['.json', '.jsonl', '.gif', '.png', '.txt']);
 
 const spec = JSON.parse(readFileSync(join(ROOT, 'dtd', 'forge-spec.json'), 'utf8'));
@@ -38,7 +38,7 @@ function walk(d) {
 
 function headerFor(ext, isConverted, hasShebang) {
   const lines = [TAG, COPY, ...(isConverted ? [MIT] : [])];
-  if (ext === '.md' || ext === '.dtd' || ext === '.xml') return lines.map((l) => `<!-- ${l} -->`).join('\n') + '\n';
+  if (ext === '.md' || ext === '.dtd') return lines.map((l) => `<!-- ${l} -->`).join('\n') + '\n';
   if (ext === '.mjs' || ext === '.js') return lines.map((l) => `// ${l}`).join('\n') + '\n';
   return lines.map((l) => `# ${l}`).join('\n') + '\n';
 }
@@ -63,9 +63,6 @@ for (const d of DIRS) {
       const cut = end + 4;
       out = text.slice(0, cut) + '\n\n' + header + text.slice(cut).replace(/^\n+/, '\n');
     } else if (text.startsWith('#!')) {
-      const nl = text.indexOf('\n') + 1;
-      out = text.slice(0, nl) + header + text.slice(nl);
-    } else if (ext === '.xml' && text.startsWith('<?xml')) {
       const nl = text.indexOf('\n') + 1;
       out = text.slice(0, nl) + header + text.slice(nl);
     } else out = header + text;

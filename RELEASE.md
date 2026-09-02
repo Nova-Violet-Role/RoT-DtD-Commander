@@ -18,6 +18,19 @@
 
 ---
 
+## v2.0.0 — the nine lenses, at full power
+
+Ten commands carry the RoT MoE lenses as declared grammar: nine lenses, each
+with its own four questions and one mid-run gate, and `/rot-elevate-dtd`,
+which summons all nine with 36 questions in nine rounds. A fifth subset,
+`cc-rot.dtd`, declares the lenses, the lanes, the NSIL decisions, the bands,
+the bounds, the experts, the interceptors, the TIER 1 stems, the ten weight
+profiles, the PRISM gauge, the C_i scale and the hybrid law once, from RoT
+MoE v10.0.2. No static instance is committed; the contract audit is a script
+with its own control and the Adiutor judges every rendered answer. Every
+number is in [CHANGELOG.md](CHANGELOG.md) beside the command that measured
+it. Install and verify exactly as below; the tag is `v2.0.0`.
+
 ## v1.0.0 — the whole thing, shipped once
 
 There is no pre-release and no patch tier: 1.0.0 is the first tag, and it was

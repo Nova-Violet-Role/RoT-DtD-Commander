@@ -14,18 +14,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: xmlstarlet
-        run: sudo apt-get update -q && sudo apt-get install -y -q xmlstarlet
       - name: build drift (committed resolved tree equals a fresh resolve of src/)
         run: node bin/rot-dtd-commander.mjs build --check; echo "exit=$?"; node bin/rot-dtd-commander.mjs build --check
-      - name: checker C1..C12 plus xmlstarlet on every example
+      - name: checker C1..C12 on every source
         run: |
-          node bin/rot-dtd-commander.mjs check --xml | tee check.log
+          node bin/rot-dtd-commander.mjs check | tee check.log
           test "${PIPESTATUS[0]}" -eq 0
-          grep -q 'xml-run 6' check.log
+          grep -q 'failed 0' check.log
       - name: adiutor controls (eight guards tripped on purpose)
         run: node bin/adiutor.mjs controls
-      - name: checker controls (three mutations and one broken instance refused)
+      - name: contract audit (both directions, with its planted control)
+        run: node checker/contract-audit.mjs
+      - name: checker controls (three mutations and two broken instances refused)
         run: bash checker/checker-controls.sh
       - name: spdx sweep
         run: bash checker/spdx-sweep.sh

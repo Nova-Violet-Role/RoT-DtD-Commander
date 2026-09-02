@@ -17,7 +17,7 @@ body:
     attributes:
       label: Where the claim is
       description: File and line if you have it.
-      placeholder: "README.md:88, \"checked 80  failed 0  xml-run 6\""
+      placeholder: "README.md:88, \"checked 91  failed 0\""
     validations:
       required: true
   - type: textarea

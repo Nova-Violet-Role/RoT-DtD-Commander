@@ -27,8 +27,8 @@
 - [ ] New files carry the SPDX header: `bash checker/spdx-sweep.sh` prints 0
       missing. A converted file keeps its MIT portions line.
 - [ ] A new command has a `grammar_map` that names every declared element,
-      and, if it carries IDREFs or enumerations, an `examples/<root>.xml` plus
-      the invalid instance I watched `xmlstarlet` reject.
+      and, if it carries IDREFs or enumerations, short ids (E1, T3) so the
+      Adiutor's dangling-reference check at Stop can read them.
 - [ ] Documentation numbers I touched were re-measured, not carried over.
 
 ## What I could not verify

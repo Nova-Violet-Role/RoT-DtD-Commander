@@ -1,6 +1,6 @@
 ---
 name: dtd-audit-dtd
-description: Audit one *-dtd artifact or the whole DTD corpus. Runs the rdc checker, optionally the xmlstarlet validation, and dispatches the matching auditor agent (slash-command-auditor-dtd, skill-auditor-dtd, subagent-auditor-dtd, dtd-contract-auditor). Use before installing, after editing a shared subset, or when asked whether a -dtd file is sound.
+description: Audit one *-dtd artifact or the whole DTD corpus. Runs the rdc checker and dispatches the matching auditor agent (slash-command-auditor-dtd, skill-auditor-dtd, subagent-auditor-dtd, dtd-contract-auditor). Use before installing, after editing a shared subset, or when asked whether a -dtd file is sound.
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->

@@ -5,7 +5,7 @@
 # checker/checker-controls.sh
 # Trip the checker on purpose. Three mutations of a resolved command, each
 # asserted PRESENT before the check runs, each expected to fail with its
-# named rule; then the untouched file, expected to pass. Then the XML
+# named rule; then the untouched file, expected to pass.
 # validator: a broken instance must be rejected with a named error before
 # the valid instance's pass counts.
 set -u
@@ -34,16 +34,6 @@ out=$(run "$T/commands/m3.md"); echo "$out" | grep -q 'ERR  C5 element orphan' &
 # Untouched -> pass
 out=$(run "$T/commands/pareto-dtd.md"); echo "$out" | grep -q 'failed 0' && echo "PASS M0 untouched file passes" || { echo "FAIL M0"; echo "$out" | tail -3; fail=1; }
 
-# XML: broken instance rejected before the valid one is trusted
-if command -v xmlstarlet >/dev/null 2>&1; then
-  node -e "import('./lib/dtd.mjs').then(m=>{const t=m.readText('commands/second-order-dtd.md');m.writeLF(process.argv[1],m.extractDtd(t))})" "$T/second_order.dtd"
-  sed -e 's/causes="E4"/causes="E9"/' -e '/<assessment/d' examples/second_order.xml > "$T/bad.xml"
-  grep -q 'causes="E9"' "$T/bad.xml" || { echo "X1 mutation did not land"; fail=1; }
-  if timeout 30 xmlstarlet val -e -d "$T/second_order.dtd" "$T/bad.xml" < /dev/null > "$T/bad.out" 2>&1; then echo "FAIL X1 broken instance accepted"; fail=1; else grep -q 'E9' "$T/bad.out" && echo "PASS X1 broken instance rejected, dangling IDREF named" || { echo "FAIL X1 rejected without naming E9"; fail=1; }; fi
-  timeout 30 xmlstarlet val -e -d "$T/second_order.dtd" examples/second_order.xml < /dev/null > /dev/null 2>&1 && echo "PASS X0 valid instance accepted" || { echo "FAIL X0"; fail=1; }
-else
-  echo "SKIP X1/X0 xmlstarlet not on PATH"
-fi
 
 rm -rf "$T"
 echo "checker-controls: $([ $fail -eq 0 ] && echo all tripped as designed || echo A CONTROL DID NOT FIRE)"

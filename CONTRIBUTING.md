@@ -22,10 +22,12 @@ npm run gate; echo "exit=$?"
 ```
 
 That runs, in order: `rdc build --check` (the committed resolved tree equals a
-fresh resolve of `src/`), `rdc check --xml` (rules C1 to C12 on every source,
-`xmlstarlet` on every example), the Adiutor controls (eight guards tripped on
-purpose), and the SPDX and CRLF sweeps (each with its own negative control).
-Read the exit code directly, never through a pipe.
+fresh resolve of `src/`), `rdc check` (rules C1 to C12 on every source), the
+Adiutor controls (eight guards tripped on purpose), the contract audit (every
+declaration used, every law numbered densely, with a planted control), the
+checker controls (three mutations refused), and the SPDX and CRLF sweeps
+(each with its own negative control). Read the exit code directly, never
+through a pipe.
 
 ## Where the sources are
 
@@ -39,9 +41,9 @@ Use the `dtd-forge-dtd` skill, or by hand: write the grammar first (root,
 children, cardinality, attributes, two to four laws under a new prefix), add
 an entry to a spec module shaped like `dtd/new-commands-a.spec.mjs`, run
 `rdc forge <spec> <name>`, then `npm run build` and `npm run gate`. A command
-whose grammar carries IDREFs or enumerations also gets an
-`examples/<root>.xml` and, in your pull request, the invalid instance you
-watched the validator reject.
+whose grammar carries IDREFs uses short ids (E1, T3, R2) so the Adiutor's
+dangling-reference check at Stop can read them; in your pull request, quote
+the ledger line of one run where you watched that check fail on purpose.
 
 ## Watch it fail
 

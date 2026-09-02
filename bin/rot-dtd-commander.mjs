@@ -9,7 +9,7 @@
 //                 [--only a,b] [--force] [--dry-run] [--no-arm]
 //   rdc uninstall [--project | --target <dir>] [--force] [--yes]
 //   rdc list      [--project | --target <dir>]
-//   rdc check     [paths...] [--xml]
+//   rdc check     [paths...]
 //   rdc build     [--check]
 //   rdc resolve   <src.md> <out.md>
 //   rdc forge     <spec.json|spec.mjs> [names...]
@@ -41,10 +41,10 @@ const ROOT = presolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PKG = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
 const VERSION = PKG.version;
 const NAME = 'rot-dtd-commander';
-const TEXT_EXT = new Set(['.md', '.dtd', '.sh', '.mjs', '.js', '.json', '.yml', '.yaml', '.txt', '.xml', '.tsv', '.csv', '.ps1', '.nu', '.py', '.toml', '.tape']);
+const TEXT_EXT = new Set(['.md', '.dtd', '.sh', '.mjs', '.js', '.json', '.yml', '.yaml', '.txt', '.tsv', '.csv', '.ps1', '.nu', '.py', '.toml', '.tape']);
 const JUNK = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
 const MANIFEST = `.${NAME}-manifest.json`;
-const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/arm.mjs', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/adiutor.dtd'];
+const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/arm.mjs', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd'];
 
 // ---------- args ----------
 
@@ -62,7 +62,6 @@ function parseArgs(argv) {
     else if (a === '--only') o.only = (argv[++i] || '').split(',').map((s) => s.trim()).filter(Boolean);
     else if (a === '--force') o.force = true;
     else if (a === '--dry-run') o.dryRun = true;
-    else if (a === '--xml') o.xml = true;
     else if (a === '--check') o.check = true;
     else if (a === '--no-arm') o.noArm = true;
     else if (a === '--guided') o.guided = true;
@@ -198,21 +197,6 @@ function cmdBuild(o) {
   }
   console.log(`\nbuild: ${written} written, ${failed} failing`);
   process.exit(failed ? 1 : 0);
-}
-
-// ---------- xml validation (optional, xmlstarlet on PATH) ----------
-
-function xmlValidate(resolvedText, name) {
-  const example = join(ROOT, 'examples', `${name}.xml`);
-  if (!existsSync(example)) return { skipped: true, reason: 'no examples/' + name + '.xml' };
-  const which = spawnSync('xmlstarlet', ['--version'], { stdio: 'pipe' });
-  if (which.error || which.status !== 0) return { skipped: true, reason: 'xmlstarlet not on PATH' };
-  const tmpDir = join(os.tmpdir(), NAME);
-  mkdirSync(tmpDir, { recursive: true });
-  const dtdPath = join(tmpDir, `${name}.dtd`);
-  writeLF(dtdPath, extractDtd(resolvedText));
-  const r = spawnSync('xmlstarlet', ['val', '-e', '-d', dtdPath, example], { stdio: 'pipe', encoding: 'utf8' });
-  return { skipped: false, ok: r.status === 0, out: (r.stdout || '') + (r.stderr || '') };
 }
 
 // ---------- the capability statement, printed before arming ----------
@@ -492,8 +476,6 @@ function cmdCheck(o) {
     ];
   }
   let bad = 0;
-  let xmlBad = 0;
-  let xmlRun = 0;
   for (const p of paths) {
     const abs = presolve(p);
     let prep;
@@ -510,18 +492,9 @@ function cmdCheck(o) {
     }
     printFindings(relative(ROOT, abs), prep.report);
     if (!prep.report.ok) bad++;
-    if (o.xml && prep.report.ok) {
-      const x = xmlValidate(prep.resolved.text, prep.resolved.name);
-      if (x.skipped) console.log(`    xml  skipped: ${x.reason}`);
-      else {
-        xmlRun++;
-        if (!x.ok) xmlBad++;
-        console.log(`    xml  ${x.ok ? 'valid' : 'INVALID'} ${x.out.trim().split('\n').join(' | ')}`);
-      }
-    }
   }
-  console.log(`\nchecked ${paths.length}  failed ${bad}  xml-run ${xmlRun}  xml-invalid ${xmlBad}`);
-  process.exit(bad || xmlBad ? 1 : 0);
+  console.log(`\nchecked ${paths.length}  failed ${bad}`);
+  process.exit(bad ? 1 : 0);
 }
 
 function cmdResolve(o) {
@@ -609,6 +582,6 @@ switch (cmd) {
     delegate(cmd, o);
     break;
   default:
-    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | list | check | build | resolve | forge | arm | disarm | doctor | controls | ledger | suggest\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --no-arm\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...] [--xml]   check every DOCTYPE-bearing source; --xml validates examples/<root>.xml with xmlstarlet\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose\n`);
+    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | list | check | build | resolve | forge | arm | disarm | doctor | controls | ledger | suggest\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --no-arm\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C12\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose\n`);
     process.exit(cmd ? 2 : 0);
 }

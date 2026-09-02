@@ -77,11 +77,24 @@ The three reference notes under `skills/dtd-core-dtd/references/`
 upstream's design notes, retained under the same terms.
 
 Everything else is original: `bin/`, `lib/`, `dtd/`, `checker/`, `hooks/`,
-`examples/`, the four power-up commands (`first-principles-dtd`,
+the four power-up commands (`first-principles-dtd`,
 `second-order-dtd`, `ask-me-questions-dtd`, `deep-dive-dtd`, whose prose was
 rewritten around the AskUserQuestion grammar), the twenty book-derived
 commands, `RoT-DtD-Commander-Adiutor`, the seven new skills, the four agents,
 and every document at the repository root.
+
+### B.1 The lens material (2.0.0)
+
+The ten `/rot-*-dtd` commands, `dtd/cc-rot.dtd` and the `rot-lenses-dtd`
+skill transcribe the mechanisms and the measured defaults of the nine lens
+charters of this organisation's own RoT MoE packet (v10.0.2, `agents/rot-*.md` and `engine/rot-lean.md`, read from the repository with `gh`;
+AGPL-3.0-or-later OR EUPL-1.2, same author). The numbers (lambda, mu, the
+entropy and gauge bands, the twelve timelines, the three recursion levels,
+the 0.95 strike threshold, the hybrid law) are the charters' own, re-typed
+once into `cc-rot.dtd` and bound to the skill's reference by the contract
+audit. No Latin seal or parameter the charters do not carry was invented. The
+charters' persona prose is not reproduced; the commands carry grammar and
+process in this repository's own words.
 
 ## C. What was left out, and why
 
@@ -103,11 +116,13 @@ the same discipline applies to what the instruments do **not** cover.
   its prose agree: every declared element is named, every named channel is
   fenced, no entity is unresolved, the dialect validates. It does not prove
   that a model will obey the grammar.
-- `examples/<root>.xml` validated by `xmlstarlet` proves that the declared
-  grammar is a real, deterministic XML DTD that accepts a conforming instance
-  and rejects a broken one. Six roots carry an example today; the others are
-  checked by rules C1 to C12 only, and `rdc check --xml` prints `skipped` for
-  each of them rather than a pass.
+- `checker/contract-audit.mjs` proves that every element, entity and
+  parameter entity declared in the five shared subsets is used by at least
+  one source and that every law prefix is numbered densely; its own control
+  plants an unused declaration and requires it to be reported. No static
+  example instance is committed (2.0.0 removed them and the `xmlstarlet`
+  step): the instrument for a rendered answer is the Adiutor's Stop check,
+  which reads headings, order and dangling short ids.
 - The Adiutor's Stop check judges the **rendered markdown** of an answer: the
   presence and order of the headings the grammar map declares, the presence of
   an assumptions section on an autonomous run, and that every short id an
@@ -130,7 +145,6 @@ the same discipline applies to what the instruments do **not** cover.
 
 - Lex Christopherson, `taches-cc-resources` (MIT): the thinking-model,
   research and workflow commands and the eleven skills this layer converted.
-- The `xmlstarlet` and `libxml2` authors: the validator behind `--xml`.
 - The `vhs` and `ttyd` authors: the tape renderer behind the gallery.
 - This organisation's own `RoT-MoE` and `RoT-DTD-GOAL`, whose contract DTDs
   and both-direction checkers are the ancestors of `cc-core.dtd` and the

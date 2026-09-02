@@ -10,15 +10,15 @@
 
 **Commands that carry their own grammar, and a doctor that reads it**
 
-*58 Claude Code slash commands, 18 skills and 4 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; and the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it*
+*68 Claude Code slash commands, 19 skills and 4 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; and the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it*
 
 [![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/saimonokuma)
 [![Nova-Violet Role](https://img.shields.io/badge/Nova--Violet-Role-9b59b6?style=for-the-badge)](https://github.com/Nova-Violet-Role)
 [![License](https://img.shields.io/badge/License-AGPL--3.0_OR_EUPL--1.2-764ba2?style=for-the-badge)](LICENSE)
 
-[![Checker](https://img.shields.io/badge/checked-80_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![XML](https://img.shields.io/badge/xmlstarlet-6_grammars_valid-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-8_%2B_4-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Checker](https://img.shields.io/badge/checked-91_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Contract](https://img.shields.io/badge/contract_audit-154_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-8_%2B_3-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
 
@@ -116,9 +116,8 @@ node bin/rot-dtd-commander.mjs install      # or: npx . install
 
 ### 🔧 Requirements
 
-Node 20 or later. Nothing else is required. `xmlstarlet` on PATH lets
-`rdc check --xml` validate the example instances; without it the twelve
-checker rules still run and the XML step prints `skipped`, never a pass.
+Node 20 or later. Nothing else is required: the twelve checker rules, the
+contract audit and the Adiutor run on Node alone.
 
 ### ⚙️ Configuration
 
@@ -134,7 +133,7 @@ disarms the hooks; `rdc disarm` removes only the hooks.
 
 ## 🕹️ Usage
 
-Fifty-eight commands, in four families. Every one of them opens with its
+Sixty-eight commands, in five families. Every one of them opens with its
 DOCTYPE and closes with its laws.
 
 **Thinking models** (the argument, or the current discussion): `/pareto-dtd`,
@@ -171,6 +170,29 @@ problem to the right shelf.
 `/feasibility-dtd`, `/history-dtd`, `/landscape-dtd`, `/open-source-dtd`,
 `/options-dtd`, `/technical-dtd`. Add `--no-gate` to any of them for an
 autonomous run: every gap becomes a listed assumption instead of a question.
+
+**The nine lenses of RoT MoE, as commands.** Each one carries its lens's
+mechanism as grammar, opens with that lens's own four questions, holds one
+mid-run gate where the mechanism branches, renders the lens's bound as a
+checkable line, and quotes the live router marker when the RoT MoE plugin is
+installed:
+
+| command | what the lens does here | mid-run gate |
+|---|---|---|
+| `/rot-nova-dtd` | six NSIL axes, one decision (CONFIRM, OVERRIDE, BOOST, FUSE, ELEVATE), four or more roles, purification, a convergence that names what it retains | which roles to weight |
+| `/rot-violet-dtd` | the emotional frequency, one of five jazz tracks, a weighted landscape, four roles, a synthesis, the unplayed note | play the unplayed note or not |
+| `/rot-antivenom-dtd` | diagnose, isolate, neutralize, purify, verify; findings with severity, level and confidence; anything possibly creative preserved and flagged | purify or preserve |
+| `/rot-venom-dtd` | perceive, route, one strike under 500 words at `ci` 0.95 or as a recommendation with its deciding fact, two questions pre-empted, the reversal named | none, by its bound |
+| `/rot-carnage-dtd` | three to five unrelated domains, a fragment each, a juxtaposed weave, three or more connections, survivors judged by a real constraint and handed to the lens that ships | which collisions meet reality |
+| `/rot-chroma-dtd` | twelve timelines under five experts spawned from the question and the answers, five shown with five steps, a forced dissent, forks kept, a horizon | which timeline to expand |
+| `/rot-soleil-dtd` | a payload through five layers, an M2M packet, Token Optimization from both counts; for file edits, handoffs and context | none, by its bound |
+| `/rot-eidolon-dtd` | three recursion levels, preserve, transmute, rebuild, a manifest, hybrids by the law, evolution proposals born pending | approve or reject each proposal |
+| `/rot-claude-dtd` | hypotheses, instruments shown failing first, measurements with exit codes read directly, a verdict with no middle state | which measurements to run now |
+| `/rot-elevate-dtd` | all nine at full weight: nine intakes of four questions, nine stanzas, hybrids for the fused pairs, tensions kept, a convergence with a named lead | the nine gates |
+
+The parameter rows, the bands and the hybrid law live in `dtd/cc-rot.dtd`
+and the `rot-lenses-dtd` skill; the mechanisms are transcribed from this
+organisation's own RoT MoE packet at v10.0.2 (the nine charters and the engine), and `NOTICE.md` says so.
 
 **Workflow and wrappers**: `/whats-next-dtd`, `/add-to-todos-dtd`,
 `/check-todos-dtd`, `/run-plan-dtd`, `/heal-skill-dtd`, `/debug-dtd`, the
@@ -223,10 +245,14 @@ npx github:Nova-Violet-Role/RoT-DtD-Commander install
 
 Answer three questions: the target (`1` for user-wide, `2` for this project,
 `3` for a path), the kinds (Enter for all), and `y` after reading what the
-Adiutor will do. The GIF installs into a scratch path so you can see every
-line, including the capability statement and the arm:
+Adiutor will do.
+
+<details>
+<summary><b>Watch: the guided installer, end to end</b> (installs into a scratch path so every line is visible: the three questions, the capability statement, 219 files written and verified, the hooks armed with the backup path printed)</summary>
 
 ![install](docs/gifs/install.gif)
+
+</details>
 
 Afterwards, restart Claude Code once so the agents and the hooks load.
 
@@ -234,13 +260,15 @@ Afterwards, restart Claude Code once so the agents and the hooks load.
 
 ```sh
 rdc doctor          # or: node ~/.claude/rot-dtd-commander/bin/adiutor.mjs doctor
-rdc check --xml     # from a clone: every source against its own DOCTYPE
+rdc check           # from a clone: every source against its own DOCTYPE, rules C1 to C12
 ```
 
-The checker over the whole tree with `xmlstarlet` on the six examples, then
-refusing three mutations and one broken instance on purpose:
+<details>
+<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C12 on 91 sources, then <code>checker/checker-controls.sh</code> refusing three mutations on purpose)</summary>
 
 ![check](docs/gifs/check.gif)
+
+</details>
 
 ### Step 3: run a command, then ask the Adiutor
 
@@ -257,23 +285,47 @@ at Stop the answer is checked; the run becomes one ledger line. Then:
 /RoT-DtD-Commander-Adiutor
 ```
 
-The same mechanism driven by hand in a scratch state directory: a run opens,
-a complete answer passes, a broken one fails, then the ledger and the
-prescription:
+<details>
+<summary><b>Watch: the Adiutor, driven by hand in a scratch state directory</b> (a <code>/pareto-dtd</code> prompt opens a run and prints the armed line, a complete answer passes at Stop, a broken one fails with the missing heading named, then <code>rdc ledger</code> and <code>rdc suggest</code> with the charm and the rite)</summary>
 
 ![doctor](docs/gifs/doctor.gif)
+
+</details>
 
 ### Step 4: when an answer fails its grammar
 
 Under the default `warn` policy you get a one-line system message and a
 ledger line; `/RoT-DtD-Commander-Adiutor` shows the charm (what to change)
 and the rite (how the fix is verified). Under `ROT_DTD_ADIUTOR=strict` the
-Stop is blocked once with that prescription as the reason. Eight guards
-tripped on purpose, C3 being exactly that block, once and never twice:
+Stop is blocked once with that prescription as the reason.
+
+<details>
+<summary><b>Watch: eight guards tripped on purpose</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command)</summary>
 
 ![controls](docs/gifs/adiutor-fail.gif)
 
-### Step 5: undo any of it
+</details>
+
+### Step 5: summon a lens
+
+```
+/rot-chroma-dtd should we keep committing the generated command tree
+```
+
+Chroma asks its four questions (horizon, coalescence mode, the constraint
+every future inherits, what you fear and hope), spawns twelve timelines,
+shows five with their steps, forces a dissent, and asks which timeline to
+expand. `/rot-elevate-dtd` does the same with all nine lenses, 36 questions in
+nine rounds.
+
+<details>
+<summary><b>Watch: a lens command under the checker and the Adiutor</b> (<code>rdc check</code> on the ten lens commands with the engine subset inlined, the eight ROT laws present in the ELEVATE command, then the Adiutor arming for <code>/rot-chroma-dtd</code> and naming the headings its answer must carry)</summary>
+
+![lens](docs/gifs/lens.gif)
+
+</details>
+
+### Step 6: undo any of it
 
 ```sh
 rdc disarm       # remove only the hooks; files stay
@@ -289,11 +341,11 @@ from nothing is removed again once it is empty.
 
 | claim | instrument | last measured |
 |---|---|---|
-| 58 commands, 18 skills, 4 agents carry a DOCTYPE | `rdc list` | 2026-09-02 |
-| every source passes rules C1 to C12 | `rdc check --xml`: `checked 80  failed 0` | 2026-09-02 |
-| six declared grammars are real, deterministic DTDs | same run: `xml-run 6  xml-invalid 0` | 2026-09-02 |
-| the committed resolved tree equals a fresh build | `rdc build --check`: `210 targets, 0 drifted` | 2026-09-02 |
-| the checker refuses a removed declaration, a `(CDATA)` model and an orphan element, and the validator refuses a broken instance with the dangling id named | `bash checker/checker-controls.sh` | 2026-09-02 |
+| 68 commands, 19 skills, 4 agents carry a DOCTYPE | `rdc list` | 2026-09-02 |
+| every source passes rules C1 to C12 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
+| the committed resolved tree equals a fresh build | `rdc build --check`: `223 targets, 0 drifted` | 2026-09-02 |
+| the checker refuses a removed declaration, a `(CDATA)` model and an orphan element | `bash checker/checker-controls.sh` | 2026-09-02 |
+| every declaration in the five subsets is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `154 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
 | the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands | `node bin/adiutor.mjs controls`: `8 run, 0 failing` | 2026-09-02 |
 | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
 | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
@@ -312,7 +364,7 @@ cd RoT-DtD-Commander
 npm run gate; echo "exit=$?"
 ```
 
-`gate` runs `build --check`, `check --xml`, the eight Adiutor controls and the
+`gate` runs `build --check`, `check`, the eight Adiutor controls, the contract audit, the checker controls and the
 two sweeps; each ends with a line of counts, and the exit code is read
 directly. Then break it:
 
@@ -352,7 +404,7 @@ the changelog.
 
 Lex Christopherson's `taches-cc-resources` (MIT), from which thirty-three
 commands and eleven skills were converted with their prose retained; the
-`xmlstarlet` and `libxml2` authors; the `vhs` and `ttyd` authors. The full
+`vhs` and `ttyd` authors. The full
 provenance, including what was deliberately left out, is in
 [NOTICE.md](NOTICE.md).
 

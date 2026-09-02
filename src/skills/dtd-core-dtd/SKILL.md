@@ -60,7 +60,7 @@ For the full text read [references/subsets.md](references/subsets.md).
 
 <checker>
 
-The `checker` is `node bin/rot-dtd-commander.mjs check [paths] [--xml]` in the repository, backed by lib/dtd.mjs. It resolves the includes in two passes (file inclusion, then internal %name; substitution) and applies rules C1 to C12 to the resolved text; the exact list is in [references/checker-rules.md](references/checker-rules.md). With --xml and xmlstarlet on PATH it also validates examples/<root>.xml against the resolved subset. A rule that cannot fail is not a rule: the checker was tripped on purpose with a removed declaration, a (CDATA) content model and an orphan element before its green was trusted.
+The `checker` is `node bin/rot-dtd-commander.mjs check [paths]` in the repository, backed by lib/dtd.mjs. It resolves the includes in two passes (file inclusion, then internal %name; substitution) and applies rules C1 to C12 to the resolved text; the exact list is in [references/checker-rules.md](references/checker-rules.md). Beside it, checker/contract-audit.mjs proves every declaration in the shared subsets is used and every law is numbered densely, and the Adiutor judges the rendered answer at Stop. A rule that cannot fail is not a rule: the checker was tripped on purpose with a removed declaration, a (CDATA) content model and an orphan element before its green was trusted.
 
 </checker>
 

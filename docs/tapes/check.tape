@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
 # Copyright 2026 Saimonokuma.
-# The checker over the whole tree, with xmlstarlet on the six examples, then
+# The checker over the whole tree, then
 # the checker refusing three mutations on purpose.
 Output docs/gifs/check.gif
 Set Shell "bash"
@@ -11,7 +11,7 @@ Set Padding 12
 Set TypingSpeed 35ms
 Set Theme "Catppuccin Mocha"
 
-Type "node bin/rot-dtd-commander.mjs check --xml | grep -E 'xml  valid|^checked'"
+Type "node bin/rot-dtd-commander.mjs check | tail -4"
 Enter
 Sleep 6s
 Type "clear"
