@@ -115,5 +115,16 @@
   "audit-tasks": "📋",
   "create-workflow-tasks": "🏗️",
   "task-run": "🏃",
-  "task-handoff": "🤝"
+  "task-handoff": "🤝",
+  "create-filetype-callout": "📍",
+  "create-filetype-heredoc": "🛎️",
+  "create-filetype-yaml": "🪪",
+  "create-filetype-nt": "🧲",
+  "create-filetype-xml": "🧿",
+  "create-filetype-polyglot": "🎲",
+  "create-filetype-alarm": "🪁",
+  "create-filetype-polyalarm": "🧊",
+  "create-filetype": "🪃",
+  "create-dork-search": "🕸️",
+  "create-dork-local": "🔦"
 }

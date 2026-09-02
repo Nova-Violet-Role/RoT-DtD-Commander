@@ -200,6 +200,19 @@ counts are re-measured.
   task-run 🏃 (one task in the foreground under ceilings, the expansion
   shown first), task-handoff 🤝 (evidence, status through the runtime, the
   record with the command-generated filename, the next session's line).
+- Free file types: create-filetype-<schematic>-dtd, eight creators from one
+  function (📍 🛎️ 🪪 🧲 🧿 🎲 🪁 🧊), each pinned to its schematic: name,
+  extension, NOTATION and cc-form kind, the semantic schemas and forms, the
+  dollar-token variants marked after elaboration and embedded the way the
+  schematic embeds a reference, a license; the exemplar and the NOTATION
+  declaration written under filetypes/, guarded, a planted expanding token
+  refused. create-filetype-dtd 🪃 routes to them.
+- Dorks: create-dork-search-dtd 🕸️ (a query of declared operators for a web
+  engine or GitHub code search in narrow, wide and negated phrasings, nothing
+  fetched unless asked, an unknown operator refused) and create-dork-local-dtd
+  🔦 (a ripgrep and fd hunt by type and content in the foreground under a
+  ceiling, fixed-string matching for backslashes, a planted file it must find
+  and an empty directory it must report as zero).
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,
