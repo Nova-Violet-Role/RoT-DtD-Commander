@@ -38,7 +38,7 @@ jobs:
         run: node checker/heading-sweep.mjs --check
       - name: front matter parses as YAML (no bare colon-space or hash in a value; the sweep is a no-op)
         run: node checker/frontmatter-sweep.mjs --check
-      - name: adiutor controls (twenty-seven guards tripped on purpose; C21 to C27 the AI_SLOP gate on four spots and the tally)
+      - name: adiutor controls (twenty-nine guards tripped on purpose; C21 to C29 the AI_SLOP gate on five spots, the tally and the fields)
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, three planted controls)
         run: node checker/contract-audit.mjs
@@ -68,7 +68,7 @@ jobs:
         run: node lib/record.mjs controls
       - name: license controls (fifty SPDX ids with definitions)
         run: node lib/license.mjs controls
-      - name: scratch controls (a worktree opened, diffed, merged by marked paths and whole, discarded)
+      - name: scratch controls (a worktree opened, diffed, merged by marked paths and whole, an overwrite refused, reverted after a red gate, discarded)
         run: node lib/scratch.mjs controls
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0

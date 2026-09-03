@@ -101,7 +101,12 @@ function spotOfTool(payload) {
   const inp = payload.tool_input || {};
   if (/^(Write|Edit|NotebookEdit)$/.test(tool)) {
     const file = inp.file_path || inp.notebook_path || '';
-    const text = tool === 'Write' ? inp.content : tool === 'Edit' ? inp.new_string : inp.new_source;
+    // The field a text-writing tool carries its text in. Write uses content and
+    // Edit new_string (both measured in the hooks reference); NotebookEdit's name
+    // was not in the reference, so every candidate is accepted and the first
+    // string wins (control C28). A field this list does not know leaves nothing
+    // to judge, which the control also states.
+    const text = [inp.content, inp.new_string, inp.new_source, inp.source, inp.text].find((v) => typeof v === 'string' && v.trim());
     if (!text || !file) return null;
     const j = judgeSpot('write', text, { file });
     return j ? { j, target: file } : null;
@@ -335,7 +340,21 @@ export function observe(event, payload, io = console) {
       }
       return;
     }
-    case 'SubagentStop':
+    case 'SubagentStop': {
+      // SLOP.spot.5: the payload's shape is not in the local hooks reference, so
+      // the answer is judged only when the payload carries one under a name a
+      // Stop payload uses; otherwise there is nothing to judge and nothing is
+      // said (LAW.SLOP.7, control C29).
+      if (payload.stop_hook_active) return;
+      const text = [payload.last_assistant_message, payload.last_message, payload.response].find((v) => typeof v === 'string' && v.trim());
+      if (!text) return;
+      const j = judgeSpot('subagent', text);
+      if (j && !j.alive) {
+        refuseSpot(session, j, 'subagent answer');
+        out(JSON.stringify({ decision: 'block', reason: refusal(j) }));
+      }
+      return;
+    }
     case 'PreCompact':
       return;
     case 'Stop': {
@@ -1083,6 +1102,27 @@ export async function controls(io = console) {
     const afterPass = (readRun('S27') || {}).tools;
     dropRun('S27');
     return { ok: denied(d) && afterDeny === 0 && !p && afterPass === 1, detail: `denied=${denied(d)} tally after deny=${afterDeny} after the clean write=${afterPass}` };
+  }, results);
+
+  control('C28 a NotebookEdit is judged whichever field carries its text, and a payload with no text field is not judged', () => {
+    const names = ['new_source', 'content', 'new_string', 'source', 'text'];
+    const denials = names.map((n) => denied(preTool('S28', 'NotebookEdit', { notebook_path: join(tmp, 'nb.md'), [n]: sloppyText })));
+    const empty = preTool('S28', 'NotebookEdit', { notebook_path: join(tmp, 'nb.md'), cell_id: 'abc' });
+    const clean = preTool('S28', 'NotebookEdit', { notebook_path: join(tmp, 'nb.md'), new_source: cleanPlain });
+    return { ok: denials.every(Boolean) && !empty && !clean, detail: `fields denied ${denials.filter(Boolean).length}/${names.length}; no text field=${empty ? 'output' : 'silent'}; clean=${clean ? 'output' : 'silent'}` };
+  }, results);
+
+  control('C29 a subagent answer that fails the gate blocks its SubagentStop once; a payload with no answer is not judged, and the re-fired one returns', () => {
+    const io1 = capture();
+    observe('SubagentStop', { session_id: 'S29', last_assistant_message: sloppyText, stop_hook_active: false }, io1);
+    const blocked = io1.lines.some((l) => l.includes('"decision":"block"') && l.includes('AI_SLOP'));
+    const io2 = capture();
+    observe('SubagentStop', { session_id: 'S29', stop_hook_active: false }, io2);
+    const io3 = capture();
+    observe('SubagentStop', { session_id: 'S29', last_assistant_message: sloppyText, stop_hook_active: true }, io3);
+    const io4 = capture();
+    observe('SubagentStop', { session_id: 'S29', last_assistant_message: cleanPlain, stop_hook_active: false }, io4);
+    return { ok: blocked && io2.lines.length === 0 && io3.lines.length === 0 && io4.lines.length === 0 && ledgerHas('slop:subagent'), detail: `blocked=${blocked} no-answer=${io2.lines.length} refired=${io3.lines.length} clean=${io4.lines.length} ledger slop:subagent=${ledgerHas('slop:subagent')}` };
   }, results);
 
   control('C26 the escape is the contract: the same failing phrases inside a code fence pass a Write, and a refusal carries no CDATA section', () => {

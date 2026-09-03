@@ -28,7 +28,10 @@ controls C21 to C26 tripped on purpose. `/ai-slop-dtd` is the hand-run form.
 `.claude/worktrees`, reviews the diff hunk by hunk, amplifies the research
 with what the build measured, and asks at a merge gate, with the pros and
 cons per file, what may land; `lib/scratch.mjs` carries the worktree, the
-diff and the merges with seven controls. Every number is in
+diff, the merges and the red-gate revert with ten controls. Every Remaining
+Unknown of the two deep dives behind this release was closed before the tag:
+the field names, the subagent spot, the mark question's cap, the revert, and
+the comment measures, each with a control or a measured file behind it. Every number is in
 [CHANGELOG.md](CHANGELOG.md). The tag is `v5.1.0`.
 
 ## v5.0.1 — the privacy policy and the command index

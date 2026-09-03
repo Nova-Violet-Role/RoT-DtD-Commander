@@ -52,6 +52,33 @@ and cons per file, what may land in the repository.
   applying the merge and running the project gate on the merged tree, a
   red gate reverted and reported. lib/scratch.mjs carries open, diff,
   merge-all, merge, discard and seven controls in a temporary repository.
+- The Remaining Unknowns of both 5.1.0 deep dives, closed before the tag
+  rather than after it. The NotebookEdit text field was a guess: every field
+  name a text-writing tool may use is accepted now and the first string wins,
+  with control C28 denying the same sloppy text under five field names and
+  staying silent when none carries text. The SubagentStop payload was unknown:
+  it is declared as SLOP.spot.5 and judged only when the payload carries an
+  answer, blocking that SubagentStop once, with control C29. The mark question
+  holds at most four options, which no law said: LAW.DS.4 now marks four files
+  per round, twelve across the three rounds, and groups by top directory beyond
+  that. The red-gate revert was reasoned, not run: lib/scratch.mjs gained
+  revert(), which restores a path the base had and removes one it did not, with
+  two controls, and the whole path (open, build, run, diff, marked merge,
+  revert, discard) was exercised live in this repository, every exit code read
+  directly. The static-share question answered itself against a real file:
+  accesskit-0.24.1/src/geometry.rs fails lexical_mattr at 0.5233 on its
+  hand-written doc comments, so SLOP.comment.measures declares that a lifted
+  comment block answers to the phrase and verb measures only; the two
+  prose-shape numbers are still reported, marked as not applying. Twelve
+  languages measured through the lifter, six real files judged, one refusal
+  found and fixed. The repository ignores its own .claude/worktrees/. The live
+  exercise also found a defect nothing had tripped: a marked merge is a checkout
+  over the working tree, so a path the repository changed after the scratch was
+  opened, or one carrying uncommitted work, was overwritten in silence. Only a
+  deliberate choice not to mark lib/scratch.mjs kept this session's own work.
+  mergeMarked refuses such a path by name now, force is the override, LAW.DS.5
+  says it, and a control edits a file in the main tree and watches the merge
+  refuse it and then take it under force.
 - Companion run 10 (okto, v5.1.0, opus, 34 turns, 329 s): fail, eight
   findings, three high, all eight sound and closed. Three published counts
   were stale against instruments the release names (package.json still said
@@ -71,7 +98,7 @@ and cons per file, what may land in the repository.
   ran its git calls under a ceiling of sixty seconds while the command
   declared SCRATCH.ceiling 300: the library runs under 300 and an eighth
   control reads the built command and holds the two together.
-- Counts: 120 commands, 22 skills, 5 agents; checked 147; 27 Adiutor guards;
+- Counts: 120 commands, 22 skills, 5 agents; checked 147; 29 Adiutor guards;
   the README index places the two in the research and the audits families;
   PRIVACY.md version 2 (the gate's row), SECURITY.md and NOTICE §D each gain
   a row or a bullet; the manifests say 5.1.0.

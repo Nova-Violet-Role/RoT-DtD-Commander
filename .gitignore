@@ -27,3 +27,7 @@ node_modules/
 Thumbs.db
 desktop.ini
 *.rot-dtd-commander.*.bak
+
+# The scratch worktrees of /deep-scratch-dtd (lib/scratch.mjs open); each is a
+# branch of this repository checked out under here, never content of its own.
+.claude/worktrees/

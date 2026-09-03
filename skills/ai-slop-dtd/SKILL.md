@@ -280,13 +280,15 @@ description: "The AI_SLOP gate, the voice contract of every -dtd answer and, whe
 <!ENTITY SLOP.spot.2 "write: the text of a Write, an Edit or a NotebookEdit, prose whole, code by its lifted comments">
 <!ENTITY SLOP.spot.3 "commit: the message of a git commit given inline, by -F, or by a heredoc">
 <!ENTITY SLOP.spot.4 "pr: the body of a gh pr, gh issue or gh release call, or of a curl payload to a pulls, issues or releases path">
+<!ENTITY SLOP.spot.5 "subagent: the answer of a subagent at SubagentStop, judged only when the payload carries one">
+<!ENTITY SLOP.comment.measures "tells|closers|hedges|fillers|static_share">
 <!ENTITY SLOP.prose.ext "md|markdown|txt|rst|adoc">
 <!ENTITY SLOP.comment.slash "js|mjs|cjs|ts|tsx|jsx|java|c|h|cpp|hpp|cc|cs|go|rs|swift|kt|scala|css|scss|php">
 <!ENTITY SLOP.comment.hash "py|rb|sh|bash|zsh|ps1|psm1|yaml|yml|toml|nu|r|pl|dockerfile|mk|cmake|conf|ini">
 <!ENTITY SLOP.comment.dash "lua|sql|hs|lean|elm|ada">
 <!ENTITY SLOP.comment.angle "html|xml|svg|xhtml|vue|dtd">
-<!ENTITY LAW.SLOP.7 "When the Adiutor is armed the gate judges four spots without any command being run: the answer to any turn at Stop when no -dtd run is open, the text of a Write, an Edit or a NotebookEdit before it lands, the message of a git commit, and the body of a pull request, an issue or a release; a prose file is judged whole, a code file by its lifted comments alone, and a spot under SLOP.min_words on the ban list alone.">
-<!ENTITY LAW.SLOP.8 "The four spots are strict whatever the policy: a failed answer blocks the Stop once and the re-fired Stop passes, a failed Write, Edit, commit or body is denied until its text changes, every refusal closes one ledger line whose command is slop and the spot, the reason names the measures and quotes the failing phrases inside a quoted element and never a CDATA section, and a phrase inside a code fence, an inline code span or a quoted element stays data, which is the only escape.">
+<!ENTITY LAW.SLOP.7 "When the Adiutor is armed the gate judges four spots without any command being run: the answer to any turn at Stop when no -dtd run is open, the text of a Write, an Edit or a NotebookEdit before it lands, the message of a git commit, the body of a pull request, an issue or a release, and the answer of a subagent at SubagentStop when the payload carries one; a prose file is judged whole, a code file by its lifted comments alone, and a spot under SLOP.min_words on the ban list alone; a lifted-comment spot is held to the SLOP.comment.measures only, because a comment block is a list of labels and not a voice across sentences, measured on a real Rust module whose doc comments fail the lexical bound at 0.5233 while being written by hand.">
+<!ENTITY LAW.SLOP.8 "The four spots are strict whatever the policy: a failed answer blocks the Stop once and the re-fired Stop passes, a failed subagent answer blocks its SubagentStop once, a failed Write, Edit, commit or body is denied until its text changes, every refusal closes one ledger line whose command is slop and the spot, the reason names the measures and quotes the failing phrases inside a quoted element and never a CDATA section, and a phrase inside a code fence, an inline code span or a quoted element stays data, which is the only escape.">
 <!-- end subset ai-slop -->
 ]>
 
@@ -329,7 +331,10 @@ no `-dtd` run is open; SLOP.spot.2, the text of a Write, an Edit or a
 NotebookEdit before it lands; SLOP.spot.3, the message of a `git commit`
 given inline, by `-F` or by a heredoc; SLOP.spot.4, the body of a `gh pr`,
 `gh issue` or `gh release` call, or of a `curl` payload to a pulls, issues
-or releases path. What is judged depends on the file: an extension in
+or releases path; and SLOP.spot.5, the answer of a subagent at SubagentStop,
+judged only when the payload carries one, because that payload's shape is
+not in the local hooks reference. What is judged depends on the file: an
+extension in
 SLOP.prose.ext is prose and judged whole; an extension in
 SLOP.comment.slash, SLOP.comment.hash, SLOP.comment.dash or
 SLOP.comment.angle is code, and its comments alone are lifted and judged

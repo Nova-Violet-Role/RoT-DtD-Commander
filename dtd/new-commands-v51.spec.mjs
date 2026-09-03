@@ -65,6 +65,9 @@ The argument walk is the one cc-args declares: the string is read once and split
       'SCRATCH.dir': '.claude/worktrees',
       'SCRATCH.branch': 'scratch/ followed by the topic',
       'SCRATCH.ceiling': '300',
+      'MERGE.per_round': '4',
+      'MERGE.max_files': '12',
+      'MERGE.group_by': 'the top directory of each changed path',
     },
     model: [
       'deep_scratch (intake, report, scratch, diff_review, report, merge_gate, artifact, artifact, assumption_made*)',
@@ -85,8 +88,8 @@ The argument walk is the one cc-args declares: the string is read once and split
       'DS.1': 'The scratch is a git worktree under SCRATCH.dir on the branch SCRATCH.branch off HEAD, opened with node lib/scratch.mjs open; nothing is written outside it before the merge gate, and a topic that is not lower-case letters, digits and hyphens is refused.',
       'DS.2': 'Every build step and every run happen inside the worktree, in the foreground, under SCRATCH.ceiling seconds, with the exit code read directly; a claim the first report marked reasoned is re-marked measured by a run or marked failed, never left as it was.',
       'DS.3': 'Every hunk of node lib/scratch.mjs diff is one finding with its file, its hunk, a verdict of kept, changed or dropped, a severity and a confidence; a hunk without a finding was not reviewed.',
-      'DS.4': 'The merge gate is one mark question over every changed file with its pro and its con and the lines each carries, asked with MERGE.question and the four choices MERGE.all, MERGE.marked, MERGE.keep and MERGE.discard; --no-gate skips the intake and never the merge gate.',
-      'DS.5': 'The chosen files are merged by the command, merge-all for every file and merge with the marked paths otherwise, and the project gate runs on the merged tree before the answer closes; a red gate is reverted to the base and reported as the verdict gate red.',
+      'DS.4': 'The merge gate is a mark question over the changed files with a pro and a con and the lines each carries, asked with MERGE.question and the four choices MERGE.all, MERGE.marked, MERGE.keep and MERGE.discard; a question carries at most ASK.max_options files, so the files are marked in rounds of four up to ASK.max_total, and beyond twelve the question marks groups instead, one per top directory of the diff, with the group\'s files and line counts in its description; --no-gate skips the intake and never the merge gate.',
+      'DS.5': 'A marked merge is a checkout over the working tree, so a path the repository has changed since the scratch was opened, or that carries uncommitted work, is refused by name and nothing is written unless the operator forces it; the chosen files are merged by the command, merge-all for every file and merge with the marked paths otherwise, and the project gate runs on the merged tree before the answer closes; a red gate is reverted to the base and reported as the verdict gate red.',
       'DS.6': 'Two reports are saved under artifacts/research, the deep-dive of phase one and the deep-scratch of phase three, each as one artifact, and both paths are printed.',
       'DS.7': 'Discard removes the worktree and its branch with node lib/scratch.mjs discard; keep leaves both and prints the path; the verdict says which.',
     },
@@ -103,7 +106,7 @@ Local evidence first: files read, commands run, the worktree measured. The scrat
       'Run inside the worktree: the project gate, the tests or the controls that measure the phase-one claims, each under `timeout SCRATCH.ceiling` with the exit code read directly, one `run` line each (LAW.DS.2).',
       'Diff: `timeout 60 node lib/scratch.mjs diff <topic>` for the files with their counts, and `git diff <base>...<branch>` for the hunks; write one `finding` per hunk with file, hunk, verdict kept, changed or dropped, severity and confidence (LAW.DS.3); a changed or dropped hunk is edited in the worktree and committed before the next phase.',
       'Amplify: write the second `report` with every phase-one claim re-marked by what the runs measured, the diff findings folded into How It Works and Limitations, and the `next_action`; save it as the second `artifact`, `YYYY-MM-DD-<topic>-deep-scratch.md`, and print the path (LAW.DS.6).',
-      'Merge gate: one `pro` and one `con` per changed file, each with the lines it carries; then the mark question MERGE.question with the four options MERGE.all, MERGE.marked, MERGE.keep and MERGE.discard, multiSelect for the marked files; the replies are `answer` elements (LAW.DS.4).',
+      'Merge gate: one `pro` and one `con` per changed file, each with the lines it carries; then the mark question MERGE.question with the four options MERGE.all, MERGE.marked, MERGE.keep and MERGE.discard, multiSelect for the marked files. A question holds at most four options, so four files are marked per round and at most twelve across the three rounds; a diff of more than twelve files is marked by group instead, one option per top directory with its files and line counts, and the answer names the groups (LAW.DS.4). The replies are `answer` elements.',
       'Apply and close: merge-all with `node lib/scratch.mjs merge-all <topic>`, the marked files with `node lib/scratch.mjs merge <topic> <path...>`, then the project gate on the merged tree under the ceiling; a red gate is reverted (`git reset --hard <base>` after merge-all, `git checkout HEAD -- <paths>` after a marked merge) and the `verdict` carries gate red (LAW.DS.5); keep prints the worktree path; discard runs `node lib/scratch.mjs discard <topic>` (LAW.DS.7); render the `verdict` with its choice and its gate.',
     ],
     map: {
@@ -132,7 +135,7 @@ Local evidence first: files read, commands run, the worktree measured. The scrat
 **Merge Gate:**
 - pro: [file] [lines]: [what the merge gives]
 - con: [file] [lines]: [what the merge risks]
-- ask: [MERGE.question; the marked files]
+- ask: [MERGE.question; at most MERGE.per_round files marked per round, MERGE.max_files in all, groups beyond that]
 - answer: [the reply]
 - verdict: choice [merged-all|merged-marked|kept|discarded] gate [green|red|not-run]
 

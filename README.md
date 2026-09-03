@@ -17,8 +17,8 @@
 [![License](https://img.shields.io/badge/License-AGPL--3.0_OR_EUPL--1.2-764ba2?style=for-the-badge)](LICENSE)
 
 [![Checker](https://img.shields.io/badge/checked-147_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Contract](https://img.shields.io/badge/contract_audit-1265_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-27_%2B_18-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Contract](https://img.shields.io/badge/contract_audit-1267_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-29_%2B_18-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Listed on ClaudePluginHub](https://www.claudepluginhub.com/badge/nova-violet-role-rot-dtd-commander)](https://www.claudepluginhub.com/plugins/nova-violet-role-rot-dtd-commander?ref=badge)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
@@ -143,8 +143,8 @@ and runs only when you run `rdc watch`; it reads the ledger and prints,
 nothing more.
 
 Armed, since 5.1.0, the AI_SLOP gate of `ai-slop.dtd` also judges every
-answer at Stop and every Write, Edit, NotebookEdit, commit message and
-request body before it lands: a prose file whole, a code file by its lifted
+answer at Stop, a subagent answer at SubagentStop, and every Write, Edit,
+NotebookEdit, commit message and request body before it lands: a prose file whole, a code file by its lifted
 comments, strict whatever the policy, one ledger line per refusal, the
 escape a code fence or a quoted element (LAW.SLOP.7, LAW.SLOP.8; controls
 C21 to C26). `/ai-slop-dtd` is the hand-run form of the same instrument.
@@ -794,8 +794,8 @@ while the plugin is still registered.
 | every build target under commands, skills and agents is tracked; an ignored one would pass the drift check here and fail it on a fresh checkout | `bash checker/tracked-sweep.sh`: `0 ignored build targets`, its planted control reported | every push |
 | every command, skill and agent of the tree is named in the README index, each command in exactly one family | `node checker/readme-index.mjs --check`: `README block in step`; `--controls`: an unclaimed name refused, a removed row reported | every push |
 | the version is one everywhere: package.json, plugin.json, both marketplace fields, the top changelog section, a RELEASE.md heading, and the tag that ships | `node checker/release-notes.mjs --versions`, and the release job with the tag; controls plant a stray manifest, a missing heading and a wrong tag | every push, and the tag |
-| armed, the AI_SLOP gate judges every answer at Stop and every Write, Edit, NotebookEdit, commit message and request body before it lands, strict, with a fence or a quoted element as the only escape | `node bin/adiutor.mjs controls` C21 to C27; `node lib/ai-slop.mjs controls` trips the comment lifter, the command parser and the refusal | every push |
-| a scratch is a git worktree that is opened on its own branch, diffed into findings with counts, merged by marked paths or whole, and discarded with its branch | `node lib/scratch.mjs controls`: `8 run, 0 failing` | every push |
+| armed, the AI_SLOP gate judges every answer at Stop and every Write, Edit, NotebookEdit, commit message and request body before it lands, strict, with a fence or a quoted element as the only escape | `node bin/adiutor.mjs controls` C21 to C29; `node lib/ai-slop.mjs controls` trips the comment lifter, the command parser and the refusal | every push |
+| a scratch is a git worktree that is opened on its own branch, diffed into findings with counts, merged by marked paths or whole, and discarded with its branch | `node lib/scratch.mjs controls`: `11 run, 0 failing`, among them the red-gate revert and the refusal to overwrite newer work | every push |
 | every count the repository publishes (the badges, the tagline, the claims rows, the three manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the checker controls, the declarations | `node checker/counts-sweep.mjs`: `14 places in step`; `--controls` plants a stale badge, a stale count in words and a removed count | every push |
 | a tag `v*` ships the GitHub release with the CHANGELOG section of its version as the notes; a tag that is not package.json's version, a section still in progress, or a release already on the tag ships nothing | the `release` job in `.github/workflows/gate.yml`; `node checker/release-notes.mjs --controls`: `4 run, 0 failing` | on the tag |
 
@@ -825,7 +825,7 @@ exit code is read directly. Then break it:
 bash checker/checker-controls.sh      # M0 to M17: seven mutations refused, one under INCLUDE and the untouched file pass, then nine scorer and runner controls
 node checker/gate-sync.mjs            # every gate command is a run line of the workflow; a line removed or a step commented out is reported
 node checker/release-notes.mjs --controls  # the release job's notes: an in-progress heading and an unknown version refused
-node bin/adiutor.mjs controls         # twenty-seven guards; C21 to C27 the AI_SLOP gate on four spots and the tally; C3 is the strict block, once and never twice; C12 the monitor, tripped live; C13 the lagging answer, C14 the trailing call, C17 the heading-less file judged
+node bin/adiutor.mjs controls         # twenty-nine guards; C21 to C29 the AI_SLOP gate on five spots, the tally and the fields; C3 is the strict block, once and never twice; C12 the monitor, tripped live; C13 the lagging answer, C14 the trailing call, C17 the heading-less file judged
 rdc watch --once                      # the monitor over your own ledger: one line per failed run, silence for a pass
 ```
 

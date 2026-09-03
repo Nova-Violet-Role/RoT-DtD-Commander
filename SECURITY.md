@@ -34,7 +34,7 @@ The contract, and how each part is verified rather than promised:
 | every written text file is re-read and verified: UTF-8, LF, no BOM | the installer's writer, `verifyFile` |
 | a hook reads stdin to the end, spawns no process, writes only under its state directory, and exits 0 | `bin/adiutor.mjs observe`; LAW.ADIUTOR.4 |
 | the Stop hook blocks at most once per run, and only under `ROT_DTD_ADIUTOR=strict` | control C3 |
-| armed, the AI_SLOP gate (5.1.0) reads the text of a Write, an Edit or a NotebookEdit and the command of a Bash call to find a commit message or a request body, judges it, and denies it with the measures as the reason; it runs nothing, evaluates nothing, and a `-F` or `--body-file` path is read as it stands | controls C21 to C26; `node lib/ai-slop.mjs controls` |
+| armed, the AI_SLOP gate (5.1.0) reads the text of a Write, an Edit or a NotebookEdit and the command of a Bash call to find a commit message or a request body, judges it, and denies it with the measures as the reason; it reads a subagent answer at SubagentStop only when the payload carries one, and it accepts any of the field names a text-writing tool may use so a renamed field cannot pass unjudged; it runs nothing, evaluates nothing, and a `-F` or `--body-file` path is read as it stands | controls C21 to C26; `node lib/ai-slop.mjs controls` |
 | a slash command opens a run only if its installed file carries a DOCTYPE | control C8 |
 
 It does **not** phone home, download anything, execute code from the network,

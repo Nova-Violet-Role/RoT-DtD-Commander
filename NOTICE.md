@@ -137,7 +137,13 @@ the same discipline applies to what the instruments do **not** cover.
   commit message or a request body by the declared measures; it does not
   judge whether they are true, a phrase inside a fence or a quoted element is
   data it never sees, and the comment lifter reads a declared table of
-  extensions, so a language outside the table has nothing judged.
+  extensions, so a language outside the table has nothing judged. A lifted
+  comment block answers to the phrase and verb measures only, not to the two
+  prose-shape ones: measured on accesskit-0.24.1/src/geometry.rs, whose
+  hand-written doc comments fail the lexical bound at 0.5233 because a geometry
+  module repeats its own nouns. The gate reports both numbers and marks them as
+  not applying, so nothing is hidden, but a repetitive comment block is not
+  called slop for being repetitive.
 - `checker/contract-audit.mjs` proves that every element, entity and
   parameter entity declared in the twelve shared subsets and the Adiutor
   contract is used by at least

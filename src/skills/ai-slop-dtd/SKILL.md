@@ -52,7 +52,10 @@ no `-dtd` run is open; SLOP.spot.2, the text of a Write, an Edit or a
 NotebookEdit before it lands; SLOP.spot.3, the message of a `git commit`
 given inline, by `-F` or by a heredoc; SLOP.spot.4, the body of a `gh pr`,
 `gh issue` or `gh release` call, or of a `curl` payload to a pulls, issues
-or releases path. What is judged depends on the file: an extension in
+or releases path; and SLOP.spot.5, the answer of a subagent at SubagentStop,
+judged only when the payload carries one, because that payload's shape is
+not in the local hooks reference. What is judged depends on the file: an
+extension in
 SLOP.prose.ext is prose and judged whole; an extension in
 SLOP.comment.slash, SLOP.comment.hash, SLOP.comment.dash or
 SLOP.comment.angle is code, and its comments alone are lifted and judged
