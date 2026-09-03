@@ -6,15 +6,23 @@
 ## What this software does to your machine
 
 `rdc install` **writes files under `~/.claude`** (or `./.claude` with
-`--project`) and **edits `~/.claude/settings.json`** to arm the Adiutor hooks.
-That is the whole security surface, and it is stated first because it is the
-thing worth auditing before you run anything here.
+`--project`) and, **only when `--arm` is given** or `rdc arm` is run later,
+**edits `~/.claude/settings.json`** to arm the Adiutor hooks. Since 5.0.0 a
+plain install arms nothing and starts no monitor: the Adiutor runs when you
+run it (`rdc doctor`, `rdc controls`, `/RoT-DtD-Commander-Adiutor`), the
+monitor when you run `rdc watch`, and every run of either ends at a 300
+second ceiling (LAW.ADIUTOR.10). That is the whole security surface, and it
+is stated first because it is the thing worth auditing before you run
+anything here.
 
 The contract, and how each part is verified rather than promised:
 
 | rule | verified by |
 |---|---|
 | the capability statement is printed before anything is armed | `bin/rot-dtd-commander.mjs` prints it before the confirm prompt and before a `--yes` install writes |
+| a plain install arms nothing: no hooks entry, no monitor process | the install output says `hooks not armed`; `rdc doctor` reports the hook state; the `install-roundtrip` job installs, runs the doctor and uninstalls to zero files |
+| every unattended runner ends at a ceiling: the Stop hook at 300 s, `rdc doctor` and `rdc controls` at 300 s, `rdc watch --secs 300`, every workflow and task step under its declared ceiling | `bash checker/ceiling-controls.sh`; `node lib/workflow.mjs controls` |
+| the Scratchpad Companion, a nested `claude -p` the maintainer runs by hand, reads and runs only: its tool allow-list carries no writing or spawning tool and every Bash form starts with `timeout 60` | control M17 in `checker/checker-controls.sh` refuses a copy of the runner that grants Write |
 | `settings.json` is backed up first and the restore command printed | `lib/arm.mjs` `armSettings`; the path is in the install output |
 | a read-only attribute on `settings.json` is lifted for the one write and put back, and the install output says so | `lib/arm.mjs` `isReadOnly`; measured on this maintainer's machine, where the file carries `attrib +R` |
 | additive merge only: parse, append, write back; never a template rewrite | Adiutor control C6 |
@@ -30,7 +38,11 @@ The contract, and how each part is verified rather than promised:
 
 It does **not** phone home, download anything, execute code from the network,
 or read any file outside `~/.claude`, the current project's `.claude`, the
-transcript path Claude Code hands the hook, and the repository itself.
+transcript path Claude Code hands the hook, and the repository itself. The
+one network call this repository makes is the release job's, from CI, to
+the GitHub API of the repository itself with the workflow's own token; that
+job alone holds `contents: write`, only on a tag `v*`, and the workflow
+file is the record of it.
 
 ## Text the hooks treat as data
 

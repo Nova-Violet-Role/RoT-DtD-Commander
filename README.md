@@ -115,15 +115,32 @@ expands a slash command only at the head of a prompt; the Adiutor arms the
 run on the trailing token too (control C14) and its armed line tells the
 model to run the command, so the call is as complete as a leading one.
 
+Since 5.0.0 the commands also write. Sixteen prompt and meta-prompt creators,
+one per schematic (callout, heredoc, yaml, nt, xml, polyglot, alarm,
+polyalarm), draw every syntax from a declared table and prove a planted
+out-of-table syntax refused. Creators for skills, hooks, commands, subagents,
+plans, MCP servers and workflow files ask twelve questions in three rounds,
+write with the answers as known slots, and audit what they wrote here, in the
+foreground, with a planted fault proving the audit. A tasks family keeps its
+registry and ledger; eight filetype creators and their router write an
+exemplar and its NOTATION; two dork creators build a search and a local hunt.
+Every creator declares a curated SPDX licence from `dtd/licenses.json`.
+Records nest (`cc-record.dtd`), the shelf of nineteen book-derived commands
+carries a voice profile the slop sweep reads, and the Scratchpad Companion, a
+second session run in the foreground, audits each build phase in a declared
+grammar and is scored on its finding elements.
+
 ### 🤝 It **improves** Claude Code; it does not replace it
 
-The commands install into `~/.claude/commands` like any other. The hooks are
-added to `~/.claude/settings.json` by an additive merge that backs up first,
-preserves every key it did not add (deep-compared after re-reading from disk),
-and reverses with one command. A hook reads its payload, writes under its own
-state directory, spawns nothing, and exits. The monitor is a plugin of its
-own, `~/.claude/skills/rot-dtd-commander-adiutor/`, that Claude Code loads by
-itself; it reads the ledger and prints, nothing more.
+The commands install into `~/.claude/commands` like any other, and a plain
+install arms nothing. When you ask for the hooks (`rdc install --arm` or
+`rdc arm`), they are added to `~/.claude/settings.json` by an additive merge
+that backs up first, preserves every key it did not add (deep-compared after
+re-reading from disk), and reverses with one command. A hook reads its
+payload, writes under its own state directory, spawns nothing, and exits. The
+monitor is declared in `monitors/manual.json`, a file the loader never reads,
+and runs only when you run `rdc watch`; it reads the ledger and prints,
+nothing more.
 
 ---
 

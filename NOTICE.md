@@ -9,11 +9,13 @@
 ## A. Licensing
 
 **RoT DtD Commander is an original work with declared portions.** It is not a
-fork: the repository history begins here, the installer, the four shared
-subsets, the Adiutor, the twenty book-derived commands, the four power-up
-commands, the seven new skills and the four agents were written for this
-repository. Forty-four files, listed in section B, keep prose from an MIT
-upstream inside a new declared grammar. That fact decides the licence layout.
+fork: the repository history begins here; the installer, the twelve shared
+subsets, the Adiutor and its monitor, the nineteen book-derived commands and
+their router, the power-up commands, the creator kit of 5.0.0, the twelve
+original skills and the five agents were written for this repository.
+Thirty-four files, listed in section B, keep prose from an MIT upstream
+inside a new declared grammar (forty-four did, until 5.0.0 rewrote ten of
+them). That fact decides the licence layout.
 
 | file | what it is | why |
 |---|---|---|
@@ -54,21 +56,26 @@ template and success criteria is retained; the frontmatter description, the
 DOCTYPE, the trust boundary, the grammar map and the added success criteria
 are new.
 
-Commands (33): `5-whys-dtd`, `10-10-10-dtd`, `add-to-todos-dtd`,
-`audit-skill-dtd`, `audit-slash-command-dtd`, `audit-subagent-dtd`,
-`check-todos-dtd`, `competitive-dtd`, `create-agent-skill-dtd`,
+Commands (24): `5-whys-dtd`, `10-10-10-dtd`, `add-to-todos-dtd`,
+`check-todos-dtd`, `competitive-dtd`, `debug-dtd`, `eisenhower-matrix-dtd`,
+`feasibility-dtd`, `heal-skill-dtd`, `history-dtd`, `inversion-dtd`,
+`landscape-dtd`, `occams-razor-dtd`, `one-thing-dtd`, `open-source-dtd`,
+`opportunity-cost-dtd`, `options-dtd`, `pareto-dtd`, `run-plan-dtd`,
+`setup-ralph-dtd`, `swot-dtd`, `technical-dtd`, `via-negativa-dtd`,
+`whats-next-dtd`. Nine more carried the upstream prose until 5.0.0 rewrote
+them from scratch as creators and auditors (`create-agent-skill-dtd`,
 `create-hook-dtd`, `create-meta-prompt-dtd`, `create-plan-dtd`,
-`create-slash-command-dtd`, `create-subagent-dtd`, `debug-dtd`,
-`eisenhower-matrix-dtd`, `feasibility-dtd`, `heal-skill-dtd`, `history-dtd`,
-`inversion-dtd`, `landscape-dtd`, `occams-razor-dtd`, `one-thing-dtd`,
-`open-source-dtd`, `opportunity-cost-dtd`, `options-dtd`, `pareto-dtd`,
-`run-plan-dtd`, `setup-ralph-dtd`, `swot-dtd`, `technical-dtd`,
-`via-negativa-dtd`, `whats-next-dtd`.
+`create-slash-command-dtd`, `create-subagent-dtd`, `audit-skill-dtd`,
+`audit-slash-command-dtd`, `audit-subagent-dtd`); they carry the portions
+line no more. This list is measured: it is the set of files under `src/`
+whose header carries that line, and the count is the grep's.
 
-Skills (11, whole directories): `create-agent-skills-dtd`, `create-hooks-dtd`,
+Skills (10, whole directories): `create-agent-skills-dtd`, `create-hooks-dtd`,
 `create-mcp-servers-dtd`, `create-meta-prompts-dtd`, `create-plans-dtd`,
-`create-prompt-dtd`, `create-slash-commands-dtd`, `create-subagents-dtd`,
-`debug-like-expert-dtd`, `run-prompt-dtd`, `setup-ralph-dtd`. In each, the
+`create-slash-commands-dtd`, `create-subagents-dtd`, `debug-like-expert-dtd`,
+`run-prompt-dtd`, `setup-ralph-dtd` (`create-prompt-dtd` was the eleventh
+until 5.0.0 replaced it with the schematic router; nothing of the upstream
+remains in it). In each, the
 supporting files under `references/`, `templates/`, `workflows/` and similar
 are the upstream's text unchanged apart from the SPDX header and line endings.
 
@@ -76,12 +83,16 @@ The three reference notes under `skills/dtd-core-dtd/references/`
 (`context-handoff.md`, `meta-prompting.md`, `todo-management.md`) are the
 upstream's design notes, retained under the same terms.
 
-Everything else is original: `bin/`, `lib/`, `dtd/`, `checker/`, `hooks/`,
-the four power-up commands (`first-principles-dtd`,
-`second-order-dtd`, `ask-me-questions-dtd`, `deep-dive-dtd`, whose prose was
-rewritten around the AskUserQuestion grammar), the twenty book-derived
-commands, `RoT-DtD-Commander-Adiutor`, the seven new skills, the four agents,
-and every document at the repository root.
+Everything else is original: `bin/`, `lib/`, `dtd/`, `checker/`, `monitors/`,
+the power-up commands (`first-principles-dtd`, `second-order-dtd`,
+`ask-me-questions-dtd` and its two variants, `deep-dive-dtd`, whose prose was
+rewritten around the AskUserQuestion grammar), the nineteen book-derived
+commands and `phantom-dtd`, the nine lens commands and ELEVATE, the creator
+kit of 5.0.0 (the sixteen prompt and meta-prompt creators, the seven artifact
+creators, the tasks family, the eight filetype creators and their router, the
+two dork creators, the coin flips, the repository commands),
+`RoT-DtD-Commander-Adiutor`, the twelve original skills, the five agents, and
+every document at the repository root.
 
 ### B.1 The lens material (2.0.0)
 
@@ -98,7 +109,7 @@ process in this repository's own words.
 
 ## C. What was left out, and why
 
-- The corpus of encyclopedia article copies that inspired the twenty
+- The corpus of encyclopedia article copies that inspired the nineteen
   book-derived commands is CC BY-SA and is not published here. The shelf notes
   in `skills/phantom-library-dtd/references/books.md` are original summaries.
 - A folder of third-party example DTDs (Apache Software Foundation, GNOME, IETF
@@ -115,9 +126,16 @@ the same discipline applies to what the instruments do **not** cover.
 - The checker (`rdc check`, rules C1 to C14) proves that a file's DOCTYPE and
   its prose agree: every declared element is named, every named channel is
   fenced, no entity is unresolved, the dialect validates, and every heading of the answer template carries the command's sigil with a blank line on each side (C13). It does not prove
-  that a model will obey the grammar.
+  that a model will obey the grammar: that is measured per run by the
+  Adiutor's Stop check, when armed or run by hand, and per build phase by the
+  Scratchpad Companion (`checker/companion-audit.sh`), a second session run
+  in the foreground that reads the diff and the tree and answers in a
+  declared grammar, scored on its finding elements and never on its prose.
+  The ai-slop sweep holds every source's voice to a declared bound; it does
+  not judge whether the prose is true.
 - `checker/contract-audit.mjs` proves that every element, entity and
-  parameter entity declared in the five shared subsets is used by at least
+  parameter entity declared in the twelve shared subsets and the Adiutor
+  contract is used by at least
   one source and that every law prefix is numbered densely; its own control
   plants an unused declaration and requires it to be reported. No static
   example instance is committed (2.0.0 removed them and the `xmlstarlet`
@@ -128,10 +146,16 @@ the same discipline applies to what the instruments do **not** cover.
   an assumptions section on an autonomous run, and that every short id an
   answer references was defined in it. It does not judge whether the content
   under a heading is true. A passing run means the answer had the declared
-  shape, nothing more, and the ledger says exactly that.
+  shape, nothing more, and the ledger says exactly that. Since 5.0.0 it runs
+  only when armed with `--arm` or run by hand (`rdc doctor`, `rdc controls`),
+  each under a 300 second ceiling, so a session with a plain install is not
+  checked at all until it asks to be.
 - `rdc build --check` proves the committed resolved tree equals a fresh
   resolve of `src/` at the commit it ran on, not at every commit; the workflow
-  runs it on every push and pull request.
+  runs it on every push and pull request, and `checker/tracked-sweep.sh`
+  refuses a build target an ignore rule catches, the one way the check can
+  pass on the machine that built it and fail on a fresh checkout (measured
+  on the first CI run of 5.0.0).
 - The guided installer's prompts are exercised by `docs/tapes/install.tape`,
   which is also the source of the README's GIF. On this maintainer's machine
   `vhs` stalls before spawning `ttyd`, so the GIFs were rendered by
@@ -139,12 +163,15 @@ the same discipline applies to what the instruments do **not** cover.
   the typed answers on stdin (`rdc install --guided`) and draws the captured
   output with `ffmpeg`. What the GIF shows is real output; what it does not
   show is a pseudo-terminal, so a prompt that misbehaves only under a real TTY
-  is outside this test.
+  is outside this test here; the `tapes` workflow renders every tape with
+  the real `vhs` on Ubuntu on each push that touches them and keeps the
+  result as a workflow artifact, so that case is covered there.
 
 ## E. Standing on other people's work
 
 - Lex Christopherson, `taches-cc-resources` (MIT): the thinking-model,
-  research and workflow commands and the eleven skills this layer converted.
+  research and workflow commands and the ten skills this layer still carries
+  (an eleventh, `create-prompt`, was replaced in 5.0.0).
 - The `vhs` and `ttyd` authors: the tape renderer behind the gallery.
 - This organisation's own `RoT-MoE` and `RoT-DTD-GOAL`, whose contract DTDs
   and both-direction checkers are the ancestors of `cc-core.dtd` and the

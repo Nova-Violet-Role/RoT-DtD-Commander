@@ -12,7 +12,7 @@ bad=0
 checked=0
 while IFS= read -r f; do
   case "$f" in
-    *.gif|*.png|*.tgz) continue ;;
+    *.gif|*.png|*.tgz|*.log) continue ;;
   esac
   [ -f "$f" ] || continue
   checked=$((checked+1))

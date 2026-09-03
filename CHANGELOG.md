@@ -330,6 +330,20 @@ only instrument and record faults, all closed before this line was dated.
   target under commands, skills or agents, with a planted ignored file as
   its control. The tag v5.0.0 moved to the commit that carries this, before
   any release existed.
+- The second CI run of 5.0.0 (a8773ad) failed the SPDX sweep on `check.log`,
+  the file the checker step tees into the tree: since 5.0.0 the sweep
+  enumerates untracked files too (its control plants one), and the local
+  chain never writes that log. The workflow tees outside the tree
+  (`$RUNNER_TEMP`) and both sweeps skip `*.log`. With it, the documents
+  caught up with the release: the README About carries the creator kit and
+  the hand-run Adiutor; NOTICE.md counts the declared portions as the
+  portions line measures them (twenty-four commands and ten skills; nine
+  creators and auditors and the create-prompt skill were rewritten in 5.0.0
+  and carry it no more) and states the limits as they stand; SECURITY.md
+  says a plain install arms nothing and names the one network call, the
+  release job's; the plugin, marketplace and package manifests carry the
+  5.0.0 counts and a fuller keyword set; the repository's About and topics
+  were set to the same through the API.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

@@ -13,7 +13,7 @@ missing=0
 checked=0
 while IFS= read -r f; do
   case "$f" in
-    *.json|*.jsonl|*.gif|*.png|*.txt|LICENSE*|LICENSES/*|.gitignore|*.tgz) continue ;;
+    *.json|*.jsonl|*.gif|*.png|*.txt|*.log|LICENSE*|LICENSES/*|.gitignore|*.tgz) continue ;;
   esac
   [ -f "$f" ] || continue
   checked=$((checked+1))

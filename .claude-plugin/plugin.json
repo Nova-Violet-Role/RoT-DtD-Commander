@@ -1,7 +1,7 @@
 {
   "name": "rot-dtd-commander",
   "version": "5.0.0",
-  "description": "RoT DtD Commander: 118 Claude Code commands, 22 skills and 5 agents that carry their own DTD grammar, verdict vocabulary, laws and trust boundary; the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it and prescribes on failure; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it. Checked in both directions by rules C1 to C14, the contract audited in both directions, twelve Adiutor guards and six checker mutations tripped on purpose.",
+  "description": "RoT DtD Commander 5.0.0, the creator kit: 118 Claude Code commands, 22 skills and 5 agents that carry their own DTD grammar, verdict vocabulary, laws and trust boundary; sixteen prompt and meta-prompt creators over eight schematics, creators for skills, hooks, commands, subagents, plans, MCP servers, workflow files, tasks, filetypes and dorks, each auditing what it wrote in the foreground; the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it, and the Commander-Adiutor monitor, both run by hand unless armed. Checked in both directions by rules C1 to C14, the contract audited in both directions (1253 declarations), twenty Adiutor guards and eighteen checker controls tripped on purpose, every claim measured in CI.",
   "author": {
     "name": "Saimonokuma",
     "url": "https://github.com/Nova-Violet-Role"
@@ -10,7 +10,11 @@
   "homepage": "https://github.com/Nova-Violet-Role/RoT-DtD-Commander",
   "repository": "https://github.com/Nova-Violet-Role/RoT-DtD-Commander",
   "keywords": [
-    "dtd", "claude-code", "hooks", "stop-hook", "prompt-engineering",
-    "trust-boundary", "installer", "npx", "thinking-models", "research"
+    "dtd", "doctype", "xml", "grammar", "trust-boundary",
+    "claude-code", "claude-code-plugin", "claude-code-commands", "claude-code-skills", "claude-code-agents",
+    "prompt-engineering", "meta-prompt", "creators", "schematics", "callout", "heredoc", "yaml", "nestedtext", "polyglot",
+    "workflow", "tasks", "records", "spdx", "reuse",
+    "hooks", "stop-hook", "monitor", "installer", "npx",
+    "thinking-models", "phantom-books", "rot-moe", "companion-audit", "ai-slop", "research"
   ]
 }

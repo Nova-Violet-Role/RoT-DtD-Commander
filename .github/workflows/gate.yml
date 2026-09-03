@@ -31,9 +31,9 @@ jobs:
         run: node bin/rot-dtd-commander.mjs build --check; echo "exit=$?"; node bin/rot-dtd-commander.mjs build --check
       - name: checker C1..C14 on every source
         run: |
-          node bin/rot-dtd-commander.mjs check | tee check.log
+          node bin/rot-dtd-commander.mjs check | tee "$RUNNER_TEMP/check.log"
           test "${PIPESTATUS[0]}" -eq 0
-          grep -q 'failed 0' check.log
+          grep -q 'failed 0' "$RUNNER_TEMP/check.log"
       - name: heading shape (every grammar_map heading is a sigil heading with blank lines; the sweep is a no-op)
         run: node checker/heading-sweep.mjs --check
       - name: front matter parses as YAML (no bare colon-space or hash in a value; the sweep is a no-op)
