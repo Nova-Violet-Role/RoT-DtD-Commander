@@ -1,7 +1,7 @@
 {
   "name": "rot-dtd-commander",
   "version": "6.0.0",
-  "description": "RoT DtD Commander: 123 Claude Code commands (the nine RoT MoE lenses as commands among them), 22 skills and 5 agents that carry their own DTD grammar and trust boundary, the creator kit (prompt, meta-prompt, skill, hook, command, subagent, plan, MCP, workflow, task, filetype and dork creators), a guided NPX installer into ~/.claude, the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it, and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it; both run by hand unless armed.",
+  "description": "RoT DtD Commander: 123 Claude Code commands, 22 skills and 5 agents that carry their own DTD grammar and trust boundary, the creator kit (prompt, meta-prompt, skill, hook, command, subagent, plan, MCP, workflow, task, filetype and dork creators), a guided NPX installer into ~/.claude, the Adiutor Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it, the AI_SLOP gate on five spots when armed, and the codebase growth family that walks any codebase and names the release its findings amount to.",
   "type": "module",
   "license": "AGPL-3.0-or-later OR EUPL-1.2",
   "author": {
@@ -51,7 +51,7 @@
     "doctor": "node bin/adiutor.mjs doctor",
     "watch": "node bin/rot-dtd-commander.mjs watch",
     "sweep": "bash checker/spdx-sweep.sh && bash checker/crlf-sweep.sh",
-    "gate": "node checker/gate-sync.mjs && npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep && npm run controls:ordinals && npm run controls:slop && npm run controls:ceiling && npm run controls:form && npm run controls:args && npm run controls:schematic && npm run controls:workflow && npm run controls:task && npm run controls:record && npm run controls:license && npm run controls:scratch && npm run controls:amplify && npm run sweep:engines && npm run sweep:slop && npm run sweep:prose && npm run sweep:tracked && npm run sweep:index && npm run sweep:counts && node checker/release-notes.mjs --versions && node checker/release-notes.mjs --controls",
+    "gate": "node checker/gate-sync.mjs && npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep && npm run controls:ordinals && npm run controls:slop && npm run controls:ceiling && npm run controls:form && npm run controls:args && npm run controls:schematic && npm run controls:workflow && npm run controls:task && npm run controls:record && npm run controls:license && npm run controls:scratch && npm run controls:amplify && npm run sweep:engines && npm run sweep:about && npm run sweep:slop && npm run sweep:prose && npm run sweep:tracked && npm run sweep:index && npm run sweep:counts && node checker/release-notes.mjs --versions && node checker/release-notes.mjs --controls",
     "install-home": "node bin/rot-dtd-commander.mjs install --yes",
     "controls:ordinals": "node lib/ordinals.mjs controls",
     "controls:slop": "node lib/ai-slop.mjs controls",
@@ -70,7 +70,8 @@
     "sweep:tracked": "bash checker/tracked-sweep.sh",
     "sweep:index": "node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls",
     "sweep:counts": "node checker/counts-sweep.mjs && node checker/counts-sweep.mjs --controls",
-    "sweep:engines": "node checker/engines-sweep.mjs && node checker/engines-sweep.mjs --controls"
+    "sweep:engines": "node checker/engines-sweep.mjs && node checker/engines-sweep.mjs --controls",
+    "sweep:about": "node checker/about-sweep.mjs && node checker/about-sweep.mjs --controls"
   },
   "keywords": [
     "claude-code",

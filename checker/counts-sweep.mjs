@@ -64,14 +64,14 @@ export function places(c) {
     { file: 'package.json', re: /(\d+) Claude Code commands/, want: [c.commands], label: 'the package description' },
     { file: 'package.json', re: /(\d+) skills and (\d+) agents/, want: [c.skills, c.agents], label: 'the package description, skills and agents' },
     { file: '.claude-plugin/plugin.json', re: /(\d+) Claude Code commands, (\d+) skills and (\d+) agents/, want: [c.commands, c.skills, c.agents], label: 'the plugin description' },
-    { file: '.claude-plugin/plugin.json', re: /\((\d+) declarations\)/, want: [c.declarations], label: 'the plugin description, declarations' },
+    { file: '.claude-plugin/plugin.json', re: /(\d+) declarations/, want: [c.declarations], label: 'the plugin description, declarations' },
     { file: '.claude-plugin/plugin.json', re: /([a-z-]+) Adiutor guards and ([a-z-]+) checker controls/, want: [c.guards, c.checkerControls], label: 'the plugin description, guards' },
     { file: '.claude-plugin/marketplace.json', re: /"(\d+) commands, (\d+) of them -dtd/, want: [c.commands, c.commands - 1], label: 'the marketplace plugin description' },
     // The claim rows publish what an instrument prints; a row that no longer
     // re-runs is exactly what this sweep exists to refuse.
     { file: 'README.md', re: /gate-sync\.mjs`: `(\d+) commands in the gate chain/, want: [c.gateChain], label: 'the claims row of the gate chain' },
     { file: 'README.md', re: /amplify\.mjs controls`: `(\d+) run, 0 failing/, want: [c.amplifyControls], label: 'the claims row of the amplify controls' },
-    { file: '.claude-plugin/marketplace.json', re: /(\d+) skills, (\d+) agents/, want: [c.skills, c.agents], label: 'the marketplace plugin description, skills and agents' },
+    { file: '.claude-plugin/marketplace.json', re: /(\d+) skills and (\d+) agents/, want: [c.skills, c.agents], label: 'the marketplace plugin description, skills and agents' },
   ];
 }
 

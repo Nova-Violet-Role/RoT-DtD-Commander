@@ -74,6 +74,8 @@ jobs:
         run: node lib/amplify.mjs controls
       - name: every engine a shipped command invokes is a file the installer writes (two families once shipped without theirs)
         run: node checker/engines-sweep.mjs && node checker/engines-sweep.mjs --controls
+      - name: the About and the three manifest descriptions say what the tree measures (the About sat two majors behind because nothing read it)
+        run: node checker/about-sweep.mjs && node checker/about-sweep.mjs --controls
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
       - name: the generated contract and the growth state record pass the same measures
