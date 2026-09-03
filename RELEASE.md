@@ -18,6 +18,28 @@
 
 ---
 
+## v5.0.1 — the privacy policy and the command index
+
+`PRIVACY.md` says what the software reads, writes and sends on your machine,
+component by component and measured, what leaves it and to whom, what the
+organisation holds and for how long, and the rights with their two structural
+limits. The README index is generated from the tree by
+`checker/readme-index.mjs`: a map of the twelve families, a badge per family,
+a collapsible table each, the skills and the agents; the gate refuses a README
+that disagrees with the files, and a version-agreement check refuses a tag
+whose version the manifests, the changelog and this file do not share. Every
+number is in [CHANGELOG.md](CHANGELOG.md). The tag is `v5.0.1`.
+
+## v5.0.0 — the creator kit
+
+Sixteen prompt and meta-prompt creators over eight schematics, creators for
+skills, hooks, commands, subagents, plans, MCP servers and workflow files, a
+tasks family, filetype and dork creators, nineteen book-derived commands with
+their voice profiles, records that nest, an Adiutor that runs only by hand,
+and every count re-measured: 118 commands, 22 skills, 5 agents. Nine
+companion runs audited the work, and CI ships the release from the tag. Every
+number is in [CHANGELOG.md](CHANGELOG.md). The tag is `v5.0.0`.
+
 ## v4.0.0 — the Commander-Adiutor
 
 The Adiutor's monitor, a separate process beside the hooks:

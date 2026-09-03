@@ -14,6 +14,15 @@ data, measured line by line, and a README that names every one of the
 hundred and eighteen commands, twenty-two skills and five agents from the
 tree, with a gate sweep that refuses a README which disagrees with the files.
 
+- The release job refused the first v5.0.1 tag: package.json still said
+  5.0.0, and the job's first step is built to refuse exactly that.
+  `checker/release-notes.mjs --versions` now holds package.json,
+  plugin.json, both marketplace.json fields, the top CHANGELOG section and a
+  RELEASE.md heading to one version, refuses a tag that differs, and runs in
+  the gate and as the release job's first check (three controls: agreeing
+  versions report nothing, a stray manifest and a missing heading are both
+  named, a wrong tag is refused). RELEASE.md gained its 5.0.0 and 5.0.1
+  entries, and the manifests' descriptions carry no version number.
 - The README index. The README named 89 of the 118 commands by token and 15
   of the 22 skills by name, counting the rest by family (the three sets of
   eight schematic creators, the four coin flips, setup-ralph). Now

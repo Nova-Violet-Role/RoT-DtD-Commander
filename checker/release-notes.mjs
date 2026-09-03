@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
 // Copyright 2026 Saimonokuma.
 //
-// checker/release-notes.mjs <version> | --payload <tag> | --controls
+// checker/release-notes.mjs <version> | --payload <tag> | --versions [tag] | --controls
 // The release notes of a version are its CHANGELOG.md section: the lines
 // after the `## <version> (<date>)` heading up to the next `## ` heading.
 // Two refusals: a version with no section, and a heading still marked
@@ -54,6 +54,41 @@ export function payload(tag, changelog) {
   return { ok: true, json: { tag_name: tag, name: releaseName(version, s.body), body: s.body, draft: false, prerelease: false } };
 }
 
+// The version is one everywhere: package.json, plugin.json, both fields of
+// marketplace.json, the top section of CHANGELOG.md (in progress or dated)
+// and a "## v<version>" heading in RELEASE.md; a tag, when given, must be
+// v<version>. The release job refused the first v5.0.1 tag because
+// package.json still said 5.0.0: this is the check that names that before
+// a tag is cut.
+export function versions(root = ROOT) {
+  const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version;
+  const plugin = JSON.parse(readFileSync(join(root, '.claude-plugin', 'plugin.json'), 'utf8')).version;
+  const mk = JSON.parse(readFileSync(join(root, '.claude-plugin', 'marketplace.json'), 'utf8'));
+  const top = readFileSync(join(root, 'CHANGELOG.md'), 'utf8').match(/^## (\d+\.\d+\.\d+) \(([^)]*)\)/m) || [];
+  const esc = String(pkg).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const releaseHeading = new RegExp(`^## v${esc}\\b`, 'm').test(readFileSync(join(root, 'RELEASE.md'), 'utf8'));
+  return {
+    'package.json': pkg,
+    'plugin.json': plugin,
+    'marketplace.json metadata': mk.metadata && mk.metadata.version,
+    'marketplace.json plugin': mk.plugins && mk.plugins[0] && mk.plugins[0].version,
+    'CHANGELOG.md top section': top[1],
+    changelogState: top[2] || '',
+    releaseHeading,
+  };
+}
+
+export function versionFindings(v, tag = null) {
+  const want = v['package.json'];
+  const out = [];
+  for (const n of ['plugin.json', 'marketplace.json metadata', 'marketplace.json plugin', 'CHANGELOG.md top section']) {
+    if (v[n] !== want) out.push(`${n} says ${v[n]}, package.json says ${want}`);
+  }
+  if (!v.releaseHeading) out.push(`RELEASE.md has no heading "## v${want}"`);
+  if (tag && tag !== `v${want}`) out.push(`the tag ${tag} is not v${want}`);
+  return out;
+}
+
 function controls() {
   const planted = [
     '# Changelog', '',
@@ -73,7 +108,14 @@ function controls() {
   say(!two.ok && /in progress/.test(two.reason), `trip: an in-progress heading is refused: ${two.reason}`);
   const three = section(planted, '3.0.0');
   say(!three.ok && /no section/.test(three.reason), `trip: a version with no section is refused: ${three.reason}`);
-  console.log(`release-notes controls: 4 run, ${fail} failing`);
+  const sound = { 'package.json': '1.0.0', 'plugin.json': '1.0.0', 'marketplace.json metadata': '1.0.0', 'marketplace.json plugin': '1.0.0', 'CHANGELOG.md top section': '1.0.0', changelogState: '2026-01-01', releaseHeading: true };
+  say(versionFindings(sound, 'v1.0.0').length === 0, 'versions that agree everywhere, with their tag, report nothing');
+  const stray = versionFindings({ ...sound, 'plugin.json': '1.0.1', releaseHeading: false });
+  say(stray.length === 2 && /plugin\.json says 1\.0\.1/.test(stray[0]) && /RELEASE\.md/.test(stray[1]),
+    `trip: a stray plugin.json version and a missing RELEASE.md heading are both reported: ${stray.join('; ')}`);
+  const wrongTag = versionFindings(sound, 'v1.0.1');
+  say(wrongTag.length === 1 && /the tag v1\.0\.1 is not v1\.0\.0/.test(wrongTag[0]), `trip: a tag that is not the version is refused: ${wrongTag[0]}`);
+  console.log(`release-notes controls: 7 run, ${fail} failing`);
   return fail === 0;
 }
 
@@ -82,6 +124,15 @@ function controls() {
 function main() {
   const args = process.argv.slice(2);
   if (args[0] === '--controls') process.exit(controls() ? 0 : 1);
+  if (args[0] === '--versions') {
+    const v = versions();
+    for (const k of ['package.json', 'plugin.json', 'marketplace.json metadata', 'marketplace.json plugin', 'CHANGELOG.md top section']) console.log(`  ${k}: ${v[k]}`);
+    console.log(`  RELEASE.md heading "## v${v['package.json']}": ${v.releaseHeading ? 'present' : 'MISSING'}; changelog top section ${v.changelogState}${args[1] ? `; tag ${args[1]}` : ''}`);
+    const f = versionFindings(v, args[1] || null);
+    for (const line of f) console.log(`  DISAGREE ${line}`);
+    console.log(`release-notes versions: ${f.length === 0 ? `one version everywhere, ${v['package.json']}` : `${f.length} disagreements`}`);
+    process.exit(f.length === 0 ? 0 : 1);
+  }
   const changelog = readFileSync(join(ROOT, 'CHANGELOG.md'), 'utf8');
   if (args[0] === '--payload') {
     const p = payload(args[1] || '', changelog);

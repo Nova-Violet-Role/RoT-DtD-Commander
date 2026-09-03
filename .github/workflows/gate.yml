@@ -71,11 +71,13 @@ jobs:
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
       - name: the root documents pass the slop measures (the release ships a changelog section)
-        run: node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md && node lib/ai-slop.mjs NOTICE.md && node lib/ai-slop.mjs SECURITY.md && node lib/ai-slop.mjs PRIVACY.md
+        run: node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md && node lib/ai-slop.mjs NOTICE.md && node lib/ai-slop.mjs SECURITY.md && node lib/ai-slop.mjs PRIVACY.md && node lib/ai-slop.mjs RELEASE.md
       - name: every build target is tracked (an ignored target passes here and drifts on a fresh checkout)
         run: bash checker/tracked-sweep.sh
       - name: the README index names every command, skill and agent of the tree (generated; its controls)
         run: node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls
+      - name: one version everywhere (package.json, plugin.json, marketplace.json, the changelog, RELEASE.md)
+        run: node checker/release-notes.mjs --versions
       - name: release-notes controls (the release job's instrument can fail)
         run: node checker/release-notes.mjs --controls
       - name: every tape has a committed GIF under 2 MB
@@ -123,11 +125,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: the tag names the version in package.json
-        run: |
-          v="v$(node -p "require('./package.json').version")"
-          echo "tag $GITHUB_REF_NAME, package.json $v"
-          test "$v" = "$GITHUB_REF_NAME"
+      - name: the tag names the one version the manifests, the changelog and RELEASE.md share
+        run: node checker/release-notes.mjs --versions "$GITHUB_REF_NAME"
       - name: the notes are the CHANGELOG section of that version, dated, no longer in progress
         run: |
           node checker/release-notes.mjs "${GITHUB_REF_NAME#v}" > notes.md
