@@ -1677,11 +1677,11 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
   monitor (monitors/commander-adiutor.mjs) reads that ledger only and hands
   every failed run to the session as it closes; it never reads a
   transcript and never judges. This file declares the run, its states, its
-  policy, the ledger record and the two lines the monitor may print.
+  policy, the ledger record and the three lines the monitor may print.
   `node bin/adiutor.mjs controls` runs both ways: the policy default
   declared here must equal the code default in bin/adiutor.mjs, every
   RECORD.run field must be written by the code (C7), and the monitor's
-  printed lines must match MONITOR.fail and MONITOR.malformed (C12), and a
+  printed lines must match MONITOR.fail, MONITOR.record and MONITOR.malformed (C12), and a
   lagging answer behind narration must be completed from the Stop payload
   (C13), and a sloppy answer must close as a slop finding (C19).
 -->
@@ -1720,7 +1720,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ENTITY ADIUTOR.strict.max_blocks "1">
 <!ENTITY RECORD.run "run|ledger.tsv|1=ts:PCDATA@1|2=session:PCDATA@1|3=command:PCDATA@1|4=root:PCDATA@1|5=expected:CDATA@1|6=tools:PCDATA@1|7=errors:CDATA@1|8=status:PCDATA@1|9=findings:CDATA@1|10=prescription:CDATA@1">
 
-<!-- The two lines the monitor may print. %name% marks the one field taken
+<!-- The three lines the monitor may print. %name% marks the one field taken
      from the ledger row or the reader; the rest is literal. -->
 <!ENTITY MONITOR.name      "commander-adiutor">
 <!ENTITY MONITOR.fail      "Adiutor: /%command% failed at Stop: %finding%. Run /RoT-DtD-Commander-Adiutor.">
@@ -1733,7 +1733,7 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ENTITY LAW.ADIUTOR.4 "The Adiutor edits no file the user owns and spawns no process from a hook; it writes only under its own state directory and, when arming, settings.json with a backup first.">
 <!ENTITY LAW.ADIUTOR.5 "Every closed run is one ledger line with the ten RECORD.run fields in order; a line with more or fewer columns is refused by the reader.">
 <!ENTITY LAW.ADIUTOR.6 "Every guard has a control that was tripped on purpose before the guard was trusted.">
-<!ENTITY LAW.ADIUTOR.7 "The monitor reads the ledger and nothing else: one MONITOR.fail line per run closed as fail, one MONITOR.malformed line per line the reader refuses, nothing for a pass, and never a line for a run that closed before it started.">
+<!ENTITY LAW.ADIUTOR.7 "The monitor reads the ledger and nothing else: one MONITOR.fail line per run closed as fail on any finding but a record fault, one MONITOR.record line per run closed on a record fault (its first finding opens with the word record), one MONITOR.malformed line per line the reader refuses, nothing for a pass, and never a line for a run that closed before it started.">
 <!ENTITY LAW.ADIUTOR.8 "A file that declares no rendered heading is still judged by the shared laws: a non-empty answer, every heading carrying the sigil with a blank line before and after it, an Assumptions Made heading when the run had no gate, and every reference resolved; no run closes as skipped.">
 <!ENTITY LAW.ADIUTOR.9 "Every answer is measured by the AI_SLOP gate of ai-slop.dtd at Stop, after the grammar check; a gate that does not hold is a finding of kind slop, closes the run as fail like any other finding, and its prescription names the measure that failed (control C19).">
 <!ENTITY LAW.ADIUTOR.10 "The Adiutor and its monitor run only when the operator runs them: no plugin manifest arms a hook, no loader file starts the monitor, an install arms nothing unless --arm is given, and every run of either ends at a 300 second ceiling (the Stop hook timeout when armed, the delegate timeout of rdc doctor and rdc controls, and --secs of rdc watch).">

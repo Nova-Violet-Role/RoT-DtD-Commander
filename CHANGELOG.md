@@ -233,8 +233,8 @@ counts are re-measured.
   show | check | controls` holds the list and the definitions to each other
   in both directions and accepts a single, a double or a triple joined by OR
   or AND; LICENSE.definitions and LAW.LICENSE.3; controls:license in the gate.
-- Companion run 5 (v5-blocks-4-6, opus, 37 turns, 379 s): fail with two high,
-  four medium and two low findings, all closed: control C12 now trips the
+- Companion run 5 (v5-blocks-4-6, opus, 37 turns, 382 s): fail with eight
+  findings, two high, four medium and two low, all closed: control C12 now trips the
   MONITOR.record line (three templates held); the README claims table
   re-measured (check 145, build 282, contract-audit 1253, Adiutor controls
   20) and the shelf at nineteen, the skills at twenty-two; LAW.ADIUTOR.9 and
@@ -242,6 +242,16 @@ counts are re-measured.
   laws are read in, not only their density, with a planted control; the slop
   sweep refuses a sweep of no file, with a control; the monitor's header
   names all three templates.
+- Companion run 6 (v5-closing, opus, 26 turns, 258 s): fail with eight
+  findings, one high and the rest medium or low, all closed: LAW.ADIUTOR.7
+  carves out the record fault it contradicted, and the contract's header
+  names three lines; the contract audit names a source file in its order
+  message (it read undefined) and plants the disorder in a source too;
+  the sweep floor cites no law that does not govern it; the changelog and
+  the run 5 record say eight and 382 s; the README skills sentence closes
+  its arithmetic (eleven converted, eight of 4.0.0, three of 5.0.0). The
+  companion wrote its findings as bold lines instead of finding elements,
+  so the script counted no high finding; the substance stood.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

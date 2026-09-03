@@ -66,7 +66,7 @@ function audit({ dtdDir = join(ROOT, 'dtd'), srcDir = join(ROOT, 'src') } = {}) 
       read.set(m[1], seq);
     }
     for (const [p, seq] of read) {
-      for (let i = 1; i < seq.length; i++) if (seq[i] <= seq[i - 1]) { gaps.push(`LAW.${p} out of order in ${src.f}: read ${seq.join(', ')}`); break; }
+      for (let i = 1; i < seq.length; i++) if (seq[i] <= seq[i - 1]) { gaps.push(`LAW.${p} out of order in ${src.f || src.p || src.path}: read ${seq.join(', ')}`); break; }
     }
   }
   for (const [p, set] of laws) {
@@ -103,4 +103,17 @@ try {
   unlinkSync(plant2);
 }
 console.log(ordered ? 'control: two laws planted out of order are reported' : 'CONTROL FAIL: the planted disorder was not reported');
-process.exit(r.unused.length || r.gaps.length || !tripped || !ordered ? 1 : 0);
+// the same disorder planted in a source file, so the src arm is exercised and names its file
+const plant3 = join(ROOT, 'src', 'commands', 'zz-order-control-dtd.md');
+writeFileSync(plant3, '---\ndescription: control\n---\n<!DOCTYPE zz [\n  <!ENTITY LAW.ZZSRC.2 "second first">\n  <!ENTITY LAW.ZZSRC.1 "first second">\n]>\n', 'utf8');
+let orderedSrc = false;
+let srcMsg = '';
+try {
+  const c = audit();
+  srcMsg = c.gaps.find((g) => /LAW\.ZZSRC out of order/.test(g)) || '';
+  orderedSrc = /zz-order-control-dtd\.md/.test(srcMsg) && !/undefined/.test(srcMsg);
+} finally {
+  unlinkSync(plant3);
+}
+console.log(orderedSrc ? 'control: two laws planted out of order in a source are reported with the file named' : 'CONTROL FAIL: the planted disorder in a source was not reported with its file: ' + srcMsg);
+process.exit(r.unused.length || r.gaps.length || !tripped || !ordered || !orderedSrc ? 1 : 0);

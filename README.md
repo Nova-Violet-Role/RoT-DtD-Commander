@@ -266,12 +266,13 @@ organisation's own RoT MoE packet at v10.0.2 (the nine charters and the engine),
 `/check-todos-dtd`, `/run-plan-dtd`, `/heal-skill-dtd`, `/debug-dtd`, the
 `create-*-dtd` and `audit-*-dtd` wrappers, and `/RoT-DtD-Commander-Adiutor`.
 
-Twenty-two skills load themselves when the description matches (`ai-slop-dtd`, `iupac-ordinals-dtd` and `dtd-forms-dtd` among them): the eleven
+Twenty-two skills load themselves when the description matches: the eleven
 converted ones (`create-plans-dtd`, `create-slash-commands-dtd`,
-`debug-like-expert-dtd`, and the rest) and eight new: `dtd-core-dtd` (the
+`debug-like-expert-dtd`, and the rest), eight of 4.0.0: `dtd-core-dtd` (the
 contract), `dtd-forge-dtd` (make a new command), `dtd-audit-dtd`,
 `ask-gate-dtd`, `phantom-library-dtd`, `records-dtd`, `dtd-eval-dtd`, and
-`rot-lenses-dtd` (the nine lenses' rows, bands and hybrid law). Four
+`rot-lenses-dtd` (the nine lenses' rows, bands and hybrid law), and three of
+5.0.0: `ai-slop-dtd`, `iupac-ordinals-dtd` and `dtd-forms-dtd`. Four
 agents audit the set: `slash-command-auditor-dtd`, `skill-auditor-dtd`,
 `subagent-auditor-dtd`, `dtd-contract-auditor`. A fifth,
 `dtd-command-inventory`, audits nothing: it holds Read, Grep and Glob only
