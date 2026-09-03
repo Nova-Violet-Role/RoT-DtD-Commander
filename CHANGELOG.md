@@ -248,15 +248,21 @@ counts are re-measured.
   names three lines; the contract audit names a source file in its order
   message (it read undefined) and plants the disorder in a source too;
   the sweep floor cites no law that does not govern it; the changelog and
-  the run 5 record say eight and 382 s; the README skills sentence closes
+  the run 5 record say eight and 379 s; the README skills sentence closes
   its arithmetic (eleven converted, eight of 4.0.0, three of 5.0.0). The
   companion wrote its findings as bold lines instead of finding elements,
   so the script counted no high finding; the substance stood. The records
   of the runs live in the workspace beside this repository, under
   `../artifacts/companion-audit/` as `companion-audit.<ordinal>.md`, which
-  this repository does not track.
-- Companion run 7 (v5-closing-2, opus, 38 turns, 355 s): fail with three
-  high, three medium and one low, all closed: the prompt now commands the
+  this repository does not track. The ordinal numbers the files of this
+  command, not the runs (LAW.IUPAC.7): heis is foundations-1 run 2, duo is
+  top-1 run 4 (run 3 is closed inside it), treis, tessares and pente are
+  runs 5, 6 and 7 of this session, hex is run 8; run 1 captured a hook
+  stanza and left no file.
+- Companion run 7 (v5-closing-2, opus, 38 turns, 355 s): fail with two
+  high, three medium and two low as its finding elements count (the scorer
+  printed three high because it read a sentence of the prose, the fault run
+  8 named), all closed: the prompt now commands the
   finding element spelling and the scorer counts it and the bold spelling,
   exposed as `companion-audit.sh --score` and tripped by controls M9 to M13
   (a high in each spelling, a fail with none, a pass, a scope line of another
@@ -264,6 +270,15 @@ counts are re-measured.
   durations above corrected from the runs' own JSON; the subsets index names
   MONITOR.record and eleven laws; the contract audit plants its source
   disorder in a temporary tree, never in src/, and drops a dead alternative.
+- Companion run 8 (v5-closing-3, opus, 30 turns, 355 s): fail with three
+  high, five medium and two low, all closed: the scorer counts a high
+  finding only on a line that opens a finding element (a sentence in the
+  prose and a bold line count for nothing; M10 and M14 prove it), the bold
+  arm is gone so the prompt's "no other spelling" is true, M13 carries the
+  landed proof that the replaced expression accepted the wrong range, the
+  synopsis names --score and exit 2, the comments say M9 to M14, the run 7
+  counts above are the finding elements' own, the run 5 sentence agrees
+  with itself, and the record key above says which file is which run.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

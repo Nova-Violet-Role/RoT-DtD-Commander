@@ -5,6 +5,7 @@
 # checker/companion-audit.sh : run the Scratchpad Companion on one build phase.
 #
 #   bash checker/companion-audit.sh <phase-name> <git-range> [out-dir] [model] [turns] [seconds]
+#   bash checker/companion-audit.sh --score <answer-file> <phase-name> <git-range> [model]
 #
 # Foreground only. stdin closed, a turn ceiling, a wall-clock ceiling, the
 # raw JSON stream teed to <out-dir>/companion-<phase>.json, the answer
@@ -15,6 +16,7 @@
 #   exit 0   last line is COMPANION VERDICT: pass
 #   exit 1   last line is COMPANION VERDICT: fail, or is not a verdict line
 #   exit 124 the ceiling fired: the phase is UNAUDITED (LAW.COMPANION.5)
+#   exit 2   the verdict entities are not declared, or --score lacks its arguments
 # The contract the companion answers in is checker/companion-audit.dtd.
 # ROTMOE_VOICE=0 silences the voice hooks in the nested session so its
 # final message is the audit and not a stanza.
@@ -26,16 +28,18 @@ vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audi
 [ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
 
 # The scorer, on one answer file. Reads the LAST non-empty line for the
-# verdict; counts a high finding in the element spelling the prompt commands
-# (severity="high") and in the bold line spelling a companion once used
-# (**high ·); holds the scope line to this run with a fixed-string, whole-line
-# match. checker/checker-controls.sh trips it on planted answers (M9 to M12).
+# verdict; counts a high finding only on a line that opens a finding element
+# and carries severity="high", the one spelling the prompt commands, so a
+# bold line or a sentence in the prose that mentions the attribute counts
+# for nothing; holds the scope line to this run with a fixed-string,
+# whole-line match. checker/checker-controls.sh trips it on planted answers
+# (M9 to M14).
 score() {
   local log="$1" phase="$2" range="$3" model="$4"
   local last nverdict nhigh scope_ok
   last="$(grep -v '^[[:space:]]*$' "$log" | tail -1)"
   nverdict=$(grep -c '^COMPANION VERDICT' "$log")
-  nhigh=$(( $(grep -c 'severity="high"' "$log") + $(grep -c '^\*\*high ·' "$log") ))
+  nhigh=$(grep -c '^<finding .*severity="high"' "$log")
   scope_ok=$(grep -c -F -x "phase=$phase range=$range model=$model" "$log")
   echo "companion: last line: $last; verdict lines=$nverdict; high findings=$nhigh; scope line=$scope_ok"
   [ "$nverdict" -eq 1 ] || { echo "companion: LAW.COMPANION.4 broken, $nverdict verdict lines"; return 1; }

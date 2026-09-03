@@ -3,9 +3,11 @@
 # Copyright 2026 Saimonokuma.
 #
 # checker/checker-controls.sh
-# Trip the checker on purpose. Three mutations of a resolved command, each
-# asserted PRESENT before the check runs, each expected to fail with its
-# named rule; then the untouched file, expected to pass.
+# Trip the checker on purpose. M1 to M8: mutations of a resolved command,
+# each asserted PRESENT before the check runs, each expected to fail with
+# its named rule (or, for M8, to pass); M0: the untouched file, expected to
+# pass; M9 to M14: the companion scorer on whole planted answers, each
+# expected to score as its law says.
 # validator: a broken instance must be rejected with a named error before
 # the valid instance's pass counts.
 set -u
@@ -53,19 +55,22 @@ out=$(run "$T/commands/m8.md"); echo "$out" | grep -q 'failed 0' && echo "PASS M
 out=$(run "$T/commands/pareto-dtd.md"); echo "$out" | grep -q 'failed 0' && echo "PASS M0 untouched file passes" || { echo "FAIL M0"; echo "$out" | tail -3; fail=1; }
 
 
-# M9..M12: the companion scorer on planted answers (LAW.COMPANION.4 and 6)
+# M9..M14: the companion scorer on planted answers (LAW.COMPANION.4 and 6)
 scope="phase=p range=a..b model=opus"
 score() { bash checker/companion-audit.sh --score "$1" p a..b opus >/dev/null 2>&1; }
 printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high" confidence="measured">planted</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m9.md"
 score "$T/m9.md"; rc=$?; [ $rc -eq 1 ] && echo "PASS M9 a fail with a high finding in the element spelling scores as a fail (exit 1)" || { echo "FAIL M9 exit=$rc"; fail=1; }
 printf '%s\n\n### 🩺 Findings\n\n**high · measured · x:1** planted in the bold spelling\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m10.md"
-score "$T/m10.md"; rc=$?; [ $rc -eq 1 ] && bash checker/companion-audit.sh --score "$T/m10.md" p a..b opus 2>&1 | grep -q 'high findings=1' && echo "PASS M10 the bold spelling of a high finding is counted" || { echo "FAIL M10 exit=$rc"; fail=1; }
+out=$(bash checker/companion-audit.sh --score "$T/m10.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'high findings=0' && echo "$out" | grep -q 'a fail with no high finding' && echo "PASS M10 a bold line is not a finding: high findings=0 and the fail is refused" || { echo "FAIL M10 exit=$rc"; fail=1; }
 printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="low" confidence="measured">planted</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m11.md"
 out=$(bash checker/companion-audit.sh --score "$T/m11.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'a fail with no high finding' && echo "PASS M11 a fail with no high finding breaks LAW.COMPANION.4 (exit 1, named)" || { echo "FAIL M11 exit=$rc"; fail=1; }
 printf '%s\n\n### 🩺 Findings\n\nnone\n\nCOMPANION VERDICT: pass\n' "$scope" > "$T/m12.md"
 score "$T/m12.md"; rc=$?; [ $rc -eq 0 ] && echo "PASS M12 a pass with the scope line scores as a pass (exit 0)" || { echo "FAIL M12 exit=$rc"; fail=1; }
 printf 'phase=p range=axxb model=opus\n\nCOMPANION VERDICT: pass\n' > "$T/m13.md"
-out=$(bash checker/companion-audit.sh --score "$T/m13.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.6' && echo "PASS M13 a scope line of another range is refused by a whole-line fixed-string match" || { echo "FAIL M13 exit=$rc"; fail=1; }
+old=$(grep -c "^phase=p range=a..b model=opus\$" "$T/m13.md"); [ "$old" -eq 1 ] || { echo "M13 landed proof failed: the replaced expression should have matched axxb, got $old"; fail=1; }
+out=$(bash checker/companion-audit.sh --score "$T/m13.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.6' && echo "PASS M13 the replaced expression accepted axxb for a..b (landed proof), the whole-line fixed-string match refuses it" || { echo "FAIL M13 exit=$rc"; fail=1; }
+printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="low" confidence="measured">planted</finding>\n\n### 🩺 Next\n\nRaise the severity="high" on the next run.\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m14.md"
+out=$(bash checker/companion-audit.sh --score "$T/m14.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'high findings=0' && echo "$out" | grep -q 'a fail with no high finding' && echo "PASS M14 the attribute in prose counts for nothing: high findings=0 and the fail is refused" || { echo "FAIL M14 exit=$rc"; fail=1; }
 
 rm -rf "$T"
 echo "checker-controls: $([ $fail -eq 0 ] && echo all tripped as designed || echo A CONTROL DID NOT FIRE)"
