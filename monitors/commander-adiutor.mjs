@@ -13,11 +13,12 @@
 // (the Claude Code Monitor contract), so it prints only what needs acting on:
 //
 //   MONITOR.fail       one line per run that closed as fail
+//   MONITOR.record     one line per run that closed on a record finding (LAW.ADIUTOR.11)
 //   MONITOR.malformed  one line per ledger line that is not the ten-field RECORD.run
 //
-// and nothing for a pass. Both templates are declared in dtd/adiutor.dtd;
+// and nothing for a pass. The three templates are declared in dtd/adiutor.dtd;
 // control C12 in bin/adiutor.mjs trips this monitor on purpose and holds the
-// printed lines to those templates.
+// printed lines to all three.
 //
 //   node commander-adiutor.mjs [--poll <ms>] [--once] [--from-start] [--secs <n>]
 //     default   start at the current end of the ledger, poll every 1000 ms,

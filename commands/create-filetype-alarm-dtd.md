@@ -822,8 +822,8 @@ argument-hint: [what the file type is for, or leave blank; --no-gate for autonom
 <!ENTITY ASK.LICENSE.1 "License|Which SPDX license heads the files? A double or triple joins two or three with OR or AND.|AGPL-3.0-or-later OR EUPL-1.2, the license of this repository|MIT|Apache-2.0|An identifier or a compound expression from LICENSE.list, typed under Other">
 
 <!ENTITY LAW.LICENSE.1 "The license is one identifier of LICENSE.list or a compound expression of listed identifiers joined by LICENSE.join; anything else is refused with the list printed and ASK.LICENSE.1 asked again; the license element renders the expression, its count and listed yes.">
-<!ENTITY LAW.LICENSE.3 "Every identifier of LICENSE.list has one definition in LICENSE.definitions and every definition names a listed identifier, held in both directions by lib/license.mjs controls; the elaborate and mark variants of ASK.LICENSE.1 read a licence's definition from there, never from memory.">
 <!ENTITY LAW.LICENSE.2 "The chosen expression heads every file written whose format allows a comment, as an SPDX-License-Identifier line before any other content; a file whose format allows no comment is named in the answer as unheaded.">
+<!ENTITY LAW.LICENSE.3 "Every identifier of LICENSE.list has one definition in LICENSE.definitions and every definition names a listed identifier, held in both directions by lib/license.mjs controls; the elaborate and mark variants of ASK.LICENSE.1 read a licence's definition from there, never from memory.">
 <!-- end subset cc-license -->
 
   

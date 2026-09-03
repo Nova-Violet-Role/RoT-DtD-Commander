@@ -1394,8 +1394,8 @@ The curated SPDX list (LICENSE.list, LICENSE.count), the default, the join rule,
 <!ENTITY ASK.LICENSE.1 "License|Which SPDX license heads the files? A double or triple joins two or three with OR or AND.|AGPL-3.0-or-later OR EUPL-1.2, the license of this repository|MIT|Apache-2.0|An identifier or a compound expression from LICENSE.list, typed under Other">
 
 <!ENTITY LAW.LICENSE.1 "The license is one identifier of LICENSE.list or a compound expression of listed identifiers joined by LICENSE.join; anything else is refused with the list printed and ASK.LICENSE.1 asked again; the license element renders the expression, its count and listed yes.">
-<!ENTITY LAW.LICENSE.3 "Every identifier of LICENSE.list has one definition in LICENSE.definitions and every definition names a listed identifier, held in both directions by lib/license.mjs controls; the elaborate and mark variants of ASK.LICENSE.1 read a licence's definition from there, never from memory.">
 <!ENTITY LAW.LICENSE.2 "The chosen expression heads every file written whose format allows a comment, as an SPDX-License-Identifier line before any other content; a file whose format allows no comment is named in the answer as unheaded.">
+<!ENTITY LAW.LICENSE.3 "Every identifier of LICENSE.list has one definition in LICENSE.definitions and every definition names a listed identifier, held in both directions by lib/license.mjs controls; the elaborate and mark variants of ASK.LICENSE.1 read a licence's definition from there, never from memory.">
 ```
 
 ## cc-workflow.dtd
@@ -1735,9 +1735,9 @@ The Adiutor contract: a run with its expected headings, errors, findings and pre
 <!ENTITY LAW.ADIUTOR.6 "Every guard has a control that was tripped on purpose before the guard was trusted.">
 <!ENTITY LAW.ADIUTOR.7 "The monitor reads the ledger and nothing else: one MONITOR.fail line per run closed as fail, one MONITOR.malformed line per line the reader refuses, nothing for a pass, and never a line for a run that closed before it started.">
 <!ENTITY LAW.ADIUTOR.8 "A file that declares no rendered heading is still judged by the shared laws: a non-empty answer, every heading carrying the sigil with a blank line before and after it, an Assumptions Made heading when the run had no gate, and every reference resolved; no run closes as skipped.">
+<!ENTITY LAW.ADIUTOR.9 "Every answer is measured by the AI_SLOP gate of ai-slop.dtd at Stop, after the grammar check; a gate that does not hold is a finding of kind slop, closes the run as fail like any other finding, and its prescription names the measure that failed (control C19).">
 <!ENTITY LAW.ADIUTOR.10 "The Adiutor and its monitor run only when the operator runs them: no plugin manifest arms a hook, no loader file starts the monitor, an install arms nothing unless --arm is given, and every run of either ends at a 300 second ceiling (the Stop hook timeout when armed, the delegate timeout of rdc doctor and rdc controls, and --secs of rdc watch).">
 <!ENTITY LAW.ADIUTOR.11 "At Stop the Adiutor reads the record nesting the command declared (LAW.REC.5): a command whose command-info-types is record must have written its record under RECORD.dir with the command's own name or a spelled ordinal, its declared fields dense and at least one revision with evidence (LAW.REC.6); a RECORD.* entity that names a file must find that file written in the run; a fault is a finding of kind record, closes the run as fail, and the monitor prints it as MONITOR.record; a command that declares nothing is asked nothing.">
-<!ENTITY LAW.ADIUTOR.9 "Every answer is measured by the AI_SLOP gate of ai-slop.dtd at Stop, after the grammar check; a gate that does not hold is a finding of kind slop, closes the run as fail like any other finding, and its prescription names the measure that failed (control C19).">
 ```
 
 ## ai-slop.dtd

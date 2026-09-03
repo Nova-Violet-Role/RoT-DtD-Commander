@@ -913,7 +913,7 @@ export async function controls(io = console) {
     return { ok: opened && io.lines.length === 1 && io.lines[0].includes('Adiutor armed') && notOpened && io2.lines.length === 0, detail: `opened=${opened} armed-line=${io.lines.length} unknown-ignored=${notOpened}` };
   }, results);
 
-  await controlAsync('C12 the monitor prints one line per failed run and one per malformed line, nothing for a pass, nothing for history, in the words of dtd/adiutor.dtd', async () => {
+  await controlAsync('C12 the monitor prints one line per failed run, one per malformed line and one per record finding, nothing for a pass, nothing for history, in the words of dtd/adiutor.dtd', async () => {
     // The templates come from the contract, not from the monitor: a printed
     // line that drifts from MONITOR.fail or MONITOR.malformed fails here.
     const dtd = readText(join(ROOT, 'dtd', 'adiutor.dtd'));
@@ -921,6 +921,7 @@ export async function controls(io = console) {
     const tpl = (s) => new RegExp('^' + s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&').replace(/%[a-z]+%/g, '(.+?)') + '$');
     const failT = tpl(ent('MONITOR.fail'));
     const malT = tpl(ent('MONITOR.malformed'));
+    const recT = tpl(ent('MONITOR.record'));
     // 5.0.0: the declaration lives in manual.json, a file the loader never
     // reads; when is manual, and only rdc watch starts the process.
     const mons = JSON.parse(readText(join(ROOT, 'monitors', 'manual.json')));
@@ -948,17 +949,20 @@ export async function controls(io = console) {
     // then a pass, a fail with two findings, and a nine-column line
     const failLine = ledgerLine(run, 'fail', [{ msg: 'missing heading Bottom Line' }, { msg: 'second finding' }]);
     const nine = ledgerLine(run, 'pass').split('\t').slice(0, RECORD_FIELDS.length - 1).join('\t');
-    appendFileSync(lp, ledgerLine(run, 'pass') + '\n' + failLine + '\n' + nine + '\n', 'utf8');
-    const landed = readFileSync(lp, 'utf8').split('\n').filter(Boolean).length === 4 && nine.split('\t').length === RECORD_FIELDS.length - 1;
-    const got = await until(() => out.split('\n').filter(Boolean).length >= 2, 8000);
+    // and a run closed on a record finding (LAW.ADIUTOR.11): the monitor prints MONITOR.record for it
+    const recLine = ledgerLine(run, 'fail', [{ kind: 'record', msg: 'record: no record file under artifacts/x-dtd/ named after the command (LAW.REC.6)' }]);
+    appendFileSync(lp, ledgerLine(run, 'pass') + '\n' + failLine + '\n' + nine + '\n' + recLine + '\n', 'utf8');
+    const landed = readFileSync(lp, 'utf8').split('\n').filter(Boolean).length === 5 && nine.split('\t').length === RECORD_FIELDS.length - 1;
+    const got = await until(() => out.split('\n').filter(Boolean).length >= 3, 8000);
     await new Promise((r) => setTimeout(r, 300)); // a third line, if the pass or the history leaked, lands here
     child.kill();
     const lines = out.split('\n').filter(Boolean);
     const f = lines[0] ? failT.exec(lines[0]) : null;
     const m = lines[1] ? malT.exec(lines[1]) : null;
     const historySilent = !out.includes('from history');
-    const ok = declared && ready && landed && got && lines.length === 2 && !!f && f[1] === 'x-dtd' && f[2] === 'missing heading Bottom Line' && !!m && m[1] === '4' && m[2] === '9' && historySilent;
-    return { ok, detail: `declared=${declared} ready=${ready} landed=${landed} lines=${lines.length} fail-line=${!!f} malformed-line=${!!m} pass-silent=${lines.length === 2} history-silent=${historySilent}` };
+    const r = lines[2] ? recT.exec(lines[2]) : null;
+    const ok = declared && ready && landed && got && lines.length === 3 && !!f && f[1] === 'x-dtd' && f[2] === 'missing heading Bottom Line' && !!m && m[1] === '4' && m[2] === '9' && !!r && r[1] === 'x-dtd' && /no record file/.test(r[2]) && historySilent;
+    return { ok, detail: `declared=${declared} ready=${ready} landed=${landed} lines=${lines.length} fail-line=${!!f} malformed-line=${!!m} record-line=${!!r} pass-silent=${lines.length === 3} history-silent=${historySilent}` };
   }, results);
 
   for (const r of results) io.log(`  ${r.ok ? 'PASS' : 'FAIL'} ${r.name}: ${r.detail}`);

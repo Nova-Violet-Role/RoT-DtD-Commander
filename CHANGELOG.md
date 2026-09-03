@@ -233,6 +233,15 @@ counts are re-measured.
   show | check | controls` holds the list and the definitions to each other
   in both directions and accepts a single, a double or a triple joined by OR
   or AND; LICENSE.definitions and LAW.LICENSE.3; controls:license in the gate.
+- Companion run 5 (v5-blocks-4-6, opus, 37 turns, 379 s): fail with two high,
+  four medium and two low findings, all closed: control C12 now trips the
+  MONITOR.record line (three templates held); the README claims table
+  re-measured (check 145, build 282, contract-audit 1253, Adiutor controls
+  20) and the shelf at nineteen, the skills at twenty-two; LAW.ADIUTOR.9 and
+  LAW.LICENSE.2 back in reading order; the contract audit checks the order
+  laws are read in, not only their density, with a planted control; the slop
+  sweep refuses a sweep of no file, with a control; the monitor's header
+  names all three templates.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

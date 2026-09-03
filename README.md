@@ -213,8 +213,8 @@ the rebuilt conclusion names the truths it stands on) and `/second-order-dtd`
 (every effect has an order, a cause, a sign, a horizon and a confidence; loops
 are named).
 
-**The Phantom Books shelf**, twenty commands each drawing one structure from
-one book: `/tetralemma-dtd` (four corners, then what the claim depends on),
+**The Phantom Books shelf**, nineteen commands each drawing one structure from
+one book, and `/phantom-dtd` that routes a problem to the shelf: `/tetralemma-dtd` (four corners, then what the claim depends on),
 `/loci-dtd` (a memory palace for a codebase or a handoff), `/babel-dtd` and
 `/catalog-dtd` (enumerate a finite space; verify an index both ways),
 `/count-the-library-dtd` (size a space before searching it), `/goetia-dtd`
@@ -266,7 +266,7 @@ organisation's own RoT MoE packet at v10.0.2 (the nine charters and the engine),
 `/check-todos-dtd`, `/run-plan-dtd`, `/heal-skill-dtd`, `/debug-dtd`, the
 `create-*-dtd` and `audit-*-dtd` wrappers, and `/RoT-DtD-Commander-Adiutor`.
 
-Nineteen skills load themselves when the description matches: the eleven
+Twenty-two skills load themselves when the description matches (`ai-slop-dtd`, `iupac-ordinals-dtd` and `dtd-forms-dtd` among them): the eleven
 converted ones (`create-plans-dtd`, `create-slash-commands-dtd`,
 `debug-like-expert-dtd`, and the rest) and eight new: `dtd-core-dtd` (the
 contract), `dtd-forge-dtd` (make a new command), `dtd-audit-dtd`,
@@ -433,11 +433,11 @@ while the plugin is still registered.
 | claim | instrument | last measured |
 |---|---|---|
 | 118 commands, 22 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-03 |
-| every source passes rules C1 to C14 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
-| the committed resolved tree equals a fresh build | `rdc build --check`: `223 targets, 0 drifted` | 2026-09-02 |
+| every source passes rules C1 to C14 | `rdc check`: `checked 145  failed 0` | 2026-09-03 |
+| the committed resolved tree equals a fresh build | `rdc build --check`: `282 targets, 0 drifted` | 2026-09-03 |
 | the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil and a front-matter value YAML would misread | `bash checker/checker-controls.sh` | 2026-09-02 |
-| every declaration in the five subsets and the Adiutor contract is used by a source, and every law prefix is numbered densely | `node checker/contract-audit.mjs`: `161 declarations, 0 unused, 0 law gaps` | 2026-09-02 |
-| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, reads the whole turn after the command prompt, and its monitor prints one line per failed run and one per malformed ledger line in the DTD's words, nothing for a pass and nothing for history, and an answer that lags behind narration at Stop is completed from the payload's `last_assistant_message`, a prompt that ends with a `/name-dtd` token arms the run (LAW.CORE.7) and a -dtd skill arms it like a command, a reference is judged only inside the id families the answer defines, and a file with no heading is judged by the shared laws, never skipped | `node bin/adiutor.mjs controls`: `17 run, 0 failing` | 2026-09-02 |
+| every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1253 declarations, 0 unused, 0 law gaps`, and the two planted controls | 2026-09-03 |
+| the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, reads the whole turn after the command prompt, and its monitor prints one line per failed run and one per malformed ledger line in the DTD's words, nothing for a pass and nothing for history, and an answer that lags behind narration at Stop is completed from the payload's `last_assistant_message`, a prompt that ends with a `/name-dtd` token arms the run (LAW.CORE.7) and a -dtd skill arms it like a command, a reference is judged only inside the id families the answer defines, and a file with no heading is judged by the shared laws, never skipped | `node bin/adiutor.mjs controls`: `20 run, 0 failing` | 2026-09-03 |
 | `rdc install` writes the monitor as `skills/rot-dtd-commander-adiutor/` (a `.claude-plugin/plugin.json` and a `monitors/monitors.json` running the copied script), the doctor's `monitor` row is green, and `rdc uninstall` leaves `skills/` empty | `rdc install --yes --target <scratch> --only pareto-dtd`: `written 17`; `CLAUDE_CONFIG_DIR=<scratch> node bin/adiutor.mjs doctor`: `11 checks, 0 failing`; `rdc uninstall --yes --target <scratch>`: `removed 17  kept 0` | 2026-09-02 |
 | the repository is a valid plugin with its monitor declared | `claude plugin validate .`: `Validation passed` | 2026-09-02 |
 | a live `/pareto-dtd` turn in a fresh headless session, through the armed hooks, closes as `pass` in the ledger | `MSYS_NO_PATHCONV=1 claude -p "/pareto-dtd ..." --dangerously-skip-permissions`, then `rdc ledger --last 1` | 2026-09-02 |
