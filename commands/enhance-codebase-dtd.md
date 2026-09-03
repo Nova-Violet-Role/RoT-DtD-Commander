@@ -445,7 +445,7 @@ argument-hint: [a path to walk, or blank for the current repository; --stage=alp
 
   cc-amplify.dtd holds everything the three commands share: the fifteen-verb
   ladder, the two possibility classes, the walk, the generator, the study, the
-  release recognizer and LAW.AMP.1 to LAW.AMP.10. This file holds only what
+  release recognizer and LAW.AMP.1 to LAW.AMP.14. This file holds only what
   makes this variant itself, and it holds it as declarations a validator can
   judge rather than as prose a reader must trust.
 

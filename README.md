@@ -448,7 +448,7 @@ flowchart LR
 
 | command | sigil | what it does |
 |---|:-:|---|
-| `/ai-slop-dtd` | 🧼 | DTD-native: judge a file, a commit message file or the last answer by the AI_SLOP gate, the hand-run form of the hook gate: the same… |
+| `/ai-slop-dtd` | 🫧 | DTD-native: judge a file, a commit message file or the last answer by the AI_SLOP gate, the hand-run form of the hook gate: the same… |
 | `/audit-skill-dtd` | 🔍 | DTD-native: audit a skill directory here, in the foreground: the contract rules C1 to C14 through the checker under a ceiling, then the… |
 | `/audit-slash-command-dtd` | 🔎 | DTD-native: audit a slash command file here, in the foreground: the contract rules C1 to C14 through the checker under a ceiling, then the… |
 | `/audit-subagent-dtd` | 🕵️ | DTD-native: audit an agent file here, in the foreground: the contract rules C1 to C14 through the checker under a ceiling, then the style… |
@@ -815,9 +815,9 @@ while the plugin is still registered.
 |---|---|---|
 | 123 commands, 22 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-03 |
 | every source passes rules C1 to C14 | `rdc check`: `checked 150  failed 0` | 2026-09-03 |
-| the committed resolved tree equals a fresh build | `rdc build --check`: `282 targets, 0 drifted` | 2026-09-03 |
+| the committed resolved tree equals a fresh build | `rdc build --check`: `287 targets, 0 drifted, 0 failing` | 2026-09-03 |
 | the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil, a front-matter value YAML would misread and a declaration hidden under IGNORE, passes one under INCLUDE and the untouched file, and the companion scorer counts a high finding only in a finding element's opening tag, refuses a finding missing one of its four attributes, and runs under an allow-list with no writing tool | `bash checker/checker-controls.sh`: eighteen controls M0 to M17, `all tripped as designed` | 2026-09-03 |
-| every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1253 declarations, 0 unused, 0 law gaps`, and the two planted controls | 2026-09-03 |
+| every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1368 declarations, 0 unused, 0 law gaps`, and the three planted controls | 2026-09-03 |
 | the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, reads the whole turn after the command prompt, and its monitor prints one line per failed run and one per malformed ledger line in the DTD's words, nothing for a pass and nothing for history, and an answer that lags behind narration at Stop is completed from the payload's `last_assistant_message`, a prompt that ends with a `/name-dtd` token arms the run (LAW.CORE.7) and a -dtd skill arms it like a command, a reference is judged only inside the id families the answer defines, and a file with no heading is judged by the shared laws, never skipped | `node bin/adiutor.mjs controls`: `20 run, 0 failing` | 2026-09-03 |
 | `rdc install` writes the monitor as `skills/rot-dtd-commander-adiutor/` (a `.claude-plugin/plugin.json` and a `monitors/monitors.json` running the copied script), the doctor's `monitor` row is green, and `rdc uninstall` leaves `skills/` empty | `rdc install --yes --target <scratch> --only pareto-dtd`: `written 17`; `CLAUDE_CONFIG_DIR=<scratch> node bin/adiutor.mjs doctor`: `11 checks, 0 failing`; `rdc uninstall --yes --target <scratch>`: `removed 17  kept 0` | 2026-09-02 |
 | the repository is a valid plugin with its monitor declared | `claude plugin validate .`: `Validation passed` | 2026-09-02 |

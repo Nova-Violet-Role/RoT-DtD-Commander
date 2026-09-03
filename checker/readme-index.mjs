@@ -170,9 +170,33 @@ export function compare(readme, block) {
   return diff;
 }
 
+// Two commands wearing one sigil cannot be told apart in a heading, and
+// LAW.CORE.6 makes the sigil the mark of which command answered.
+export function sigilCollisions(sigils) {
+  const seen = new Map();
+  const out = [];
+  for (const [name, s] of Object.entries(sigils)) {
+    if (seen.has(s)) out.push({ sigil: s, names: [seen.get(s), name] });
+    else seen.set(s, name);
+  }
+  return out;
+}
+
 function controls(readme, block) {
   let fail = 0;
-  const say = (ok, text) => { console.log(`  ${ok ? 'PASS' : 'FAIL'} ${text}`); if (!ok) fail++; };
+  let ran = 0;
+  const say = (ok, text) => { ran++; console.log(`  ${ok ? 'PASS' : 'FAIL'} ${text}`); if (!ok) fail++; };
+
+  // Two commands wearing one sigil cannot be told apart in a heading. 5.1.0
+  // gave ai-slop the sigil clean-unclean already had and nothing noticed.
+  const live = JSON.parse(readFileSync(join(ROOT, 'dtd', 'sigils.json'), 'utf8'));
+  const collisions = sigilCollisions(live);
+  say(collisions.length === 0, collisions.length === 0
+    ? `every sigil is worn by one command: ${Object.keys(live).length} entries, ${new Set(Object.values(live)).size} distinct`
+    : `two commands share a sigil: ${collisions.map((c) => `${c.sigil} on ${c.names.join(' and ')}`).join('; ')}`);
+  const planted = sigilCollisions({ ...live, 'a-planted-name': Object.values(live)[0] });
+  say(planted.length === 1 && planted[0].names.includes('a-planted-name'),
+    `trip: a planted duplicate sigil is named: ${planted.map((c) => c.names.join(' and ')).join('')}`);
   let threw = '';
   try { classify('zz-unclaimed-control'); } catch (e) { threw = e.message; }
   say(/claimed by 0 families/.test(threw), `trip: an unclaimed command name is refused: ${threw.slice(0, 80)}`);
@@ -183,7 +207,7 @@ function controls(readme, block) {
   const diff = compare(without, block);
   say(diff.length > 0 && diff.some((d) => /pareto/.test(d)), `trip: the README without the pareto row is reported (${diff.length} differing lines, the first names it)`);
   say(compare(readme, block).length === 0, 'the README in step reports no difference');
-  console.log(`readme-index controls: 4 run, ${fail} failing`);
+  console.log(`readme-index controls: ${ran} run, ${fail} failing`);
   return fail === 0;
 }
 

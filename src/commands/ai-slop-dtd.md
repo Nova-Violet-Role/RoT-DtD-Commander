@@ -50,27 +50,27 @@ The argument walk is the one cc-args declares: the string is read once and split
 <output_format>
 <grammar_map>
 Render the `ai_slop_check` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧼 Heading` carrying this command's sigil 🧼, with a blank line before and after it (LAW.CORE.6).
-- `args`: **🧼 Arguments**, the walk with its count and its guards
-- `target`: **🧼 Target**, its kind (answer, file, commit or text) and the file judged
-- `slop_report`: **🧼 Slop Report**, the verdict, the hits, the measures with their bounds, as lib/ai-slop.mjs printed them
-- `escape`: **🧼 Escape**, needed yes or no, and the rewrite or the fence
+- `args`: **🫧 Arguments**, the walk with its count and its guards
+- `target`: **🫧 Target**, its kind (answer, file, commit or text) and the file judged
+- `slop_report`: **🫧 Slop Report**, the verdict, the hits, the measures with their bounds, as lib/ai-slop.mjs printed them
+- `escape`: **🫧 Escape**, needed yes or no, and the rewrite or the fence
 </grammar_map>
 
-### 🧼 Arguments
+### 🫧 Arguments
 
 [count] word(s): [the walk]; guards: [four, each held or named]
 
-### 🧼 Target
+### 🫧 Target
 
 [answer|file|commit|text] [path]
 
-### 🧼 Slop Report
+### 🫧 Slop Report
 
 - verdict: alive [yes|no], words [n], sentences [n]
 - hits: [kind line phrase, one per line, with --verbose]
 - measures: tells [v] bound [b] holds [yes|no]; hedges ...; fillers ...; closers ...; static_share ...; rhythm_cv ...; lexical_mattr ...; rotation_overlap ...
 
-### 🧼 Escape
+### 🫧 Escape
 
 needed [yes|no]. [the rewrite, or the phrases that must stay and their fence]
 </output_format>

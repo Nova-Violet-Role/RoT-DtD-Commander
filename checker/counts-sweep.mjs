@@ -54,7 +54,7 @@ export function places(c) {
     { file: '.claude-plugin/plugin.json', re: /(\d+) Claude Code commands, (\d+) skills and (\d+) agents/, want: [c.commands, c.skills, c.agents], label: 'the plugin description' },
     { file: '.claude-plugin/plugin.json', re: /\((\d+) declarations\)/, want: [c.declarations], label: 'the plugin description, declarations' },
     { file: '.claude-plugin/plugin.json', re: /([a-z-]+) Adiutor guards and ([a-z-]+) checker controls/, want: [c.guards, c.checkerControls], label: 'the plugin description, guards' },
-    { file: '.claude-plugin/marketplace.json', re: /"(\d+) -dtd commands/, want: [c.commands], label: 'the marketplace plugin description' },
+    { file: '.claude-plugin/marketplace.json', re: /"(\d+) commands, (\d+) of them -dtd/, want: [c.commands, c.commands - 1], label: 'the marketplace plugin description' },
     { file: '.claude-plugin/marketplace.json', re: /(\d+) skills, (\d+) agents/, want: [c.skills, c.agents], label: 'the marketplace plugin description, skills and agents' },
   ];
 }
