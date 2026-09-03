@@ -49,7 +49,7 @@ versioned by judgement — it no longer is.
 - The amplify-codebase skill is dissolved: this is a command family, and the
   prose it carried now lives in the three commands themselves, with the
   generated contract at `dtd/ladder.md` beside the declarations it renders.
-- Counts: 123 commands, 22 skills, 5 agents; 18 subsets; amplify controls 32.
+- Counts: 123 commands, 22 skills, 5 agents; 18 subsets; amplify controls 34.
 
 ## 5.2.0 (2026-09-03)
 

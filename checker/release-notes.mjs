@@ -153,6 +153,13 @@ function main() {
         console.log(`  DISPUTED package.json says ${check.version}; the recognizer says ${check.recognised} (class ${check.class}) from the verbs kept at ${stated.from}`);
         f.push('the recognizer disputes the version');
       } else console.log(`  recognised ${check.recognised} (class ${check.class}) from the kept verbs ${stated.kept.map((k) => k.verb).join(', ')} at ${stated.from}`);
+    } else {
+      // Silence would be indistinguishable from a passing check. A tree with
+      // no state record is not subject to LAW.AMP.14; it says so out loud.
+      const p = join(ROOT, 'artifacts', 'amplify-codebase', 'state.md');
+      console.log(existsSync(p)
+        ? `  NOT CHECKED the recognizer gate did not run: ${p} carries no "- from:" line or no marked row`
+        : '  NOT CHECKED the recognizer gate did not run: no state record, so this tree names no kept verbs (LAW.AMP.14)');
     }
     console.log(`release-notes versions: ${f.length === 0 ? `one version everywhere, ${v['package.json']}` : `${f.length} disagreements`}`);
     process.exit(f.length === 0 ? 0 : 1);

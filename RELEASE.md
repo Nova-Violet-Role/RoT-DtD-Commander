@@ -35,8 +35,10 @@ guards of the $ reference are declarations with a control each, and the study
 writer emits the four documents with a missing kind refused by name.
 
 **Migrating from 5.x**: nothing to do. The new subsets install themselves, the
-state record is created on the first run of the family, and a repository with
-no state record is not subject to the version gate. Every 5.x command keeps
+state record is created on the first run of the family, and the version gate
+applies only to a tree whose state record names both a version to measure
+from and at least one marked possibility; anything else prints NOT CHECKED
+rather than passing quietly. Every 5.x command keeps
 its grammar. Every number is in [CHANGELOG.md](CHANGELOG.md). The tag is
 `v6.0.0`.
 
