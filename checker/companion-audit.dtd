@@ -26,8 +26,10 @@
           line       CDATA #REQUIRED
           severity   (high|medium|low) #REQUIRED
           confidence (measured|reasoned|guessed) #REQUIRED>
+<!-- The verdict is prose; the decision travels as the LAST line of the
+     answer, one of the two entities below, which the scorer reads. No
+     attribute: nothing read one, so none is declared. -->
 <!ELEMENT verdict (#PCDATA)>
-<!ATTLIST verdict pass (yes|no) #REQUIRED>
 <!ELEMENT next (#PCDATA)>
 
 <!ENTITY COMPANION.verdict.pass "COMPANION VERDICT: pass">
@@ -39,3 +41,14 @@
 <!ENTITY LAW.COMPANION.4 "The answer ends with exactly one verdict line, COMPANION.verdict.pass or COMPANION.verdict.fail, and fail requires at least one high finding.">
 <!ENTITY LAW.COMPANION.5 "A ceiling that fires (exit 124) is a result: the phase is recorded as unaudited, never as passed.">
 <!ENTITY LAW.COMPANION.6 "The scope opens with one line carrying the three attributes of companion_audit, phase= range= model=, and the runner refuses an answer whose line does not match the run it launched.">
+
+<!-- Which instrument holds which law. 1 and 2: the runner's tool allow-list
+     (Read, Grep, Glob, and Bash only in forms that start with "timeout 60";
+     no Write, Edit or Agent; control M17 refuses a copy that grants Write)
+     and stdin closed on the nested session; a write reached through a
+     redirect is the companion's own breach, and it discloses it in the
+     scope. 3, 4 and 6: the scorer in checker/companion-audit.sh (a finding
+     element carries file, line, severity and confidence in its opening
+     tag, M16; exactly one verdict line and a fail needs one high finding,
+     counted in the opening tag only, M9 to M11, M14 and M15; the scope
+     line, M12 and M13). 5: the runner's exit 124 branch. -->

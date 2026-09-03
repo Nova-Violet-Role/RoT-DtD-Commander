@@ -159,10 +159,10 @@ counts are re-measured.
   LEX.bibl id. The slop sweep reads the profile of every command the shelf
   names and refuses a missing profile, a paraphrase without a source or a
   source outside the library; its controls fire LAW.LEX.5 on purpose.
-- The voice pass: forty-one rewrites in fifteen files of the slop baseline (a
-  banned word each: leverage, robust, seamless, key takeaways, kind of, just,
-  actually), so the sweep baseline falls from 18 to 3 and the gate holds it
-  there. Then the three rhythm files got one longer opening sentence each,
+- The voice pass: forty-one rewrites in fifteen files of the slop baseline,
+  one banned word each (the four tells, the hedge and the two fillers that
+  `lib/ai-slop.mjs` names), so the sweep baseline falls from 18 to 3 and the
+  gate holds it there. Then the three rhythm files got one longer opening sentence each,
   and the baseline is 0: every file under src passes the gate.
 - create-plugin includes cc-license and drops its private list; LAW.PLUGIN.4
   cites LICENSE.list and LICENSE.join, and LAW.PLUGIN.6 hands name=, emoji=
@@ -257,14 +257,15 @@ counts are re-measured.
   this repository does not track. The ordinal numbers the files of this
   command, not the runs (LAW.IUPAC.7): heis is foundations-1 run 2, duo is
   top-1 run 4 (run 3 is closed inside it), treis, tessares and pente are
-  runs 5, 6 and 7 of this session, hex is run 8; run 1 captured a hook
-  stanza and left no file.
+  runs 5, 6 and 7 of this session, hex is run 8, hepta is run 9; run 1
+  captured a hook stanza and left no file.
 - Companion run 7 (v5-closing-2, opus, 38 turns, 355 s): fail with two
   high, three medium and two low as its finding elements count (the scorer
   printed three high because it read a sentence of the prose, the fault run
-  8 named), all closed: the prompt now commands the
-  finding element spelling and the scorer counts it and the bold spelling,
-  exposed as `companion-audit.sh --score` and tripped by controls M9 to M13
+  8 named), all closed at that commit: the prompt commanded the finding
+  element spelling and the scorer of that day counted it and the bold
+  spelling (an arm run 8 removed), exposed as `companion-audit.sh --score`
+  and tripped by the five controls of that day, M9 to M13
   (a high in each spelling, a fail with none, a pass, a scope line of another
   range refused by a whole-line fixed-string match); the record paths and the
   durations above corrected from the runs' own JSON; the subsets index names
@@ -281,18 +282,40 @@ counts are re-measured.
   with itself, and the record key above says which file is which run.
 - CI for 5.0.0: the gate workflow runs the ten library controls, the slop
   sweep at zero and the release-notes controls it lacked, its step names
-  carry the measured counts (twenty guards, M0 to M14), and its first step
+  carry the measured counts (twenty guards, M0 to M17), and its first step
   is `checker/gate-sync.mjs`, which proves every command of the gate
-  script appears in the workflow (a copy missing one is reported; the gate
-  script runs it too). A `release` job runs on a tag `v*` after the gate
+  script is a run line of the workflow or a shell segment of one (a line
+  removed or a step commented out is reported, a file of comments reports
+  all twenty-four; the workflow may run more, and that direction is not
+  claimed; the gate script runs it too). A `release` job runs on a tag `v*` after the gate
   and the install round trip and ships the GitHub release through the REST
   API with the CHANGELOG section of that version as its notes
   (`checker/release-notes.mjs`, four controls); a tag that is not
   package.json's version or a section still marked in progress ships
   nothing, and a release already on the tag is left alone. The two shell
   scripts added in 5.0.0 are executable in the index, which the workflow
-  checks. The whole chain was run once under Node 20, the workflow's
-  runtime, and passed; the README badges carry the 5.0.0 counts.
+  checks. The gate job pins Node 20 (`node-version: 20`), so every green
+  run of the workflow is the chain measured under that runtime; the README
+  badges carry the 5.0.0 counts.
+- Companion run 9 (v5-closing-4, opus, 35 turns, 396 s): fail with one
+  high, seven medium and three low as its finding elements count (the
+  scorer printed two high because a medium finding quoted the attribute in
+  its body), all closed, and the count with them: gate-sync reads the
+  workflow's run lines and their shell segments, a comment counts for
+  nothing (three controls: a run line removed, a step commented out, a file
+  of comments) and it claims one direction only; the checker-controls step
+  name and the README say seven mutations refused and one passing; both
+  new scripts run their check only as the entry point, so their exports
+  are reachable; the verdict attribute nothing read is gone and the
+  contract says which instrument holds which law; the scorer reads severity
+  in the opening tag only (M15), refuses a finding element missing one of
+  its four attributes under LAW.COMPANION.3 (M16), and the runner's
+  allow-list is proven free of writing and spawning tools with every Bash
+  form under its ceiling, a copy granting Write refused (M17; `cat` left
+  the list, Read covers it); the release POST carries its content type;
+  README and CHANGELOG pass the slop measures and the gate runs them (the
+  release ships a changelog section); the run 7 bullet reads as history
+  and the Node 20 claim names the workflow run as its artifact.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

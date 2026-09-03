@@ -14,7 +14,7 @@
 // changelog, so the job's instrument is known to be able to fail.
 
 import { readFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -77,16 +77,23 @@ function controls() {
   return fail === 0;
 }
 
-const args = process.argv.slice(2);
-if (args[0] === '--controls') process.exit(controls() ? 0 : 1);
-const changelog = readFileSync(join(ROOT, 'CHANGELOG.md'), 'utf8');
-if (args[0] === '--payload') {
-  const p = payload(args[1] || '', changelog);
-  if (!p.ok) { console.error(`release-notes: ${p.reason}`); process.exit(1); }
-  process.stdout.write(JSON.stringify(p.json) + '\n');
-  process.exit(0);
+// The check runs only when this file is the entry point, so the exports
+// above stay reachable from another module.
+function main() {
+  const args = process.argv.slice(2);
+  if (args[0] === '--controls') process.exit(controls() ? 0 : 1);
+  const changelog = readFileSync(join(ROOT, 'CHANGELOG.md'), 'utf8');
+  if (args[0] === '--payload') {
+    const p = payload(args[1] || '', changelog);
+    if (!p.ok) { console.error(`release-notes: ${p.reason}`); process.exit(1); }
+    process.stdout.write(JSON.stringify(p.json) + '\n');
+    process.exit(0);
+  }
+  if (!args[0]) { console.error('usage: release-notes.mjs <version> | --payload <tag> | --controls'); process.exit(2); }
+  const s = section(changelog, args[0]);
+  if (!s.ok) { console.error(`release-notes: ${s.reason}`); process.exit(1); }
+  process.stdout.write(s.body);
 }
-if (!args[0]) { console.error('usage: release-notes.mjs <version> | --payload <tag> | --controls'); process.exit(2); }
-const s = section(changelog, args[0]);
-if (!s.ok) { console.error(`release-notes: ${s.reason}`); process.exit(1); }
-process.stdout.write(s.body);
+
+const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) main();

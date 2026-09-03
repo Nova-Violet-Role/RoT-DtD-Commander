@@ -6,8 +6,9 @@
 # Trip the checker on purpose. M1 to M8: mutations of a resolved command,
 # each asserted PRESENT before the check runs, each expected to fail with
 # its named rule (or, for M8, to pass); M0: the untouched file, expected to
-# pass; M9 to M14: the companion scorer on whole planted answers, each
-# expected to score as its law says.
+# pass; M9 to M16: the companion scorer on whole planted answers, each
+# expected to score as its law says; M17: the runner's allow-list, a copy
+# granting Write refused.
 # validator: a broken instance must be rejected with a named error before
 # the valid instance's pass counts.
 set -u
@@ -55,7 +56,7 @@ out=$(run "$T/commands/m8.md"); echo "$out" | grep -q 'failed 0' && echo "PASS M
 out=$(run "$T/commands/pareto-dtd.md"); echo "$out" | grep -q 'failed 0' && echo "PASS M0 untouched file passes" || { echo "FAIL M0"; echo "$out" | tail -3; fail=1; }
 
 
-# M9..M14: the companion scorer on planted answers (LAW.COMPANION.4 and 6)
+# M9..M17: the companion scorer on planted answers (LAW.COMPANION.3, 4 and 6) and the runner's allow-list (1 and 2)
 scope="phase=p range=a..b model=opus"
 score() { bash checker/companion-audit.sh --score "$1" p a..b opus >/dev/null 2>&1; }
 printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high" confidence="measured">planted</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m9.md"
@@ -71,6 +72,17 @@ old=$(grep -c "^phase=p range=a..b model=opus\$" "$T/m13.md"); [ "$old" -eq 1 ] 
 out=$(bash checker/companion-audit.sh --score "$T/m13.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.6' && echo "PASS M13 the replaced expression accepted axxb for a..b (landed proof), the whole-line fixed-string match refuses it" || { echo "FAIL M13 exit=$rc"; fail=1; }
 printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="low" confidence="measured">planted</finding>\n\n### 🩺 Next\n\nRaise the severity="high" on the next run.\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m14.md"
 out=$(bash checker/companion-audit.sh --score "$T/m14.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'high findings=0' && echo "$out" | grep -q 'a fail with no high finding' && echo "PASS M14 the attribute in prose counts for nothing: high findings=0 and the fail is refused" || { echo "FAIL M14 exit=$rc"; fail=1; }
+
+printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="medium" confidence="measured">the body quotes severity="high" and it counts for nothing</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m15.md"
+out=$(bash checker/companion-audit.sh --score "$T/m15.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'high findings=0' && echo "$out" | grep -q 'a fail with no high finding' && echo "PASS M15 the attribute quoted in a finding body counts for nothing: high findings=0 and the fail is refused" || { echo "FAIL M15 exit=$rc"; echo "$out" | tail -2; fail=1; }
+printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high">planted without a confidence</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m16.md"
+out=$(bash checker/companion-audit.sh --score "$T/m16.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.3' && echo "PASS M16 a finding element without its confidence is refused under LAW.COMPANION.3" || { echo "FAIL M16 exit=$rc"; echo "$out" | tail -2; fail=1; }
+# M17: the runner's allow-list carries no writing or spawning tool and every Bash form starts with its ceiling; a copy granting Write is refused
+allow_ok() { local a; a=$(grep -o -- '--allowedTools "[^"]*"' "$1"); [ -n "$a" ] || return 2; echo "$a" | grep -q -E 'Write|Edit|NotebookEdit|Agent|Task' && return 1; echo "$a" | grep -o 'Bash([^)]*)' | grep -v -q 'Bash(timeout 60 ' && return 1; return 0; }
+sed 's/--allowedTools "Read,/--allowedTools "Write,Read,/' checker/companion-audit.sh > "$T/m17.sh"
+grep -q -- '--allowedTools "Write,Read,' "$T/m17.sh" || { echo "M17 mutation did not land"; fail=1; }
+allow_ok "$T/m17.sh"; r1=$?; allow_ok checker/companion-audit.sh; r0=$?
+[ $r1 -eq 1 ] && [ $r0 -eq 0 ] && echo "PASS M17 the runner's allow-list carries no writing or spawning tool and every Bash form starts with timeout 60; a copy granting Write is refused" || { echo "FAIL M17 planted=$r1 real=$r0"; fail=1; }
 
 rm -rf "$T"
 echo "checker-controls: $([ $fail -eq 0 ] && echo all tripped as designed || echo A CONTROL DID NOT FIRE)"

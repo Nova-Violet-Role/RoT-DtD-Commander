@@ -2,8 +2,10 @@
 # Copyright 2026 Saimonokuma.
 #
 # The gate, as CI. The `gate` job runs the same chain as `npm run gate`, one
-# step per command, and its first step proves the two lists agree
-# (checker/gate-sync.mjs). The `install-roundtrip` job installs into a
+# step per command, and its first step proves every command of that chain
+# is a run line of this file or a shell segment of one (checker/gate-sync.mjs;
+# a step commented out counts for nothing; this file may run more, and that
+# direction is not claimed). The `install-roundtrip` job installs into a
 # scratch target and uninstalls back to zero files. The `release` job runs
 # only on a tag `v*`, after both, and ships the GitHub release with the
 # CHANGELOG section of that version as its notes; a tag whose version is not
@@ -40,7 +42,7 @@ jobs:
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, three planted controls)
         run: node checker/contract-audit.mjs
-      - name: checker controls (M0 to M14 - eight mutations refused, the untouched file passes, six scorer controls)
+      - name: checker controls (M0 to M17 - seven mutations refused, one under INCLUDE and the untouched file pass, nine scorer and runner controls)
         run: bash checker/checker-controls.sh
       - name: spdx sweep
         run: bash checker/spdx-sweep.sh
@@ -68,6 +70,8 @@ jobs:
         run: node lib/license.mjs controls
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
+      - name: README and CHANGELOG pass the slop measures (the release ships a changelog section)
+        run: node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md
       - name: release-notes controls (the release job's instrument can fail)
         run: node checker/release-notes.mjs --controls
       - name: every tape has a committed GIF under 2 MB
@@ -131,7 +135,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API: ${{ github.api_url }}/repos/${{ github.repository }}
         run: |
-          auth=(-H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28")
+          auth=(-H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" -H "Content-Type: application/json")
           code=$(curl -s -o /dev/null -w '%{http_code}' "${auth[@]}" "$API/releases/tags/$GITHUB_REF_NAME")
           if [ "$code" = "200" ]; then echo "release $GITHUB_REF_NAME already exists: nothing shipped"; exit 0; fi
           node checker/release-notes.mjs --payload "$GITHUB_REF_NAME" > payload.json

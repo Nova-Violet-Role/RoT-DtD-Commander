@@ -28,21 +28,26 @@ vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audi
 [ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
 
 # The scorer, on one answer file. Reads the LAST non-empty line for the
-# verdict; counts a high finding only on a line that opens a finding element
-# and carries severity="high", the one spelling the prompt commands, so a
-# bold line or a sentence in the prose that mentions the attribute counts
-# for nothing; holds the scope line to this run with a fixed-string,
+# verdict; counts a high finding only in the OPENING TAG of a line that
+# opens a finding element (the text before its first ">"), the one spelling
+# the prompt commands, so a bold line, a sentence in the prose or a finding
+# body that quotes the attribute counts for nothing; refuses a finding
+# element whose opening tag lacks one of file, line, severity, confidence
+# (LAW.COMPANION.3); holds the scope line to this run with a fixed-string,
 # whole-line match. checker/checker-controls.sh trips it on planted answers
-# (M9 to M14).
+# (M9 to M17).
 score() {
   local log="$1" phase="$2" range="$3" model="$4"
-  local last nverdict nhigh scope_ok
+  local last nverdict nfind nsound nhigh scope_ok
   last="$(grep -v '^[[:space:]]*$' "$log" | tail -1)"
   nverdict=$(grep -c '^COMPANION VERDICT' "$log")
-  nhigh=$(grep -c '^<finding .*severity="high"' "$log")
+  nfind=$(grep -c '^<finding ' "$log")
+  nhigh=$(grep '^<finding ' "$log" | sed 's/>.*//' | grep -c 'severity="high"')
+  nsound=$(grep '^<finding ' "$log" | sed 's/>.*//' | grep -E ' file="[^"]+"' | grep -E ' line="[^"]+"' | grep -E ' severity="(high|medium|low)"' | grep -c -E ' confidence="(measured|reasoned|guessed)"')
   scope_ok=$(grep -c -F -x "phase=$phase range=$range model=$model" "$log")
-  echo "companion: last line: $last; verdict lines=$nverdict; high findings=$nhigh; scope line=$scope_ok"
+  echo "companion: last line: $last; verdict lines=$nverdict; findings=$nfind sound=$nsound; high findings=$nhigh; scope line=$scope_ok"
   [ "$nverdict" -eq 1 ] || { echo "companion: LAW.COMPANION.4 broken, $nverdict verdict lines"; return 1; }
+  [ "$nsound" -eq "$nfind" ] || { echo "companion: LAW.COMPANION.3 broken, $((nfind - nsound)) finding elements lack a file, a line, a severity or a confidence in the opening tag"; return 1; }
   [ "$scope_ok" -eq 1 ] || { echo "companion: LAW.COMPANION.6 broken, the scope line does not match this run"; return 1; }
   if [ "$last" = "$vpass" ]; then echo "companion: $phase PASS"; return 0; fi
   if [ "$last" = "$vfail" ]; then
@@ -86,7 +91,7 @@ $files"
 echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${secs}s log=$log"
 # cwd is the scratchpad, not the repo: a nested session's hooks must not touch the tree (measured: CRLF .gitignore, .claude/, .codemap/, CLAUDE.md).
 ( cd "$out" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 env -u CLAUDECODE timeout "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
-  --allowedTools "Read,Grep,Glob,Bash(timeout 60 node:*),Bash(timeout 60 git:*),Bash(timeout 60 cat:*)" \
+  --allowedTools "Read,Grep,Glob,Bash(timeout 60 node:*),Bash(timeout 60 git:*)" \
   < /dev/null 2>&1 ) | tee "$raw" | tail -c 400
 rc=${PIPESTATUS[0]}
 echo
