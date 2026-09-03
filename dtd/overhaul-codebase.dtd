@@ -26,7 +26,7 @@
 <!ENTITY OVERHAUL.band "11|12|13|14|15">
 <!ENTITY OVERHAUL.low "11">
 <!ENTITY OVERHAUL.high "15">
-<!ENTITY OVERHAUL.next "1">
+<!ENTITY OVERHAUL.next "1: the ladder wraps at its top, so the verb after metamorphosis is tweak again, not a sixteenth">
 <!ENTITY OVERHAUL.what "an approach is replaced or a layer is lifted into its own subset; the old way is removed, not left beside">
 
 <!-- ===== THE GUARDS OF THE $ REFERENCE, WHERE THEY APPLY ===== -->

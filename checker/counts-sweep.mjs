@@ -26,7 +26,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WORDS = { ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, 'twenty-one': 21, 'twenty-two': 22, 'twenty-three': 23, 'twenty-four': 24, 'twenty-five': 25, 'twenty-six': 26, 'twenty-seven': 27, 'twenty-eight': 28, 'twenty-nine': 29, thirty: 30 };
 const num = (s) => (/^\d+$/.test(s) ? Number(s) : WORDS[s.toLowerCase()]);
 
-export // Run an instrument in the foreground and hand back what it printed. A number
+// Run an instrument in the foreground and hand back what it printed. A number
 // in a claim row is only a claim until this reads it back.
 function runOut(cmd) {
   const parts = cmd.split(' ');
@@ -34,7 +34,7 @@ function runOut(cmd) {
   return (r.stdout || '') + (r.stderr || '');
 }
 
-function measure(root = ROOT) {
+export function measure(root = ROOT) {
   const commands = readdirSync(join(root, 'commands')).filter((f) => f.endsWith('.md')).length;
   const skills = readdirSync(join(root, 'skills')).filter((d) => existsSync(join(root, 'skills', d, 'SKILL.md'))).length;
   const agents = readdirSync(join(root, 'agents')).filter((f) => f.endsWith('.md')).length;

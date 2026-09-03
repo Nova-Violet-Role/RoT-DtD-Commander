@@ -23,4 +23,4 @@
 | a1c0de07 | idea | generic | marked | 12 |  | a refusal expires after three runs or on a change beneath it; done is forever |
 | a1c0de08 | gap | report | marked | 7 |  | the study writer emits the four documents and a missing kind is refused by name |
 | a1c0de09 | gap | args | marked | 6 |  | the four guards of the $ reference carried as declarations and controls |
-| a1c0de10 | gap | voice | refused | 3 | 6 | the skill that documented the family: dissolved into the command prose instead |
+| a1c0de10 | gap | voice | refused | 3 | 1 | the skill that documented the family: dissolved into the command prose instead |

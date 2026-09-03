@@ -455,12 +455,12 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
   }
   const node = process.versions.node;
   // The subsets the repository declares against the subsets on disk. A hand-kept
-  // install list once shipped fourteen of fifteen and reported nothing wrong;
+  // install list once shipped fourteen of the eighteen this tree now carries and reported nothing wrong;
   // nothing compared the two directories, so nothing could tell.
   try {
     const here = readdirSync(join(ROOT, 'dtd')).filter((f) => f.endsWith('.dtd')).sort();
-    const there = existsSync(join(os.homedir(), '.claude', 'rot-dtd-commander', 'dtd'))
-      ? readdirSync(join(os.homedir(), '.claude', 'rot-dtd-commander', 'dtd')).filter((f) => f.endsWith('.dtd')).sort() : [];
+    const there = existsSync(join(target, 'rot-dtd-commander', 'dtd'))
+      ? readdirSync(join(target, 'rot-dtd-commander', 'dtd')).filter((f) => f.endsWith('.dtd')).sort() : [];
     const missing = here.filter((f) => !there.includes(f));
     const extra = there.filter((f) => !here.includes(f));
     row('subsets', missing.length === 0 && extra.length === 0,
