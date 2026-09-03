@@ -147,7 +147,7 @@ answer at Stop, a subagent answer at SubagentStop, and every Write, Edit,
 NotebookEdit, commit message and request body before it lands: a prose file whole, a code file by its lifted
 comments, strict whatever the policy, one ledger line per refusal, the
 escape a code fence or a quoted element (LAW.SLOP.7, LAW.SLOP.8; controls
-C21 to C26). `/ai-slop-dtd` is the hand-run form of the same instrument.
+C21 to C29). `/ai-slop-dtd` is the hand-run form of the same instrument.
 
 ---
 
@@ -226,7 +226,7 @@ flowchart LR
   R --> tasks["📌 Tasks · 5"]
   R --> repository["🐙 Repository · 3"]
   R --> audits["🔍 Audits, in the foreground · 4"]
-  R --> undefined[" Codebase growth · 3"]
+  R --> growth["🌱 Codebase growth · 3"]
   R --> workflow["🩺 Workflow and the Adiutor · 8"]
 ```
 
@@ -241,7 +241,7 @@ flowchart LR
 [![Tasks](https://img.shields.io/badge/%F0%9F%93%8C_Tasks-5-2c3e50?style=flat-square)](#family-tasks)
 [![Repository](https://img.shields.io/badge/%F0%9F%90%99_Repository-3-9b59b6?style=flat-square)](#family-repository)
 [![Audits, in the foreground](https://img.shields.io/badge/%F0%9F%94%8D_Audits%2C_in_the_foreground-4-1abc9c?style=flat-square)](#family-audits)
-[![Codebase growth](https://img.shields.io/badge/_Codebase_growth-3-undefined?style=flat-square)](#family-undefined)
+[![Codebase growth](https://img.shields.io/badge/%F0%9F%8C%B1_Codebase_growth-3-16a34a?style=flat-square)](#family-growth)
 [![Workflow and the Adiutor](https://img.shields.io/badge/%F0%9F%A9%BA_Workflow_and_the_Adiutor-8-e67e22?style=flat-square)](#family-workflow)
 
 <a name="family-thinking"></a>
@@ -455,9 +455,9 @@ flowchart LR
 
 </details>
 
-<a name="family-undefined"></a>
+<a name="family-growth"></a>
 <details>
-<summary><b> Codebase growth</b> · 3 commands</summary>
+<summary><b>🌱 Codebase growth</b> · 3 commands</summary>
 
 | command | sigil | what it does |
 |---|:-:|---|
@@ -832,7 +832,7 @@ while the plugin is still registered.
 | every build target under commands, skills and agents is tracked; an ignored one would pass the drift check here and fail it on a fresh checkout | `bash checker/tracked-sweep.sh`: `0 ignored build targets`, its planted control reported | every push |
 | every command, skill and agent of the tree is named in the README index, each command in exactly one family | `node checker/readme-index.mjs --check`: `README block in step`; `--controls`: an unclaimed name refused, a removed row reported | every push |
 | the version is one everywhere: package.json, plugin.json, both marketplace fields, the top changelog section, a RELEASE.md heading, and the tag that ships | `node checker/release-notes.mjs --versions`, and the release job with the tag; controls plant a stray manifest, a missing heading and a wrong tag | every push, and the tag |
-| armed, the AI_SLOP gate judges every answer at Stop and every Write, Edit, NotebookEdit, commit message and request body before it lands, strict, with a fence or a quoted element as the only escape | `node bin/adiutor.mjs controls` C21 to C29; `node lib/ai-slop.mjs controls` trips the comment lifter, the command parser and the refusal | every push |
+| armed, the AI_SLOP gate judges every answer at Stop and every Write, Edit, NotebookEdit, commit message, request body and subagent answer before it lands, strict, with a fence or a quoted element as the only escape | `node bin/adiutor.mjs controls` C21 to C29; `node lib/ai-slop.mjs controls` trips the comment lifter, the command parser and the refusal | every push |
 | a scratch is a git worktree that is opened on its own branch, diffed into findings with counts, merged by marked paths or whole, and discarded with its branch | `node lib/scratch.mjs controls`: `11 run, 0 failing`, among them the red-gate revert and the refusal to overwrite newer work | every push |
 | every count the repository publishes (the badges, the tagline, the claims rows, the three manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the checker controls, the declarations | `node checker/counts-sweep.mjs`: `14 places in step`; `--controls` plants a stale badge, a stale count in words and a removed count | every push |
 | the growth ladder is fifteen verbs partitioned into three bands with no overlap and no gap, a possibility keeps one id across runs, a refusal returns only as a reopen, the page grows with the answering, and the version a release publishes is the one its own recognizer computes | `node lib/amplify.mjs controls`: `27 run, 0 failing`, among them a ceiling tripped on purpose, a refusal reopened, a study missing a kind refused, and a manifest version the recognizer disputes | every push |

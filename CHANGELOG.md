@@ -19,7 +19,7 @@ versioned by judgement — it no longer is.
   and version from the kept verbs, and refuses a disagreement by name. The
   control plants 6.1.0 against a recognised 6.0.0 and watches it refused.
 - The installer ships every subset in dtd/, read from disk. A hand-kept list
-  had shipped fourteen of fifteen while reporting nothing wrong:
+  had shipped fourteen of eighteen while reporting nothing wrong:
   `cc-amplify.dtd` was forged against, checked against and never installed.
   A doctor row `subsets` now diffs the repository against the installation, so
   that class of silence cannot recur.

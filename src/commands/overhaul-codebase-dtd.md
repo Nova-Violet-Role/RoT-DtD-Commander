@@ -7,10 +7,10 @@ argument-hint: [a path to walk, or blank for the current repository; --stage=alp
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!DOCTYPE overhaul_run [
-  <!ENTITY <!ENTITY % ask.rounds "(1|2|3|4|5)">>
-  <!ENTITY <!ENTITY % ask.of     "(5)">>
-  <!ENTITY <!ENTITY ASK.rounds_per_prompt "5">>
-  <!ENTITY <!ENTITY ASK.max_total "20">>
+  <!ENTITY % ask.rounds "(1|2|3|4|5)">
+  <!ENTITY % ask.of "(5)">
+  <!ENTITY ASK.rounds_per_prompt "5">
+  <!ENTITY ASK.max_total "20">
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
   <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">

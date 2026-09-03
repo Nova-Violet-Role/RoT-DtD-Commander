@@ -74,6 +74,8 @@ jobs:
         run: node lib/amplify.mjs controls
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
+      - name: the generated contract and the growth state record pass the same measures
+        run: node lib/ai-slop.mjs dtd/ladder.md && node lib/ai-slop.mjs sweep artifacts/amplify-codebase
       - name: the root documents pass the slop measures (the release ships a changelog section)
         run: node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md && node lib/ai-slop.mjs NOTICE.md && node lib/ai-slop.mjs SECURITY.md && node lib/ai-slop.mjs PRIVACY.md && node lib/ai-slop.mjs RELEASE.md
       - name: every build target is tracked (an ignored target passes here and drifts on a fresh checkout)

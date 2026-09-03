@@ -47,12 +47,7 @@ for (const f of FAMILY) {
     include: ['cc-args', 'cc-ask', 'cc-amplify', `${f.key}-codebase`],
     // LAW.ASK.11: the rounds are raised only by declaring these four before
     // the cc-ask include; the first declaration binds.
-    predeclare: [
-      '<!ENTITY % ask.rounds "(1|2|3|4|5)">',
-      '<!ENTITY % ask.of     "(5)">',
-      '<!ENTITY ASK.rounds_per_prompt "5">',
-      '<!ENTITY ASK.max_total "20">',
-    ],
+    predeclare: ['% ask.rounds "(1|2|3|4|5)"', '% ask.of "(5)"', 'ASK.rounds_per_prompt "5"', 'ASK.max_total "20"'],
     description: `DTD-native: walk a codebase through the layers it declares, expose what could be done as measured gaps and reasoned ideas on the ${f.key} band of the fifteen-verb ladder (${f.verbs}), ask across five rounds of four which to keep, write the study down as four documents, and name the release the kept ones amount to without ever taking it`,
     argumentHint: '[a path to walk, or blank for the current repository; --stage=alpha|beta|pre names a pre-release; --no-gate runs autonomously]',
     model: [`${f.root} (args, intake, walk, generator, study, release, next_verb, assumption_made*)`],

@@ -31,3 +31,6 @@ desktop.ini
 # The scratch worktrees of /deep-scratch-dtd (lib/scratch.mjs open); each is a
 # branch of this repository checked out under here, never content of its own.
 .claude/worktrees/
+
+# The codemap tool caches an index beside the tree; it is not the tree.
+.codemap/

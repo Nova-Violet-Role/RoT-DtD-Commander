@@ -65,7 +65,7 @@
     "controls:license": "node lib/license.mjs controls",
     "controls:scratch": "node lib/scratch.mjs controls",
     "controls:amplify": "node lib/amplify.mjs controls",
-    "sweep:slop": "node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0",
+    "sweep:slop": "node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0 && node lib/ai-slop.mjs dtd/ladder.md && node lib/ai-slop.mjs sweep artifacts/amplify-codebase",
     "sweep:prose": "node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md && node lib/ai-slop.mjs NOTICE.md && node lib/ai-slop.mjs SECURITY.md && node lib/ai-slop.mjs PRIVACY.md && node lib/ai-slop.mjs RELEASE.md",
     "sweep:tracked": "bash checker/tracked-sweep.sh",
     "sweep:index": "node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls",

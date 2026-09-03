@@ -27,7 +27,7 @@ longer publishes a version by judgement, which is the metamorphosis its own
 ladder calls verb 15.
 
 Beside it: the installer now ships every subset read from disk (a hand-kept
-list had silently shipped fourteen of fifteen), a doctor row diffs the
+list had silently shipped fourteen of eighteen), a doctor row diffs the
 repository's subsets against the installation, three variant subsets pin each
 command's band as a #FIXED attribute, the generator's page grows with the
 answering, a refusal expires after three runs or a change beneath it, the four
