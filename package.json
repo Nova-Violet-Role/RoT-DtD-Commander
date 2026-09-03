@@ -51,7 +51,7 @@
     "doctor": "node bin/adiutor.mjs doctor",
     "watch": "node bin/rot-dtd-commander.mjs watch",
     "sweep": "bash checker/spdx-sweep.sh && bash checker/crlf-sweep.sh",
-    "gate": "node checker/gate-sync.mjs && npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep && npm run controls:ordinals && npm run controls:slop && npm run controls:ceiling && npm run controls:form && npm run controls:args && npm run controls:schematic && npm run controls:workflow && npm run controls:task && npm run controls:record && npm run controls:license && npm run sweep:slop && npm run sweep:prose && node checker/release-notes.mjs --controls",
+    "gate": "node checker/gate-sync.mjs && npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep && npm run controls:ordinals && npm run controls:slop && npm run controls:ceiling && npm run controls:form && npm run controls:args && npm run controls:schematic && npm run controls:workflow && npm run controls:task && npm run controls:record && npm run controls:license && npm run sweep:slop && npm run sweep:prose && npm run sweep:tracked && node checker/release-notes.mjs --controls",
     "install-home": "node bin/rot-dtd-commander.mjs install --yes",
     "controls:ordinals": "node lib/ordinals.mjs controls",
     "controls:slop": "node lib/ai-slop.mjs controls",
@@ -64,7 +64,8 @@
     "controls:record": "node lib/record.mjs controls",
     "controls:license": "node lib/license.mjs controls",
     "sweep:slop": "node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0",
-    "sweep:prose": "node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md"
+    "sweep:prose": "node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md",
+    "sweep:tracked": "bash checker/tracked-sweep.sh"
   },
   "keywords": [
     "claude-code",

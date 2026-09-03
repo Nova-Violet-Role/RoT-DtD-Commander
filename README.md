@@ -449,6 +449,7 @@ while the plugin is still registered.
 | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
 | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
 | every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `24 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
+| every build target under commands, skills and agents is tracked; an ignored one would pass the drift check here and fail it on a fresh checkout | `bash checker/tracked-sweep.sh`: `0 ignored build targets`, its planted control reported | every push |
 | a tag `v*` ships the GitHub release with the CHANGELOG section of its version as the notes; a tag that is not package.json's version, a section still in progress, or a release already on the tag ships nothing | the `release` job in `.github/workflows/gate.yml`; `node checker/release-notes.mjs --controls`: `4 run, 0 failing` | on the tag |
 
 If one of these does not re-run for you, open the issue form **"A claim in
@@ -469,8 +470,8 @@ npm run gate; echo "exit=$?"
 Adiutor controls, the contract audit, the checker controls, the two sweeps,
 the ten library controls (ordinals, slop, ceiling, form, args, schematic,
 workflow, task, record, license), the slop sweep at zero, the slop
-measures on README and CHANGELOG (the release ships a changelog section)
-and the release-notes controls; each ends with a line of counts, and the
+measures on README and CHANGELOG (the release ships a changelog section),
+the tracked-targets sweep and the release-notes controls; each ends with a line of counts, and the
 exit code is read directly. Then break it:
 
 ```sh

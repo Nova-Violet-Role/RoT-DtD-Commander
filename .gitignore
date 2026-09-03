@@ -18,6 +18,7 @@ skills/*
 agents/*
 !agents/*-dtd.md
 !agents/dtd-contract-auditor.md
+!agents/dtd-command-inventory.md
 
 # Tooling
 node_modules/

@@ -321,6 +321,15 @@ only instrument and record faults, all closed before this line was dated.
   README and CHANGELOG pass the slop measures and the gate runs them (the
   release ships a changelog section); the run 7 bullet reads as history
   and the Node 20 claim names the workflow run as its artifact.
+- The first CI run of 5.0.0 drifted on one target: `agents/dtd-command-inventory.md`
+  is built from `src/` but fell under the `agents/*` ignore rule (its name
+  does not end in -dtd.md), so it was present on the machine that built it
+  and absent from the committed tree; the drift check passed here and
+  failed on the fresh checkout. The rule now names it, the file is tracked,
+  and `checker/tracked-sweep.sh` in the gate refuses any ignored build
+  target under commands, skills or agents, with a planted ignored file as
+  its control. The tag v5.0.0 moved to the commit that carries this, before
+  any release existed.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,
