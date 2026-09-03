@@ -42,7 +42,8 @@ transcript path Claude Code hands the hook, and the repository itself. The
 one network call this repository makes is the release job's, from CI, to
 the GitHub API of the repository itself with the workflow's own token; that
 job alone holds `contents: write`, only on a tag `v*`, and the workflow
-file is the record of it.
+file is the record of it. What is kept of all this, for how long, and your
+rights over it: [PRIVACY.md](PRIVACY.md).
 
 ## Text the hooks treat as data
 

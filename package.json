@@ -64,7 +64,7 @@
     "controls:record": "node lib/record.mjs controls",
     "controls:license": "node lib/license.mjs controls",
     "sweep:slop": "node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0",
-    "sweep:prose": "node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md",
+    "sweep:prose": "node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md && node lib/ai-slop.mjs NOTICE.md && node lib/ai-slop.mjs SECURITY.md && node lib/ai-slop.mjs PRIVACY.md",
     "sweep:tracked": "bash checker/tracked-sweep.sh"
   },
   "keywords": [

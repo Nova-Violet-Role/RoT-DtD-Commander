@@ -14,6 +14,7 @@ says how to reach the right one fastest. For this repository:
 | A number in the README or NOTICE that does not re-run | Issues, *A claim in our docs is false* |
 | A `-dtd` answer the Adiutor passed but should not have, or failed but should not have | Issues, *Something is broken*, with the ledger line |
 | A security finding | **not an issue**: see [SECURITY.md](SECURITY.md) |
+| A question about your data, or a request to correct or remove it | [PRIVACY.md](PRIVACY.md): an email or a private advisory, answered within a month |
 | A new command or a new book to draw from | the **Ideas** discussion |
 
 ## What makes a report answerable

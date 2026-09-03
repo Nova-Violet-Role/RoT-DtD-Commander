@@ -7,6 +7,30 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 5.0.1 (in progress, 2026-09-03)
+
+- PRIVACY.md: the privacy policy, every line of it measured. What the
+  software reads, writes and sends on your machine, component by component
+  (a grep over bin, lib and monitors finds no network module; the hooks
+  keep a run record and a ledger line and never an answer; uninstall keeps
+  the ledger and the run records, measured in a scratch target); what
+  leaves the machine and to whom (npm and Claude Code fetching the
+  repository, your own Claude Code account carrying every prompt to
+  Anthropic, the companion under the maintainer's account, the release
+  job's one API call); the hosted surfaces (GitHub, the release page and
+  the Actions artifacts, the badges through GitHub's proxy, Ko-fi, the
+  ClaudePluginHub listing); what the organisation holds and for how long
+  (public GitHub posts, commit metadata that a .mailmap corrects, the
+  trailers that name the organisation's own account, a donation record, a
+  security report); the GDPR rights and the two structural limits (git
+  history, GitHub's own controls); children; the licences and the policy
+  as two documents that do not change each other, AGPL section 13 not
+  triggered; changes dated and announced. README, SECURITY.md and
+  SUPPORT.md link it, and the prose sweep in the gate now covers NOTICE,
+  SECURITY and PRIVACY beside README and CHANGELOG. An organisation-wide
+  draft for Nova-Violet-Role/.github was written beside the research
+  record, to be placed by hand.
+
 ## 5.0.0 (2026-09-03)
 
 The creator kit: prompt creators for eight schematics, creators for skills,

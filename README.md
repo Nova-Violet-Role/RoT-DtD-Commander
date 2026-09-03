@@ -510,6 +510,10 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md). The short form: edit `src/`, run
 and say what you could not verify. New commands are made with the
 `dtd-forge-dtd` skill: grammar first, prose second.
 
+What the software does with your data, and what we hold of it, is in
+[PRIVACY.md](PRIVACY.md): nothing leaves your machine, and every line of it
+names the measurement.
+
 ## 🏛️ Where this sits in the organisation
 
 [Nova-Violet Role](https://github.com/Nova-Violet-Role) builds convergent

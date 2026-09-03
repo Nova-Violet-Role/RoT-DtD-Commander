@@ -70,8 +70,8 @@ jobs:
         run: node lib/license.mjs controls
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
-      - name: README and CHANGELOG pass the slop measures (the release ships a changelog section)
-        run: node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md
+      - name: the root documents pass the slop measures (the release ships a changelog section)
+        run: node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md && node lib/ai-slop.mjs NOTICE.md && node lib/ai-slop.mjs SECURITY.md && node lib/ai-slop.mjs PRIVACY.md
       - name: every build target is tracked (an ignored target passes here and drifts on a fresh checkout)
         run: bash checker/tracked-sweep.sh
       - name: release-notes controls (the release job's instrument can fail)
