@@ -30,8 +30,14 @@ export function invokedLibs(root = ROOT, dir = 'commands') {
   const want = new Map();
   const d = join(root, dir);
   if (!existsSync(d)) return want;
-  for (const f of readdirSync(d).filter((n) => n.endsWith('.md'))) {
-    for (const m of readFileSync(join(d, f), 'utf8').matchAll(/node (lib\/[\w.-]+\.mjs)/g)) {
+  // A skill is a directory holding SKILL.md; a command is a file.
+  const files = [];
+  for (const n of readdirSync(d, { withFileTypes: true })) {
+    if (n.isDirectory()) { const s = join(d, n.name, 'SKILL.md'); if (existsSync(s)) files.push([`${n.name}/SKILL.md`, s]); }
+    else if (n.name.endsWith('.md')) files.push([n.name, join(d, n.name)]);
+  }
+  for (const [f, path] of files) {
+    for (const m of readFileSync(path, 'utf8').matchAll(/node (lib\/[\w.-]+\.mjs)/g)) {
       if (!want.has(m[1])) want.set(m[1], []);
       if (!want.get(m[1]).includes(f)) want.get(m[1]).push(f);
     }
@@ -41,7 +47,15 @@ export function invokedLibs(root = ROOT, dir = 'commands') {
 
 export function sweep(root = ROOT, { shipped = null } = {}) {
   const ship = shipped || shippedLibs(root);
-  const want = invokedLibs(root);
+  // Commands, skills and agents all invoke engines; reading one of the three
+  // was reading a third of what the installer ships.
+  const want = new Map();
+  for (const dir of ['commands', 'skills', 'agents']) {
+    for (const [lib, by] of invokedLibs(root, dir)) {
+      if (!want.has(lib)) want.set(lib, []);
+      want.get(lib).push(...by.map((f) => `${dir}/${f}`));
+    }
+  }
   const missing = [...want.entries()].filter(([lib]) => !ship.has(lib));
   return { wanted: want.size, missing: missing.map(([lib, by]) => ({ lib, by })) };
 }
@@ -72,6 +86,6 @@ if (isMain) {
   if (process.argv[2] === '--controls') process.exit(controls() ? 0 : 1);
   const r = sweep();
   for (const m of r.missing) console.log(`  MISSING ${m.lib} invoked by ${m.by.join(', ')}`);
-  console.log(`engines-sweep: ${r.wanted} engines invoked by commands, ${r.missing.length} not shipped`);
+  console.log(`engines-sweep: ${r.wanted} engines invoked by commands, skills and agents, ${r.missing.length} not shipped`);
   process.exit(r.missing.length === 0 ? 0 : 1);
 }

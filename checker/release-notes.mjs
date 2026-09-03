@@ -110,7 +110,9 @@ function controls() {
     '## 0.9.0 (2025-12-31)', '', '- old', '',
   ].join('\n');
   let fail = 0;
-  const say = (ok, text) => { console.log(`  ${ok ? 'PASS' : 'FAIL'} ${text}`); if (!ok) fail++; };
+  let ran = 0;
+  const say = (ok, text) => {
+    ran++; console.log(`  ${ok ? 'PASS' : 'FAIL'} ${text}`); if (!ok) fail++; };
   const one = section(planted, '1.0.0');
   say(one.ok && one.body === 'The first one: whole, over two\nlines. Two sentences here.\n\n- a\n- b\n' && one.date === '2026-01-01',
     `a dated section is extracted whole and stops at the next heading: ${JSON.stringify(one.body)}`);
@@ -128,7 +130,7 @@ function controls() {
     `trip: a stray plugin.json version and a missing RELEASE.md heading are both reported: ${stray.join('; ')}`);
   const wrongTag = versionFindings(sound, 'v1.0.1');
   say(wrongTag.length === 1 && /the tag v1\.0\.1 is not v1\.0\.0/.test(wrongTag[0]), `trip: a tag that is not the version is refused: ${wrongTag[0]}`);
-  console.log(`release-notes controls: 7 run, ${fail} failing`);
+  console.log(`release-notes controls: ${ran} run, ${fail} failing`);
   return fail === 0;
 }
 
@@ -157,9 +159,14 @@ function main() {
       // Silence would be indistinguishable from a passing check. A tree with
       // no state record is not subject to LAW.AMP.14; it says so out loud.
       const p = join(ROOT, 'artifacts', 'amplify-codebase', 'state.md');
-      console.log(existsSync(p)
-        ? `  NOT CHECKED the recognizer gate did not run: ${p} carries no "- from:" line or no marked row`
-        : '  NOT CHECKED the recognizer gate did not run: no state record, so this tree names no kept verbs (LAW.AMP.14)');
+      if (existsSync(p)) {
+        // A record that exists and cannot be read is a broken gate, not an
+        // exemption: it would let any version through in silence.
+        console.log(`  UNREADABLE ${p} exists but names no version to measure from, or no marked possibility; the recognizer cannot check the version`);
+        f.push('the state record cannot be read by the recognizer');
+      } else {
+        console.log('  NOT CHECKED no state record, so this tree names no kept verbs and LAW.AMP.14 does not bind it');
+      }
     }
     console.log(`release-notes versions: ${f.length === 0 ? `one version everywhere, ${v['package.json']}` : `${f.length} disagreements`}`);
     process.exit(f.length === 0 ? 0 : 1);
