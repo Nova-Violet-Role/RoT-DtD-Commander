@@ -7,8 +7,29 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
-## 5.0.1 (in progress, 2026-09-03)
+## 5.0.1 (2026-09-03)
 
+The privacy policy and the command index: what the software does with your
+data, measured line by line, and a README that names every one of the
+hundred and eighteen commands, twenty-two skills and five agents from the
+tree, with a gate sweep that refuses a README which disagrees with the files.
+
+- The README index. The README named 89 of the 118 commands by token and 15
+  of the 22 skills by name, counting the rest by family (the three sets of
+  eight schematic creators, the four coin flips, setup-ralph). Now
+  `checker/readme-index.mjs` generates the index between two markers from
+  commands/, skills/, agents/ and dtd/sigils.json: a mermaid map of the
+  twelve families with their counts, one badge per family that jumps to its
+  section, one collapsible table per family (the command, its sigil, the
+  first sentence of its own description), then the skills and the agents.
+  Every command is claimed by exactly one family rule, and an unclaimed
+  name fails the run, so a new command is placed before it ships.
+  `--check` in the gate regenerates and compares (a removed row is
+  reported, control), `--controls` trips both. The skills paragraph
+  counted eleven converted skills and three of 5.0.0 where ten and four
+  stand (create-prompt-dtd was rewritten as the schematic router), and the
+  workflow paragraph named wrappers 5.0.0 had rewritten as creators; both
+  corrected.
 - PRIVACY.md: the privacy policy, every line of it measured. What the
   software reads, writes and sends on your machine, component by component
   (a grep over bin, lib and monitors finds no network module; the hooks

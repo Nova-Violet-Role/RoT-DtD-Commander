@@ -74,6 +74,8 @@ jobs:
         run: node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md && node lib/ai-slop.mjs NOTICE.md && node lib/ai-slop.mjs SECURITY.md && node lib/ai-slop.mjs PRIVACY.md
       - name: every build target is tracked (an ignored target passes here and drifts on a fresh checkout)
         run: bash checker/tracked-sweep.sh
+      - name: the README index names every command, skill and agent of the tree (generated; its controls)
+        run: node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls
       - name: release-notes controls (the release job's instrument can fail)
         run: node checker/release-notes.mjs --controls
       - name: every tape has a committed GIF under 2 MB
