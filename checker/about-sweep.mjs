@@ -35,6 +35,9 @@ const REPO = 'Nova-Violet-Role/RoT-DtD-Commander';
 // visitor deciding whether to install would look for.
 export const MUST_NAME = ['commands', 'skills', 'agents', 'DTD', 'trust boundary', 'Adiutor', 'DOCTYPE'];
 export const CAP = 350;
+// The website field of the About. It is the one place a reader can support the
+// work from, so a drop is a finding rather than a preference.
+export const HOMEPAGE = 'https://ko-fi.com/saimonokuma';
 
 export function token() {
   const r = spawnSync('git', ['credential', 'fill'], { input: 'protocol=https\nhost=github.com\n\n', encoding: 'utf8', timeout: 30000 });
@@ -46,7 +49,7 @@ export function fetchAbout(tok) {
   try {
     const j = JSON.parse(r.stdout || '{}');
     if (j.message) return { error: j.message };
-    return { description: j.description || '', topics: j.topics || [] };
+    return { description: j.description || '', topics: j.topics || [], homepage: j.homepage || '' };
   } catch { return { error: 'the API returned something that is not JSON' }; }
 }
 
@@ -65,6 +68,7 @@ export function judge(about, c = measure(ROOT)) {
   for (const word of MUST_NAME) {
     if (!new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(d)) findings.push(`the About names no ${word}`);
   }
+  if (about.homepage !== undefined && about.homepage !== HOMEPAGE) findings.push(`the About website is ${about.homepage || 'empty'}, not ${HOMEPAGE}`);
   // A version inside the About is release archaeology: it goes stale the day
   // after it is written, which is how this one reached two majors behind.
   const v = /\b\d+\.\d+\.\d+\b/.exec(d);
@@ -101,6 +105,7 @@ function controls() {
   const good = {
     description: `The creator kit: ${c.commands} Claude Code commands, ${c.skills} skills and ${c.agents} agents that carry their own DTD grammar, laws and trust boundary. The Adiutor checks every answer against the DOCTYPE that produced it.`,
     topics: ['dtd'],
+    homepage: HOMEPAGE,
   };
   say(judge(good, c).length === 0, 'an About that matches the tree reports nothing');
   const stale = { ...good, description: good.description.replace(`${c.commands} Claude Code commands`, '118 Claude Code commands') };
@@ -112,6 +117,8 @@ function controls() {
   const d3 = judge(quiet, c);
   say(d3.some((f) => /names no Adiutor/.test(f)) && d3.some((f) => /names no DOCTYPE/.test(f)), 'trip: an About that stops naming what it guarantees is named');
   say(judge({ ...good, description: 'x'.repeat(CAP + 1) }, c).some((f) => /over the 350/.test(f)), `trip: an About over the ${CAP} character cap is refused`);
+  say(judge({ ...good, homepage: '' }, c).some((f) => /website is empty/.test(f)) && judge({ ...good, homepage: HOMEPAGE }, c).length === 0,
+    `trip: a dropped website field is named, and ${HOMEPAGE} passes`);
   say(manifests(ROOT, c).length === 0, `the three manifest descriptions agree with the tree and carry no release archaeology`);
   const planted = manifests(ROOT, c).length === 0;
   say(planted, 'the manifests as they stand report nothing');
