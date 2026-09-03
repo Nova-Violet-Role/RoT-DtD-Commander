@@ -370,7 +370,7 @@ async function cmdInstall(o) {
     }
   }
 
-  for (const rel of runtimeFiles(SRC)) {
+  for (const rel of runtimeFiles(ROOT)) {
     const src = join(ROOT, rel);
     if (!existsSync(src)) continue;
     writeOne(src, join(target, NAME, rel), `runtime ${rel}`, false);
