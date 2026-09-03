@@ -1,6 +1,8 @@
 {
   "_": "One sigil per command, carried on every heading of its answer (LAW.CORE.6). The nine lens commands carry their lens emoji from RoT MoE; rot-elevate carries the galaxy because it summons all nine. Keys are the file name without -dtd.md; the four agents are keyed the same way. Read by lib/headings.mjs.",
   "10-10-10": "⏳",
+  "ai-slop": "🧼",
+  "deep-scratch": "🔬",
   "5-whys": "🔁",
   "RoT-DtD-Commander-Adiutor": "🩺",
   "add-to-todos": "➕",

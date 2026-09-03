@@ -18,6 +18,19 @@
 
 ---
 
+## v5.1.0 — the gate on every spot, and the scratch
+
+An armed Adiutor now judges every answer, file, commit message and request
+body by the AI_SLOP contract before it lands (LAW.SLOP.7, LAW.SLOP.8):
+strict, one ledger line per refusal, the escape a fence or a quoted element,
+controls C21 to C26 tripped on purpose. `/ai-slop-dtd` is the hand-run form.
+`/deep-scratch-dtd` researches a change, builds it in a git worktree under
+`.claude/worktrees`, reviews the diff hunk by hunk, amplifies the research
+with what the build measured, and asks at a merge gate, with the pros and
+cons per file, what may land; `lib/scratch.mjs` carries the worktree, the
+diff and the merges with seven controls. Every number is in
+[CHANGELOG.md](CHANGELOG.md). The tag is `v5.1.0`.
+
 ## v5.0.1 — the privacy policy and the command index
 
 `PRIVACY.md` says what the software reads, writes and sends on your machine,

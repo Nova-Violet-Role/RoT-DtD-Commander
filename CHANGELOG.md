@@ -7,6 +7,56 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 5.1.0 (2026-09-03)
+
+The gate on every spot, and the scratch: an armed Adiutor now judges every
+answer, file, commit message and request body by the AI_SLOP contract
+before it lands, and a new command researches a change, builds it in a git
+worktree, reviews the diff, amplifies the research and asks, with the pros
+and cons per file, what may land in the repository.
+
+- The AI_SLOP gate as a hook (LAW.SLOP.7, LAW.SLOP.8, LAW.ADIUTOR.12). A
+  user who never loads the skill had no gate; now an armed Adiutor judges
+  four spots without any command being run: the answer to any turn at Stop
+  when no -dtd run is open, the text of a Write, an Edit or a NotebookEdit,
+  the message of a git commit (inline, by -F, by a heredoc), and the body
+  of a gh pr, gh issue or gh release call or of a curl payload to a pulls,
+  issues or releases path. A prose file is judged whole, a code file by its
+  lifted comments alone (the extension tables are entities of ai-slop.dtd:
+  SLOP.prose.ext, SLOP.comment.slash, hash, dash and angle), a small body
+  on the ban list alone. Strict whatever the policy: a failed answer blocks
+  the Stop once and the re-fired Stop passes (stop_hook_active); a failed
+  Write, Edit, commit or body is denied with the measures and the failing
+  phrases quoted inside a quoted element, never a CDATA section; every
+  refusal is one ledger line with command slop:stop, slop:write,
+  slop:commit or slop:pr; the escape is a fence or a quoted element
+  (LAW.SLOP.1). Nothing new is armed: the PreToolUse entry already fires on
+  every tool. The doctor gained a slop gate row. Measured before it was
+  built: the full profile over 1590 words of the tree's own code comments
+  and over the last ten commit messages refused nothing. Controls C21 to
+  C26 trip every spot; the slop controls trip the lifter, the parser and
+  the refusal; the law count moved from six to eight.
+- /ai-slop-dtd, the hand-run form of the hook gate: a file, a commit message
+  file or the last answer, judged by the same instrument, the report
+  rendered from its output, the escape named; the argument walked by
+  cc-args (LAW.ASC.1 to LAW.ASC.3).
+- /deep-scratch-dtd (LAW.DS.1 to LAW.DS.7): the intake of cc-ask, the
+  research of a deep dive saved as the first report, a scratch that is a git
+  worktree under .claude/worktrees on a branch off HEAD (lib/scratch.mjs
+  open), the build and every run inside it under a ceiling with exit codes
+  read directly, every hunk of the diff a finding with a verdict, a
+  severity and a confidence, the research amplified with the build as
+  evidence and saved as the second report, then the merge gate: one mark
+  question over every changed file with its pro and its con, four choices
+  (merge every file, merge the marked files, keep, discard), the command
+  applying the merge and running the project gate on the merged tree, a
+  red gate reverted and reported. lib/scratch.mjs carries open, diff,
+  merge-all, merge, discard and seven controls in a temporary repository.
+- Counts: 120 commands, 22 skills, 5 agents; checked 147; 26 Adiutor guards;
+  the README index places the two in the research and the audits families;
+  PRIVACY.md version 2 (the gate's row), SECURITY.md and NOTICE §D each gain
+  a row or a bullet; the manifests say 5.1.0.
+
 ## 5.0.1 (2026-09-03)
 
 The privacy policy and the command index: what the software does with your

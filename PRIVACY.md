@@ -3,7 +3,7 @@
 
 # Privacy Policy
 
-Version 1, dated 2026-09-03. Applies to RoT DtD Commander 5.0.0 and later,
+Version 2, dated 2026-09-03. Applies to RoT DtD Commander 5.0.0 and later,
 to this repository on GitHub, and to the places the README links. Every
 claim below names the file or the control that measures it, the way
 NOTICE.md and SECURITY.md do; a claim you cannot re-run is a defect, and the
@@ -35,6 +35,7 @@ and only when you use its service.
 | `rdc install` | the repository; `~/.claude` (or `CLAUDE_CONFIG_DIR`, or `./.claude` with `--project`) | commands, skills, agents and the runtime under that directory; a manifest `.rot-dtd-commander-manifest.json` with the target path, the install time and one sha256 per file | nothing: a grep over `bin/`, `lib/` and `monitors/` finds no fetch, no http, no net and no dns module (measured 2026-09-03) |
 | `rdc install --arm`, `rdc arm` | `settings.json` | a backup `settings.json.rot-dtd-commander.<n>.bak`, then the hook entries by additive merge (control C6) | nothing |
 | the Adiutor hooks, when armed | the payload Claude Code hands every hook (session id, transcript path, working directory, event name); at Stop, the transcript file of the session, to find the last answer of the `-dtd` command (`lastAssistantText`, LAW.ADIUTOR.2) | one run record `rot-dtd-commander/runs/<session>.json` while a run is open (command, root, expected headings, working directory, opening time); one ledger line in `rot-dtd-commander/ledger.tsv` when it closes (RECORD.run: time, session id, command, root, expected headings, tool count, errors, status, findings, prescription); never the answer text, never a prompt | nothing: a hook reads stdin, spawns nothing and writes only under its state directory (LAW.ADIUTOR.4) |
+| the AI_SLOP gate, when armed (5.1.0) | at Stop the answer of the turn; at PreToolUse the text of a Write, an Edit or a NotebookEdit and the command of a Bash call, to find a commit message or a request body (a `-F` or `--body-file` path is read from disk) | one ledger line per refusal: the spot and the measures that failed, never the text judged | nothing: a refusal is a hook reply to Claude Code |
 | `rdc doctor`, `rdc controls`, `rdc ledger` | the manifest, `settings.json`, the ledger, the plugin registry under `~/.claude/plugins` | nothing; `controls` writes under a temporary state directory it removes | nothing |
 | the monitor, `rdc watch` | `ledger.tsv` and nothing else (LAW.ADIUTOR.7) | nothing; it prints to your terminal and ends at 300 s | nothing |
 | the task and workflow runners (`lib/task.mjs`, `lib/workflow.mjs`) | the task and workflow files of your project | `tasks/` and its ledger inside your project, and whatever the steps you declared write | whatever the commands you declared send; the runner itself sends nothing |

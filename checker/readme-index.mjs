@@ -32,7 +32,7 @@ export const FAMILIES = [
   { id: 'thinking', name: 'Thinking models', rep: 'pareto', color: '27ae60',
     members: ['pareto', 'swot', '5-whys', '10-10-10', 'eisenhower-matrix', 'occams-razor', 'inversion', 'one-thing', 'opportunity-cost', 'via-negativa', 'first-principles', 'second-order'] },
   { id: 'research', name: 'Research', rep: 'deep-dive', color: '2980b9',
-    members: ['deep-dive', 'competitive', 'feasibility', 'history', 'landscape', 'open-source', 'options', 'technical'] },
+    members: ['deep-dive', 'deep-scratch', 'competitive', 'feasibility', 'history', 'landscape', 'open-source', 'options', 'technical'] },
   { id: 'asking', name: 'Asking and deciding', rep: 'ask-me-questions', color: '8e44ad',
     members: ['ask-me-questions', 'ask-me-many-questions', 'ask-me-preview', 'brainstorm-meta-clear-section'], patterns: [/^coin-flip/] },
   { id: 'shelf', name: 'The Phantom Books shelf', rep: 'phantom', color: 'd35400',
@@ -47,7 +47,7 @@ export const FAMILIES = [
   { id: 'repository', name: 'Repository', rep: 'git-gh-amplification', color: '9b59b6',
     members: ['git-gh-amplification', 'repo-git-scalar', 'repo-creativity-askingstorm'] },
   { id: 'audits', name: 'Audits, in the foreground', rep: 'audit-skill', color: '1abc9c',
-    members: ['audit-skill', 'audit-slash-command', 'audit-subagent'] },
+    members: ['audit-skill', 'audit-slash-command', 'audit-subagent', 'ai-slop'] },
   { id: 'workflow', name: 'Workflow and the Adiutor', rep: 'RoT-DtD-Commander-Adiutor', color: 'e67e22',
     members: ['whats-next', 'add-to-todos', 'check-todos', 'run-plan', 'heal-skill', 'debug', 'setup-ralph', 'RoT-DtD-Commander-Adiutor'] },
 ];

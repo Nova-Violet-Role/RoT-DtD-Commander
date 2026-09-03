@@ -1,6 +1,6 @@
 ---
 name: ai-slop-dtd
-description: "The AI_SLOP gate, the voice contract of every -dtd answer. Load when an answer reads generic, when the Adiutor closed a run with a slop finding, when a command's prose needs the ban list checked before it ships, when the bounds in ai-slop.dtd must be read or changed, or when a new record must not open its sentences the way the previous one did."
+description: "The AI_SLOP gate, the voice contract of every -dtd answer and, when the Adiutor is armed, of every answer, file, commit message and request body. Load when an answer reads generic, when the Adiutor closed a run with a slop finding, when an armed hook denied a Write, a commit or an answer for slop and the measures and the escape must be read, when a command's prose needs the ban list checked before it ships, when the bounds in ai-slop.dtd must be read or changed, or when a new record must not open its sentences the way the previous one did."
 ---
 
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
@@ -42,6 +42,39 @@ Two rhythm measures back the layers (LAW.SLOP.3): the coefficient of variation o
 ## The report is the verdict (LAW.SLOP.5)
 
 The gate renders one `slop_report`: a `slop_verdict` with alive yes or no, one `slop_hit` per phrase with its kind and line, and one `slop_measure` per measure with its value, its bound and whether it holds. A verdict stated without those lines was not given. The Adiutor applies the same scan at Stop and records a failed gate as a finding of kind `slop` (LAW.ADIUTOR.9).
+
+## The gate as a hook on four spots (LAW.SLOP.7, LAW.SLOP.8)
+
+Since 5.1.0 an armed Adiutor (`rdc arm`, `rdc install --arm`; a plain
+install arms nothing) judges four spots without any command being run,
+each named by an entity: SLOP.spot.1, the answer to any turn at Stop when
+no `-dtd` run is open; SLOP.spot.2, the text of a Write, an Edit or a
+NotebookEdit before it lands; SLOP.spot.3, the message of a `git commit`
+given inline, by `-F` or by a heredoc; SLOP.spot.4, the body of a `gh pr`,
+`gh issue` or `gh release` call, or of a `curl` payload to a pulls, issues
+or releases path. What is judged depends on the file: an extension in
+SLOP.prose.ext is prose and judged whole; an extension in
+SLOP.comment.slash, SLOP.comment.hash, SLOP.comment.dash or
+SLOP.comment.angle is code, and its comments alone are lifted and judged
+(`liftComments` in `lib/ai-slop.mjs`); a file of neither kind has nothing
+to judge and passes. A small body is judged on the ban list alone
+(LAW.SLOP.6).
+
+The four spots are strict whatever `ROT_DTD_ADIUTOR` says (LAW.SLOP.8): a
+failed answer blocks the Stop once and the re-fired Stop passes; a failed
+Write, Edit, commit or body is denied until its text changes; every refusal
+closes one ledger line whose command is `slop:` and the spot, so `rdc
+ledger` and `rdc watch` show it (LAW.ADIUTOR.12, and the doctor's slop gate
+row); the reason names the measures and quotes the failing phrases inside
+a `quoted` element, never a CDATA section. The escape is the contract: a
+phrase inside a code fence, an inline code span or a quoted element is
+data (LAW.SLOP.1) and never a hit. The hand-run form is `/ai-slop-dtd`,
+which judges a file, a commit message file or the last answer with the
+same instrument. Controls C21 to C26 of `node bin/adiutor.mjs controls`
+trip every spot on purpose: the plain answer blocked once, the prose file
+denied with the phrases quoted, the code file judged by its comments alone,
+the commit message inline and by `-F`, the request body by `gh` and by
+`curl`, and the fenced phrases passing.
 
 ## The controls come first
 

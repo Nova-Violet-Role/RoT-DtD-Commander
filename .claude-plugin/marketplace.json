@@ -6,18 +6,18 @@
   },
   "metadata": {
     "description": "Nova-Violet Role: RoT DtD Commander, the creator kit. Claude Code commands, skills and agents with a declared DTD grammar and trust boundary; creators for prompts, skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks; the Adiutor Stop-hook doctor and the Commander-Adiutor monitor, run by hand unless armed.",
-    "version": "5.0.1"
+    "version": "5.1.0"
   },
   "plugins": [
     {
       "name": "rot-dtd-commander",
       "source": "./",
-      "description": "118 -dtd commands (the nine RoT MoE lenses and ELEVATE among them, nineteen book-derived commands with their voice profiles, sixteen prompt creators over eight schematics, the tasks family, the filetype and dork creators), 22 skills, 5 agents; the Adiutor: a Stop hook that checks every -dtd answer against the DOCTYPE of the command that produced it, a ledger, and the /RoT-DtD-Commander-Adiutor doctor; and the Commander-Adiutor: a monitor that hands every failed answer to the session as the ledger closes it. Nothing is armed by a plain install; rdc install --arm or rdc arm arms the hooks, rdc watch starts the monitor, each under a 300 second ceiling.",
-      "version": "5.0.1",
+      "description": "120 -dtd commands (the nine RoT MoE lenses and ELEVATE among them, nineteen book-derived commands with their voice profiles, sixteen prompt creators over eight schematics, the tasks family, the filetype and dork creators), 22 skills, 5 agents; the Adiutor: a Stop hook that checks every -dtd answer against the DOCTYPE of the command that produced it, a ledger, and the /RoT-DtD-Commander-Adiutor doctor; and the Commander-Adiutor: a monitor that hands every failed answer to the session as the ledger closes it. Nothing is armed by a plain install; rdc install --arm or rdc arm arms the hooks, rdc watch starts the monitor, each under a 300 second ceiling. Armed, the AI_SLOP gate judges every answer, file, commit message and request body before it lands, and /deep-scratch-dtd builds in a git worktree behind a merge gate (5.1.0).",
+      "version": "5.1.0",
       "keywords": [
         "dtd", "doctype", "xml", "trust-boundary", "claude-code", "claude-code-plugin",
         "prompt-engineering", "meta-prompt", "creators", "schematics", "workflow", "tasks", "records",
-        "spdx", "hooks", "stop-hook", "monitor", "npx", "thinking-models", "phantom-books", "rot-moe"
+        "spdx", "hooks", "stop-hook", "monitor", "npx", "thinking-models", "phantom-books", "rot-moe", "ai-slop", "worktree"
       ],
       "strict": true
     }

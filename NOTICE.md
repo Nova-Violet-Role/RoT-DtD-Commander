@@ -133,6 +133,11 @@ the same discipline applies to what the instruments do **not** cover.
   declared grammar, scored on its finding elements and never on its prose.
   The ai-slop sweep holds every source's voice to a declared bound; it does
   not judge whether the prose is true.
+- The AI_SLOP gate as a hook (5.1.0) judges the voice of an answer, a file, a
+  commit message or a request body by the declared measures; it does not
+  judge whether they are true, a phrase inside a fence or a quoted element is
+  data it never sees, and the comment lifter reads a declared table of
+  extensions, so a language outside the table has nothing judged.
 - `checker/contract-audit.mjs` proves that every element, entity and
   parameter entity declared in the twelve shared subsets and the Adiutor
   contract is used by at least

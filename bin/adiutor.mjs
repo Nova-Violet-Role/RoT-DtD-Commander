@@ -32,7 +32,7 @@ import { readText, resolveFile, check, parseSubset, splitDoctype } from '../lib/
 import { expectedFromCommand, checkAnswer, prescribe } from '../lib/render-check.mjs';
 import { armSettings, disarmSettings, armedIn, EVENTS, hookCommand } from '../lib/arm.mjs';
 import { claudeDir, stateDir, ledgerPath, safeId, RECORD_FIELDS, parseLedger } from '../lib/ledger.mjs';
-import { scan as slopScan, summary as slopSummary, SLOPPY_FIXTURE } from '../lib/ai-slop.mjs';
+import { scan as slopScan, summary as slopSummary, SLOPPY_FIXTURE, judgeSpot, refusal, bashText } from '../lib/ai-slop.mjs';
 import { nestingOf, declaredRecords, recordFindings, RECORD_DIR } from '../lib/record.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -84,6 +84,35 @@ export function ledgerLine(run, status, findings = [], prescription = null) {
     cdata(prescription ? `${prescription.charm} RITE: ${prescription.rite}` : ''),
   ];
   return fields.join('\t');
+}
+// 5.1.0: a refused spot of the AI_SLOP gate closes one ledger line whose
+// command is slop and the spot (LAW.SLOP.8, LAW.ADIUTOR.12) without touching
+// the open -dtd run, if any; the run record stays where it is.
+function refuseSpot(session, j, target) {
+  const run = { session, command: `slop:${j.kind}`, root: String(target || j.kind).replace(/\s+/g, ' ').slice(0, 120), expected: { headings: [] }, tools: 0, errors: [] };
+  const failed = j.rep.measures.filter((m) => !m.holds).map((m) => `${m.name} ${m.value} (bound ${m.bound})`).join(', ');
+  appendFileSync(ledgerPath(), ledgerLine(run, 'fail', [{ msg: `slop: ${failed}` }], { charm: 'AI_SLOP', rite: 'rewrite in your own voice; fence a phrase that must stay (LAW.SLOP.1)' }) + '\n', 'utf8');
+}
+// The spot a tool call carries, judged (LAW.SLOP.7): a Write, an Edit or a
+// NotebookEdit by its text and extension, a Bash call by the commit message
+// or request body it names. null when there is nothing to judge.
+function spotOfTool(payload) {
+  const tool = payload.tool_name || '';
+  const inp = payload.tool_input || {};
+  if (/^(Write|Edit|NotebookEdit)$/.test(tool)) {
+    const file = inp.file_path || inp.notebook_path || '';
+    const text = tool === 'Write' ? inp.content : tool === 'Edit' ? inp.new_string : inp.new_source;
+    if (!text || !file) return null;
+    const j = judgeSpot('write', text, { file });
+    return j ? { j, target: file } : null;
+  }
+  if (tool === 'Bash') {
+    const got = bashText(inp.command || '');
+    if (!got) return null;
+    const j = judgeSpot(got.kind, got.text);
+    return j ? { j, target: got.source } : null;
+  }
+  return null;
 }
 function closeRun(run, status, findings = [], prescription = null) {
   appendFileSync(ledgerPath(), ledgerLine(run, status, findings, prescription) + '\n', 'utf8');
@@ -278,6 +307,12 @@ export function observe(event, payload, io = console) {
       return;
     }
     case 'PreToolUse': {
+      // The AI_SLOP gate on a Write, an Edit, a NotebookEdit, a commit or a body, before it lands (LAW.SLOP.7, LAW.SLOP.8, controls C22 to C26).
+      const spot = spotOfTool(payload);
+      if (spot && !spot.j.alive) {
+        refuseSpot(session, spot.j, spot.target);
+        out(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'deny', permissionDecisionReason: refusal(spot.j) } }));
+      }
       const run = readRun(session);
       if (!run) return;
       run.tools = (run.tools || 0) + 1;
@@ -304,7 +339,17 @@ export function observe(event, payload, io = console) {
     case 'Stop': {
       if (payload.stop_hook_active) return;
       const run = readRun(session);
-      if (!run) return;
+      if (!run) {
+        // No -dtd run open: the answer is still judged by the AI_SLOP gate, and a
+        // failed one blocks the Stop once; the re-fired Stop returned above (LAW.SLOP.7, LAW.SLOP.8, control C21).
+        const text = typeof payload.last_assistant_message === 'string' && payload.last_assistant_message.trim() ? payload.last_assistant_message : lastAssistantText(payload.transcript_path, null);
+        const j = judgeSpot('stop', text);
+        if (j && !j.alive) {
+          refuseSpot(session, j, 'answer');
+          out(JSON.stringify({ decision: 'block', reason: refusal(j) }));
+        }
+        return;
+      }
       // A file that declares no rendered heading (every installed skill,
       // measured: 20 of 20) is judged like any other by the shared laws;
       // no run closes as skipped (LAW.ADIUTOR.8, control C17).
@@ -398,6 +443,7 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
   }
   row('settings.json', parsed, parsed ? 'parses' : 'does not parse; hooks cannot load');
   const armed = parsed ? armedIn(settings) : [];
+  row('slop gate', armed.length === EVENTS.length, armed.length === EVENTS.length ? 'armed with the hooks: the answer at Stop, a Write, an Edit, a NotebookEdit, a commit message and a request body, strict (LAW.SLOP.7, LAW.SLOP.8)' : 'not armed (rdc arm); the -dtd Stop gate and the sweep stand');
   row('hooks', armed.length === EVENTS.length, `${armed.length}/${EVENTS.length} Adiutor events armed${armed.length ? ': ' + armed.join(', ') : ''}`);
   const lp = ledgerPath();
   if (existsSync(lp)) {
@@ -966,6 +1012,77 @@ export async function controls(io = console) {
   }, results);
 
   for (const r of results) io.log(`  ${r.ok ? 'PASS' : 'FAIL'} ${r.name}: ${r.detail}`);
+
+  // ---- 5.1.0: the AI_SLOP gate on the four spots (LAW.SLOP.7, LAW.SLOP.8, LAW.ADIUTOR.12) ----
+  const sloppyText = SLOPPY_FIXTURE;
+  const cleanPlain = 'The build ran in the worktree and the gate returned exit 0. Two files changed, one of them new. The diff review kept both hunks and dropped none.';
+  const preTool = (session, tool, tool_input) => { const io = capture(); observe('PreToolUse', { session_id: session, tool_name: tool, tool_input, cwd: tmp }, io); return io.lines.join('\n'); };
+  const denied = (s) => /"permissionDecision":"deny"/.test(s);
+  const ledgerHas = (cmd) => existsSync(ledgerPath()) && readFileSync(ledgerPath(), 'utf8').split('\n').some((l) => l.split('\t')[2] === cmd);
+
+  control('C21 a plain answer that fails the AI_SLOP gate blocks the Stop once with no -dtd run open; the re-fired Stop passes; a clean plain answer passes silently', () => {
+    if (slopScan(sloppyText).alive || !slopScan(cleanPlain).alive) return { ok: false, detail: 'the fixtures do not separate' };
+    const io1 = capture();
+    observe('Stop', { session_id: 'S21', transcript_path: transcript(sloppyText), last_assistant_message: sloppyText, stop_hook_active: false }, io1);
+    const blocked = io1.lines.some((l) => l.includes('"decision":"block"') && l.includes('AI_SLOP'));
+    const io2 = capture();
+    observe('Stop', { session_id: 'S21', transcript_path: transcript(sloppyText), last_assistant_message: sloppyText, stop_hook_active: true }, io2);
+    const io3 = capture();
+    observe('Stop', { session_id: 'S21c', transcript_path: transcript(cleanPlain), last_assistant_message: cleanPlain, stop_hook_active: false }, io3);
+    return { ok: blocked && io2.lines.length === 0 && io3.lines.length === 0 && ledgerHas('slop:stop'), detail: `blocked=${blocked} refired=${io2.lines.length} lines clean=${io3.lines.length} lines ledger slop:stop=${ledgerHas('slop:stop')}` };
+  }, results);
+
+  control('C22 a Write of a prose file that fails the gate is denied with the measures and the phrases quoted; a clean one passes silently', () => {
+    const d = preTool('S22', 'Write', { file_path: join(tmp, 'notes.md'), content: sloppyText });
+    const p = preTool('S22', 'Write', { file_path: join(tmp, 'notes.md'), content: cleanPlain });
+    return { ok: denied(d) && /<quoted/.test(d) && !p && ledgerHas('slop:write'), detail: `denied=${denied(d)} quoted=${/<quoted/.test(d)} clean=${p ? 'output' : 'silent'} ledger slop:write=${ledgerHas('slop:write')}` };
+  }, results);
+
+  control('C23 a code file is judged by its lifted comments alone: sloppy comments denied, the same phrases inside a string literal pass, clean comments pass, no comments pass', () => {
+    const lines = sloppyText.split('\n').filter((l) => l.trim());
+    const asComments = lines.map((l) => '// ' + l).join('\n') + '\nexport const x = 1;\n';
+    const asString = 'export const s = ' + JSON.stringify(sloppyText) + ';\n';
+    const cleanComments = cleanPlain.split('. ').map((l) => '// ' + l).join('\n') + '\nexport const y = 2;\n';
+    const d = preTool('S23', 'Write', { file_path: join(tmp, 'mod.mjs'), content: asComments });
+    const s = preTool('S23', 'Write', { file_path: join(tmp, 'mod.mjs'), content: asString });
+    const c = preTool('S23', 'Write', { file_path: join(tmp, 'mod.mjs'), content: cleanComments });
+    const n = preTool('S23', 'Write', { file_path: join(tmp, 'mod.mjs'), content: 'export const z = 3;\n' });
+    return { ok: denied(d) && !s && !c && !n, detail: `comments=${denied(d) ? 'denied' : 'passed'} string=${s ? 'output' : 'silent'} clean=${c ? 'output' : 'silent'} none=${n ? 'output' : 'silent'}` };
+  }, results);
+
+  control('C24 a commit message that fails the gate is denied, inline with -m or by -F from a file; a clean -F file and a command that is not a commit pass', () => {
+    const sloppyFile = join(tmp, 'msg-sloppy.txt');
+    writeFileSync(sloppyFile, sloppyText, 'utf8');
+    const cleanFile = join(tmp, 'msg-clean.txt');
+    writeFileSync(cleanFile, cleanPlain, 'utf8');
+    const m = preTool('S24', 'Bash', { command: 'git commit -m ' + JSON.stringify(sloppyText.replace(/\s+/g, ' ')) });
+    const f = preTool('S24', 'Bash', { command: 'cd "' + tmp + '" && git commit -q -F "' + sloppyFile + '"' });
+    const c = preTool('S24', 'Bash', { command: 'git commit -F "' + cleanFile + '"' });
+    const o = preTool('S24', 'Bash', { command: 'ls -la' });
+    return { ok: denied(m) && denied(f) && !c && !o && ledgerHas('slop:commit'), detail: `-m=${denied(m)} -F=${denied(f)} clean=${c ? 'output' : 'silent'} other=${o ? 'output' : 'silent'}` };
+  }, results);
+
+  control('C25 a pull request or release body that fails the gate is denied: gh pr create --body-file, and a curl payload to a pulls path; a clean release payload passes', () => {
+    const sloppyFile = join(tmp, 'body-sloppy.md');
+    writeFileSync(sloppyFile, sloppyText, 'utf8');
+    const payload = join(tmp, 'payload.json');
+    writeFileSync(payload, JSON.stringify({ title: 't', body: sloppyText }), 'utf8');
+    const cleanPayload = join(tmp, 'payload-clean.json');
+    writeFileSync(cleanPayload, JSON.stringify({ tag_name: 'v1', name: 'v1', body: cleanPlain }), 'utf8');
+    const g = preTool('S25', 'Bash', { command: 'gh pr create --title "t" --body-file "' + sloppyFile + '"' });
+    const u = preTool('S25', 'Bash', { command: 'curl -s -X POST https://api.github.com/repos/o/r/pulls --data "@' + payload + '"' });
+    const c = preTool('S25', 'Bash', { command: 'curl -s -X POST https://api.github.com/repos/o/r/releases --data "@' + cleanPayload + '"' });
+    return { ok: denied(g) && denied(u) && !c && ledgerHas('slop:pr'), detail: `gh=${denied(g)} curl=${denied(u)} clean=${c ? 'output' : 'silent'} ledger slop:pr=${ledgerHas('slop:pr')}` };
+  }, results);
+
+  control('C26 the escape is the contract: the same failing phrases inside a code fence pass a Write, and a refusal carries no CDATA section', () => {
+    const fenced = 'A note.\n\n' + '```' + '\n' + sloppyText + '\n' + '```' + '\n';
+    const p = preTool('S26', 'Write', { file_path: join(tmp, 'fenced.md'), content: fenced });
+    const d = preTool('S26', 'Write', { file_path: join(tmp, 'plain.md'), content: sloppyText });
+    return { ok: !p && denied(d) && !/CDATA|\]\]>/.test(d), detail: `fenced=${p ? 'output' : 'silent'} plain=${denied(d) ? 'denied' : 'passed'} cdata=${/CDATA|\]\]>/.test(d)}` };
+  }, results);
+
+
   const bad = results.filter((r) => !r.ok).length;
   io.log(`\ncontrols: ${results.length} run, ${bad} failing`);
   rmSync(tmp, { recursive: true, force: true });
