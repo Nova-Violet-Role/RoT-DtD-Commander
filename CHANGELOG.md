@@ -233,7 +233,7 @@ counts are re-measured.
   show | check | controls` holds the list and the definitions to each other
   in both directions and accepts a single, a double or a triple joined by OR
   or AND; LICENSE.definitions and LAW.LICENSE.3; controls:license in the gate.
-- Companion run 5 (v5-blocks-4-6, opus, 37 turns, 382 s): fail with eight
+- Companion run 5 (v5-blocks-4-6, opus, 37 turns, 379 s): fail with eight
   findings, two high, four medium and two low, all closed: control C12 now trips the
   MONITOR.record line (three templates held); the README claims table
   re-measured (check 145, build 282, contract-audit 1253, Adiutor controls
@@ -242,7 +242,7 @@ counts are re-measured.
   laws are read in, not only their density, with a planted control; the slop
   sweep refuses a sweep of no file, with a control; the monitor's header
   names all three templates.
-- Companion run 6 (v5-closing, opus, 26 turns, 258 s): fail with eight
+- Companion run 6 (v5-closing, opus, 26 turns, 254 s): fail with eight
   findings, one high and the rest medium or low, all closed: LAW.ADIUTOR.7
   carves out the record fault it contradicted, and the contract's header
   names three lines; the contract audit names a source file in its order
@@ -251,7 +251,19 @@ counts are re-measured.
   the run 5 record say eight and 382 s; the README skills sentence closes
   its arithmetic (eleven converted, eight of 4.0.0, three of 5.0.0). The
   companion wrote its findings as bold lines instead of finding elements,
-  so the script counted no high finding; the substance stood.
+  so the script counted no high finding; the substance stood. The records
+  of the runs live in the workspace beside this repository, under
+  `../artifacts/companion-audit/` as `companion-audit.<ordinal>.md`, which
+  this repository does not track.
+- Companion run 7 (v5-closing-2, opus, 38 turns, 355 s): fail with three
+  high, three medium and one low, all closed: the prompt now commands the
+  finding element spelling and the scorer counts it and the bold spelling,
+  exposed as `companion-audit.sh --score` and tripped by controls M9 to M13
+  (a high in each spelling, a fail with none, a pass, a scope line of another
+  range refused by a whole-line fixed-string match); the record paths and the
+  durations above corrected from the runs' own JSON; the subsets index names
+  MONITOR.record and eleven laws; the contract audit plants its source
+  disorder in a temporary tree, never in src/, and drops a dead alternative.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

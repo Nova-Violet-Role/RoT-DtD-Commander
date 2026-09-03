@@ -20,25 +20,54 @@
 # final message is the audit and not a stanza.
 
 set -u
+here="$(cd "$(dirname "$0")/.." && pwd)"
+vpass="$(grep -o 'COMPANION.verdict.pass *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
+vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
+[ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
+
+# The scorer, on one answer file. Reads the LAST non-empty line for the
+# verdict; counts a high finding in the element spelling the prompt commands
+# (severity="high") and in the bold line spelling a companion once used
+# (**high ·); holds the scope line to this run with a fixed-string, whole-line
+# match. checker/checker-controls.sh trips it on planted answers (M9 to M12).
+score() {
+  local log="$1" phase="$2" range="$3" model="$4"
+  local last nverdict nhigh scope_ok
+  last="$(grep -v '^[[:space:]]*$' "$log" | tail -1)"
+  nverdict=$(grep -c '^COMPANION VERDICT' "$log")
+  nhigh=$(( $(grep -c 'severity="high"' "$log") + $(grep -c '^\*\*high ·' "$log") ))
+  scope_ok=$(grep -c -F -x "phase=$phase range=$range model=$model" "$log")
+  echo "companion: last line: $last; verdict lines=$nverdict; high findings=$nhigh; scope line=$scope_ok"
+  [ "$nverdict" -eq 1 ] || { echo "companion: LAW.COMPANION.4 broken, $nverdict verdict lines"; return 1; }
+  [ "$scope_ok" -eq 1 ] || { echo "companion: LAW.COMPANION.6 broken, the scope line does not match this run"; return 1; }
+  if [ "$last" = "$vpass" ]; then echo "companion: $phase PASS"; return 0; fi
+  if [ "$last" = "$vfail" ]; then
+    [ "$nhigh" -ge 1 ] || { echo "companion: LAW.COMPANION.4 broken, a fail with no high finding"; return 1; }
+    echo "companion: $phase FAIL"; return 1
+  fi
+  echo "companion: no verdict on the last line of $log"; return 1
+}
+
+if [ "${1:-}" = "--score" ]; then
+  score "${2:?answer file}" "${3:?phase}" "${4:?range}" "${5:-opus}"
+  exit $?
+fi
+
 phase="${1:?phase name}"
 range="${2:?git range, e.g. abc123..HEAD}"
 out="${3:-${TMPDIR:-/tmp}}"
 model="${4:-opus}"
 turns="${5:-40}"
 secs="${6:-900}"
-here="$(cd "$(dirname "$0")/.." && pwd)"
 mkdir -p "$out"
 raw="$out/companion-$phase.json"
 log="$out/companion-$phase.md"
 contract="$(cat "$here/checker/companion-audit.dtd")"
-vpass="$(grep -o 'COMPANION.verdict.pass *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
-vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
-[ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
 stat="$(git -C "$here" diff --stat "$range" | tail -40)"
 files="$(git -C "$here" diff --name-only "$range")"
 
 prompt="You are the Scratchpad Companion auditing build phase '$phase' of RoT DtD Commander at $here (git range $range).
-Answer in the grammar declared here, one markdown heading per element in declared order, headings '### 🩺 Scope', '### 🩺 Findings', '### 🩺 Verdict', '### 🩺 Next', each with a blank line before and after:
+Answer in the grammar declared here, one markdown heading per element in declared order, headings '### 🩺 Scope', '### 🩺 Findings', '### 🩺 Verdict', '### 🩺 Next', each with a blank line before and after. Write every finding as a finding element on its own lines, exactly this spelling: <finding file=\"path\" line=\"n\" severity=\"high|medium|low\" confidence=\"measured|reasoned|guessed\">the text</finding>; the scorer counts severity=\"high\" and no other spelling of a high finding:
 
 $contract
 
@@ -69,16 +98,5 @@ fs.writeFileSync(process.argv[2], result.replace(/\r/g, "") + (result.endsWith("
 const meta = j ? `turns=${j.num_turns} cost_usd=${j.total_cost_usd} duration_ms=${j.duration_ms} is_error=${j.is_error} subtype=${j.subtype}` : "no json parsed";
 console.log("companion: " + meta + " answer_bytes=" + Buffer.byteLength(result));
 ' "$raw" "$log"
-last="$(grep -v '^[[:space:]]*$' "$log" | tail -1)"
-nverdict=$(grep -c '^COMPANION VERDICT' "$log")
-nhigh=$(grep -c 'severity="high"' "$log")
-scope_ok=$(grep -c "^phase=$phase range=$range model=$model\$" "$log")
-echo "companion: last line: $last; verdict lines=$nverdict; high findings=$nhigh; scope line=$scope_ok"
-[ "$nverdict" -eq 1 ] || { echo "companion: LAW.COMPANION.4 broken, $nverdict verdict lines"; exit 1; }
-[ "$scope_ok" -eq 1 ] || { echo "companion: LAW.COMPANION.6 broken, the scope line does not match this run"; exit 1; }
-if [ "$last" = "$vpass" ]; then echo "companion: $phase PASS"; exit 0; fi
-if [ "$last" = "$vfail" ]; then
-  [ "$nhigh" -ge 1 ] || { echo "companion: LAW.COMPANION.4 broken, a fail with no high finding"; exit 1; }
-  echo "companion: $phase FAIL"; exit 1
-fi
-echo "companion: no verdict on the last line of $log"; exit 1
+score "$log" "$phase" "$range" "$model"
+exit $?

@@ -1661,7 +1661,7 @@ The numbered, append-only field discipline for any file one session writes and a
 
 ## adiutor.dtd
 
-The Adiutor contract: a run with its expected headings, errors, findings and prescription; the policy and status enumerations; RECORD.run, the ten-field ledger line; ADIUTOR.policy.default bound to the code by control C7; the monitor and its emit lines, MONITOR.name, MONITOR.fail and MONITOR.malformed bound to monitors/commander-adiutor.mjs by control C12; LAW.ADIUTOR.1 to 10, the tenth the rule that both run only by hand under a 300 second ceiling. Read by bin/adiutor.mjs and its controls; included by the Adiutor command.
+The Adiutor contract: a run with its expected headings, errors, findings and prescription; the policy and status enumerations; RECORD.run, the ten-field ledger line; ADIUTOR.policy.default bound to the code by control C7; the monitor and its emit lines, MONITOR.name, MONITOR.fail, MONITOR.record and MONITOR.malformed bound to monitors/commander-adiutor.mjs by control C12; LAW.ADIUTOR.1 to 11, the tenth the rule that both run only by hand under a 300 second ceiling. Read by bin/adiutor.mjs and its controls; included by the Adiutor command.
 
 ```dtd
 <!--
