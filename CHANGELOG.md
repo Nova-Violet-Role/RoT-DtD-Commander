@@ -7,10 +7,15 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
-## 5.0.0 (in progress, 2026-09-02)
+## 5.0.0 (2026-09-03)
 
-The creator kit. Nothing below is released until the gate is green and the
-counts are re-measured.
+The creator kit: prompt creators for eight schematics, creators for skills,
+hooks, commands, subagents, plans, MCP servers and workflow files, a tasks
+family, filetype and dork creators, nineteen book-derived commands with their
+voice profiles, records that nest, an Adiutor that runs only by hand, and
+every count re-measured, one hundred and eighteen commands, twenty-two skills
+and five agents. Nine companion runs audited the work; the last three found
+only instrument and record faults, all closed before this line was dated.
 
 - The Adiutor and its monitor run only by hand (LAW.ADIUTOR.10). The plugin
   ships no `hooks/hooks.json`; `rdc install` arms nothing unless `--arm` is
