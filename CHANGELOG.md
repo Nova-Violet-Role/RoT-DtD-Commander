@@ -225,6 +225,14 @@ counts are re-measured.
   C20), the monitor prints MONITOR.record; task-handoff declares that it
   produces a record (RECORD.handoff) and task-run that it produces none.
   controls:record in the gate.
+- The counts re-measured with `rdc list`: 118 commands, 22 skills, 5
+  agents, in README.md, plugin.json, marketplace.json and package.json; a
+  paragraph on the 5.0.0 families under Usage.
+- The SPDX definitions: `dtd/licenses.json` carries one entry per identifier
+  of LICENSE.list (name, family, a one-sentence definition), `lib/license.mjs
+  show | check | controls` holds the list and the definitions to each other
+  in both directions and accepts a single, a double or a triple joined by OR
+  or AND; LICENSE.definitions and LAW.LICENSE.3; controls:license in the gate.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

@@ -10,7 +10,7 @@
 
 **Commands that carry their own grammar, and a doctor that reads it**
 
-*68 Claude Code slash commands, 19 skills and 5 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it*
+*118 Claude Code slash commands, 22 skills and 5 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it*
 
 [![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/saimonokuma)
 [![Nova-Violet Role](https://img.shields.io/badge/Nova--Violet-Role-9b59b6?style=for-the-badge)](https://github.com/Nova-Violet-Role)
@@ -179,8 +179,30 @@ the hooks.
 
 ## 🕹️ Usage
 
-Sixty-eight commands, in five families. Every one of them opens with its
+One hundred and eighteen commands, in nine families. Every one of them opens with its
 DOCTYPE and closes with its laws.
+
+**The 5.0.0 families** (each with its laws in the CHANGELOG): the creators
+(`/create-plugin-dtd`, `/create-moe-dtd`, `/create-router-dtd`,
+`/create-ot-variants-dtd`, `/create-db-dtd`, `/create-monitor-dtd`,
+`/create-mcp-dtd`, `/create-workflowjson-dtd`, and the amplified
+`/create-agent-skill-dtd`, `/create-hook-dtd`, `/create-slash-command-dtd`,
+`/create-subagent-dtd`, `/create-plan-dtd`), the prompt creators per
+schematic (`/create-prompt-<schematic>-dtd` and
+`/create-meta-prompt-<schematic>-dtd` for callout, heredoc, yaml, nt, xml,
+polyglot, alarm and polyalarm, with `/create-prompt-dtd` and
+`/create-meta-prompt-dtd` as the routers), the asking family
+(`/ask-me-many-questions-dtd`, `/ask-me-preview-dtd`,
+`/brainstorm-meta-clear-section-dtd`, the four `/coin-flip*-dtd`), the
+repository commands (`/git-gh-amplification-dtd`, `/repo-git-scalar-dtd`,
+`/repo-creativity-askingstorm-dtd`), the tasks family (`/create-task-dtd`,
+`/audit-tasks-dtd`, `/create-workflow-tasks-dtd`, `/task-run-dtd`,
+`/task-handoff-dtd`), the file types (`/create-filetype-<schematic>-dtd`
+with `/create-filetype-dtd` as the router), the dorks
+(`/create-dork-search-dtd`, `/create-dork-local-dtd`), and the audits that
+run in the foreground (`/audit-skill-dtd`, `/audit-slash-command-dtd`,
+`/audit-subagent-dtd`). Every question of every one of them names its
+variant: select, check, elaborate or mark.
 
 **Thinking models** (the argument, or the current discussion): `/pareto-dtd`,
 `/swot-dtd`, `/5-whys-dtd`, `/10-10-10-dtd`, `/eisenhower-matrix-dtd`,
@@ -410,7 +432,7 @@ while the plugin is still registered.
 
 | claim | instrument | last measured |
 |---|---|---|
-| 68 commands, 19 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-02 |
+| 118 commands, 22 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-03 |
 | every source passes rules C1 to C14 | `rdc check`: `checked 91  failed 0` | 2026-09-02 |
 | the committed resolved tree equals a fresh build | `rdc build --check`: `223 targets, 0 drifted` | 2026-09-02 |
 | the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil and a front-matter value YAML would misread | `bash checker/checker-controls.sh` | 2026-09-02 |

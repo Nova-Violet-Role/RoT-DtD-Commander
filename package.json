@@ -1,7 +1,7 @@
 {
   "name": "rot-dtd-commander",
   "version": "5.0.0",
-  "description": "RoT DtD Commander: 68 Claude Code commands (the nine RoT MoE lenses as commands among them), 19 skills and 5 agents that carry their own DTD grammar and trust boundary, a guided NPX installer into ~/.claude, the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it, and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it.",
+  "description": "RoT DtD Commander: 118 Claude Code commands (the nine RoT MoE lenses as commands among them), 22 skills and 5 agents that carry their own DTD grammar and trust boundary, a guided NPX installer into ~/.claude, the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it, and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it.",
   "type": "module",
   "license": "AGPL-3.0-or-later OR EUPL-1.2",
   "author": {
@@ -51,7 +51,7 @@
     "doctor": "node bin/adiutor.mjs doctor",
     "watch": "node bin/rot-dtd-commander.mjs watch",
     "sweep": "bash checker/spdx-sweep.sh && bash checker/crlf-sweep.sh",
-    "gate": "npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep && npm run controls:ordinals && npm run controls:slop && npm run controls:ceiling && npm run controls:form && npm run controls:args && npm run controls:schematic && npm run controls:workflow && npm run controls:task && npm run controls:record && npm run sweep:slop",
+    "gate": "npm run build:check && npm run check && node checker/heading-sweep.mjs --check && node checker/frontmatter-sweep.mjs --check && npm run controls && node checker/contract-audit.mjs && bash checker/checker-controls.sh && npm run sweep && npm run controls:ordinals && npm run controls:slop && npm run controls:ceiling && npm run controls:form && npm run controls:args && npm run controls:schematic && npm run controls:workflow && npm run controls:task && npm run controls:record && npm run controls:license && npm run sweep:slop",
     "install-home": "node bin/rot-dtd-commander.mjs install --yes",
     "controls:ordinals": "node lib/ordinals.mjs controls",
     "controls:slop": "node lib/ai-slop.mjs controls",
@@ -62,6 +62,7 @@
     "controls:workflow": "node lib/workflow.mjs controls",
     "controls:task": "node lib/task.mjs controls",
     "controls:record": "node lib/record.mjs controls",
+    "controls:license": "node lib/license.mjs controls",
     "sweep:slop": "node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0"
   },
   "keywords": [

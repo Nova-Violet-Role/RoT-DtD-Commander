@@ -283,10 +283,12 @@ argument-hint: [what the subagent is for, or leave blank; --no-gate for autonomo
 <!ENTITY LICENSE.list "0BSD, AFL-3.0, AGPL-3.0-only, AGPL-3.0-or-later, Apache-2.0, Artistic-2.0, BSD-2-Clause, BSD-3-Clause, BSD-3-Clause-Clear, BSD-4-Clause, BSL-1.0, CC-BY-4.0, CC-BY-SA-4.0, CC0-1.0, CECILL-2.1, CERN-OHL-P-2.0, CERN-OHL-S-2.0, CERN-OHL-W-2.0, ECL-2.0, EPL-1.0, EPL-2.0, EUPL-1.1, EUPL-1.2, GFDL-1.3, GPL-2.0-only, GPL-2.0-or-later, GPL-3.0-only, GPL-3.0-or-later, ISC, LGPL-2.1-only, LGPL-2.1-or-later, LGPL-3.0-only, LGPL-3.0-or-later, LPPL-1.3c, MIT, MIT-0, MPL-2.0, MS-PL, MS-RL, MulanPSL-2.0, NCSA, ODbL-1.0, OFL-1.1, OSL-3.0, PostgreSQL, Unlicense, UPL-1.0, Vim, WTFPL, Zlib">
 <!ENTITY LICENSE.default "AGPL-3.0-or-later OR EUPL-1.2">
 <!ENTITY LICENSE.join "OR or AND, upper case, one space each side">
+<!ENTITY LICENSE.definitions "dtd/licenses.json: one entry per identifier with its name, its family and a one-sentence definition, read by lib/license.mjs">
 
 <!ENTITY ASK.LICENSE.1 "License|Which SPDX license heads the files? A double or triple joins two or three with OR or AND.|AGPL-3.0-or-later OR EUPL-1.2, the license of this repository|MIT|Apache-2.0|An identifier or a compound expression from LICENSE.list, typed under Other">
 
 <!ENTITY LAW.LICENSE.1 "The license is one identifier of LICENSE.list or a compound expression of listed identifiers joined by LICENSE.join; anything else is refused with the list printed and ASK.LICENSE.1 asked again; the license element renders the expression, its count and listed yes.">
+<!ENTITY LAW.LICENSE.3 "Every identifier of LICENSE.list has one definition in LICENSE.definitions and every definition names a listed identifier, held in both directions by lib/license.mjs controls; the elaborate and mark variants of ASK.LICENSE.1 read a licence's definition from there, never from memory.">
 <!ENTITY LAW.LICENSE.2 "The chosen expression heads every file written whose format allows a comment, as an SPDX-License-Identifier line before any other content; a file whose format allows no comment is named in the answer as unheaded.">
 <!-- end subset cc-license -->
 

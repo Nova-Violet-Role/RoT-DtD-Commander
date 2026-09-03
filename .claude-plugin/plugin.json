@@ -1,7 +1,7 @@
 {
   "name": "rot-dtd-commander",
   "version": "5.0.0",
-  "description": "RoT DtD Commander: 68 Claude Code commands, 19 skills and 5 agents that carry their own DTD grammar, verdict vocabulary, laws and trust boundary; the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it and prescribes on failure; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it. Checked in both directions by rules C1 to C14, the contract audited in both directions, twelve Adiutor guards and six checker mutations tripped on purpose.",
+  "description": "RoT DtD Commander: 118 Claude Code commands, 22 skills and 5 agents that carry their own DTD grammar, verdict vocabulary, laws and trust boundary; the Adiutor, a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it and prescribes on failure; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it. Checked in both directions by rules C1 to C14, the contract audited in both directions, twelve Adiutor guards and six checker mutations tripped on purpose.",
   "author": {
     "name": "Saimonokuma",
     "url": "https://github.com/Nova-Violet-Role"
