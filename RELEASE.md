@@ -18,6 +18,19 @@
 
 ---
 
+## v5.2.0 — the codebase growth family
+
+Three commands on one ladder of fifteen verbs: `/amplify-codebase-dtd` 🌱,
+`/enhance-codebase-dtd` 🪴 and `/overhaul-codebase-dtd` 🦋 walk any codebase
+through the layers it declares, run every instrument the tree already carries
+before reading a file by hand, and expose what could be done as measured gaps
+and reasoned ideas, paged four per round with the unshown counted. A state
+record keeps every possibility under an id that survives between runs, so a
+refusal is never offered twice and each run continues where the last stopped:
+one run is bounded, the sequence is not. It closes by naming the release the
+kept work amounts to and the next verb up the ladder, and never takes the
+version. Every number is in [CHANGELOG.md](CHANGELOG.md). The tag is `v5.2.0`.
+
 ## v5.1.0 — the gate on every spot, and the scratch
 
 An armed Adiutor now judges every answer, file, commit message and request

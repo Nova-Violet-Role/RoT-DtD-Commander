@@ -1,0 +1,138 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-amplify.dtd : the growth grammar shared by the three codebase commands
+  (amplify, enhance, overhaul).
+
+  A run walks a codebase through the layers it declares, exposes what could
+  be done as possibilities of two classes, asks which of them to keep, writes
+  the study down, and names the release the kept ones amount to. The next run
+  reads the state the last one wrote, so nothing already refused is offered
+  twice and the ladder continues where it stopped: one run is bounded, the
+  sequence of runs is not.
+
+  Three things are declared here that nothing else in the tree declares: the
+  fifteen-verb ladder of how much a change may change (AMP.verb.1 to
+  AMP.verb.15, ascending), the two classes a possibility may belong to (a gap
+  is measured against a declaration, an idea is reasoned and must name what it
+  would add), and the release recognizer, which reads the kept possibilities
+  and says which segment of the version they move.
+
+  lib/amplify.mjs reads this file and holds the code to it; its controls trip
+  every law that can be tripped.
+-->
+
+<!-- ===== THE LADDER ===== -->
+<!-- Fifteen verbs, ascending by how much of the codebase they disturb. A
+     command owns a band and names the next verb up when it closes, so the
+     chain from a tweak to a metamorphosis is declared, never remembered. -->
+<!ENTITY AMP.verb.1  "tweak: one line, one name, one number; nothing that a reader must relearn">
+<!ENTITY AMP.verb.2  "enrich: something true is said in more detail; no behaviour moves">
+<!ENTITY AMP.verb.3  "ameliorate: a rough edge is smoothed where it is felt, in place">
+<!ENTITY AMP.verb.4  "amplification: what exists gains a companion beside it, the original untouched">
+<!ENTITY AMP.verb.5  "magnify: one part is made to carry more of the work it already does">
+<!ENTITY AMP.verb.6  "heighten: a bound is raised or a measure is added to what was unmeasured">
+<!ENTITY AMP.verb.7  "promote: something local becomes shared; a habit becomes a declaration">
+<!ENTITY AMP.verb.8  "cultivate: a pattern is grown across the places that lacked it">
+<!ENTITY AMP.verb.9  "enhancement: a capability the codebase implied is now actually there">
+<!ENTITY AMP.verb.10 "upgrade: a dependency, a contract or a version moves forward under its own gate">
+<!ENTITY AMP.verb.11 "elevation: a layer is lifted into its own declared subset with its own laws">
+<!ENTITY AMP.verb.12 "intensification: an existing law is made strict where it was advisory">
+<!ENTITY AMP.verb.13 "evolve: the shape of a family changes and its members change with it">
+<!ENTITY AMP.verb.14 "overhaul: an approach is replaced; the old one is removed, not left beside">
+<!ENTITY AMP.verb.15 "metamorphosis: the codebase becomes a different kind of thing and says so in its major">
+<!ENTITY AMP.ladder.count "15">
+<!ENTITY AMP.band.amplify  "1|2|3|4|5">
+<!ENTITY AMP.band.enhance  "6|7|8|9|10">
+<!ENTITY AMP.band.overhaul "11|12|13|14|15">
+
+<!-- ===== THE WALK ===== -->
+<!ENTITY AMP.layers "schematic|form|voice|args|record|report|task|workflow|adiutor|license|rot|generic">
+<!ENTITY AMP.ceiling.family "120">
+<!ENTITY AMP.ceiling.total "900">
+<!ENTITY AMP.page "4">
+<!ENTITY AMP.rounds "5">
+<!ENTITY AMP.questions "20">
+<!ENTITY AMP.dir "artifacts/amplify-codebase">
+<!ENTITY AMP.state "state.md">
+
+<!-- ===== THE RELEASE RECOGNIZER ===== -->
+<!-- Which segment of the version the kept possibilities move. The three
+     release classes carry three segments; the three pre-release classes
+     carry four, the fourth being the pre-release counter. -->
+<!ENTITY AMP.release.major "1.0.0: a metamorphosis or an overhaul; something the codebase was is no longer">
+<!ENTITY AMP.release.mid   "0.1.0: an elevation, an evolution or an enhancement; a capability that was not there">
+<!ENTITY AMP.release.minor "0.0.1: a tweak, an enrichment or an amelioration; nothing a reader must relearn">
+<!ENTITY AMP.release.alpha "0.1.0.0: the shape is settled and the measures are not">
+<!ENTITY AMP.release.beta  "0.0.1.0: the measures hold and the documents do not">
+<!ENTITY AMP.release.pre   "0.0.0.1: everything holds and one thing outside the codebase does not">
+
+<!-- ===== ELEMENTS ===== -->
+<!ELEMENT walk (layer+)>
+<!ATTLIST walk
+          target   CDATA #REQUIRED
+          declared (yes|no) #REQUIRED
+          seconds  CDATA #REQUIRED>
+<!ELEMENT layer (#PCDATA)>
+<!ATTLIST layer
+          name        NMTOKEN #REQUIRED
+          instrument  CDATA #REQUIRED
+          exit        CDATA #REQUIRED
+          read        CDATA #REQUIRED
+          of          CDATA #REQUIRED
+          walked      (yes|no|timeout) #REQUIRED>
+
+<!ELEMENT possibility (why, evidence, cost)>
+<!ATTLIST possibility
+          id         NMTOKEN #REQUIRED
+          class      (gap|idea) #REQUIRED
+          verb       CDATA #REQUIRED
+          layer      NMTOKEN #REQUIRED
+          confidence (measured|reasoned|guessed) #REQUIRED
+          verdict    (exposed|marked|refused|done) #REQUIRED>
+<!ELEMENT why (#PCDATA)>
+<!ELEMENT evidence (#PCDATA)>
+<!ATTLIST evidence
+          instrument CDATA #IMPLIED
+          adds       CDATA #IMPLIED>
+<!ELEMENT cost (#PCDATA)>
+<!ATTLIST cost
+          files CDATA #REQUIRED
+          risk  (high|medium|low) #REQUIRED>
+
+<!ELEMENT generator (possibility+)>
+<!ATTLIST generator
+          exposed CDATA #REQUIRED
+          shown   CDATA #REQUIRED
+          unshown CDATA #REQUIRED
+          offset  CDATA #REQUIRED>
+
+<!ELEMENT release EMPTY>
+<!ATTLIST release
+          class   (major|mid|minor|alpha|beta|pre) #REQUIRED
+          from    CDATA #REQUIRED
+          to      CDATA #REQUIRED
+          taken   (no) #FIXED "no">
+
+<!ELEMENT study (document+)>
+<!ELEMENT document (#PCDATA)>
+<!ATTLIST document
+          kind (family|ledger|roadmap|handoff) #REQUIRED
+          path CDATA #REQUIRED>
+
+<!ELEMENT next_verb (#PCDATA)>
+<!ATTLIST next_verb
+          n       CDATA #REQUIRED
+          command CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.AMP.1 "A run walks only the layers of AMP.layers its target actually declares, every instrument in the foreground under AMP.ceiling.family seconds and the whole walk under AMP.ceiling.total, with each exit code read directly; a layer that reaches its ceiling is rendered walked timeout, never walked no, because silence must not read as health.">
+<!ENTITY LAW.AMP.2 "Instruments before reading: every checker, sweep, audit and control the target already carries is run before a single file is read by hand, and each layer names the instrument it ran and the exit it got; a layer whose findings came from reading alone says so with the instrument attribute empty.">
+<!ENTITY LAW.AMP.3 "A possibility of class gap is measured: a declaration exists, the target disagrees with it, and the evidence names the instrument and the path that show it. A possibility of class idea is reasoned or guessed, nothing declares it yet, and its evidence names in adds the law, entity or file it would create; an idea rendered as measured is a failed answer.">
+<!ENTITY LAW.AMP.4 "Every possibility carries a verb of the ladder AMP.verb.1 to AMP.verb.15 and a command may expose only the verbs of its own band; a possibility above the band is rendered with the next_verb element naming the number and the command that owns it, never silently kept.">
+<!ENTITY LAW.AMP.5 "The generator pages: at most AMP.page possibilities are offered per round, ranked, and the count of the unshown is printed beside them, so an unbounded space is exposed in bounded rounds and the walk may stop as soon as the run stops.">
+<!ENTITY LAW.AMP.6 "A run reads the state record at AMP.dir and AMP.state before it exposes anything and writes it after: every possibility keeps a stable id derived from its layer, its files and the law it names, a refused id is never offered again by any later run, and the record carries the families walked, the generator offset, the verb the run ended on and the release badge.">
+<!ENTITY LAW.AMP.7 "The study is written before the answer closes: one document per layer walked, one ranked ledger of every possibility of the run, one roadmap ordering the kept ones toward the named release, and one handoff for the next run; every path is printed and every document is UTF-8 with LF endings.">
+<!ENTITY LAW.AMP.8 "The release element names the class the kept possibilities amount to by the recognizer (major, mid, minor, alpha, beta or pre), the version it moves from and to, and carries taken no: the command names a release and never takes it, because a version bump is the operator's and this command writes no version anywhere.">
+<!ENTITY LAW.AMP.9 "A sample is declared: when a layer holds more files than its ceiling allows, the layer renders read and of with the true numbers and the document says how the sample was chosen; a finding drawn from a sample is never presented as exhaustive.">
+<!ENTITY LAW.AMP.10 "The target may be any codebase: when it declares none of the layers, the walk falls back to what is measurable anywhere (the voice of its comments, the guards of its arguments, the ceilings and exit codes of its scripts, its licence headers) and the walk element carries declared no.">

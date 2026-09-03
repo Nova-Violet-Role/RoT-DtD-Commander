@@ -48,6 +48,8 @@ export const FAMILIES = [
     members: ['git-gh-amplification', 'repo-git-scalar', 'repo-creativity-askingstorm'] },
   { id: 'audits', name: 'Audits, in the foreground', rep: 'audit-skill', color: '1abc9c',
     members: ['audit-skill', 'audit-slash-command', 'audit-subagent', 'ai-slop'] },
+  { name: 'Codebase growth', blurb: 'walk a codebase, expose what could be done as measured gaps and reasoned ideas on a fifteen-verb ladder, keep what you mark, and name the release it amounts to', colour: '16a34a',
+    members: ['amplify-codebase', 'enhance-codebase', 'overhaul-codebase'] },
   { id: 'workflow', name: 'Workflow and the Adiutor', rep: 'RoT-DtD-Commander-Adiutor', color: 'e67e22',
     members: ['whats-next', 'add-to-todos', 'check-todos', 'run-plan', 'heal-skill', 'debug', 'setup-ralph', 'RoT-DtD-Commander-Adiutor'] },
 ];

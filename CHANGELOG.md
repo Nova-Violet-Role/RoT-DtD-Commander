@@ -7,6 +7,48 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 5.2.0 (2026-09-03)
+
+The codebase growth family: three commands that walk a codebase for what
+could be done next, on one ladder of fifteen verbs, remembering every
+refusal between runs.
+
+- dtd/cc-amplify.dtd, the growth grammar: the ladder AMP.verb.1 to
+  AMP.verb.15 ascending by how much a change disturbs (tweak, enrich,
+  ameliorate, amplification, magnify, heighten, promote, cultivate,
+  enhancement, upgrade, elevation, intensification, evolve, overhaul,
+  metamorphosis); three bands that partition it with no overlap and no gap;
+  the walk element with a layer per layer and its instrument, exit, read of
+  of and walked yes, no or timeout; the possibility element in two classes,
+  gap and idea; the generator with its paging counts; the study of four
+  documents; the release element carrying taken fixed at no; and LAW.AMP.1
+  to LAW.AMP.10.
+- /amplify-codebase-dtd, /enhance-codebase-dtd and /overhaul-codebase-dtd,
+  forged from one anatomy in dtd/new-commands-v52.spec.mjs and differing in
+  four places: the band, the sigil, the root element and the sentence that
+  says what kind of change they are for. Each raises the intake to five
+  rounds of four questions the only legal way, by declaring ask.rounds,
+  ask.of, ASK.rounds_per_prompt and ASK.max_total above its cc-ask include
+  (LAW.ASK.11), and each hands a possibility above its band to the command
+  that owns it rather than keeping it.
+- lib/amplify.mjs: the contract read from the DTD and nothing repeated in
+  code, the layer detector, the walk (instruments before reading, each in
+  the foreground under AMP.ceiling.family with its exit read directly, a
+  ceiling rendered timeout and never as an empty layer), the stable id (a
+  hash of layer, files and law, invariant under file order), the ranking
+  (gaps before ideas, then risk, then breadth), the pager, the state record
+  that round-trips, and the release recognizer whose arithmetic carries and
+  resets (5.1.2 plus a mid is 5.2.0, plus a major is 6.0.0). Seventeen
+  controls, among them a ceiling tripped on purpose with an instrument that
+  cannot finish in time, and the generated reference held against the DTD.
+- The skills/amplify-codebase-dtd skill with references/ladder.md generated
+  by node lib/amplify.mjs table, so the fifteen verbs, the bands, the
+  layers, the bounds, the six release classes and the ten laws are one
+  table nobody types twice.
+- Counts: 123 commands, 23 skills, 5 agents; checked 151; contract-audit
+  1321 declarations, 0 unused; the README index gains the Codebase growth
+  family; the gate chain and the workflow gain the amplify controls.
+
 ## 5.1.0 (2026-09-03)
 
 The gate on every spot, and the scratch: an armed Adiutor now judges every
