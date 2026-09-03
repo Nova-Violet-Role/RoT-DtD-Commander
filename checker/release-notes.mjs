@@ -25,7 +25,10 @@ function amplifyState(root) {
   if (!existsSync(p)) return null;
   const text = readFileSync(p, 'utf8');
   const from = (/^- from: (.+)$/m.exec(text) || [])[1];
-  const kept = [...text.matchAll(/^\| [0-9a-f]{8} \| (?:gap|idea) \| [a-z]+ \| marked \| ([0-9]+) \|/gm)].map((m) => ({ verb: Number(m[1]) }));
+  // marked is work this release kept; done is work it kept and finished.
+  // Reading only marked made the gate red the moment a release closed its own
+  // rows, which is the next step of the lifecycle the DTD declares.
+  const kept = [...text.matchAll(/^\| [0-9a-f]{8} \| (?:gap|idea) \| [a-z]+ \| (?:marked|done) \| ([0-9]+) \|/gm)].map((m) => ({ verb: Number(m[1]) }));
   if (!from || !kept.length) return null;
   return { from: from.trim(), kept };
 }
