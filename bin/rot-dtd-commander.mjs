@@ -61,11 +61,26 @@ function subsetFiles(root) {
     return readdirSync(join(root, 'dtd')).filter((f) => f.endsWith('.dtd')).sort().map((f) => `dtd/${f}`);
   } catch { return []; }
 }
+// Every `node lib/x.mjs` a shipped command names must be a file the installer
+// writes, or the command installs without the engine it runs on. Two families
+// shipped that way: the commands were installed, their engines were not.
+export function enginesShipped(root) {
+  const shipped = new Set(runtimeFiles(root));
+  const wanted = new Set();
+  const dir = join(root, 'commands');
+  if (existsSync(dir)) {
+    for (const f of readdirSync(dir).filter((n) => n.endsWith('.md'))) {
+      for (const m of readFileSync(join(dir, f), 'utf8').matchAll(/node (lib\/[\w.-]+\.mjs)/g)) wanted.add(m[1]);
+    }
+  }
+  return { wanted: [...wanted].sort(), missing: [...wanted].filter((w) => !shipped.has(w)).sort() };
+}
+
 function runtimeFiles(root) {
   const fixed = RUNTIME.filter((f) => !(f.startsWith('dtd/') && f.endsWith('.dtd')));
   return [...new Set([...fixed, ...subsetFiles(root)])];
 }
-const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-args.dtd', 'dtd/cc-form.dtd', 'lib/form.mjs', 'dtd/cc-lexicon.dtd', 'lib/args.mjs', 'dtd/cc-schematic.dtd', 'lib/schematic.mjs', 'dtd/cc-license.dtd', 'dtd/cc-workflow.dtd', 'lib/workflow.mjs', 'dtd/cc-task.dtd', 'lib/task.mjs', 'lib/record.mjs', 'lib/ordinals.mjs', 'lib/license.mjs', 'dtd/licenses.json', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd', 'dtd/ai-slop.dtd', 'lib/ordinals.mjs', 'lib/ai-slop.mjs'];
+const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/amplify.mjs', 'lib/scratch.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-args.dtd', 'dtd/cc-form.dtd', 'lib/form.mjs', 'dtd/cc-lexicon.dtd', 'lib/args.mjs', 'dtd/cc-schematic.dtd', 'lib/schematic.mjs', 'dtd/cc-license.dtd', 'dtd/cc-workflow.dtd', 'lib/workflow.mjs', 'dtd/cc-task.dtd', 'lib/task.mjs', 'lib/record.mjs', 'lib/ordinals.mjs', 'lib/license.mjs', 'dtd/licenses.json', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd', 'dtd/ai-slop.dtd', 'lib/ai-slop.mjs'];
 // The skills-directory plugin older installs wrote to auto-start the monitor;
 // 5.0.0 writes none, and the doctor turns red while one is still present.
 const MONITOR_PLUGIN = 'rot-dtd-commander-adiutor';

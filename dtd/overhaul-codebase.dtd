@@ -10,9 +10,11 @@
   judge rather than as prose a reader must trust.
 
   The band is a #FIXED attribute. A rendered answer that carries any other
-  value is invalid against this subset, so "this command exposes only verbs
-  11 to 15" stops being a rule the model remembers and becomes a rule the
-  parser enforces.
+  value contradicts the declaration it was rendered under, so "this command exposes only verbs
+  11 to 15" stops being a rule the model remembers and becomes a rule an
+  instrument reads: node lib/amplify.mjs controls opens the BUILT command and
+  refuses it unless this band is pinned here. No validating XML parser runs in
+  this tree, and the claim is only ever as strong as the control.
 -->
 
 <!-- ===== THE BAND, PINNED ===== -->
@@ -26,7 +28,9 @@
 <!ENTITY OVERHAUL.band "11|12|13|14|15">
 <!ENTITY OVERHAUL.low "11">
 <!ENTITY OVERHAUL.high "15">
-<!ENTITY OVERHAUL.next "1: the ladder wraps at its top, so the verb after metamorphosis is tweak again, not a sixteenth">
+<!-- The ladder wraps at its top: the verb after metamorphosis is tweak again,
+     not a sixteenth, so this is the only band whose next is below its low. -->
+<!ENTITY OVERHAUL.next "1">
 <!ENTITY OVERHAUL.what "an approach is replaced or a layer is lifted into its own subset; the old way is removed, not left beside">
 
 <!-- ===== THE GUARDS OF THE $ REFERENCE, WHERE THEY APPLY ===== -->

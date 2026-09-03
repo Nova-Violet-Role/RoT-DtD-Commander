@@ -450,9 +450,11 @@ argument-hint: [a path to walk, or blank for the current repository; --stage=alp
   judge rather than as prose a reader must trust.
 
   The band is a #FIXED attribute. A rendered answer that carries any other
-  value is invalid against this subset, so "this command exposes only verbs
-  6 to 10" stops being a rule the model remembers and becomes a rule the
-  parser enforces.
+  value contradicts the declaration it was rendered under, so "this command exposes only verbs
+  6 to 10" stops being a rule the model remembers and becomes a rule an
+  instrument reads: node lib/amplify.mjs controls opens the BUILT command and
+  refuses it unless this band is pinned here. No validating XML parser runs in
+  this tree, and the claim is only ever as strong as the control.
 -->
 
 <!-- ===== THE BAND, PINNED ===== -->
@@ -515,7 +517,7 @@ Grow the codebase at <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted
 
 Use this command when the codebase is sound and unfinished: it says what it does and does not yet do all of it. The three commands of this family are one anatomy over one ladder of fifteen verbs, declared in cc-amplify.dtd and ascending by how much they disturb: tweak, enrich, ameliorate, amplification, magnify, heighten, promote, cultivate, enhancement, upgrade, elevation, intensification, evolve, overhaul, metamorphosis. This one owns AMP.band.enhance. When the run ends it names the next verb up and the command that owns it, so the climb from a tweak to a metamorphosis is a declared chain rather than a thing to remember.
 
-The DOCTYPE declares the whole deliverable. The `args` element and its four guards come from cc-args: the argument is split like shell words and never evaluated (LAW.ARGS.1), --stage and --no-gate are read as flags (LAW.ARGS.2, LAW.ARGS.3), and the walk is rendered with its count and its guards (LAW.ARGS.4, LAW.ARGS.5, LAW.ARGS.6). The `intake` comes from cc-ask, raised to five rounds of four by the declarations above the include (LAW.ASK.11): a `context_analysis` of known and gap slots, up to five `round` elements each carrying one `ask` of one to four bilateral `question` elements with their variants, `answer` elements that are data, an `impactful` element when the gate asks for one, and a `gate` whose only choices are start, more, add and impactful (LAW.ASK.1 to LAW.ASK.14). The `walk`, the `generator`, the `study`, the `release` and the `next_verb` come from cc-amplify and answer to LAW.AMP.1 to LAW.AMP.10.
+The DOCTYPE declares the whole deliverable. The `args` element and its four guards come from cc-args: the argument is split like shell words and never evaluated (LAW.ARGS.1), --stage and --no-gate are read as flags (LAW.ARGS.2, LAW.ARGS.3), and the walk is rendered with its count and its guards (LAW.ARGS.4, LAW.ARGS.5, LAW.ARGS.6). The `intake` comes from cc-ask, raised to five rounds of four by the declarations above the include (LAW.ASK.11): a `context_analysis` of known and gap slots, up to five `round` elements each carrying one `ask` of one to four bilateral `question` elements with their variants, `answer` elements that are data, an `impactful` element when the gate asks for one, and a `gate` whose only choices are start, more, add and impactful (LAW.ASK.1 to LAW.ASK.14). The `walk`, the `generator`, the `study`, the `release` and the `next_verb` come from cc-amplify and answer to LAW.AMP.1 to LAW.AMP.14.
 
 The ladder is declared, not remembered. `cc-amplify.dtd` carries the fifteen
 verbs in ascending order of how much they disturb: AMP.verb.1 tweak, AMP.verb.2

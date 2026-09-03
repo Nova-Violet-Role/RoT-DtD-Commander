@@ -10,9 +10,11 @@
   judge rather than as prose a reader must trust.
 
   The band is a #FIXED attribute. A rendered answer that carries any other
-  value is invalid against this subset, so "this command exposes only verbs
-  1 to 5" stops being a rule the model remembers and becomes a rule the
-  parser enforces.
+  value contradicts the declaration it was rendered under, so "this command exposes only verbs
+  1 to 5" stops being a rule the model remembers and becomes a rule an
+  instrument reads: node lib/amplify.mjs controls opens the BUILT command and
+  refuses it unless this band is pinned here. No validating XML parser runs in
+  this tree, and the claim is only ever as strong as the control.
 -->
 
 <!-- ===== THE BAND, PINNED ===== -->

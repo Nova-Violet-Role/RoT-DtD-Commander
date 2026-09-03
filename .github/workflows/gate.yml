@@ -72,6 +72,8 @@ jobs:
         run: node lib/scratch.mjs controls
       - name: amplify controls (the ladder, the bands, the ids, the paging, the state record, the release recognizer, a ceiling tripped on purpose)
         run: node lib/amplify.mjs controls
+      - name: every engine a shipped command invokes is a file the installer writes (two families once shipped without theirs)
+        run: node checker/engines-sweep.mjs && node checker/engines-sweep.mjs --controls
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
       - name: the generated contract and the growth state record pass the same measures
