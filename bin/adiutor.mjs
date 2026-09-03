@@ -454,6 +454,20 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
     row('manifest', false, `no manifest at ${manifestPath}; run rdc install`);
   }
   const node = process.versions.node;
+  // The subsets the repository declares against the subsets on disk. A hand-kept
+  // install list once shipped fourteen of fifteen and reported nothing wrong;
+  // nothing compared the two directories, so nothing could tell.
+  try {
+    const here = readdirSync(join(ROOT, 'dtd')).filter((f) => f.endsWith('.dtd')).sort();
+    const there = existsSync(join(os.homedir(), '.claude', 'rot-dtd-commander', 'dtd'))
+      ? readdirSync(join(os.homedir(), '.claude', 'rot-dtd-commander', 'dtd')).filter((f) => f.endsWith('.dtd')).sort() : [];
+    const missing = here.filter((f) => !there.includes(f));
+    const extra = there.filter((f) => !here.includes(f));
+    row('subsets', missing.length === 0 && extra.length === 0,
+      missing.length || extra.length
+        ? `${here.length} in the repository, ${there.length} installed${missing.length ? '; missing: ' + missing.join(', ') : ''}${extra.length ? '; stale: ' + extra.join(', ') : ''}`
+        : `${here.length} subsets, every one installed`);
+  } catch (e) { row('subsets', false, `cannot compare the subsets: ${e.message}`); }
   row('node', Number(node.split('.')[0]) >= 20, `node ${node}`);
   const settings = join(target, 'settings.json');
   let parsed = true;

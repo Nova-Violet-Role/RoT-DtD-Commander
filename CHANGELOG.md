@@ -7,6 +7,50 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 6.0.0 (2026-09-03)
+
+The metamorphosis: the version stops being typed. A release names the verbs it
+kept, the recognizer turns them into a number, and a manifest that says
+anything else is refused by name. What the codebase was — a set of commands
+versioned by judgement — it no longer is.
+
+- LAW.AMP.14 and the gate that enforces it: `checker/release-notes.mjs
+  --versions` reads `artifacts/amplify-codebase/state.md`, computes the class
+  and version from the kept verbs, and refuses a disagreement by name. The
+  control plants 6.1.0 against a recognised 6.0.0 and watches it refused.
+- The installer ships every subset in dtd/, read from disk. A hand-kept list
+  had shipped fourteen of fifteen while reporting nothing wrong:
+  `cc-amplify.dtd` was forged against, checked against and never installed.
+  A doctor row `subsets` now diffs the repository against the installation, so
+  that class of silence cannot recur.
+- Three variant subsets, `amplify-codebase.dtd`, `enhance-codebase.dtd` and
+  `overhaul-codebase.dtd`: each pins its band as a #FIXED attribute on the
+  root, so a command that claims a verb outside its band is invalid XML rather
+  than merely wrong prose, and each carries the four guards of the $ reference
+  as declarations where they apply.
+- LAW.AMP.11, the growing generator: the page starts at AMP.page, moves by
+  AMP.grow.marked, AMP.grow.other and AMP.grow.skipped as the rounds are
+  answered, and is held under a ceiling the size of the walk allows
+  (AMP.grow.tie) and under AMP.page.max. Engagement leads; the tree's size
+  only breaks the tie. The size is carried in the state record.
+- LAW.AMP.12, the expiring refusal: a refused possibility returns as verdict
+  `reopen` after AMP.reopen.after runs or as soon as a file named in its id
+  changes, carrying `refused_at` so a second offer reads as one. A possibility
+  marked `done` never returns, and the idea class stays generable without
+  limit.
+- LAW.AMP.13, the four guards: the argument split like shell words and never
+  evaluated, the study written literally, every possibility escaped into
+  PCDATA and never wrapped in a CDATA section, and a parameter entity found in
+  a scanned file reported as data. Four controls, one per guard.
+- `writeStudy` writes the four documents of LAW.AMP.7 from the run's own data,
+  and `studyHolds` refuses a study missing a kind by name.
+- `--stage=alpha|beta|pre` and `--from=` reach the recognizer from the command
+  line; an undeclared stage is refused with the declared classes listed.
+- The amplify-codebase skill is dissolved: this is a command family, and the
+  prose it carried now lives in the three commands themselves, with the
+  generated contract at `dtd/ladder.md` beside the declarations it renders.
+- Counts: 123 commands, 22 skills, 5 agents; 18 subsets; amplify controls 27.
+
 ## 5.2.0 (2026-09-03)
 
 The codebase growth family: three commands that walk a codebase for what

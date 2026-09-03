@@ -53,6 +53,18 @@ const NAME = 'rot-dtd-commander';
 const TEXT_EXT = new Set(['.md', '.dtd', '.sh', '.mjs', '.js', '.json', '.yml', '.yaml', '.txt', '.tsv', '.csv', '.ps1', '.nu', '.py', '.toml', '.tape']);
 const JUNK = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
 const MANIFEST = `.${NAME}-manifest.json`;
+// Every subset in dtd/ ships: the list is read from disk, never kept by hand.
+// A hand-kept list is how cc-amplify.dtd was written, forged against and never
+// installed, with the installer reporting 0 failed the whole time.
+function subsetFiles(root) {
+  try {
+    return readdirSync(join(root, 'dtd')).filter((f) => f.endsWith('.dtd')).sort().map((f) => `dtd/${f}`);
+  } catch { return []; }
+}
+function runtimeFiles(root) {
+  const fixed = RUNTIME.filter((f) => !(f.startsWith('dtd/') && f.endsWith('.dtd')));
+  return [...new Set([...fixed, ...subsetFiles(root)])];
+}
 const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-args.dtd', 'dtd/cc-form.dtd', 'lib/form.mjs', 'dtd/cc-lexicon.dtd', 'lib/args.mjs', 'dtd/cc-schematic.dtd', 'lib/schematic.mjs', 'dtd/cc-license.dtd', 'dtd/cc-workflow.dtd', 'lib/workflow.mjs', 'dtd/cc-task.dtd', 'lib/task.mjs', 'lib/record.mjs', 'lib/ordinals.mjs', 'lib/license.mjs', 'dtd/licenses.json', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd', 'dtd/ai-slop.dtd', 'lib/ordinals.mjs', 'lib/ai-slop.mjs'];
 // The skills-directory plugin older installs wrote to auto-start the monitor;
 // 5.0.0 writes none, and the doctor turns red while one is still present.
@@ -358,7 +370,7 @@ async function cmdInstall(o) {
     }
   }
 
-  for (const rel of RUNTIME) {
+  for (const rel of runtimeFiles(SRC)) {
     const src = join(ROOT, rel);
     if (!existsSync(src)) continue;
     writeOne(src, join(target, NAME, rel), `runtime ${rel}`, false);

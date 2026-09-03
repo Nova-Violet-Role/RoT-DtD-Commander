@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Nova-Violet Role: RoT DtD Commander, the creator kit. Claude Code commands, skills and agents with a declared DTD grammar and trust boundary; creators for prompts, skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks; the Adiutor Stop-hook doctor and the Commander-Adiutor monitor, run by hand unless armed.",
-    "version": "5.2.0"
+    "version": "6.0.0"
   },
   "plugins": [
     {
       "name": "rot-dtd-commander",
       "source": "./",
-      "description": "123 -dtd commands (the nine RoT MoE lenses and ELEVATE among them, nineteen book-derived commands with their voice profiles, sixteen prompt creators over eight schematics, the tasks family, the filetype and dork creators), 23 skills, 5 agents; the Adiutor: a Stop hook that checks every -dtd answer against the DOCTYPE of the command that produced it, a ledger, and the /RoT-DtD-Commander-Adiutor doctor; and the Commander-Adiutor: a monitor that hands every failed answer to the session as the ledger closes it. Nothing is armed by a plain install; rdc install --arm or rdc arm arms the hooks, rdc watch starts the monitor, each under a 300 second ceiling. Armed, the AI_SLOP gate judges every answer, file, commit message and request body before it lands, and /deep-scratch-dtd builds in a git worktree behind a merge gate (5.1.0). 5.2.0 adds the codebase growth family: /amplify-codebase-dtd, /enhance-codebase-dtd and /overhaul-codebase-dtd walk any codebase, expose what could be done as measured gaps and reasoned ideas on a fifteen-verb ladder, remember every refusal between runs, and name the release the kept work amounts to without taking it.",
-      "version": "5.2.0",
+      "description": "123 -dtd commands (the nine RoT MoE lenses and ELEVATE among them, nineteen book-derived commands with their voice profiles, sixteen prompt creators over eight schematics, the tasks family, the filetype and dork creators), 22 skills, 5 agents; the Adiutor: a Stop hook that checks every -dtd answer against the DOCTYPE of the command that produced it, a ledger, and the /RoT-DtD-Commander-Adiutor doctor; and the Commander-Adiutor: a monitor that hands every failed answer to the session as the ledger closes it. Nothing is armed by a plain install; rdc install --arm or rdc arm arms the hooks, rdc watch starts the monitor, each under a 300 second ceiling. Armed, the AI_SLOP gate judges every answer, file, commit message and request body before it lands, and /deep-scratch-dtd builds in a git worktree behind a merge gate (5.1.0). 5.2.0 adds the codebase growth family: /amplify-codebase-dtd, /enhance-codebase-dtd and /overhaul-codebase-dtd walk any codebase, expose what could be done as measured gaps and reasoned ideas on a fifteen-verb ladder, remember every refusal between runs, and name the release the kept work amounts to without taking it. 6.0.0 makes the version itself measured: a release names the verbs it kept in a state record, the recognizer turns them into a number, and a manifest that says anything else is refused by name.",
+      "version": "6.0.0",
       "keywords": [
         "dtd", "doctype", "xml", "trust-boundary", "claude-code", "claude-code-plugin",
         "prompt-engineering", "meta-prompt", "creators", "schematics", "workflow", "tasks", "records",

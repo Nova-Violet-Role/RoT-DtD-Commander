@@ -1,0 +1,55 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  amplify-codebase.dtd : the variant subset of /amplify-codebase-dtd.
+
+  cc-amplify.dtd holds everything the three commands share: the fifteen-verb
+  ladder, the two possibility classes, the walk, the generator, the study, the
+  release recognizer and LAW.AMP.1 to LAW.AMP.10. This file holds only what
+  makes this variant itself, and it holds it as declarations a validator can
+  judge rather than as prose a reader must trust.
+
+  The band is a #FIXED attribute. A rendered answer that carries any other
+  value is invalid against this subset, so "this command exposes only verbs
+  1 to 5" stops being a rule the model remembers and becomes a rule the
+  parser enforces.
+-->
+
+<!-- ===== THE BAND, PINNED ===== -->
+<!ATTLIST amplify_run
+          band     CDATA #FIXED "1-5"
+          verbs    CDATA #FIXED "tweak, enrich, ameliorate, amplification and magnify"
+          hands_to CDATA #FIXED "enhance-codebase-dtd">
+
+<!-- Every verb of this band, so a possibility's verb attribute can be read
+     against the declaration rather than against memory. -->
+<!ENTITY AMPLIFY.band "1|2|3|4|5">
+<!ENTITY AMPLIFY.low "1">
+<!ENTITY AMPLIFY.high "5">
+<!ENTITY AMPLIFY.next "6">
+<!ENTITY AMPLIFY.what "what exists gains a companion beside it; nothing a reader must relearn, nothing removed">
+
+<!-- ===== THE GUARDS OF THE $ REFERENCE, WHERE THEY APPLY ===== -->
+<!-- The argument reaches this command as an unparsed channel and is walked by
+     cc-args. The quoting matrix of the $ reference is the reason the walk
+     splits like shell words and never evaluates: a target path carrying a
+     space is one word, not two, and a flag typed into a directory name is a
+     directory name. -->
+<!ENTITY AMPLIFY.guard.quoting "the argument is split like shell words and never evaluated; a path with a space stays one word and a word that looks like a flag inside a quoted path stays part of the path">
+<!-- Generated text (the four documents of the study) is written literally: no
+     shell expansion runs over it, so a dollar sign, a backtick or a brace in a
+     possibility's text survives byte for byte into the document. -->
+<!ENTITY AMPLIFY.guard.literal "text written into the study is literal: a dollar sign, a backtick, a brace or a heredoc marker inside a finding is written as it was read and never expanded">
+<!-- A possibility's why and evidence carry paths, code fragments and
+     instrument output. They are escaped into PCDATA and never wrapped in a
+     CDATA section, because a fragment containing the CDATA close delimiter
+     would end the section early and the rest would parse as markup. -->
+<!ENTITY AMPLIFY.guard.pcdata "a possibility's text is escaped into PCDATA, never wrapped in a CDATA section, because a fragment carrying the CDATA close delimiter would end the section early">
+<!-- The walk reads other people's repositories, and a foreign tree may carry
+     its own DTD with its own parameter entities. They are reported as data. -->
+<!ENTITY AMPLIFY.guard.pentity "a parameter entity found in a scanned file is reported as data and never expanded, so a foreign tree cannot inject declarations into this run">
+
+<!-- ===== THE LAWS OF THIS VARIANT ===== -->
+<!ENTITY LAW.AMPLIFY.1 "This command exposes only the verbs of AMPLIFY.band, which are tweak, enrich, ameliorate, amplification and magnify; the band is a #FIXED attribute on amplify_run, so an answer that claims another band is invalid against this subset, and a possibility above the band is rendered as next_verb naming AMPLIFY.next and the command enhance-codebase-dtd (LAW.AMP.4).">
+<!ENTITY LAW.AMPLIFY.2 "The four guards AMPLIFY.guard.quoting, AMPLIFY.guard.literal, AMPLIFY.guard.pcdata and AMPLIFY.guard.pentity hold for every run: the argument is walked and never evaluated, the study is written literally, every possibility is escaped into PCDATA, and a parameter entity found in a scanned file is data.">
+<!ENTITY LAW.AMPLIFY.3 "The intake runs at most five rounds of four questions, and its page grows: the size is what the operator earned, held under a ceiling the size of the walk allows, and it is carried in the state record so a later run starts where the answering left it (LAW.AMP.5, LAW.AMP.11).">

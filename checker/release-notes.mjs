@@ -13,9 +13,22 @@
 // `--controls` proves both refusals and one extraction on a planted
 // changelog, so the job's instrument is known to be able to fail.
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { versionHolds } from '../lib/amplify.mjs';
+
+// The kept verbs of this release, read from the state record the family writes.
+function amplifyState(root) {
+  const p = join(root, 'artifacts', 'amplify-codebase', 'state.md');
+  if (!existsSync(p)) return null;
+  const text = readFileSync(p, 'utf8');
+  const from = (/^- from: (.+)$/m.exec(text) || [])[1];
+  const kept = [...text.matchAll(/^\| [0-9a-f]{8} \| (?:gap|idea) \| [a-z]+ \| marked \| ([0-9]+) \|/gm)].map((m) => ({ verb: Number(m[1]) }));
+  if (!from || !kept.length) return null;
+  return { from: from.trim(), kept };
+}
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -130,6 +143,17 @@ function main() {
     console.log(`  RELEASE.md heading "## v${v['package.json']}": ${v.releaseHeading ? 'present' : 'MISSING'}; changelog top section ${v.changelogState}${args[1] ? `; tag ${args[1]}` : ''}`);
     const f = versionFindings(v, args[1] || null);
     for (const line of f) console.log(`  DISAGREE ${line}`);
+    // LAW.AMP.14: the version is not typed, it is recognised. The state record
+    // of the release names the verbs it kept; the recognizer turns them into a
+    // number, and a manifest that says anything else is refused by name.
+    const stated = amplifyState(ROOT);
+    if (stated) {
+      const check = versionHolds(v['package.json'], stated.kept, stated.from);
+      if (!check.holds) {
+        console.log(`  DISPUTED package.json says ${check.version}; the recognizer says ${check.recognised} (class ${check.class}) from the verbs kept at ${stated.from}`);
+        f.push('the recognizer disputes the version');
+      } else console.log(`  recognised ${check.recognised} (class ${check.class}) from the kept verbs ${stated.kept.map((k) => k.verb).join(', ')} at ${stated.from}`);
+    }
     console.log(`release-notes versions: ${f.length === 0 ? `one version everywhere, ${v['package.json']}` : `${f.length} disagreements`}`);
     process.exit(f.length === 0 ? 0 : 1);
   }

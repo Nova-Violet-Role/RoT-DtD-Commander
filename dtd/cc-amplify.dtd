@@ -51,6 +51,18 @@
 <!ENTITY AMP.ceiling.family "120">
 <!ENTITY AMP.ceiling.total "900">
 <!ENTITY AMP.page "4">
+<!-- The generator grows. AMP.page is the floor every first round starts at;
+     the engagement of the answering moves the size up and down inside a
+     ceiling that the size of the walk allows, and the record carries it
+     between runs. Engagement leads; the tree's size only breaks the tie. -->
+<!ENTITY AMP.page.max "12">
+<!ENTITY AMP.grow.marked "1: every possibility marked or refused with a reason moves the page up by one">
+<!ENTITY AMP.grow.other "1: a round answered in the operator's own words moves it up by one">
+<!ENTITY AMP.grow.skipped "-1: a round left unanswered moves it down by one">
+<!ENTITY AMP.grow.tie "the ceiling is the walk's own size: a tree of few possibilities cannot page wide however well the operator answers">
+<!-- A refusal expires; a thing finished does not. -->
+<!ENTITY AMP.reopen.after "3">
+<!ENTITY AMP.reopen.on "a change to any file named in the possibility's id, whichever comes first">
 <!ENTITY AMP.rounds "5">
 <!ENTITY AMP.questions "20">
 <!ENTITY AMP.dir "artifacts/amplify-codebase">
@@ -89,7 +101,8 @@
           verb       CDATA #REQUIRED
           layer      NMTOKEN #REQUIRED
           confidence (measured|reasoned|guessed) #REQUIRED
-          verdict    (exposed|marked|refused|done) #REQUIRED>
+          verdict    (exposed|marked|refused|done|reopen) #REQUIRED
+          refused_at CDATA #IMPLIED>
 <!ELEMENT why (#PCDATA)>
 <!ELEMENT evidence (#PCDATA)>
 <!ATTLIST evidence
@@ -136,3 +149,7 @@
 <!ENTITY LAW.AMP.8 "The release element names the class the kept possibilities amount to by the recognizer (major, mid, minor, alpha, beta or pre), the version it moves from and to, and carries taken no: the command names a release and never takes it, because a version bump is the operator's and this command writes no version anywhere.">
 <!ENTITY LAW.AMP.9 "A sample is declared: when a layer holds more files than its ceiling allows, the layer renders read and of with the true numbers and the document says how the sample was chosen; a finding drawn from a sample is never presented as exhaustive.">
 <!ENTITY LAW.AMP.10 "The target may be any codebase: when it declares none of the layers, the walk falls back to what is measurable anywhere (the voice of its comments, the guards of its arguments, the ceilings and exit codes of its scripts, its licence headers) and the walk element carries declared no.">
+<!ENTITY LAW.AMP.11 "The page grows with the answering: it starts at AMP.page, moves by AMP.grow.marked, AMP.grow.other and AMP.grow.skipped as the rounds are answered, never exceeds the ceiling AMP.grow.tie allows out of what the walk found, never exceeds AMP.page.max, and is carried in the state record so a later run resumes the size the answering earned.">
+<!ENTITY LAW.AMP.12 "A refusal expires and a thing finished does not: a possibility refused returns as verdict reopen after AMP.reopen.after runs or on AMP.reopen.on, carrying refused_at so a second offer is visibly a second offer; a possibility marked done never returns; and the idea class stays generable without limit, which is the other half of the unboundedness.">
+<!ENTITY LAW.AMP.13 "Four guards hold wherever this family reads or writes: the argument is split like shell words and never evaluated; text written into the study is literal and never expanded; a possibility's text is escaped into PCDATA and never wrapped in a CDATA section, because a fragment carrying the close delimiter would end it early; and a parameter entity found in a scanned file is reported as data, never expanded, so a foreign tree cannot inject declarations into a run.">
+<!ENTITY LAW.AMP.14 "The version obeys the recognizer: a release names its kept verbs in the state record, and the version in the manifests must equal what the recognizer computes from them; a manifest version the engine disputes is refused by name, so the number a release carries is measured rather than typed.">

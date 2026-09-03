@@ -18,6 +18,28 @@
 
 ---
 
+## v6.0.0 — the version stops being typed
+
+A release names the verbs it kept in `artifacts/amplify-codebase/state.md`;
+`lib/amplify.mjs` turns them into a class and a number; and
+`release-notes --versions` refuses a manifest that disagrees. The codebase no
+longer publishes a version by judgement, which is the metamorphosis its own
+ladder calls verb 15.
+
+Beside it: the installer now ships every subset read from disk (a hand-kept
+list had silently shipped fourteen of fifteen), a doctor row diffs the
+repository's subsets against the installation, three variant subsets pin each
+command's band as a #FIXED attribute, the generator's page grows with the
+answering, a refusal expires after three runs or a change beneath it, the four
+guards of the $ reference are declarations with a control each, and the study
+writer emits the four documents with a missing kind refused by name.
+
+**Migrating from 5.x**: nothing to do. The new subsets install themselves, the
+state record is created on the first run of the family, and a repository with
+no state record is not subject to the version gate. Every 5.x command keeps
+its grammar. Every number is in [CHANGELOG.md](CHANGELOG.md). The tag is
+`v6.0.0`.
+
 ## v5.2.0 — the codebase growth family
 
 Three commands on one ladder of fifteen verbs: `/amplify-codebase-dtd` 🌱,
