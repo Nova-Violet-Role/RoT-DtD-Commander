@@ -16,9 +16,9 @@
 [![Nova-Violet Role](https://img.shields.io/badge/Nova--Violet-Role-9b59b6?style=for-the-badge)](https://github.com/Nova-Violet-Role)
 [![License](https://img.shields.io/badge/License-AGPL--3.0_OR_EUPL--1.2-764ba2?style=for-the-badge)](LICENSE)
 
-[![Checker](https://img.shields.io/badge/checked-91_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Contract](https://img.shields.io/badge/contract_audit-161_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-12_%2B_6-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Checker](https://img.shields.io/badge/checked-145_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Contract](https://img.shields.io/badge/contract_audit-1253_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-20_%2B_15-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Listed on ClaudePluginHub](https://www.claudepluginhub.com/badge/nova-violet-role-rot-dtd-commander)](https://www.claudepluginhub.com/plugins/nova-violet-role-rot-dtd-commander?ref=badge)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
@@ -349,7 +349,7 @@ rdc check           # from a clone: every source against its own DOCTYPE, rules 
 ```
 
 <details>
-<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C14 on 91 sources, then <code>checker/checker-controls.sh</code> refusing three mutations on purpose)</summary>
+<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C14 over the sources of that day, then <code>checker/checker-controls.sh</code> refusing mutations on purpose; the counts on screen are the recording's, the current ones stand in the claims table)</summary>
 
 ![check](docs/gifs/check.gif)
 
@@ -436,7 +436,7 @@ while the plugin is still registered.
 | 118 commands, 22 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-03 |
 | every source passes rules C1 to C14 | `rdc check`: `checked 145  failed 0` | 2026-09-03 |
 | the committed resolved tree equals a fresh build | `rdc build --check`: `282 targets, 0 drifted` | 2026-09-03 |
-| the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil and a front-matter value YAML would misread | `bash checker/checker-controls.sh` | 2026-09-02 |
+| the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil, a front-matter value YAML would misread and a declaration hidden under IGNORE, passes one under INCLUDE and the untouched file, and the companion scorer counts a high finding only on a finding element | `bash checker/checker-controls.sh`: fifteen controls M0 to M14, `all tripped as designed` | 2026-09-03 |
 | every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1253 declarations, 0 unused, 0 law gaps`, and the two planted controls | 2026-09-03 |
 | the Adiutor finds a missing heading, passes a complete answer, blocks once under strict and never twice, stays silent on `stop_hook_active`, refuses a ledger line with an inserted column, preserves foreign settings keys and is idempotent, binds its policy default to `dtd/adiutor.dtd`, opens runs only for installed `-dtd` commands, flags a crammed answer as a spacing finding, reads the whole turn after the command prompt, and its monitor prints one line per failed run and one per malformed ledger line in the DTD's words, nothing for a pass and nothing for history, and an answer that lags behind narration at Stop is completed from the payload's `last_assistant_message`, a prompt that ends with a `/name-dtd` token arms the run (LAW.CORE.7) and a -dtd skill arms it like a command, a reference is judged only inside the id families the answer defines, and a file with no heading is judged by the shared laws, never skipped | `node bin/adiutor.mjs controls`: `20 run, 0 failing` | 2026-09-03 |
 | `rdc install` writes the monitor as `skills/rot-dtd-commander-adiutor/` (a `.claude-plugin/plugin.json` and a `monitors/monitors.json` running the copied script), the doctor's `monitor` row is green, and `rdc uninstall` leaves `skills/` empty | `rdc install --yes --target <scratch> --only pareto-dtd`: `written 17`; `CLAUDE_CONFIG_DIR=<scratch> node bin/adiutor.mjs doctor`: `11 checks, 0 failing`; `rdc uninstall --yes --target <scratch>`: `removed 17  kept 0` | 2026-09-02 |
@@ -448,6 +448,8 @@ while the plugin is still registered.
 | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
 | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
 | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
+| the gate workflow runs every command of the gate script, and a workflow copy missing one is reported | `node checker/gate-sync.mjs`: `commands in the gate chain, 0 missing from gate.yml`, its control passing | every push |
+| a tag `v*` ships the GitHub release with the CHANGELOG section of its version as the notes; a tag that is not package.json's version, a section still in progress, or a release already on the tag ships nothing | the `release` job in `.github/workflows/gate.yml`; `node checker/release-notes.mjs --controls`: `4 run, 0 failing` | on the tag |
 
 If one of these does not re-run for you, open the issue form **"A claim in
 our docs is false"**. It is the most welcome report there is.
@@ -462,13 +464,19 @@ cd RoT-DtD-Commander
 npm run gate; echo "exit=$?"
 ```
 
-`gate` runs `build --check`, `check`, the seventeen Adiutor controls, the contract audit, the checker controls and the
-two sweeps; each ends with a line of counts, and the exit code is read
-directly. Then break it:
+`gate` opens by proving the workflow runs the same chain
+(`checker/gate-sync.mjs`), then runs `build --check`, `check`, the twenty
+Adiutor controls, the contract audit, the checker controls, the two sweeps,
+the ten library controls (ordinals, slop, ceiling, form, args, schematic,
+workflow, task, record, license), the slop sweep at zero and the
+release-notes controls; each ends with a line of counts, and the exit code
+is read directly. Then break it:
 
 ```sh
-bash checker/checker-controls.sh      # six mutations and one untouched file, each asserted present, each refused
-node bin/adiutor.mjs controls         # seventeen guards; C3 is the strict block, once and never twice; C12 the monitor, tripped live; C13 the lagging answer, C14 the trailing call, C17 the heading-less file judged
+bash checker/checker-controls.sh      # M0 to M14: eight mutations and one untouched file, each asserted present, each refused, then six scorer controls
+node checker/gate-sync.mjs            # the workflow lists every gate command; a copy missing one is reported
+node checker/release-notes.mjs --controls  # the release job's notes: an in-progress heading and an unknown version refused
+node bin/adiutor.mjs controls         # twenty guards; C3 is the strict block, once and never twice; C12 the monitor, tripped live; C13 the lagging answer, C14 the trailing call, C17 the heading-less file judged
 rdc watch --once                      # the monitor over your own ledger: one line per failed run, silence for a pass
 ```
 

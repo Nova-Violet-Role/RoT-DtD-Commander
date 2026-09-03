@@ -279,6 +279,20 @@ counts are re-measured.
   synopsis names --score and exit 2, the comments say M9 to M14, the run 7
   counts above are the finding elements' own, the run 5 sentence agrees
   with itself, and the record key above says which file is which run.
+- CI for 5.0.0: the gate workflow runs the ten library controls, the slop
+  sweep at zero and the release-notes controls it lacked, its step names
+  carry the measured counts (twenty guards, M0 to M14), and its first step
+  is `checker/gate-sync.mjs`, which proves every command of the gate
+  script appears in the workflow (a copy missing one is reported; the gate
+  script runs it too). A `release` job runs on a tag `v*` after the gate
+  and the install round trip and ships the GitHub release through the REST
+  API with the CHANGELOG section of that version as its notes
+  (`checker/release-notes.mjs`, four controls); a tag that is not
+  package.json's version or a section still marked in progress ships
+  nothing, and a release already on the tag is left alone. The two shell
+  scripts added in 5.0.0 are executable in the index, which the workflow
+  checks. The whole chain was run once under Node 20, the workflow's
+  runtime, and passed; the README badges carry the 5.0.0 counts.
 - New commands: git-gh-amplification, repo-git-scalar,
   repo-creativity-askingstorm, brainstorm-meta-clear-section,
   ask-me-many-questions, ask-me-preview, coin-flip, coin-flip-best-of,

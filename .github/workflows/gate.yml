@@ -1,5 +1,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
 # Copyright 2026 Saimonokuma.
+#
+# The gate, as CI. The `gate` job runs the same chain as `npm run gate`, one
+# step per command, and its first step proves the two lists agree
+# (checker/gate-sync.mjs). The `install-roundtrip` job installs into a
+# scratch target and uninstalls back to zero files. The `release` job runs
+# only on a tag `v*`, after both, and ships the GitHub release with the
+# CHANGELOG section of that version as its notes; a tag whose version is not
+# package.json's, or whose section is still marked in progress, ships
+# nothing.
 name: gate
 on:
   push:
@@ -14,6 +23,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: this workflow runs every command of the gate script (checker/gate-sync.mjs, with its control)
+        run: node checker/gate-sync.mjs
       - name: build drift (committed resolved tree equals a fresh resolve of src/)
         run: node bin/rot-dtd-commander.mjs build --check; echo "exit=$?"; node bin/rot-dtd-commander.mjs build --check
       - name: checker C1..C14 on every source
@@ -25,16 +36,40 @@ jobs:
         run: node checker/heading-sweep.mjs --check
       - name: front matter parses as YAML (no bare colon-space or hash in a value; the sweep is a no-op)
         run: node checker/frontmatter-sweep.mjs --check
-      - name: adiutor controls (eleven guards tripped on purpose)
+      - name: adiutor controls (twenty guards tripped on purpose)
         run: node bin/adiutor.mjs controls
-      - name: contract audit (both directions, with its planted control)
+      - name: contract audit (both directions, three planted controls)
         run: node checker/contract-audit.mjs
-      - name: checker controls (six mutations refused, the untouched file passes)
+      - name: checker controls (M0 to M14 - eight mutations refused, the untouched file passes, six scorer controls)
         run: bash checker/checker-controls.sh
       - name: spdx sweep
         run: bash checker/spdx-sweep.sh
       - name: crlf sweep
         run: bash checker/crlf-sweep.sh
+      - name: ordinals controls (IUPAC and Greek prefixes, next and parse)
+        run: node lib/ordinals.mjs controls
+      - name: ai-slop controls (the sloppy fixture is caught, the clean one passes, the sweep floor)
+        run: node lib/ai-slop.mjs controls
+      - name: ceiling controls (every unattended runner ends at its ceiling)
+        run: bash checker/ceiling-controls.sh
+      - name: form controls (callout, heredoc, yaml, nt, xml, polyglot, alarm)
+        run: node lib/form.mjs controls
+      - name: args controls
+        run: node lib/args.mjs controls
+      - name: schematic controls (render, read back, matrix, check)
+        run: node lib/schematic.mjs controls
+      - name: workflow controls (validate, run, ceiling, cleanup)
+        run: node lib/workflow.mjs controls
+      - name: task controls (validate, expand, audit, run, ledger)
+        run: node lib/task.mjs controls
+      - name: record controls (nesting, declared records, the newest file judged)
+        run: node lib/record.mjs controls
+      - name: license controls (fifty SPDX ids with definitions)
+        run: node lib/license.mjs controls
+      - name: ai-slop sweep over every source (no tell allowed)
+        run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
+      - name: release-notes controls (the release job's instrument can fail)
+        run: node checker/release-notes.mjs --controls
       - name: every tape has a committed GIF under 2 MB
         run: |
           rc=0
@@ -68,3 +103,39 @@ jobs:
           left=$(find "$T" -type f | wc -l)
           echo "files left: $left"
           test "$left" -eq 0
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [gate, install-roundtrip]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: the tag names the version in package.json
+        run: |
+          v="v$(node -p "require('./package.json').version")"
+          echo "tag $GITHUB_REF_NAME, package.json $v"
+          test "$v" = "$GITHUB_REF_NAME"
+      - name: the notes are the CHANGELOG section of that version, dated, no longer in progress
+        run: |
+          node checker/release-notes.mjs "${GITHUB_REF_NAME#v}" > notes.md
+          test -s notes.md
+          wc -c notes.md
+          head -5 notes.md
+      - name: ship the release (a release already on the tag is left alone)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API: ${{ github.api_url }}/repos/${{ github.repository }}
+        run: |
+          auth=(-H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28")
+          code=$(curl -s -o /dev/null -w '%{http_code}' "${auth[@]}" "$API/releases/tags/$GITHUB_REF_NAME")
+          if [ "$code" = "200" ]; then echo "release $GITHUB_REF_NAME already exists: nothing shipped"; exit 0; fi
+          node checker/release-notes.mjs --payload "$GITHUB_REF_NAME" > payload.json
+          code=$(curl -s -o response.json -w '%{http_code}' -X POST "${auth[@]}" "$API/releases" --data @payload.json)
+          echo "http $code"
+          test "$code" = "201" || { cat response.json; exit 1; }
+          node -e 'const r=require("./response.json");console.log("shipped", r.tag_name, r.name, r.html_url)'
