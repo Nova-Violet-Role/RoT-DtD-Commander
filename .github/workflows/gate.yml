@@ -38,7 +38,7 @@ jobs:
         run: node checker/heading-sweep.mjs --check
       - name: front matter parses as YAML (no bare colon-space or hash in a value; the sweep is a no-op)
         run: node checker/frontmatter-sweep.mjs --check
-      - name: adiutor controls (twenty-six guards tripped on purpose; C21 to C26 the AI_SLOP gate on four spots)
+      - name: adiutor controls (twenty-seven guards tripped on purpose; C21 to C27 the AI_SLOP gate on four spots and the tally)
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, three planted controls)
         run: node checker/contract-audit.mjs
@@ -78,6 +78,8 @@ jobs:
         run: bash checker/tracked-sweep.sh
       - name: the README index names every command, skill and agent of the tree (generated; its controls)
         run: node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls
+      - name: every published count equals the tree (badges, tagline, claims rows, the three manifests; its controls)
+        run: node checker/counts-sweep.mjs && node checker/counts-sweep.mjs --controls
       - name: one version everywhere (package.json, plugin.json, marketplace.json, the changelog, RELEASE.md)
         run: node checker/release-notes.mjs --versions
       - name: release-notes controls (the release job's instrument can fail)

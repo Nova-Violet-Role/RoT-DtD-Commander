@@ -312,6 +312,8 @@ export function observe(event, payload, io = console) {
       if (spot && !spot.j.alive) {
         refuseSpot(session, spot.j, spot.target);
         out(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'deny', permissionDecisionReason: refusal(spot.j) } }));
+        // A denied tool never ran: the open run's tally does not move (control C27).
+        return;
       }
       const run = readRun(session);
       if (!run) return;
@@ -1011,8 +1013,6 @@ export async function controls(io = console) {
     return { ok, detail: `declared=${declared} ready=${ready} landed=${landed} lines=${lines.length} fail-line=${!!f} malformed-line=${!!m} record-line=${!!r} pass-silent=${lines.length === 3} history-silent=${historySilent}` };
   }, results);
 
-  for (const r of results) io.log(`  ${r.ok ? 'PASS' : 'FAIL'} ${r.name}: ${r.detail}`);
-
   // ---- 5.1.0: the AI_SLOP gate on the four spots (LAW.SLOP.7, LAW.SLOP.8, LAW.ADIUTOR.12) ----
   const sloppyText = SLOPPY_FIXTURE;
   const cleanPlain = 'The build ran in the worktree and the gate returned exit 0. Two files changed, one of them new. The diff review kept both hunks and dropped none.';
@@ -1075,6 +1075,16 @@ export async function controls(io = console) {
     return { ok: denied(g) && denied(u) && !c && ledgerHas('slop:pr'), detail: `gh=${denied(g)} curl=${denied(u)} clean=${c ? 'output' : 'silent'} ledger slop:pr=${ledgerHas('slop:pr')}` };
   }, results);
 
+  control('C27 a Write denied while a -dtd run is open leaves the run\'s tool tally where it was; the clean Write that follows counts', () => {
+    writeRun({ session: 'S27', command: 'pareto-dtd', file: '', root: expected.root, expected, tools: 0, errors: [], attempts: 0, autonomous: false, trailing: false, opened: new Date().toISOString(), nesting: null, records: [], cwd: tmp });
+    const d = preTool('S27', 'Write', { file_path: join(tmp, 'notes.md'), content: sloppyText });
+    const afterDeny = (readRun('S27') || {}).tools;
+    const p = preTool('S27', 'Write', { file_path: join(tmp, 'notes.md'), content: cleanPlain });
+    const afterPass = (readRun('S27') || {}).tools;
+    dropRun('S27');
+    return { ok: denied(d) && afterDeny === 0 && !p && afterPass === 1, detail: `denied=${denied(d)} tally after deny=${afterDeny} after the clean write=${afterPass}` };
+  }, results);
+
   control('C26 the escape is the contract: the same failing phrases inside a code fence pass a Write, and a refusal carries no CDATA section', () => {
     const fenced = 'A note.\n\n' + '```' + '\n' + sloppyText + '\n' + '```' + '\n';
     const p = preTool('S26', 'Write', { file_path: join(tmp, 'fenced.md'), content: fenced });
@@ -1082,6 +1092,8 @@ export async function controls(io = console) {
     return { ok: !p && denied(d) && !/CDATA|\]\]>/.test(d), detail: `fenced=${p ? 'output' : 'silent'} plain=${denied(d) ? 'denied' : 'passed'} cdata=${/CDATA|\]\]>/.test(d)}` };
   }, results);
 
+
+  for (const r of results) io.log(`  ${r.ok ? 'PASS' : 'FAIL'} ${r.name}: ${r.detail}`);
 
   const bad = results.filter((r) => !r.ok).length;
   io.log(`\ncontrols: ${results.length} run, ${bad} failing`);

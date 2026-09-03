@@ -52,7 +52,26 @@ and cons per file, what may land in the repository.
   applying the merge and running the project gate on the merged tree, a
   red gate reverted and reported. lib/scratch.mjs carries open, diff,
   merge-all, merge, discard and seven controls in a temporary repository.
-- Counts: 120 commands, 22 skills, 5 agents; checked 147; 26 Adiutor guards;
+- Companion run 10 (okto, v5.1.0, opus, 34 turns, 329 s): fail, eight
+  findings, three high, all eight sound and closed. Three published counts
+  were stale against instruments the release names (package.json still said
+  118 commands, the Contract badge and plugin.json said 1253 declarations
+  for 1265, the Controls badge 20 guards) and a fourth the pass did not
+  list (the Checker badge, 145 for 147): `checker/counts-sweep.mjs` now
+  measures commands, skills, agents, their sum, the Adiutor guards, the
+  checker controls and the declarations from the tree and holds fourteen
+  places to them, numbers in words included, with three planted controls,
+  in the gate chain and the workflow. The print loop of the Adiutor
+  controls sat above the six new controls, so C21 to C26 never rendered a
+  PASS or FAIL line while the count and the exit code moved: the block
+  moved above the loop. The PreToolUse deny fell through to the open run's
+  tool tally: it returns now, and C27 opens a run, denies a Write and
+  asserts the tally did not move. The watch caption said seventeen guards
+  and the verify line twenty-six; both say twenty-seven. lib/scratch.mjs
+  ran its git calls under a ceiling of sixty seconds while the command
+  declared SCRATCH.ceiling 300: the library runs under 300 and an eighth
+  control reads the built command and holds the two together.
+- Counts: 120 commands, 22 skills, 5 agents; checked 147; 27 Adiutor guards;
   the README index places the two in the research and the audits families;
   PRIVACY.md version 2 (the gate's row), SECURITY.md and NOTICE §D each gain
   a row or a bullet; the manifests say 5.1.0.
