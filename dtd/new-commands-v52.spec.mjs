@@ -17,21 +17,18 @@ const FAMILY = [
   {
     key: 'amplify', sigil: '🌱', root: 'amplify_run', prefix: 'AMPLIFY',
     band: 'AMP.band.amplify', verbs: 'tweak, enrich, ameliorate, amplification and magnify',
-    next: 'enhance-codebase-dtd',
     what: 'what exists gains beside it: nothing a reader must relearn, nothing removed',
     when: 'the codebase is sound and under-served: the shapes are right and the coverage is thin',
   },
   {
     key: 'enhance', sigil: '🪴', root: 'enhance_run', prefix: 'ENHANCE',
     band: 'AMP.band.enhance', verbs: 'heighten, promote, cultivate, enhancement and upgrade',
-    next: 'overhaul-codebase-dtd',
     what: 'a capability the codebase implied becomes actually there, and a habit becomes a declaration',
     when: 'the codebase is sound and unfinished: it says what it does and does not yet do all of it',
   },
   {
     key: 'overhaul', sigil: '🦋', root: 'overhaul_run', prefix: 'OVERHAUL',
     band: 'AMP.band.overhaul', verbs: 'elevation, intensification, evolve, overhaul and metamorphosis',
-    next: 'amplify-codebase-dtd (the ladder wraps: after a metamorphosis the small verbs matter again)',
     what: 'an approach is replaced or a layer is lifted into its own subset; the old way is removed, not left beside',
     when: 'the codebase is sound and outgrown: the shape itself is the thing in the way',
   },

@@ -164,7 +164,7 @@ function main() {
     process.stdout.write(JSON.stringify(p.json) + '\n');
     process.exit(0);
   }
-  if (!args[0]) { console.error('usage: release-notes.mjs <version> | --payload <tag> | --controls'); process.exit(2); }
+  if (!args[0]) { console.error('usage: release-notes.mjs <version> | --versions [tag] | --payload <tag> | --controls'); process.exit(2); }
   const s = section(changelog, args[0]);
   if (!s.ok) { console.error(`release-notes: ${s.reason}`); process.exit(1); }
   process.stdout.write(s.body);

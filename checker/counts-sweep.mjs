@@ -26,7 +26,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WORDS = { ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, 'twenty-one': 21, 'twenty-two': 22, 'twenty-three': 23, 'twenty-four': 24, 'twenty-five': 25, 'twenty-six': 26, 'twenty-seven': 27, 'twenty-eight': 28, 'twenty-nine': 29, thirty: 30 };
 const num = (s) => (/^\d+$/.test(s) ? Number(s) : WORDS[s.toLowerCase()]);
 
-export function measure(root = ROOT) {
+export // Run an instrument in the foreground and hand back what it printed. A number
+// in a claim row is only a claim until this reads it back.
+function runOut(cmd) {
+  const parts = cmd.split(' ');
+  const r = spawnSync(parts[0], parts.slice(1), { cwd: ROOT, encoding: 'utf8', timeout: 300000, stdio: ['ignore', 'pipe', 'pipe'] });
+  return (r.stdout || '') + (r.stderr || '');
+}
+
+function measure(root = ROOT) {
   const commands = readdirSync(join(root, 'commands')).filter((f) => f.endsWith('.md')).length;
   const skills = readdirSync(join(root, 'skills')).filter((d) => existsSync(join(root, 'skills', d, 'SKILL.md'))).length;
   const agents = readdirSync(join(root, 'agents')).filter((f) => f.endsWith('.md')).length;
@@ -35,7 +43,11 @@ export function measure(root = ROOT) {
   const audit = spawnSync(process.execPath, [join(root, 'checker', 'contract-audit.mjs')], { cwd: root, encoding: 'utf8', timeout: 120000 });
   const m = String(audit.stdout || '').match(/contract-audit: (\d+) declarations/);
   if (!m) throw new Error(`counts-sweep: contract-audit printed no declarations count: ${String(audit.stdout || audit.stderr).slice(0, 120)}`);
-  return { commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, declarations: Number(m[1]) };
+  const gateChain = Number((/gate-sync: (\d+) commands in the gate chain/.exec(runOut('node checker/gate-sync.mjs')) || [])[1] || 0);
+  const amplifyControls = Number((/amplify controls: (\d+) run/.exec(runOut('node lib/amplify.mjs controls')) || [])[1] || 0);
+  return {
+    gateChain,
+    amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, declarations: Number(m[1]) };
 }
 
 // Where each count is printed: a file, a pattern with one capture per
@@ -55,6 +67,10 @@ export function places(c) {
     { file: '.claude-plugin/plugin.json', re: /\((\d+) declarations\)/, want: [c.declarations], label: 'the plugin description, declarations' },
     { file: '.claude-plugin/plugin.json', re: /([a-z-]+) Adiutor guards and ([a-z-]+) checker controls/, want: [c.guards, c.checkerControls], label: 'the plugin description, guards' },
     { file: '.claude-plugin/marketplace.json', re: /"(\d+) commands, (\d+) of them -dtd/, want: [c.commands, c.commands - 1], label: 'the marketplace plugin description' },
+    // The claim rows publish what an instrument prints; a row that no longer
+    // re-runs is exactly what this sweep exists to refuse.
+    { file: 'README.md', re: /gate-sync\.mjs`: `(\d+) commands in the gate chain/, want: [c.gateChain], label: 'the claims row of the gate chain' },
+    { file: 'README.md', re: /amplify\.mjs controls`: `(\d+) run, 0 failing/, want: [c.amplifyControls], label: 'the claims row of the amplify controls' },
     { file: '.claude-plugin/marketplace.json', re: /(\d+) skills, (\d+) agents/, want: [c.skills, c.agents], label: 'the marketplace plugin description, skills and agents' },
   ];
 }
