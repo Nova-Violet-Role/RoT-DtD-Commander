@@ -1,0 +1,13 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- file-gray.dtd : one entry per entity, written by /file-graylist-dtd.
+     The scope and the class are FIXED here, so a file claiming another is
+     invalid against its own declaration rather than merely mislabelled. -->
+
+<!ATTLIST file_gray
+          scope CDATA #FIXED "file"
+          class CDATA #FIXED "gray">
+
+<!ENTITY LIST.entry.py "nothing forbids Python, and a second runtime splits the gate and the CI image; ask before adding one|2026-09-04|">
+<!ENTITY LIST.entry.ps1 "the shell here is bash under a ceiling; a PowerShell script runs outside every rule the no-stall law sets|2026-09-04|">

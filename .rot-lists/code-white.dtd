@@ -1,0 +1,14 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- code-white.dtd : one entry per entity, written by /code-whitelist-dtd.
+     The scope and the class are FIXED here, so a file claiming another is
+     invalid against its own declaration rather than merely mislabelled. -->
+
+<!ATTLIST code_white
+          scope CDATA #FIXED "code"
+          class CDATA #FIXED "white">
+
+<!ENTITY LIST.entry.node "the only runtime this project builds and tests under|2026-09-04|">
+<!ENTITY LIST.entry.gif "the production artifact a tape becomes; the code end of the tape pair|2026-09-04|">
+<!ENTITY LIST.entry.vhs "what renders a tape into a gif, and the one tool the tapes workflow needs|2026-09-04|">
