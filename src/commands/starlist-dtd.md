@@ -7,6 +7,14 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!DOCTYPE starlist_run [
+  <!-- LAW.ASK.11: raised BEFORE the include, because the first declaration
+       binds. LAW.STAR.5 binds this command to blocks of STAR.block rounds,
+       and the cc-ask default of three contradicted its own STAR.block of
+       eight in one DOCTYPE (pass 10 of the 7.0.0 audit). -->
+  <!ENTITY % ask.rounds "(1|2|3|4|5|6|7|8)">
+  <!ENTITY % ask.of "(8)">
+  <!ENTITY ASK.rounds_per_prompt "8">
+  <!ENTITY ASK.max_total "32">
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
   <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
