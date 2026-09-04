@@ -313,9 +313,14 @@ export function observe(event, payload, io = console) {
         }
         return [...byName.values()];
       };
+      // Every black list before any gray one: a refusal outranks a question,
+      // and scoping the loop by scope let a gray file entry answer before the
+      // code black list was opened at all (pass 16).
       for (const scope of ['file', 'code']) {
         const black = read1(`${scope}-black.dtd`).find((r) => r.name === ext);
         if (black) return { kind: 'black', ext, scope, reason: black.reason, layer: black.layer };
+      }
+      for (const scope of ['file', 'code']) {
         const gray = read1(`${scope}-gray.dtd`).find((r) => r.name === ext);
         if (gray && !gray.granted) {
           return { kind: 'gray', ext, scope, reason: gray.reason, layer: gray.layer,
@@ -373,7 +378,7 @@ export function observe(event, payload, io = console) {
         if (v && v.kind === 'gray') {
           noteList(session, 'gray', v.ext, v.reason);
           out(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'ask',
-            permissionDecisionReason: `${v.ext} is gray here: "${v.reason}"\n  use it anyway and record the exception, or take one the white list allows: ${v.white.join(', ') || 'none recorded'}` } }));
+            permissionDecisionReason: `${v.ext} is gray here: "${v.reason}"\n  take one the white list allows: ${v.white.join(', ') || 'none recorded'}\n  or use it anyway and record the exception with /${v.scope}-graylist-dtd --grant ${v.ext}, which is what stops this being asked again (LAW.LIST.5)` } }));
           return;
         }
       }
@@ -1188,24 +1193,37 @@ export async function controls(io = console) {
     const before = process.env.CLAUDE_PROJECT_DIR;
     process.env.CLAUDE_PROJECT_DIR = repo;
     try {
+      // Nothing at all before there are lists.
       const silent = preTool('S30', 'Write', { file_path: join(repo, 'a.exe'), content: 'x' });
       mkdirSync(join(repo, '.rot-lists'), { recursive: true });
+
+      // Six states, one extension each, every list written before any probe
+      // runs: the fixture used to write between probes, so each new assertion
+      // silently retargeted an older one (pass 16).
+      //   exe  black in the file scope          -> denied
+      //   dll  black in the code scope          -> denied, so the code lists are read
+      //   ps1  gray in the file scope           -> asked
+      //   py   gray in file AND black in code   -> denied, a refusal outranks a question
+      //   rb   gray carrying a dated exception  -> silent
+      //   mjs  white                            -> allowed
       writeFileSync(join(repo, '.rot-lists', 'file-black.dtd'), '<!ENTITY LIST.entry.exe "nothing here ships a binary|2026-09-04|">\n', 'utf8');
-      writeFileSync(join(repo, '.rot-lists', 'file-gray.dtd'), '<!ENTITY LIST.entry.py "a second runtime splits the gate|2026-09-04|">\n', 'utf8');
+      writeFileSync(join(repo, '.rot-lists', 'code-black.dtd'), '<!ENTITY LIST.entry.dll "no library object belongs here|2026-09-04|">\n<!ENTITY LIST.entry.py "a compiled python artifact never belongs here|2026-09-04|">\n', 'utf8');
+      writeFileSync(join(repo, '.rot-lists', 'file-gray.dtd'), '<!ENTITY LIST.entry.ps1 "a second runtime splits the gate|2026-09-04|">\n<!ENTITY LIST.entry.py "asked here, refused by the code list|2026-09-04|">\n<!ENTITY LIST.entry.rb "no ruby runs here|2026-09-04|granted 2026-09-04 for bench.rb">\n', 'utf8');
       writeFileSync(join(repo, '.rot-lists', 'file-white.dtd'), '<!ENTITY LIST.entry.mjs "the toolchain|2026-09-04|">\n<!ENTITY LIST.entry.md "default|2026-09-04|">\n', 'utf8');
+
       const denied8 = preTool('S30', 'Write', { file_path: join(repo, 'a.exe'), content: 'x' });
-      const asked = preTool('S30', 'Write', { file_path: join(repo, 'b.py'), content: 'x' });
-      writeFileSync(join(repo, '.rot-lists', 'code-black.dtd'), '<!ENTITY LIST.entry.dll "no library object belongs here|2026-09-04|">\n', 'utf8');
+      const asked = preTool('S30', 'Write', { file_path: join(repo, 'b.ps1'), content: 'x' });
+      const bothLists = preTool('S30', 'Write', { file_path: join(repo, 'b.py'), content: 'x' });
       const codeScope = preTool('S30', 'Write', { file_path: join(repo, 'x.dll'), content: 'x' });
-      writeFileSync(join(repo, '.rot-lists', 'file-gray.dtd'), '<!ENTITY LIST.entry.py "a second runtime splits the gate|2026-09-04|granted 2026-09-04 for bench.py">\n', 'utf8');
-      const granted8 = preTool('S30', 'Write', { file_path: join(repo, 'b.py'), content: 'x' });
+      const granted8 = preTool('S30', 'Write', { file_path: join(repo, 'b.rb'), content: 'x' });
       const clean8 = preTool('S30', 'Write', { file_path: join(repo, 'c.mjs'), content: cleanPlain });
       const isDeny = denied8 && denied8.includes('"permissionDecision":"deny"') && denied8.includes('file-black') && denied8.includes('--drop exe');
       const isAsk = asked && asked.includes('"permissionDecision":"ask"') && asked.includes('second runtime') && asked.includes('mjs');
       const isCode = Boolean(codeScope) && codeScope.includes('code-black');
+      const beatsGray = Boolean(bothLists) && bothLists.includes('"permissionDecision":"deny"') && bothLists.includes('code-black');
       const grantedSilent = !granted8 || !granted8.includes('permissionDecision');
-      return { ok: !silent && isDeny && isAsk && isCode && grantedSilent && !(clean8 && clean8.includes('deny')),
-        detail: `no lists=${silent ? 'spoke' : 'silent'} black=${isDeny ? 'denied' : 'no'} gray=${isAsk ? 'asked' : 'no'} code=${isCode ? 'denied' : 'MISSED'} granted=${grantedSilent ? 'stays silent' : 'RE-ASKED'} white=${clean8 && clean8.includes('deny') ? 'denied' : 'allowed'}` };
+      return { ok: !silent && isDeny && isAsk && beatsGray && isCode && grantedSilent && !(clean8 && clean8.includes('deny')),
+        detail: `no lists=${silent ? 'spoke' : 'silent'} black=${isDeny ? 'denied' : 'no'} gray=${isAsk ? 'asked' : 'no'} code=${isCode ? 'denied' : 'MISSED'} black-beats-gray=${beatsGray ? 'refused' : 'ASKED INSTEAD'} granted=${grantedSilent ? 'stays silent' : 'RE-ASKED'} white=${clean8 && clean8.includes('deny') ? 'denied' : 'allowed'}` };
     } finally { if (before === undefined) delete process.env.CLAUDE_PROJECT_DIR; else process.env.CLAUDE_PROJECT_DIR = before; }
   }, results);
 
