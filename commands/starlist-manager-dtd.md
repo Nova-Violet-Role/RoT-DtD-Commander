@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: find and adopt the toolchain a project needs through the six declared managers — Scoop, Chocolatey, Bun, Vcpkg, Cargo and uv — by measuring the repository first, asking in uncapped blocks of four questions until the toolchain is settled, searching in the foreground under each manager's own ceiling, and installing only after a confirmation that shows the literal line and is refused for anything a black list names"
+description: "DTD-native: find and adopt the toolchain a project needs through the six declared managers — Scoop, Chocolatey, Bun, Vcpkg, Cargo and uv — by measuring the repository first, asking in uncapped blocks of up to eight rounds of four questions until the toolchain is settled, searching in the foreground under each manager's own ceiling, and installing only after a confirmation that shows the literal line and is refused for anything a black list names"
 argument-hint: "[what you are trying to build, or blank to start from the walk; --manager <name> limits the search to one of the six; --resume continues the session record from where it stopped; --no-gate skips the intake and never the install confirmation]"
 ---
 
