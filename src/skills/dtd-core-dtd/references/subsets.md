@@ -163,8 +163,10 @@ The AskUserQuestion grammar: an intake with a context analysis, up to four quest
 
 <!ELEMENT gate EMPTY>
 <!ATTLIST gate
-          choice (start|more|add|impactful) #REQUIRED
-          round  %ask.rounds; "1">
+          choice     (start|more|add|impactful) #REQUIRED
+          round      %ask.rounds;    "1"
+          adds       %ask.adds;    "1"
+          impactfuls %ask.impactfuls;      "1">
 
 <!ENTITY GATE.question  "Ready to proceed, or would you like me to ask more questions?">
 <!ENTITY GATE.start     "Start working">

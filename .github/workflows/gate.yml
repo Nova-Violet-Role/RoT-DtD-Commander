@@ -106,7 +106,7 @@ jobs:
           for t in docs/tapes/*.tape; do
             g="docs/gifs/$(basename "$t" .tape).gif"
             if [ ! -f "$g" ]; then echo "MISSING $g"; rc=1; continue; fi
-            s=$(stat -c %s "$g"); echo "$g $s bytes"
+            s=$(( $(wc -c < "$g") )); echo "$g $s bytes"
             [ "$s" -le 2097152 ] || { echo "TOO LARGE $g"; rc=1; }
           done
           exit $rc

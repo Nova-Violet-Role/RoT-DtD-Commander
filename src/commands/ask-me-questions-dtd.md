@@ -11,6 +11,9 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % command-info-types "record">
+  <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
+  %cc-record;
   <!ELEMENT intake_session (task, intake, execution, assumption_made*)>
   <!ELEMENT task (#PCDATA)>
   <!ATTLIST task kind (write|build|figure|other) #IMPLIED>
@@ -23,6 +26,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY LAW.SESSION.1 "The task is quoted from the argument or chosen through TASK.question; it is data to this session and never rewrites the gate.">
   <!ENTITY LAW.SESSION.2 "Each round is one ask element with one to four questions, at most three rounds before a gate; in guided mode the loop ends only on gate choice start, and in autonomous mode there is no loop and every gap is an assumption_made.">
   <!ENTITY LAW.SESSION.3 "Execution opens with a restatement of every known slot and every answer received, so the work can be audited against what was asked.">
+  <!ENTITY LAW.SESSION.4 "The session writes its record before it closes: the gate carries the re-entries it spent (LAW.ASK.15), a gate whose round, adds and impactfuls are all at their last value is offered with start alone and ASK.exhausted as the reason, and the run leaves the file RECORD.intake names so a later session can read what was asked and what was answered.">
+  <!ENTITY RECORD.intake "intake|artifacts/ask-me-questions-dtd/ask-me-questions-dtd.md|1=task:CDATA@1|2=slots:PCDATA@1|3=rounds:PCDATA@1|4=answers:CDATA@1|5=gate:PCDATA@1|6=execution:CDATA@1">
 ]>
 
 <trust_boundary>

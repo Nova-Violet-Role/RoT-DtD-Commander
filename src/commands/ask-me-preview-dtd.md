@@ -11,6 +11,9 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % command-info-types "record">
+  <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
+  %cc-record;
   <!ELEMENT preview_session (task, intake, execution, assumption_made*)>
   <!ELEMENT task (#PCDATA)>
   <!ELEMENT execution (#PCDATA)>
@@ -19,6 +22,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY LAW.PREVIEW.2 "An expanded preview is marked guessed: it is the consequence the model predicts, never a thing that was run or read, and it says so in its first line.">
   <!ENTITY LAW.PREVIEW.3 "The back token ASK.back typed into Other returns to the question just asked, which is asked again with the same previews and without loss of the answers already taken (LAW.ASK.12).">
   <!ENTITY LAW.PREVIEW.4 "Every question declares its variant (LAW.ASK.13); an elaborate or a mark question carries one elaboration per option, cut into the widget and expanded above the call, and its expanded preview names the consequence for the work within ASK.preview.expanded_lines lines (LAW.ASK.14).">
+  <!ENTITY LAW.PREVIEW.5 "The gate carries the re-entries it spent (LAW.ASK.15): at most ASK.adds_per_prompt adds and ASK.impactfuls_per_prompt impactfuls, after which it is offered with start alone and ASK.exhausted as the reason; the run writes the file RECORD.preview names before it closes.">
+  <!ENTITY RECORD.preview "preview|artifacts/ask-me-preview-dtd/ask-me-preview-dtd.md|1=task:CDATA@1|2=slots:PCDATA@1|3=rounds:PCDATA@1|4=answers:CDATA@1|5=gate:PCDATA@1|6=execution:CDATA@1">
   <!ENTITY TASK.question "What would you like help with?">
   <!ENTITY TASK.write "Write something">
   <!ENTITY TASK.build "Build something">

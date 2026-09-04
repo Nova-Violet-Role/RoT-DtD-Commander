@@ -47,7 +47,7 @@ jobs:
             rm -f "docs/gifs/$(basename "$t" .tape).gif"
             timeout 600 vhs "$t" || { echo "vhs failed on $t"; rc=1; continue; }
             g="docs/gifs/$(basename "$t" .tape).gif"
-            [ -s "$g" ] && echo "rendered $g $(stat -c %s "$g") bytes" || { echo "no gif for $t"; rc=1; }
+            [ -s "$g" ] && echo "rendered $g $(( $(wc -c < "$g") )) bytes" || { echo "no gif for $t"; rc=1; }
           done
           exit $rc
       - name: the ffmpeg renderer produces the same four files

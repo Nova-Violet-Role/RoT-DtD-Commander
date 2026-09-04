@@ -15,6 +15,9 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % command-info-types "record">
+  <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
+  %cc-record;
   <!ELEMENT many_session (task, intake, execution, assumption_made*)>
   <!ELEMENT task (#PCDATA)>
   <!ELEMENT execution (#PCDATA)>
@@ -23,6 +26,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY LAW.MANY.2 "Each round is one ask element with one to four questions, then the gate is offered only after a round that closed a slot; a round whose every question was answered Other with the back token re-asks and does not count.">
   <!ENTITY LAW.MANY.3 "Execution opens with a restatement of every known slot and every answer received, thirty at most, so the work can be audited against what was asked.">
   <!ENTITY LAW.MANY.4 "Every question of every round declares its variant, select, check, elaborate or mark, and the round names it (LAW.ASK.13); across thirty questions all four appear where the slots allow, and the previews of the elaborate and mark questions carry the predicted answer and its consequence (LAW.ASK.14).">
+  <!ENTITY LAW.MANY.5 "The eight rounds are bounded by ask.rounds and the other two re-entries by their own enumerations: at most ASK.adds_per_prompt adds and ASK.impactfuls_per_prompt impactfuls, after which the gate is offered with start alone and ASK.exhausted as the reason (LAW.ASK.15); the run writes the file RECORD.many names before it closes.">
+  <!ENTITY RECORD.many "many|artifacts/ask-me-many-questions-dtd/ask-me-many-questions-dtd.md|1=task:CDATA@1|2=slots:PCDATA@1|3=rounds:PCDATA@1|4=answers:CDATA@1|5=gate:PCDATA@1|6=execution:CDATA@1">
   <!ENTITY TASK.question "What would you like help with?">
   <!ENTITY TASK.write "Write something">
   <!ENTITY TASK.build "Build something">
