@@ -1,0 +1,19 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- starlist.dtd : what the harness may reach, written by /starlist-dtd.
+     One axis, not two: a tool is reachable or it is absent, and absent is
+     recorded rather than assumed. -->
+
+<!ATTLIST starlist
+          kind CDATA #FIXED "starlist">
+
+<!ENTITY STAR.have.node "present; the runtime the gate and every engine run under|2026-09-04|">
+<!ENTITY STAR.have.git "present; the repository, the tags and the credential helper|2026-09-04|">
+<!ENTITY STAR.have.vhs "reachable via scoop or chocolatey; renders the tapes workflow|2026-09-04|">
+<!ENTITY STAR.have.scoop "present as a shim; the probe now reaches it through the shell|2026-09-04|">
+<!ENTITY STAR.have.chocolatey "present on this machine|2026-09-04|">
+<!ENTITY STAR.have.bun "present on this machine|2026-09-04|">
+<!ENTITY STAR.have.vcpkg "present on this machine|2026-09-04|">
+<!ENTITY STAR.have.cargo "present on this machine|2026-09-04|">
+<!ENTITY STAR.have.uv "present on this machine|2026-09-04|">
