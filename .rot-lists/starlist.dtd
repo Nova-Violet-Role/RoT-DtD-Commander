@@ -5,7 +5,14 @@
      One axis, not two: a tool is reachable or it is absent, and absent is
      recorded rather than assumed. -->
 
-<!ELEMENT tools (#PCDATA)>
+<!ELEMENT tools (tool*)>
+<!ELEMENT tool (#PCDATA)>
+<!ATTLIST tool
+          name      CDATA #REQUIRED
+          reachable (yes|no) #REQUIRED
+          layer     (repository|machine) #REQUIRED
+          date      CDATA #REQUIRED>
+
 <!ATTLIST tools
           kind CDATA #FIXED "starlist">
 
