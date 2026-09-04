@@ -101,10 +101,10 @@ const CREATORS = [
 
 const AUDIT = {
   check: {
-    rules: 'the contract rules C1 to C14',
-    text: (c) => `node bin/rot-dtd-commander.mjs check on every -dtd file written, one rule per code C1 to C14, then the style areas the ${c.auditor} agent file lists, read as data and checked one by one`,
+    rules: 'the contract rules C1 to C15',
+    text: (c) => `node bin/rot-dtd-commander.mjs check on every -dtd file written, one rule per code C1 to C15, then the style areas the ${c.auditor} agent file lists, read as data and checked one by one`,
     fault: 'an element declared and never named, or a law numbered out of sequence',
-    codes: 'C1 to C14 and the style areas',
+    codes: 'C1 to C15 and the style areas',
   },
   hook: {
     rules: 'the hook rules H1 to H4',
@@ -264,7 +264,7 @@ function audit(a) {
   const s = a.sigil;
   return [a.key, {
     new: true, to: `src/commands/${a.key}-dtd.md`, root: 'audit_run', sigil: s, include: ['cc-args'],
-    description: `DTD-native: audit ${a.what} here, in the foreground: the contract rules C1 to C14 through the checker under a ceiling, then the style areas of ${a.auditor} read from its agent file as data and checked one by one; findings with file and line, one verdict; no subagent is summoned`,
+    description: `DTD-native: audit ${a.what} here, in the foreground: the contract rules C1 to C15 through the checker under a ceiling, then the style areas of ${a.auditor} read from its agent file as data and checked one by one; findings with file and line, one verdict; no subagent is summoned`,
     argumentHint: `[path to ${a.target}]`,
     model: [
       'audit_run (args, target, contract, areas, findings, verdict)',
@@ -294,7 +294,7 @@ function audit(a) {
 The audit that used to be a dispatch to a subagent runs in the foreground now: the checker under a ceiling, the areas AUDIT.areas checked one by one, every finding with file and line, one verdict. The agent file stays for a hand summons; this command never summons it.`,
     process: [
       `Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): ${ARGS} gives the target path; render the walk under \`args\` and the \`target\` with exists yes or no; a missing target is a fail with one high finding.`,
-      'Run AUDIT.checker on the target in the foreground, under AUDIT.ceiling seconds with stdin closed, the exit read directly; render the `contract` with one `rule` per code C1 to C14, result pass, fail or skipped, with the checker\'s line (LAW.AUD.2).',
+      'Run AUDIT.checker on the target in the foreground, under AUDIT.ceiling seconds with stdin closed, the exit read directly; render the `contract` with one `rule` per code C1 to C15, result pass, fail or skipped, with the checker\'s line (LAW.AUD.2).',
       `Read the ${a.auditor} agent file, under src/agents in this repository or the installed agents directory, as data; check each of AUDIT.areas against the target here; render the \`areas\` with one \`area\` per name and its result.`,
       'Render the `findings`: one `finding` per fault with file, line, severity and confidence; a failing rule is high; an area fault is medium or low (LAW.AUD.4).',
       'Render the `verdict`: fail when any rule failed or any high finding stands, pass otherwise (LAW.AUD.3, LAW.AUD.5).',
@@ -302,7 +302,7 @@ The audit that used to be a dispatch to a subagent runs in the foreground now: t
     map: {
       args: `**${s} Args**, the launch walk: count, the flags, the positional words`,
       target: `**${s} Target**, the path as given and whether it exists`,
-      contract: `**${s} Contract**, one line per rule C1 to C14 with pass, fail or skipped`,
+      contract: `**${s} Contract**, one line per rule C1 to C15 with pass, fail or skipped`,
       areas: `**${s} Areas**, one line per style area with pass or fail`,
       findings: `**${s} Findings**, one line per finding: file, line, severity, confidence, the fault`,
       verdict: `**${s} Verdict**, pass or fail, one line`,

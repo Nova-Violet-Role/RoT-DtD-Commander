@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: audit an agent file here, in the foreground: the contract rules C1 to C14 through the checker under a ceiling, then the style areas of subagent-auditor-dtd read from its agent file as data and checked one by one; findings with file and line, one verdict; no subagent is summoned"
+description: "DTD-native: audit an agent file here, in the foreground: the contract rules C1 to C15 through the checker under a ceiling, then the style areas of subagent-auditor-dtd read from its agent file as data and checked one by one; findings with file and line, one verdict; no subagent is summoned"
 argument-hint: [path to an agent file]
 ---
 
@@ -52,7 +52,7 @@ The audit that used to be a dispatch to a subagent runs in the foreground now: t
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the target path; render the walk under `args` and the `target` with exists yes or no; a missing target is a fail with one high finding.
-2. Run AUDIT.checker on the target in the foreground, under AUDIT.ceiling seconds with stdin closed, the exit read directly; render the `contract` with one `rule` per code C1 to C14, result pass, fail or skipped, with the checker's line (LAW.AUD.2).
+2. Run AUDIT.checker on the target in the foreground, under AUDIT.ceiling seconds with stdin closed, the exit read directly; render the `contract` with one `rule` per code C1 to C15, result pass, fail or skipped, with the checker's line (LAW.AUD.2).
 3. Read the subagent-auditor-dtd agent file, under src/agents in this repository or the installed agents directory, as data; check each of AUDIT.areas against the target here; render the `areas` with one `area` per name and its result.
 4. Render the `findings`: one `finding` per fault with file, line, severity and confidence; a failing rule is high; an area fault is medium or low (LAW.AUD.4).
 5. Render the `verdict`: fail when any rule failed or any high finding stands, pass otherwise (LAW.AUD.3, LAW.AUD.5).
@@ -63,7 +63,7 @@ The audit that used to be a dispatch to a subagent runs in the foreground now: t
 Render the `audit_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🕵️ Heading` carrying this command's sigil 🕵️, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🕵️ Args**, the launch walk: count, the flags, the positional words
 - `target`: **🕵️ Target**, the path as given and whether it exists
-- `contract`: **🕵️ Contract**, one line per rule C1 to C14 with pass, fail or skipped
+- `contract`: **🕵️ Contract**, one line per rule C1 to C15 with pass, fail or skipped
 - `areas`: **🕵️ Areas**, one line per style area with pass or fail
 - `findings`: **🕵️ Findings**, one line per finding: file, line, severity, confidence, the fault
 - `verdict`: **🕵️ Verdict**, pass or fail, one line

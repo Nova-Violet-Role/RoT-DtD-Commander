@@ -69,7 +69,7 @@ For the full text read [references/subsets.md](references/subsets.md).
 
 <checker>
 
-The `checker` is `node bin/rot-dtd-commander.mjs check [paths]` in the repository, backed by lib/dtd.mjs. It resolves the includes in two passes (file inclusion, then internal %name; substitution) and applies rules C1 to C14 to the resolved text; the exact list is in [references/checker-rules.md](references/checker-rules.md). Beside it, checker/contract-audit.mjs proves every declaration in the shared subsets is used and every law is numbered densely, and the Adiutor judges the rendered answer at Stop. A rule that cannot fail is not a rule: the checker was tripped on purpose with a removed declaration, a (CDATA) content model, an orphan element, a crammed heading and a heading without its sigil before its green was trusted.
+The `checker` is `node bin/rot-dtd-commander.mjs check [paths]` in the repository, backed by lib/dtd.mjs. It resolves the includes in two passes (file inclusion, then internal %name; substitution) and applies rules C1 to C15 to the resolved text; the exact list is in [references/checker-rules.md](references/checker-rules.md). Beside it, checker/contract-audit.mjs proves every declaration in the shared subsets is used and every law is numbered densely, and the Adiutor judges the rendered answer at Stop. A rule that cannot fail is not a rule: the checker was tripped on purpose with a removed declaration, a (CDATA) content model, an orphan element, a crammed heading and a heading without its sigil before its green was trusted.
 
 </checker>
 
@@ -88,7 +88,7 @@ To `extension` the contract: add the declaration to the right subset, use it in 
 <additional_resources>
 
 - [references/subsets.md](references/subsets.md): the four subsets, verbatim, with commentary
-- [references/checker-rules.md](references/checker-rules.md): rules C1 to C14 with the fix for each
+- [references/checker-rules.md](references/checker-rules.md): rules C1 to C15 with the fix for each
 - [references/context-handoff.md](references/context-handoff.md), [references/meta-prompting.md](references/meta-prompting.md), [references/todo-management.md](references/todo-management.md): the original design notes for handoffs, meta-prompting and todos, folded here because their records are now declared under cc-record
 
 </additional_resources>

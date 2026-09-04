@@ -82,8 +82,8 @@ The declarations this command reads: STAR.managers and the six adapters STAR.mgr
 Render the `starlist_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⭐ Heading` carrying this command's sigil ⭐, with a blank line before and after it (LAW.CORE.6).
 - `args`: **⭐ Arguments**, the walked argument with every flag and every bare word named
 - `probe`: **⭐ Probe**, the managers present and the managers absent, with the seconds
-- `intake`: **⭐ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
 - `measured`: **⭐ Measured**, what the walk found before the first question: the languages, the build files and the managers present (LAW.STAR.4)
+- `intake`: **⭐ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
 - `tools`: **⭐ Tools**, one `tool` per line as read back from disk with its name, whether it is reachable, its layer and the date
 - `bounds`: **⭐ Bounds**, every white entry this starlist can no longer support, with the edit
 - `verdicts`: **⭐ Verdicts**, one line per name asked for, holding yes or no

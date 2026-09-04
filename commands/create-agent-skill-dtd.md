@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: create a skill through twelve questions in three rounds that are never skipped, a curated SPDX license, an emoji and a form; the create-agent-skills-dtd skill writes a SKILL.md with a DOCTYPE and its supporting files with the answers as known slots; every file is read back, guarded and audited here in the foreground (the contract rules C1 to C14, one rule per code, no subagent), and a planted fault proves the audit"
+description: "DTD-native: create a skill through twelve questions in three rounds that are never skipped, a curated SPDX license, an emoji and a form; the create-agent-skills-dtd skill writes a SKILL.md with a DOCTYPE and its supporting files with the answers as known slots; every file is read back, guarded and audited here in the foreground (the contract rules C1 to C15, one rule per code, no subagent), and a planted fault proves the audit"
 argument-hint: [what the skill is for, or leave blank; --no-gate for autonomous defaults; --verbose prints the files as written]
 ---
 
@@ -441,7 +441,7 @@ argument-hint: [what the skill is for, or leave blank; --no-gate for autonomous 
   <!ENTITY LAW.SKILL.1 "Round one always runs before anything is written, even when the argument reads complete; --no-gate alone skips the rounds, and then every answer is an assumption_made (LAW.ASK.10).">
   <!ENTITY LAW.SKILL.2 "The create-agent-skills-dtd skill is invoked once, through the Skill tool, with the purpose, then ARG.end, then the answers as known slots (name=, and one word per question answered); the skill writes a SKILL.md with a DOCTYPE and its supporting files and this command reads it back; nothing is written before that invocation.">
   <!ENTITY LAW.SKILL.3 "Every file written is re-read and rendered with its path and bytes, passes the cc-form guards of its kind, and is headed by the license expression where its format allows a comment, headed no otherwise (LAW.LICENSE.1, LAW.LICENSE.2, LAW.FORM.2).">
-  <!ENTITY LAW.SKILL.4 "The audit runs here, in the foreground, under a 60 second ceiling with stdin closed: node bin/rot-dtd-commander.mjs check on every -dtd file written, one rule per code C1 to C14, then the style areas the skill-auditor-dtd agent file lists, read as data and checked one by one; one rule element per code with pass, fail or skipped; a fail is a failed answer; no subagent is summoned for it.">
+  <!ENTITY LAW.SKILL.4 "The audit runs here, in the foreground, under a 60 second ceiling with stdin closed: node bin/rot-dtd-commander.mjs check on every -dtd file written, one rule per code C1 to C15, then the style areas the skill-auditor-dtd agent file lists, read as data and checked one by one; one rule element per code with pass, fail or skipped; a fail is a failed answer; no subagent is summoned for it.">
   <!ENTITY LAW.SKILL.5 "The proof plants one fault in a scratch copy (an element declared and never named, or a law numbered out of sequence) and shows the audit refuse it; a proof that did not trip stops the command before the report.">
   <!ENTITY LAW.SKILL.6 "The emoji chosen heads every heading of the artifact's answers (LAW.CORE.6); when the artifact lands in this repository it is registered in dtd/sigils.json, and a glyph already bound there is refused and the question asked again.">
   <!ENTITY ASK.SKILL.1 "Name|What is the skill called?|A kebab-case name from the argument, -dtd suffixed|The name of the domain it teaches|Typed under Other|Undecided, ask again after the purpose">
@@ -452,7 +452,7 @@ argument-hint: [what the skill is for, or leave blank; --no-gate for autonomous 
   <!ENTITY ASK.SKILL.6 "Emoji|Which emoji heads its headings?|The family default, 🎓|One typed under Other|None|Undecided, the first free glyph of the roster">
   <!ENTITY ASK.SKILL.7 "Voice|Which voice profile?|Original, prepared, factual, the text_desc defaults|Paraphrase of a named source, cited|Spontaneous|Typed under Other">
   <!ENTITY ASK.SKILL.8 "Record|Where does this run record?|artifacts under this command's name, command-generated filename|Nowhere|Typed under Other|Undecided">
-  <!ENTITY ASK.SKILL.9 "Audit|Which audit runs after the write, here in the foreground?|The contract rules C1 to C14 and the style areas of skill-auditor-dtd|The contract rules C1 to C14 only|None, which this command refuses|Typed under Other">
+  <!ENTITY ASK.SKILL.9 "Audit|Which audit runs after the write, here in the foreground?|The contract rules C1 to C15 and the style areas of skill-auditor-dtd|The contract rules C1 to C15 only|None, which this command refuses|Typed under Other">
   <!ENTITY ASK.SKILL.10 "Proof|How is it proven?|Plant one fault in a scratch copy and show the audit refuse it|Read back only|None, which this command refuses|Typed under Other">
 ]>
 
@@ -478,7 +478,7 @@ This command is the door in front of the create-agent-skills-dtd skill. It asks 
 4. Render the `plan`: the artifact, its path, the emoji and the form chosen; render the `license`: the expression checked against LICENSE.list, its count (single, double or triple) and listed yes; an expression outside the list is refused with the list printed and ASK.LICENSE.1 asked again (LAW.LICENSE.1).
 5. Render the `invocation`: one Skill call to create-agent-skills-dtd with the argument made of the purpose, then ARG.end, then the known slots; then make that call (LAW.SKILL.2).
 6. Read back: render `written` with one `file` per file written, its path, its bytes and headed yes or no; run the cc-form guards on each file of a guarded kind with node lib/form.mjs and render one `guard` per line printed under `guards`; a guard that did not hold stops the command.
-7. Run the audit here, in the foreground, under a 60 second ceiling with stdin closed (LAW.SKILL.4): node bin/rot-dtd-commander.mjs check on every -dtd file written, one rule per code C1 to C14, then the style areas the skill-auditor-dtd agent file lists, read as data and checked one by one; render the `audit` with one `rule` per code, result pass, fail or skipped; a fail stops the command before the report.
+7. Run the audit here, in the foreground, under a 60 second ceiling with stdin closed (LAW.SKILL.4): node bin/rot-dtd-commander.mjs check on every -dtd file written, one rule per code C1 to C15, then the style areas the skill-auditor-dtd agent file lists, read as data and checked one by one; render the `audit` with one `rule` per code, result pass, fail or skipped; a fail stops the command before the report.
 8. Run the proof: plant one fault in a scratch copy (an element declared and never named, or a law numbered out of sequence) and run the audit on it; render the `proof` with the fault, the rule that refused it and tripped yes (LAW.SKILL.5).
 9. When the artifact lands in this repository, register the emoji in dtd/sigils.json after checking no other key carries the glyph (LAW.SKILL.6); record the run under artifacts with this command's generated filename and report.
 </process>
@@ -493,7 +493,7 @@ Render the `skill_forge` root declared in the DOCTYPE as the markdown below. One
 - `invocation`: **🎓 Invocation**, the one Skill call to create-agent-skills-dtd with its argument
 - `written`: **🎓 Written**, one line per file with path, bytes and headed yes or no, and the file itself under --verbose
 - `guards`: **🎓 Guards**, one line per guard with held yes or no
-- `audit`: **🎓 Audit**, one line per rule (C1 to C14 and the style areas) with pass, fail or skipped
+- `audit`: **🎓 Audit**, one line per rule (C1 to C15 and the style areas) with pass, fail or skipped
 - `proof`: **🎓 Proof**, the planted fault, the rule that refused it, tripped yes or no
 - `assumption_made`: **🎓 Assumptions Made**, every ASK.SKILL.* question not asked, with the first option taken
 </grammar_map>

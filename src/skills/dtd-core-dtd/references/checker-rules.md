@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
-# Checker rules C1 to C14
+# Checker rules C1 to C15
 
 Applied by `lib/dtd.mjs check()` to the RESOLVED text of a file (includes inlined). An error fails the file; a warning is printed and does not.
 
