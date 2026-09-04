@@ -262,7 +262,11 @@ argument-hint: [the task name]
      see. Nothing reads RECORD.info at runtime: passes 13 and 14 each named a
      reader that does not exist, and pass 15 stopped guessing. -->
 <!ENTITY RECORD.info "no-record-nesting">
-<!ELEMENT no-record-nesting EMPTY>
+<!-- The two values are tokens a command selects between, not elements any
+     content model reaches: no root in the tree admits either, which is why
+     `produces` was deleted as an orphan in pass 8 and why its sibling had to
+     follow (pass 25 of the 7.0.0 audit measured all 131 resolved commands and
+     found no model that reaches it). -->
 <!-- No element wraps the choice: the Adiutor reads the parameter entity
      itself at Stop, and an element nothing renders is an orphan the contract
      audit could not see until its element arm stopped matching bare prose

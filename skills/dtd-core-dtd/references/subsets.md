@@ -1638,7 +1638,9 @@ The numbered, append-only field discipline for any file one session writes and a
      see. Nothing reads RECORD.info at runtime: passes 13 and 14 each named a
      reader that does not exist, and pass 15 stopped guessing. -->
 <!ENTITY RECORD.info "%command-info-types;">
-<!ELEMENT no-record-nesting EMPTY>
+<!-- The two values of command-info-types are tokens a command selects
+     between, not elements: no root in the tree admits either, which is why
+     produces was deleted as an orphan and its sibling followed (pass 25). -->
 <!-- No element wraps the choice: the Adiutor reads the parameter entity itself at Stop. -->
 
 <!-- ===== the body of a record file: a revision history ===== -->
@@ -1950,7 +1952,7 @@ The six lists a repository may hold: three classes (black, gray, white) over two
 scopes (file, code), stored one file per list under `.rot-lists/` in two layers,
 the repository overriding the machine. Declares `LIST.classes`, `LIST.scopes`,
 `LIST.dir`, `LIST.files`, the markdown interlock (`LIST.md.default`,
-`LIST.md.condition`), the gray vocabulary (`GRAY.question`, `GRAY.use`,
+`LIST.md.condition`, `LIST.md.refusal`), the gray vocabulary (`GRAY.question`, `GRAY.use`,
 `GRAY.explain`), `LIST.refusal` and `LAW.LIST.1` to `LAW.LIST.8`. Read by
 `lib/list.mjs`; the eight list commands are held to it by `familyHolds()`.
 

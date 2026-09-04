@@ -519,7 +519,7 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
       const r = check(resolveFile(t, dirname(f.path)).text, {});
       if (!r.ok) failed++;
     }
-    row('checker', failed === 0, `${mains.length} installed main files, ${failed} failing C1..C14`);
+    row('checker', failed === 0, `${mains.length} installed main files, ${failed} failing C1..C15`);
   } else {
     row('manifest', false, `no manifest at ${manifestPath}; run rdc install`);
   }

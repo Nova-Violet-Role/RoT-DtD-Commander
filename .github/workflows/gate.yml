@@ -29,7 +29,7 @@ jobs:
         run: node checker/gate-sync.mjs
       - name: build drift (committed resolved tree equals a fresh resolve of src/)
         run: node bin/rot-dtd-commander.mjs build --check
-      - name: checker C1..C14 on every source
+      - name: checker C1..C15 on every source
         run: |
           node bin/rot-dtd-commander.mjs check | tee "$RUNNER_TEMP/check.log"
           test "${PIPESTATUS[0]}" -eq 0
@@ -126,9 +126,16 @@ jobs:
       - name: install into a scratch target, doctor, uninstall to zero
         run: |
           T=$(mktemp -d)
-          node bin/rot-dtd-commander.mjs install --yes --target "$T" | tail -3
+          # A GitHub step runs without pipefail, so this took its exit status
+          # from tail and a failing install passed (pass 25).
+          node bin/rot-dtd-commander.mjs install --yes --target "$T" > "$T/install.log" 2>&1 || { tail -20 "$T/install.log"; exit 1; }
+          tail -3 "$T/install.log"
           test -f "$T/.rot-dtd-commander-manifest.json"
-          CLAUDE_CONFIG_DIR="$T" node bin/adiutor.mjs doctor || true
+          # || true discarded every row and nothing read them, so the step
+          # named a doctor it never listened to (pass 25).
+          CLAUDE_CONFIG_DIR="$T" node bin/adiutor.mjs doctor > "$T/doctor.log" 2>&1 || true
+          cat "$T/doctor.log"
+          grep -q "every one installed" "$T/doctor.log"
           node bin/rot-dtd-commander.mjs uninstall --yes --target "$T" | tail -1
           left=$(find "$T" -type f | wc -l)
           echo "files left: $left"

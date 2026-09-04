@@ -57,7 +57,7 @@ nothing. The first entry written is the moment the rules begin.
 
 **Measured.** `node lib/list.mjs controls` 47 run, 0 failing;
 `node lib/starlist.mjs controls` 40 run, 0 failing; 131 commands, 22 skills,
-5 agents; checked 158; 1435 declarations, 0 unused, 0 law gaps.
+5 agents; checked 158; 1434 declarations, 0 unused, 0 law gaps.
 
 ## v6.0.0 — the version stops being typed
 
