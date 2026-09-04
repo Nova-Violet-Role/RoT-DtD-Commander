@@ -425,11 +425,12 @@ argument-hint: "[code class or classes to mark gray, or blank to read the list; 
 <!ENTITY STAR.mgr.cargo      "cargo|search|install|120">
 <!ENTITY STAR.mgr.uv         "uv|-|pip install|120">
 <!ENTITY STAR.managers "scoop|chocolatey|bun|vcpkg|cargo|uv">
-<!-- The same six as an enumeration, declared once so an attribute that must
-     name a manager derives from this line rather than copying it. LAW.STAR.1
-     says a seventh manager is one more entity and no new code; it was three
-     separate copies of the names until pass 19 of the 7.0.0 audit. -->
-<!ENTITY % star.managers "(scoop|chocolatey|bun|vcpkg|cargo|uv)">
+<!-- The enumeration on the adopted attribute repeats these names because a DTD
+     cannot build an enumeration out of an entity value, and the build inlines
+     this subset into every command, which left an unreferenced parameter entity
+     in each one. So the copy stays and a control compares the two spellings
+     instead: adding a manager that edits one and not the other fails
+     lib/starlist.mjs controls (passes 19 and 20 of the 7.0.0 audit). -->
 <!-- A search subcommand of a single hyphen means the manager installs but does
      not search a registry: bun pm ls lists a project's dependencies and uv pip
      list lists what is installed, so neither could ever return a hit and both

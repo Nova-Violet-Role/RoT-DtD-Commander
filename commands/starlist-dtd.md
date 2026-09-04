@@ -425,11 +425,12 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!ENTITY STAR.mgr.cargo      "cargo|search|install|120">
 <!ENTITY STAR.mgr.uv         "uv|-|pip install|120">
 <!ENTITY STAR.managers "scoop|chocolatey|bun|vcpkg|cargo|uv">
-<!-- The same six as an enumeration, declared once so an attribute that must
-     name a manager derives from this line rather than copying it. LAW.STAR.1
-     says a seventh manager is one more entity and no new code; it was three
-     separate copies of the names until pass 19 of the 7.0.0 audit. -->
-<!ENTITY % star.managers "(scoop|chocolatey|bun|vcpkg|cargo|uv)">
+<!-- The enumeration on the adopted attribute repeats these names because a DTD
+     cannot build an enumeration out of an entity value, and the build inlines
+     this subset into every command, which left an unreferenced parameter entity
+     in each one. So the copy stays and a control compares the two spellings
+     instead: adding a manager that edits one and not the other fails
+     lib/starlist.mjs controls (passes 19 and 20 of the 7.0.0 audit). -->
 <!-- A search subcommand of a single hyphen means the manager installs but does
      not search a registry: bun pm ls lists a project's dependencies and uv pip
      list lists what is installed, so neither could ever return a hit and both
@@ -495,7 +496,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!ENTITY LAW.STAR.6 "The starlist bounds every other list: a white list naming a toolchain the starlist cannot reach is a refused combination under LAW.LIST.4, and the starlist itself is what makes that reachability a measurement rather than an opinion.">
 <!-- end subset cc-starlist -->
 
-  <!ELEMENT starlist_run (args, probe, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
+  <!ELEMENT starlist_run (args, probe, measured, intake, tools, adopted*, bounds, verdicts, refused*, next_action, assumption_made*)>
   <!ATTLIST starlist_run
             kind   CDATA #FIXED "starlist"
             layers CDATA #REQUIRED>
@@ -524,7 +525,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 <objective>
 Declare what the harness may reach for <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>: SL.what, written as a declaration under STAR.dir.
 
-This is the sixth list and the only one about the machine rather than the tree, which is why SL.default holds: a fact about what this machine can provide belongs to the machine layer, and a repository entry means this project additionally relies on it.
+This is the seventh list and the only one about the machine rather than the tree, which is why SL.default holds: a fact about what this machine can provide belongs to the machine layer, and a repository entry means this project additionally relies on it.
 
 Its purpose is to bound the others. SL.bounds holds — a class whitelisted but unreachable is a promise this machine cannot keep — so after any write this command re-runs the guard and renders what the starlist can no longer support (LAW.SL.3). SL.absent is the discipline that makes all of it trustworthy: what did not answer is recorded absent, never assumed.
 

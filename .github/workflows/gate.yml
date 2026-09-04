@@ -28,7 +28,7 @@ jobs:
       - name: this workflow runs every command of the gate script (checker/gate-sync.mjs, with its control)
         run: node checker/gate-sync.mjs
       - name: build drift (committed resolved tree equals a fresh resolve of src/)
-        run: node bin/rot-dtd-commander.mjs build --check; echo "exit=$?"; node bin/rot-dtd-commander.mjs build --check
+        run: node bin/rot-dtd-commander.mjs build --check
       - name: checker C1..C14 on every source
         run: |
           node bin/rot-dtd-commander.mjs check | tee "$RUNNER_TEMP/check.log"

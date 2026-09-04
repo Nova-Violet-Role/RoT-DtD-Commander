@@ -25,7 +25,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   %cc-list;
   <!ENTITY % cc-starlist SYSTEM "../../dtd/cc-starlist.dtd">
   %cc-starlist;
-  <!ELEMENT starlist_run (args, probe, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
+  <!ELEMENT starlist_run (args, probe, measured, intake, tools, adopted*, bounds, verdicts, refused*, next_action, assumption_made*)>
   <!ATTLIST starlist_run
             kind   CDATA #FIXED "starlist"
             layers CDATA #REQUIRED>
@@ -54,7 +54,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 <objective>
 Declare what the harness may reach for <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>: SL.what, written as a declaration under STAR.dir.
 
-This is the sixth list and the only one about the machine rather than the tree, which is why SL.default holds: a fact about what this machine can provide belongs to the machine layer, and a repository entry means this project additionally relies on it.
+This is the seventh list and the only one about the machine rather than the tree, which is why SL.default holds: a fact about what this machine can provide belongs to the machine layer, and a repository entry means this project additionally relies on it.
 
 Its purpose is to bound the others. SL.bounds holds — a class whitelisted but unreachable is a promise this machine cannot keep — so after any write this command re-runs the guard and renders what the starlist can no longer support (LAW.SL.3). SL.absent is the discipline that makes all of it trustworthy: what did not answer is recorded absent, never assumed.
 
