@@ -37,7 +37,11 @@ function audit({ dtdDir = join(ROOT, 'dtd'), srcDir = join(ROOT, 'src') } = {}) 
     for (const m of t.matchAll(/<!ELEMENT\s+([\w.:-]+)/g)) {
       total++;
       const n = m[1];
-      const re = new RegExp('(<' + n + '[\\s>/]|`' + n + '`|\\b' + n + '\\b)');
+      const re = // A bare word is not a use: the third alternative matched any English prose,
+      // so an orphaned element named block passed on the word "block" occurring
+      // somewhere unrelated (pass 8). An element is used when it is written as
+      // markup, quoted as code, or named in a content model.
+      new RegExp('(<' + n + '[\\s>/]|`' + n + '`|[(,|]\\s*' + n + '[?*+]?\\s*[),|]|ENTITY % [A-Za-z.-]+ "[^"]*\\b' + n + '\\b)');
       if (!files.some((x) => re.test(x.t))) unused.push(`${f} element ${n}`);
     }
     for (const m of t.matchAll(/<!ENTITY\s+(?!%)([\w.:-]+)/g)) {

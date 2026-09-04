@@ -450,11 +450,6 @@ argument-hint: "[code class or classes to allow, or blank to read the list; --pa
           builds    CDATA #IMPLIED
           toolchain CDATA #IMPLIED>
 
-<!ELEMENT block (#PCDATA)>
-<!ATTLIST block
-          n      CDATA #REQUIRED
-          rounds CDATA #REQUIRED>
-
 <!-- A tool is not a list entry: entry in cc-list.dtd requires a scope and a
      class, and a starlist tool has neither (third companion pass of 7.0.0). -->
 <!ELEMENT tools (tool*)>

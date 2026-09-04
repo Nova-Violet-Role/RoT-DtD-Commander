@@ -75,7 +75,7 @@
     "controls:list": "node lib/list.mjs controls",
     "controls:starlist": "node lib/starlist.mjs controls",
     "sweep:lists": "node lib/list.mjs table --check",
-    "sweep:reach": "node lib/list.mjs reach"
+    "sweep:reach": "node lib/list.mjs reach --repo-only"
   },
   "keywords": [
     "claude-code",

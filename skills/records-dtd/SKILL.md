@@ -117,7 +117,10 @@ description: "The numbered, append-only field discipline for any file one sessio
      (LAW.REC.5). -->
 <!ENTITY % command-info-types "record">
 <!ELEMENT no-record-nesting EMPTY>
-<!ELEMENT produces ((record)*)>
+<!-- No element wraps the choice: the Adiutor reads the parameter entity
+     itself at Stop, and an element nothing renders is an orphan the contract
+     audit could not see until its element arm stopped matching bare prose
+     (pass 8 of the 7.0.0 audit). -->
 
 <!-- ===== the body of a record file: a revision history ===== -->
 <!-- The frontmatter carries the numbered fields; the body is one revision per
