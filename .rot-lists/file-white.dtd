@@ -9,14 +9,15 @@
           scope CDATA #FIXED "file"
           class CDATA #FIXED "white">
 
-<!ENTITY LIST.entry.md "every command, skill and agent is one markdown file; white by default and unseatable only under the interlock|2026-09-04|">
-<!ENTITY LIST.entry.mjs "the installer, the checker, the engines; ES modules under the Node the gate runs|2026-09-04|">
-<!ENTITY LIST.entry.dtd "the subsets and the per-repository lists; the declarations everything else is held to|2026-09-04|">
-<!ENTITY LIST.entry.sh "the companion audit and the checker controls|2026-09-04|">
-<!ENTITY LIST.entry.json "the manifests, the sigils and the settings|2026-09-04|">
-<!ENTITY LIST.entry.yml "the workflows the gate runs in|2026-09-04|">
-<!ENTITY LIST.entry.tape "the VHS scripts that record the demonstrations; becomes gif in production|2026-09-04|">
-<!ENTITY LIST.entry.gif "the recorded demonstrations the README shows|2026-09-04|">
-<!ENTITY LIST.entry.txt "the licence texts|2026-09-04|">
-<!ENTITY LIST.entry.jsonl "the Adiutor ledger, one line per run|2026-09-04|">
-<!ENTITY LIST.entry.cff "the citation file|2026-09-04|">
+<!ENTITY LIST.entry.md "every command, skill and agent is one markdown file; white by default and unseatable only under the interlock|2026-09-04|||">
+<!ENTITY LIST.entry.mjs "the installer, the checker, the engines; ES modules under the Node the gate runs|2026-09-04|||">
+<!ENTITY LIST.entry.dtd "the subsets and the per-repository lists; the declarations everything else is held to|2026-09-04|||">
+<!ENTITY LIST.entry.sh "the companion audit and the checker controls|2026-09-04|||">
+<!ENTITY LIST.entry.json "the manifests, the sigils and the settings|2026-09-04|||">
+<!ENTITY LIST.entry.yml "the workflows the gate runs in|2026-09-04|||">
+<!ENTITY LIST.entry.tape "the VHS scripts that record the demonstrations; becomes gif in production|2026-09-04|||gif">
+<!ENTITY LIST.entry.gif "the recorded demonstrations the README shows|2026-09-04|||">
+<!ENTITY LIST.entry.txt "the licence texts|2026-09-04|||">
+<!ENTITY LIST.entry.jsonl "the Adiutor ledger, one line per run|2026-09-04|||">
+<!ENTITY LIST.entry.cff "the citation file|2026-09-04|||">
+<!ENTITY LIST.entry.ts "the TypeScript MCP server template the create-mcp-servers skill ships; content, never compiled here|2026-09-04|||">

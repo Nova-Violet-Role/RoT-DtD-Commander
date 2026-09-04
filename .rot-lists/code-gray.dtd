@@ -1,0 +1,11 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- code-gray.dtd : one entry per entity, written by /code-graylist-dtd.
+     The scope and the class are FIXED here, so a file claiming another is
+     invalid against its own declaration rather than merely mislabelled. -->
+
+<!ATTLIST code_gray
+          scope CDATA #FIXED "code"
+          class CDATA #FIXED "gray">
+
