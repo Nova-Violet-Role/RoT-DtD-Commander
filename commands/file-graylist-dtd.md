@@ -433,7 +433,7 @@ Render the `file_graylist_run` root declared in the DOCTYPE as the markdown belo
 - `args`: **🟨 Arguments**, the walked argument with every flag and every bare word named
 - `walk`: **🟨 Walk**, the counts of each named extension in this tree, and the seconds
 - `intake`: **🟨 Intake**, the known and gap slots, each round with its questions and answers, the gate choice
-- `entries`: **🟨 Entries**, one line per gray entry as read back from disk with its layer, reason and date
+- `entries`: **🟨 Entries**, one line per gray entry as read back from disk with its scope and class, its layer, reason and date, and the evidence count the walk measured for it
 - `exceptions`: **🟨 Exceptions**, every granted exception with its date and what it was granted for, oldest first
 - `verdicts`: **🟨 Verdicts**, one line per name asked for, holding yes or no
 - `refused`: **🟨 Refused**, the full refusal for each, with the entry, the collision, the layer and the edit

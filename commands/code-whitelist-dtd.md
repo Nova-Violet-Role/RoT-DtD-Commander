@@ -451,6 +451,16 @@ argument-hint: "[code class or classes to allow, or blank to read the list; --pa
           n      CDATA #REQUIRED
           rounds CDATA #REQUIRED>
 
+<!-- A tool is not a list entry: entry in cc-list.dtd requires a scope and a
+     class, and a starlist tool has neither (third companion pass of 7.0.0). -->
+<!ELEMENT tools (tool*)>
+<!ELEMENT tool (#PCDATA)>
+<!ATTLIST tool
+          name      CDATA #REQUIRED
+          reachable (yes|no) #REQUIRED
+          layer     (repository|machine) #REQUIRED
+          date      CDATA #REQUIRED>
+
 <!ELEMENT adopted (#PCDATA)>
 <!ATTLIST adopted
           tool      CDATA #REQUIRED
@@ -519,7 +529,7 @@ Render the `code_whitelist_run` root declared in the DOCTYPE as the markdown bel
 - `args`: **✅ Arguments**, the walked argument with every flag and every bare word named
 - `walk`: **✅ Walk**, what this project builds and the managers present, with the seconds
 - `intake`: **✅ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
-- `entries`: **✅ Entries**, one line per white entry as read back from disk with its layer, reason and date
+- `entries`: **✅ Entries**, one line per white entry as read back from disk with its scope and class, its layer, reason and date, and the evidence count the walk measured for it
 - `pairs`: **✅ Pairs**, every file entry with its production counterpart, incomplete ones marked
 - `reachable`: **✅ Reachable**, per class the manager that provides it and whether it is present here
 - `verdicts`: **✅ Verdicts**, one line per name asked for, holding yes or no

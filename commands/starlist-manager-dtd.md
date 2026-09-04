@@ -455,6 +455,16 @@ argument-hint: "[what you are trying to build, or blank to start from the walk; 
           n      CDATA #REQUIRED
           rounds CDATA #REQUIRED>
 
+<!-- A tool is not a list entry: entry in cc-list.dtd requires a scope and a
+     class, and a starlist tool has neither (third companion pass of 7.0.0). -->
+<!ELEMENT tools (tool*)>
+<!ELEMENT tool (#PCDATA)>
+<!ATTLIST tool
+          name      CDATA #REQUIRED
+          reachable (yes|no) #REQUIRED
+          layer     (repository|machine) #REQUIRED
+          date      CDATA #REQUIRED>
+
 <!ELEMENT adopted (#PCDATA)>
 <!ATTLIST adopted
           tool      CDATA #REQUIRED

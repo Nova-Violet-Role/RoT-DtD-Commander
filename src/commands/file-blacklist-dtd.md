@@ -65,7 +65,7 @@ Render the `file_blacklist_run` root declared in the DOCTYPE as the markdown bel
 - `args`: **⛔ Arguments**, the walked argument with every flag and every bare word named
 - `walk`: **⛔ Walk**, the target, the extensions counted, the seconds it took
 - `intake`: **⛔ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
-- `entries`: **⛔ Entries**, one line per entry as read back from disk with its layer, reason and date
+- `entries`: **⛔ Entries**, one line per entry as read back from disk with its scope and class, its layer, reason and date, and the evidence count the walk measured for it
 - `verdicts`: **⛔ Verdicts**, one line per name asked for, holding yes or no
 - `refused`: **⛔ Refused**, the full refusal for each, with the entry, the collision, the layer and the edit
 - `next_action`: **⛔ Next Action**, one line

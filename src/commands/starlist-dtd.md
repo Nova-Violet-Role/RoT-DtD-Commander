@@ -17,7 +17,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   %cc-list;
   <!ENTITY % cc-starlist SYSTEM "../../dtd/cc-starlist.dtd">
   %cc-starlist;
-  <!ELEMENT starlist_run (args, probe, intake, entries, bounds, verdicts, refused*, next_action, assumption_made*)>
+  <!ELEMENT starlist_run (args, probe, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
   <!ATTLIST starlist_run
             scope  CDATA #FIXED "star"
             layers CDATA #REQUIRED>
@@ -71,7 +71,7 @@ Render the `starlist_run` root declared in the DOCTYPE as the markdown below. On
 - `args`: **⭐ Arguments**, the walked argument with every flag and every bare word named
 - `probe`: **⭐ Probe**, the managers present and the managers absent, with the seconds
 - `intake`: **⭐ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
-- `entries`: **⭐ Entries**, one line per tool as read back from disk with its layer, its reachability and the date
+- `tools`: **⭐ Tools**, one `tool` per line as read back from disk with its name, whether it is reachable, its layer and the date
 - `bounds`: **⭐ Bounds**, every white entry this starlist can no longer support, with the edit
 - `verdicts`: **⭐ Verdicts**, one line per name asked for, holding yes or no
 - `refused`: **⭐ Refused**, the full refusal for each, with the entry, the collision, the layer and the edit
@@ -96,7 +96,7 @@ Render the `starlist_run` root declared in the DOCTYPE as the markdown below. On
 - round 1 of 3: [headers] answered [labels or Other text]
 - gate: [start|more|add|impactful] (round N)
 
-### ⭐ Entries
+### ⭐ Tools
 
 - [tool] ([layer]) reachable via [manager] | absent — recorded [date]
 

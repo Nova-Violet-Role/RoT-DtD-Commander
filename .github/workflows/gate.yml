@@ -76,6 +76,8 @@ jobs:
         run: node checker/engines-sweep.mjs && node checker/engines-sweep.mjs --controls
       - name: the About and the three manifest descriptions say what the tree measures (the About sat two majors behind because nothing read it)
         run: node checker/about-sweep.mjs && node checker/about-sweep.mjs --controls
+      - name: the generated table of the list grammar still equals the declarations it was generated from
+        run: node lib/list.mjs table --check
       - name: the lists refuse a mix that would leave a repository unable to build itself, and the eight commands stay in step with the subset they share
         run: node lib/list.mjs controls
       - name: a manager absent from the machine is reported absent, and an install of a blacklisted tool is refused before its confirmation
