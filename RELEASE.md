@@ -18,6 +18,47 @@
 
 ---
 
+## v7.0.0 — what a project may contain
+
+Eight commands that declare what a repository may hold, what it must ask about
+before holding it, what it is made of in production, and what this machine can
+actually reach.
+
+The mechanism was borrowed rather than invented. The DITA corpus in
+`cc-resources/.dtd-file-examples` already solved it: a constraint module
+narrows a grammar by redeclaring a parameter entity before the base module
+loads, so a blacklist is a constraint module and not a configuration file;
+`subjectScheme` binds an attribute's legal values to a taxonomy held outside
+the grammar, which is what a whitelist is; and the `.ent`/`.mod` split is why
+the entries live in `.rot-lists/` while `cc-list.dtd` holds none of its own.
+
+- `/file-blacklist-dtd`, `/code-blacklist-dtd` — refuse a filetype from the
+  source while leaving it usable outside, or refuse a code class outright.
+  Code is the stricter half and implies the file rule.
+- `/file-graylist-dtd`, `/code-graylist-dtd` — ask instead of refusing. The
+  question quotes the reason recorded when the entry was listed and offers the
+  replacements the white list allows; a grant is dated and never asked twice.
+- `/file-whitelist-dtd`, `/code-whitelist-dtd` — what the project is made of,
+  and what it becomes in production. A `.tape` in the file scope becomes a
+  `.gif` in the code scope.
+- `/starlist-dtd`, `/starlist-manager-dtd` — what the harness may reach, and
+  the six managers that reach it. Searches run in the foreground under each
+  manager's declared ceiling; an install happens only after a confirmation
+  showing the literal line, and never for anything a black list names.
+
+Two layers hold at once, the machine's and the repository's, and the
+repository wins the entries they share. Every refusal names what was asked,
+which list refused it, which layer that list came from, the entry it collides
+with, and the edit that would resolve it.
+
+**Migration.** Nothing changes for an existing install until a list exists: a
+tree with no `.rot-lists/` directory has no lists, and `LAW.CORE.8` asks
+nothing. The first entry written is the moment the rules begin.
+
+**Measured.** `node lib/list.mjs controls` 17 run, 0 failing;
+`node lib/starlist.mjs controls` 12 run, 0 failing; 131 commands, 22 skills,
+5 agents; checked 158; 1434 declarations, 0 unused, 0 law gaps.
+
 ## v6.0.0 — the version stops being typed
 
 A release names the verbs it kept in `artifacts/amplify-codebase/state.md`;

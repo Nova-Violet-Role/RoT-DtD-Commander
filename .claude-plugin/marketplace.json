@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Nova-Violet Role: RoT DtD Commander, the creator kit. Claude Code commands, skills and agents with a declared DTD grammar and trust boundary; creators for prompts, skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks; the Adiutor Stop-hook doctor and the Commander-Adiutor monitor, run by hand unless armed.",
-    "version": "6.0.0"
+    "version": "7.0.0"
   },
   "plugins": [
     {
       "name": "rot-dtd-commander",
       "source": "./",
-      "description": "123 commands, 122 of them -dtd, with 22 skills and 5 agents: the nine RoT MoE lenses and ELEVATE, nineteen book-derived commands with their voice profiles, sixteen prompt and meta-prompt creators over eight schematics, the creators for skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks, the research family, the tasks family, and the codebase growth family that walks any codebase on a fifteen-verb ladder and names the release its findings amount to. Every file declares its own grammar, laws and trust boundary in a DOCTYPE the checker holds it to. The Adiutor checks each answer against the DOCTYPE of the command that produced it and writes one ledger line; the Commander-Adiutor monitor hands every failed answer to the session. Nothing is armed by a plain install: rdc install --arm or rdc arm arms the hooks, rdc watch starts the monitor, each under a 300 second ceiling. Armed, the AI_SLOP gate judges every answer, file, commit message, request body and subagent answer before it lands, and a release cannot publish a version its own recognizer disputes.",
-      "version": "6.0.0",
+      "description": "131 commands, 130 of them -dtd, with 22 skills and 5 agents: the nine RoT MoE lenses and ELEVATE, nineteen book-derived commands with their voice profiles, sixteen prompt and meta-prompt creators over eight schematics, the creators for skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks, the research family, the tasks family, the codebase growth family that walks any codebase on a fifteen-verb ladder and names the release its findings amount to, and the list family that declares what a project may contain, what it must ask about and what it is made of, bounded by a starlist of what the harness can actually reach. Every file declares its own grammar, laws and trust boundary in a DOCTYPE the checker holds it to. The Adiutor checks each answer against the DOCTYPE of the command that produced it and writes one ledger line; the Commander-Adiutor monitor hands every failed answer to the session. Nothing is armed by a plain install: rdc install --arm or rdc arm arms the hooks, rdc watch starts the monitor, each under a 300 second ceiling. Armed, the AI_SLOP gate judges every answer, file, commit message, request body and subagent answer before it lands, and a release cannot publish a version its own recognizer disputes.",
+      "version": "7.0.0",
       "keywords": [
         "dtd",
         "doctype",

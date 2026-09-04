@@ -7,6 +7,37 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 7.0.0 (2026-09-04)
+
+### The lists
+
+Eight commands that declare what a project may contain, what it must ask about, and what it is made of, plus the starlist that bounds them by what this machine can actually reach.
+
+- `/file-blacklist-dtd` and `/code-blacklist-dtd`: refuse a filetype from the source while leaving it usable outside, or refuse a code class outright. Code is the stricter half and implies the file rule, so one entry does both.
+- `/file-graylist-dtd` and `/code-graylist-dtd`: mark what must be asked about rather than refused. The ask names the reason recorded when the entry was listed and offers the replacements the white list already allows; a grant is dated and never asked again for that entry.
+- `/file-whitelist-dtd` and `/code-whitelist-dtd`: declare what the project is made of and what it becomes in production. A tape in the file scope becomes a gif in the code scope; a pair with one end is rendered incomplete.
+- `/starlist-dtd` and `/starlist-manager-dtd`: what the harness may reach, and the six declared managers that reach it. Searches run in the foreground under each manager's own ceiling; an install happens only after a confirmation showing the literal line, and is refused outright for anything a black list names.
+
+### The mechanism, borrowed rather than invented
+
+The corpus in `cc-resources/.dtd-file-examples` decided the shape. DITA's constraint modules narrow a grammar by redeclaring a parameter entity before the base module loads, so a blacklist is a constraint module rather than a configuration file. `subjectScheme` binds an attribute's legal values to a taxonomy held outside the grammar, which is what a whitelist is. The `.ent`/`.mod` split keeps entries apart from the grammar that reads them, so entries live in `.rot-lists/` and `cc-list.dtd` holds none of its own.
+
+### Two layers, one refusal grammar
+
+A machine layer under the installed plugin and a repository layer at `.rot-lists/`; where both name an entry the repository wins, and every refusal says which layer it came from, what it collides with, and the edit that would resolve it.
+
+### The guards
+
+- The reachability guard refuses any combination that would leave a repository unable to build itself, naming both colliding entries.
+- The markdown interlock: `.md` is white from the first run and unseated only when a Julia Markdown installation, a black entry for `.md` and `.jmd` in both white scopes all hold together; the refusal names which failed.
+- `LAW.CORE.8` carries the gray ask into every `-dtd` command, skill and agent through the subset they all include.
+
+### Measured
+
+- `node lib/list.mjs controls`: 17 run, 0 failing
+- `node lib/starlist.mjs controls`: 12 run, 0 failing
+- 131 commands, 22 skills, 5 agents; checked 158; 1435 declarations; 44 gate-chain commands
+
 ## 6.0.0 (2026-09-03)
 
 The metamorphosis: the version stops being typed. A release names the verbs it

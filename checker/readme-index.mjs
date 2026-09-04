@@ -50,6 +50,8 @@ export const FAMILIES = [
     members: ['audit-skill', 'audit-slash-command', 'audit-subagent', 'ai-slop'] },
   { id: 'growth', name: 'Codebase growth', rep: 'amplify-codebase', color: '16a34a',
     members: ['amplify-codebase', 'enhance-codebase', 'overhaul-codebase'] },
+  { id: 'lists', name: 'The lists', rep: 'file-blacklist', color: 'c0392b',
+    members: ['file-blacklist', 'code-blacklist', 'file-graylist', 'code-graylist', 'file-whitelist', 'code-whitelist', 'starlist', 'starlist-manager'] },
   { id: 'workflow', name: 'Workflow and the Adiutor', rep: 'RoT-DtD-Commander-Adiutor', color: 'e67e22',
     members: ['whats-next', 'add-to-todos', 'check-todos', 'run-plan', 'heal-skill', 'debug', 'setup-ralph', 'RoT-DtD-Commander-Adiutor'] },
 ];

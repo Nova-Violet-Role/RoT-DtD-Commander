@@ -63,12 +63,6 @@
 <!ENTITY LIST.refusal "what was asked, which list refused it, which layer that list came from, the entry it collides with when there is one, and the edit that would resolve it">
 
 <!-- ===== ELEMENTS ===== -->
-<!ELEMENT list_run (walk, entries, verdicts?, refused*, next_action)>
-<!ATTLIST list_run
-          scope  (file|code) #REQUIRED
-          class  (black|gray|white) #REQUIRED
-          layers CDATA #REQUIRED>
-
 <!ELEMENT walk (#PCDATA)>
 <!ATTLIST walk
           target     CDATA #REQUIRED

@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 1
+- run: 2
 - verb: 15
 - offset: 10
 - page: 4
-- from: 5.2.0
-- release: major 6.0.0
+- from: 6.0.0
+- release: major 7.0.0
 - walked: schematic, form, voice, args, record, report, task, workflow, adiutor, license, rot, generic
 
 | id | class | layer | verdict | verb | refused_at | why |
@@ -24,3 +24,11 @@
 | a1c0de08 | gap | report | marked | 7 |  | the study writer emits the four documents and a missing kind is refused by name |
 | a1c0de09 | gap | args | marked | 6 |  | the four guards of the $ reference carried as declarations and controls |
 | a1c0de10 | gap | voice | refused | 3 | 1 | the skill that documented the family: dissolved into the command prose instead |
+| L1 | gap | contract | marked  | declare | a project could not say what it may contain; cc-list.dtd declares three classes over two scopes |
+| L2 | gap | contract | marked  | declare | nothing bounded what the harness may reach; cc-starlist.dtd declares six manager adapters |
+| L3 | gap | guard | marked  | refuse | a poisoned mix could be chosen freely; the reachability guard refuses one that breaks the build |
+| L4 | gap | guard | marked  | refuse | md could be unseated by one careless answer; the three-part interlock refuses unless all hold |
+| L5 | gap | reach | marked  | extend | a gray filetype slipped past any command that never heard of the list; LAW.CORE.8 reaches all 131 |
+| L6 | gap | command | marked  | build | eight hand-written commands, held to their shared subset by a control that reads all eight built |
+| L7 | gap | install | marked  | refuse | an install could contradict a blacklist; the plan is refused before its confirmation is offered |
+| L8 | idea | session | marked  | record | an interrupted toolchain session asked its answered questions again; the record resumes it |

@@ -73,6 +73,7 @@ argument-hint: [goal or leave blank for current context]
 <!ENTITY LAW.CORE.5 "An answer produced without a gate lists every assumption it made in assumption_made elements.">
 <!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!ENTITY LAW.CORE.7 "A /name-dtd token that ends a prompt, alone or followed by the arrow token (a less-than sign and a hyphen), invokes that command on the text before it; that text is its user-args, and the call is as complete as one that opens the prompt.">
+<!ENTITY LAW.CORE.8 "Before writing or proposing a file or a code artifact whose class a gray list names, the command asks the declared gray question, naming the reason recorded when the entry was listed and offering the replacements the white list of the same scope already allows; the answer is data to the gate, an answer of use-it-anyway is written back as a dated exception and not asked again for that entry in that repository, and a refusal is never silent. A tree with no .rot-lists directory has no gray list and this law asks nothing.">
 <!-- end subset cc-core -->
 
   <!ELEMENT inversion (goal, failure_mode+, anti_goal+, success_by_avoidance, remaining_risk)>
