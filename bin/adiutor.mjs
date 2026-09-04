@@ -22,7 +22,7 @@
 // Policy: ROT_DTD_ADIUTOR = off | warn | strict (default in POLICY_DEFAULT,
 // bound to ADIUTOR.policy.default in dtd/adiutor.dtd by the controls).
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, appendFileSync, rmSync, unlinkSync, statSync, utimesSync } from 'node:fs';
+import { readFileSync, mkdtempSync, writeFileSync, existsSync, mkdirSync, readdirSync, appendFileSync, rmSync, unlinkSync, statSync, utimesSync } from 'node:fs';
 import { join, dirname, resolve as presolve, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -88,6 +88,14 @@ export function ledgerLine(run, status, findings = [], prescription = null) {
 // 5.1.0: a refused spot of the AI_SLOP gate closes one ledger line whose
 // command is slop and the spot (LAW.SLOP.8, LAW.ADIUTOR.12) without touching
 // the open -dtd run, if any; the run record stays where it is.
+// A list refusal is a ledger line like any other, so a run that was stopped by
+// a black entry or paused by a gray one can be read back afterwards.
+function noteList(session, kind, ext, reason) {
+  const run = { session, command: `list:${kind}`, root: String(ext), expected: { headings: [] }, tools: 0 };
+  const rite = kind === 'black' ? 'drop the entry, or write the file outside the source' : 'take a replacement the white list allows, or record the exception';
+  appendFileSync(ledgerPath(), ledgerLine(run, 'fail', [{ msg: `${kind}: ${ext} ${String(reason).slice(0, 80)}` }], { charm: 'LIST', rite }) + '\n', 'utf8');
+}
+
 function refuseSpot(session, j, target) {
   const run = { session, command: `slop:${j.kind}`, root: String(target || j.kind).replace(/\s+/g, ' ').slice(0, 120), expected: { headings: [] }, tools: 0, errors: [] };
   const failed = j.rep.measures.filter((m) => !m.holds).map((m) => `${m.name} ${m.value} (bound ${m.bound})`).join(', ');
@@ -280,6 +288,30 @@ function isTrailingCall(prompt) {
 export function observe(event, payload, io = console) {
   const session = payload.session_id || 'unknown';
   const out = (s) => io.log(s);
+  // LAW.CORE.8 and LAW.LIST.5: a write whose filetype a list names is refused
+  // outright (black) or asked about (gray), with the reason recorded when the
+  // entry was listed and the replacements the white list allows. A tree with no
+  // .rot-lists directory has no lists and this says nothing.
+  const listVerdict = (filePath) => {
+    try {
+      const ext = String(filePath || '').includes('.') ? String(filePath).split('.').pop().toLowerCase() : '';
+      if (!ext) return null;
+      const root = process.env.CLAUDE_PROJECT_DIR || process.cwd();
+      if (!existsSync(join(root, '.rot-lists'))) return null;
+      const read1 = (name) => {
+        const p = join(root, '.rot-lists', name);
+        if (!existsSync(p)) return [];
+        return [...readFileSync(p, 'utf8').matchAll(/<!ENTITY LIST\.entry\.([A-Za-z0-9_-]+)\s+"([^"]*)">/g)]
+          .map((m) => ({ name: m[1], reason: (m[2].split('|')[0] || '').trim(), granted: (m[2].split('|')[2] || '').trim() }));
+      };
+      const black = read1('file-black.dtd').find((r) => r.name === ext);
+      if (black) return { kind: 'black', ext, reason: black.reason };
+      const gray = read1('file-gray.dtd').find((r) => r.name === ext);
+      if (gray && !gray.granted) return { kind: 'gray', ext, reason: gray.reason, white: read1('file-white.dtd').map((r) => r.name).filter((n) => n !== ext).slice(0, 3) };
+      return null;
+    } catch { return null; }
+  };
+
   switch (event) {
     case 'SessionStart': {
       const lp = ledgerPath();
@@ -312,6 +344,25 @@ export function observe(event, payload, io = console) {
       return;
     }
     case 'PreToolUse': {
+      // The list gate runs before the slop gate: a file that may not exist at
+      // all is not worth judging the prose of (LAW.CORE.8).
+      const ptool = payload.tool_name || '';
+      const pinp = payload.tool_input || {};
+      if (/^(Write|Edit|NotebookEdit)$/.test(ptool)) {
+        const v = listVerdict(pinp.file_path || pinp.notebook_path);
+        if (v && v.kind === 'black') {
+          noteList(session, 'black', v.ext, v.reason);
+          out(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'deny',
+            permissionDecisionReason: `REFUSED write ${pinp.file_path || pinp.notebook_path}\n  file-black (repository) names ${v.ext}\n  reason: "${v.reason}"\n  to resolve: /file-blacklist-dtd --drop ${v.ext}` } }));
+          return;
+        }
+        if (v && v.kind === 'gray') {
+          noteList(session, 'gray', v.ext, v.reason);
+          out(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'ask',
+            permissionDecisionReason: `${v.ext} is gray here: "${v.reason}"\n  use it anyway and record the exception, or take one the white list allows: ${v.white.join(', ') || 'none recorded'}` } }));
+          return;
+        }
+      }
       // The AI_SLOP gate on a Write, an Edit, a NotebookEdit, a commit or a body, before it lands (LAW.SLOP.7, LAW.SLOP.8, controls C22 to C26).
       const spot = spotOfTool(payload);
       if (spot && !spot.j.alive) {
@@ -1116,6 +1167,26 @@ export async function controls(io = console) {
     const afterPass = (readRun('S27') || {}).tools;
     dropRun('S27');
     return { ok: denied(d) && afterDeny === 0 && !p && afterPass === 1, detail: `denied=${denied(d)} tally after deny=${afterDeny} after the clean write=${afterPass}` };
+  }, results);
+
+  control('C30 LAW.CORE.8: a write of a blacklisted filetype is denied by name, a gray one is asked about with its reason and the replacements, and a tree with no lists says nothing', () => {
+    const repo = mkdtempSync(join(os.tmpdir(), 'rot-adiutor-lists-'));
+    const before = process.env.CLAUDE_PROJECT_DIR;
+    process.env.CLAUDE_PROJECT_DIR = repo;
+    try {
+      const silent = preTool('S30', 'Write', { file_path: join(repo, 'a.exe'), content: 'x' });
+      mkdirSync(join(repo, '.rot-lists'), { recursive: true });
+      writeFileSync(join(repo, '.rot-lists', 'file-black.dtd'), '<!ENTITY LIST.entry.exe "nothing here ships a binary|2026-09-04|">\n', 'utf8');
+      writeFileSync(join(repo, '.rot-lists', 'file-gray.dtd'), '<!ENTITY LIST.entry.py "a second runtime splits the gate|2026-09-04|">\n', 'utf8');
+      writeFileSync(join(repo, '.rot-lists', 'file-white.dtd'), '<!ENTITY LIST.entry.mjs "the toolchain|2026-09-04|">\n<!ENTITY LIST.entry.md "default|2026-09-04|">\n', 'utf8');
+      const denied8 = preTool('S30', 'Write', { file_path: join(repo, 'a.exe'), content: 'x' });
+      const asked = preTool('S30', 'Write', { file_path: join(repo, 'b.py'), content: 'x' });
+      const clean8 = preTool('S30', 'Write', { file_path: join(repo, 'c.mjs'), content: cleanPlain });
+      const isDeny = denied8 && denied8.includes('"permissionDecision":"deny"') && denied8.includes('file-black') && denied8.includes('--drop exe');
+      const isAsk = asked && asked.includes('"permissionDecision":"ask"') && asked.includes('second runtime') && asked.includes('mjs');
+      return { ok: !silent && isDeny && isAsk && !(clean8 && clean8.includes('deny')),
+        detail: `no lists=${silent ? 'spoke' : 'silent'} black=${isDeny ? 'denied' : 'no'} gray=${isAsk ? 'asked' : 'no'} white=${clean8 && clean8.includes('deny') ? 'denied' : 'allowed'}` };
+    } finally { if (before === undefined) delete process.env.CLAUDE_PROJECT_DIR; else process.env.CLAUDE_PROJECT_DIR = before; }
   }, results);
 
   control('C28 a NotebookEdit is judged whichever field carries its text, and a payload with no text field is not judged', () => {
