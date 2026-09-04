@@ -496,7 +496,11 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!ENTITY LAW.STAR.6 "The starlist bounds every other list: a white list naming a toolchain the starlist cannot reach is a refused combination under LAW.LIST.4, and the starlist itself is what makes that reachability a measurement rather than an opinion.">
 <!-- end subset cc-starlist -->
 
-  <!ELEMENT starlist_run (args, probe, measured, intake, tools, adopted*, bounds, verdicts, refused*, next_action, assumption_made*)>
+  <!-- adopted is starlist-manager-dtd's, not this one's: LAW.SL.4 says this
+       command installs nothing, and a slot for the one act its own law forbids
+       it is a contradiction the model was carrying (pass 22 of the 7.0.0
+       audit). measured stays, and the map below renders it. -->
+  <!ELEMENT starlist_run (args, probe, measured, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
   <!ATTLIST starlist_run
             kind   CDATA #FIXED "starlist"
             layers CDATA #REQUIRED>
@@ -540,7 +544,7 @@ The declarations this command reads: STAR.managers and the six adapters STAR.mgr
 3. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
 4. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
 5. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1).
-6. Re-run `timeout 120 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
+6. Re-run `timeout 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
 7. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
 </process>
 
@@ -550,6 +554,7 @@ Render the `starlist_run` root declared in the DOCTYPE as the markdown below. On
 - `args`: **⭐ Arguments**, the walked argument with every flag and every bare word named
 - `probe`: **⭐ Probe**, the managers present and the managers absent, with the seconds
 - `intake`: **⭐ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
+- `measured`: **⭐ Measured**, what the walk found before the first question: the languages, the build files and the managers present (LAW.STAR.4)
 - `tools`: **⭐ Tools**, one `tool` per line as read back from disk with its name, whether it is reachable, its layer and the date
 - `bounds`: **⭐ Bounds**, every white entry this starlist can no longer support, with the edit
 - `verdicts`: **⭐ Verdicts**, one line per name asked for, holding yes or no
@@ -574,6 +579,10 @@ Render the `starlist_run` root declared in the DOCTYPE as the markdown below. On
 - gaps: [slots asked about]
 - round 1 of 8: [headers] answered [labels or Other text]
 - gate: [start|more|add|impactful] (round N)
+
+### ⭐ Measured
+
+[languages, builds and toolchain as the walk measured them, before any question]
 
 ### ⭐ Tools
 
