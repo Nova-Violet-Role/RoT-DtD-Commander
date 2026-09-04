@@ -2,7 +2,7 @@
 <!-- Copyright 2026 Saimonokuma. -->
 # The shared subsets, verbatim
 
-Every declaration below is used by at least one source file or by the Adiutor code; checker/contract-audit.mjs proves it in both directions. A source file includes a subset with <!ENTITY % name SYSTEM "../../dtd/name.dtd"> %name; inside its DOCTYPE, and the build inlines the text between begin and end subset comments.
+Every declaration below is used by at least one source file or by the Adiutor code; checker/contract-audit.mjs proves that of the subsets themselves, against the tree; nothing reads this file, which is a copy for a reader and can fall behind the dtd/ it quotes. A source file includes a subset with <!ENTITY % name SYSTEM "../../dtd/name.dtd"> %name; inside its DOCTYPE, and the build inlines the text between begin and end subset comments.
 
 ## cc-core.dtd
 
@@ -1956,6 +1956,118 @@ the repository overriding the machine. Declares `LIST.classes`, `LIST.scopes`,
 `GRAY.explain`), `LIST.refusal` and `LAW.LIST.1` to `LAW.LIST.8`. Read by
 `lib/list.mjs`; the eight list commands are held to it by `familyHolds()`.
 
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-list.dtd : the black, gray and white lists shared by the eight list
+  commands (code and file × black, gray and white, plus the starlist pair).
+
+  The mechanism is borrowed, not invented. DITA's constraint modules
+  (strictTaskbodyConstraint.mod in cc-resources/.dtd-file-examples) narrow a
+  grammar by REDECLARING a parameter entity before the base module is
+  included: the first declaration binds, so a constraint removes options
+  without editing the thing it constrains. A blacklist is that, applied to
+  filetypes and code classes. DITA's subjectScheme binds an attribute's legal
+  values to a taxonomy held outside the grammar; a whitelist is that. And the
+  .ent/.mod split keeps the entries apart from the grammar that reads them,
+  which is why the entries live in .rot-lists/ and this file holds no entry
+  of its own.
+
+  Two layers. The machine layer under the installed plugin holds what is true
+  of this machine; the repository layer at .rot-lists/ holds what is true of
+  this project, and where they disagree the repository wins (LAW.LIST.3). A
+  refusal always says which layer refused, because a rule whose origin is
+  unclear cannot be argued with.
+
+  Scope is the axis the two halves of every pair differ on. A FILE rule
+  governs what may sit in the tree: a .cpp on the file blacklist may still
+  produce a .dll, it simply may not live in the source. A CODE rule governs
+  what may exist at all as an artifact, a compiler or a patcher: a .cpp on the
+  code blacklist means nothing here compiles C++. Code is the stricter of the
+  two, and a code rule implies its file rule (LAW.LIST.2).
+-->
+
+<!-- ===== THE CLASSES ===== -->
+<!ENTITY LIST.class.black "black: refused outright; the write does not happen and the refusal names the entry, its layer and the edit that would allow it">
+<!ENTITY LIST.class.gray  "gray: asked before it happens; the question names why the entry is gray and offers the replacements the white list already allows">
+<!ENTITY LIST.class.white "white: allowed and enforced; what the production build is made of, and the set a gray question draws its replacements from">
+<!ENTITY LIST.classes "black|gray|white">
+<!ENTITY LIST.scopes  "file|code">
+
+<!ENTITY LIST.scope.file "what may sit in the tree; a blacklisted file class may still be produced or consumed outside the source">
+<!ENTITY LIST.scope.code "what may exist as an artifact, a compiler or a patcher; the stricter half, and it implies the file rule">
+
+<!-- ===== THE TWO LAYERS ===== -->
+<!ENTITY LIST.layer.repo    ".rot-lists at the root of the repository; what is true of this project">
+<!ENTITY LIST.layer.machine ".rot-lists beside the installed plugin; what is true of this machine">
+<!ENTITY LIST.dir           ".rot-lists">
+<!ENTITY LIST.files "file-black.dtd|code-black.dtd|file-gray.dtd|code-gray.dtd|file-white.dtd|code-white.dtd|starlist.dtd">
+
+<!-- ===== THE MARKDOWN INTERLOCK ===== -->
+<!-- .md is white from the first run and no single answer may unseat it. All
+     three conditions must hold together, and the refusal names the one that
+     failed (LAW.LIST.7). -->
+<!ENTITY LIST.md.default "md: white in both scopes from the first run, and removable only under LIST.md.condition">
+<!ENTITY LIST.md.condition "all three at once: the starlist carries a Julia Markdown installation, the black list names md, and the white list already carries jmd in both the file scope and the code scope">
+<!ENTITY LIST.md.refusal "the removal of md is refused by naming which of the three conditions does not hold">
+
+<!-- ===== THE GRAY QUESTION ===== -->
+<!ENTITY GRAY.question "This is gray here. Use it anyway, or take one of the replacements the white list allows?">
+<!ENTITY GRAY.use      "Use it anyway, and record the exception">
+<!ENTITY GRAY.explain  "Tell me more about what it breaks">
+<!ENTITY GRAY.except   "a granted exception carries the date, the file or code it was granted for, and the reason; the same entry is not asked again in that repository, a new entry of the same class still is">
+
+<!-- ===== THE REFUSAL ===== -->
+<!ENTITY LIST.refusal "what was asked, which list refused it, which layer that list came from, the entry it collides with when there is one, and the edit that would resolve it">
+
+<!-- ===== ELEMENTS ===== -->
+<!ELEMENT walk (#PCDATA)>
+<!ATTLIST walk
+          target     CDATA #REQUIRED
+          extensions CDATA #REQUIRED
+          seconds    CDATA #REQUIRED>
+
+<!ELEMENT entries (entry*)>
+<!ELEMENT entry (reason, evidence?)>
+<!ATTLIST entry
+          name    CDATA #REQUIRED
+          scope   (file|code) #REQUIRED
+          class   (black|gray|white) #REQUIRED
+          layer   (repository|machine) #REQUIRED
+          granted CDATA #IMPLIED>
+<!ELEMENT reason (#PCDATA)>
+<!ELEMENT evidence (#PCDATA)>
+<!ATTLIST evidence count CDATA #IMPLIED>
+
+<!ELEMENT verdicts (verdict+)>
+<!ELEMENT verdict (#PCDATA)>
+<!ATTLIST verdict
+          on     CDATA #REQUIRED
+          holds  (yes|no) #REQUIRED>
+
+<!ELEMENT refused (#PCDATA)>
+<!ATTLIST refused
+          entry     CDATA #REQUIRED
+          collides  CDATA #IMPLIED
+          layer     (repository|machine) #REQUIRED
+          edit      CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.LIST.1 "A list is a declaration, never a configuration file: every entry lives in a .dtd under LIST.dir as an entity carrying its name, its reason and the date it was listed, and a command that would write an entry anywhere else has written nothing.">
+<!ENTITY LAW.LIST.2 "Scope is the axis: a file rule governs what may sit in the tree and a code rule governs what may exist as an artifact, a compiler or a patcher; code is the stricter half and a code entry implies its file entry, so a blacklisted code class cannot be whitelisted as a file.">
+<!ENTITY LAW.LIST.3 "Two layers hold at once, LIST.layer.machine and LIST.layer.repo, and where they name the same entry the repository wins; every refusal names the layer it came from, because a rule whose origin is unclear cannot be argued with.">
+<!ENTITY LAW.LIST.4 "The reachability guard refuses any combination that leaves the repository unable to build itself: an entry in both black and white, a code class blacklisted while a whitelisted class needs it to be produced, a whitelist naming a toolchain the starlist cannot reach, or an empty white list for a language the tree actually contains; each refusal names the two entries that collide.">
+<!ENTITY LAW.LIST.5 "A gray entry is asked, never assumed: the question names the entry, the reason recorded when it was listed and up to three replacements drawn from the white list, and the answer is data to the gate; an answer of GRAY.use is written back as a dated exception under GRAY.except and that entry is not asked again in that repository.">
+<!ENTITY LAW.LIST.6 "Every refusal carries LIST.refusal in full: what was asked, the list, the layer, the colliding entry when there is one, and the edit that would resolve it; a refusal that names no edit sends the reader hunting and is a failed refusal.">
+<!ENTITY LAW.LIST.7 "LIST.md.default holds: md is white in both scopes from the first run and is removable only when every condition of LIST.md.condition holds together; the removal is otherwise refused under LIST.md.refusal by naming the condition that failed.">
+<!-- The blocks LAW.LIST.8 speaks of are the ask grammar's rounds: a command
+     raises them by declaring ask.rounds before it includes cc-ask (LAW.ASK.11),
+     and this subset declares no enumeration of its own (pass 7 of the 7.0.0
+     audit found the law naming one that did not exist). -->
+<!ENTITY LAW.LIST.8 "The intake of a list command is uncapped in blocks: the rounds are the enumeration cc-ask declares and a command raises under LAW.ASK.11, and when a block closes with the lists still in a refused combination a fresh block opens carrying every answer forward, so the session ends when the formula holds rather than when a counter runs out.">
+```
+
 ## cc-starlist.dtd
 
 What the harness may reach, and the six package managers that reach it, each an
@@ -1964,3 +2076,103 @@ the bounds (`STAR.ceiling.search`, `STAR.ceiling.install`), where the list lands
 (`STAR.dir`, `STAR.file`, `STAR.session`), the uncapped intake (`STAR.block`,
 `STAR.per_round`, `STAR.uncapped`), the install contract (`STAR.install.*`) and
 `LAW.STAR.1` to `LAW.STAR.6`. Read by `lib/starlist.mjs`.
+
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-starlist.dtd : what the harness may reach, and the managers that reach it.
+
+  The starlist is the seventh list and the only one about the machine rather
+  than the tree: the paths, programs, compilers and filetypes this harness may
+  use. It is bounded by its managers, six of them, each declared here as an
+  adapter rather than written into code, so a seventh is a declaration.
+
+  Two rules travel with every manager. The search runs in the foreground under
+  its own ceiling with the exit code read directly, and a manager absent from
+  this machine is reported absent rather than guessed at. An install runs only
+  after a confirmation that shows the literal line, the manager running it and
+  the seconds it may take, and is refused outright when the tool or its
+  filetype sits in a black list, because installing what the repository
+  forbids is the poisoned mix wearing another costume.
+-->
+
+<!-- ===== THE MANAGERS ===== -->
+<!-- binary | search subcommand | install subcommand | ceiling in seconds -->
+<!ENTITY STAR.mgr.scoop      "scoop|search|install|60">
+<!ENTITY STAR.mgr.chocolatey "choco|search|install -y|120">
+<!ENTITY STAR.mgr.bun        "bun|-|add|60">
+<!ENTITY STAR.mgr.vcpkg      "vcpkg|search|install|300">
+<!ENTITY STAR.mgr.cargo      "cargo|search|install|120">
+<!ENTITY STAR.mgr.uv         "uv|-|pip install|120">
+<!ENTITY STAR.managers "scoop|chocolatey|bun|vcpkg|cargo|uv">
+<!-- The enumeration on the adopted attribute repeats these names because a DTD
+     cannot build an enumeration out of an entity value, and the build inlines
+     this subset into every command, which left an unreferenced parameter entity
+     in each one. So the copy stays and a control compares the two spellings
+     instead: adding a manager that edits one and not the other fails
+     lib/starlist.mjs controls (passes 19 and 20 of the 7.0.0 audit). -->
+<!-- A search subcommand of a single hyphen means the manager installs but does
+     not search a registry: bun pm ls lists a project's dependencies and uv pip
+     list lists what is installed, so neither could ever return a hit and both
+     were reporting a measured absence that was really a missing feature (pass
+     14 of the 7.0.0 audit). -->
+<!ENTITY STAR.no_search "a manager whose search subcommand is a single hyphen installs but cannot search; it is reported as having no search rather than as finding nothing">
+<!ENTITY STAR.absent "a manager whose binary is not on this machine is reported absent; its hits are never guessed and never inferred from another manager">
+
+<!-- ===== THE BOUNDS ===== -->
+<!ENTITY STAR.ceiling.search  "300">
+<!ENTITY STAR.ceiling.install "600">
+<!ENTITY STAR.dir     ".rot-lists">
+<!ENTITY STAR.file    "starlist.dtd">
+<!ENTITY STAR.session "starlist-session.md">
+
+<!-- ===== THE INTAKE ===== -->
+<!ENTITY STAR.block  "8">
+<!ENTITY STAR.per_round "4">
+<!ENTITY STAR.uncapped "when a block of STAR.block rounds closes with the toolchain unsettled a fresh block opens, carrying every answer forward in the session record; the blocks have no declared limit and each block is a declared enumeration">
+<!ENTITY STAR.measured_first "the languages present, the build and lock files, and the toolchain already on the machine are measured before the first question; nothing measurable is ever asked">
+
+<!-- ===== THE INSTALL ===== -->
+<!ENTITY STAR.install.shows "the literal command, the manager that will run it, and the seconds it may take">
+<!ENTITY STAR.install.refused "an install of a tool, or of a tool whose filetype, sits in a black list is refused before the confirmation is offered">
+<!ENTITY STAR.install.recorded "every install is written into the starlist with its date and the answer that authorised it">
+
+<!-- ===== ELEMENTS ===== -->
+<!-- No root is declared here. starlist-dtd.md and starlist-manager-dtd.md
+     each declare their own, and a root declared in both a subset and the
+     command that includes it is declared twice: XML forbids it, the first
+     binds, and the command then answers to a grammar it did not write (found
+     by the first companion pass of 7.0.0). -->
+
+<!ELEMENT measured (#PCDATA)>
+<!ATTLIST measured
+          languages CDATA #REQUIRED
+          builds    CDATA #IMPLIED
+          toolchain CDATA #IMPLIED>
+
+<!-- A tool is not a list entry: entry in cc-list.dtd requires a scope and a
+     class, and a starlist tool has neither (third companion pass of 7.0.0). -->
+<!ELEMENT tools (tool*)>
+<!ELEMENT tool (#PCDATA)>
+<!ATTLIST tool
+          name      CDATA #REQUIRED
+          reachable (yes|no) #REQUIRED
+          layer     (repository|machine) #REQUIRED
+          date      CDATA #REQUIRED>
+
+<!ELEMENT adopted (#PCDATA)>
+<!ATTLIST adopted
+          tool      CDATA #REQUIRED
+          manager   (scoop|chocolatey|bun|vcpkg|cargo|uv) #REQUIRED
+          installed (yes|no|printed) #REQUIRED
+          date      CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.STAR.1 "Every manager is a declaration of STAR.managers, not a branch in code: its binary, its search subcommand, its install subcommand and its search ceiling come from its entity, and a seventh manager is two declarations and no new code, its own STAR.mgr entity and its name in STAR.managers, with the enumeration on adopted held to those two by a control rather than by a reader; an install is bounded by STAR.ceiling.install instead, because LAW.STAR.3 names that one and a factor in code is not a declaration.">
+<!ENTITY LAW.STAR.2 "A search runs in the foreground under the manager's own ceiling with its exit code read directly, never in the background and never through a pipe that hides it; a manager absent from this machine is reported under STAR.absent and its hits are never guessed.">
+<!ENTITY LAW.STAR.3 "An install happens only after a confirmation showing STAR.install.shows, runs in the foreground under STAR.ceiling.install, and is refused under STAR.install.refused when a black list names the tool or its filetype; STAR.install.recorded holds for every one that runs.">
+<!ENTITY LAW.STAR.4 "STAR.measured_first holds: the tree is walked before the first question and nothing a walk can measure is ever asked, so the questions are about the target of the build, the platforms, what may never be installed here, and whether the toolchain is adopted or managed.">
+<!ENTITY LAW.STAR.5 "The intake is uncapped under STAR.uncapped, and the session record at STAR.dir and STAR.session carries the block, every answer and what the walk measured, so a session broken off mid-block resumes where it stopped rather than asking again.">
+<!ENTITY LAW.STAR.6 "The starlist bounds every other list: a white list naming a toolchain the starlist cannot reach is a refused combination under LAW.LIST.4, and the starlist itself is what makes that reachability a measurement rather than an opinion.">
+```

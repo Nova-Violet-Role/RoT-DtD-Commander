@@ -20,6 +20,8 @@ Applied by `lib/dtd.mjs check()` to the RESOLVED text of a file (includes inline
 | C12 | No `--` inside a DOCTYPE comment | Rephrase the comment |
 | C13 | Every grammar_map heading carries the command's sigil (one sigil per file), the map invokes LAW.CORE.6, every declared heading is rendered in the template as `### <sigil> Heading` (or as bold with the sigil when nested), and every `###` line has a blank line before and after | Run `node checker/heading-sweep.mjs` |
 | C14 | No bare front-matter value carries `: ` or ` #`; a YAML parser reads a nested mapping or a comment there (GitHub's renderer: "mapping values are not allowed in this context") | Quote the value, or run `node checker/frontmatter-sweep.mjs` |
+| C15 | an element the root requires that no `grammar_map` row renders | a command promising a slot its reader has no way to fill |
+| C16 | an entity redeclared after the subset that already declares it | XML binds the first; the second text governs nothing |
 
 Elements declared by an included subset are exempt from C5 in the including file; they are checked across the corpus by the dtd-contract-auditor agent instead.
 

@@ -13,7 +13,7 @@
 
 import { readFileSync, readdirSync, writeFileSync, unlinkSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, dirname } from 'node:path';
+import { join, dirname, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -28,7 +28,12 @@ function walk(d) {
   return out;
 }
 
-function audit({ dtdDir = join(ROOT, 'dtd'), srcDir = join(ROOT, 'src') } = {}) {
+function audit({ dtdDir = join(ROOT, 'dtd'), srcDir = join(ROOT, 'src'), builtDirs = ['commands', 'skills', 'agents'] } = {}) {
+  const built = builtDirs
+    .map((d) => (isAbsolute(d) ? d : join(ROOT, d)))
+    .filter((d) => { try { readdirSync(d); return true; } catch { return false; } })
+    .flatMap((d) => walk(d))
+    .map((p) => ({ p, t: readFileSync(p, 'utf8') }));
   const files = walk(srcDir).map((p) => ({ p, t: readFileSync(p, 'utf8') }));
   const dtds = readdirSync(dtdDir).filter((f) => f.endsWith('.dtd')).map((f) => ({ f, t: readFileSync(join(dtdDir, f), 'utf8') }));
   const unused = [];
@@ -58,14 +63,10 @@ function audit({ dtdDir = join(ROOT, 'dtd'), srcDir = join(ROOT, 'src') } = {}) 
   }
   // law density per prefix over dtd and src, and the order of reading inside each file:
   // a Set forgets position, so the numbers are also kept as they were read and must ascend
-  const laws = new Map();
   const gaps = [];
   for (const src of [...dtds, ...files]) {
     const read = new Map();
     for (const m of src.t.matchAll(/<!ENTITY\s+LAW\.([A-Z_.]+)\.(\d+)\s/g)) {
-      const set = laws.get(m[1]) || new Set();
-      set.add(Number(m[2]));
-      laws.set(m[1], set);
       const seq = read.get(m[1]) || [];
       seq.push(Number(m[2]));
       read.set(m[1], seq);
@@ -74,9 +75,22 @@ function audit({ dtdDir = join(ROOT, 'dtd'), srcDir = join(ROOT, 'src') } = {}) 
       for (let i = 1; i < seq.length; i++) if (seq[i] <= seq[i - 1]) { gaps.push(`LAW.${p} out of order in ${src.f || src.p}: read ${seq.join(', ')}`); break; }
     }
   }
-  for (const [p, set] of laws) {
-    const max = Math.max(...set);
-    if (set.size !== max) gaps.push(`LAW.${p}: ${set.size} declared, highest ${max}`);
+  // Density is asked of each built document, where the installer has already
+  // inlined every subset, so one file holds a whole prefix. Keyed by prefix
+  // alone across the tree the Set unioned every source and a hole in one file
+  // was filled by another declaring the number (pass 27); asked of src/ alone
+  // it fired on every command that extends its subset's numbering.
+  for (const b of built) {
+    const seen = new Map();
+    for (const m of b.t.matchAll(/<!ENTITY\s+LAW\.([A-Z_.]+)\.(\d+)\s/g)) {
+      const set = seen.get(m[1]) || new Set();
+      set.add(Number(m[2]));
+      seen.set(m[1], set);
+    }
+    for (const [p, set] of seen) {
+      const max = Math.max(...set);
+      if (set.size !== max) gaps.push(`LAW.${p} in ${b.p}: ${set.size} declared, highest ${max}`);
+    }
   }
   return { total, unused, gaps };
 }
@@ -123,4 +137,21 @@ try {
   rmSync(tmpSrc, { recursive: true, force: true });
 }
 console.log(orderedSrc ? 'control: two laws planted out of order in a source are reported with the file named' : 'CONTROL FAIL: the planted disorder in a source was not reported with its file: ' + srcMsg);
-process.exit(r.unused.length || r.gaps.length || !tripped || !ordered || !orderedSrc ? 1 : 0);
+// the density arm, planted in a temporary built tree: a prefix that skips a
+// number must be reported and must name the document it was read from. Before
+// pass 27 this arm keyed one Set by prefix across the whole tree, so a hole in
+// one file was filled by another declaring the number and no plant could trip it.
+const tmpBuilt = mkdtempSync(join(tmpdir(), 'rot-dtd-density-'));
+const plant4 = join(tmpBuilt, 'zz-density-control-dtd.md');
+writeFileSync(plant4, '<!DOCTYPE zz [\n  <!ENTITY LAW.ZZDENSE.1 "one">\n  <!ENTITY LAW.ZZDENSE.3 "three, and no two">\n]>\n', 'utf8');
+let dense = false;
+let denseMsg = '';
+try {
+  const c = audit({ builtDirs: [tmpBuilt] });
+  denseMsg = c.gaps.find((g) => /LAW\.ZZDENSE/.test(g)) || '';
+  dense = /zz-density-control-dtd\.md/.test(denseMsg) && /2 declared, highest 3/.test(denseMsg);
+} finally {
+  rmSync(tmpBuilt, { recursive: true, force: true });
+}
+console.log(dense ? 'control: a law prefix that skips a number is reported with its document' : 'CONTROL FAIL: the planted density gap was not reported: ' + denseMsg);
+process.exit(r.unused.length || r.gaps.length || !tripped || !ordered || !orderedSrc || !dense ? 1 : 0);
