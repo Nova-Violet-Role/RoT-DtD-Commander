@@ -78,9 +78,24 @@ out=$(bash checker/companion-audit.sh --score "$T/m15.md" p a..b opus 2>&1); rc=
 printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high">planted without a confidence</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m16.md"
 out=$(bash checker/companion-audit.sh --score "$T/m16.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.3' && echo "PASS M16 a finding element without its confidence is refused under LAW.COMPANION.3" || { echo "FAIL M16 exit=$rc"; echo "$out" | tail -2; fail=1; }
 # M17: the runner's allow-list carries no writing or spawning tool and every Bash form starts with its ceiling; a copy granting Write is refused
-allow_ok() { local a; a=$(grep -o -- '--allowedTools "[^"]*"' "$1"); [ -n "$a" ] || return 2; echo "$a" | grep -q -E 'Write|Edit|NotebookEdit|Agent|Task' && return 1; echo "$a" | grep -o 'Bash([^)]*)' | grep -v -q 'Bash(timeout 60 ' && return 1; return 0; }
+# A bare Bash in the allow-list is the widest grant there is, and the old
+# second stage could not see it: grep -o 'Bash([^)]*)' emitted nothing, so the
+# grep -v that followed exited 1 and the && never fired (pass 17).
+allow_ok() {
+  local a tools bare_bash; a=$(grep -o -- '--allowedTools "[^"]*"' "$1"); [ -n "$a" ] || return 2
+  echo "$a" | grep -q -E 'Write|Edit|NotebookEdit|Agent|Task' && return 1
+  tools=$(echo "$a" | sed 's/.*--allowedTools "//; s/"$//')
+  bare_bash=$(echo "$tools" | tr ',' '\n' | grep -c '^Bash$' || true)
+  [ "$bare_bash" != "0" ] && return 1
+  echo "$a" | grep -o 'Bash([^)]*)' | grep -v -q 'Bash(timeout 60 ' && return 1
+  return 0
+}
 sed 's/--allowedTools "Read,/--allowedTools "Write,Read,/' checker/companion-audit.sh > "$T/m17.sh"
 grep -q -- '--allowedTools "Write,Read,' "$T/m17.sh" || { echo "M17 mutation did not land"; fail=1; }
+sed 's/--allowedTools "Read,\([^"]*\)"/--allowedTools "Read,Bash"/' checker/companion-audit.sh > "$T/m17b.sh"
+grep -q -- '--allowedTools "Read,Bash"' "$T/m17b.sh" || { echo "M17b mutation did not land"; fail=1; }
+allow_ok "$T/m17b.sh"; r2=$?
+[ $r2 -eq 1 ] || { echo "M17b DID NOT FIRE: a bare Bash in the allow-list was admitted"; fail=1; }
 allow_ok "$T/m17.sh"; r1=$?; allow_ok checker/companion-audit.sh; r0=$?
 [ $r1 -eq 1 ] && [ $r0 -eq 0 ] && echo "PASS M17 the runner's allow-list carries no writing or spawning tool and every Bash form starts with timeout 60; a copy granting Write is refused" || { echo "FAIL M17 planted=$r1 real=$r0"; fail=1; }
 
