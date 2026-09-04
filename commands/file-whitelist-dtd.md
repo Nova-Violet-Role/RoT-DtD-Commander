@@ -7,6 +7,14 @@ argument-hint: "[extension or extensions to allow, or blank to read the list; --
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!DOCTYPE file_whitelist_run [
+  <!-- LAW.ASK.11: raised BEFORE the include, because the first declaration
+       binds. LAW.LIST.8 declares this intake uncapped in blocks, and a
+       command that leaves the cc-ask default of three in place cannot honour
+       it (pass 11 of the 7.0.0 audit). -->
+  <!ENTITY % ask.rounds "(1|2|3|4|5|6|7|8)">
+  <!ENTITY % ask.of "(8)">
+  <!ENTITY ASK.rounds_per_prompt "8">
+  <!ENTITY ASK.max_total "32">
   
   
 <!-- begin subset cc-core -->
@@ -190,8 +198,8 @@ argument-hint: "[extension or extensions to allow, or blank to read the list; --
      number out of the rounds this prompt may chain. -->
 <!ELEMENT round (ask, answer+)>
 <!ATTLIST round
-          n  (1|2|3) #REQUIRED
-          of (3)     #REQUIRED>
+          n  (1|2|3|4|5|6|7|8) #REQUIRED
+          of (8)     #REQUIRED>
 
 <!ELEMENT ask (question, (question, (question, question?)?)?)>
 <!ELEMENT question (option, option, (option, option?)?)>
@@ -229,7 +237,7 @@ argument-hint: "[extension or extensions to allow, or blank to read the list; --
 <!ELEMENT gate EMPTY>
 <!ATTLIST gate
           choice (start|more|add|impactful) #REQUIRED
-          round  (1|2|3) "1">
+          round  (1|2|3|4|5|6|7|8) "1">
 
 <!ENTITY GATE.question  "Ready to proceed, or would you like me to ask more questions?">
 <!ENTITY GATE.start     "Start working">

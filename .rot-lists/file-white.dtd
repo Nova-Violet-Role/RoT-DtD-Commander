@@ -2,9 +2,10 @@
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!-- file-white.dtd : one entry per entity, written by /file-whitelist-dtd.
-     The scope and the class are FIXED here, so a file claiming another is
-     invalid against its own declaration rather than merely mislabelled. -->
+     The scope and the class below are FIXED, and node lib/list.mjs reach
+     refuses a file whose pair disagrees with its own filename. -->
 
+<!ELEMENT file_white (#PCDATA)>
 <!ATTLIST file_white
           scope CDATA #FIXED "file"
           class CDATA #FIXED "white">

@@ -2,14 +2,15 @@
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!-- code-white.dtd : one entry per entity, written by /code-whitelist-dtd.
-     The scope and the class are FIXED here, so a file claiming another is
-     invalid against its own declaration rather than merely mislabelled. -->
+     The scope and the class below are FIXED, and node lib/list.mjs reach
+     refuses a file whose pair disagrees with its own filename. -->
 
+<!ELEMENT code_white (#PCDATA)>
 <!ATTLIST code_white
           scope CDATA #FIXED "code"
           class CDATA #FIXED "white">
 
-<!ENTITY LIST.entry.md "white in both scopes from the first run; the format every command, skill and agent is written in|2026-09-04||">
-<!ENTITY LIST.entry.node "the only runtime this project builds and tests under|2026-09-04||">
-<!ENTITY LIST.entry.gif "the production artifact a tape becomes; the code end of the tape pair|2026-09-04||vhs">
-<!ENTITY LIST.entry.vhs "what renders a tape into a gif, and the one tool the tapes workflow needs|2026-09-04||">
+<!ENTITY LIST.entry.md "white in both scopes from the first run; the format every command, skill and agent is written in|2026-09-04|||">
+<!ENTITY LIST.entry.node "the only runtime this project builds and tests under|2026-09-04|||">
+<!ENTITY LIST.entry.gif "the production artifact a tape becomes; the code end of the tape pair|2026-09-04||vhs|">
+<!ENTITY LIST.entry.vhs "what renders a tape into a gif, and the one tool the tapes workflow needs|2026-09-04|||">

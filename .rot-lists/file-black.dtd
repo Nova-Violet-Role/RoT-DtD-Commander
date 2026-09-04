@@ -2,12 +2,13 @@
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!-- file-black.dtd : one entry per entity, written by /file-blacklist-dtd.
-     The scope and the class are FIXED here, so a file claiming another is
-     invalid against its own declaration rather than merely mislabelled. -->
+     The scope and the class below are FIXED, and node lib/list.mjs reach
+     refuses a file whose pair disagrees with its own filename. -->
 
+<!ELEMENT file_black (#PCDATA)>
 <!ATTLIST file_black
           scope CDATA #FIXED "file"
           class CDATA #FIXED "black">
 
-<!ENTITY LIST.entry.exe "nothing here ships a binary; a compiled artifact in the tree is a mistake or a leak|2026-09-04|">
-<!ENTITY LIST.entry.dll "as exe: this project produces text, and a library object never belongs in it|2026-09-04|">
+<!ENTITY LIST.entry.exe "nothing here ships a binary; a compiled artifact in the tree is a mistake or a leak|2026-09-04|||">
+<!ENTITY LIST.entry.dll "as exe: this project produces text, and a library object never belongs in it|2026-09-04|||">
