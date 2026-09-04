@@ -1,0 +1,79 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-starlist.dtd : what the harness may reach, and the managers that reach it.
+
+  The starlist is the sixth list and the only one about the machine rather
+  than the tree: the paths, programs, compilers and filetypes this harness may
+  use. It is bounded by its managers, six of them, each declared here as an
+  adapter rather than written into code, so a seventh is a declaration.
+
+  Two rules travel with every manager. The search runs in the foreground under
+  its own ceiling with the exit code read directly, and a manager absent from
+  this machine is reported absent rather than guessed at. An install runs only
+  after a confirmation that shows the literal line, the manager running it and
+  the seconds it may take, and is refused outright when the tool or its
+  filetype sits in a black list, because installing what the repository
+  forbids is the poisoned mix wearing another costume.
+-->
+
+<!-- ===== THE MANAGERS ===== -->
+<!-- binary | search subcommand | install subcommand | ceiling in seconds -->
+<!ENTITY STAR.mgr.scoop      "scoop|search|install|60">
+<!ENTITY STAR.mgr.chocolatey "choco|search|install -y|120">
+<!ENTITY STAR.mgr.bun        "bun|pm ls|add|60">
+<!ENTITY STAR.mgr.vcpkg      "vcpkg|search|install|300">
+<!ENTITY STAR.mgr.cargo      "cargo|search|install|120">
+<!ENTITY STAR.mgr.uv         "uv|pip list|pip install|120">
+<!ENTITY STAR.managers "scoop|chocolatey|bun|vcpkg|cargo|uv">
+<!ENTITY STAR.absent "a manager whose binary is not on this machine is reported absent; its hits are never guessed and never inferred from another manager">
+
+<!-- ===== THE BOUNDS ===== -->
+<!ENTITY STAR.ceiling.search  "300">
+<!ENTITY STAR.ceiling.install "600">
+<!ENTITY STAR.dir     ".rot-lists">
+<!ENTITY STAR.file    "starlist.dtd">
+<!ENTITY STAR.session "starlist-session.md">
+
+<!-- ===== THE INTAKE ===== -->
+<!ENTITY STAR.block  "8">
+<!ENTITY STAR.per_round "4">
+<!ENTITY STAR.uncapped "when a block of STAR.block rounds closes with the toolchain unsettled a fresh block opens, carrying every answer forward in the session record; the blocks have no declared limit and each block is a declared enumeration">
+<!ENTITY STAR.measured_first "the languages present, the build and lock files, and the toolchain already on the machine are measured before the first question; nothing measurable is ever asked">
+
+<!-- ===== THE INSTALL ===== -->
+<!ENTITY STAR.install.shows "the literal command, the manager that will run it, and the seconds it may take">
+<!ENTITY STAR.install.refused "an install of a tool, or of a tool whose filetype, sits in a black list is refused before the confirmation is offered">
+<!ENTITY STAR.install.recorded "every install is written into the starlist with its date and the answer that authorised it">
+
+<!-- ===== ELEMENTS ===== -->
+<!ELEMENT starlist_run (measured, block+, adopted*, refused*, next_action)>
+<!ATTLIST starlist_run
+          target CDATA #REQUIRED
+          blocks CDATA #REQUIRED>
+
+<!ELEMENT measured (#PCDATA)>
+<!ATTLIST measured
+          languages CDATA #REQUIRED
+          builds    CDATA #IMPLIED
+          toolchain CDATA #IMPLIED>
+
+<!ELEMENT block (#PCDATA)>
+<!ATTLIST block
+          n      CDATA #REQUIRED
+          rounds CDATA #REQUIRED>
+
+<!ELEMENT adopted (#PCDATA)>
+<!ATTLIST adopted
+          tool      CDATA #REQUIRED
+          manager   (scoop|chocolatey|bun|vcpkg|cargo|uv) #REQUIRED
+          installed (yes|no|printed) #REQUIRED
+          date      CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.STAR.1 "Every manager is a declaration of STAR.managers, not a branch in code: its binary, its search subcommand, its install subcommand and its ceiling come from its entity, and a seventh manager is one more entity and no new code.">
+<!ENTITY LAW.STAR.2 "A search runs in the foreground under the manager's own ceiling with its exit code read directly, never in the background and never through a pipe that hides it; a manager absent from this machine is reported under STAR.absent and its hits are never guessed.">
+<!ENTITY LAW.STAR.3 "An install happens only after a confirmation showing STAR.install.shows, runs in the foreground under STAR.ceiling.install, and is refused under STAR.install.refused when a black list names the tool or its filetype; STAR.install.recorded holds for every one that runs.">
+<!ENTITY LAW.STAR.4 "STAR.measured_first holds: the tree is walked before the first question and nothing a walk can measure is ever asked, so the questions are about the target of the build, the platforms, what may never be installed here, and whether the toolchain is adopted or managed.">
+<!ENTITY LAW.STAR.5 "The intake is uncapped under STAR.uncapped, and the session record at STAR.dir and STAR.session carries the block, every answer and what the walk measured, so a session broken off mid-block resumes where it stopped rather than asking again.">
+<!ENTITY LAW.STAR.6 "The starlist bounds every other list: a white list naming a toolchain the starlist cannot reach is a refused combination under LAW.LIST.4, and the starlist itself is what makes that reachability a measurement rather than an opinion.">

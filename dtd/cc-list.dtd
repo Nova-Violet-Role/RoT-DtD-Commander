@@ -1,0 +1,111 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-list.dtd : the black, gray and white lists shared by the eight list
+  commands (code and file × black, gray and white, plus the starlist pair).
+
+  The mechanism is borrowed, not invented. DITA's constraint modules
+  (strictTaskbodyConstraint.mod in cc-resources/.dtd-file-examples) narrow a
+  grammar by REDECLARING a parameter entity before the base module is
+  included: the first declaration binds, so a constraint removes options
+  without editing the thing it constrains. A blacklist is that, applied to
+  filetypes and code classes. DITA's subjectScheme binds an attribute's legal
+  values to a taxonomy held outside the grammar; a whitelist is that. And the
+  .ent/.mod split keeps the entries apart from the grammar that reads them,
+  which is why the entries live in .rot-lists/ and this file holds no entry
+  of its own.
+
+  Two layers. The machine layer under the installed plugin holds what is true
+  of this machine; the repository layer at .rot-lists/ holds what is true of
+  this project, and where they disagree the repository wins (LAW.LIST.3). A
+  refusal always says which layer refused, because a rule whose origin is
+  unclear cannot be argued with.
+
+  Scope is the axis the two halves of every pair differ on. A FILE rule
+  governs what may sit in the tree: a .cpp on the file blacklist may still
+  produce a .dll, it simply may not live in the source. A CODE rule governs
+  what may exist at all as an artifact, a compiler or a patcher: a .cpp on the
+  code blacklist means nothing here compiles C++. Code is the stricter of the
+  two, and a code rule implies its file rule (LAW.LIST.2).
+-->
+
+<!-- ===== THE CLASSES ===== -->
+<!ENTITY LIST.class.black "black: refused outright; the write does not happen and the refusal names the entry, its layer and the edit that would allow it">
+<!ENTITY LIST.class.gray  "gray: asked before it happens; the question names why the entry is gray and offers the replacements the white list already allows">
+<!ENTITY LIST.class.white "white: allowed and enforced; what the production build is made of, and the set a gray question draws its replacements from">
+<!ENTITY LIST.classes "black|gray|white">
+<!ENTITY LIST.scopes  "file|code">
+
+<!ENTITY LIST.scope.file "what may sit in the tree; a blacklisted file class may still be produced or consumed outside the source">
+<!ENTITY LIST.scope.code "what may exist as an artifact, a compiler or a patcher; the stricter half, and it implies the file rule">
+
+<!-- ===== THE TWO LAYERS ===== -->
+<!ENTITY LIST.layer.repo    ".rot-lists at the root of the repository; what is true of this project">
+<!ENTITY LIST.layer.machine ".rot-lists beside the installed plugin; what is true of this machine">
+<!ENTITY LIST.dir           ".rot-lists">
+<!ENTITY LIST.files "file-black.dtd|code-black.dtd|file-gray.dtd|code-gray.dtd|file-white.dtd|code-white.dtd|starlist.dtd">
+
+<!-- ===== THE MARKDOWN INTERLOCK ===== -->
+<!-- .md is white from the first run and no single answer may unseat it. All
+     three conditions must hold together, and the refusal names the one that
+     failed (LAW.LIST.7). -->
+<!ENTITY LIST.md.default "md: white in both scopes from the first run, and removable only under LIST.md.condition">
+<!ENTITY LIST.md.condition "all three at once: the starlist carries a Julia Markdown installation, the black list names md, and the white list already carries jmd in both the file scope and the code scope">
+<!ENTITY LIST.md.refusal "the removal of md is refused by naming which of the three conditions does not hold">
+
+<!-- ===== THE GRAY QUESTION ===== -->
+<!ENTITY GRAY.question "This is gray here. Use it anyway, or take one of the replacements the white list allows?">
+<!ENTITY GRAY.use      "Use it anyway, and record the exception">
+<!ENTITY GRAY.explain  "Tell me more about what it breaks">
+<!ENTITY GRAY.except   "a granted exception carries the date, the file or code it was granted for, and the reason; the same entry is not asked again in that repository, a new entry of the same class still is">
+
+<!-- ===== THE REFUSAL ===== -->
+<!ENTITY LIST.refusal "what was asked, which list refused it, which layer that list came from, the entry it collides with when there is one, and the edit that would resolve it">
+
+<!-- ===== ELEMENTS ===== -->
+<!ELEMENT list_run (walk, entries, verdicts?, refused*, next_action)>
+<!ATTLIST list_run
+          scope  (file|code) #REQUIRED
+          class  (black|gray|white) #REQUIRED
+          layers CDATA #REQUIRED>
+
+<!ELEMENT walk (#PCDATA)>
+<!ATTLIST walk
+          target     CDATA #REQUIRED
+          extensions CDATA #REQUIRED
+          seconds    CDATA #REQUIRED>
+
+<!ELEMENT entries (entry*)>
+<!ELEMENT entry (reason, evidence?)>
+<!ATTLIST entry
+          name    CDATA #REQUIRED
+          scope   (file|code) #REQUIRED
+          class   (black|gray|white) #REQUIRED
+          layer   (repository|machine) #REQUIRED
+          granted CDATA #IMPLIED>
+<!ELEMENT reason (#PCDATA)>
+<!ELEMENT evidence (#PCDATA)>
+<!ATTLIST evidence count CDATA #IMPLIED>
+
+<!ELEMENT verdicts (verdict+)>
+<!ELEMENT verdict (#PCDATA)>
+<!ATTLIST verdict
+          on     CDATA #REQUIRED
+          holds  (yes|no) #REQUIRED>
+
+<!ELEMENT refused (#PCDATA)>
+<!ATTLIST refused
+          entry     CDATA #REQUIRED
+          collides  CDATA #IMPLIED
+          layer     (repository|machine) #REQUIRED
+          edit      CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.LIST.1 "A list is a declaration, never a configuration file: every entry lives in a .dtd under LIST.dir as an entity carrying its name, its reason and the date it was listed, and a command that would write an entry anywhere else has written nothing.">
+<!ENTITY LAW.LIST.2 "Scope is the axis: a file rule governs what may sit in the tree and a code rule governs what may exist as an artifact, a compiler or a patcher; code is the stricter half and a code entry implies its file entry, so a blacklisted code class cannot be whitelisted as a file.">
+<!ENTITY LAW.LIST.3 "Two layers hold at once, LIST.layer.machine and LIST.layer.repo, and where they name the same entry the repository wins; every refusal names the layer it came from, because a rule whose origin is unclear cannot be argued with.">
+<!ENTITY LAW.LIST.4 "The reachability guard refuses any combination that leaves the repository unable to build itself: an entry in both black and white, a code class blacklisted while a whitelisted class needs it to be produced, a whitelist naming a toolchain the starlist cannot reach, or an empty white list for a language the tree actually contains; each refusal names the two entries that collide.">
+<!ENTITY LAW.LIST.5 "A gray entry is asked, never assumed: the question names the entry, the reason recorded when it was listed and up to three replacements drawn from the white list, and the answer is data to the gate; an answer of GRAY.use is written back as a dated exception under GRAY.except and that entry is not asked again in that repository.">
+<!ENTITY LAW.LIST.6 "Every refusal carries LIST.refusal in full: what was asked, the list, the layer, the colliding entry when there is one, and the edit that would resolve it; a refusal that names no edit sends the reader hunting and is a failed refusal.">
+<!ENTITY LAW.LIST.7 "LIST.md.default holds: md is white in both scopes from the first run and is removable only when every condition of LIST.md.condition holds together; the removal is otherwise refused under LIST.md.refusal by naming the condition that failed.">
+<!ENTITY LAW.LIST.8 "The intake of a list command is uncapped in blocks: the rounds are the declared enumeration, and when a block closes with the lists still in a refused combination a fresh block opens carrying every answer forward, so the session ends when the formula holds rather than when a counter runs out.">
