@@ -256,7 +256,7 @@ function staticArtifacts(o, out, io, rows) {
     const ord = nextOrdinal(join(out, name), name);
     if (o.dryRun) { io.log(`  plan ${name} (agent, static) -> ${name}/${name}.${ord.name}.md`); continue; }
     const head = ['---', `name: ${name}`, 'kind: agent', 'mode: static (rdc check; an agent runs only as a subagent, which this machine forbids)', `ordinal: ${ord.name} (${ord.index})`, `date: ${new Date().toISOString()}`, `verdict: ${status}`, '---', ''].join('\n');
-    const body = `### rdc check\n\n\`\`\`\n${line.trim()}\n\`\`\`\n\nExit ${check.status}; the line is the checker's own for \`src/agents/${name}.md\` (rules C1 to C15 of lib/dtd.mjs).\n`;
+    const body = `### rdc check\n\n\`\`\`\n${line.trim()}\n\`\`\`\n\nExit ${check.status}; the line is the checker's own for \`src/agents/${name}.md\` (rules C1 to C16 of lib/dtd.mjs).\n`;
     const file = saveArtifact(out, name, ord, head, body);
     io.log(`  STATIC ${name}  ${status.toUpperCase()}  -> ${basename(file)}`);
     rows.push({ command: name, status, seconds: 0 });

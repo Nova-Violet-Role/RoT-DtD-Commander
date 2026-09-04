@@ -22,7 +22,7 @@ npm run gate; echo "exit=$?"
 ```
 
 That runs, in order: `rdc build --check` (the committed resolved tree equals a
-fresh resolve of `src/`), `rdc check` (rules C1 to C15 on every source), the
+fresh resolve of `src/`), `rdc check` (rules C1 to C16 on every source), the
 Adiutor controls (twelve guards tripped on purpose), the contract audit (every
 declaration used, every law numbered densely, with a planted control), the
 checker controls (six mutations refused), and the SPDX and CRLF sweeps

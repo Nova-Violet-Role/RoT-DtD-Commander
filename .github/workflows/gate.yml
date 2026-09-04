@@ -29,7 +29,7 @@ jobs:
         run: node checker/gate-sync.mjs
       - name: build drift (committed resolved tree equals a fresh resolve of src/)
         run: node bin/rot-dtd-commander.mjs build --check
-      - name: checker C1..C15 on every source
+      - name: checker C1..C16 on every source
         run: |
           node bin/rot-dtd-commander.mjs check | tee "$RUNNER_TEMP/check.log"
           test "${PIPESTATUS[0]}" -eq 0
@@ -38,7 +38,7 @@ jobs:
         run: node checker/heading-sweep.mjs --check
       - name: front matter parses as YAML (no bare colon-space or hash in a value; the sweep is a no-op)
         run: node checker/frontmatter-sweep.mjs --check
-      - name: adiutor controls (twenty-nine guards tripped on purpose; C21 to C29 the AI_SLOP gate on five spots, the tally and the fields)
+      - name: adiutor controls (thirty guards tripped on purpose; C21 to C29 the AI_SLOP gate on five spots, the tally and the fields)
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, three planted controls)
         run: node checker/contract-audit.mjs
@@ -136,7 +136,9 @@ jobs:
           CLAUDE_CONFIG_DIR="$T" node bin/adiutor.mjs doctor > "$T/doctor.log" 2>&1 || true
           cat "$T/doctor.log"
           grep -q "every one installed" "$T/doctor.log"
-          node bin/rot-dtd-commander.mjs uninstall --yes --target "$T" | tail -1
+          # Its exit came from tail, exactly as the install step did (pass 26).
+          node bin/rot-dtd-commander.mjs uninstall --yes --target "$T" > "$T/uninstall.log" 2>&1 || { tail -20 "$T/uninstall.log"; exit 1; }
+          tail -1 "$T/uninstall.log"
           left=$(find "$T" -type f | wc -l)
           echo "files left: $left"
           test "$left" -eq 0

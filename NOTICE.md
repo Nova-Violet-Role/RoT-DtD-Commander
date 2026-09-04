@@ -123,7 +123,7 @@ process in this repository's own words.
 This repository makes measurable claims and each one names its instrument;
 the same discipline applies to what the instruments do **not** cover.
 
-- The checker (`rdc check`, rules C1 to C15) proves that a file's DOCTYPE and
+- The checker (`rdc check`, rules C1 to C16) proves that a file's DOCTYPE and
   its prose agree: every declared element is named, every named channel is
   fenced, no entity is unresolved, the dialect validates, and every heading of the answer template carries the command's sigil with a blank line on each side (C13). It does not prove
   that a model will obey the grammar: that is measured per run by the

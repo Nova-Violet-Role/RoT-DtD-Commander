@@ -451,9 +451,9 @@ flowchart LR
 | command | sigil | what it does |
 |---|:-:|---|
 | `/ai-slop-dtd` | 🫧 | DTD-native: judge a file, a commit message file or the last answer by the AI_SLOP gate, the hand-run form of the hook gate: the same… |
-| `/audit-skill-dtd` | 🔍 | DTD-native: audit a skill directory here, in the foreground: the contract rules C1 to C15 through the checker under a ceiling, then the… |
-| `/audit-slash-command-dtd` | 🔎 | DTD-native: audit a slash command file here, in the foreground: the contract rules C1 to C15 through the checker under a ceiling, then the… |
-| `/audit-subagent-dtd` | 🕵️ | DTD-native: audit an agent file here, in the foreground: the contract rules C1 to C15 through the checker under a ceiling, then the style… |
+| `/audit-skill-dtd` | 🔍 | DTD-native: audit a skill directory here, in the foreground: the contract rules C1 to C16 through the checker under a ceiling, then the… |
+| `/audit-slash-command-dtd` | 🔎 | DTD-native: audit a slash command file here, in the foreground: the contract rules C1 to C16 through the checker under a ceiling, then the… |
+| `/audit-subagent-dtd` | 🕵️ | DTD-native: audit an agent file here, in the foreground: the contract rules C1 to C16 through the checker under a ceiling, then the style… |
 
 </details>
 
@@ -744,11 +744,11 @@ Afterwards, restart Claude Code once so the agents and the hooks load.
 
 ```sh
 rdc doctor          # or: node ~/.claude/rot-dtd-commander/bin/adiutor.mjs doctor
-rdc check           # from a clone: every source against its own DOCTYPE, rules C1 to C15
+rdc check           # from a clone: every source against its own DOCTYPE, rules C1 to C16
 ```
 
 <details>
-<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C15 over the sources of that day, then <code>checker/checker-controls.sh</code> refusing mutations on purpose; the counts on screen are the recording's, the current ones stand in the claims table)</summary>
+<summary><b>Watch: the checker over the whole tree</b> (rules C1 to C16 over the sources of that day, then <code>checker/checker-controls.sh</code> refusing mutations on purpose; the counts on screen are the recording's, the current ones stand in the claims table)</summary>
 
 ![check](docs/gifs/check.gif)
 
@@ -786,7 +786,7 @@ and the rite (how the fix is verified). Under `ROT_DTD_ADIUTOR=strict` the
 Stop is blocked once with that prescription as the reason.
 
 <details>
-<summary><b>Watch: the guards tripped on purpose (seventeen when the tape was recorded, twenty-seven now)</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding, C10 the answer of a run is every assistant text after the command prompt, C11 prune-plugin refuses while registered and removes the leftover, C12 the monitor prints one line per failed run and per malformed line, nothing for a pass or for history, in the DTD's words, C13 narration before a lagging answer is completed from the Stop payload's <code>last_assistant_message</code>: the same transcript fails without it and passes with it, C14 a trailing <code>/name-dtd</code> token arms the run with or without <code>&lt;-</code>, a token in the middle does not, and an installed -dtd skill arms it too, C15 a heading inside narration does not end the wait and a payload answer skips it, C16 a reference is judged only inside the id families the answer defines, C17 a file that declares no heading is still judged by the shared laws and no run closes as skipped)</summary>
+<summary><b>Watch: the guards tripped on purpose (seventeen when the tape was recorded, thirty now)</b> (<code>node bin/adiutor.mjs controls</code>: C1 a missing heading is found, C2 a complete answer passes, C3 strict blocks the Stop once and never twice, C4 <code>stop_hook_active</code> is silent, C5 a ledger line with an inserted column is refused, C6 arm preserves foreign keys and is idempotent, C7 the policy default is bound to the DTD, C8 a run opens only for an installed command, C9 a crammed answer is a spacing finding, C10 the answer of a run is every assistant text after the command prompt, C11 prune-plugin refuses while registered and removes the leftover, C12 the monitor prints one line per failed run and per malformed line, nothing for a pass or for history, in the DTD's words, C13 narration before a lagging answer is completed from the Stop payload's <code>last_assistant_message</code>: the same transcript fails without it and passes with it, C14 a trailing <code>/name-dtd</code> token arms the run with or without <code>&lt;-</code>, a token in the middle does not, and an installed -dtd skill arms it too, C15 a heading inside narration does not end the wait and a payload answer skips it, C16 a reference is judged only inside the id families the answer defines, C17 a file that declares no heading is still judged by the shared laws and no run closes as skipped)</summary>
 
 ![controls](docs/gifs/adiutor-fail.gif)
 
@@ -833,7 +833,7 @@ while the plugin is still registered.
 | claim | instrument | last measured |
 |---|---|---|
 | 131 commands, 22 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-03 |
-| every source passes rules C1 to C15 | `rdc check`: `checked 158  failed 0` | 2026-09-03 |
+| every source passes rules C1 to C16 | `rdc check`: `checked 158  failed 0` | 2026-09-03 |
 | the committed resolved tree equals a fresh build | `rdc build --check`: `287 targets, 0 drifted, 0 failing` | 2026-09-03 |
 | the checker refuses a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a heading without its sigil, a front-matter value YAML would misread and a declaration hidden under IGNORE, passes one under INCLUDE and the untouched file, and the companion scorer counts a high finding only in a finding element's opening tag, refuses a finding missing one of its four attributes, and runs under an allow-list with no writing tool | `bash checker/checker-controls.sh`: eighteen controls M0 to M17, `all tripped as designed` | 2026-09-03 |
 | every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1434 declarations, 0 unused, 0 law gaps`, and the three planted controls | 2026-09-03 |

@@ -17,6 +17,10 @@ argument-hint: [what the workflow file is for, or leave blank; --no-gate for aut
   %cc-license;
   <!ENTITY % cc-workflow SYSTEM "../../dtd/cc-workflow.dtd">
   %cc-workflow;
+  <!-- LAW.WF.1 to LAW.WF.6 are cc-workflow.dtd's. They were declared again
+       here with different texts, and XML binds the first declaration, so
+       the six this file described were the six nothing used (pass 26 of
+       the 7.0.0 audit). -->
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
   <!ELEMENT workflow_forge (args, intake, plan, license, invocation, written, guards, audit, proof, assumption_made*)>
@@ -32,12 +36,6 @@ argument-hint: [what the workflow file is for, or leave blank; --no-gate for aut
   <!ATTLIST file path CDATA #REQUIRED bytes CDATA #REQUIRED headed (yes|no) #REQUIRED>
   <!ATTLIST rule code NMTOKEN #REQUIRED result (pass|fail|skipped) #REQUIRED>
   <!ATTLIST proof tripped (yes|no) #REQUIRED>
-  <!ENTITY LAW.WF.1 "Round one always runs before anything is written, even when the argument reads complete; --no-gate alone skips the rounds, and then every answer is an assumption_made (LAW.ASK.10).">
-  <!ENTITY LAW.WF.2 "This command writes a JSON workflow of foreground steps under ceilings (WORKFLOW.file), run by node lib/workflow.mjs itself, under WORKFLOW.dir as <name>.workflow.json, from the answers, UTF-8 LF without BOM, and validates it before anything else is reported; nothing is written before the gate chose start.">
-  <!ENTITY LAW.WF.3 "Every file written is re-read and rendered with its path and bytes, passes the cc-form guards of its kind, and is headed by the license expression where its format allows a comment, headed no otherwise (LAW.LICENSE.1, LAW.LICENSE.2, LAW.FORM.2).">
-  <!ENTITY LAW.WF.4 "The audit runs here, in the foreground, under a 60 second ceiling with stdin closed: node lib/workflow.mjs validate on the file written, sound (W1); a dry run listing every step with its ceiling (W2); every step read for a closed stdin, a ceiling within WORKFLOW.ceiling.max and none of WORKFLOW.forbidden (W3); and a live run under the ceilings when the Proof answer chose it, the exit of every step read directly (W4); one rule element per code with pass, fail or skipped; a fail is a failed answer; no subagent is summoned for it.">
-  <!ENTITY LAW.WF.5 "The proof plants one fault in a scratch copy (a step whose run ends in an ampersand) and shows the audit refuse it; a proof that did not trip stops the command before the report.">
-  <!ENTITY LAW.WF.6 "The emoji chosen heads every heading of the artifact's answers (LAW.CORE.6); when the artifact lands in this repository it is registered in dtd/sigils.json, and a glyph already bound there is refused and the question asked again.">
   <!ENTITY ASK.WF.1 "Name|What is the workflow called?|A kebab-case name from the argument|The job it runs, as a verb and an object|Typed under Other|Undecided, ask again after the steps">
   <!ENTITY ASK.WF.2 "Trigger|When does it run?|By hand: node lib/workflow.mjs run|After a hook event, run by hand from the event line|By a cron the operator arms, never by this command|Typed under Other">
   <!ENTITY ASK.WF.3 "Steps|How many steps?|Three|One|Up to twelve, the cap|Typed under Other">
