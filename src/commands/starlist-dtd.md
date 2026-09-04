@@ -60,7 +60,7 @@ Its purpose is to bound the others. SL.bounds holds — a class whitelisted but 
 
 This command installs nothing (LAW.SL.4). Anything unreachable is named to starlist-manager-dtd, where a confirmation showing the literal line stands between a search and a change to this machine.
 
-The declarations this command reads: STAR.managers and the six adapters STAR.mgr.scoop, STAR.mgr.chocolatey, STAR.mgr.bun, STAR.mgr.vcpkg, STAR.mgr.cargo and STAR.mgr.uv; STAR.absent for what a silent binary means; STAR.ceiling.search for the bound on every probe; STAR.file, which is where the list lands and what the writer honours; and LAW.STAR.1 for why a seventh manager is a declaration and no new code.
+The declarations this command reads: STAR.managers and the six adapters STAR.mgr.scoop, STAR.mgr.chocolatey, STAR.mgr.bun, STAR.mgr.vcpkg, STAR.mgr.cargo and STAR.mgr.uv; STAR.no_search and STAR.absent for what a silent binary means; STAR.ceiling.search for the bound on every probe; STAR.file, which is where the list lands and what the writer honours; and LAW.STAR.1 for why a seventh manager is a declaration and no new code.
 </objective>
 
 <process>

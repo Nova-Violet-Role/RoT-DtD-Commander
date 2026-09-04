@@ -416,11 +416,17 @@ argument-hint: "[what you are trying to build, or blank to start from the walk; 
 <!-- binary | search subcommand | install subcommand | ceiling in seconds -->
 <!ENTITY STAR.mgr.scoop      "scoop|search|install|60">
 <!ENTITY STAR.mgr.chocolatey "choco|search|install -y|120">
-<!ENTITY STAR.mgr.bun        "bun|pm ls|add|60">
+<!ENTITY STAR.mgr.bun        "bun|-|add|60">
 <!ENTITY STAR.mgr.vcpkg      "vcpkg|search|install|300">
 <!ENTITY STAR.mgr.cargo      "cargo|search|install|120">
-<!ENTITY STAR.mgr.uv         "uv|pip list|pip install|120">
+<!ENTITY STAR.mgr.uv         "uv|-|pip install|120">
 <!ENTITY STAR.managers "scoop|chocolatey|bun|vcpkg|cargo|uv">
+<!-- A search subcommand of a single hyphen means the manager installs but does
+     not search a registry: bun pm ls lists a project's dependencies and uv pip
+     list lists what is installed, so neither could ever return a hit and both
+     were reporting a measured absence that was really a missing feature (pass
+     14 of the 7.0.0 audit). -->
+<!ENTITY STAR.no_search "a manager whose search subcommand is a single hyphen installs but cannot search; it is reported as having no search rather than as finding nothing">
 <!ENTITY STAR.absent "a manager whose binary is not on this machine is reported absent; its hits are never guessed and never inferred from another manager">
 
 <!-- ===== THE BOUNDS ===== -->

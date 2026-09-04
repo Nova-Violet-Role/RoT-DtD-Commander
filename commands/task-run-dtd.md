@@ -258,8 +258,9 @@ argument-hint: [the task name]
      (LAW.REC.5). -->
 <!ENTITY % command-info-types "record">
 <!-- The choice, consumed where it is declared so it is a reference and not
-     only a default: the Adiutor reads RECORD.info at Stop to learn whether a
-     command writes a record of its own (pass 13). -->
+     only a default. It is read by the checker when it compares a command's
+     declarations against its prose; nothing at runtime reads it, which the
+     comment claimed until pass 14. -->
 <!ENTITY RECORD.info "no-record-nesting">
 <!ELEMENT no-record-nesting EMPTY>
 <!-- No element wraps the choice: the Adiutor reads the parameter entity

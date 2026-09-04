@@ -5,6 +5,7 @@
      One axis, not two: a tool is reachable or it is absent, and absent is
      recorded rather than assumed. -->
 
+<!ELEMENT tools (#PCDATA)>
 <!ATTLIST tools
           kind CDATA #FIXED "starlist">
 
