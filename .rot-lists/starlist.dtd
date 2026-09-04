@@ -5,15 +5,15 @@
      One axis, not two: a tool is reachable or it is absent, and absent is
      recorded rather than assumed. -->
 
-<!ATTLIST starlist
+<!ATTLIST tools
           kind CDATA #FIXED "starlist">
 
-<!ENTITY STAR.have.node "present; the runtime the gate and every engine run under|2026-09-04|">
-<!ENTITY STAR.have.git "present; the repository, the tags and the credential helper|2026-09-04|">
-<!ENTITY STAR.have.vhs "reachable via scoop or chocolatey; renders the tapes workflow|2026-09-04|">
-<!ENTITY STAR.have.scoop "present as a shim; the probe now reaches it through the shell|2026-09-04|">
-<!ENTITY STAR.have.chocolatey "present on this machine|2026-09-04|">
-<!ENTITY STAR.have.bun "present on this machine|2026-09-04|">
-<!ENTITY STAR.have.vcpkg "present on this machine|2026-09-04|">
-<!ENTITY STAR.have.cargo "present on this machine|2026-09-04|">
-<!ENTITY STAR.have.uv "present on this machine|2026-09-04|">
+<!ENTITY STAR.have.node "the runtime the gate and every engine run under|2026-09-04||yes">
+<!ENTITY STAR.have.git "the repository, the tags and the credential helper|2026-09-04||yes">
+<!ENTITY STAR.have.vhs "renders the tapes workflow; reachable via scoop or chocolatey|2026-09-04||yes">
+<!ENTITY STAR.have.scoop "present; the probe resolves its shim rather than assuming|2026-09-04||yes">
+<!ENTITY STAR.have.chocolatey "present on this machine|2026-09-04||yes">
+<!ENTITY STAR.have.bun "present on this machine|2026-09-04||yes">
+<!ENTITY STAR.have.vcpkg "present on this machine|2026-09-04||yes">
+<!ENTITY STAR.have.cargo "present on this machine|2026-09-04||yes">
+<!ENTITY STAR.have.uv "present on this machine|2026-09-04||yes">
