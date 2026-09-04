@@ -133,9 +133,17 @@ jobs:
           test -f "$T/.rot-dtd-commander-manifest.json"
           # || true discarded every row and nothing read them, so the step
           # named a doctor it never listened to (pass 25).
+          # || true discards the exit on purpose: a scratch install is not armed
+          # (deliberate since 5.0.0), so doctor exits 1 for a correct install and
+          # the rows are what this step reads.
           CLAUDE_CONFIG_DIR="$T" node bin/adiutor.mjs doctor > "$T/doctor.log" 2>&1 || true
           cat "$T/doctor.log"
-          grep -q "every one installed" "$T/doctor.log"
+          # The row, not a phrase: pass 25 reworded the summary to "158 installed
+          # main files, 0 failing C1..C16" and this grep still asked for "every
+          # one installed", so it failed on a healthy install (pass 27, caught by
+          # CI). Matched loosely so a recount or a rule range does not break it.
+          grep -qE "OK +checker +[0-9]+ installed main files, 0 failing" "$T/doctor.log"
+          grep -qE "OK +double install" "$T/doctor.log"
           # Its exit came from tail, exactly as the install step did (pass 26).
           node bin/rot-dtd-commander.mjs uninstall --yes --target "$T" > "$T/uninstall.log" 2>&1 || { tail -20 "$T/uninstall.log"; exit 1; }
           tail -1 "$T/uninstall.log"
