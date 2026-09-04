@@ -126,27 +126,32 @@ jobs:
       - name: install into a scratch target, doctor, uninstall to zero
         run: |
           T=$(mktemp -d)
+          # The logs live outside the target. Written into it, the three of them
+          # were the three files the "uninstall to zero" test then found left
+          # over, so that test could never pass; it went unseen because the
+          # doctor grep above it failed first (pass 27, caught by CI).
+          L=$(mktemp -d)
           # A GitHub step runs without pipefail, so this took its exit status
           # from tail and a failing install passed (pass 25).
-          node bin/rot-dtd-commander.mjs install --yes --target "$T" > "$T/install.log" 2>&1 || { tail -20 "$T/install.log"; exit 1; }
-          tail -3 "$T/install.log"
+          node bin/rot-dtd-commander.mjs install --yes --target "$T" > "$L/install.log" 2>&1 || { tail -20 "$L/install.log"; exit 1; }
+          tail -3 "$L/install.log"
           test -f "$T/.rot-dtd-commander-manifest.json"
           # || true discarded every row and nothing read them, so the step
           # named a doctor it never listened to (pass 25).
           # || true discards the exit on purpose: a scratch install is not armed
           # (deliberate since 5.0.0), so doctor exits 1 for a correct install and
           # the rows are what this step reads.
-          CLAUDE_CONFIG_DIR="$T" node bin/adiutor.mjs doctor > "$T/doctor.log" 2>&1 || true
-          cat "$T/doctor.log"
+          CLAUDE_CONFIG_DIR="$T" node bin/adiutor.mjs doctor > "$L/doctor.log" 2>&1 || true
+          cat "$L/doctor.log"
           # The row, not a phrase: pass 25 reworded the summary to "158 installed
           # main files, 0 failing C1..C16" and this grep still asked for "every
           # one installed", so it failed on a healthy install (pass 27, caught by
           # CI). Matched loosely so a recount or a rule range does not break it.
-          grep -qE "OK +checker +[0-9]+ installed main files, 0 failing" "$T/doctor.log"
-          grep -qE "OK +double install" "$T/doctor.log"
+          grep -qE "OK +checker +[0-9]+ installed main files, 0 failing" "$L/doctor.log"
+          grep -qE "OK +double install" "$L/doctor.log"
           # Its exit came from tail, exactly as the install step did (pass 26).
-          node bin/rot-dtd-commander.mjs uninstall --yes --target "$T" > "$T/uninstall.log" 2>&1 || { tail -20 "$T/uninstall.log"; exit 1; }
-          tail -1 "$T/uninstall.log"
+          node bin/rot-dtd-commander.mjs uninstall --yes --target "$T" > "$L/uninstall.log" 2>&1 || { tail -20 "$L/uninstall.log"; exit 1; }
+          tail -1 "$L/uninstall.log"
           left=$(find "$T" -type f | wc -l)
           echo "files left: $left"
           test "$left" -eq 0
