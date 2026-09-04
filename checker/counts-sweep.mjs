@@ -45,8 +45,11 @@ export function measure(root = ROOT) {
   if (!m) throw new Error(`counts-sweep: contract-audit printed no declarations count: ${String(audit.stdout || audit.stderr).slice(0, 120)}`);
   const gateChain = Number((/gate-sync: (\d+) commands in the gate chain/.exec(runOut('node checker/gate-sync.mjs')) || [])[1] || 0);
   const amplifyControls = Number((/amplify controls: (\d+) run/.exec(runOut('node lib/amplify.mjs controls')) || [])[1] || 0);
+  const listControls = Number((/list controls: (\d+) run/.exec(runOut('node lib/list.mjs controls')) || [])[1] || 0);
+  const starlistControls = Number((/starlist controls: (\d+) run/.exec(runOut('node lib/starlist.mjs controls')) || [])[1] || 0);
   return {
     gateChain,
+    listControls, starlistControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, declarations: Number(m[1]) };
 }
 
@@ -71,6 +74,10 @@ export function places(c) {
     // re-runs is exactly what this sweep exists to refuse.
     { file: 'README.md', re: /gate-sync\.mjs`: `(\d+) commands in the gate chain/, want: [c.gateChain], label: 'the claims row of the gate chain' },
     { file: 'README.md', re: /amplify\.mjs controls`: `(\d+) run, 0 failing/, want: [c.amplifyControls], label: 'the claims row of the amplify controls' },
+    { file: 'README.md', re: /list\.mjs controls`: `(\d+) run, 0 failing/, want: [c.listControls], label: 'the claims row of the list controls' },
+    { file: 'CHANGELOG.md', re: /lib\/list\.mjs controls`: (\d+) run/, want: [c.listControls], label: 'the changelog list controls' },
+    { file: 'RELEASE.md', re: /lib\/list\.mjs controls` (\d+) run/, want: [c.listControls], label: 'the release notes list controls' },
+    { file: 'CHANGELOG.md', re: /lib\/starlist\.mjs controls`: (\d+) run/, want: [c.starlistControls], label: 'the changelog starlist controls' },
     { file: '.claude-plugin/marketplace.json', re: /(\d+) skills and (\d+) agents/, want: [c.skills, c.agents], label: 'the marketplace plugin description, skills and agents' },
   ];
 }
