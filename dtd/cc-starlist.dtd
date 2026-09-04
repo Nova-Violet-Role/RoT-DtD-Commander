@@ -3,7 +3,7 @@
 <!--
   cc-starlist.dtd : what the harness may reach, and the managers that reach it.
 
-  The starlist is the sixth list and the only one about the machine rather
+  The starlist is the seventh list and the only one about the machine rather
   than the tree: the paths, programs, compilers and filetypes this harness may
   use. It is bounded by its managers, six of them, each declared here as an
   adapter rather than written into code, so a seventh is a declaration.
@@ -26,6 +26,11 @@
 <!ENTITY STAR.mgr.cargo      "cargo|search|install|120">
 <!ENTITY STAR.mgr.uv         "uv|-|pip install|120">
 <!ENTITY STAR.managers "scoop|chocolatey|bun|vcpkg|cargo|uv">
+<!-- The same six as an enumeration, declared once so an attribute that must
+     name a manager derives from this line rather than copying it. LAW.STAR.1
+     says a seventh manager is one more entity and no new code; it was three
+     separate copies of the names until pass 19 of the 7.0.0 audit. -->
+<!ENTITY % star.managers "(scoop|chocolatey|bun|vcpkg|cargo|uv)">
 <!-- A search subcommand of a single hyphen means the manager installs but does
      not search a registry: bun pm ls lists a project's dependencies and uv pip
      list lists what is installed, so neither could ever return a hit and both
@@ -78,7 +83,7 @@
 <!ELEMENT adopted (#PCDATA)>
 <!ATTLIST adopted
           tool      CDATA #REQUIRED
-          manager   (scoop|chocolatey|bun|vcpkg|cargo|uv) #REQUIRED
+          manager   %star.managers; #REQUIRED
           installed (yes|no|printed) #REQUIRED
           date      CDATA #REQUIRED>
 

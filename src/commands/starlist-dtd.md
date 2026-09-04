@@ -27,7 +27,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   %cc-starlist;
   <!ELEMENT starlist_run (args, probe, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
   <!ATTLIST starlist_run
-            scope  CDATA #FIXED "star"
+            kind   CDATA #FIXED "starlist"
             layers CDATA #REQUIRED>
   <!ELEMENT probe (#PCDATA)>
   <!ATTLIST probe present CDATA #REQUIRED absent CDATA #REQUIRED>
