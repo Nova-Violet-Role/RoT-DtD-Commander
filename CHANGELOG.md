@@ -34,8 +34,8 @@ A machine layer under the installed plugin and a repository layer at `.rot-lists
 
 ### Measured
 
-- `node lib/list.mjs controls`: 45 run, 0 failing
-- `node lib/starlist.mjs controls`: 35 run, 0 failing
+- `node lib/list.mjs controls`: 47 run, 0 failing
+- `node lib/starlist.mjs controls`: 36 run, 0 failing
 - 131 commands, 22 skills, 5 agents; checked 158; 1435 declarations; 46 gate-chain commands
 
 ## 6.0.0 (2026-09-03)

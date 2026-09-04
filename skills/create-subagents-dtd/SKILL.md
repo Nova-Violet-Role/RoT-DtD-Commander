@@ -296,7 +296,7 @@ You are a senior code reviewer specializing in security.
 Tailor instructions to the specific task domain. Don't create generic "helper" subagents.
 
 ❌ Bad: "You are a helpful assistant that helps with code"
-✅ Good: "You are a React component refactoring specialist. Analyze components for hooks best practices, performance anti-patterns, and accessibility issues."
+✅ Good: "You are a React component refactoring specialist. Analyze components for hooks best practices, performance anti-patterns, and accessibility issues."
 
 </principle>
 </system_prompt_guidelines>

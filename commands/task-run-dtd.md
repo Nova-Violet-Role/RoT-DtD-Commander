@@ -257,10 +257,10 @@ argument-hint: [the task name]
      that says nothing, and the Adiutor reads the declaration at Stop
      (LAW.REC.5). -->
 <!ENTITY % command-info-types "record">
-<!-- The choice, consumed where it is declared so it is a reference and not
-     only a default. It is read by the checker when it compares a command's
-     declarations against its prose; nothing at runtime reads it, which the
-     comment claimed until pass 14. -->
+<!-- The choice, consumed where it is declared so the parameter entity has a
+     reference and a command's override is a declaration the contract audit can
+     see. Nothing reads RECORD.info at runtime: passes 13 and 14 each named a
+     reader that does not exist, and pass 15 stopped guessing. -->
 <!ENTITY RECORD.info "no-record-nesting">
 <!ELEMENT no-record-nesting EMPTY>
 <!-- No element wraps the choice: the Adiutor reads the parameter entity
