@@ -438,10 +438,11 @@ argument-hint: "[what you are trying to build, or blank to start from the walk; 
 <!ENTITY STAR.install.recorded "every install is written into the starlist with its date and the answer that authorised it">
 
 <!-- ===== ELEMENTS ===== -->
-<!ELEMENT starlist_run (measured, block+, adopted*, refused*, next_action)>
-<!ATTLIST starlist_run
-          target CDATA #REQUIRED
-          blocks CDATA #REQUIRED>
+<!-- No root is declared here. starlist-dtd.md and starlist-manager-dtd.md
+     each declare their own, and a root declared in both a subset and the
+     command that includes it is declared twice: XML forbids it, the first
+     binds, and the command then answers to a grammar it did not write (found
+     by the first companion pass of 7.0.0). -->
 
 <!ELEMENT measured (#PCDATA)>
 <!ATTLIST measured

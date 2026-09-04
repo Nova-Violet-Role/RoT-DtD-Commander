@@ -17,7 +17,7 @@
 [![License](https://img.shields.io/badge/License-AGPL--3.0_OR_EUPL--1.2-764ba2?style=for-the-badge)](LICENSE)
 
 [![Checker](https://img.shields.io/badge/checked-158_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Contract](https://img.shields.io/badge/contract_audit-1434_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Contract](https://img.shields.io/badge/contract_audit-1433_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
 [![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-29_%2B_18-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Listed on ClaudePluginHub](https://www.claudepluginhub.com/badge/nova-violet-role-rot-dtd-commander)](https://www.claudepluginhub.com/plugins/nova-violet-role-rot-dtd-commander?ref=badge)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
@@ -203,7 +203,7 @@ the hooks.
 
 ## 🕹️ Usage
 
-One hundred and twenty-three commands, in the families the index below lists, every
+131 commands, in the families the index below lists, every
 one opening with its DOCTYPE and closing with its laws. The index is generated
 from the tree by `checker/readme-index.mjs`: the map shows the families, a badge
 jumps to one, and each family expands to its commands; the gate refuses a README
@@ -854,7 +854,7 @@ while the plugin is still registered.
 | armed, the AI_SLOP gate judges every answer at Stop and every Write, Edit, NotebookEdit, commit message, request body and subagent answer before it lands, strict, with a fence or a quoted element as the only escape | `node bin/adiutor.mjs controls` C21 to C29; `node lib/ai-slop.mjs controls` trips the comment lifter, the command parser and the refusal | every push |
 | a scratch is a git worktree that is opened on its own branch, diffed into findings with counts, merged by marked paths or whole, and discarded with its branch | `node lib/scratch.mjs controls`: `11 run, 0 failing`, among them the red-gate revert and the refusal to overwrite newer work | every push |
 | every count the repository publishes (the badges, the tagline, the claims rows, the three manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the checker controls, the declarations | `node checker/counts-sweep.mjs`: `14 places in step`; `--controls` plants a stale badge, a stale count in words and a removed count | every push |
-| the growth ladder is fifteen verbs partitioned into three bands with no overlap and no gap, a possibility keeps one id across runs, a refusal returns only as a reopen, the page grows with the answering, and the version a release publishes is the one its own recognizer computes | `node lib/list.mjs controls`: `19 run, 0 failing` | the lists refuse a mix that would leave a repository unable to build itself, and an entry name that would close its own declaration |
+| the growth ladder is fifteen verbs partitioned into three bands with no overlap and no gap, a possibility keeps one id across runs, a refusal returns only as a reopen, the page grows with the answering, and the version a release publishes is the one its own recognizer computes | the lists refuse a mix that would leave a repository unable to build itself, an entry name that would close its own declaration, and a code class the starlist cannot reach | `node lib/list.mjs controls`: `27 run, 0 failing` | every gate run |
 | `node lib/amplify.mjs controls`: `35 run, 0 failing`, among them a ceiling tripped on purpose, a refusal reopened, a study missing a kind refused, and a manifest version the recognizer disputes | every push |
 | every subset the repository declares is installed, and a version the recognizer disputes is refused | `rdc doctor` row `subsets`: `18 subsets, every one installed` (run against your own installation, not in CI); `node checker/release-notes.mjs --versions`: the recognised class and version printed beside the manifests | every push |
 | a tag `v*` ships the GitHub release with the CHANGELOG section of its version as the notes; a tag that is not package.json's version, a section still in progress, or a release already on the tag ships nothing | the `release` job in `.github/workflows/gate.yml`; `node checker/release-notes.mjs --controls`: `4 run, 0 failing` | on the tag |

@@ -63,6 +63,7 @@ export function places(c) {
     { file: 'README.md', re: /\*(\d+) Claude Code slash commands, (\d+) skills and (\d+) agents/, want: [c.commands, c.skills, c.agents], label: 'the tagline' },
     { file: 'README.md', re: /\| (\d+) commands, (\d+) skills, (\d+) agents carry a DOCTYPE/, want: [c.commands, c.skills, c.agents], label: 'the claims row of the counts' },
     { file: 'README.md', re: /`checked (\d+)  failed 0`/, want: [c.checked], label: 'the claims row of the checker' },
+    { file: 'README.md', re: /^(\d+) commands, in the families/m, want: [c.commands], label: 'the usage sentence' },
     { file: 'README.md', re: /adiutor\.mjs controls\s+# ([a-z-]+) guards;/, want: [c.guards], label: 'the verify line of the guards' },
     { file: 'package.json', re: /(\d+) Claude Code commands/, want: [c.commands], label: 'the package description' },
     { file: 'package.json', re: /(\d+) skills and (\d+) agents/, want: [c.skills, c.agents], label: 'the package description, skills and agents' },
