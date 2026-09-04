@@ -1,0 +1,81 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  regression-extention-retenue.dtd : the contract for lib/regression.mjs.
+
+  Three words, three questions, in the order a release must ask them.
+
+    REGRESSION  what left between two tags, and was a reason recorded
+    EXTENTION   what arrived, and is anything reading it
+    RETENUE     what stayed with no reader, and is the reason it is kept
+                written down
+
+  Written after the v7.0.0 hunt that found nothing. A diff-based detector
+  would have returned green on that release, because v6.0.0..v7.0.0 deleted
+  no file at all: the only regression was a COMMENT that claimed the Adiutor
+  read RECORD.info. Pass 13 invented that reader, pass 14 named 13's reader
+  as nonexistent and invented a second, pass 15 wrote the truth. Three
+  passes, two hallucinated capabilities, and every one of them would have
+  passed a diff.
+
+  So the instrument reads CLAIMS, not diffs. LAW.RER.2 is the whole reason
+  this file exists: a comment that says something reads X is checked against
+  the thing it names, and a reader that does not contain X is a finding.
+
+  This subset uses a conditional section on purpose. lib/dtd.mjs has carried
+  flattenConditionals() since before 7.0.0 and no file in dtd/ ever used it;
+  a resolver nobody exercises is the same defect class this file hunts, so
+  the hunt begins with its own tooling.
+-->
+
+<!ENTITY % rer.strict "INCLUDE">
+
+<!ELEMENT regression_run (scope, finding*, verdict)>
+<!ATTLIST regression_run
+          from CDATA #REQUIRED
+          to   CDATA #REQUIRED>
+
+<!ELEMENT scope (#PCDATA)>
+<!ATTLIST scope
+          files    CDATA #REQUIRED
+          removed  CDATA #REQUIRED
+          arrived  CDATA #REQUIRED>
+
+<!-- One finding. `kind` is which of the three questions it answers.
+     `subject` is the declaration, entity or capability it is about.
+     `where` is the file and line it was read from, so a reader can argue. -->
+<!ELEMENT finding (#PCDATA)>
+<!ATTLIST finding
+          kind       (regression|extention|retenue) #REQUIRED
+          subject    CDATA #REQUIRED
+          where      CDATA #REQUIRED
+          severity   (high|medium|low) #REQUIRED
+          confidence (measured|reasoned|guessed) #REQUIRED>
+
+<!ELEMENT verdict EMPTY>
+<!ATTLIST verdict
+          value    (clean|findings) #REQUIRED
+          findings CDATA #REQUIRED>
+
+<!ENTITY RER.verdict.clean    "REGRESSION VERDICT: clean">
+<!ENTITY RER.verdict.findings "REGRESSION VERDICT: findings">
+
+<!-- The shapes a capability claim takes in a comment. A claim names a
+     reader and a subject; the reader is a path or a module name this
+     repository can open. -->
+<!ENTITY RER.claim.reads   "a comment saying that some named thing reads, checks or consumes a named declaration">
+<!ENTITY RER.claim.reader  "the file the claim names, which must exist and must contain the subject">
+<!ENTITY RER.vestigial     "a declaration that survives with no reader and carries the reason it is kept">
+
+<![ %rer.strict; [
+<!-- Strict: a claim whose reader cannot be opened is a high finding rather
+     than a note. Set rer.strict to IGNORE before the include to downgrade
+     every claim finding to low, which is what a survey run wants. -->
+<!ENTITY RER.claim.unresolved.severity "high">
+]]>
+
+<!ENTITY LAW.RER.1 "Every declaration that left the tree between the two tags is listed with the commit that removed it and the reason recorded in that commit body; a removal whose commit body does not mention it is a regression finding, and a release that deleted no file still runs this arm because a declaration can leave a file that stays.">
+<!ENTITY LAW.RER.2 "A capability a comment asserts is checked against the reader it names: the claim RER.claim.reads must resolve to RER.claim.reader, that file must exist, and it must contain the subject; a claim naming a reader that does not contain the subject is a finding of kind regression at RER.claim.unresolved.severity, because a comment is documentation and a wrong one is a defect that ships.">
+<!ENTITY LAW.RER.3 "Retenue: a declaration that survives with no reader anywhere is reported as RER.vestigial, and it is a finding only when no comment within the twelve lines above it gives the reason it is kept; RECORD.info is the reference case and its recorded reason is that the parameter entity command-info-types needs a reference.">
+<!ENTITY LAW.RER.4 "A mechanic this codebase implements and never exercises is a retenue finding of its own: code that no caller reaches cannot be trusted when a release finally reaches it, and flattenConditionals in lib/dtd.mjs is the case that named this law.">
+<!ENTITY LAW.RER.5 "The run ends with exactly one verdict line, RER.verdict.clean or RER.verdict.findings, and a verdict of findings carries the count; a run that names findings and then reports clean is a broken instrument and exits 2.">

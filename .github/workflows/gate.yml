@@ -72,6 +72,8 @@ jobs:
         run: node lib/scratch.mjs controls
       - name: amplify controls (the ladder, the bands, the ids, the paging, the state record, the release recognizer, a ceiling tripped on purpose)
         run: node lib/amplify.mjs controls
+      - name: regression, extention, retenue controls (a lying claim, a negated one, a vestigial declaration reasoned above and below, a real removal, a rewrite that is not one)
+        run: node lib/regression.mjs controls
       - name: every engine a shipped command invokes is a file the installer writes (two families once shipped without theirs)
         run: node checker/engines-sweep.mjs && node checker/engines-sweep.mjs --controls
       - name: the About and the three manifest descriptions say what the tree measures (the About sat two majors behind because nothing read it)
@@ -94,6 +96,8 @@ jobs:
         run: bash checker/tracked-sweep.sh
       - name: the README index names every command, skill and agent of the tree (generated; its controls)
         run: node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls
+      - name: no comment claims a reader that does not read it, and no declaration survives unread without its reason
+        run: node lib/regression.mjs claims && node lib/regression.mjs retenue
       - name: every published count equals the tree (badges, tagline, claims rows, the three manifests; its controls)
         run: node checker/counts-sweep.mjs && node checker/counts-sweep.mjs --controls
       - name: one version everywhere (package.json, plugin.json, marketplace.json, the changelog, RELEASE.md)

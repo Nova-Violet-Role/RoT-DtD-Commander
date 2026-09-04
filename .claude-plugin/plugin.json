@@ -1,6 +1,6 @@
 {
   "name": "rot-dtd-commander",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "RoT DtD Commander, the creator kit: 131 Claude Code commands, 22 skills and 5 agents that carry their own DTD grammar, verdict vocabulary, laws and trust boundary, checked by rules C1 to C15 against the prose beside them. Creators for prompts and meta-prompts over eight schematics, and for skills, hooks, commands, subagents, plans, MCP servers, workflow files, tasks, filetypes and dorks, each auditing what it wrote in the foreground. The Adiutor is a Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it, with the Commander-Adiutor monitor beside it; a plain install arms nothing. Armed, the AI_SLOP gate judges every answer, file, commit message, request body and subagent answer before it lands. The codebase growth family walks any codebase on a declared fifteen-verb ladder and names the release its findings amount to, and the version a release publishes is the one its own recognizer computes (1440 declarations, thirty Adiutor guards and eighteen checker controls, every claim measured in CI).",
   "author": {
     "name": "Saimonokuma",

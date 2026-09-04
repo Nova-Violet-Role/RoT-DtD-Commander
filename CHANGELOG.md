@@ -7,6 +7,76 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 7.1.0 (2026-09-05)
+
+### The regression that never happened
+
+The release opened as a hunt for what v7.0.0 removed. It removed nothing:
+`git diff --diff-filter=D --name-only v6.0.0 v7.0.0` returns zero rows, and
+`git log -S 'RECORD.info' -- bin/adiutor.mjs` returns zero commits, so the
+Adiutor never held the string it was remembered reading. Pass 13 invented that
+reader, pass 14 named 13's reader as one that does not exist and invented a
+second, pass 15 wrote the truth. The capability was never removed because it
+never existed; a false claim about it was, twice.
+
+### Regression, Extention, Retenue
+
+So the new instrument reads claims, not diffs. A diff-based detector would have
+returned green on the only regression v7.0.0 actually had.
+
+- `checker/regression-extention-retenue.dtd` and `lib/regression.mjs`, four verbs:
+  `claims` opens the reader a comment names and reports the ones that lie,
+  `retenue` reports a declaration nothing reads whose reason is written down
+  nowhere near it, `diff <from> <to>` reports a declaration that left the tree
+  with no commit body naming it, and `controls` plants all of it on purpose.
+- Both arms were caught producing findings that were not findings, and both
+  fixes are controls now: a rewritten declaration shows its old text on a minus
+  line and is not a removal, and a reason can be recorded below a declaration as
+  readily as above it.
+- The DTD uses a conditional section, the first in this repository to do so.
+  `lib/dtd.mjs` has carried `flattenConditionals()` since before 7.0.0 with no
+  file in `dtd/` ever reaching it; a resolver nobody exercises is the defect
+  class this instrument hunts, so LAW.RER.4 names it and the hunt starts at home.
+
+### The gate that could not run on macOS
+
+`stat -c %s` is GNU. `gate.yml` and `tapes.yml` both used it, so adding
+`macos-latest` to the matrix would have failed before reaching a single checker.
+Both are `$(( $(wc -c < "$g") ))` now; the arithmetic wrapper is load bearing,
+because BSD's `wc` prints leading spaces where `stat` printed none.
+
+### The loop that only the user could end
+
+`LAW.ASK.3` refused `more` after the rounds ran out, because `ask.rounds` is an
+enumeration a checker can read. `add` and `impactful` had no such enumeration and
+no bound at all, so a guided intake ended only when the user chose to end it.
+`ask.adds` and `ask.impactfuls` are enumerations now, the gate carries the
+re-entries it has spent, and `LAW.ASK.15` says what happens when all three are
+spent. A bound that lives only in prose is not a bound.
+
+The ask-me family also declared no record, which is why it wrote no numbered
+file — not because it was the only command that fails to, but because 125 of 130
+declare none. All three now declare one under `artifacts/`.
+
+### Read before written
+
+`cc-resources/.dtd-file-examples` is 2219 files, 767 of them DTD-family. The
+census behind this release: parameter entities in 618, ID/IDREF in 214, a
+parameter entity as an ATTLIST type in 197 (DocBook 4.3 `dbpoolx.mod` spells it
+`colsep %yesorno; #IMPLIED`, which is why the gate's new attributes are written
+that way), conditional sections in 90, NOTATION in 13, and NDATA in none of them.
+
+NDATA is standard XML — a stock validator accepts our internal subset, which is
+the whole point of it. What has no precedent in DocBook, DITA, TEI, JATS, MathML,
+SVG, XHTML, OpenDocument or DAISY is using it to classify trust rather than file
+format. Rule C7 is the only instrument anywhere that reads it that way.
+
+### Measured
+
+- `node lib/regression.mjs controls`: 10 run, 0 failing
+- `node checker/readme-index.mjs --controls`: 6 run, 0 failing
+- `node checker/contract-audit.mjs`: 1440 declarations, 0 unused, 0 law gaps
+- 131 commands, 22 skills, 5 agents; checked 158; 1440 declarations; 49 gate-chain commands
 ## 7.0.0 (2026-09-05)
 
 ### The lists

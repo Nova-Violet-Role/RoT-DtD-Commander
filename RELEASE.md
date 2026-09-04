@@ -18,6 +18,21 @@
 
 ---
 
+## v7.1.0 — the claim, not the diff
+
+A patch that began as a regression hunt and found none. v7.0.0 deleted no file;
+what it removed was a comment claiming the Adiutor read something it never read.
+So this release ships an instrument that checks claims against the readers they
+name, bounds a gate loop that only the user could end, and fixes the two CI steps
+that could never have run on macOS.
+
+- **Regression, Extention, Retenue** — `lib/regression.mjs`, ten controls, three
+  arms. Both arms were caught producing false findings during the build; both
+  fixes are controls now.
+- **The gate loop** — `add` and `impactful` are enumerations, like `more` always was.
+- **macOS** — `stat -c %s` is gone from both workflows.
+- **The README** — 945 lines to 833, the generated index folded into a spoiler,
+  the camera tutorial retired.
 ## v7.0.0 — what a project may contain
 
 Eight commands that declare what a repository may hold, what it must ask about

@@ -15,6 +15,9 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+const NLC = String.fromCharCode(10);
 import { fileURLToPath } from 'node:url';
 
 import { versionHolds } from '../lib/amplify.mjs';
@@ -28,7 +31,16 @@ function amplifyState(root) {
   // marked is work this release kept; done is work it kept and finished.
   // Reading only marked made the gate red the moment a release closed its own
   // rows, which is the next step of the lifecycle the DTD declares.
-  const kept = [...text.matchAll(/^\| [0-9a-f]{8} \| (?:gap|idea) \| [a-z]+ \| (?:marked|done) \| ([0-9]+) \|/gm)].map((m) => ({ verb: Number(m[1]) }));
+  // But reading both across the WHOLE file made every release after a major a
+  // major too: 7.0.0 recorded verb 15 and nothing could ever compute lower
+  // again. The run column, appended in 7.1.0, says which release a row belongs
+  // to, and kept is this run's rows. A record with no run column reads run 0
+  // and, when the head names no run either, the whole file is one release,
+  // which is the pre-7.1.0 behaviour exactly.
+  const headRun = Number((/^- run: ([0-9]+)$/m.exec(text) || [, '0'])[1]);
+  const kept = [...text.matchAll(/^\| [0-9a-f]{8} \| (?:gap|idea) \| [a-z]+ \| (?:marked|done) \| ([0-9]+) \| [0-9]* \| [^|]*? \|(?: ([0-9]*) \|)?$/gm)]
+    .map((m) => ({ verb: Number(m[1]), run: Number(m[2] || 0) }))
+    .filter((r) => r.run === headRun);
   if (!from || !kept.length) return null;
   return { from: from.trim(), kept };
 }
@@ -133,6 +145,46 @@ function controls() {
     `trip: a stray plugin.json version and a missing RELEASE.md heading are both reported: ${stray.join('; ')}`);
   const wrongTag = versionFindings(sound, 'v1.0.1');
   say(wrongTag.length === 1 && /the tag v1\.0\.1 is not v1\.0\.0/.test(wrongTag[0]), `trip: a tag that is not the version is refused: ${wrongTag[0]}`);
+
+  // LAW.AMP.14 could not be satisfied twice. kept was every marked-or-done row
+  // in the file, so once 7.0.0 recorded verb 15 the recognizer computed major
+  // for every release after it and no lower number could ever be reached. The
+  // run column decides which release a row belongs to. Both directions here:
+  // the closed row must not reach this run, and a record written before the
+  // column existed must still read as one release, which is what it was.
+  const stateDir = mkdtempSync(join(tmpdir(), 'rn-'));
+  const writeState = (lines) => {
+    mkdirSync(join(stateDir, 'artifacts', 'amplify-codebase'), { recursive: true });
+    writeFileSync(join(stateDir, 'artifacts', 'amplify-codebase', 'state.md'), lines.join(NLC), 'utf8');
+  };
+  try {
+    writeState([
+      '- run: 3', '- from: 7.0.0', '',
+      '| id | class | layer | verdict | verb | refused_at | why | run |',
+      '|---|---|---|---|---|---|---|---|',
+      '| aaaaaaaa | gap | form | done | 15 |  | the metamorphosis, shipped two releases ago | 2 |',
+      '| bbbbbbbb | gap | form | marked | 3 |  | an amelioration, this run | 3 |',
+      '',
+    ]);
+    const s = amplifyState(stateDir);
+    const verbs = (s ? s.kept : []).map((k) => k.verb);
+    say(s !== null && verbs.length === 1 && verbs[0] === 3,
+      `trip: a closed release does not reach this run, so a major does not repeat for ever: kept ${JSON.stringify(verbs)} at ${s ? s.from : '(unread)'}`);
+
+    // the shape written before the column existed: seven columns, no head run
+    writeState([
+      '- from: 7.0.0', '',
+      '| id | class | layer | verdict | verb | refused_at | why |',
+      '|---|---|---|---|---|---|---|',
+      '| aaaaaaaa | gap | form | done | 15 |  | written before the run column existed |',
+      '| bbbbbbbb | gap | form | marked | 3 |  | likewise |',
+      '',
+    ]);
+    const old = amplifyState(stateDir);
+    const oldVerbs = (old ? old.kept : []).map((k) => k.verb).sort((a, b) => b - a);
+    say(old !== null && oldVerbs.length === 2 && oldVerbs[0] === 15,
+      `a record with no run column still reads as one release: kept ${JSON.stringify(oldVerbs)}`);
+  } finally { rmSync(stateDir, { recursive: true, force: true }); }
   console.log(`release-notes controls: ${ran} run, ${fail} failing`);
   return fail === 0;
 }
