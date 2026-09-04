@@ -1633,8 +1633,12 @@ The numbered, append-only field discipline for any file one session writes and a
      that says nothing, and the Adiutor reads the declaration at Stop
      (LAW.REC.5). -->
 <!ENTITY % command-info-types "record">
+<!-- The choice, consumed where it is declared so it is a reference and not
+     only a default: the Adiutor reads RECORD.info at Stop to learn whether a
+     command writes a record of its own (pass 13). -->
+<!ENTITY RECORD.info "%command-info-types;">
 <!ELEMENT no-record-nesting EMPTY>
-<!ELEMENT produces ((%command-info-types;)*)>
+<!-- No element wraps the choice: the Adiutor reads the parameter entity itself at Stop. -->
 
 <!-- ===== the body of a record file: a revision history ===== -->
 <!-- The frontmatter carries the numbered fields; the body is one revision per
@@ -1938,3 +1942,22 @@ The AI_SLOP contract, the voice gate: slop_report with its verdict, hits and mea
 <!ENTITY LAW.SLOP.5 "A slop verdict is measured by lib/ai-slop.mjs and rendered with every slop_measure and its bound; a verdict without its numbers was not given.">
 <!ENTITY LAW.SLOP.6 "An answer under SLOP.min_words is judged on the ban list alone; the rhythm, verb and rotation measures need a body to measure.">
 ```
+
+## cc-list.dtd
+
+The six lists a repository may hold: three classes (black, gray, white) over two
+scopes (file, code), stored one file per list under `.rot-lists/` in two layers,
+the repository overriding the machine. Declares `LIST.classes`, `LIST.scopes`,
+`LIST.dir`, `LIST.files`, the markdown interlock (`LIST.md.default`,
+`LIST.md.condition`), the gray vocabulary (`GRAY.question`, `GRAY.use`,
+`GRAY.explain`), `LIST.refusal` and `LAW.LIST.1` to `LAW.LIST.8`. Read by
+`lib/list.mjs`; the eight list commands are held to it by `familyHolds()`.
+
+## cc-starlist.dtd
+
+What the harness may reach, and the six package managers that reach it, each an
+entity rather than a branch in code (`STAR.mgr.*`, `STAR.managers`). Declares
+the bounds (`STAR.ceiling.search`, `STAR.ceiling.install`), where the list lands
+(`STAR.dir`, `STAR.file`, `STAR.session`), the uncapped intake (`STAR.block`,
+`STAR.per_round`, `STAR.uncapped`), the install contract (`STAR.install.*`) and
+`LAW.STAR.1` to `LAW.STAR.6`. Read by `lib/starlist.mjs`.

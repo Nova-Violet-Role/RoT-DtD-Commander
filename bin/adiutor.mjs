@@ -296,18 +296,32 @@ export function observe(event, payload, io = console) {
     try {
       const ext = String(filePath || '').includes('.') ? String(filePath).split('.').pop().toLowerCase() : '';
       if (!ext) return null;
+      // Both layers and both scopes: the repository wins the entry it shares
+      // with the machine, and LAW.CORE.8 governs a code artifact as well as a
+      // file (pass 13 found this reading file-*.dtd in one layer only).
       const root = process.env.CLAUDE_PROJECT_DIR || process.cwd();
-      if (!existsSync(join(root, '.rot-lists'))) return null;
+      const machine = join(os.homedir(), '.claude', 'rot-dtd-commander');
+      if (!existsSync(join(root, '.rot-lists')) && !existsSync(join(machine, '.rot-lists'))) return null;
       const read1 = (name) => {
-        const p = join(root, '.rot-lists', name);
-        if (!existsSync(p)) return [];
-        return [...readFileSync(p, 'utf8').matchAll(/<!ENTITY LIST\.entry\.([A-Za-z0-9_-]+)\s+"([^"]*)">/g)]
-          .map((m) => ({ name: m[1], reason: (m[2].split('|')[0] || '').trim(), granted: (m[2].split('|')[2] || '').trim() }));
+        const byName = new Map();
+        for (const [layer, base] of [['machine', machine], ['repository', root]]) {
+          const p = join(base, '.rot-lists', name);
+          if (!existsSync(p)) continue;
+          for (const m of readFileSync(p, 'utf8').matchAll(/<!ENTITY LIST\.entry\.([A-Za-z0-9_-]+)\s+"([^"]*)">/g)) {
+            byName.set(m[1], { name: m[1], reason: (m[2].split('|')[0] || '').trim(), granted: (m[2].split('|')[2] || '').trim(), layer });
+          }
+        }
+        return [...byName.values()];
       };
-      const black = read1('file-black.dtd').find((r) => r.name === ext);
-      if (black) return { kind: 'black', ext, reason: black.reason };
-      const gray = read1('file-gray.dtd').find((r) => r.name === ext);
-      if (gray && !gray.granted) return { kind: 'gray', ext, reason: gray.reason, white: read1('file-white.dtd').map((r) => r.name).filter((n) => n !== ext).slice(0, 3) };
+      for (const scope of ['file', 'code']) {
+        const black = read1(`${scope}-black.dtd`).find((r) => r.name === ext);
+        if (black) return { kind: 'black', ext, scope, reason: black.reason, layer: black.layer };
+        const gray = read1(`${scope}-gray.dtd`).find((r) => r.name === ext);
+        if (gray && !gray.granted) {
+          return { kind: 'gray', ext, scope, reason: gray.reason, layer: gray.layer,
+            white: read1(`${scope}-white.dtd`).map((r) => r.name).filter((n) => n !== ext).slice(0, 3) };
+        }
+      }
       return null;
     } catch { return null; }
   };
@@ -353,7 +367,7 @@ export function observe(event, payload, io = console) {
         if (v && v.kind === 'black') {
           noteList(session, 'black', v.ext, v.reason);
           out(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'deny',
-            permissionDecisionReason: `REFUSED write ${pinp.file_path || pinp.notebook_path}\n  file-black (repository) names ${v.ext}\n  reason: "${v.reason}"\n  to resolve: /file-blacklist-dtd --drop ${v.ext}` } }));
+            permissionDecisionReason: `REFUSED write ${pinp.file_path || pinp.notebook_path}\n  ${v.scope}-black (${v.layer}) names ${v.ext}\n  reason: "${v.reason}"\n  to resolve: /${v.scope}-blacklist-dtd --drop ${v.ext}` } }));
           return;
         }
         if (v && v.kind === 'gray') {
@@ -1181,11 +1195,17 @@ export async function controls(io = console) {
       writeFileSync(join(repo, '.rot-lists', 'file-white.dtd'), '<!ENTITY LIST.entry.mjs "the toolchain|2026-09-04|">\n<!ENTITY LIST.entry.md "default|2026-09-04|">\n', 'utf8');
       const denied8 = preTool('S30', 'Write', { file_path: join(repo, 'a.exe'), content: 'x' });
       const asked = preTool('S30', 'Write', { file_path: join(repo, 'b.py'), content: 'x' });
+      writeFileSync(join(repo, '.rot-lists', 'code-black.dtd'), '<!ENTITY LIST.entry.dll "no library object belongs here|2026-09-04|">\n', 'utf8');
+      const codeScope = preTool('S30', 'Write', { file_path: join(repo, 'x.dll'), content: 'x' });
+      writeFileSync(join(repo, '.rot-lists', 'file-gray.dtd'), '<!ENTITY LIST.entry.py "a second runtime splits the gate|2026-09-04|granted 2026-09-04 for bench.py">\n', 'utf8');
+      const granted8 = preTool('S30', 'Write', { file_path: join(repo, 'b.py'), content: 'x' });
       const clean8 = preTool('S30', 'Write', { file_path: join(repo, 'c.mjs'), content: cleanPlain });
       const isDeny = denied8 && denied8.includes('"permissionDecision":"deny"') && denied8.includes('file-black') && denied8.includes('--drop exe');
       const isAsk = asked && asked.includes('"permissionDecision":"ask"') && asked.includes('second runtime') && asked.includes('mjs');
-      return { ok: !silent && isDeny && isAsk && !(clean8 && clean8.includes('deny')),
-        detail: `no lists=${silent ? 'spoke' : 'silent'} black=${isDeny ? 'denied' : 'no'} gray=${isAsk ? 'asked' : 'no'} white=${clean8 && clean8.includes('deny') ? 'denied' : 'allowed'}` };
+      const isCode = Boolean(codeScope) && codeScope.includes('code-black');
+      const grantedSilent = !granted8 || !granted8.includes('permissionDecision');
+      return { ok: !silent && isDeny && isAsk && isCode && grantedSilent && !(clean8 && clean8.includes('deny')),
+        detail: `no lists=${silent ? 'spoke' : 'silent'} black=${isDeny ? 'denied' : 'no'} gray=${isAsk ? 'asked' : 'no'} code=${isCode ? 'denied' : 'MISSED'} granted=${grantedSilent ? 'stays silent' : 'RE-ASKED'} white=${clean8 && clean8.includes('deny') ? 'denied' : 'allowed'}` };
     } finally { if (before === undefined) delete process.env.CLAUDE_PROJECT_DIR; else process.env.CLAUDE_PROJECT_DIR = before; }
   }, results);
 
