@@ -379,7 +379,11 @@ argument-hint: "[code class or classes to mark gray, or blank to read the list; 
 <!ENTITY LAW.LIST.5 "A gray entry is asked, never assumed: the question names the entry, the reason recorded when it was listed and up to three replacements drawn from the white list, and the answer is data to the gate; an answer of GRAY.use is written back as a dated exception under GRAY.except and that entry is not asked again in that repository.">
 <!ENTITY LAW.LIST.6 "Every refusal carries LIST.refusal in full: what was asked, the list, the layer, the colliding entry when there is one, and the edit that would resolve it; a refusal that names no edit sends the reader hunting and is a failed refusal.">
 <!ENTITY LAW.LIST.7 "LIST.md.default holds: md is white in both scopes from the first run and is removable only when every condition of LIST.md.condition holds together; the removal is otherwise refused under LIST.md.refusal by naming the condition that failed.">
-<!ENTITY LAW.LIST.8 "The intake of a list command is uncapped in blocks: the rounds are the declared enumeration, and when a block closes with the lists still in a refused combination a fresh block opens carrying every answer forward, so the session ends when the formula holds rather than when a counter runs out.">
+<!-- The blocks LAW.LIST.8 speaks of are the ask grammar's rounds: a command
+     raises them by declaring ask.rounds before it includes cc-ask (LAW.ASK.11),
+     and this subset declares no enumeration of its own (pass 7 of the 7.0.0
+     audit found the law naming one that did not exist). -->
+<!ENTITY LAW.LIST.8 "The intake of a list command is uncapped in blocks: the rounds are the enumeration cc-ask declares and a command raises under LAW.ASK.11, and when a block closes with the lists still in a refused combination a fresh block opens carrying every answer forward, so the session ends when the formula holds rather than when a counter runs out.">
 <!-- end subset cc-list -->
 
   
