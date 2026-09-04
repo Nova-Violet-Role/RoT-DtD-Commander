@@ -7,7 +7,7 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
-## 7.0.0 (2026-09-04)
+## 7.0.0 (2026-09-05)
 
 ### The lists
 
