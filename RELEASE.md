@@ -56,7 +56,7 @@ tree with no `.rot-lists/` directory has no lists, and `LAW.CORE.8` asks
 nothing. The first entry written is the moment the rules begin.
 
 **Measured.** `node lib/list.mjs controls` 44 run, 0 failing;
-`node lib/starlist.mjs controls` 30 run, 0 failing; 131 commands, 22 skills,
+`node lib/starlist.mjs controls` 33 run, 0 failing; 131 commands, 22 skills,
 5 agents; checked 158; 1433 declarations, 0 unused, 0 law gaps.
 
 ## v6.0.0 — the version stops being typed

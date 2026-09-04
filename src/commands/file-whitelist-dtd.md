@@ -94,7 +94,7 @@ Render the `file_whitelist_run` root declared in the DOCTYPE as the markdown bel
 
 - known: [slots the argument and the walk filled]
 - gaps: [slots asked about]
-- round 1 of 3: [headers] answered [labels or Other text]
+- round 1 of 8: [headers] answered [labels or Other text]
 - gate: [start|more|add|impactful] (round N)
 
 ### 🟩 Entries
