@@ -121,6 +121,25 @@ jobs:
           bad=$(git ls-files -s bin/ checker/*.sh | grep -v '^100755' || true)
           if [ -n "$bad" ]; then echo "$bad"; exit 1; fi
           echo "ok: every script is executable in the index"
+      - name: the two hosted badges are a fresh render, and their guards trip
+        run: node checker/badges.mjs --check && node checker/badges.mjs --controls
+      - name: the hosted-plugin Guard trips every one of its own controls
+        run: node checker/pack-claude-ai.mjs --controls
+      - name: every hosted candidate builds and passes H0 to H12
+        run: |
+          # The wrapped candidates were the control for a manifest rule that an
+          # upload falsified on 2026-09-05: dotbin-wrapped installed on both
+          # surfaces. H2 was withdrawn and the step that required these to FAIL
+          # went with it. Every candidate is now required to pass.
+          node checker/pack-claude-ai.mjs --all --out "$RUNNER_TEMP/hosted"
+          node checker/pack-claude-ai.mjs --check "$RUNNER_TEMP"/hosted/*.zip
+      - name: the proven combination builds under its release name
+        run: |
+          node checker/pack-claude-ai.mjs --out "$RUNNER_TEMP/canon"
+          ls -l "$RUNNER_TEMP/canon"
+          v=$(node -e 'process.stdout.write(require("./.claude-plugin/plugin.json").version)')
+          test -f "$RUNNER_TEMP/canon/claude_ai_cowork_rot_dtd_commander_${v}.zip"
+          echo "ok: the release asset name follows the manifest version"
 
   install-roundtrip:
     runs-on: ubuntu-latest
@@ -194,3 +213,49 @@ jobs:
           echo "http $code"
           test "$code" = "201" || { cat response.json; exit 1; }
           node -e 'const r=require("./response.json");console.log("shipped", r.tag_name, r.name, r.html_url)'
+
+      - name: attach the archive claude.ai and Claude Cowork accept
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API: ${{ github.api_url }}/repos/${{ github.repository }}
+          UPLOADS: ${{ github.server_url == 'https://github.com' && 'https://uploads.github.com' || github.api_url }}/repos/${{ github.repository }}
+        run: |
+          auth=(-H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28")
+          # The packer refuses to name a canonical archive before one combination
+          # has been uploaded and accepted (exit 2). Until then every candidate is
+          # attached and the run is annotated, so a release never silently ships
+          # an archive nobody has proved installs.
+          set +e
+          node checker/pack-claude-ai.mjs --out dist
+          rc=$?
+          set -e
+          if [ "$rc" = "2" ]; then
+            echo "::warning title=hosted plugin::no combination is recorded in checker/hosted-plugin.json yet; attaching every candidate instead of one canonical archive"
+            node checker/pack-claude-ai.mjs --all --out dist
+          elif [ "$rc" != "0" ]; then
+            exit "$rc"
+          fi
+          # Two checksum artifacts beside the archive. GitHub already attaches
+          # its own Source code (zip) and (tar.gz) with digests; these cover the
+          # asset GitHub did not build, so a downloader can verify the one file
+          # that matters without trusting the release page.
+          ( cd dist && for z in *.zip; do sha256sum "$z" > "$z.sha256"; done && sha256sum *.zip > SHA256SUMS )
+          ls -l dist
+          cat dist/SHA256SUMS
+          rel=$(curl -s "${auth[@]}" "$API/releases/tags/$GITHUB_REF_NAME")
+          id=$(node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);if(!r.id){console.error(s);process.exit(1)}console.log(r.id)})' <<< "$rel")
+          for z in dist/*.zip dist/*.sha256 dist/SHA256SUMS; do
+            n=$(basename "$z")
+            # 422 is what the API answers for an asset already on the release.
+            # Re-running a release must not fail on work already done, so 201
+            # and 422 are both success and anything else is not.
+            case "$n" in *.zip) ct=application/zip ;; *) ct=text/plain ;; esac
+            code=$(curl -s -o up.json -w '%{http_code}' -X POST "${auth[@]}" -H "Content-Type: $ct" "$UPLOADS/releases/$id/assets?name=$n" --data-binary @"$z")
+            echo "$n http $code"
+            case "$code" in
+              201) : ;;
+              422) echo "asset $n already on the release: left alone" ;;
+              *) cat up.json; exit 1 ;;
+            esac
+          done
+          echo "attached $(ls dist/ | wc -l) file(s) to $GITHUB_REF_NAME (archive, per-file .sha256, SHA256SUMS)"
