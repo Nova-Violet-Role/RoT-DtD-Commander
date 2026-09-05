@@ -572,165 +572,91 @@ flowchart LR
 <details>
 <summary><b>The families, in prose</b> &mdash; what each group is for and when to reach for it</summary>
 
-**The 5.0.0 families** (each with its laws in the CHANGELOG): the creators
-(`/create-plugin-dtd`, `/create-moe-dtd`, `/create-router-dtd`,
-`/create-ot-variants-dtd`, `/create-db-dtd`, `/create-monitor-dtd`,
-`/create-mcp-dtd`, `/create-workflowjson-dtd`, and the amplified
-`/create-agent-skill-dtd`, `/create-hook-dtd`, `/create-slash-command-dtd`,
-`/create-subagent-dtd`, `/create-plan-dtd`), the prompt creators per
-schematic (`/create-prompt-<schematic>-dtd` and
-`/create-meta-prompt-<schematic>-dtd` for callout, heredoc, yaml, nt, xml,
-polyglot, alarm and polyalarm, with `/create-prompt-dtd` and
-`/create-meta-prompt-dtd` as the routers), the asking family
-(`/ask-me-many-questions-dtd`, `/ask-me-preview-dtd`,
-`/brainstorm-meta-clear-section-dtd`, the four `/coin-flip*-dtd`), the
-repository commands (`/git-gh-amplification-dtd`, `/repo-git-scalar-dtd`,
-`/repo-creativity-askingstorm-dtd`), the tasks family (`/create-task-dtd`,
-`/audit-tasks-dtd`, `/create-workflow-tasks-dtd`, `/task-run-dtd`,
-`/task-handoff-dtd`), the file types (`/create-filetype-<schematic>-dtd`
-with `/create-filetype-dtd` as the router), the dorks
-(`/create-dork-search-dtd`, `/create-dork-local-dtd`), and the audits that
-run in the foreground (`/audit-skill-dtd`, `/audit-slash-command-dtd`,
-`/audit-subagent-dtd`, and since 5.1.0 `/ai-slop-dtd`, the hand-run form of the
-AI_SLOP hook gate). Every question of every one of them names its
-variant: select, check, elaborate or mark.
+Fourteen families, in the order the index lists them. The catalogue above carries
+every name and what it does; this says what each group is *for*, and the moment
+you would reach for it.
 
-**Thinking models** (the argument, or the current discussion): `/pareto-dtd`,
-`/swot-dtd`, `/5-whys-dtd`, `/10-10-10-dtd`, `/eisenhower-matrix-dtd`,
-`/occams-razor-dtd`, `/inversion-dtd`, `/one-thing-dtd`,
-`/opportunity-cost-dtd`, `/via-negativa-dtd`, and the two that reason with
-ids: `/first-principles-dtd` (every assumption has an origin and a verdict;
-the rebuilt conclusion names the truths it stands on) and `/second-order-dtd`
-(every effect has an order, a cause, a sign, a horizon and a confidence; loops
-are named).
+**Thinking models** — twelve classical decision frames, each rendered as a
+grammar rather than a prompt: a Pareto answer must name its vital few and its
+trivial many, a five-whys answer must reach a cause it can act on. Reach for one
+when you already know the shape of the thinking you want and would rather not
+improvise its structure. Two of them reason with identifiers, so an assumption
+and the conclusion standing on it can be traced back to each other.
 
-**The Phantom Books shelf**, nineteen commands each drawing one structure from
-one book, and `/phantom-dtd` that routes a problem to the shelf: `/tetralemma-dtd` (four corners, then what the claim depends on),
-`/loci-dtd` (a memory palace for a codebase or a handoff), `/babel-dtd` and
-`/catalog-dtd` (enumerate a finite space; verify an index both ways),
-`/count-the-library-dtd` (size a space before searching it), `/goetia-dtd`
-(the agents actually installed, each with office, seal and bound),
-`/clean-unclean-dtd` (taint tracking with a rite that is proven to fire),
-`/eleusis-dtd` (progressive disclosure with gates that can be failed),
-`/voluspa-dtd` (the end first, then the stanzas back to now),
-`/havamal-dtd` (sayings that survive without their context),
-`/atharvan-dtd` (a charm and a rite per remedy), `/sutra-dtd` (every shortcut
-with its domain and a tried counterexample), `/wu-wei-dtd` (the do-nothing
-branch costed), `/water-dtd` (constraints marked hard, soft or assumed; the
-course through yield points), `/witnesses-dtd` (seen versus inferred),
-`/four-branches-dtd` (one change told by user, operator, attacker,
-maintainer), `/redaction-dtd` (two accounts, classified variants, the
-archetype), `/sapiential-dtd` (clever against wise), `/formula-dtd` (every
-number re-derived from the executable), and `/phantom-dtd`, which routes a
-problem to the right shelf.
+**Research** — nine commands that gather evidence and save a dated report under
+`artifacts/research/`. They share one grammar: a strategic summary first, named
+sections in a fixed order, and every claim marked measured, reasoned or guessed,
+where *measured* requires something this session actually ran or read. Reach for
+these when the answer must survive being re-read next month.
 
-**Codebase growth** (5.2.0, three commands on one fifteen-verb ladder declared
-in `cc-amplify.dtd`): `/amplify-codebase-dtd` 🌱 owns tweak, enrich,
-ameliorate, amplification and magnify; `/enhance-codebase-dtd` 🪴 owns
-heighten, promote, cultivate, enhancement and upgrade; `/overhaul-codebase-dtd`
-🦋 owns elevation, intensification, evolve, overhaul and metamorphosis. Each
-walks whatever codebase it is pointed at through the layers that codebase
-declares, running every instrument the tree already carries before it reads a
-file by hand, then exposes what could be done as two declared classes: a gap is
-measured and names the instrument and path that show it, an idea is reasoned or
-guessed and names the law, entity or file it would add. The generator pages four
-per round with the unshown counted beside them, the intake asks five rounds of
-four, and a state record under `artifacts/amplify-codebase/` keeps every
-possibility under an id that survives between runs, so a refusal is never
-offered twice and the next run continues where the last stopped. It closes by
-naming the release the kept work amounts to (major, mid, minor, or an alpha,
-beta or pre stage) and the next verb up the ladder with the command that owns
-it. It never takes the version — and from 6.0.0 it does not have to: a release
-names the verbs it kept in `artifacts/amplify-codebase/state.md`, the
-recognizer turns them into a number, and `release-notes --versions` refuses a
-manifest that says anything else. The generator's page grows with the
-answering and is held under a ceiling the size of the walk allows; a refusal
-returns as a reopen after three runs or as soon as a file beneath it moves,
-while a possibility marked done never returns.
+**Asking and deciding** — eight commands that gather requirements before doing
+the work, through a declared state machine rather than an improvised
+conversation: bounded rounds, bounded re-entries, and a gate that terminates by
+declaration instead of by your patience. Reach for one when the task has more
+than one reasonable reading and guessing wrong is expensive.
 
-**Research** (with the AskUserQuestion intake declared in `cc-ask.dtd`):
-`/deep-dive-dtd`, `/deep-scratch-dtd` (the research, then a build in a git
-worktree under `.claude/worktrees`, the diff reviewed hunk by hunk, the
-research amplified by what the build measured, and a merge gate with the pros
-and cons per file: merge all, merge the marked files, keep or discard, the
-project gate on the merged tree), `/ask-me-questions-dtd`, `/competitive-dtd`,
-`/feasibility-dtd`, `/history-dtd`, `/landscape-dtd`, `/open-source-dtd`,
-`/options-dtd`, `/technical-dtd`. Add `--no-gate` to any of them for an
-autonomous run: every gap becomes a listed assumption instead of a question.
+**The Phantom Books shelf** — twenty commands, each drawing one structure from
+one book, plus a router that matches a problem to the shelf. These are the
+unusual instruments: enumerate a finite space and verify the index both ways,
+size a search before running it, track taint through a codebase, hold four
+positions at once instead of two. Reach for the shelf when the ordinary frames
+have already been tried and returned something bland.
 
-**The nine lenses of RoT MoE, as commands.** Each one carries its lens's
-mechanism as grammar, opens with that lens's own four questions, holds one
-mid-run gate where the mechanism branches, renders the lens's bound as a
-checkable line, and quotes the live router marker when the RoT MoE plugin is
-installed:
+**The RoT MoE lenses** — ten commands, one per lens, each committed to a single
+way of seeing and forbidden from averaging into the others. Their value is the
+unblended range: where two lenses genuinely disagree is usually where the
+decision actually lives. Reach for them when consensus arrived too easily.
 
-| command | what the lens does here | mid-run gate |
-|---|---|---|
-| ⚜️ `/rot-nova-dtd` | six NSIL axes, one decision (CONFIRM, OVERRIDE, BOOST, FUSE, ELEVATE), four or more roles, purification, a convergence that names what it retains | which roles to weight |
-| 🎷 `/rot-violet-dtd` | the emotional frequency, one of five jazz tracks, a weighted landscape, four roles, a synthesis, the unplayed note | play the unplayed note or not |
-| ⚪ `/rot-antivenom-dtd` | diagnose, isolate, neutralize, purify, verify; findings with severity, level and confidence; anything possibly creative preserved and flagged | purify or preserve |
-| 🕷️ `/rot-venom-dtd` | perceive, route, one strike under 500 words at `ci` 0.95 or as a recommendation with its deciding fact, two questions pre-empted, the reversal named | none, by its bound |
-| 🩸 `/rot-carnage-dtd` | three to five unrelated domains, a fragment each, a juxtaposed weave, three or more connections, survivors judged by a real constraint and handed to the lens that ships | which collisions meet reality |
-| 🔮 `/rot-chroma-dtd` | twelve timelines under five experts spawned from the question and the answers, five shown with five steps, a forced dissent, forks kept, a horizon | which timeline to expand |
-| ⬜ `/rot-soleil-dtd` | a payload through five layers, an M2M packet, Token Optimization from both counts; for file edits, handoffs and context | none, by its bound |
-| 🜏 `/rot-eidolon-dtd` | three recursion levels, preserve, transmute, rebuild, a manifest, hybrids by the law, evolution proposals born pending | approve or reject each proposal |
-| 🧭 `/rot-claude-dtd` | hypotheses, instruments shown failing first, measurements with exit codes read directly, a verdict with no middle state | which measurements to run now |
-| 🌌 `/rot-elevate-dtd` | all nine at full weight: nine intakes of four questions, nine stanzas, hybrids for the fused pairs, tensions kept, a convergence with a named lead | the nine gates |
+**Creators** — thirteen commands that write Claude Code artifacts: plugins,
+hooks, subagents, skills, slash commands, monitors, MCP servers. Each one gates
+before it writes, and each produces a file whose grammar the checker can verify.
+Reach for a creator instead of a blank file when you want the result to pass
+`rdc check` on the first run.
 
-The parameter rows, the bands and the hybrid law live in `dtd/cc-rot.dtd`
-and the `rot-lenses-dtd` skill; the mechanisms are transcribed from this
-organisation's own RoT MoE packet at v10.0.2 (the nine charters and the engine), and `NOTICE.md` says so.
+**Prompt creators, one per schematic** — seventeen commands covering eight
+prompt schematics (callout, heredoc, YAML, NestedText, XML, polyglot, alarm,
+polyalarm), each in a plain and a meta form, with routers that choose for you.
+The schematic is the decision: it determines how a prompt survives being pasted
+somewhere that reformats it. Reach for the router when you do not yet know which
+container the prompt has to live in.
 
-**Workflow and the Adiutor**: `/whats-next-dtd`, `/add-to-todos-dtd`,
-`/check-todos-dtd`, `/run-plan-dtd`, `/heal-skill-dtd`, `/debug-dtd`,
-`/setup-ralph-dtd`, and `/RoT-DtD-Commander-Adiutor`; the `create-*-dtd`
-creators and the `audit-*-dtd` foreground audits stand in their own families
-above.
+**File types and dorks** — eleven commands. The file-type creators generate a
+schematic-shaped file for a named format; the dorks build search expressions,
+one family for the open web and one for a local tree. Reach for a dork when the
+hard part is the query rather than the reading.
 
-Twenty-two skills load themselves when the description matches, every one
-named in the index above: the ten converted ones (`create-plans-dtd`,
-`create-slash-commands-dtd`, `debug-like-expert-dtd`, and the rest), eight of
-4.0.0: `dtd-core-dtd` (the contract), `dtd-forge-dtd` (make a new command),
-`dtd-audit-dtd`, `ask-gate-dtd`, `phantom-library-dtd`, `records-dtd`,
-`dtd-eval-dtd`, and `rot-lenses-dtd` (the nine lenses' rows, bands and hybrid
-law), and four of 5.0.0: `ai-slop-dtd`, `iupac-ordinals-dtd`, `dtd-forms-dtd`
-and `create-prompt-dtd`, rewritten as the schematic router. Four
-agents audit the set: `slash-command-auditor-dtd`, `skill-auditor-dtd`,
-`subagent-auditor-dtd`, `dtd-contract-auditor`. A fifth,
-`dtd-command-inventory`, audits nothing: it holds Read, Grep and Glob only
-and reports which `-dtd` commands are installed on the machine, from which
-root, with the DOCTYPE root element and law count each file declares.
+**Tasks** — five commands for work that outlives one session: create a task,
+audit a set of them, compose a workflow, run one, hand one off. Reach for these
+when the thing you are doing will be picked up by someone else, or by you after
+enough time to have forgotten it.
 
-### The Adiutor, decoded
+**Repository** — three commands that operate on a repository as a whole rather
+than on a file: its git surface, its history, its scalar properties. Reach for
+them when the question is about the project, not about the code in front of you.
 
-```
-Adiutor armed for /pareto-dtd: root pareto; required headings: Vital Few (focus here), Bottom Line; 8 laws; the answer is checked at Stop (policy warn).
-```
+**Audits, in the foreground** — four commands that judge an existing artifact
+against the contract it claims: a skill, a slash command, a subagent, or prose
+against the AI-slop gate. They run in front of you and report; they do not
+rewrite. Reach for an audit before shipping something you did not write.
 
-That line is injected when a `-dtd` command starts. It is read from the
-command's own file, not from a second description. At Stop the check judges
-the rendered markdown: the declared headings present and in order, an
-"Assumptions Made" section on an autonomous run, and every short id an answer
-references (`E4`, `T1`, `A2`) defined somewhere in it. It does not judge
-whether the content is true; `NOTICE.md` §D says so in full.
+**Codebase growth** — three commands on one fifteen-verb ladder: amplify for the
+lower rungs, enhance for the middle, overhaul for the top. What they record is
+what sets this project's version number, because the release class is computed
+from the highest verb a pass kept rather than typed by hand. Reach for them when
+a release is due and the question is what the work actually amounted to.
 
-```sh
-rdc doctor          # manifest vs disk, checker on installed files, hooks armed or deliberately not, settings parses, ledger sound, monitor declared manual
-rdc ledger --last 5 # closed runs, ten numbered fields each
-rdc suggest         # a charm and a rite for every failed run
-rdc watch --once    # what the Commander-Adiutor monitor would have said for the ledger as it stands; without --once it watches for 300 s (--secs)
-```
+**The lists** — eight commands maintaining per-repository white, grey and black
+lists of file classes and code classes, plus the starlist of tools the harness
+may reach. A grey entry does not forbid anything; it obliges the asking of a
+declared question and records the answer with a date. Reach for these when a
+convention keeps being re-litigated and should instead be written down where a
+checker can read it.
 
-The monitor's two lines, verbatim from `dtd/adiutor.dtd`:
-
-```
-Adiutor: /pareto-dtd failed at Stop: required heading "Bottom Line" (element bottom_line) is absent. Run /RoT-DtD-Commander-Adiutor.
-Adiutor: ledger line 14 malformed (9 fields, expected 10). Run rdc doctor.
-```
-
-A pass prints nothing, and a run that closed before the monitor started is
-never replayed. Every stdout line of a monitor is a notification in the
-session, so it prints only what needs acting on.
+**Workflow and the Adiutor** — eight commands around the doctor: run it, arm it,
+read its ledger, compose the workflows it judges. The Adiutor is a Stop hook that
+checks a finished answer against the DOCTYPE that produced it. Since 5.0.0 it is
+not armed by default, so it runs when you run it. Reach for this family when you
+want the grammar enforced rather than merely declared.
 
 </details>
 
@@ -758,7 +684,7 @@ session, so it prints only what needs acting on.
 | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
 | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
 | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
-| every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `50 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
+| every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `52 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
 | every build target under commands, skills and agents is tracked; an ignored one would pass the drift check here and fail it on a fresh checkout | `bash checker/tracked-sweep.sh`: `0 ignored build targets`, its planted control reported | every push |
 | every command, skill and agent of the tree is named in the README index, each command in exactly one family | `node checker/readme-index.mjs --check`: `README block in step`; `--controls`: an unclaimed name refused, a removed row reported | every push |
 | the version is one everywhere: package.json, plugin.json, both marketplace fields, the top changelog section, a RELEASE.md heading, and the tag that ships | `node checker/release-notes.mjs --versions`, and the release job with the tag; controls plant a stray manifest, a missing heading and a wrong tag | every push, and the tag |

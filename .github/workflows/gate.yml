@@ -96,6 +96,8 @@ jobs:
         run: bash checker/tracked-sweep.sh
       - name: the README index names every command, skill and agent of the tree (generated; its controls)
         run: node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls
+      - name: the glossary agrees with the tree, and every guard on it trips
+        run: node checker/glossary.mjs --check && node checker/glossary.mjs --controls
       - name: no comment claims a reader that does not read it, no declaration survives unread without its reason, and no controls verb the gate never runs stays unexplained
         run: node lib/regression.mjs claims && node lib/regression.mjs retenue && node lib/regression.mjs unreached
       - name: every published count equals the tree (badges, tagline, claims rows, the three manifests; its controls)

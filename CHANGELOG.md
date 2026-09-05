@@ -65,7 +65,7 @@ written.
 - `node lib/regression.mjs controls`: 12 run, 0 failing
 - `node checker/readme-index.mjs --controls`: 6 run, 0 failing
 - `node checker/contract-audit.mjs`: 1440 declarations, 0 unused, 0 law gaps
-- 131 commands, 22 skills, 5 agents; checked 158; 1440 declarations; 50 gate-chain commands
+- 131 commands, 22 skills, 5 agents; checked 158; 1440 declarations; 52 gate-chain commands
 ## 7.1.0 (2026-09-05)
 
 ### The regression that never happened
