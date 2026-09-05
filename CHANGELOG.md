@@ -7,6 +7,65 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 7.1.1 (2026-09-05)
+
+### The page, folded
+
+Ten README sections now sit behind their headings and the generated command
+index is the one region left open, so the catalogue is what a visitor sees.
+The header block stays open on purpose: it carries six numbers `counts-sweep`
+publishes, and a proof nobody can see is not a proof. Said plainly, because it
+is easy to assume otherwise: a `<details>` shrinks the rendered page, not the
+file. README.md grew from 63,764 to 64,793 bytes while the visible page
+collapsed to ten headings plus the index.
+
+### A bound that was prose, in the release that condemned prose bounds
+
+The `unreached` arm let a module stay outside the gate if its header matched
+`/\b(kept outside|on purpose|because|reason)\b/`. `LAW.ASK.15`, written days
+earlier in 7.1.0, says a bound living in prose is not a bound. The release
+contradicted itself inside a week and only a question exposed it.
+
+The escape is an enumeration now: `%rer.outside "(spend|nondeterminism|manual)"`
+with a declared marker, both read from the DTD, and `checker/live-sweep.mjs`
+declares `rer-outside: spend`. `LAW.RER.6` binds it.
+
+### Widening the contract audit: measured, and refused
+
+The open question was whether `contract-audit.mjs` should scan past `dtd/`. It
+was tried. It reported 27 orphan declarations of which zero were orphans,
+through three separate causes found one after the other: `walk()` collected
+`.md` only, so the use corpus for `lib/` was empty; a name read out of a DTD
+appears dot-escaped inside the regex that reads it, so a plain `includes` misses
+its own reader; and the residue is reached through names built at runtime, which
+no static search follows.
+
+That last class is why `.rot-lists/*.dtd` must never enter this scope either.
+`lib/list.mjs` builds an entry's ENTITY name at runtime, so 19 of its 21
+declarations look orphaned and none is. The widening is reverted and the answer
+is now measured rather than assumed: this is the wrong instrument, not a
+deferred one. A dynamic audit for checker DTDs is a different tool and is not
+written.
+
+### Also
+
+- `node lib/regression.mjs contract` prints every shape the DTD declares, so the
+  three glosses have a caller rather than being documentation nobody reads.
+- The three ask-me roots carry the `artifact` element the 7.1.0 plan named; the
+  build had substituted a `RECORD.*` declaration and said so, which was sound
+  reasoning and still not what was asked for. The checker refused three times on
+  the way and every refusal was right: C5 wanted the element named in the body,
+  C15 a grammar_map row, C13 a template that renders the heading.
+- Every saved deep-dive artifact was missing the `intake` its root requires.
+  Six were short of it, five repaired. Nothing checks a saved artifact against
+  the root that declares it; that instrument does not exist yet.
+
+### Measured
+
+- `node lib/regression.mjs controls`: 12 run, 0 failing
+- `node checker/readme-index.mjs --controls`: 6 run, 0 failing
+- `node checker/contract-audit.mjs`: 1440 declarations, 0 unused, 0 law gaps
+- 131 commands, 22 skills, 5 agents; checked 158; 1440 declarations; 50 gate-chain commands
 ## 7.1.0 (2026-09-05)
 
 ### The regression that never happened

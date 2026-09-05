@@ -18,6 +18,17 @@
 
 ---
 
+## v7.1.1 — the page folded, and a bound that was prose
+
+A patch that shrinks the README and closes the two questions 7.1.0 left open,
+one of them against the assumption recorded for it.
+
+- **The README folds.** Ten sections behind their headings, the command index
+  left open, the badges still visible.
+- **The `unreached` escape is an enumeration**, because the previous one was the
+  prose bound this project condemned a week earlier.
+- **Widening the contract audit is refused**, with three measured reasons rather
+  than a deferral.
 ## v7.1.0 — the claim, not the diff
 
 A patch that began as a regression hunt and found none. v7.0.0 deleted no file;

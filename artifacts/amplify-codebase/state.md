@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 3
-- verb: 9
+- run: 4
+- verb: 6
 - offset: 0
 - page: 1
-- from: 7.0.0
-- release: mid 7.1.0
+- from: 7.1.0
+- release: minor 7.1.1
 - walked: schematic, form, voice, args, record, report, task, workflow, adiutor, license, rot, generic
 
 | id | class | layer | verdict | verb | refused_at | why | run |
@@ -32,10 +32,15 @@
 | 71570006 | gap | command | done | 4 |  | eight hand-written commands, held to their shared subset by a control that reads all eight built | 2 |
 | 71570007 | gap | install | done | 12 |  | an install could contradict a blacklist; the plan is refused before its confirmation is offered | 2 |
 | 71570008 | idea | session | done | 9 |  | an interrupted toolchain session asked its answered questions again; the record resumes it | 2 |
-| b2d0de01 | gap | adiutor | marked | 9 |  | no instrument read a comment against the reader it names; pass 13 shipped an invented reader and only a person caught it. lib/regression.mjs claims does it now | 3 |
-| b2d0de02 | gap | form | marked | 8 |  | the enumeration bound existed for more and nowhere else; ask.adds and ask.impactfuls grow it to the two re-entries that had none | 3 |
-| b2d0de03 | gap | record | marked | 8 |  | the record pattern grown to the three ask-me commands that declared none, so a looping intake leaves a trace of what it asked | 3 |
-| b2d0de04 | gap | generic | marked | 7 |  | the conditional section: lib/dtd.mjs carried flattenConditionals unexercised since before 7.0.0, and a declaration reaches it now | 3 |
-| b2d0de05 | gap | generic | marked | 6 |  | stat -c is GNU and both workflows used it, so the macOS leg was unmeasurable before it was ever run; wc -c under arithmetic measures it | 3 |
-| b2d0de06 | idea | report | marked | 4 |  | the corpus census stands beside the release study as its own document; neither is changed by the other | 3 |
-| b2d0de07 | gap | report | marked | 3 |  | the README carried 339 generated lines in its middle and a camera tutorial nobody reads twice; the index is folded and the tutorial retired | 3 |
+| b2d0de01 | gap | adiutor | done | 9 |  | no instrument read a comment against the reader it names; pass 13 shipped an invented reader and only a person caught it. lib/regression.mjs claims does it now | 3 |
+| b2d0de02 | gap | form | done | 8 |  | the enumeration bound existed for more and nowhere else; ask.adds and ask.impactfuls grow it to the two re-entries that had none | 3 |
+| b2d0de03 | gap | record | done | 8 |  | the record pattern grown to the three ask-me commands that declared none, so a looping intake leaves a trace of what it asked | 3 |
+| b2d0de04 | gap | generic | done | 7 |  | the conditional section: lib/dtd.mjs carried flattenConditionals unexercised since before 7.0.0, and a declaration reaches it now | 3 |
+| b2d0de05 | gap | generic | done | 6 |  | stat -c is GNU and both workflows used it, so the macOS leg was unmeasurable before it was ever run; wc -c under arithmetic measures it | 3 |
+| b2d0de06 | idea | report | done | 4 |  | the corpus census stands beside the release study as its own document; neither is changed by the other | 3 |
+| b2d0de07 | gap | report | done | 3 |  | the README carried 339 generated lines in its middle and a camera tutorial nobody reads twice; the index is folded and the tutorial retired | 3 |
+| c3e0de01 | gap | form | marked | 6 |  | the unreached escape was a prose regex any header saying because would satisfy; %rer.outside makes it three words a checker can read | 4 |
+| c3e0de02 | idea | report | marked | 4 |  | a contract verb prints every shape the DTD declares, so a gloss has a caller instead of being documentation nobody reads | 4 |
+| c3e0de03 | gap | report | marked | 3 |  | ten README sections folded behind their headings with the generated index left open; the page shrinks and no claim moves | 4 |
+| c3e0de04 | gap | adiutor | marked | 3 |  | the three ask-me roots carry the artifact element the plan named, and every saved deep dive carries the intake its root requires | 4 |
+| c3e0de05 | gap | generic | refused | 5 | 4 | widening contract-audit past dtd/ was tried and reverted: 27 findings, none real, and the residue is read through names built at runtime | 4 |
