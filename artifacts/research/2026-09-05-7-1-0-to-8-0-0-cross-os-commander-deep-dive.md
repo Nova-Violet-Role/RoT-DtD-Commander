@@ -6,6 +6,17 @@
 Date: 2026-09-05 · Depth: comprehensive · Use: drive the 7.1.0 build
 Command: /deep-dive-dtd · Gate: start (after one impactful round; all four selections taken)
 
+## Intake
+
+- known **what**: the 7.1.0 to 8.0.0 plan, quoted from the argument
+- known **focus**: regression forensics first (round 1)
+- known **how**: plan the WSL install too (round 1)
+- known **depth**: comprehensive, to drive the build (round 1)
+- known **use**: drive the build
+- round 1 of 3, select: Focus / Substrate / Depth+Use, all three answered
+- gate: `impactful` (round 1), four ranked selections rendered, provenance codebase x3 and command x1
+- round 2: "all 4 of them"; gate: `start`
+
 ## Strategic Summary
 
 v7.0.0 deleted zero files and removed 236 lines, none of which cost a capability: the

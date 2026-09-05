@@ -300,7 +300,14 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
 <!ENTITY LAW.REC.6 "A record file is named RECORD.filename, its frontmatter carries every field of the command's RECORD.* declaration in declared order, and its body is a revhistory: at least one revision heading (RECORD.revision.heading) with at least one evidence line (RECORD.evidence.line) under it; a record missing, misnamed, stale, short of a field or empty of evidence is a finding of kind record and the monitor prints it as MONITOR.record.">
 <!-- end subset cc-record -->
 
-  <!ELEMENT intake_session (task, intake, execution, assumption_made*)>
+  <!ELEMENT intake_session (task, intake, execution, artifact, assumption_made*)>
+  <!-- The file the run leaves behind. cc-report declares an artifact fixed to
+       artifacts/research, which is the research family's directory and not
+       this one; a command that borrowed it would name a file it never writes. -->
+  <!ELEMENT artifact EMPTY>
+  <!ATTLIST artifact
+            dir  CDATA #FIXED "artifacts"
+            name CDATA #REQUIRED>
   <!ELEMENT task (#PCDATA)>
   <!ATTLIST task kind (write|build|figure|other) #IMPLIED>
   <!ELEMENT execution (#PCDATA)>
@@ -313,6 +320,7 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY LAW.SESSION.2 "Each round is one ask element with one to four questions, at most three rounds before a gate; in guided mode the loop ends only on gate choice start, and in autonomous mode there is no loop and every gap is an assumption_made.">
   <!ENTITY LAW.SESSION.3 "Execution opens with a restatement of every known slot and every answer received, so the work can be audited against what was asked.">
   <!ENTITY LAW.SESSION.4 "The session writes its record before it closes: the gate carries the re-entries it spent (LAW.ASK.15), a gate whose round, adds and impactfuls are all at their last value is offered with start alone and ASK.exhausted as the reason, and the run leaves the file RECORD.intake names so a later session can read what was asked and what was answered.">
+  <!ENTITY LAW.SESSION.5 "The run renders an artifact element naming the file it wrote under the directory the artifact attribute fixes; the name is the one RECORD.filename gives, and a run that renders the element without writing the file, or writes the file without rendering the element, is a failed answer.">
   <!ENTITY RECORD.intake "intake|artifacts/ask-me-questions-dtd/ask-me-questions-dtd.md|1=task:CDATA@1|2=slots:PCDATA@1|3=rounds:PCDATA@1|4=answers:CDATA@1|5=gate:PCDATA@1|6=execution:CDATA@1">
 ]>
 
@@ -397,8 +405,14 @@ Render the `intake_session` root declared in the DOCTYPE as the markdown below. 
 - `task`: **❓ Task**, with its kind when it came from TASK.question
 - `intake`: **❓ Intake**, the known and gap slots, then each `round` as n of 3 with its questions and answers (Other answers quoted as typed), the `impactful` selections when the gate asked for them, then the gate choice and round number
 - `execution`: **❓ Execution**, opening with the restatement, then the work itself
+- `artifact`: **❓ Artifact**, the record this run wrote, as one `<artifact>` naming its file under the fixed directory; a run that wrote none says so on that line
 - `assumption_made`: **❓ Assumptions Made**, autonomous mode only
 </grammar_map>
+
+The `artifact` element is the file this run leaves for the next one: the record
+named by this command's `RECORD.*` declaration, written under `artifacts/` and
+the command's own name, with a Greek ordinal before `.md` only when the run
+wrote more than one (LAW.IUPAC.7). Render `<artifact>` with the name it wrote.
 
 ### ❓ Task
 
@@ -417,6 +431,10 @@ Render the `intake_session` root declared in the DOCTYPE as the markdown below. 
 
 Restating what was asked: [every known slot and every answer]
 [the work]
+
+### ❓ Artifact
+
+Saved to `artifacts/ask-me-questions-dtd/ask-me-questions-dtd.md` (one line saying none was written if the run wrote none).
 
 ### ❓ Assumptions Made
 

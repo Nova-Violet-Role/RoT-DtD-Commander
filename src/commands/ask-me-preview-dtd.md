@@ -14,7 +14,14 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY % command-info-types "record">
   <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
   %cc-record;
-  <!ELEMENT preview_session (task, intake, execution, assumption_made*)>
+  <!ELEMENT preview_session (task, intake, execution, artifact, assumption_made*)>
+  <!-- The file the run leaves behind. cc-report declares an artifact fixed to
+       artifacts/research, which is the research family's directory and not
+       this one; a command that borrowed it would name a file it never writes. -->
+  <!ELEMENT artifact EMPTY>
+  <!ATTLIST artifact
+            dir  CDATA #FIXED "artifacts"
+            name CDATA #REQUIRED>
   <!ELEMENT task (#PCDATA)>
   <!ELEMENT execution (#PCDATA)>
   <!ATTLIST task kind (write|build|figure|other) #IMPLIED>
@@ -23,6 +30,7 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY LAW.PREVIEW.3 "The back token ASK.back typed into Other returns to the question just asked, which is asked again with the same previews and without loss of the answers already taken (LAW.ASK.12).">
   <!ENTITY LAW.PREVIEW.4 "Every question declares its variant (LAW.ASK.13); an elaborate or a mark question carries one elaboration per option, cut into the widget and expanded above the call, and its expanded preview names the consequence for the work within ASK.preview.expanded_lines lines (LAW.ASK.14).">
   <!ENTITY LAW.PREVIEW.5 "The gate carries the re-entries it spent (LAW.ASK.15): at most ASK.adds_per_prompt adds and ASK.impactfuls_per_prompt impactfuls, after which it is offered with start alone and ASK.exhausted as the reason; the run writes the file RECORD.preview names before it closes.">
+  <!ENTITY LAW.PREVIEW.6 "The run renders an artifact element naming the file it wrote under the directory the artifact attribute fixes; the name is the one RECORD.filename gives, and a run that renders the element without writing the file, or writes the file without rendering the element, is a failed answer.">
   <!ENTITY RECORD.preview "preview|artifacts/ask-me-preview-dtd/ask-me-preview-dtd.md|1=task:CDATA@1|2=slots:PCDATA@1|3=rounds:PCDATA@1|4=answers:CDATA@1|5=gate:PCDATA@1|6=execution:CDATA@1">
   <!ENTITY TASK.question "What would you like help with?">
   <!ENTITY TASK.write "Write something">
@@ -62,8 +70,14 @@ Render the `preview_session` root declared in the DOCTYPE as the markdown below.
 - `task`: **🔭 Task**, with its kind when it came from TASK.question
 - `intake`: **🔭 Intake**, the known and gap slots, then each round as n of 3 with its questions, the expanded previews as rendered, and the answers (Other answers quoted as typed), the impactful selections when asked for, then the gate choice
 - `execution`: **🔭 Execution**, opening with the restatement, then the work itself
+- `artifact`: **🔭 Artifact**, the record this run wrote, as one `<artifact>` naming its file under the fixed directory; a run that wrote none says so on that line
 - `assumption_made`: **🔭 Assumptions Made**, autonomous mode only
 </grammar_map>
+
+The `artifact` element is the file this run leaves for the next one: the record
+named by this command's `RECORD.*` declaration, written under `artifacts/` and
+the command's own name, with a Greek ordinal before `.md` only when the run
+wrote more than one (LAW.IUPAC.7). Render `<artifact>` with the name it wrote.
 
 ### 🔭 Task
 
@@ -82,6 +96,10 @@ Render the `preview_session` root declared in the DOCTYPE as the markdown below.
 
 Restating what was asked: [every known slot and every answer]
 [the work]
+
+### 🔭 Artifact
+
+Saved to `artifacts/ask-me-preview-dtd/ask-me-preview-dtd.md` (one line saying none was written if the run wrote none).
 
 ### 🔭 Assumptions Made
 

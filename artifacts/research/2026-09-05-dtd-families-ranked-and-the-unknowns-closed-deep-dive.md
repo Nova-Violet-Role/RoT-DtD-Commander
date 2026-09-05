@@ -6,6 +6,14 @@
 Date: 2026-09-05 · Depth: comprehensive · Use: drive the release after 7.1.0
 Gate: start · Sources: local, 2219 corpus files and 82 crafted files of this repository
 
+## Intake
+
+- known **what**: rank the families, close every unknown, finish the crafted pass
+- known **focus**: the xhtml family the earlier study never opened
+- known **depth**: comprehensive · known **use**: drive the release after 7.1.0
+- no gap left open; no round run
+- gate: `start` ("camon partner!")
+
 ## Strategic Summary
 
 DITA, the family this repository borrowed from, uses conditional sections in 4 of

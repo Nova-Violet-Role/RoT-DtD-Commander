@@ -6,6 +6,13 @@
 Date: 2026-09-05 · Depth: comprehensive · Use: drive 7.1.0, and 8.0.0 after it
 Gate: start (the argument named the work and closed with "lets get going")
 
+## Intake
+
+- known **what**: NDATA, the three byproduct documents, the TEI family, the remaining build
+- known **depth**: comprehensive · known **use**: drive 7.1.0 and 8.0.0 after it
+- no gap left open among depth, focus and use (LAW.DD.3)
+- gate: `start` ("lets get going!")
+
 ## Strategic Summary
 
 NDATA is standard XML 1.0 and a stock validator accepts our subset — measured

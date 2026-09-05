@@ -8,6 +8,14 @@ Subject: `cc-resources/.dtd-file-examples/` — 2219 files, 17 top-level collect
 Method: construct census by `grep -lE` over the 767 DTD-family files, compared against
 our own 20 files in `dtd/`
 
+## Intake
+
+- known **what**: rank the mechanics of cc-resources/.dtd-file-examples
+- known **why**: the operator asked for an extra deep dive ranking them
+- known **depth**: comprehensive · known **use**: drive 7.1.0 and cross-os.dtd
+- no gap left open; no round run
+- gate: `start` (the request named the work outright)
+
 ## Strategic Summary
 
 The professional corpus runs on one mechanic above all others — the parameter entity,

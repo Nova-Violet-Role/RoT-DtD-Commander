@@ -304,7 +304,14 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
 <!ENTITY LAW.REC.6 "A record file is named RECORD.filename, its frontmatter carries every field of the command's RECORD.* declaration in declared order, and its body is a revhistory: at least one revision heading (RECORD.revision.heading) with at least one evidence line (RECORD.evidence.line) under it; a record missing, misnamed, stale, short of a field or empty of evidence is a finding of kind record and the monitor prints it as MONITOR.record.">
 <!-- end subset cc-record -->
 
-  <!ELEMENT many_session (task, intake, execution, assumption_made*)>
+  <!ELEMENT many_session (task, intake, execution, artifact, assumption_made*)>
+  <!-- The file the run leaves behind. cc-report declares an artifact fixed to
+       artifacts/research, which is the research family's directory and not
+       this one; a command that borrowed it would name a file it never writes. -->
+  <!ELEMENT artifact EMPTY>
+  <!ATTLIST artifact
+            dir  CDATA #FIXED "artifacts"
+            name CDATA #REQUIRED>
   <!ELEMENT task (#PCDATA)>
   <!ELEMENT execution (#PCDATA)>
   <!ATTLIST task kind (write|build|figure|other) #IMPLIED>
@@ -313,6 +320,7 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   <!ENTITY LAW.MANY.3 "Execution opens with a restatement of every known slot and every answer received, thirty at most, so the work can be audited against what was asked.">
   <!ENTITY LAW.MANY.4 "Every question of every round declares its variant, select, check, elaborate or mark, and the round names it (LAW.ASK.13); across thirty questions all four appear where the slots allow, and the previews of the elaborate and mark questions carry the predicted answer and its consequence (LAW.ASK.14).">
   <!ENTITY LAW.MANY.5 "The eight rounds are bounded by ask.rounds and the other two re-entries by their own enumerations: at most ASK.adds_per_prompt adds and ASK.impactfuls_per_prompt impactfuls, after which the gate is offered with start alone and ASK.exhausted as the reason (LAW.ASK.15); the run writes the file RECORD.many names before it closes.">
+  <!ENTITY LAW.MANY.6 "The run renders an artifact element naming the file it wrote under the directory the artifact attribute fixes; the name is the one RECORD.filename gives, and a run that renders the element without writing the file, or writes the file without rendering the element, is a failed answer.">
   <!ENTITY RECORD.many "many|artifacts/ask-me-many-questions-dtd/ask-me-many-questions-dtd.md|1=task:CDATA@1|2=slots:PCDATA@1|3=rounds:PCDATA@1|4=answers:CDATA@1|5=gate:PCDATA@1|6=execution:CDATA@1">
   <!ENTITY TASK.question "What would you like help with?">
   <!ENTITY TASK.write "Write something">
@@ -350,8 +358,14 @@ Render the `many_session` root declared in the DOCTYPE as the markdown below. On
 - `task`: **❔ Task**, with its kind when it came from TASK.question
 - `intake`: **❔ Intake**, the known and gap slots, then each round as n of 8 with its questions and answers (Other answers quoted as typed), the impactful selections when the gate asked for them, then the gate choice and round number
 - `execution`: **❔ Execution**, opening with the restatement, then the work itself
+- `artifact`: **❔ Artifact**, the record this run wrote, as one `<artifact>` naming its file under the fixed directory; a run that wrote none says so on that line
 - `assumption_made`: **❔ Assumptions Made**, autonomous mode only
 </grammar_map>
+
+The `artifact` element is the file this run leaves for the next one: the record
+named by this command's `RECORD.*` declaration, written under `artifacts/` and
+the command's own name, with a Greek ordinal before `.md` only when the run
+wrote more than one (LAW.IUPAC.7). Render `<artifact>` with the name it wrote.
 
 ### ❔ Task
 
@@ -370,6 +384,10 @@ Render the `many_session` root declared in the DOCTYPE as the markdown below. On
 
 Restating what was asked: [every known slot and every answer]
 [the work]
+
+### ❔ Artifact
+
+Saved to `artifacts/ask-me-many-questions-dtd/ask-me-many-questions-dtd.md` (one line saying none was written if the run wrote none).
 
 ### ❔ Assumptions Made
 
