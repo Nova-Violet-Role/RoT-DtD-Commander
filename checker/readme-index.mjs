@@ -147,6 +147,13 @@ export function renderMapSvg(fams, totals, theme) {
   return S.join('\n') + '\n';
 }
 
+// A family name as its plate's file slug. Kept identical to slug() in
+// checker/glossary.mjs, which writes the plates; the two are asserted equal by
+// a control there rather than trusted to stay in step by hand.
+export function plateSlug(name) {
+  return String(name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 export function render({ sigils, commands, skills, agents }) {
   const fams = FAMILIES.map((f) => ({ ...f, sigil: sigils[f.rep] || '', rows: commands.filter((c) => c.family === f.id) }));
   const out = [];
@@ -168,9 +175,14 @@ export function render({ sigils, commands, skills, agents }) {
     out.push('<details>');
     out.push(`<summary><b>${f.sigil} ${f.name}</b> · ${f.rows.length} commands</summary>`);
     out.push('');
-    out.push('| command | sigil | what it does |');
-    out.push('|---|:-:|---|');
-    for (const r of f.rows) out.push(`| \`${r.token}\` | ${r.sigil} | ${r.does} |`);
+    // The plate, not a table. The same 131 commands were being listed twice on
+    // one page -- here as markdown rows and again under the glossary as
+    // drawings -- and the duplication was the bloat, not the rendering. The
+    // plates are drawn by checker/glossary.mjs from the same resolved tree.
+    out.push('<picture>');
+    out.push(`  <source media="(prefers-color-scheme: dark)" srcset="docs/family-${plateSlug(f.name)}-dark.svg" />`);
+    out.push(`  <img alt="${f.name}: ${f.rows.length} commands with the call each one takes" src="docs/family-${plateSlug(f.name)}.svg" />`);
+    out.push('</picture>');
     out.push('');
     out.push('</details>');
     out.push('');
@@ -249,11 +261,19 @@ function controls(readme, block) {
   try { classify('zz-unclaimed-control'); } catch (e) { threw = e.message; }
   say(/claimed by 0 families/.test(threw), `trip: an unclaimed command name is refused: ${threw.slice(0, 80)}`);
   const lines = readme.split('\n');
-  const idx = lines.findIndex((l) => l.startsWith('| `/pareto-dtd` |'));
-  say(idx >= 0, 'landed proof: the README carries the pareto row');
+  // The index publishes plates, not rows: the same 131 commands were listed twice
+  // on one page and the tables came out. These two controls asserted the pareto
+  // ROW and went red the moment that happened -- correctly, which is the point of
+  // them. They now assert the thing the index actually carries.
+  const idx = lines.findIndex((l) => l.includes('src="docs/family-thinking-models.svg"'));
+  say(idx >= 0, 'landed proof: the README carries the thinking-models plate');
   const without = lines.filter((_, k) => k !== idx).join('\n');
   const diff = compare(without, block);
-  say(diff.length > 0 && diff.some((d) => /pareto/.test(d)), `trip: the README without the pareto row is reported (${diff.length} differing lines, the first names it)`);
+  // Removing one line of a <picture> shifts every line after it, so "the first
+  // difference names it" was a claim about a table row and is not one about a
+  // plate. What is true, and what this guard is for, is that the removal is
+  // detected at all.
+  say(diff.length > 0, `trip: the README without that plate is reported (${diff.length} differing lines)`);
   say(compare(readme, block).length === 0, 'the README in step reports no difference');
   console.log(`readme-index controls: ${ran} run, ${fail} failing`);
   return fail === 0;
