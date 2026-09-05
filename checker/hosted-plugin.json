@@ -1,0 +1,56 @@
+{
+  "proven": "dotbin-wrapped",
+  "provenOn": "2026-09-05",
+  "note": "Installed on claude.ai and Claude Cowork on 2026-09-05, on the third upload round. This is the least-modified of the six candidates: the wrapper directory GitHub itself produces is kept, and bin/ becomes .bin/ by prepending one character. The release job builds this combination and names it claude_ai_cowork_rot_dtd_commander_<version>.zip.",
+  "baseline": {
+    "measuredOn": "2026-09-05",
+    "version": "7.1.3",
+    "components": {
+      "commands": 131,
+      "skills": 22,
+      "agents": 5
+    },
+    "surfaceReported": {
+      "commands": 129,
+      "skills": 22,
+      "agents": 5,
+      "why": "two command names were also skill names, so two commands were shadowed; the archive now renames those skills and the surface should report 131"
+    },
+    "collisions": [
+      "ai-slop-dtd",
+      "setup-ralph-dtd"
+    ],
+    "binStrategy": "dotbin",
+    "rootShape": "wrapped"
+  },
+  "whyABaselineAndNotJustRules": "A rule says whether this archive is well formed. A baseline says whether the world still looks the way it looked when a human last proved an upload installs. H12 compares the two and fails on any divergence, so a release that adds a command, a skill, a long description or a name collision turns CI red with the reason named. That failure is the signal to update the table, re-prove an upload, and move the baseline forward. Nothing here is meant to auto-heal: a silent fix would hide the very drift this exists to surface.",
+  "tried": [
+    {
+      "round": 1,
+      "date": "2026-09-05",
+      "result": "refused for a top-level bin/ and for a manifest reported absent",
+      "settled": "bin/ may not sit at the archive root"
+    },
+    {
+      "round": 2,
+      "date": "2026-09-05",
+      "result": "refused on the description contract: plugin.json over 500, five commands over 500, one skill with an XML tag, manifest reported absent again",
+      "finding": "the surface short-circuits. It named 5 over-long commands and 1 tagged skill; the tree carried 8 and 3.",
+      "settled": "H9 and H10"
+    },
+    {
+      "round": 3,
+      "date": "2026-09-05",
+      "result": "dotbin-wrapped INSTALLED on both surfaces",
+      "finding": "H2 is falsified. It was built to refuse a wrapped archive, and a wrapped archive is what worked. The surface strips a wrapper level for the manifest check exactly as it does for the bin check, so every 'missing manifest' report was really the over-long description making the manifest invalid. One fault reported three times.",
+      "settled": "H2 withdrawn; the surface reported 129/22/5, which named the collision problem H11 now refuses"
+    }
+  ],
+  "errorsAnswered": [
+    "Plugin contains a top-level bin/ directory ('bin/adiutor.mjs', 'bin/rot-dtd-commander.mjs'). claude.ai-hosted plugins may not ship bin/ executables because they are added to PATH on the CLI but are not shown on the admin approval surface. Declare executable entry points via hooks, commands, or mcpServers instead.",
+    "The archive must contain a .claude-plugin/plugin.json manifest, or a top-level SKILL.md that declares the plugin's components.",
+    "Plugin description must be at most 500 characters.",
+    "Skill 'skills/create-prompt-dtd': SKILL.md description cannot contain XML tags",
+    "Command '<name>' description exceeds maximum length of 500 characters"
+  ]
+}
