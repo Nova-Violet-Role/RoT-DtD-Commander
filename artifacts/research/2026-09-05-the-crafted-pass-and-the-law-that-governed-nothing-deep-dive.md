@@ -107,9 +107,16 @@ from the one the plan named.
   weaker bound than an enumeration, and by this release's own standard
   (`LAW.ASK.15`) a bound that lives in prose is not a bound. It is an improvement
   on nothing, not a proof.
-- **CI was still in progress when this was written.** gate #48 on `main` and gate
-  #47 on tag `v7.1.0` were running; template-lint #20 completed in 10s. The Linux
-  legs had not reported at the time of writing.
+- **CI is green, read from the REST API rather than the HTML.** gate #47 (tag
+  v7.1.0), #48 and #49 (main), tapes #29/#30 and template-lint #20 all report
+  conclusion success on ubuntu-latest, which is the first evidence that the
+  stat -c to wc -c change actually holds on Linux. The Actions HTML page cannot
+  answer this: its status icons are SVGs carrying no text, so a fetch of the page
+  reports durations and nothing else. The endpoint /actions/runs?per_page=N
+  carries a conclusion field per run, and CLAUDE.md line 7 prescribes exactly
+  that route: git only, gh prohibited, GitHub via git + REST API with curl. I had
+  assumed the whole API was out of bounds and nearly abandoned following CI;
+  opening the rule file instead of trusting its one-line summary corrected it.
 
 ## Current State and Trends
 
@@ -129,10 +136,8 @@ green in 95 s; fresh-clone gate green in 96 s with zero dependencies.
 
 ## Remaining Unknowns
 
-- [ ] Did gate #47 and #48 pass on `ubuntu-latest`? (assumed: yes — the same chain
-      is green locally and in a fresh clone, and the only platform-specific change
-      this release removes a GNU dependency rather than adding one; unresolved at
-      the time of writing)
+- [x] Did the tag pass on `ubuntu-latest`? **Closed by measurement**: gate #47 on
+      tag v7.1.0 reports conclusion success, as do tapes #29 and template-lint #20.
 - [ ] Should `contract-audit.mjs` widen to every tracked `.dtd`? (assumed: yes, but
       not this release — it may surface unused declarations in the seven
       `.rot-lists` files and that is a change with its own blast radius)
