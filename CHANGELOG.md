@@ -7,6 +7,50 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 7.1.2 (2026-09-05)
+
+### The glossary
+
+`docs/glossary.xhtml`: every command, skill and agent with what it does and,
+for the first time anywhere in this project, **how to invoke it** &mdash; the exact
+call including its arguments, read from the `argument-hint` frontmatter that 128
+of 131 commands have carried all along and nothing surfaced. Each entry also
+names the family that claims it, the root element its answer must take and how
+many laws that answer inherits.
+
+Live search, family filters, one self-contained file: no CDN, no webfont, no
+fetch. It opens from disk with the network off, which is the only way a
+reference is reliable.
+
+It is valid **XHTML 1.1**, and that is not decoration. This project claims a
+grammar declared inside a file lets an ordinary validator judge the file; a
+reference page that is itself an instance of a published DTD is that claim
+applied to its own documentation. The one script is wrapped in a CDATA section,
+as XHTML requires, and a control asserts exactly one CDATA close so the section
+cannot terminate early.
+
+The family table is imported from `checker/readme-index.mjs`, never copied, so
+the index and the glossary cannot drift apart about what a family contains. The
+first cut guessed a family from the per-command sigil &mdash; which is a family label
+borrowed from one representative command, not a per-command mark &mdash; and put 144
+of 158 entries in Unfiled while still rendering a page that looked finished.
+
+### The families section, rewritten
+
+It was 162 lines carrying 94 command names across 15 sentences, six per
+sentence, every one already listed with a description in the index directly
+above it. It restated the catalogue instead of explaining it. It is 88 lines now
+with no command names at all: one paragraph per family, in the index's own
+order, saying what the group is for and the moment you would reach for it.
+
+README.md is 58,922 bytes, smaller than the 63,764 it was before the folding
+work of 7.1.1 began.
+
+### Measured
+
+- `node checker/glossary.mjs --controls`: 10 run, 0 failing
+- `xmlstarlet val -w docs/glossary.xhtml`: valid
+- 131 commands, 22 skills, 5 agents; checked 158; 1440 declarations; 52 gate-chain commands
 ## 7.1.1 (2026-09-05)
 
 ### The page, folded

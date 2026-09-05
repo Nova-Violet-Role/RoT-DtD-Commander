@@ -18,6 +18,15 @@
 
 ---
 
+## v7.1.2 — how to use it, not only what exists
+
+A patch that answers the question this project had never answered anywhere: how
+do I actually call any of these.
+
+- **`docs/glossary.xhtml`** &mdash; 158 entries, each with its exact invocation,
+  searchable, self-contained, valid XHTML 1.1.
+- **The families section is prose again** &mdash; 94 command names removed, because
+  the index above it already lists every one.
 ## v7.1.1 — the page folded, and a bound that was prose
 
 A patch that shrinks the README and closes the two questions 7.1.0 left open,

@@ -1,6 +1,6 @@
 {
   "name": "rot-dtd-commander",
-  "version": "7.1.1",
+  "version": "7.1.2",
   "description": "RoT DtD Commander: 131 Claude Code commands, 22 skills and 5 agents that carry their own DTD grammar and trust boundary, the creator kit (prompt, meta-prompt, skill, hook, command, subagent, plan, MCP, workflow, task, filetype and dork creators), a guided NPX installer into ~/.claude, the Adiutor Stop-hook doctor that checks every -dtd answer against the DOCTYPE that produced it, the AI_SLOP gate on five spots when armed, and the codebase growth family that walks any codebase and names the release its findings amount to.",
   "type": "module",
   "license": "AGPL-3.0-or-later OR EUPL-1.2",

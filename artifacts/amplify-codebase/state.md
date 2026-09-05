@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 4
-- verb: 6
+- run: 5
+- verb: 4
 - offset: 0
 - page: 1
-- from: 7.1.0
-- release: minor 7.1.1
+- from: 7.1.1
+- release: minor 7.1.2
 - walked: schematic, form, voice, args, record, report, task, workflow, adiutor, license, rot, generic
 
 | id | class | layer | verdict | verb | refused_at | why | run |
@@ -39,8 +39,11 @@
 | b2d0de05 | gap | generic | done | 6 |  | stat -c is GNU and both workflows used it, so the macOS leg was unmeasurable before it was ever run; wc -c under arithmetic measures it | 3 |
 | b2d0de06 | idea | report | done | 4 |  | the corpus census stands beside the release study as its own document; neither is changed by the other | 3 |
 | b2d0de07 | gap | report | done | 3 |  | the README carried 339 generated lines in its middle and a camera tutorial nobody reads twice; the index is folded and the tutorial retired | 3 |
-| c3e0de01 | gap | form | marked | 6 |  | the unreached escape was a prose regex any header saying because would satisfy; %rer.outside makes it three words a checker can read | 4 |
-| c3e0de02 | idea | report | marked | 4 |  | a contract verb prints every shape the DTD declares, so a gloss has a caller instead of being documentation nobody reads | 4 |
-| c3e0de03 | gap | report | marked | 3 |  | ten README sections folded behind their headings with the generated index left open; the page shrinks and no claim moves | 4 |
-| c3e0de04 | gap | adiutor | marked | 3 |  | the three ask-me roots carry the artifact element the plan named, and every saved deep dive carries the intake its root requires | 4 |
+| c3e0de01 | gap | form | done | 6 |  | the unreached escape was a prose regex any header saying because would satisfy; %rer.outside makes it three words a checker can read | 4 |
+| c3e0de02 | idea | report | done | 4 |  | a contract verb prints every shape the DTD declares, so a gloss has a caller instead of being documentation nobody reads | 4 |
+| c3e0de03 | gap | report | done | 3 |  | ten README sections folded behind their headings with the generated index left open; the page shrinks and no claim moves | 4 |
+| c3e0de04 | gap | adiutor | done | 3 |  | the three ask-me roots carry the artifact element the plan named, and every saved deep dive carries the intake its root requires | 4 |
 | c3e0de05 | gap | generic | refused | 5 | 4 | widening contract-audit past dtd/ was tried and reverted: 27 findings, none real, and the residue is read through names built at runtime | 4 |
+| d4e0de01 | gap | report | marked | 4 |  | docs/glossary.xhtml stands beside the README index and says how to invoke every command, which the index never did; the index is untouched | 5 |
+| d4e0de02 | gap | report | marked | 3 |  | the families section carried 94 command names across 15 sentences, every one already in the index above it; 88 lines now and no names at all | 5 |
+| d4e0de03 | idea | form | marked | 2 |  | the glossary imports FAMILIES from readme-index instead of copying it, so the two pages cannot drift about what a family contains | 5 |

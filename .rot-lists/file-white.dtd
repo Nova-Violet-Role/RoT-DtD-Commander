@@ -18,6 +18,7 @@
 <!ENTITY LIST.entry.yml "the workflows the gate runs in|2026-09-04|||">
 <!ENTITY LIST.entry.tape "the VHS scripts that record the demonstrations; becomes gif in production|2026-09-04|||gif">
 <!ENTITY LIST.entry.gif "the recorded demonstrations the README shows|2026-09-04|||">
+<!ENTITY LIST.entry.xhtml "the generated glossary; valid XHTML 1.1 so a DTD-reading validator can judge the reference page of a project about declared grammars|2026-09-05|||">
 <!ENTITY LIST.entry.txt "the licence texts|2026-09-04|||">
 <!ENTITY LIST.entry.jsonl "the Adiutor ledger, one line per run|2026-09-04|||">
 <!ENTITY LIST.entry.cff "the citation file|2026-09-04|||">
