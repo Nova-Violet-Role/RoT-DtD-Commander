@@ -191,9 +191,14 @@ export function render({ sigils, commands, skills, agents }) {
   out.push('<details>');
   out.push(`<summary><b>🎓 Skills</b> · ${skills.length}, each loading itself when its description matches</summary>`);
   out.push('');
-  out.push('| skill | what it holds |');
-  out.push('|---|---|');
-  for (const s of skills) out.push(`| \`${s.name}\` | ${s.does} |`);
+  // Plates, like the fourteen families above. These two blocks stayed markdown
+  // when the families were drawn, so checker/glossary.mjs was writing
+  // family-skills.svg and family-agents.svg that nothing on the page referenced:
+  // four orphaned plates and 27 entries rendered unlike every other entry.
+  out.push('<picture>');
+  out.push('  <source media="(prefers-color-scheme: dark)" srcset="docs/family-skills-dark.svg" />');
+  out.push(`  <img alt="Skills: ${skills.length}, each loading itself when its description matches" src="docs/family-skills.svg" />`);
+  out.push('</picture>');
   out.push('');
   out.push('</details>');
   out.push('');
@@ -201,9 +206,10 @@ export function render({ sigils, commands, skills, agents }) {
   out.push('<details>');
   out.push(`<summary><b>🕵️ Agents</b> · ${agents.length}</summary>`);
   out.push('');
-  out.push('| agent | sigil | what it does |');
-  out.push('|---|:-:|---|');
-  for (const a of agents) out.push(`| \`${a.name}\` | ${a.sigil} | ${a.does} |`);
+  out.push('<picture>');
+  out.push('  <source media="(prefers-color-scheme: dark)" srcset="docs/family-agents-dark.svg" />');
+  out.push(`  <img alt="Agents: ${agents.length}" src="docs/family-agents.svg" />`);
+  out.push('</picture>');
   out.push('');
   out.push('</details>');
   out.push('');
