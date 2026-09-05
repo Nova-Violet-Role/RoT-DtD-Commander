@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. GENERATED from README prose. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="720" viewBox="0 0 820 720" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect width="820" height="720" fill="#0f1117"/>
+<rect x="0" y="0" width="6" height="720" fill="#d97757"/>
+<text x="26" y="34" font-size="19" font-weight="600" fill="#e6e9ef">## 🎓 Verify it yourself</text>
+<line x1="26" y1="48" x2="794" y2="48" stroke="#242938" stroke-width="1"/>
+<text x="26" y="99" font-size="13.5" fill="#e6e9ef">sh</text>
+<text x="26" y="119" font-size="13.5" fill="#e6e9ef">git clone https://github.com/Nova-Violet-Role/RoT-DtD-Commander</text>
+<text x="26" y="139" font-size="13.5" fill="#e6e9ef">cd RoT-DtD-Commander</text>
+<text x="26" y="159" font-size="13.5" fill="#e6e9ef">npm run gate; echo &quot;exit=$?&quot;</text>
+<text x="26" y="189" font-size="13.5" fill="#e6e9ef">gate opens by proving the workflow runs the same chain</text>
+<text x="26" y="209" font-size="13.5" fill="#e6e9ef">(checker/gate-sync.mjs), then runs build --check, check, the twenty</text>
+<text x="26" y="229" font-size="13.5" fill="#e6e9ef">Adiutor controls, the contract audit, the checker controls, the two sweeps,</text>
+<text x="26" y="249" font-size="13.5" fill="#e6e9ef">the ten library controls (ordinals, slop, ceiling, form, args, schematic,</text>
+<text x="26" y="269" font-size="13.5" fill="#e6e9ef">workflow, task, record, license), the slop sweep at zero, the slop</text>
+<text x="26" y="289" font-size="13.5" fill="#e6e9ef">measures on README and CHANGELOG (the release ships a changelog section),</text>
+<text x="26" y="309" font-size="13.5" fill="#e6e9ef">the tracked-targets sweep and the release-notes controls; each ends with a line of counts,</text>
+<text x="26" y="329" font-size="13.5" fill="#e6e9ef">and the</text>
+<text x="26" y="349" font-size="13.5" fill="#e6e9ef">exit code is read directly. Then break it:</text>
+<text x="26" y="379" font-size="13.5" fill="#e6e9ef">sh</text>
+<text x="26" y="399" font-size="13.5" fill="#e6e9ef">bash checker/checker-controls.sh # M0 to M17: seven mutations refused, one under INCLUDE and</text>
+<text x="26" y="419" font-size="13.5" fill="#e6e9ef">the untouched file pass, then nine scorer and runner controls</text>
+<text x="26" y="439" font-size="13.5" fill="#e6e9ef">node checker/gate-sync.mjs # every gate command is a run line of the workflow; a line</text>
+<text x="26" y="459" font-size="13.5" fill="#e6e9ef">removed or a step commented out is reported</text>
+<text x="26" y="479" font-size="13.5" fill="#e6e9ef">node checker/release-notes.mjs --controls # the release job's notes: an in-progress heading</text>
+<text x="26" y="499" font-size="13.5" fill="#e6e9ef">and an unknown version refused</text>
+<text x="26" y="519" font-size="13.5" fill="#e6e9ef">node bin/adiutor.mjs controls # thirty guards; C21 to C29 the AI_SLOP gate on five spots,</text>
+<text x="26" y="539" font-size="13.5" fill="#e6e9ef">the tally and the fields; C3 is the strict block, once and never twice; C12 the monitor,</text>
+<text x="26" y="559" font-size="13.5" fill="#e6e9ef">tripped live; C13 the lagging answer, C14 the trailing call, C17 the heading-less file</text>
+<text x="26" y="579" font-size="13.5" fill="#e6e9ef">judged</text>
+<text x="26" y="599" font-size="13.5" fill="#e6e9ef">rdc watch --once # the monitor over your own ledger: one line per failed run, silence for a</text>
+<text x="26" y="619" font-size="13.5" fill="#e6e9ef">pass</text>
+<text x="26" y="649" font-size="13.5" fill="#e6e9ef">A guard nobody has tripped on purpose is decoration. Every one here has been.</text>
+<text x="26" y="689" font-size="13.5" fill="#e6e9ef">---</text>
+</svg>

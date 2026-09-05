@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. GENERATED from README prose. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="360" viewBox="0 0 820 360" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect width="820" height="360" fill="#0f1117"/>
+<rect x="0" y="0" width="6" height="360" fill="#d97757"/>
+<text x="26" y="34" font-size="19" font-weight="600" fill="#e6e9ef">## 👋 Welcome</text>
+<line x1="26" y1="48" x2="794" y2="48" stroke="#242938" stroke-width="1"/>
+<text x="26" y="99" font-size="13.5" fill="#e6e9ef">You are welcome here, whatever you came for. If you want sharper thinking</text>
+<text x="26" y="119" font-size="13.5" fill="#e6e9ef">commands in your Claude Code sessions, start with Install: one</text>
+<text x="26" y="139" font-size="13.5" fill="#e6e9ef">line, and rdc uninstall undoes every byte of it. If you came to check whether</text>
+<text x="26" y="159" font-size="13.5" fill="#e6e9ef">the numbers on this page are real, start with Verify</text>
+<text x="26" y="179" font-size="13.5" fill="#e6e9ef">and try to break them; that is the point of the page, not an offence against</text>
+<text x="26" y="199" font-size="13.5" fill="#e6e9ef">it. If &quot;DTD&quot; is a word you last saw in 2002, nothing here requires you to write</text>
+<text x="26" y="219" font-size="13.5" fill="#e6e9ef">one: the commands work as commands, and the grammar rides inside them.</text>
+<text x="26" y="249" font-size="13.5" fill="#e6e9ef">Questions that begin &quot;this is probably a dumb question&quot; are the ones the</text>
+<text x="26" y="269" font-size="13.5" fill="#e6e9ef">documentation failed to answer. Ask them in Discussions and they will be</text>
+<text x="26" y="289" font-size="13.5" fill="#e6e9ef">treated as defects in this page.</text>
+<text x="26" y="329" font-size="13.5" fill="#e6e9ef">---</text>
+</svg>

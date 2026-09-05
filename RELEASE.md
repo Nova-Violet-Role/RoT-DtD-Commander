@@ -18,6 +18,14 @@
 
 ---
 
+## v7.1.3 — the page is drawn
+
+Thirty-six plates, one per family per theme. The mermaid fence is gone, the
+duplicate listing is gone, and nothing is truncated.
+
+- **Every family is a drawing** &mdash; the exact call, what it does, the law count.
+- **README 63,793 &rarr; 40,557 bytes**, because the same 131 commands were listed twice.
+- **0 ellipses across 36 plates**; the plate is the only copy of that text now.
 ## v7.1.2 — how to use it, not only what exists
 
 A patch that answers the question this project had never answered anywhere: how

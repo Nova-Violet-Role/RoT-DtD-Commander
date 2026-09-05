@@ -7,6 +7,55 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 7.1.3 (2026-09-05)
+
+### The page is drawn
+
+Every family of the Suite is a plate now: thirty-six SVG drawings, a light and
+a dark ground each, served by `<picture>` on `prefers-color-scheme`. Each plate
+carries every entry of its family with the exact call you type, what it does and
+how many laws its answer inherits, and sizes itself to its own longest line so
+the text wraps rather than the plate widening -- GitHub scales any image wider than its ~830px column down to fit, so a wide plate is a SMALL plate.
+
+The mermaid flowchart is gone. It was eleven lines of fence rendered by GitHub's
+client at view time, in their colours; the same graph is one file we draw, each
+spoke in the colour that family already declares for its badge, so the drawing
+and the badges agree without either being told about the other.
+
+### The listing that existed twice
+
+Measured: the Usage index carried **131 markdown table rows** across sixteen
+`<details>`, and the glossary block carried sixteen `<details>` of plates. The
+same 131 commands, twice, on one page. That was the bloat, not the rendering.
+The index keeps the plates and drops the tables; the glossary block points at
+`docs/glossary.xhtml` for search and filters instead of repeating what sits
+above it. **README.md fell from 63,793 to 40,557 bytes.**
+
+### Nothing is cut
+
+Six plates carried an ellipsis where a family note was clipped at 150
+characters &mdash; the one place anything was still truncated once the tables were
+removed, and the plate is the only copy of that text now. Measured after: **0
+ellipses across 36 plates**. Type went from 10.5&ndash;16px to 13&ndash;22px and rows from
+40 to 54 pixels, because a plate that used to sit beside a table now has to be
+legible on its own.
+
+### What stays text, and why
+
+The claims table cannot become a drawing: `checker/counts-sweep.mjs` reads eight
+numbers straight out of those rows and a grep cannot read a picture. What was
+wrong there was three cells running 558, 1000 and 636 characters inside a single
+table cell; they say the same thing in one line each now.
+
+`docs/glossary.xhtml` also stays, and stays valid XHTML 1.1: it is the only
+surface that carries every string untruncated and searchable.
+
+### Measured
+
+- `node checker/glossary.mjs --controls`: 15 run, 0 failing
+- `node checker/readme-index.mjs --controls`: 6 run, 0 failing
+- 36 plates, every one 820px wide so GitHub renders it 1:1 rather than scaling it down; 0 ellipses; every plate valid XML
+- 131 commands, 22 skills, 5 agents; checked 158; 1440 declarations; 52 gate-chain commands
 ## 7.1.2 (2026-09-05)
 
 ### The glossary

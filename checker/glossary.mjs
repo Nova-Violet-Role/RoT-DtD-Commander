@@ -322,9 +322,9 @@ export function renderSvg(entries, theme) {
     .map((k) => ({ name: k, n: byFam.get(k), color: dark ? '#4b5563' : '#94a3b8' }));
   const all = rows.concat(extra);
   const max = all.reduce((m, r) => Math.max(m, r.n), 1);
-  const rowH = 34, top = 92, padL = 320, barW = 620;
+  const rowH = 30, top = 84, padL = 270, barW = 430;
   const H = top + all.length * rowH + 46;
-  const W = 1060;
+  const W = 820;
   const S = [];
   S.push('<?xml version="1.0" encoding="UTF-8"?>');
   S.push('<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->');
@@ -360,6 +360,27 @@ function clip(s, n) {
   return x.length <= n ? x : x.slice(0, n - 1) + '\u2026';
 }
 
+// GitHub lays a README out in a column about 830 pixels wide and scales anything
+// wider down to fit, so a 2100-pixel plate is displayed at roughly 40 per cent and
+// its 15.5-pixel type arrives at six. The plate must therefore be NARROWER than
+// the column, and the text wraps instead of the plate widening.
+const PLATE_W = 820;
+
+// Greedy wrap at a character budget. Returns one or more lines, never cutting a
+// word and never dropping one: the plate is the only copy of this text.
+export function wrap(s, cols) {
+  const words = String(s || '').split(/\s+/).filter(Boolean);
+  const out = [];
+  let line = '';
+  for (const w of words) {
+    if (!line.length) { line = w; continue; }
+    if ((line + ' ' + w).length <= cols) line += ' ' + w;
+    else { out.push(line); line = w; }
+  }
+  if (line.length) out.push(line);
+  return out.length ? out : [String(s || "")];
+}
+
 // ---------- one family, drawn ----------
 export function renderFamilySvg(entries, famName, theme) {
   const dark = theme === 'dark';
@@ -379,9 +400,14 @@ export function renderFamilySvg(entries, famName, theme) {
   const longestCall = rows.reduce((m, e) => Math.max(m, callOf(e).length), 0);
   const longestDesc = rows.reduce((m, e) => Math.max(m, String(e.description || '').length), 0);
   const note = (famMeta(famName) || {}).note || '';
-  const W = Math.max(1100, Math.min(2100, Math.round(Math.max(longestCall * 9.4, longestDesc * 8.1, note.length * 7.6) + 110)));
-  const rowH = 54, top = 96;
-  const H = top + rows.length * rowH + 34;
+  const W = PLATE_W;
+  // Every row is laid out first, so the plate height follows the wrapped text.
+  const NOTE_COLS = 96, DESC_COLS = 88;
+  const noteLines = note ? wrap(note, NOTE_COLS) : [];
+  const laid = rows.map((e) => ({ e, call: callOf(e), desc: wrap(e.description, DESC_COLS) }));
+  const LINE = 19, CALL_H = 30, GAP = 14;
+  const top = 74 + noteLines.length * 20;
+  const H = top + laid.reduce((s, r) => s + CALL_H + r.desc.length * LINE + GAP, 0) + 20;
   const S = [];
   S.push('<?xml version="1.0" encoding="UTF-8"?>');
   S.push('<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->');
@@ -389,24 +415,25 @@ export function renderFamilySvg(entries, famName, theme) {
   S.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">`);
   S.push(`<rect width="${W}" height="${H}" fill="${bg}"/>`);
   S.push(`<rect x="0" y="0" width="6" height="${H}" fill="${accent}"/>`);
-  S.push(`<text x="30" y="40" font-size="22" font-weight="600" fill="${fg}">${esc(famName)}</text>`);
-  S.push(`<text x="${W - 30}" y="40" font-size="17" fill="${dim}" text-anchor="end">${rows.length}</text>`);
+  S.push(`<text x="26" y="34" font-size="19" font-weight="600" fill="${fg}">${esc(famName)}</text>`);
+  S.push(`<text x="${W - 26}" y="34" font-size="15" fill="${dim}" text-anchor="end">${rows.length}</text>`);
   const meta = famMeta(famName);
-  // The note is NOT clipped. It was, at 150 characters, and six plates carried an
-  // ellipsis where the sentence ended -- the one place anything was still cut once
-  // the tables were removed. The plate is the only copy of this text now, so the
-  // width follows the note as well as the rows.
-  if (meta && meta.note) S.push(`<text x="30" y="66" font-size="14.5" fill="${dim}">${esc(meta.note)}</text>`);
-  S.push(`<line x1="30" y1="${top - 18}" x2="${W - 30}" y2="${top - 18}" stroke="${line}" stroke-width="1"/>`);
-  rows.forEach((e, i) => {
-    const y = top + i * rowH;
-    const call = callOf(e);
-    const w = Math.round(9.35 * call.length + 20);
-    S.push(`<rect x="30" y="${y - 16}" width="${w}" height="26" rx="5" fill="${chip}"/>`);
-    S.push(`<text x="39" y="${y + 3}" font-size="15.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="${fg}">${esc(call)}</text>`);
-    S.push(`<text x="39" y="${y + 28}" font-size="14" fill="${dim}">${esc(e.description)}</text>`);
-    if (e.laws) S.push(`<text x="${W - 30}" y="${y + 3}" font-size="13" fill="${dim}" text-anchor="end">${e.laws} laws</text>`);
+  // The note is NOT clipped; it wraps. Six plates once carried an ellipsis here.
+  noteLines.forEach((ln, i) => {
+    S.push(`<text x="26" y="${58 + i * 20}" font-size="13.5" fill="${dim}">${esc(ln)}</text>`);
   });
+  S.push(`<line x1="26" y1="${top - 16}" x2="${W - 26}" y2="${top - 16}" stroke="${line}" stroke-width="1"/>`);
+  let y = top;
+  for (const { e, call, desc } of laid) {
+    const w = Math.min(W - 120, Math.round(8.05 * call.length + 18));
+    S.push(`<rect x="26" y="${y}" width="${w}" height="24" rx="5" fill="${chip}"/>`);
+    S.push(`<text x="34" y="${y + 17}" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="${fg}">${esc(call)}</text>`);
+    if (e.laws) S.push(`<text x="${W - 26}" y="${y + 17}" font-size="12" fill="${dim}" text-anchor="end">${e.laws} laws</text>`);
+    desc.forEach((ln, k) => {
+      S.push(`<text x="34" y="${y + CALL_H + 14 + k * LINE}" font-size="13" fill="${dim}">${esc(ln)}</text>`);
+    });
+    y += CALL_H + desc.length * LINE + GAP;
+  }
   S.push('</svg>');
   return S.join(NL) + NL;
 }

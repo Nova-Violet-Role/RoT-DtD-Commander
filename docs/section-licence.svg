@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. GENERATED from README prose. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="320" viewBox="0 0 820 320" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect width="820" height="320" fill="#ffffff"/>
+<rect x="0" y="0" width="6" height="320" fill="#b8543a"/>
+<text x="26" y="34" font-size="19" font-weight="600" fill="#1a1d24">## 📄 Licence</text>
+<line x1="26" y1="48" x2="794" y2="48" stroke="#e2e5ec" stroke-width="1"/>
+<text x="26" y="99" font-size="13.5" fill="#1a1d24">AGPL-3.0-or-later OR EUPL-1.2, at your option, for every file in this</text>
+<text x="26" y="119" font-size="13.5" fill="#1a1d24">repository. Root LICENSE is the AGPL text (the one GitHub reads);</text>
+<text x="26" y="139" font-size="13.5" fill="#1a1d24">LICENSE-EUPL-1.2 sits beside it; LICENSES/ holds both plus the upstream</text>
+<text x="26" y="159" font-size="13.5" fill="#1a1d24">MIT for tooling. Forty-four converted files carry an MIT portions line in</text>
+<text x="26" y="179" font-size="13.5" fill="#1a1d24">their header. Copyleft on purpose: what is shared here cannot be enclosed</text>
+<text x="26" y="199" font-size="13.5" fill="#1a1d24">later, by anyone, including us.</text>
+<text x="26" y="229" font-size="13.5" fill="#1a1d24">&lt;div align=&quot;center&quot;&gt;</text>
+<text x="26" y="259" font-size="13.5" fill="#1a1d24">Reality is the judge.</text>
+<text x="26" y="289" font-size="13.5" fill="#1a1d24">&lt;/div&gt;</text>
+</svg>

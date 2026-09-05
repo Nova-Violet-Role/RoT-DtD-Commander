@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. GENERATED from README prose. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="250" viewBox="0 0 820 250" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect width="820" height="250" fill="#ffffff"/>
+<rect x="0" y="0" width="6" height="250" fill="#b8543a"/>
+<text x="26" y="34" font-size="19" font-weight="600" fill="#1a1d24">## 🏛️ Where this sits in the organisation</text>
+<line x1="26" y1="48" x2="794" y2="48" stroke="#e2e5ec" stroke-width="1"/>
+<text x="26" y="99" font-size="13.5" fill="#1a1d24">Nova-Violet Role builds convergent</text>
+<text x="26" y="119" font-size="13.5" fill="#1a1d24">cognitive frameworks, formally verified where it counts. RoT-MoE routes a</text>
+<text x="26" y="139" font-size="13.5" fill="#1a1d24">prompt through nine lenses; RoT-DTD-GOAL makes completion something a Stop</text>
+<text x="26" y="159" font-size="13.5" fill="#1a1d24">hook earns. This repository is the third piece: the commands themselves carry</text>
+<text x="26" y="179" font-size="13.5" fill="#1a1d24">a contract, and a Stop hook reads it. The contract DTDs of the two siblings are</text>
+<text x="26" y="199" font-size="13.5" fill="#1a1d24">the ancestors of dtd/cc-core.dtd, and their both-direction checkers are the</text>
+<text x="26" y="219" font-size="13.5" fill="#1a1d24">ancestors of rdc check.</text>
+</svg>

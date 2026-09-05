@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. GENERATED from README prose. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="320" viewBox="0 0 820 320" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect width="820" height="320" fill="#ffffff"/>
+<rect x="0" y="0" width="6" height="320" fill="#b8543a"/>
+<text x="26" y="34" font-size="19" font-weight="600" fill="#1a1d24">## ☕ Supporting a non-profit</text>
+<line x1="26" y1="48" x2="794" y2="48" stroke="#e2e5ec" stroke-width="1"/>
+<text x="26" y="99" font-size="13.5" fill="#1a1d24">Ko-fi buys time, never priority. Proving a</text>
+<text x="26" y="119" font-size="13.5" fill="#1a1d24">number on this page wrong is worth more than a coffee, and it is credited in</text>
+<text x="26" y="139" font-size="13.5" fill="#1a1d24">the changelog.</text>
+<text x="26" y="170" font-size="15" font-weight="600" fill="#1a1d24">🙏 Standing on other people's work</text>
+<text x="26" y="209" font-size="13.5" fill="#1a1d24">Lex Christopherson's taches-cc-resources (MIT), from which thirty-three</text>
+<text x="26" y="229" font-size="13.5" fill="#1a1d24">commands and eleven skills were converted with their prose retained; the</text>
+<text x="26" y="249" font-size="13.5" fill="#1a1d24">vhs and ttyd authors. The full</text>
+<text x="26" y="269" font-size="13.5" fill="#1a1d24">provenance, including what was deliberately left out, is in</text>
+<text x="26" y="289" font-size="13.5" fill="#1a1d24">NOTICE.md.</text>
+</svg>

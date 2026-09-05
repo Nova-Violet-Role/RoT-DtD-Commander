@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. GENERATED from README prose. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="2040" viewBox="0 0 820 2040" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect width="820" height="2040" fill="#0f1117"/>
+<rect x="0" y="0" width="6" height="2040" fill="#d97757"/>
+<text x="26" y="34" font-size="19" font-weight="600" fill="#e6e9ef">## 📜 About</text>
+<line x1="26" y1="48" x2="794" y2="48" stroke="#242938" stroke-width="1"/>
+<text x="26" y="99" font-size="13.5" fill="#e6e9ef">A slash command is a prompt. A prompt says what an answer should contain, in</text>
+<text x="26" y="119" font-size="13.5" fill="#e6e9ef">prose, and prose drifts: the template at the bottom stops matching the steps</text>
+<text x="26" y="139" font-size="13.5" fill="#e6e9ef">in the middle, the verdict words multiply, and nothing ever reads the answer</text>
+<text x="26" y="159" font-size="13.5" fill="#e6e9ef">back. This repository fixes the shape of the answer once, in the oldest schema</text>
+<text x="26" y="179" font-size="13.5" fill="#e6e9ef">language there is, and then reads it back.</text>
+<text x="26" y="209" font-size="13.5" fill="#e6e9ef">Every -dtd command, skill and agent opens with a &lt;!DOCTYPE&gt; block:</text>
+<text x="26" y="239" font-size="13.5" fill="#e6e9ef">&lt;!DOCTYPE pareto [</text>
+<text x="26" y="259" font-size="13.5" fill="#e6e9ef">&lt;!ELEMENT pareto (vital+, trivial, bottom_line)&gt;</text>
+<text x="26" y="279" font-size="13.5" fill="#e6e9ef">&lt;!ELEMENT vital (factor, why, action)&gt;</text>
+<text x="26" y="299" font-size="13.5" fill="#e6e9ef">&lt;!ATTLIST vital rank CDATA #REQUIRED impact (high|medium|low) #REQUIRED&gt;</text>
+<text x="26" y="319" font-size="13.5" fill="#e6e9ef">&lt;!ENTITY LAW.PARETO.2 &quot;The cutoff is stated as a count of factors out of the total, not as a</text>
+<text x="26" y="339" font-size="13.5" fill="#e6e9ef">feeling.&quot;&gt;</text>
+<text x="26" y="359" font-size="13.5" fill="#e6e9ef">]&gt;</text>
+<text x="26" y="389" font-size="13.5" fill="#e6e9ef">The elements are the answer's shape. The enumerations are the only verdicts it</text>
+<text x="26" y="409" font-size="13.5" fill="#e6e9ef">may give. The LAW. entities are its success criteria, numbered and never</text>
+<text x="26" y="429" font-size="13.5" fill="#e6e9ef">reused. Four unparsed channels (user-args, tool-result, file-ref,</text>
+<text x="26" y="449" font-size="13.5" fill="#e6e9ef">ask-answer) are declared as NDATA: whatever arrives on them is data, never an</text>
+<text x="26" y="469" font-size="13.5" fill="#e6e9ef">instruction, and every file must say so in its trust boundary or the checker</text>
+<text x="26" y="489" font-size="13.5" fill="#e6e9ef">refuses it. The four terms are used as they were meant: #PCDATA is the</text>
+<text x="26" y="509" font-size="13.5" fill="#e6e9ef">model's own reasoning, CDATA is text carried in whole, NDATA names a</text>
+<text x="26" y="529" font-size="13.5" fill="#e6e9ef">channel, NOTATION says how it must be handled.</text>
+<text x="26" y="559" font-size="13.5" fill="#e6e9ef">Then the Adiutor closes the loop. When you run any -dtd command, a hook</text>
+<text x="26" y="579" font-size="13.5" fill="#e6e9ef">reads that command's DOCTYPE and records which headings the answer must carry.</text>
+<text x="26" y="599" font-size="13.5" fill="#e6e9ef">At Stop, another hook reads the answer from the transcript and checks it.</text>
+<text x="26" y="619" font-size="13.5" fill="#e6e9ef">Every run is one line in a ledger. /RoT-DtD-Commander-Adiutor is the doctor</text>
+<text x="26" y="639" font-size="13.5" fill="#e6e9ef">that reads the ledger and prescribes. Nothing is described twice: the grammar</text>
+<text x="26" y="659" font-size="13.5" fill="#e6e9ef">the model was shown is the grammar the hook reads.</text>
+<text x="26" y="689" font-size="13.5" fill="#e6e9ef">Beside the hooks runs the Commander-Adiutor, a monitor: a separate</text>
+<text x="26" y="709" font-size="13.5" fill="#e6e9ef">process (monitors/commander-adiutor.mjs, not bin/adiutor.mjs) that tails</text>
+<text x="26" y="729" font-size="13.5" fill="#e6e9ef">the ledger and hands every answer that failed its grammar to the session the</text>
+<text x="26" y="749" font-size="13.5" fill="#e6e9ef">moment the run closes, one line each, nothing for a pass. It reads the ledger</text>
+<text x="26" y="769" font-size="13.5" fill="#e6e9ef">only, never a transcript, and the two lines it may print are declared in</text>
+<text x="26" y="789" font-size="13.5" fill="#e6e9ef">dtd/adiutor.dtd. Since 5.0.0 neither runs on its own: no plugin manifest</text>
+<text x="26" y="809" font-size="13.5" fill="#e6e9ef">arms the hooks, an install arms nothing unless --arm is given, the monitor</text>
+<text x="26" y="829" font-size="13.5" fill="#e6e9ef">is declared in monitors/manual.json and started only by rdc watch, and</text>
+<text x="26" y="849" font-size="13.5" fill="#e6e9ef">every run of either ends at a 300 second ceiling.</text>
+<text x="26" y="879" font-size="13.5" fill="#e6e9ef">The answer has one shape too. Every heading a command's grammar map declares</text>
+<text x="26" y="899" font-size="13.5" fill="#e6e9ef">is rendered as a markdown heading that carries the command's own sigil, with</text>
+<text x="26" y="919" font-size="13.5" fill="#e6e9ef">a blank line before it and after it:</text>
+<text x="26" y="950" font-size="15" font-weight="600" fill="#e6e9ef">🎯 Vital Few (focus here)</text>
+<circle cx="31" cy="985" r="2.5" fill="#9aa3b2"/>
+<text x="42" y="989" font-size="13.5" fill="#e6e9ef">Factor 1: the installer, because it checks every other file</text>
+<text x="26" y="1020" font-size="15" font-weight="600" fill="#e6e9ef">🎯 Bottom Line</text>
+<text x="26" y="1059" font-size="13.5" fill="#e6e9ef">Ship the installer first.</text>
+<text x="26" y="1089" font-size="13.5" fill="#e6e9ef">One sigil per command, declared once in dtd/sigils.json (the nine lens</text>
+<text x="26" y="1109" font-size="13.5" fill="#e6e9ef">commands carry their lens emoji); the rule is LAW.CORE.6, checker rule</text>
+<text x="26" y="1129" font-size="13.5" fill="#e6e9ef">C13 refuses a template whose headings touch or lack the sigil, and the</text>
+<text x="26" y="1149" font-size="13.5" fill="#e6e9ef">Adiutor flags a crammed answer at Stop as a spacing finding. Nothing runs</text>
+<text x="26" y="1169" font-size="13.5" fill="#e6e9ef">together, and an answer is recognisable at a glance.</text>
+<text x="26" y="1199" font-size="13.5" fill="#e6e9ef">A command is also runnable from the end of a prompt: LAW.CORE.7 declares</text>
+<text x="26" y="1219" font-size="13.5" fill="#e6e9ef">that a /name-dtd token that ends a prompt, with or without a trailing &lt;-,</text>
+<text x="26" y="1239" font-size="13.5" fill="#e6e9ef">invokes that command on the text before it as its arguments. Claude Code</text>
+<text x="26" y="1259" font-size="13.5" fill="#e6e9ef">expands a slash command only at the head of a prompt; the Adiutor arms the</text>
+<text x="26" y="1279" font-size="13.5" fill="#e6e9ef">run on the trailing token too (control C14) and its armed line tells the</text>
+<text x="26" y="1299" font-size="13.5" fill="#e6e9ef">model to run the command, so the call is as complete as a leading one.</text>
+<text x="26" y="1329" font-size="13.5" fill="#e6e9ef">Since 5.0.0 the commands also write. Sixteen prompt and meta-prompt creators,</text>
+<text x="26" y="1349" font-size="13.5" fill="#e6e9ef">one per schematic (callout, heredoc, yaml, nt, xml, polyglot, alarm,</text>
+<text x="26" y="1369" font-size="13.5" fill="#e6e9ef">polyalarm), draw every syntax from a declared table and prove a planted</text>
+<text x="26" y="1389" font-size="13.5" fill="#e6e9ef">out-of-table syntax refused. Creators for skills, hooks, commands, subagents,</text>
+<text x="26" y="1409" font-size="13.5" fill="#e6e9ef">plans, MCP servers and workflow files ask twelve questions in three rounds,</text>
+<text x="26" y="1429" font-size="13.5" fill="#e6e9ef">write with the answers as known slots, and audit what they wrote here, in the</text>
+<text x="26" y="1449" font-size="13.5" fill="#e6e9ef">foreground, with a planted fault proving the audit. A tasks family keeps its</text>
+<text x="26" y="1469" font-size="13.5" fill="#e6e9ef">registry and ledger; eight filetype creators and their router write an</text>
+<text x="26" y="1489" font-size="13.5" fill="#e6e9ef">exemplar and its NOTATION; two dork creators build a search and a local hunt.</text>
+<text x="26" y="1509" font-size="13.5" fill="#e6e9ef">Every creator declares a curated SPDX licence from dtd/licenses.json.</text>
+<text x="26" y="1529" font-size="13.5" fill="#e6e9ef">Records nest (cc-record.dtd), the shelf of nineteen book-derived commands</text>
+<text x="26" y="1549" font-size="13.5" fill="#e6e9ef">carries a voice profile the slop sweep reads, and the Scratchpad Companion, a</text>
+<text x="26" y="1569" font-size="13.5" fill="#e6e9ef">second session run in the foreground, audits each build phase in a declared</text>
+<text x="26" y="1589" font-size="13.5" fill="#e6e9ef">grammar and is scored on its finding elements.</text>
+<text x="26" y="1620" font-size="15" font-weight="600" fill="#e6e9ef">🤝 It improves Claude Code; it does not replace it</text>
+<text x="26" y="1659" font-size="13.5" fill="#e6e9ef">The commands install into ~/.claude/commands like any other, and a plain</text>
+<text x="26" y="1679" font-size="13.5" fill="#e6e9ef">install arms nothing. When you ask for the hooks (rdc install --arm or</text>
+<text x="26" y="1699" font-size="13.5" fill="#e6e9ef">rdc arm), they are added to ~/.claude/settings.json by an additive merge</text>
+<text x="26" y="1719" font-size="13.5" fill="#e6e9ef">that backs up first, preserves every key it did not add (deep-compared after</text>
+<text x="26" y="1739" font-size="13.5" fill="#e6e9ef">re-reading from disk), and reverses with one command. A hook reads its</text>
+<text x="26" y="1759" font-size="13.5" fill="#e6e9ef">payload, writes under its own state directory, spawns nothing, and exits. The</text>
+<text x="26" y="1779" font-size="13.5" fill="#e6e9ef">monitor is declared in monitors/manual.json, a file the loader never reads,</text>
+<text x="26" y="1799" font-size="13.5" fill="#e6e9ef">and runs only when you run rdc watch; it reads the ledger and prints,</text>
+<text x="26" y="1819" font-size="13.5" fill="#e6e9ef">nothing more.</text>
+<text x="26" y="1849" font-size="13.5" fill="#e6e9ef">Armed, since 5.1.0, the AI_SLOP gate of ai-slop.dtd also judges every</text>
+<text x="26" y="1869" font-size="13.5" fill="#e6e9ef">answer at Stop, a subagent answer at SubagentStop, and every Write, Edit,</text>
+<text x="26" y="1889" font-size="13.5" fill="#e6e9ef">NotebookEdit, commit message and request body before it lands: a prose file whole, a code</text>
+<text x="26" y="1909" font-size="13.5" fill="#e6e9ef">file by its lifted</text>
+<text x="26" y="1929" font-size="13.5" fill="#e6e9ef">comments, strict whatever the policy, one ledger line per refusal, the</text>
+<text x="26" y="1949" font-size="13.5" fill="#e6e9ef">escape a code fence or a quoted element (LAW.SLOP.7, LAW.SLOP.8; controls</text>
+<text x="26" y="1969" font-size="13.5" fill="#e6e9ef">C21 to C29). /ai-slop-dtd is the hand-run form of the same instrument.</text>
+<text x="26" y="2009" font-size="13.5" fill="#e6e9ef">---</text>
+</svg>

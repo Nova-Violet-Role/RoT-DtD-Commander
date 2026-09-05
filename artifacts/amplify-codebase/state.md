@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 5
-- verb: 4
+- run: 6
+- verb: 5
 - offset: 0
 - page: 1
-- from: 7.1.1
-- release: minor 7.1.2
+- from: 7.1.2
+- release: minor 7.1.3
 - walked: schematic, form, voice, args, record, report, task, workflow, adiutor, license, rot, generic
 
 | id | class | layer | verdict | verb | refused_at | why | run |
@@ -44,6 +44,10 @@
 | c3e0de03 | gap | report | done | 3 |  | ten README sections folded behind their headings with the generated index left open; the page shrinks and no claim moves | 4 |
 | c3e0de04 | gap | adiutor | done | 3 |  | the three ask-me roots carry the artifact element the plan named, and every saved deep dive carries the intake its root requires | 4 |
 | c3e0de05 | gap | generic | refused | 5 | 4 | widening contract-audit past dtd/ was tried and reverted: 27 findings, none real, and the residue is read through names built at runtime | 4 |
-| d4e0de01 | gap | report | marked | 4 |  | docs/glossary.xhtml stands beside the README index and says how to invoke every command, which the index never did; the index is untouched | 5 |
-| d4e0de02 | gap | report | marked | 3 |  | the families section carried 94 command names across 15 sentences, every one already in the index above it; 88 lines now and no names at all | 5 |
-| d4e0de03 | idea | form | marked | 2 |  | the glossary imports FAMILIES from readme-index instead of copying it, so the two pages cannot drift about what a family contains | 5 |
+| d4e0de01 | gap | report | done | 4 |  | docs/glossary.xhtml stands beside the README index and says how to invoke every command, which the index never did; the index is untouched | 5 |
+| d4e0de02 | gap | report | done | 3 |  | the families section carried 94 command names across 15 sentences, every one already in the index above it; 88 lines now and no names at all | 5 |
+| d4e0de03 | idea | form | done | 2 |  | the glossary imports FAMILIES from readme-index instead of copying it, so the two pages cannot drift about what a family contains | 5 |
+| e5f0de01 | gap | report | marked | 5 |  | the Usage index carried a list of names and now carries the whole reference as plates: every call, description and law count | 6 |
+| e5f0de02 | gap | report | marked | 3 |  | the same 131 commands were listed twice on one page, as index rows and again as glossary plates; the duplicate is gone and README fell 63,793 to 40,557 bytes | 6 |
+| e5f0de03 | idea | form | marked | 3 |  | the mermaid fence became a drawing we make, each spoke in the colour its family already declares for its badge | 6 |
+| e5f0de04 | gap | report | marked | 2 |  | six plates clipped a family note at 150 characters; nothing is truncated now, measured at 0 ellipses across 36 plates | 6 |
