@@ -28,7 +28,11 @@
 // timeout, and its stdout captured, and a line is printed before and after
 // each session so silence has a shape.
 //
-// OUTSIDE THE GATE, and kept outside on purpose. Of the twenty-three modules
+// rer-outside: spend
+//
+// OUTSIDE THE GATE, and kept outside on purpose. The marker line above is the
+// enumerated reason LAW.RER.6 requires; the prose below is for people. Of the
+// twenty-three modules
 // that carry a controls verb, this is the only one the gate does not reach:
 // it spends real API calls, one headless session per installed name, and its
 // verdicts depend on a model rather than on this tree. Recorded here because

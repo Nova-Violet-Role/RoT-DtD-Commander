@@ -78,4 +78,16 @@
 <!ENTITY LAW.RER.2 "A capability a comment asserts is checked against the reader it names: the claim RER.claim.reads must resolve to RER.claim.reader, that file must exist, and it must contain the subject; a claim naming a reader that does not contain the subject is a finding of kind regression at RER.claim.unresolved.severity, because a comment is documentation and a wrong one is a defect that ships.">
 <!ENTITY LAW.RER.3 "Retenue: a declaration that survives with no reader anywhere is reported as RER.vestigial, and it is a finding only when no comment within the twelve lines above it gives the reason it is kept; RECORD.info is the reference case and its recorded reason is that the parameter entity command-info-types needs a reference.">
 <!ENTITY LAW.RER.4 "A mechanic this codebase implements and never exercises is a retenue finding of its own: code that no caller reaches cannot be trusted when a release finally reaches it, and flattenConditionals in lib/dtd.mjs is the case that named this law.">
+<!-- The reasons a module carrying a controls verb may stay outside the gate.
+     LAW.ASK.15 of this same release says a bound living in prose is not a
+     bound, and the first cut of the unreached arm escaped on a prose regex
+     that any header saying "because" would satisfy. These are the words, and
+     a module declares one of them on a marker line the arm reads. -->
+<!ENTITY % rer.outside "(spend|nondeterminism|manual)">
+<!ENTITY RER.outside.marker "rer-outside:">
+<!ENTITY RER.outside.spend "the run costs money or quota that a gate must not spend on every push">
+<!ENTITY RER.outside.nondeterminism "the verdict depends on a model or a network, so a red run would not mean the tree is broken">
+<!ENTITY RER.outside.manual "the run needs a human present, so an unattended gate cannot complete it">
+
 <!ENTITY LAW.RER.5 "The run ends with exactly one verdict line, RER.verdict.clean or RER.verdict.findings, and a verdict of findings carries the count; a run that names findings and then reports clean is a broken instrument and exits 2.">
+<!ENTITY LAW.RER.6 "A module that carries a controls verb the gate never runs declares why on a line beginning RER.outside.marker followed by one value of rer.outside; any other word is not an escape and the module is reported. A reason a checker cannot enumerate is a reason nobody can audit.">

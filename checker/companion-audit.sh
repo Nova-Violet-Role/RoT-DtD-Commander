@@ -28,6 +28,13 @@ vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audi
 [ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
 
 # The scorer, on one answer file. Reads the LAST non-empty line for the
+#
+# The allow-list below IS LAW.COMPANION.1 and LAW.COMPANION.2: the nested
+# session is granted Read, Grep, Glob and Bash-under-timeout and nothing that
+# writes, and its stdin is closed. Those two laws are enforced by this shape
+# rather than by a string the runner checks, and naming them here is what lets
+# the contract audit see that they govern something. The root element the
+# answer must take is companion_audit.
 # verdict; counts a high finding only in the OPENING TAG of a line that
 # opens a finding element (the text before its first ">"), the one spelling
 # the prompt commands, so a bold line, a sentence in the prose or a finding
