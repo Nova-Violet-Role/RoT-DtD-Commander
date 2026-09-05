@@ -27,6 +27,14 @@
 // static check passed; 1 otherwise. Every child gets stdin closed, a
 // timeout, and its stdout captured, and a line is printed before and after
 // each session so silence has a shape.
+//
+// OUTSIDE THE GATE, and kept outside on purpose. Of the twenty-three modules
+// that carry a controls verb, this is the only one the gate does not reach:
+// it spends real API calls, one headless session per installed name, and its
+// verdicts depend on a model rather than on this tree. Recorded here because
+// a thing kept out for a reason nobody wrote down is indistinguishable from a
+// thing forgotten (LAW.RER.3), and forgetting is what hid flattenConditionals
+// in lib/dtd.mjs for a whole release. Run it by hand before a major.
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, cpSync, rmSync } from 'node:fs';
 import { join, dirname, basename, resolve } from 'node:path';
