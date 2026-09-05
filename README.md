@@ -12,6 +12,9 @@
 
 *131 Claude Code slash commands, 22 skills and 5 agents whose answer grammar, verdicts, laws and trust boundary are declared in a DTD inside each file; a guided NPX installer; the Adiutor, a Stop hook that checks every answer against the DOCTYPE that produced it; and the Commander-Adiutor, a monitor that hands every failed answer to the session as the ledger closes it*
 
+[![claude.ai Customize — drag the release archive into Customize](docs/badge-claude-ai.svg)](#hosted-install)
+[![Claude Cowork Plugin — the same archive installs on the desktop app](docs/badge-cowork.svg)](#hosted-install)
+
 [![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/saimonokuma)
 [![Nova-Violet Role](https://img.shields.io/badge/Nova--Violet-Role-9b59b6?style=for-the-badge)](https://github.com/Nova-Violet-Role)
 [![License](https://img.shields.io/badge/License-AGPL--3.0_OR_EUPL--1.2-764ba2?style=for-the-badge)](LICENSE)
@@ -40,6 +43,34 @@
   <source media="(prefers-color-scheme: dark)" srcset="docs/section-about-dark.svg" />
   <img alt="📜 About" src="docs/section-about.svg" />
 </picture>
+
+<a id="hosted-install"></a>
+
+## 🧩 Install on claude.ai and Claude Cowork
+
+**[Download the latest release](https://github.com/Nova-Violet-Role/RoT-DtD-Commander/releases/latest)**, take the file named `claude_ai_cowork_rot_dtd_commander_<version>.zip`, and drag it into **Customize** on claude.ai. That is the install. No terminal, no Node, no `npx`.
+
+One archive covers both surfaces. The same file you drop into Customize on **claude.ai** is the one **Claude Cowork** takes on your desktop — we install from it on both, and there is no separate download for either. Measured on 2026-09-05; the archive that installed is the one the release ships.
+
+<details>
+<summary><b>What is different between claude.ai and Claude Cowork?</b></summary>
+
+Nothing that changes what you install. Both read the same `.claude-plugin/plugin.json`, discover the same `commands/`, `skills/` and `agents/` directories, and refuse the same things — an executable on PATH, a description over 500 characters, an XML tag in a description. We built one archive for both and it was accepted by both.
+
+What differs is what surrounds them: Cowork runs on your machine and can reach your files, claude.ai runs in the browser. The plugin is identical either way.
+
+The organisation **Admin Console** approves plugins from the same manifest, which is precisely why a hosted plugin may not ship a `bin/` directory: anything landing on PATH would not appear on the approval surface. We have not run an org-wide rollout ourselves, so treat that path as unverified here.
+
+</details>
+
+<details>
+<summary><b>How we made a CLI plugin installable on a hosted surface</b></summary>
+
+Three refusals, three rounds, and one of them was two errors wearing the same coat. The whole method — what each refusal actually meant, which of them was a cascade, the four files that had to follow `bin/`, the description contract and the two rules that now hold it, and the Guard that fails CI when a future release breaks the trick — is written down for you to copy in **[docs/HOSTED-PLUGIN.md](docs/HOSTED-PLUGIN.md)**.
+
+It is a recipe, not a war story. If you maintain a Claude Code plugin with executables and want it on claude.ai, that file is the shortest path we know.
+
+</details>
 
 ## 🚀 Install
 
@@ -459,7 +490,7 @@ want the grammar enforced rather than merely declared.
      | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
      | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
      | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
-     | every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `52 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
+     | every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `55 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
      | every build target under commands, skills and agents is tracked; an ignored one would pass the drift check here and fail it on a fresh checkout | `bash checker/tracked-sweep.sh`: `0 ignored build targets`, its planted control reported | every push |
      | every command, skill and agent of the tree is named in the README index, each command in exactly one family | `node checker/readme-index.mjs --check`: `README block in step`; `--controls`: an unclaimed name refused, a removed row reported | every push |
      | the version is one everywhere: package.json, plugin.json, both marketplace fields, the top changelog section, a RELEASE.md heading, and the tag that ships | `node checker/release-notes.mjs --versions`, and the release job with the tag; controls plant a stray manifest, a missing heading and a wrong tag | every push, and the tag |
