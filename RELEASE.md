@@ -18,6 +18,16 @@
 
 ---
 
+## v7.2.0 — it installs on claude.ai and Claude Cowork
+
+Download the archive, drag it into Customize. No terminal, no Node, no `npx`,
+and the same file works on Claude Cowork.
+
+- **[`claude_ai_cowork_rot_dtd_commander_7.2.0.zip`](https://github.com/Nova-Violet-Role/RoT-DtD-Commander/releases/latest)** &mdash; one archive, both surfaces, with a `.sha256` and a `SHA256SUMS` beside it.
+- **Two commands came back.** The surface reported 129 where the tree holds 131; two command names were also skill names, and a shadowed command never reaches you.
+- **The repository did not move.** `bin/` is where it always was; the archive is derived, and a guard with 23 controls refuses one the surface would refuse.
+- **How we did it** &mdash; [docs/HOSTED-PLUGIN.md](docs/HOSTED-PLUGIN.md), written as a recipe rather than a war story.
+
 ## v7.1.3 — the page is drawn
 
 Thirty-six plates, one per family per theme. The mermaid fence is gone, the

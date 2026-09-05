@@ -7,6 +7,55 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 7.2.0 (2026-09-05)
+
+### It installs on claude.ai and Claude Cowork
+
+One archive, dragged into Customize, installs the whole suite on the hosted
+surfaces. It took three refused uploads to learn the rules, and the fourth
+worked. `checker/pack-claude-ai.mjs` derives that archive from the tracked tree
+and refuses one the surface would refuse; the repository itself did not move.
+
+- **`bin/` becomes `.bin/` in the archive alone.** A hosted plugin may not ship
+  a PATH directory. The two executables stay where the CLI, `npx`,
+  `package.json` and this workflow expect them; four files that name `bin/` as a
+  live path follow it inside the archive, and 218 lines that merely describe the
+  build are deliberately left alone.
+- **Thirty descriptions rewritten at pack time**, none truncated. The surface
+  caps a description at 500 characters and refuses XML tags in one. It reported
+  5 over-long commands and 1 tagged skill; the tree carried **8 and 3**, so the
+  error list was 54% of the truth. `plugin.json` went 1035 to 497 and the
+  marketplace description 1274 to 497, both keeping every pattern
+  `counts-sweep` and `about-sweep` match against them.
+- **Two shadowed commands recovered.** The surface reported 129 commands where
+  the tree holds 131, with no error to explain it: `ai-slop-dtd` and
+  `setup-ralph-dtd` were each also a skill name, and a command a skill shadows
+  never reaches the user. The archive renames the skills to `ai-slop-gate-dtd`
+  and `setup-ralph-loop-dtd`; H11 recomputes the collision set so a future
+  collision fails by name.
+- **H2 withdrawn, falsified by an upload.** It refused a wrapped archive on the
+  reading that a nested manifest could not be found. A wrapped archive is what
+  installed. Every "missing manifest" report was really the over-long
+  description making the manifest invalid: one fault, reported three times. The
+  control was inverted rather than deleted, so the suite re-proves it.
+- **A baseline, not just rules.** H12 compares the archive against the state
+  recorded in `checker/hosted-plugin.json` and fails when a release changes the
+  component counts or the collision set, naming the divergence. It does not
+  self-heal on purpose: a guard that absorbs drift hides it.
+- **Two gradient badges** drawn by `checker/badges.mjs`, not fetched. A
+  shields.io half is one flat colour and the brief asked for a transition.
+- **Releases carry checksums.** The job attaches
+  `claude_ai_cowork_rot_dtd_commander_7.2.0.zip`, a `.sha256` beside it and a
+  `SHA256SUMS`, next to the two source archives GitHub attaches itself.
+- **`docs/HOSTED-PLUGIN.md`** writes the whole method down so another
+  maintainer can repeat it.
+
+`node checker/pack-claude-ai.mjs --controls`: `23 run, 0 failing`.
+`node checker/badges.mjs --controls`: `6 run, 0 failing`.
+131 commands, 22 skills, 5 agents; checked 158; 1440 declarations; 55 gate-chain commands.
+From inside an extraction of the archive, `node .bin/rot-dtd-commander.mjs check`:
+`checked 158  failed 0`.
+
 ## 7.1.3 (2026-09-05)
 
 ### The page is drawn

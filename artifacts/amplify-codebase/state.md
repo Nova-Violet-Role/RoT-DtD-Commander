@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 6
-- verb: 5
+- run: 7
+- verb: 9
 - offset: 0
 - page: 1
-- from: 7.1.2
-- release: minor 7.1.3
+- from: 7.1.3
+- release: mid 7.2.0
 - walked: schematic, form, voice, args, record, report, task, workflow, adiutor, license, rot, generic
 
 | id | class | layer | verdict | verb | refused_at | why | run |
@@ -51,3 +51,8 @@
 | e5f0de02 | gap | report | marked | 3 |  | the same 131 commands were listed twice on one page, as index rows and again as glossary plates; the duplicate is gone and README fell 63,793 to 40,557 bytes | 6 |
 | e5f0de03 | idea | form | marked | 3 |  | the mermaid fence became a drawing we make, each spoke in the colour its family already declares for its badge | 6 |
 | e5f0de04 | gap | report | marked | 2 |  | six plates clipped a family note at 150 characters; nothing is truncated now, measured at 0 ellipses across 36 plates | 6 |
+| f6a0de01 | gap | install | done | 9 |  | the plugin could not be installed on claude.ai or Claude Cowork at all; one derived archive now installs on both and the repository did not move | 7 |
+| f6a0de02 | gap | guard | done | 6 |  | description length was measured nowhere in a repository with thirty guards; H9 and H10 measure it and C14 proves the boundary is not off by one | 7 |
+| f6a0de03 | gap | guard | done | 8 |  | the trip-every-guard-on-purpose pattern grown to two new instruments, twenty-three controls in the packer and six in the badge generator | 7 |
+| f6a0de04 | gap | guard | done | 6 |  | two commands were shadowed by same-named skills and the only symptom was a count of 129; H11 recomputes the collision set so a future one fails by name | 7 |
+| f6a0de05 | gap | report | done | 7 |  | the hosted method was a story inside one session; docs/HOSTED-PLUGIN.md makes it a recipe another maintainer can repeat | 7 |
