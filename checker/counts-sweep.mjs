@@ -39,7 +39,15 @@ export function measure(root = ROOT) {
   const skills = readdirSync(join(root, 'skills')).filter((d) => existsSync(join(root, 'skills', d, 'SKILL.md'))).length;
   const agents = readdirSync(join(root, 'agents')).filter((f) => f.endsWith('.md')).length;
   const guards = Math.max(...[...readFileSync(join(root, 'bin', 'adiutor.mjs'), 'utf8').matchAll(/control\('C(\d+)/g)].map((m) => Number(m[1])));
-  const checkerControls = Math.max(...[...readFileSync(join(root, 'checker', 'checker-controls.sh'), 'utf8').matchAll(/\bM(\d+)\b/g)].map((m) => Number(m[1]))) + 1;
+  // The checker controls are what the script prints when it runs, never a
+  // formula over its labels: max(M)+1 could not see M17c and published twenty
+  // for twenty-one while this sweep reported every place in step (third
+  // companion pass). The span, M0 to M19, is a second number read separately.
+  const checkerSpan = Math.max(...[...readFileSync(join(root, 'checker', 'checker-controls.sh'), 'utf8').matchAll(/\bM(\d+)\b/g)].map((m) => Number(m[1])));
+  const ccOut = runOut('bash checker/checker-controls.sh');
+  const ccm = /checker controls: (\d+) run, (\d+) failing/.exec(ccOut);
+  if (!ccm) throw new Error(`counts-sweep: checker-controls.sh printed no total line: ${ccOut.slice(-200)}`);
+  const checkerControls = Number(ccm[1]);
   const audit = spawnSync(process.execPath, [join(root, 'checker', 'contract-audit.mjs')], { cwd: root, encoding: 'utf8', timeout: 120000 });
   const m = String(audit.stdout || '').match(/contract-audit: (\d+) declarations/);
   if (!m) throw new Error(`counts-sweep: contract-audit printed no declarations count: ${String(audit.stdout || audit.stderr).slice(0, 120)}`);
@@ -61,13 +69,13 @@ export function measure(root = ROOT) {
   return {
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
-    amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, declarations: Number(m[1]) };
+    amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, declarations: Number(m[1]) };
 }
 
 // Where each count is printed: a file, a pattern with one capture per
 // number, and the measured names the captures must equal.
 export function places(c) {
-  return [
+  const p = [
     { file: 'README.md', re: /badge\/checked-(\d+)_files/, want: [c.checked], label: 'the Checker badge' },
     { file: 'README.md', re: /contract_audit-(\d+)_declarations/, want: [c.declarations], label: 'the Contract badge' },
     { file: 'README.md', re: /guards_tripped_on_purpose-(\d+)_%2B_(\d+)/, want: [c.guards, c.checkerControls], label: 'the Controls badge' },
@@ -94,7 +102,8 @@ export function places(c) {
     { file: '.claude-plugin/marketplace.json', re: /(\d+) skills and (\d+) agents/, want: [c.skills, c.agents], label: 'the marketplace plugin description, skills and agents' },
     // The claims rows and the Measured block: prose a reader takes as evidence.
     { file: 'README.md', re: /`rdc build --check`: `(\d+) targets, 0 drifted/, want: [c.buildTargets], label: 'the claims row of the build' },
-    { file: 'README.md', re: /checker-controls\.sh`: ([a-z-]+) controls M0 to M(\d+)/, want: [c.checkerControls, c.checkerControls - 1], label: 'the claims row of the checker controls' },
+    { file: 'README.md', re: /checker-controls\.sh`: ([a-z-]+) controls M0 to M(\d+)/, want: [c.checkerControls, c.checkerSpan], label: 'the claims row of the checker controls' },
+    { file: '.github/workflows/gate.yml', re: /checker controls \(M0 to M(\d+) - seven mutations refused, one under INCLUDE and the untouched file pass, ([a-z-]+) scorer and runner controls\)/, want: [c.checkerSpan, c.checkerControls - 9], label: 'the gate step name of the checker controls' },
     { file: 'README.md', re: /contract-audit\.mjs`: `(\d+) declarations, 0 unused/, want: [c.declarations], label: 'the claims row of the contract audit' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },
     { file: 'CHANGELOG.md', re: /matrix --check`, (\d+) controls\./, want: [c.crossOsControls], label: 'the changelog cross-os prose' },
@@ -105,6 +114,13 @@ export function places(c) {
     { file: 'CHANGELOG.md', re: /checked (\d+); (\d+) declarations; (\d+) gate-chain commands/, want: [c.checked, c.declarations, c.gateChain], label: 'the changelog summary row' },
     { file: 'RELEASE.md', re: /(\d+) declarations; recognised/, want: [c.declarations], label: 'the release notes declarations' },
   ];
+  // The sweep's own size, published in two places: the claims row said 22
+  // while the sweep printed 33 (third companion pass). Two rows are added
+  // below, so the count each must carry is the length after both.
+  const total = p.length + 2;
+  p.push({ file: 'README.md', re: /counts-sweep\.mjs`: `(\d+) places in step/, want: [total], label: 'the claims row of this sweep' });
+  p.push({ file: 'CHANGELOG.md', re: /the sweep reads (\d+) places, from 22/, want: [total], label: 'the changelog sentence about this sweep' });
+  return p;
 }
 
 export function check(c, texts) {

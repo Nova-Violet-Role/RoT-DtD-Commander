@@ -26,7 +26,7 @@ say. The single-leg approach is replaced, not kept beside: `gate` and
 - **`dtd/cross-os.dtd`**, LAW.XOS.1 to 7. The three legs are an enumeration,
   the four local substrates are probed and never guessed, and the eight shell
   forms a leg lacks are a list the sweep reads, in both directions. `lib/cross-os.mjs`:
-  `probe`, `sweep`, `matrix --check`, 26 controls.
+  `probe`, `sweep`, `matrix --check`, 27 controls.
 - **The podman trap.** `podman machine list` on this machine answers a header
   and zero rows at exit 0; a script that tests the exit code concludes a
   substrate exists. LAW.XOS.1 reads the rows. WSL is not installed (exit 50),
@@ -69,12 +69,26 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads twelve more
-places. The cross-os sweep reads `package.json` scripts and refuses a release
-job that does not need every leg; the scorer refuses two verdict lines and
-none (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil
-document accused of steering flags measured clean, 0 of each, and was left
-as it was.
+counts sweep reported every place in step: the sweep reads 36 places, from 22.
+The cross-os sweep reads `package.json` scripts and refuses a release job
+that does not need every leg; the scorer refuses two verdict lines and none
+(M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document
+accused of steering flags measured clean, 0 of each, and was left as it was.
+
+The third pass read the second and found the same class one indirection
+later. The state record capped a row at 160 characters and the ledger
+re-emitted from it lost twenty-nine committed characters mid-word; the cap is
+gone and a row of 270 round-trips whole. The checker-control count was a
+formula over labels, max(M) plus one, blind to M17c: twenty was published in
+three places for a script that runs twenty-one, and the sweep meant to catch
+it could not. The script counts what it runs and prints `checker controls: 21
+run, 0 failing`; the sweep reads that line, the span M0 to M19 beside it, and
+its own size. The signal line in `lib/ceiling.mjs` had no control; a child
+killed with SIGTERM under its ceiling now exits 143 on every leg, and the old
+flat 9 fails it at 137. The release-needs check read every job after
+`release:` and holds only its own block now; a needs line in a later job no
+longer stands in. A form in a `package.json` script is reported at the line
+the file declares it.
 
 ### The fifteenth family: the Graphic and Geometric Suite
 
@@ -107,14 +121,14 @@ release; the rest are unmeasured and say so.
 
 ### Measured
 
-- `node lib/cross-os.mjs controls`: 26 run, 0 failing
+- `node lib/cross-os.mjs controls`: 27 run, 0 failing
 - `node lib/figure.mjs controls`: 23 run, 0 failing
 - `node lib/geometry.mjs controls`: 38 run, 0 failing
-- `node lib/ceiling.mjs controls`: 6 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
+- `node lib/ceiling.mjs controls`: 7 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
 - `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
 - `node checker/contract-audit.mjs`: 1619 declarations, 0 unused, 0 law gaps
 - 134 commands, 22 skills, 5 agents; checked 161; 1619 declarations; 63 gate-chain commands
-- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3 at 7.2.0
+- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3 at 7.2.0
 
 ## 7.2.0 (2026-09-05)
 
