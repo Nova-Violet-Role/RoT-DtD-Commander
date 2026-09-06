@@ -98,7 +98,9 @@ $files"
 
 echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${secs}s log=$log"
 # cwd is the scratchpad, not the repo: a nested session's hooks must not touch the tree (measured: CRLF .gitignore, .claude/, .codemap/, CLAUDE.md).
-( cd "$out" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 env -u CLAUDECODE ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
+# CLAUDECODE is unset in the subshell, not through env -u: env execs a binary and
+# cannot see the ceil function, and the first 8.0.0 run exited 127 that way.
+( unset CLAUDECODE; cd "$out" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
   --allowedTools "Read,Grep,Glob,Bash(timeout 60 node:*),Bash(timeout 60 git:*)" \
   < /dev/null 2>&1 ) | tee "$raw" | tail -c 400
 rc=${PIPESTATUS[0]}
