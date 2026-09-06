@@ -69,7 +69,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 36 places, from 22.
+counts sweep reported every place in step: the sweep reads 37 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document
@@ -104,6 +104,21 @@ without a line, is counted: twenty-two. The sweep refuses a total line with a
 failing count above zero, reads the gate step name's three numbers from the
 script's labels instead of subtracting a constant, and runs its instruments
 once per leg.
+
+The fifth pass read the fourth and used what it had built. Importing the
+packer to exercise its new exports packed a 5.4 MB archive into `dist/` and
+exited the importing process, because the entry point ran at module scope;
+it runs only as a script now, C24 imports the module in a child and proves
+nothing is written, and `dist/` is ignored. The control script raised
+`fail` twice on twenty-one of twenty-two failing paths, so one red control
+would have printed two; `ko` is the only writer now, and a plant mode runs
+one control forced to fail and prints `2 run, 1 failing`, read by the sweep.
+The gate's one invocation of the sweep printed a count of drifted places and
+no name; it prints every `DRIFT` line. The marketplace opening's three
+family counts, nineteen book-derived commands, sixteen creators over eight
+schematics, were frozen in the packer's template and held by nothing; the
+sweep measures them from the shelf and the variants on disk, the packer
+reads them from the tree, and C16 compares them.
 
 ### The fifteenth family: the Graphic and Geometric Suite
 
@@ -143,7 +158,7 @@ release; the rest are unmeasured and say so.
 - `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
 - `node checker/contract-audit.mjs`: 1619 declarations, 0 unused, 0 law gaps
 - 134 commands, 22 skills, 5 agents; checked 161; 1619 declarations; 62 gate-chain commands
-- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3, 7, 3 at 7.2.0
+- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3, 7, 3, 6, 3 at 7.2.0
 
 ## 7.2.0 (2026-09-05)
 

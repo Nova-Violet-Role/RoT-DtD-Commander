@@ -75,7 +75,17 @@ export function measure(root = ROOT) {
   // instrument answered six. A number printed once is read here or it drifts.
   const ceilingControls = Number((/ceiling controls: (\d+) run/.exec(runOut('node lib/ceiling.mjs controls')) || [])[1] || 0);
   const encodingControls = Number((/encoding controls: (\d+) run/.exec(runOut('node lib/encoding.mjs controls')) || [])[1] || 0);
+  // The three family counts the marketplace opening spells in words, and the
+  // hosted packer builds from it: the book-derived commands as the slop gate's
+  // shelf prints them, the schematics as the create-prompt variants on disk,
+  // the creators as the prompt and meta-prompt variants together (fifth pass:
+  // frozen in the packer's template, held by nothing).
+  const books = Number((/shelf: (\d+) book-derived commands/.exec(runOut('node lib/ai-slop.mjs controls')) || [])[1] || 0);
+  const cmdNames = readdirSync(join(root, 'commands'));
+  const schematics = cmdNames.filter((f) => /^create-prompt-[a-z]+-dtd\.md$/.test(f)).length;
+  const creators = schematics + cmdNames.filter((f) => /^create-meta-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   return {
+    books, schematics, creators,
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, mutationsRefused, declarations: Number(m[1]) };
@@ -109,6 +119,7 @@ export function places(c) {
     { file: 'RELEASE.md', re: /lib\/list\.mjs controls` (\d+) run/, want: [c.listControls], label: 'the release notes list controls' },
     { file: 'CHANGELOG.md', re: /lib\/starlist\.mjs controls`: (\d+) run/, want: [c.starlistControls], label: 'the changelog starlist controls' },
     { file: '.claude-plugin/marketplace.json', re: /(\d+) skills and (\d+) agents/, want: [c.skills, c.agents], label: 'the marketplace plugin description, skills and agents' },
+    { file: '.claude-plugin/marketplace.json', re: /([a-z-]+) book-derived commands[^,]*, ([a-z-]+) prompt and meta-prompt creators over ([a-z-]+) schematics/, want: [c.books, c.creators, c.schematics], label: 'the marketplace plugin description, the three families in words' },
     // The claims rows and the Measured block: prose a reader takes as evidence.
     { file: 'README.md', re: /`rdc build --check`: `(\d+) targets, 0 drifted/, want: [c.buildTargets], label: 'the claims row of the build' },
     { file: 'README.md', re: /checker-controls\.sh`: ([a-z-]+) controls M0 to M(\d+)/, want: [c.checkerControls, c.checkerSpan], label: 'the claims row of the checker controls' },
@@ -157,7 +168,15 @@ function readAll(root = ROOT) {
 function controls(c, texts) {
   let fail = 0;
   const say = (ok, text) => { console.log(`  ${ok ? 'PASS' : 'FAIL'} ${text}`); if (!ok) fail++; };
-  say(check(c, texts).length === 0, 'the tree as it stands reports nothing');
+  const d0 = check(c, texts);
+  say(d0.length === 0, d0.length === 0 ? 'the tree as it stands reports nothing' : `the tree as it stands drifts: ${d0.join(' | ')}`);
+  // The control script counts a failing control exactly once: its plant mode
+  // runs M0 and one control forced to fail, and the total line must read two
+  // run, one failing, at exit 1 (fifth companion pass: ko and a second
+  // increment on the same line were counting one failure as two).
+  const plant = spawnSync('bash', ['checker/checker-controls.sh'], { cwd: ROOT, encoding: 'utf8', timeout: 120000, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, CC_PLANT_FAIL: '1' } });
+  const total = /checker controls: (\d+) run, (\d+) failing/.exec(String(plant.stdout || '') + String(plant.stderr || ''));
+  say(plant.status === 1 && total && total[1] === '2' && total[2] === '1', `trip: a planted failing control is counted once by the script's total line: ${total ? `${total[1]} run, ${total[2]} failing` : 'no total line'}, exit ${plant.status}`);
   const planted = { ...texts, 'README.md': texts['README.md'].replace(/badge\/checked-(\d+)_files/, 'badge/checked-1_files') };
   const d1 = check(c, planted);
   say(d1.length === 1 && /Checker badge says 1, the tree measures/.test(d1[0]), `trip: a planted Checker badge is reported by name: ${d1[0] || 'nothing'}`);
@@ -167,7 +186,7 @@ function controls(c, texts) {
   const gone = { ...texts, 'package.json': texts['package.json'].replace(/\d+ Claude Code commands/, 'many commands') };
   const d3 = check(c, gone);
   say(d3.length === 1 && /package description not found/.test(d3[0]), `trip: a count removed from a description is reported as not found: ${d3[0] || 'nothing'}`);
-  console.log(`counts-sweep controls: 4 run, ${fail} failing`);
+  console.log(`counts-sweep controls: 5 run, ${fail} failing`);
   return fail === 0;
 }
 
@@ -182,6 +201,9 @@ function main() {
   if (process.argv[2] === '--controls') {
     const ok = controls(c, texts);
     const d = check(c, texts);
+    // The drift lines are the whole point of the sweep: the fifth pass found
+    // the gate's one invocation printing a count of drifted places and no name.
+    for (const line of d) console.log(`  DRIFT ${line}`);
     console.log(`counts-sweep: ${summary}; ${d.length === 0 ? `${places(c).length} places in step` : `${d.length} places drifted`}`);
     process.exit(ok && d.length === 0 ? 0 : 1);
   }

@@ -41,6 +41,7 @@
 // runner, this machine and any contributor produce the same bytes.
 
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { execFileSync } from 'node:child_process';
@@ -162,10 +163,13 @@ export function treeCounts(pluginText, marketText) {
   const d = /(\d+) declarations/.exec(pd);
   const g = /([a-z-]+) Adiutor guards and ([a-z-]+) checker controls/.exec(pd);
   const m = /^(\d+) commands, (\d+) of them -dtd, with (\d+) skills and (\d+) agents/.exec(md);
-  const missing = [['plugin counts', a], ['plugin declarations', d], ['plugin guards', g], ['market opening', m]].filter(([, x]) => !x).map(([n]) => n);
+  // The three family counts the marketplace opening carries in words; the
+  // fifth pass found them frozen in the template while the rest was read.
+  const f = /([a-z-]+) book-derived commands[^,]*, ([a-z-]+) prompt and meta-prompt creators over ([a-z-]+) schematics/.exec(md);
+  const missing = [['plugin counts', a], ['plugin declarations', d], ['plugin guards', g], ['market opening', m], ['market families', f]].filter(([, x]) => !x).map(([n]) => n);
   if (missing.length) throw new Error('pack: the tree manifests lack the pattern(s) the hosted descriptions are built from: ' + missing.join(', '));
   if (a[1] !== m[1] || a[2] !== m[3] || a[3] !== m[4]) throw new Error('pack: plugin.json and marketplace.json disagree on the counts: ' + a[1] + '/' + a[2] + '/' + a[3] + ' against ' + m[1] + '/' + m[3] + '/' + m[4]);
-  return { commands: a[1], skills: a[2], agents: a[3], declarations: d[1], guards: g[1], checkerControls: g[2], dtd: m[2] };
+  return { commands: a[1], skills: a[2], agents: a[3], declarations: d[1], guards: g[1], checkerControls: g[2], dtd: m[2], books: f[1], creators: f[2], schematics: f[3] };
 }
 
 export function pluginDesc(c) {
@@ -173,7 +177,7 @@ export function pluginDesc(c) {
 }
 
 export function marketDesc(c) {
-  return c.commands + ' commands, ' + c.dtd + ' of them -dtd, with ' + c.skills + ' skills and ' + c.agents + ' agents: the nine RoT MoE lenses and ELEVATE, nineteen book-derived commands, sixteen prompt and meta-prompt creators over eight schematics, creators for skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks, and the research, tasks, growth and list families. Every file declares its grammar, laws and trust boundary in a DOCTYPE the checker enforces. A plain install arms nothing; rdc arm arms the hooks.';
+  return c.commands + ' commands, ' + c.dtd + ' of them -dtd, with ' + c.skills + ' skills and ' + c.agents + ' agents: the nine RoT MoE lenses and ELEVATE, ' + c.books + ' book-derived commands, ' + c.creators + ' prompt and meta-prompt creators over ' + c.schematics + ' schematics, creators for skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks, and the research, tasks, growth and list families. Every file declares its grammar, laws and trust boundary in a DOCTYPE the checker enforces. A plain install arms nothing; rdc arm arms the hooks.';
 }
 
 // The numbers a hosted description carries, read back with the patterns above,
@@ -183,13 +187,14 @@ export function descCounts(pd, md) {
   const d = /(\d+) declarations/.exec(pd) || [];
   const g = /([a-z-]+) Adiutor guards and ([a-z-]+) checker controls/.exec(pd) || [];
   const m = /^(\d+) commands, (\d+) of them -dtd, with (\d+) skills and (\d+) agents/.exec(md) || [];
-  return { commands: a[1], skills: a[2], agents: a[3], declarations: d[1], guards: g[1], checkerControls: g[2], dtd: m[2], marketCommands: m[1], marketSkills: m[3], marketAgents: m[4] };
+  const f = /([a-z-]+) book-derived commands[^,]*, ([a-z-]+) prompt and meta-prompt creators over ([a-z-]+) schematics/.exec(md) || [];
+  return { commands: a[1], skills: a[2], agents: a[3], declarations: d[1], guards: g[1], checkerControls: g[2], dtd: m[2], marketCommands: m[1], marketSkills: m[3], marketAgents: m[4], books: f[1], creators: f[2], schematics: f[3] };
 }
 
 export function descDrift(pd, md, tree) {
   const have = descCounts(pd, md);
   const out = [];
-  for (const k of ['commands', 'skills', 'agents', 'declarations', 'guards', 'checkerControls', 'dtd']) if (have[k] !== tree[k]) out.push(k + ': the archive says ' + have[k] + ', the tree says ' + tree[k]);
+  for (const k of ['commands', 'skills', 'agents', 'declarations', 'guards', 'checkerControls', 'dtd', 'books', 'creators', 'schematics']) if (have[k] !== tree[k]) out.push(k + ': the archive says ' + have[k] + ', the tree says ' + tree[k]);
   if (have.marketCommands !== tree.commands) out.push('market commands: the archive says ' + have.marketCommands + ', the tree says ' + tree.commands);
   if (have.marketSkills !== tree.skills || have.marketAgents !== tree.agents) out.push('market skills and agents: the archive says ' + have.marketSkills + '/' + have.marketAgents + ', the tree says ' + tree.skills + '/' + tree.agents);
   return out;
@@ -1036,6 +1041,19 @@ function controls() {
     }
   });
 
+  run('C24 importing this module packs nothing and exits nothing: the entry point runs only as a script', () => {
+    const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'rot-pack-import-'));
+    const me = path.resolve(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
+    const script = 'import(' + JSON.stringify(new URL(import.meta.url).href) + ').then(function (m) { console.log("imported " + typeof m.treeCounts + " " + typeof m.descDrift); })';
+    let out = ''; let code = 0;
+    try { out = execFileSync(process.execPath, ['--input-type=module', '-e', script], { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 60000 }); } catch (e) { code = e.status; out = String(e.stdout || '') + String(e.stderr || ''); }
+    const wroteHere = fs.existsSync(path.join(cwd, 'dist'));
+    const wroteRoot = fs.existsSync(path.join(ROOT, 'dist')) ? 'dist/ under the repository exists' : '';
+    fs.rmSync(cwd, { recursive: true, force: true });
+    const ok = code === 0 && /^imported function function/m.test(out) && !wroteHere && !/built into/.test(out);
+    return { ok, detail: ok ? 'imported, two exports typed function, no archive written, no exit (' + me.split(/[\\/]/).pop() + ')' : 'exit ' + code + ', dist written here ' + wroteHere + ' ' + wroteRoot + ': ' + out.trim().slice(0, 160) };
+  });
+
   run('C17 the clean archive has no command shadowed by a skill', () => {
     const f = audit(clean.buf, { version, expect: files.length });
     const c = f.filter((x) => x.code === 'H11');
@@ -1225,4 +1243,9 @@ function main(argv) {
   return bad ? 1 : 0;
 }
 
-process.exit(main(process.argv.slice(2)));
+// The entry point runs only when this file is the script, never on import:
+// the fourth pass exported five functions and the fifth pass, importing one,
+// packed a 5.4 MB archive into dist/ and had its own process exited. Control
+// C24 imports the module in a child and proves nothing is written.
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
+if (isMain) process.exit(main(process.argv.slice(2)));

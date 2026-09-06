@@ -26,6 +26,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 desktop.ini
+# the hosted archives checker/pack-claude-ai.mjs writes; a git add -A must never sweep one in (fifth companion pass)
+dist/
 *.rot-dtd-commander.*.bak
 
 # The scratch worktrees of /deep-scratch-dtd (lib/scratch.mjs open); each is a
