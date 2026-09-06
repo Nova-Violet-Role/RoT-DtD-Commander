@@ -73,7 +73,7 @@
   "sweep:index": "node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls",
   "sweep:glossary": "node checker/glossary.mjs --check",
   "controls:glossary": "node checker/glossary.mjs --controls",
-  "sweep:counts": "node checker/counts-sweep.mjs && node checker/counts-sweep.mjs --controls",
+  "sweep:counts": "node checker/counts-sweep.mjs --controls",
   "controls:hosted": "node checker/pack-claude-ai.mjs --controls",
   "pack:hosted": "node checker/pack-claude-ai.mjs",
   "pack:hosted:all": "node checker/pack-claude-ai.mjs --all",

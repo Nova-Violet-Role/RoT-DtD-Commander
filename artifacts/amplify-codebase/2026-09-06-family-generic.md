@@ -18,3 +18,4 @@
 - [gap] lib/ceiling.mjs reported every signal as 9; the signal is mapped to its own number
 - [gap] the signal line of lib/ceiling.mjs was tripped by nothing; a child killed with SIGTERM under its ceiling exits 143 on every leg, measured on Windows as code null and signal SIGTERM, and the old flat 9 fails the control at 137
 - [gap] the release-needs check read every job after release and holds only the release block now, with a control that plants a needs line in a later job; a form in a package.json script is reported at the line the file declares it
+- [gap] the control script counts once per control through ok and ko instead of pass plus fail, M17b which fired without a line is counted, the sweep refuses a total line with a failing count above zero, reads the gate step name from the script labels instead of subtracting a constant, says in its header what it measures, and runs its instruments once per leg

@@ -145,11 +145,60 @@ const DESC_BY_SUFFIX = {
 const TAG_FROM = '<schematic>';
 const TAG_TO = 'SCHEMATIC';
 
-const PLUGIN_DESC =
-  "RoT DtD Commander, the creator kit: 131 Claude Code commands, 22 skills and 5 agents that carry their own DTD grammar, laws and trust boundary, checked against the prose beside them. Creators for prompts, meta-prompts, skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks, each auditing its own output. The Adiutor checks each answer against its DOCTYPE; a plain install arms nothing. 1440 declarations, thirty Adiutor guards and eighteen checker controls.";
+// The two hosted descriptions are built from the tree's own manifests, never
+// frozen: the fourth companion pass of 8.0.0 found both constants three
+// releases behind (131 commands, 1440 declarations, eighteen checker controls)
+// while the tree's plugin.json said 134, 1619 and twenty-one, and the sweep
+// that keeps the tree's manifests in step never reads this file. Every number
+// below is read from .claude-plugin/plugin.json and marketplace.json with the
+// same patterns checker/counts-sweep.mjs holds those files to, so the chain is
+// tree, then manifests, then archive, and a pattern that goes missing refuses
+// the pack by name instead of shipping the last number anyone typed.
+export function treeCounts(pluginText, marketText) {
+  const pd = JSON.parse(pluginText).description || '';
+  const mj = JSON.parse(marketText);
+  const md = (Array.isArray(mj.plugins) && mj.plugins[0] && mj.plugins[0].description) || '';
+  const a = /(\d+) Claude Code commands, (\d+) skills and (\d+) agents/.exec(pd);
+  const d = /(\d+) declarations/.exec(pd);
+  const g = /([a-z-]+) Adiutor guards and ([a-z-]+) checker controls/.exec(pd);
+  const m = /^(\d+) commands, (\d+) of them -dtd, with (\d+) skills and (\d+) agents/.exec(md);
+  const missing = [['plugin counts', a], ['plugin declarations', d], ['plugin guards', g], ['market opening', m]].filter(([, x]) => !x).map(([n]) => n);
+  if (missing.length) throw new Error('pack: the tree manifests lack the pattern(s) the hosted descriptions are built from: ' + missing.join(', '));
+  if (a[1] !== m[1] || a[2] !== m[3] || a[3] !== m[4]) throw new Error('pack: plugin.json and marketplace.json disagree on the counts: ' + a[1] + '/' + a[2] + '/' + a[3] + ' against ' + m[1] + '/' + m[3] + '/' + m[4]);
+  return { commands: a[1], skills: a[2], agents: a[3], declarations: d[1], guards: g[1], checkerControls: g[2], dtd: m[2] };
+}
 
-const MARKET_DESC =
-  "131 commands, 130 of them -dtd, with 22 skills and 5 agents: the nine RoT MoE lenses and ELEVATE, nineteen book-derived commands, sixteen prompt and meta-prompt creators over eight schematics, creators for skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks, and the research, tasks, growth and list families. Every file declares its grammar, laws and trust boundary in a DOCTYPE the checker enforces. A plain install arms nothing; rdc arm arms the hooks.";
+export function pluginDesc(c) {
+  return 'RoT DtD Commander, the creator kit: ' + c.commands + ' Claude Code commands, ' + c.skills + ' skills and ' + c.agents + ' agents that carry their own DTD grammar, laws and trust boundary, checked against their prose. Creators for prompts, meta-prompts, skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks, each auditing its own output. The Adiutor checks each answer against its DOCTYPE; a plain install arms nothing. ' + c.declarations + ' declarations, ' + c.guards + ' Adiutor guards and ' + c.checkerControls + ' checker controls.';
+}
+
+export function marketDesc(c) {
+  return c.commands + ' commands, ' + c.dtd + ' of them -dtd, with ' + c.skills + ' skills and ' + c.agents + ' agents: the nine RoT MoE lenses and ELEVATE, nineteen book-derived commands, sixteen prompt and meta-prompt creators over eight schematics, creators for skills, hooks, commands, subagents, plans, MCP servers, workflows, tasks, filetypes and dorks, and the research, tasks, growth and list families. Every file declares its grammar, laws and trust boundary in a DOCTYPE the checker enforces. A plain install arms nothing; rdc arm arms the hooks.';
+}
+
+// The numbers a hosted description carries, read back with the patterns above,
+// so an archive can be held to the tree it was packed from (control C16).
+export function descCounts(pd, md) {
+  const a = /(\d+) Claude Code commands, (\d+) skills and (\d+) agents/.exec(pd) || [];
+  const d = /(\d+) declarations/.exec(pd) || [];
+  const g = /([a-z-]+) Adiutor guards and ([a-z-]+) checker controls/.exec(pd) || [];
+  const m = /^(\d+) commands, (\d+) of them -dtd, with (\d+) skills and (\d+) agents/.exec(md) || [];
+  return { commands: a[1], skills: a[2], agents: a[3], declarations: d[1], guards: g[1], checkerControls: g[2], dtd: m[2], marketCommands: m[1], marketSkills: m[3], marketAgents: m[4] };
+}
+
+export function descDrift(pd, md, tree) {
+  const have = descCounts(pd, md);
+  const out = [];
+  for (const k of ['commands', 'skills', 'agents', 'declarations', 'guards', 'checkerControls', 'dtd']) if (have[k] !== tree[k]) out.push(k + ': the archive says ' + have[k] + ', the tree says ' + tree[k]);
+  if (have.marketCommands !== tree.commands) out.push('market commands: the archive says ' + have.marketCommands + ', the tree says ' + tree.commands);
+  if (have.marketSkills !== tree.skills || have.marketAgents !== tree.agents) out.push('market skills and agents: the archive says ' + have.marketSkills + '/' + have.marketAgents + ', the tree says ' + tree.skills + '/' + tree.agents);
+  return out;
+}
+
+function treeDescriptions() {
+  const c = treeCounts(fs.readFileSync(path.join(ROOT, '.claude-plugin', 'plugin.json'), 'utf8'), fs.readFileSync(path.join(ROOT, '.claude-plugin', 'marketplace.json'), 'utf8'));
+  return { counts: c, plugin: pluginDesc(c), market: marketDesc(c) };
+}
 
 const DESC_XML = new RegExp('<[A-Za-z/!?][^>]*>');
 
@@ -268,12 +317,12 @@ function fixDescription(name, text) {
 function fixManifest(name, text) {
   if (name === '.claude-plugin/plugin.json') {
     const j = JSON.parse(text);
-    j.description = PLUGIN_DESC;
+    j.description = treeDescriptions().plugin;
     return JSON.stringify(j, null, 1) + LF;
   }
   if (name === '.claude-plugin/marketplace.json') {
     const j = JSON.parse(text);
-    if (Array.isArray(j.plugins) && j.plugins[0]) j.plugins[0].description = MARKET_DESC;
+    if (Array.isArray(j.plugins) && j.plugins[0]) j.plugins[0].description = treeDescriptions().market;
     return JSON.stringify(j, null, 1) + LF;
   }
   return text;
@@ -952,23 +1001,39 @@ function controls() {
     return { ok: f.some((x) => x.code === 'H10'), detail: f.map((x) => x.code).join(',') || 'silent' };
   });
 
-  run('C16 the manifest descriptions in a clean archive keep every counts-sweep pattern', () => {
+  // C16 held the marketplace opening to the literal 131 and tested the plugin
+  // patterns for presence alone, so it asserted the stale numbers instead of
+  // refusing them (fourth companion pass). It compares every number the
+  // archive carries against the tree's manifests now, and C16b proves the
+  // comparison can fail.
+  run('C16 the manifest descriptions in a clean archive carry the numbers the tree manifests carry, under the limit', () => {
     const e = readZip(clean.buf).find((x) => x.name === '.claude-plugin/plugin.json');
     const m = readZip(clean.buf).find((x) => x.name === '.claude-plugin/marketplace.json');
     if (!e || !m) return { ok: false, detail: 'a manifest is missing from the archive' };
     const pd = JSON.parse(extract(clean.buf, e).toString('utf8')).description;
     const md = JSON.parse(extract(clean.buf, m).toString('utf8')).plugins[0].description;
-    const need = [
-      ['plugin counts', /(\d+) Claude Code commands, (\d+) skills and (\d+) agents/.test(pd)],
-      ['plugin declarations', /(\d+) declarations/.test(pd)],
-      ['plugin guards', /([a-z-]+) Adiutor guards and ([a-z-]+) checker controls/.test(pd)],
-      ['market opening', /^131 commands, 130 of them -dtd/.test(md)],
-      ['market skills and agents', /(\d+) skills and (\d+) agents/.test(md)],
-      ['plugin under limit', pd.length <= DESC_LIMIT],
-      ['market under limit', md.length <= DESC_LIMIT],
-    ];
-    const lost = need.filter(([, ok]) => !ok).map(([n]) => n);
-    return { ok: lost.length === 0, detail: lost.length ? 'lost: ' + lost.join(', ') : 'plugin ' + pd.length + ', marketplace ' + md.length + ', every pattern kept' };
+    const tree = treeDescriptions().counts;
+    const drift = descDrift(pd, md, tree);
+    if (pd.length > DESC_LIMIT) drift.push('plugin description is ' + pd.length + ' characters, over ' + DESC_LIMIT);
+    if (md.length > DESC_LIMIT) drift.push('marketplace description is ' + md.length + ' characters, over ' + DESC_LIMIT);
+    return { ok: drift.length === 0, detail: drift.length ? drift.join(' | ') : 'plugin ' + pd.length + ', marketplace ' + md.length + '; ' + tree.commands + ' commands, ' + tree.dtd + ' -dtd, ' + tree.skills + ' skills, ' + tree.agents + ' agents, ' + tree.declarations + ' declarations, ' + tree.guards + ' guards, ' + tree.checkerControls + ' checker controls, every number the tree carries' };
+  });
+
+  run('C16b a description carrying the numbers of three releases ago is refused against the tree by name', () => {
+    const tree = treeDescriptions().counts;
+    const stale = { ...tree, commands: '131', declarations: '1440', checkerControls: 'eighteen', dtd: '130' };
+    const drift = descDrift(pluginDesc(stale), marketDesc(stale), tree);
+    const named = ['commands', 'declarations', 'checkerControls', 'dtd', 'market commands'].filter((k) => drift.some((d) => d.startsWith(k + ':')));
+    return { ok: named.length === 5 && drift.length === 5, detail: drift.length ? drift.join(' | ') : 'silent' };
+  });
+
+  run('C16c a tree manifest that loses a counts-sweep pattern refuses the pack by name', () => {
+    try {
+      treeCounts('{"description":"no numbers here"}', '{"plugins":[{"description":"none"}]}');
+      return { ok: false, detail: 'a manifest with no counts was accepted' };
+    } catch (e) {
+      return { ok: /lack the pattern/.test(String(e.message)), detail: String(e.message).slice(0, 160) };
+    }
   });
 
   run('C17 the clean archive has no command shadowed by a skill', () => {

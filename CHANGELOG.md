@@ -81,14 +81,29 @@ re-emitted from it lost twenty-nine committed characters mid-word; the cap is
 gone and a row of 270 round-trips whole. The checker-control count was a
 formula over labels, max(M) plus one, blind to M17c: twenty was published in
 three places for a script that runs twenty-one, and the sweep meant to catch
-it could not. The script counts what it runs and prints `checker controls: 21
-run, 0 failing`; the sweep reads that line, the span M0 to M19 beside it, and
-its own size. The signal line in `lib/ceiling.mjs` had no control; a child
+it could not. The script counts what it runs and prints a total line; the sweep reads that
+line, the span M0 to M19 beside it, and its own size. The signal line in `lib/ceiling.mjs` had no control; a child
 killed with SIGTERM under its ceiling now exits 143 on every leg, and the old
 flat 9 fails it at 137. The release-needs check read every job after
 `release:` and holds only its own block now; a needs line in a later job no
 longer stands in. A form in a `package.json` script is reported at the line
 the file declares it.
+
+The fourth pass found the count that ships. `checker/pack-claude-ai.mjs`
+rewrote both hosted manifest descriptions from constants three releases old,
+131 commands, 1440 declarations and eighteen checker controls, and its own
+control C16 pinned the stale marketplace opening as a literal, so it asserted
+the wrong number instead of refusing it. The descriptions are built from the
+tree's manifests now, with the patterns the counts sweep holds those files to,
+a missing pattern refuses the pack by name, and C16 compares every number the
+archive carries against the tree; C16b proves a description of three releases
+ago is refused, C16c that a manifest without the patterns is. The control
+script's total was pass plus fail, which a mutation that fails to land would
+inflate; it counts once per control through ok and ko, and M17b, which fired
+without a line, is counted: twenty-two. The sweep refuses a total line with a
+failing count above zero, reads the gate step name's three numbers from the
+script's labels instead of subtracting a constant, and runs its instruments
+once per leg.
 
 ### The fifteenth family: the Graphic and Geometric Suite
 
@@ -127,8 +142,8 @@ release; the rest are unmeasured and say so.
 - `node lib/ceiling.mjs controls`: 7 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
 - `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
 - `node checker/contract-audit.mjs`: 1619 declarations, 0 unused, 0 law gaps
-- 134 commands, 22 skills, 5 agents; checked 161; 1619 declarations; 63 gate-chain commands
-- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3 at 7.2.0
+- 134 commands, 22 skills, 5 agents; checked 161; 1619 declarations; 62 gate-chain commands
+- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3, 7, 3 at 7.2.0
 
 ## 7.2.0 (2026-09-05)
 

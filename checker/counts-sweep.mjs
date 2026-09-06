@@ -8,8 +8,9 @@
 // claims rows, the package.json, plugin.json and marketplace.json
 // descriptions. Commands, skills and agents are counted from the resolved
 // tree; the checked files are their sum; the Adiutor guards are the highest
-// control number in bin/adiutor.mjs; the checker controls are the highest
-// mutation number in checker/checker-controls.sh plus one; the declarations
+// control number in bin/adiutor.mjs; the checker controls are the total line
+// checker/checker-controls.sh prints when it runs, and its span M0 to M19 is
+// read beside it; the declarations
 // are what checker/contract-audit.mjs prints. A number in words (twenty-six)
 // is read through a small table. The tenth companion pass found three of
 // these stale in one release after the gate had passed; this is the
@@ -23,7 +24,7 @@ import { spawnSync } from 'node:child_process';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-const WORDS = { ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, 'twenty-one': 21, 'twenty-two': 22, 'twenty-three': 23, 'twenty-four': 24, 'twenty-five': 25, 'twenty-six': 26, 'twenty-seven': 27, 'twenty-eight': 28, 'twenty-nine': 29, thirty: 30 };
+const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, 'twenty-one': 21, 'twenty-two': 22, 'twenty-three': 23, 'twenty-four': 24, 'twenty-five': 25, 'twenty-six': 26, 'twenty-seven': 27, 'twenty-eight': 28, 'twenty-nine': 29, thirty: 30 };
 const num = (s) => (/^\d+$/.test(s) ? Number(s) : WORDS[s.toLowerCase()]);
 
 // Run an instrument in the foreground and hand back what it printed. A number
@@ -43,10 +44,18 @@ export function measure(root = ROOT) {
   // formula over its labels: max(M)+1 could not see M17c and published twenty
   // for twenty-one while this sweep reported every place in step (third
   // companion pass). The span, M0 to M19, is a second number read separately.
-  const checkerSpan = Math.max(...[...readFileSync(join(root, 'checker', 'checker-controls.sh'), 'utf8').matchAll(/\bM(\d+)\b/g)].map((m) => Number(m[1])));
+  const ccText = readFileSync(join(root, 'checker', 'checker-controls.sh'), 'utf8');
+  const checkerSpan = Math.max(...[...ccText.matchAll(/\bM(\d+)\b/g)].map((m) => Number(m[1])));
+  // The mutation controls M1 to M7, counted from the labels the script prints
+  // through ok, so the gate step name's "seven" is read, not assumed.
+  const mutationsRefused = new Set([...ccText.matchAll(/\bok "M([1-7])\b/g)].map((m) => m[1])).size;
   const ccOut = runOut('bash checker/checker-controls.sh');
   const ccm = /checker controls: (\d+) run, (\d+) failing/.exec(ccOut);
   if (!ccm) throw new Error(`counts-sweep: checker-controls.sh printed no total line: ${ccOut.slice(-200)}`);
+  // A red control suite is not a count: a total line with a failing count
+  // above zero refuses the sweep here, so "36 places in step" can never print
+  // green over a script that failed (fourth companion pass).
+  if (Number(ccm[2]) !== 0) throw new Error(`counts-sweep: checker-controls.sh reports ${ccm[2]} failing control(s); the count of a red suite is not read`);
   const checkerControls = Number(ccm[1]);
   const audit = spawnSync(process.execPath, [join(root, 'checker', 'contract-audit.mjs')], { cwd: root, encoding: 'utf8', timeout: 120000 });
   const m = String(audit.stdout || '').match(/contract-audit: (\d+) declarations/);
@@ -69,7 +78,7 @@ export function measure(root = ROOT) {
   return {
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
-    amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, declarations: Number(m[1]) };
+    amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, mutationsRefused, declarations: Number(m[1]) };
 }
 
 // Where each count is printed: a file, a pattern with one capture per
@@ -103,7 +112,11 @@ export function places(c) {
     // The claims rows and the Measured block: prose a reader takes as evidence.
     { file: 'README.md', re: /`rdc build --check`: `(\d+) targets, 0 drifted/, want: [c.buildTargets], label: 'the claims row of the build' },
     { file: 'README.md', re: /checker-controls\.sh`: ([a-z-]+) controls M0 to M(\d+)/, want: [c.checkerControls, c.checkerSpan], label: 'the claims row of the checker controls' },
-    { file: '.github/workflows/gate.yml', re: /checker controls \(M0 to M(\d+) - seven mutations refused, one under INCLUDE and the untouched file pass, ([a-z-]+) scorer and runner controls\)/, want: [c.checkerSpan, c.checkerControls - 9], label: 'the gate step name of the checker controls' },
+    // The step name spells three numbers: the span, the mutations refused (M1
+    // to M7, counted from the script's own labels) and the scorer and runner
+    // controls, which are every control that is not M0 to M8. Nothing here is
+    // a constant subtracted from a total (fourth companion pass).
+    { file: '.github/workflows/gate.yml', re: /checker controls \(M0 to M(\d+) - ([a-z-]+) mutations refused, one under INCLUDE and the untouched file pass, ([a-z-]+) scorer and runner controls\)/, want: [c.checkerSpan, c.mutationsRefused, c.checkerControls - c.mutationsRefused - 2], label: 'the gate step name of the checker controls' },
     { file: 'README.md', re: /contract-audit\.mjs`: `(\d+) declarations, 0 unused/, want: [c.declarations], label: 'the claims row of the contract audit' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },
     { file: 'CHANGELOG.md', re: /matrix --check`, (\d+) controls\./, want: [c.crossOsControls], label: 'the changelog cross-os prose' },
@@ -162,7 +175,16 @@ function main() {
   const c = measure();
   const texts = readAll();
   const summary = `commands ${c.commands}, skills ${c.skills}, agents ${c.agents}, checked ${c.checked}, guards ${c.guards}, checker controls ${c.checkerControls}, declarations ${c.declarations}`;
-  if (process.argv[2] === '--controls') process.exit(controls(c, texts) ? 0 : 1);
+  // --controls carries the tree check as its first control and prints the
+  // same summary the plain call prints, so one process serves the gate and
+  // the instruments behind measure() run once per leg instead of twice
+  // (fourth companion pass).
+  if (process.argv[2] === '--controls') {
+    const ok = controls(c, texts);
+    const d = check(c, texts);
+    console.log(`counts-sweep: ${summary}; ${d.length === 0 ? `${places(c).length} places in step` : `${d.length} places drifted`}`);
+    process.exit(ok && d.length === 0 ? 0 : 1);
+  }
   const d = check(c, texts);
   for (const line of d) console.log(`  DRIFT ${line}`);
   console.log(`counts-sweep: ${summary}; ${d.length === 0 ? `${places(c).length} places in step` : `${d.length} places drifted`}`);
