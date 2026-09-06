@@ -31,7 +31,8 @@ vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audi
 # The scorer, on one answer file. Reads the LAST non-empty line for the
 #
 # The allow-list below IS LAW.COMPANION.1 and LAW.COMPANION.2: the nested
-# session is granted Read, Grep, Glob and Bash-under-timeout and nothing that
+# session is granted Read, Grep, Glob and Bash under the portable ceiling
+# (node lib/ceiling.mjs 60, because the timeout binary is absent on macOS) and nothing that
 # writes, and its stdin is closed. Those two laws are enforced by this shape
 # rather than by a string the runner checks, and naming them here is what lets
 # the contract audit see that they govern something. The root element the
@@ -88,7 +89,7 @@ Answer in the grammar declared here, one markdown heading per element in declare
 
 $contract
 
-Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run must start with 'timeout 60 ' and end with ' < /dev/null', and the only binaries the allow-list grants are node and git; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'timeout 60 node $here/lib/ai-slop.mjs controls < /dev/null' and 'timeout 60 node $here/lib/ordinals.mjs controls < /dev/null' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
+Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run must start with 'node $here/lib/ceiling.mjs 60 ' (the portable ceiling, because the timeout binary does not exist on every leg) and end with ' < /dev/null', and the only binaries the allow-list grants behind that ceiling are node and git; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'node $here/lib/ceiling.mjs 60 node $here/lib/ai-slop.mjs controls < /dev/null' and 'node $here/lib/ceiling.mjs 60 node $here/lib/ordinals.mjs controls < /dev/null' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
 
 Diff stat:
 $stat
@@ -101,7 +102,7 @@ echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${s
 # CLAUDECODE is unset in the subshell, not through env -u: env execs a binary and
 # cannot see the ceil function, and the first 8.0.0 run exited 127 that way.
 ( unset CLAUDECODE; cd "$out" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
-  --allowedTools "Read,Grep,Glob,Bash(timeout 60 node:*),Bash(timeout 60 git:*)" \
+  --allowedTools "Read,Grep,Glob,Bash(node $here/lib/ceiling.mjs 60 node:*),Bash(node $here/lib/ceiling.mjs 60 git:*)" \
   < /dev/null 2>&1 ) | tee "$raw" | tail -c 400
 rc=${PIPESTATUS[0]}
 echo

@@ -60,10 +60,10 @@ The declarations this command reads: LIST.class.black for what refusal means, LI
 
 <process>
 1. Walk the argument with the cc-args grammar: bare words are class names, `--drop` takes one, `--machine` selects the layer, `--no-gate` skips the intake. The walk splits like shell words and never evaluates.
-2. Measure before asking: read the build files and the extensions present with `timeout 120 node lib/starlist.mjs measure`, so the intake can say what this project would lose. Render it as `walk`.
+2. Measure before asking: read the build files and the extensions present with `node lib/ceiling.mjs 120 node lib/starlist.mjs measure`, so the intake can say what this project would lose. Render it as `walk`.
 3. Read both layers with `node lib/list.mjs show code black`, and render what each holds with its layer.
 4. Run the intake (LAW.ASK.6). Ask only what the measurement cannot answer: which classes, the reason for each, the layer, and whether the softer CB.sibling was meant. Name CB.reaches in the round that proposes the entry, so the install consequence is read before it is chosen.
-5. Run the reachability guard with `timeout 120 node lib/list.mjs reach` before writing. A class this project's whitelisted artifacts need in order to exist is refused with both entries named, and nothing is written (LAW.CB.3).
+5. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing. A class this project's whitelisted artifacts need in order to exist is refused with both entries named, and nothing is written (LAW.CB.3).
 6. Write the entry with its reason and today's date, read the file back, and render `entries` from disk.
 7. Render `implied`: the file rule this code entry carries for free, stated once so no one writes it twice.
 8. Render `verdicts`, then `refused` for anything the guard stopped, then the `next_action`.

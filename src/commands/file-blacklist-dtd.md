@@ -61,7 +61,7 @@ The declarations this command reads: LIST.classes and LIST.scopes for the axes, 
 2. Measure the tree before asking anything: count the files of each extension, so the intake can say what refusing one would actually cost here. Render this as `walk`.
 3. Read both layers with `node lib/list.mjs show file black`, and render what each already holds with its layer.
 4. Run the intake (LAW.ASK.6). Ask only what the walk cannot answer: which extensions, the reason for each, whether the repository or the machine layer, and whether a sibling code entry is meant instead. Never ask about an extension the argument already named.
-5. Before writing, run the reachability guard with `timeout 120 node lib/list.mjs reach`. A refused combination stops the write, and every refusal is rendered as a `refused` element carrying the entry, the collision, the layer and the edit (LAW.FB.3).
+5. Before writing, run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach`. A refused combination stops the write, and every refusal is rendered as a `refused` element carrying the entry, the collision, the layer and the edit (LAW.FB.3).
 6. Check the markdown interlock when md is among the names (LAW.FB.4); refuse with the failed condition named.
 7. Write the entries with their reasons and today's date, then read the file back and render the `entries` element from what is on disk, never from what was intended.
 8. Render `verdicts`: one line per name, holding yes when it is now listed and no when it was refused, and close with the `next_action` a reader should take.

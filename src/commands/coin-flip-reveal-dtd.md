@@ -50,7 +50,7 @@ The instrument is old: a coin does not choose, it reveals what was hoped for whi
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the two sides; render the walk under `args`.
 2. When fewer than two sides were given, round 1 of 3: ask ASK.REVEAL.1; present the gate; on start, bind the sides.
 3. Render the `call` with its two `side` elements: heads bound to the first side, tails to the second.
-4. Run `timeout 10 node -e "console.log(require('node:crypto').randomInt(2))" < /dev/null`, quote its stdout, render the `toss` with the printed value, and announce the face and its side in one sentence (LAW.REVEAL.1).
+4. Run `node lib/ceiling.mjs 10 node -e "console.log(require('node:crypto').randomInt(2))" < /dev/null`, quote its stdout, render the `toss` with the printed value, and announce the face and its side in one sentence (LAW.REVEAL.1).
 5. Round 2 of 3: ask ASK.REVEAL.2 alone; render the `feeling` with felt from the reply (LAW.REVEAL.2).
 6. Render the `result`: decided for the landed face on relieved, for the other face on disappointed, undecided on neutral, always with the feeling named beside it (LAW.REVEAL.3).
 </process>

@@ -576,8 +576,10 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 
 <!-- ===== THE FORMS A GATE INSTRUMENT MAY NOT USE ===== -->
 <!-- form | the leg that lacks it | the portable form. The list is what
-     lib/cross-os.mjs sweep reads; a form added here is refused on the next
-     run without a line of code. -->
+     lib/cross-os.mjs sweep reads, and a control holds the reverse direction:
+     every matcher in that module has a line here. The eighth form lacks no
+     leg; it is a shape that fails on every one, found by the first companion
+     run of 8.0.0. -->
 <!ENTITY XOS.gnu.timeout   "timeout N command|macos-latest ships no timeout binary|ceil N command from checker/portable.sh, which is node lib/ceiling.mjs where timeout is absent">
 <!ENTITY XOS.gnu.mapfile   "mapfile -t|bash 3.2, which is /bin/bash on macOS|a while read loop, or a byte read in Node">
 <!ENTITY XOS.gnu.grep-P    "grep -P|BSD grep|grep -E, or a byte read in Node">
@@ -585,8 +587,9 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!ENTITY XOS.gnu.stat-c    "stat -c|BSD stat|wc -c under arithmetic">
 <!ENTITY XOS.gnu.sha256sum "sha256sum|macos-latest ships shasum instead|node with the crypto module">
 <!ENTITY XOS.gnu.sed-n     "a newline escape in a sed replacement|BSD sed writes the letter n|node -e with a string replace">
-<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n">
-<!ENTITY XOS.gnu.count "7">
+<!ENTITY XOS.gnu.env-fn    "env -u VAR ceil|every leg: env execs a binary and never sees a shell function|a subshell that unsets the variable, then ceil">
+<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n|env-fn">
+<!ENTITY XOS.gnu.count "8">
 
 <!-- ===== ELEMENTS ===== -->
 <!-- What a run measured about the machine it ran on. A substrate not probed
@@ -660,17 +663,17 @@ This command installs nothing (LAW.SL.4). Anything unreachable is named to starl
 
 The declarations this command reads: STAR.managers and the six adapters STAR.mgr.scoop, STAR.mgr.chocolatey, STAR.mgr.bun, STAR.mgr.vcpkg, STAR.mgr.cargo and STAR.mgr.uv; STAR.no_search and STAR.absent for what a silent binary means; STAR.ceiling.search for the bound on every probe; STAR.file, which is where the list lands and what the writer honours; and LAW.STAR.1 for why a seventh manager is a declaration and no new code.
 
-The declarations of cross-os.dtd this command reads beside them: XOS.legs, the XOS.legs.count hosted legs XOS.leg.ubuntu-latest, XOS.leg.macos-latest and XOS.leg.windows-latest, the four local substrates XOS.local.podman, XOS.local.wsl2, XOS.local.docker and XOS.local.qemu, XOS.macos.host and XOS.macos.local, XOS.ceiling.probe for the bound on each probe and XOS.exit.ceiling for what a fired ceiling exits with, and the XOS.gnu.count forms of XOS.gnu that no gate instrument may use, XOS.gnu.timeout, XOS.gnu.mapfile, XOS.gnu.grep-P, XOS.gnu.grep-U, XOS.gnu.stat-c, XOS.gnu.sha256sum and XOS.gnu.sed-n, each with the leg that lacks it and the portable form, which is what makes a certification of the whole Suite on the three legs a measurement rather than a badge (LAW.XOS.2, LAW.XOS.4, LAW.XOS.5, LAW.XOS.6).
+The declarations of cross-os.dtd this command reads beside them: XOS.legs, the XOS.legs.count hosted legs XOS.leg.ubuntu-latest, XOS.leg.macos-latest and XOS.leg.windows-latest, the four local substrates XOS.local.podman, XOS.local.wsl2, XOS.local.docker and XOS.local.qemu, XOS.macos.host and XOS.macos.local, XOS.ceiling.probe for the bound on each probe and XOS.exit.ceiling for what a fired ceiling exits with, and the XOS.gnu.count forms of XOS.gnu that no gate instrument may use, XOS.gnu.timeout, XOS.gnu.mapfile, XOS.gnu.grep-P, XOS.gnu.grep-U, XOS.gnu.stat-c, XOS.gnu.sha256sum, XOS.gnu.sed-n and XOS.gnu.env-fn, each with the leg that lacks it and the portable form, which is what makes a certification of the whole Suite on the three legs a measurement rather than a badge (LAW.XOS.2, LAW.XOS.4, LAW.XOS.5, LAW.XOS.6).
 </objective>
 
 <process>
 1. Walk the argument with the cc-args grammar: bare words are tool names, `--probe` re-measures, `--drop` takes one, `--machine` and its absence select the layer, `--no-gate` skips the intake.
-2. Probe the six managers with `timeout 300 node lib/starlist.mjs managers`, in the foreground, exit codes read directly. Render `probe` with the present set and the absent set named (LAW.SL.1).
-3. Probe the local substrates with `timeout 60 node lib/cross-os.mjs probe`, in the foreground: render `substrates` with the host leg and one line per substrate, podman present only with a machine row, wsl2 only when wsl answers, and the macOS leg named to its hosted runner (LAW.SL.5, LAW.XOS.1).
+2. Probe the six managers with `node lib/ceiling.mjs 300 node lib/starlist.mjs managers`, in the foreground, exit codes read directly. Render `probe` with the present set and the absent set named (LAW.SL.1).
+3. Probe the local substrates with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe`, in the foreground: render `substrates` with the host leg and one line per substrate, podman present only with a machine row, wsl2 only when wsl answers, and the macOS leg named to its hosted runner (LAW.SL.5, LAW.XOS.1).
 4. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
 5. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
 6. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1).
-7. Re-run `timeout 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
+7. Re-run `node lib/ceiling.mjs 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
 8. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
 </process>
 

@@ -101,7 +101,7 @@ jobs:
         run: node lib/ceiling.mjs controls
       - name: the encoding sweep reads bytes and its three planted files are caught (LAW.XOS.4)
         run: node lib/encoding.mjs controls
-      - name: cross-os controls (the substrates probed and never guessed, the seven forms refused by name, both ceiling paths, the matrix held)
+      - name: cross-os controls (the substrates probed and never guessed, the eight forms refused by name, both ceiling paths, the matrix held)
         run: node lib/cross-os.mjs controls
       - name: no gate instrument carries a form a leg lacks, and this workflow runs every leg (LAW.XOS.4, LAW.XOS.6)
         run: node lib/cross-os.mjs sweep && node lib/cross-os.mjs matrix --check
@@ -123,8 +123,8 @@ jobs:
         run: node lib/starlist.mjs controls
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
-      - name: the generated contract and the growth state record pass the same measures
-        run: node lib/ai-slop.mjs dtd/ladder.md && node lib/ai-slop.mjs sweep artifacts/amplify-codebase
+      - name: the two generated contracts and the growth state record pass the same measures
+        run: node lib/ai-slop.mjs dtd/ladder.md && node lib/ai-slop.mjs dtd/geometry.md && node lib/ai-slop.mjs sweep artifacts/amplify-codebase
       - name: the root documents pass the slop measures (the release ships a changelog section)
         run: node lib/ai-slop.mjs README.md && node lib/ai-slop.mjs CHANGELOG.md && node lib/ai-slop.mjs NOTICE.md && node lib/ai-slop.mjs SECURITY.md && node lib/ai-slop.mjs PRIVACY.md && node lib/ai-slop.mjs RELEASE.md
       - name: every build target is tracked (an ignored target passes here and drifts on a fresh checkout)

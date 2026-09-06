@@ -54,10 +54,10 @@ The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM
 
 <process>
 1. Walk the argument through cc-args and render `args`: the first positional word is a survey json under GEOM.dir, blank means the latest one there; read --no-gate, --verbose and --debug (LAW.ARGS.2, LAW.ARGS.6).
-2. Probe the substrate with `timeout 60 node lib/cross-os.mjs probe` and render `substrates`, so the plan names the leg it was declared on (LAW.XOS.1).
+2. Probe the substrate with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe` and render `substrates`, so the plan names the leg it was declared on (LAW.XOS.1).
 3. Find the survey and render `survey_ref` with its path and date; none found means the path is empty, no projection is declared, and the answer closes naming codebase-surveyor-dtd (LAW.ARCHITECT.4).
 4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope, then a mark question over the projections the engine can declare from this survey, each option carrying a cut preview with a `figure` of the bound drawn onto the survey's figure (LAW.ASK.13, LAW.ASK.16). Present the gate; with --no-gate every gap is an `assumption_made`.
-5. Record `git status --porcelain`, then plan with `timeout 300 node lib/geometry.mjs plan <survey.json> --write` in the foreground, exit code read directly. Render `plan` with one `projection` per line: verb, name, what it declares, the measure it binds, the operator and the number (LAW.GEOM.3, LAW.ARCHITECT.5).
+5. Record `git status --porcelain`, then plan with `node lib/ceiling.mjs 300 node lib/geometry.mjs plan <survey.json> --write` in the foreground, exit code read directly. Render `plan` with one `projection` per line: verb, name, what it declares, the measure it binds, the operator and the number (LAW.GEOM.3, LAW.ARCHITECT.5).
 6. Render `figure`: the cut figure marked guessed in a fenced block, and the plate paths; the plate on disk is the survey's figure with the projections added (LAW.GEOM.8, LAW.ARCHITECT.3).
 7. Read `git status --porcelain` again: only GEOM.dir changed, or the run is a failed answer (LAW.ARCHITECT.2).
 8. Render `artifact` naming the plan file written and `next_band` naming ARCHITECT.next and codebase-renovator-dtd (LAW.ARCHITECT.1).

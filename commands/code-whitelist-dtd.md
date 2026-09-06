@@ -554,12 +554,12 @@ The declarations this command reads: LIST.class.white for what an entry promises
 
 <process>
 1. Walk the argument with the cc-args grammar: bare words are class names, `--pair` takes a file extension, `--drop` takes one name, `--machine` selects the layer, `--no-gate` skips the intake.
-2. Measure with `timeout 120 node lib/starlist.mjs measure`: what this project builds, and which managers are present. Render it as `walk`.
+2. Measure with `node lib/ceiling.mjs 120 node lib/starlist.mjs measure`: what this project builds, and which managers are present. Render it as `walk`.
 3. Read both layers with `node lib/list.mjs show code white`, and read the code black list, because it decides what may not be written here (LAW.CW.1).
 4. Render `reachable` before the intake: per class, the manager that provides it and whether that manager is on this machine (LAW.CW.2).
 5. Render `pairs`: every file white entry with its production counterpart, and every pair with one end missing marked incomplete.
 6. Run the intake (LAW.ASK.6). Ask for the file extension each class completes, for whether an unreachable class should still be written, and name the narrowing consequence of LAW.CW.4 in the round that proposes an entry.
-7. Run the reachability guard with `timeout 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
+7. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
 8. Write the entries with reason and date, read back from disk, render `entries`, then `verdicts`, any `refused`, and the `next_action`.
 </process>
 

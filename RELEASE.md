@@ -25,7 +25,7 @@ is not a gate. Every 7.x job ran on one leg; the macOS leg would have failed
 before it measured anything.
 
 - **`dtd/cross-os.dtd`** &mdash; the three legs as an enumeration, the local
-  substrates probed and never guessed, the seven forms a leg lacks refused by
+  substrates probed and never guessed, the eight forms a leg lacks refused by
   file and line, a ceiling that exists everywhere.
 - **The fifteenth family** &mdash; `/codebase-surveyor-dtd`,
   `/codebase-architect-dtd`, `/codebase-renovator-dtd`: fifty-two rungs in

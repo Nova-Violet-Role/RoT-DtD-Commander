@@ -88,17 +88,25 @@ allow_ok() {
   tools=$(echo "$a" | sed 's/.*--allowedTools "//; s/"$//')
   bare_bash=$(echo "$tools" | tr ',' '\n' | grep -c '^Bash$' || true)
   [ "$bare_bash" != "0" ] && return 1
-  echo "$a" | grep -o 'Bash([^)]*)' | grep -v -q 'Bash(timeout 60 ' && return 1
+  # Every Bash form starts with the portable ceiling. The 7.x control required
+  # the literal timeout binary here, which the macOS leg lacks: it mandated the
+  # form LAW.XOS.4 forbids (first companion pass of 8.0.0).
+  echo "$a" | grep -o 'Bash([^)]*)' | grep -v -q 'Bash(node $here/lib/ceiling.mjs 60 ' && return 1
   return 0
 }
 sed 's/--allowedTools "Read,/--allowedTools "Write,Read,/' checker/companion-audit.sh > "$T/m17.sh"
 grep -q -- '--allowedTools "Write,Read,' "$T/m17.sh" || { echo "M17 mutation did not land"; fail=1; }
 sed 's/--allowedTools "Read,\([^"]*\)"/--allowedTools "Read,Bash"/' checker/companion-audit.sh > "$T/m17b.sh"
+# M17c: the 7.x form, a bare timeout in the allow-list, is refused now (LAW.XOS.4)
+sed 's/Bash(node $here\/lib\/ceiling.mjs 60 node:\*)/Bash(timeout 60 node:*)/' checker/companion-audit.sh > "$T/m17c.sh"
+grep -q -- 'Bash(timeout 60 node:\*)' "$T/m17c.sh" || { echo "M17c mutation did not land"; fail=1; }
+allow_ok "$T/m17c.sh"; r3=$?
+[ $r3 -eq 1 ] && echo "PASS M17c a bare timeout in the allow-list is refused: the ceiling must be the portable one" || { echo "FAIL M17c a bare timeout in the allow-list was admitted"; fail=1; }
 grep -q -- '--allowedTools "Read,Bash"' "$T/m17b.sh" || { echo "M17b mutation did not land"; fail=1; }
 allow_ok "$T/m17b.sh"; r2=$?
 [ $r2 -eq 1 ] || { echo "M17b DID NOT FIRE: a bare Bash in the allow-list was admitted"; fail=1; }
 allow_ok "$T/m17.sh"; r1=$?; allow_ok checker/companion-audit.sh; r0=$?
-[ $r1 -eq 1 ] && [ $r0 -eq 0 ] && echo "PASS M17 the runner's allow-list carries no writing or spawning tool and every Bash form starts with timeout 60; a copy granting Write is refused" || { echo "FAIL M17 planted=$r1 real=$r0"; fail=1; }
+[ $r1 -eq 1 ] && [ $r0 -eq 0 ] && echo "PASS M17 the runner's allow-list carries no writing or spawning tool and every Bash form starts with the portable ceiling; a copy granting Write is refused" || { echo "FAIL M17 planted=$r1 real=$r0"; fail=1; }
 
 rm -rf "$T"
 echo "checker-controls: $([ $fail -eq 0 ] && echo all tripped as designed || echo A CONTROL DID NOT FIRE)"

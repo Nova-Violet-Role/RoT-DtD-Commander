@@ -459,8 +459,10 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
 
 <!-- ===== THE FORMS A GATE INSTRUMENT MAY NOT USE ===== -->
 <!-- form | the leg that lacks it | the portable form. The list is what
-     lib/cross-os.mjs sweep reads; a form added here is refused on the next
-     run without a line of code. -->
+     lib/cross-os.mjs sweep reads, and a control holds the reverse direction:
+     every matcher in that module has a line here. The eighth form lacks no
+     leg; it is a shape that fails on every one, found by the first companion
+     run of 8.0.0. -->
 <!ENTITY XOS.gnu.timeout   "timeout N command|macos-latest ships no timeout binary|ceil N command from checker/portable.sh, which is node lib/ceiling.mjs where timeout is absent">
 <!ENTITY XOS.gnu.mapfile   "mapfile -t|bash 3.2, which is /bin/bash on macOS|a while read loop, or a byte read in Node">
 <!ENTITY XOS.gnu.grep-P    "grep -P|BSD grep|grep -E, or a byte read in Node">
@@ -468,8 +470,9 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
 <!ENTITY XOS.gnu.stat-c    "stat -c|BSD stat|wc -c under arithmetic">
 <!ENTITY XOS.gnu.sha256sum "sha256sum|macos-latest ships shasum instead|node with the crypto module">
 <!ENTITY XOS.gnu.sed-n     "a newline escape in a sed replacement|BSD sed writes the letter n|node -e with a string replace">
-<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n">
-<!ENTITY XOS.gnu.count "7">
+<!ENTITY XOS.gnu.env-fn    "env -u VAR ceil|every leg: env execs a binary and never sees a shell function|a subshell that unsets the variable, then ceil">
+<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n|env-fn">
+<!ENTITY XOS.gnu.count "8">
 
 <!-- ===== ELEMENTS ===== -->
 <!-- What a run measured about the machine it ran on. A substrate not probed
@@ -747,10 +750,10 @@ The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM
 
 <process>
 1. Walk the argument through cc-args and render `args`: the first positional word is a survey json under GEOM.dir, blank means the latest one there; read --no-gate, --verbose and --debug (LAW.ARGS.2, LAW.ARGS.6).
-2. Probe the substrate with `timeout 60 node lib/cross-os.mjs probe` and render `substrates`, so the plan names the leg it was declared on (LAW.XOS.1).
+2. Probe the substrate with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe` and render `substrates`, so the plan names the leg it was declared on (LAW.XOS.1).
 3. Find the survey and render `survey_ref` with its path and date; none found means the path is empty, no projection is declared, and the answer closes naming codebase-surveyor-dtd (LAW.ARCHITECT.4).
 4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope, then a mark question over the projections the engine can declare from this survey, each option carrying a cut preview with a `figure` of the bound drawn onto the survey's figure (LAW.ASK.13, LAW.ASK.16). Present the gate; with --no-gate every gap is an `assumption_made`.
-5. Record `git status --porcelain`, then plan with `timeout 300 node lib/geometry.mjs plan <survey.json> --write` in the foreground, exit code read directly. Render `plan` with one `projection` per line: verb, name, what it declares, the measure it binds, the operator and the number (LAW.GEOM.3, LAW.ARCHITECT.5).
+5. Record `git status --porcelain`, then plan with `node lib/ceiling.mjs 300 node lib/geometry.mjs plan <survey.json> --write` in the foreground, exit code read directly. Render `plan` with one `projection` per line: verb, name, what it declares, the measure it binds, the operator and the number (LAW.GEOM.3, LAW.ARCHITECT.5).
 6. Render `figure`: the cut figure marked guessed in a fenced block, and the plate paths; the plate on disk is the survey's figure with the projections added (LAW.GEOM.8, LAW.ARCHITECT.3).
 7. Read `git status --porcelain` again: only GEOM.dir changed, or the run is a failed answer (LAW.ARCHITECT.2).
 8. Render `artifact` naming the plan file written and `next_band` naming ARCHITECT.next and codebase-renovator-dtd (LAW.ARCHITECT.1).

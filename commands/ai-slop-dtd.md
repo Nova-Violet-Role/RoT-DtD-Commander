@@ -386,7 +386,7 @@ The argument walk is the one cc-args declares: the string is read once and split
 
 <process>
 1. Walk the argument (LAW.ASC.3) and render the `args` element with its `arg` words and its `arg_guard` elements: the first positional word is the `target` file; blank means the last answer of this session, written to a scratch file under the session scratchpad before it is judged; note --verbose.
-2. Run `timeout 60 node <runtime>/lib/ai-slop.mjs <file>` in the foreground and read its exit code directly (LAW.ASC.1); with --verbose add every `slop_hit` line to the report.
+2. Run `node lib/ceiling.mjs 60 node <runtime>/lib/ai-slop.mjs <file>` in the foreground and read its exit code directly (LAW.ASC.1); with --verbose add every `slop_hit` line to the report.
 3. Render the `slop_report` from that output, never recomputed: the `slop_verdict`, every `slop_hit` with its kind and line, every `slop_measure` with its value and bound.
 4. Write the `escape` (LAW.ASC.2): when the gate holds, needed no; when it fails, needed yes, which phrases to rewrite and which, if any, must stay and go into backticks or a quoted element (LAW.SLOP.1, LAW.SLOP.8).
 </process>

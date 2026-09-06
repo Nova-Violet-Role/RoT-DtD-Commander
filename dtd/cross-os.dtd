@@ -51,8 +51,10 @@
 
 <!-- ===== THE FORMS A GATE INSTRUMENT MAY NOT USE ===== -->
 <!-- form | the leg that lacks it | the portable form. The list is what
-     lib/cross-os.mjs sweep reads; a form added here is refused on the next
-     run without a line of code. -->
+     lib/cross-os.mjs sweep reads, and a control holds the reverse direction:
+     every matcher in that module has a line here. The eighth form lacks no
+     leg; it is a shape that fails on every one, found by the first companion
+     run of 8.0.0. -->
 <!ENTITY XOS.gnu.timeout   "timeout N command|macos-latest ships no timeout binary|ceil N command from checker/portable.sh, which is node lib/ceiling.mjs where timeout is absent">
 <!ENTITY XOS.gnu.mapfile   "mapfile -t|bash 3.2, which is /bin/bash on macOS|a while read loop, or a byte read in Node">
 <!ENTITY XOS.gnu.grep-P    "grep -P|BSD grep|grep -E, or a byte read in Node">
@@ -60,8 +62,9 @@
 <!ENTITY XOS.gnu.stat-c    "stat -c|BSD stat|wc -c under arithmetic">
 <!ENTITY XOS.gnu.sha256sum "sha256sum|macos-latest ships shasum instead|node with the crypto module">
 <!ENTITY XOS.gnu.sed-n     "a newline escape in a sed replacement|BSD sed writes the letter n|node -e with a string replace">
-<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n">
-<!ENTITY XOS.gnu.count "7">
+<!ENTITY XOS.gnu.env-fn    "env -u VAR ceil|every leg: env execs a binary and never sees a shell function|a subshell that unsets the variable, then ceil">
+<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n|env-fn">
+<!ENTITY XOS.gnu.count "8">
 
 <!-- ===== ELEMENTS ===== -->
 <!-- What a run measured about the machine it ran on. A substrate not probed

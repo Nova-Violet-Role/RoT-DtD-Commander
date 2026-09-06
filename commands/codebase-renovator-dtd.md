@@ -459,8 +459,10 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
 
 <!-- ===== THE FORMS A GATE INSTRUMENT MAY NOT USE ===== -->
 <!-- form | the leg that lacks it | the portable form. The list is what
-     lib/cross-os.mjs sweep reads; a form added here is refused on the next
-     run without a line of code. -->
+     lib/cross-os.mjs sweep reads, and a control holds the reverse direction:
+     every matcher in that module has a line here. The eighth form lacks no
+     leg; it is a shape that fails on every one, found by the first companion
+     run of 8.0.0. -->
 <!ENTITY XOS.gnu.timeout   "timeout N command|macos-latest ships no timeout binary|ceil N command from checker/portable.sh, which is node lib/ceiling.mjs where timeout is absent">
 <!ENTITY XOS.gnu.mapfile   "mapfile -t|bash 3.2, which is /bin/bash on macOS|a while read loop, or a byte read in Node">
 <!ENTITY XOS.gnu.grep-P    "grep -P|BSD grep|grep -E, or a byte read in Node">
@@ -468,8 +470,9 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
 <!ENTITY XOS.gnu.stat-c    "stat -c|BSD stat|wc -c under arithmetic">
 <!ENTITY XOS.gnu.sha256sum "sha256sum|macos-latest ships shasum instead|node with the crypto module">
 <!ENTITY XOS.gnu.sed-n     "a newline escape in a sed replacement|BSD sed writes the letter n|node -e with a string replace">
-<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n">
-<!ENTITY XOS.gnu.count "7">
+<!ENTITY XOS.gnu.env-fn    "env -u VAR ceil|every leg: env execs a binary and never sees a shell function|a subshell that unsets the variable, then ceil">
+<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n|env-fn">
+<!ENTITY XOS.gnu.count "8">
 
 <!-- ===== ELEMENTS ===== -->
 <!-- What a run measured about the machine it ran on. A substrate not probed
@@ -749,13 +752,13 @@ The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM
 
 <process>
 1. Walk the argument through cc-args and render `args`: the first two positional words are the survey and the plan under GEOM.dir; read --no-gate, --verbose and --debug (LAW.ARGS.2, LAW.ARGS.6).
-2. Check the preconditions before anything else, with `timeout 60 node lib/geometry.mjs renovate <survey.md> <plan.md>` in the foreground, exit code read directly. A refusal is printed by name: render `survey_ref` and `plan_ref` as found, `renovation` with one line saying nothing was changed, and close naming the band that is missing (LAW.GEOM.4, LAW.RENOVATOR.4).
-3. Read the plan's bounds against its survey with `timeout 60 node lib/geometry.mjs plan --check <survey.json> <plan.json>`: the bounds exceeded are the changes this run may make, and a bound that holds is not a reason to change anything (LAW.GEOM.3).
+2. Check the preconditions before anything else, with `node lib/ceiling.mjs 60 node lib/geometry.mjs renovate <survey.md> <plan.md>` in the foreground, exit code read directly. A refusal is printed by name: render `survey_ref` and `plan_ref` as found, `renovation` with one line saying nothing was changed, and close naming the band that is missing (LAW.GEOM.4, LAW.RENOVATOR.4).
+3. Read the plan's bounds against its survey with `node lib/ceiling.mjs 60 node lib/geometry.mjs plan --check <survey.json> <plan.json>`: the bounds exceeded are the changes this run may make, and a bound that holds is not a reason to change anything (LAW.GEOM.3).
 4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope, then a mark question over the exceeded bounds and the verbs of RENOVATOR.band each change would take, each option carrying a cut preview with a `figure` of the shape after the change (LAW.ASK.13, LAW.ASK.16). Present the gate; with --no-gate every gap is an `assumption_made`.
 5. Make the marked changes, one file at a time, and render `renovation` with one `change` per file: the verb, the file, the shape before and the shape after, each shape a measure a later survey can take (LAW.RENOVATOR.3).
-6. Write the record with `timeout 60 node lib/geometry.mjs renovate <survey.md> <plan.md> --write`, then add the change rows to it; the colophon and the digests are the engine's (verbs 47 and 52).
+6. Write the record with `node lib/ceiling.mjs 60 node lib/geometry.mjs renovate <survey.md> <plan.md> --write`, then add the change rows to it; the colophon and the digests are the engine's (verbs 47 and 52).
 7. Render `figure`: the survey's plate with the changed shapes marked, the cut figure in the answer marked guessed (LAW.GEOM.8, LAW.FIG.4).
-8. Certify: run the gate on this leg with `timeout 1800 npm run gate` in the foreground and render `certified` with three `leg` elements, the host leg pass or fail by the exit code read directly and the two others unmeasured, to be filled from the workflow once it has run on them (LAW.XOS.2, LAW.RENOVATOR.5).
+8. Certify: run the gate on this leg with `node lib/ceiling.mjs 1800 npm run gate` in the foreground and render `certified` with three `leg` elements, the host leg pass or fail by the exit code read directly and the two others unmeasured, to be filled from the workflow once it has run on them (LAW.XOS.2, LAW.RENOVATOR.5).
 9. Render `artifact` naming the renovation record and `next_band` naming RENOVATOR.next and codebase-surveyor-dtd, a fresh survey of what was changed (LAW.RENOVATOR.1).
 </process>
 

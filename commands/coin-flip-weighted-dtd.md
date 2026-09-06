@@ -329,7 +329,7 @@ The weight is the operator's, quoted; the entropy is real, one execution of WEIG
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the two sides and, after the option odds, the whole number; render the walk under `args`.
 2. When a side or the odds is missing, round 1 of 3: ask ASK.WEIGHT.1 and ASK.WEIGHT.2 in one call; present the gate; on start, bind them (LAW.WEIGHT.1).
 3. Render the `call` with odds and the two `side` elements, heads with weight odds and tails with weight one hundred minus odds.
-4. Run `timeout 10 node -e "console.log(require('node:crypto').randomInt(100))" < /dev/null`, quote its stdout, render the `toss` with the printed value (LAW.WEIGHT.2).
+4. Run `node lib/ceiling.mjs 10 node -e "console.log(require('node:crypto').randomInt(100))" < /dev/null`, quote its stdout, render the `toss` with the printed value (LAW.WEIGHT.2).
 5. Render the `result`: heads when the value is below the odds, tails otherwise, with the rule written beside it (LAW.WEIGHT.3).
 </process>
 

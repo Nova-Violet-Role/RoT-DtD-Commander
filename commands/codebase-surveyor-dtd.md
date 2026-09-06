@@ -462,8 +462,10 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
 
 <!-- ===== THE FORMS A GATE INSTRUMENT MAY NOT USE ===== -->
 <!-- form | the leg that lacks it | the portable form. The list is what
-     lib/cross-os.mjs sweep reads; a form added here is refused on the next
-     run without a line of code. -->
+     lib/cross-os.mjs sweep reads, and a control holds the reverse direction:
+     every matcher in that module has a line here. The eighth form lacks no
+     leg; it is a shape that fails on every one, found by the first companion
+     run of 8.0.0. -->
 <!ENTITY XOS.gnu.timeout   "timeout N command|macos-latest ships no timeout binary|ceil N command from checker/portable.sh, which is node lib/ceiling.mjs where timeout is absent">
 <!ENTITY XOS.gnu.mapfile   "mapfile -t|bash 3.2, which is /bin/bash on macOS|a while read loop, or a byte read in Node">
 <!ENTITY XOS.gnu.grep-P    "grep -P|BSD grep|grep -E, or a byte read in Node">
@@ -471,8 +473,9 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
 <!ENTITY XOS.gnu.stat-c    "stat -c|BSD stat|wc -c under arithmetic">
 <!ENTITY XOS.gnu.sha256sum "sha256sum|macos-latest ships shasum instead|node with the crypto module">
 <!ENTITY XOS.gnu.sed-n     "a newline escape in a sed replacement|BSD sed writes the letter n|node -e with a string replace">
-<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n">
-<!ENTITY XOS.gnu.count "7">
+<!ENTITY XOS.gnu.env-fn    "env -u VAR ceil|every leg: env execs a binary and never sees a shell function|a subshell that unsets the variable, then ceil">
+<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n|env-fn">
+<!ENTITY XOS.gnu.count "8">
 
 <!-- ===== ELEMENTS ===== -->
 <!-- What a run measured about the machine it ran on. A substrate not probed
@@ -758,10 +761,10 @@ The ladder is declared, not remembered. geometry.dtd carries GEOM.verb.1 to GEOM
 
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements: the first positional word is the target path, blank means the working directory; read --no-gate, --verbose and --debug (LAW.ARGS.2, LAW.ARGS.6).
-2. Probe the substrate with `timeout 60 node lib/cross-os.mjs probe` in the foreground and render `substrates`: the host leg and one `substrate` per local of XOS.locals, present only after its probe answered with rows (LAW.XOS.1, LAW.SURVEYOR.4).
+2. Probe the substrate with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe` in the foreground and render `substrates`: the host leg and one `substrate` per local of XOS.locals, present only after its probe answered with rows (LAW.XOS.1, LAW.SURVEYOR.4).
 3. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope first, as a select question over the target and its top-level directories, then a mark question over the rungs of GEOM.instrumented that belong to SURVEYOR.band, each option carrying a cut preview that may hold a `figure` of what that rung draws (LAW.ASK.13, LAW.ASK.16). Present the gate; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
 4. Record `git status --porcelain` before the first instrument, so LAW.SURVEYOR.2 can be measured after.
-5. Survey with `timeout 300 node lib/geometry.mjs survey <target> --write` in the foreground, exit code read directly. Render `survey` with target, substrate, read of of, and one `measure` per rung measured: verb, name, value, unit, instrument, seconds; then the unmeasured rungs with why (LAW.GEOM.2, LAW.SURVEYOR.3).
+5. Survey with `node lib/ceiling.mjs 300 node lib/geometry.mjs survey <target> --write` in the foreground, exit code read directly. Render `survey` with target, substrate, read of of, and one `measure` per rung measured: verb, name, value, unit, instrument, seconds; then the unmeasured rungs with why (LAW.GEOM.2, LAW.SURVEYOR.3).
 6. Render `figure`: the cut figure the engine printed, 60 by 3, marked guessed, inside a fenced block; name the expanded plate and its dark twin written beside the survey (LAW.SURVEYOR.5, LAW.FIG.2).
 7. Read `git status --porcelain` again: every changed path lies under GEOM.dir or the run is a failed answer (LAW.SURVEYOR.2).
 8. Render `artifact` naming the survey file written, and `next_band` naming SURVEYOR.next and codebase-architect-dtd (LAW.SURVEYOR.1).

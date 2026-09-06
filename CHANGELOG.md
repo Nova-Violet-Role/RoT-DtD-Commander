@@ -24,8 +24,8 @@ say. The single-leg approach is replaced, not kept beside: `gate` and
 `windows-latest`, and the release job needs every leg green.
 
 - **`dtd/cross-os.dtd`**, LAW.XOS.1 to 7. The three legs are an enumeration,
-  the four local substrates are probed and never guessed, and the seven shell
-  forms a leg lacks are a list the sweep reads. `lib/cross-os.mjs`:
+  the four local substrates are probed and never guessed, and the eight shell
+  forms a leg lacks are a list the sweep reads, in both directions. `lib/cross-os.mjs`:
   `probe`, `sweep`, `matrix --check`, 19 controls.
 - **The podman trap.** `podman machine list` on this machine answers a header
   and zero rows at exit 0; a script that tests the exit code concludes a
@@ -49,6 +49,23 @@ ARGUMENTS in two subset comments was
   substituted by the harness at every invocation; this session's loaded
   command read "the 8.0.0 Cross-OS-Commander variant tables". The comments
   name the document instead.
+
+### The companion refused the first cut, on the release's own thesis
+
+The Scratchpad Companion's first pass over the range returned fail with four
+high findings, every one of them the same defect in a different material: a
+guard whose scope stopped exactly short of what the release added. The three
+new commands instructed the bare `timeout` eight times, and the twenty
+command bodies of the Suite carried it forty-four times in all, and the sweep
+read only `checker/` and the workflows. The companion runner's own allow-list
+granted `Bash(timeout 60 ...)` and control M17 required that form, so a
+maintainer repairing it would have been refused. `dtd/geometry.md` failed the
+slop gate and nothing ran the gate over it. All of it is taken: the sweep reads
+every command, skill and agent body, every one of the forty-four calls is the
+portable ceiling now, the nested session runs under `node lib/ceiling.mjs 60`,
+M17 is inverted and M17c refuses the old form, the eighth form is declared with
+a reverse control, the `portable.sh` exemption is one form wide, a `timeout`
+with flags is refused, LAW.GEOM.5 has a control, and the table is swept.
 
 ### The fifteenth family: the Graphic and Geometric Suite
 
@@ -87,7 +104,7 @@ release; the rest are unmeasured and say so.
 - `node lib/ceiling.mjs controls`: 5 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
 - `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
 - `node checker/contract-audit.mjs`: 1612 declarations, 0 unused, 0 law gaps
-- 134 commands, 22 skills, 5 agents; checked 161; 1612 declarations; 62 gate-chain commands
+- 134 commands, 22 skills, 5 agents; checked 161; 1612 declarations; 63 gate-chain commands
 - recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2 at 7.2.0
 
 ## 7.2.0 (2026-09-05)

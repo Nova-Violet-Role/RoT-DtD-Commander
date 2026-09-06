@@ -277,7 +277,7 @@ A monitor is the component the loader runs beside the hooks: a persistent proces
 4. Write the `monitor` file under monitors/ in the chosen runtime: read the source from its current end, detect the chosen event, print only the declared lines, keep the chosen state, stop as chosen and at the --secs ceiling (LAW.MONITOR.6); put the SPDX header on line one (LAW.MONITOR.5).
 5. Write its DTD beside it: one MONITOR.* entity per line it may print, a LAW.* per promise the intake made, and include cc-core.
 6. Write the `wiring`: the entry in monitors/manual.json when the monitor runs by hand, in monitors/monitors.json or plugin.json experimental.monitors when the loader starts it; the entry's command runs the file; never a hook entry (LAW.MONITOR.1).
-7. Write and run the control (LAW.MONITOR.4): plant one event in a scratch copy of the source, start the monitor with `timeout 30` and `< /dev/null`, read the line it prints, stop it, and record the landed proof in `proof` with tripped yes; a control that did not trip stops the command before the report.
+7. Write and run the control (LAW.MONITOR.4): plant one event in a scratch copy of the source, start the monitor with `node lib/ceiling.mjs 30` and `< /dev/null`, read the line it prints, stop it, and record the landed proof in `proof` with tripped yes; a control that did not trip stops the command before the report.
 8. Report the three files, the declaration, the proof, and the assumptions.
 </process>
 

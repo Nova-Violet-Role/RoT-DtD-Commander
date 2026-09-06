@@ -49,7 +49,7 @@ Each toss is real and separate: BEST.source runs once per toss, its digit is quo
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the two sides and, after the option of, the series length; render the walk under `args`.
 2. When a side or the length is missing, round 1 of 3: ask ASK.BEST.1 and ASK.BEST.2 in one call; present the gate; on start, bind them.
 3. Render the `call` with of and the two `side` elements, heads bound to the first option (LAW.BEST.2).
-4. For n from 1 while neither face has a majority: run `timeout 10 node -e "console.log(require('node:crypto').randomInt(2))" < /dev/null`, quote its stdout, render one `toss` with n and the printed value (LAW.BEST.1).
+4. For n from 1 while neither face has a majority: run `node lib/ceiling.mjs 10 node -e "console.log(require('node:crypto').randomInt(2))" < /dev/null`, quote its stdout, render one `toss` with n and the printed value (LAW.BEST.1).
 5. Render the `result` with the heads count, the tails count and the winner (LAW.BEST.3).
 </process>
 

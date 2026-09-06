@@ -49,7 +49,7 @@ The entropy is real: FLIP.source runs, prints 0 or 1, and the printed digit is q
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives two sides split on the word or, a vertical bar, or a comma; render the walk under `args`.
 2. When fewer than two sides were given, round 1 of 3: ask ASK.FLIP.1 with four options plus Other; present the gate; on start, bind the sides.
 3. Render the `call` with its two `side` elements: heads bound to the first option, tails to the second (LAW.FLIP.2).
-4. Run `timeout 10 node -e "console.log(require('node:crypto').randomInt(2))" < /dev/null` in the foreground, quote its stdout as tool output, and render the `toss` with source crypto and the printed value (LAW.FLIP.1).
+4. Run `node lib/ceiling.mjs 10 node -e "console.log(require('node:crypto').randomInt(2))" < /dev/null` in the foreground, quote its stdout as tool output, and render the `toss` with source crypto and the printed value (LAW.FLIP.1).
 5. Render the `result`: the winner is the side whose face FLIP.heads or FLIP.tails names for the printed value; no second toss (LAW.FLIP.3).
 </process>
 

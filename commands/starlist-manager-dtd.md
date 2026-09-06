@@ -556,10 +556,10 @@ The declarations this command reads: STAR.managers and its six adapters for what
 
 <process>
 1. Walk the argument with the cc-args grammar: the bare text is the search subject, `--manager` limits to one of the six, `--resume` reads the session record, `--no-gate` skips the intake.
-2. Measure with `timeout 300 node lib/starlist.mjs measure`: languages with counts, build files, managers present. Render `measured` (LAW.SM.1).
+2. Measure with `node lib/ceiling.mjs 300 node lib/starlist.mjs measure`: languages with counts, build files, managers present. Render `measured` (LAW.SM.1).
 3. On `--resume`, read the session record and render what it carried; otherwise open block 1.
 4. Run a block of up to eight rounds of four questions (LAW.SM.2), asking only what the walk cannot answer. After each round write the session record.
-5. Search with `timeout 300 node lib/starlist.mjs search <query>`, in the foreground, per-manager ceilings, exit codes read directly. Render `hits` with one `hit` per manager carrying its exit; an absent manager is rendered absent and no hit is invented (LAW.SM.3).
+5. Search with `node lib/ceiling.mjs 300 node lib/starlist.mjs search <query>`, in the foreground, per-manager ceilings, exit codes read directly. Render `hits` with one `hit` per manager carrying its exit; an absent manager is rendered absent and no hit is invented (LAW.SM.3).
 6. For each candidate worth adopting, build the install plan and check it against both black lists. A refused plan is rendered as `refused` with the entry, the layer and the edit, and no confirmation is offered for it (LAW.SM.4).
 7. For each surviving plan, ask one confirmation showing SM.confirm, with the options to install, to decline, or to print the line and run it yourself. Install only on the choice to install, in the foreground under the declared ceiling, exit code read directly.
 8. Write every adoption into the starlist with its date and the answer that authorised it, render `adopted`, then the `session` path, then the `next_action`. When the toolchain is still unsettled, open the next block instead of closing.

@@ -43,7 +43,8 @@
 <!ENTITY LAW.COMPANION.6 "The scope opens with one line carrying the three attributes of companion_audit, phase= range= model=, and the runner refuses an answer whose line does not match the run it launched.">
 
 <!-- Which instrument holds which law. 1 and 2: the runner's tool allow-list
-     (Read, Grep, Glob, and Bash only in forms that start with "timeout 60";
+     (Read, Grep, Glob, and Bash only in forms that start with the portable
+     ceiling, node lib/ceiling.mjs 60, since 8.0.0;
      no Write, Edit or Agent; control M17 refuses a copy that grants Write)
      and stdin closed on the nested session; a write reached through a
      redirect is the companion's own breach, and it discloses it in the

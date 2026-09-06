@@ -554,12 +554,12 @@ The declarations this command reads: LIST.class.gray for what a mark means, LIST
 
 <process>
 1. Walk the argument with the cc-args grammar: bare words are class names, `--exceptions` reads rather than writes, `--drop` takes one, `--machine` selects the layer, `--no-gate` skips the intake.
-2. Measure the project with `timeout 120 node lib/starlist.mjs measure`: the languages present, the build files, and which managers this machine actually has. Render it as `walk`.
+2. Measure the project with `node lib/ceiling.mjs 120 node lib/starlist.mjs measure`: the languages present, the build files, and which managers this machine actually has. Render it as `walk`.
 3. Read both layers with `node lib/list.mjs show code gray`, and read the code white list, because that is where the replacements come from.
 4. Render `cost` before the intake writes anything: for each named class, the manager that could reach it, whether it is already present, and what the gate would gain (LAW.CG.2).
 5. Run the intake (LAW.ASK.6). The round carries the cost and the replacements, so the mark is chosen against a measurement rather than an impression.
 6. Refuse a name a black list already holds (LAW.CG.1) with both entries and the edit.
-7. Run the reachability guard with `timeout 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
+7. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
 8. Write the entries with reason and date, read back from disk, render `entries`, then `exceptions` oldest first, `verdicts`, any `refused`, and the `next_action`.
 </process>
 
