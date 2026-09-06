@@ -50,6 +50,8 @@ export const FAMILIES = [
     members: ['audit-skill', 'audit-slash-command', 'audit-subagent', 'ai-slop'] },
   { id: 'growth', name: 'Codebase growth', rep: 'amplify-codebase', color: '16a34a',
     members: ['amplify-codebase', 'enhance-codebase', 'overhaul-codebase'] },
+  { id: 'geometry', name: 'The Graphic and Geometric Suite', rep: 'codebase-surveyor', color: '0e7490',
+    members: ['codebase-surveyor', 'codebase-architect', 'codebase-renovator'] },
   { id: 'lists', name: 'The lists', rep: 'file-blacklist', color: 'c0392b',
     members: ['file-blacklist', 'code-blacklist', 'file-graylist', 'code-graylist', 'file-whitelist', 'code-whitelist', 'starlist', 'starlist-manager'] },
   { id: 'workflow', name: 'Workflow and the Adiutor', rep: 'RoT-DtD-Commander-Adiutor', color: 'e67e22',
@@ -191,7 +193,7 @@ export function render({ sigils, commands, skills, agents }) {
   out.push('<details>');
   out.push(`<summary><b>🎓 Skills</b> · ${skills.length}, each loading itself when its description matches</summary>`);
   out.push('');
-  // Plates, like the fourteen families above. These two blocks stayed markdown
+  // Plates, like the fifteen families above. These two blocks stayed markdown
   // when the families were drawn, so checker/glossary.mjs was writing
   // family-skills.svg and family-agents.svg that nothing on the page referenced:
   // four orphaned plates and 27 entries rendered unlike every other entry.

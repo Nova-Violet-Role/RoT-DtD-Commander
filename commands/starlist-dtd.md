@@ -131,7 +131,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 
 <!-- How a word of the argument string may be embedded in what the command
      writes: the four trust classes the DTD gives it, and the one it never
-     gets. Mirrors the $ARGUMENTS variant tables: PCDATA escapes, a CDATA
+     gets. Mirrors the ARGUMENTS variant tables of the byproducts: PCDATA escapes, a CDATA
      section is the quoted heredoc, NDATA is a reference never read, and a
      parameter entity never takes user input. -->
 <!ENTITY ARG.embed.pcdata  "as parsed text: the ampersand, less-than and greater-than escaped, whitespace normalised">
@@ -218,6 +218,13 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!ELEMENT option (label, description, preview?, elaboration?)>
 <!ELEMENT label (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
+<!-- 8.0.0: the content of a preview is a parameter entity a command may
+     raise before the include, the way it raises its rounds (LAW.ASK.11).
+     The Graphic and Geometric family declares preview.content as
+     (#PCDATA | figure)* and includes cc-figure first, so a preview there can
+     carry a figure; every other command keeps the text preview it always
+     had, and its resolved declaration reads as it did (LAW.ASK.16). -->
+<!ENTITY % preview.content "(#PCDATA)">
 <!ELEMENT preview (#PCDATA)>
 <!ATTLIST preview mode (cut|expanded) "cut">
 <!-- The model's elaboration of one option, written before the ask for an
@@ -291,6 +298,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!ENTITY LAW.ASK.13 "Every question declares its variant, select, check, elaborate or mark, and the round names it beside the question: select and check map onto multiSelect false and true; elaborate renders one elaboration per option, cut into the description in the widget and expanded in the transcript above the call; mark elaborates likewise, lists the options as markable lines with ASK.token.mark, asks with multiSelect true, and turns every option into an answer marked yes or no, the unmarked ones dropped; a command that asks offers all four variants across its rounds where its slots allow.">
 <!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
 <!ENTITY LAW.ASK.15 "Every gate carries the re-entries already spent as its round, adds and impactfuls attributes, each an enumeration with a last value; a gate rendered without them has spent none. When all three are spent the gate is offered with start alone and ASK.exhausted as the reason, so a guided intake terminates by declaration rather than by the user's patience, and a bound that lives only in prose is not a bound.">
+<!ENTITY LAW.ASK.16 "A preview has the content model preview.content, which is (#PCDATA) unless a command declares it before the include; a command that declares it as (#PCDATA | figure)* includes cc-figure before this subset so the figure it names is declared, and a preview carrying a figure obeys LAW.FIG.1 to LAW.FIG.5 with the figure marked guessed, because a preview is the consequence the model predicts.">
 <!-- end subset cc-ask -->
 
   
@@ -509,11 +517,112 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!ENTITY LAW.STAR.6 "The starlist bounds every other list: a white list naming a toolchain the starlist cannot reach is a refused combination under LAW.LIST.4, and the starlist itself is what makes that reachability a measurement rather than an opinion.">
 <!-- end subset cc-starlist -->
 
+  <!-- 8.0.0: the local substrates of cross-os.dtd are probed beside the six
+       managers, because a Linux leg through podman or wsl2 is a thing this
+       machine can or cannot reach, like any other tool (LAW.XOS.7). -->
+  
+  
+<!-- begin subset cross-os -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cross-os.dtd : the three legs a harness is certified on, the substrates
+  that can carry a leg, and the shell forms a gate instrument may not use.
+
+  Until 8.0.0 every job of the gate ran on one leg, ubuntu-latest, five
+  times over, and the tree was developed on a sixth thing, Windows under
+  Git Bash. Nothing had ever run on macOS. Measured the day this file was
+  written: three shell checkers called the timeout binary, the encoding
+  sweep used mapfile and grep -P, and the release job used sha256sum; the
+  macOS runner has none of those, so the gate would have failed there
+  before it measured anything. A suite whose gate cannot run on a user's
+  operating system is not certified for that user, whatever its badges say.
+
+  This subset makes the legs an enumeration, the substrates a measured
+  fact, and the forbidden forms a list a sweep reads. lib/cross-os.mjs
+  reads this file and holds the code to it; its controls trip every law
+  that can be tripped. Included by starlist-dtd, which records the local
+  substrates the way it records any other reachable thing, and by the
+  three commands of the Graphic and Geometric family, whose measurements
+  name the substrate they were taken on.
+-->
+
+<!-- ===== THE LEGS ===== -->
+<!-- The enumeration the certified element is held to. Three, hosted, and
+     the same three the workflow declares as its matrix (LAW.XOS.6). -->
+<!ENTITY % xos.leg "(ubuntu-latest|macos-latest|windows-latest)">
+<!ENTITY XOS.legs "ubuntu-latest|macos-latest|windows-latest">
+<!ENTITY XOS.legs.count "3">
+<!-- name | what the leg's shell is | why it is a leg -->
+<!ENTITY XOS.leg.ubuntu-latest  "hosted|bash 5 with GNU coreutils and GNU grep|the one leg the 7.x gate ran, five jobs over">
+<!ENTITY XOS.leg.macos-latest   "hosted|bash on PATH, BSD grep and sed, no timeout binary|the leg no local substrate may carry, by licence">
+<!ENTITY XOS.leg.windows-latest "hosted|Git Bash with MSYS coreutils and GNU grep, autocrlf true in the system config|the leg this tree is developed on and had never been certified on">
+
+<!-- ===== THE LOCAL SUBSTRATES ===== -->
+<!-- name | the probe | what its answer means. Measured on the machine that
+     wrote this subset: podman 6.1.0 answered with a header and zero rows at
+     exit 0, wsl answered exit 50 not installed, docker was absent, and qemu
+     was present and used by nothing. -->
+<!ENTITY XOS.local.podman "podman|podman machine list|a header with zero rows exits 0: the rows are the measure, never the exit">
+<!ENTITY XOS.local.wsl2   "wsl|wsl --status|absent means exit 50 or no binary; wsl --install needs elevation and a restart, so it is never run by a command">
+<!ENTITY XOS.local.docker "docker|docker --version|absent means no binary; present is a substrate for the Linux leg like podman">
+<!ENTITY XOS.local.qemu   "qemu-system-x86_64|qemu-system-x86_64 --version|present carries no leg of its own: a guest still needs an image the licence allows">
+<!ENTITY XOS.locals "podman|wsl2|docker|qemu">
+<!ENTITY XOS.locals.count "4">
+<!ENTITY XOS.macos.host  "github-actions macos-latest">
+<!ENTITY XOS.macos.local "refused: a macOS guest on hardware Apple did not make is outside the macOS licence, so no local substrate carries the macos-latest leg, whatever the container is called">
+<!ENTITY XOS.ceiling.probe "60">
+<!ENTITY XOS.exit.ceiling "124">
+
+<!-- ===== THE FORMS A GATE INSTRUMENT MAY NOT USE ===== -->
+<!-- form | the leg that lacks it | the portable form. The list is what
+     lib/cross-os.mjs sweep reads; a form added here is refused on the next
+     run without a line of code. -->
+<!ENTITY XOS.gnu.timeout   "timeout N command|macos-latest ships no timeout binary|ceil N command from checker/portable.sh, which is node lib/ceiling.mjs where timeout is absent">
+<!ENTITY XOS.gnu.mapfile   "mapfile -t|bash 3.2, which is /bin/bash on macOS|a while read loop, or a byte read in Node">
+<!ENTITY XOS.gnu.grep-P    "grep -P|BSD grep|grep -E, or a byte read in Node">
+<!ENTITY XOS.gnu.grep-U    "grep -U|BSD grep|a byte read in Node">
+<!ENTITY XOS.gnu.stat-c    "stat -c|BSD stat|wc -c under arithmetic">
+<!ENTITY XOS.gnu.sha256sum "sha256sum|macos-latest ships shasum instead|node with the crypto module">
+<!ENTITY XOS.gnu.sed-n     "a newline escape in a sed replacement|BSD sed writes the letter n|node -e with a string replace">
+<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n">
+<!ENTITY XOS.gnu.count "7">
+
+<!-- ===== ELEMENTS ===== -->
+<!-- What a run measured about the machine it ran on. A substrate not probed
+     is unmeasured; the enumeration has no value for guessed. -->
+<!ELEMENT substrates (substrate*)>
+<!ELEMENT substrate (#PCDATA)>
+<!ATTLIST substrate
+          name    NMTOKEN #REQUIRED
+          kind    (hosted|local) #REQUIRED
+          present (yes|no|unmeasured) #REQUIRED
+          probe   CDATA #IMPLIED>
+<!-- Certification: one leg per name of XOS.legs, exactly three, so an
+     answer with a leg missing is invalid against this subset rather than
+     merely incomplete. -->
+<!ELEMENT certified (leg, leg, leg)>
+<!ELEMENT leg (#PCDATA)>
+<!ATTLIST leg
+          os      (ubuntu-latest|macos-latest|windows-latest) #REQUIRED
+          verdict (pass|fail|unmeasured) #REQUIRED
+          run     CDATA #IMPLIED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.XOS.1 "A substrate is rendered present only after its probe answered with rows, never after an exit code alone: XOS.local.podman lists machines with a header and zero rows at exit 0, and that reads absent; a substrate not probed is rendered unmeasured, and unmeasured is never present.">
+<!ENTITY LAW.XOS.2 "Certification is the gate run on every leg of XOS.legs, XOS.legs.count of them, and the certified element carries exactly one leg per name; a leg the run did not reach is rendered unmeasured, and unmeasured is never pass.">
+<!ENTITY LAW.XOS.3 "The macos-latest leg runs on XOS.macos.host and nowhere else: XOS.macos.local is a refusal by licence and not by technology, and a command that offers a local macOS substrate answers outside this subset.">
+<!ENTITY LAW.XOS.4 "No shell instrument of the gate uses a form of XOS.gnu, XOS.gnu.count of them, each declared with the leg that lacks it and the portable form; node lib/cross-os.mjs sweep refuses a checker script or a workflow run line carrying one, by file and by line.">
+<!ENTITY LAW.XOS.5 "A ceiling is portable: where the timeout binary is absent the ceiling is node lib/ceiling.mjs, it exits XOS.exit.ceiling when it fires exactly as timeout does, and a control trips both paths on purpose, because a ceiling that vanishes with the platform is a guard that cannot trip.">
+<!ENTITY LAW.XOS.6 "The gate workflow declares its legs as a matrix equal to XOS.legs and runs the install round trip on the same matrix; node lib/cross-os.mjs matrix --check refuses a gate job whose runs-on is one name, and the release job needs every leg green before it ships.">
+<!ENTITY LAW.XOS.7 "A local leg is offered only on a substrate the probe found present under LAW.XOS.1: a Linux leg through XOS.local.podman needs at least one machine row, one through XOS.local.wsl2 needs wsl to answer, and starlist-dtd records each as reachable or absent under LAW.SL.1 rather than assuming it.">
+<!-- end subset cross-os -->
+
   <!-- adopted is starlist-manager-dtd's, not this one's: LAW.SL.4 says this
        command installs nothing, and a slot for the one act its own law forbids
        it is a contradiction the model was carrying (pass 22 of the 7.0.0
        audit). measured stays, and the map below renders it. -->
-  <!ELEMENT starlist_run (args, probe, measured, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
+  <!ELEMENT starlist_run (args, probe, substrates, measured, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
   <!ATTLIST starlist_run
             kind   CDATA #FIXED "starlist"
             layers CDATA #REQUIRED>
@@ -528,6 +637,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   <!ENTITY LAW.SL.2 "SL.default holds: an entry lands in the machine layer unless the argument or the intake says this project relies on it, in which case the repository layer carries it too and wins where they differ (LAW.LIST.3).">
   <!ENTITY LAW.SL.3 "SL.bounds holds: after any write this command re-runs the reachability guard and renders every white entry the starlist can no longer support, because narrowing what the harness reaches can break a promise made elsewhere (LAW.LIST.4, LAW.STAR.6).">
   <!ENTITY LAW.SL.4 "This command installs nothing: it records what is reachable and names starlist-manager-dtd for anything that is not, so the act of changing this machine stays behind that command's confirmation (LAW.STAR.3).">
+  <!ENTITY LAW.SL.5 "The local substrates of XOS.locals, XOS.locals.count of them, are probed beside the managers under XOS.ceiling.probe and rendered in substrates, each present or absent under LAW.XOS.1 and never guessed; a Linux leg is offered only on a substrate found present under LAW.XOS.7, and the macos-latest leg is named to XOS.macos.host because XOS.macos.local is a refusal by licence (LAW.XOS.3).">
 ]>
 
 <trust_boundary>
@@ -549,16 +659,19 @@ Its purpose is to bound the others. SL.bounds holds — a class whitelisted but 
 This command installs nothing (LAW.SL.4). Anything unreachable is named to starlist-manager-dtd, where a confirmation showing the literal line stands between a search and a change to this machine.
 
 The declarations this command reads: STAR.managers and the six adapters STAR.mgr.scoop, STAR.mgr.chocolatey, STAR.mgr.bun, STAR.mgr.vcpkg, STAR.mgr.cargo and STAR.mgr.uv; STAR.no_search and STAR.absent for what a silent binary means; STAR.ceiling.search for the bound on every probe; STAR.file, which is where the list lands and what the writer honours; and LAW.STAR.1 for why a seventh manager is a declaration and no new code.
+
+The declarations of cross-os.dtd this command reads beside them: XOS.legs, the XOS.legs.count hosted legs XOS.leg.ubuntu-latest, XOS.leg.macos-latest and XOS.leg.windows-latest, the four local substrates XOS.local.podman, XOS.local.wsl2, XOS.local.docker and XOS.local.qemu, XOS.macos.host and XOS.macos.local, XOS.ceiling.probe for the bound on each probe and XOS.exit.ceiling for what a fired ceiling exits with, and the XOS.gnu.count forms of XOS.gnu that no gate instrument may use, XOS.gnu.timeout, XOS.gnu.mapfile, XOS.gnu.grep-P, XOS.gnu.grep-U, XOS.gnu.stat-c, XOS.gnu.sha256sum and XOS.gnu.sed-n, each with the leg that lacks it and the portable form, which is what makes a certification of the whole Suite on the three legs a measurement rather than a badge (LAW.XOS.2, LAW.XOS.4, LAW.XOS.5, LAW.XOS.6).
 </objective>
 
 <process>
 1. Walk the argument with the cc-args grammar: bare words are tool names, `--probe` re-measures, `--drop` takes one, `--machine` and its absence select the layer, `--no-gate` skips the intake.
 2. Probe the six managers with `timeout 300 node lib/starlist.mjs managers`, in the foreground, exit codes read directly. Render `probe` with the present set and the absent set named (LAW.SL.1).
-3. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
-4. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
-5. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1).
-6. Re-run `timeout 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
-7. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
+3. Probe the local substrates with `timeout 60 node lib/cross-os.mjs probe`, in the foreground: render `substrates` with the host leg and one line per substrate, podman present only with a machine row, wsl2 only when wsl answers, and the macOS leg named to its hosted runner (LAW.SL.5, LAW.XOS.1).
+4. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
+5. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
+6. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1).
+7. Re-run `timeout 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
+8. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
 </process>
 
 <output_format>
@@ -566,6 +679,7 @@ The declarations this command reads: STAR.managers and the six adapters STAR.mgr
 Render the `starlist_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⭐ Heading` carrying this command's sigil ⭐, with a blank line before and after it (LAW.CORE.6).
 - `args`: **⭐ Arguments**, the walked argument with every flag and every bare word named
 - `probe`: **⭐ Probe**, the managers present and the managers absent, with the seconds
+- `substrates`: **⭐ Substrates**, the host leg and one line per local substrate of XOS.locals, present or absent, with its probe (LAW.SL.5)
 - `measured`: **⭐ Measured**, what the walk found before the first question: the languages, the build files and the managers present (LAW.STAR.4)
 - `intake`: **⭐ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
 - `tools`: **⭐ Tools**, one `tool` per line as read back from disk with its name, whether it is reachable, its layer and the date
@@ -585,6 +699,11 @@ Render the `starlist_run` root declared in the DOCTYPE as the markdown below. On
 - present: [managers that answered]
 - absent: [managers that did not]
 - seconds: [n]
+
+### ⭐ Substrates
+
+host leg [ubuntu-latest|macos-latest|windows-latest] ([how])
+- [podman|wsl2|docker|qemu] [present|absent] via [probe]: [what the answer meant]
 
 ### ⭐ Intake
 

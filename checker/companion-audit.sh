@@ -23,6 +23,7 @@
 
 set -u
 here="$(cd "$(dirname "$0")/.." && pwd)"
+PORTABLE_ROOT="$here"; . "$here/checker/portable.sh"
 vpass="$(grep -o 'COMPANION.verdict.pass *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
 vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
 [ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
@@ -97,7 +98,7 @@ $files"
 
 echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${secs}s log=$log"
 # cwd is the scratchpad, not the repo: a nested session's hooks must not touch the tree (measured: CRLF .gitignore, .claude/, .codemap/, CLAUDE.md).
-( cd "$out" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 env -u CLAUDECODE timeout "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
+( cd "$out" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 env -u CLAUDECODE ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
   --allowedTools "Read,Grep,Glob,Bash(timeout 60 node:*),Bash(timeout 60 git:*)" \
   < /dev/null 2>&1 ) | tee "$raw" | tail -c 400
 rc=${PIPESTATUS[0]}

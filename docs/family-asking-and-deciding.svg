@@ -11,27 +11,27 @@
 <line x1="26" y1="98" x2="794" y2="98" stroke="#e2e5ec" stroke-width="1"/>
 <rect x="26" y="114" width="686" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="131" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/ask-me-many-questions-dtd [task or leave blank; add --no-gate for autonomous mode]</text>
-<text x="794" y="131" font-size="12" fill="#5b6472" text-anchor="end">35 laws</text>
+<text x="794" y="131" font-size="12" fill="#5b6472" text-anchor="end">36 laws</text>
 <text x="34" y="158" font-size="13" fill="#5b6472">Gather requirements through up to thirty bilateral questions in eight rounds of four</text>
 <text x="34" y="177" font-size="13" fill="#5b6472">before executing any task; the rounds are raised in the DOCTYPE before the ask grammar</text>
 <text x="34" y="196" font-size="13" fill="#5b6472">is included, and the impactful selection, the previews and the back token are all in</text>
 <text x="34" y="215" font-size="13" fill="#5b6472">force</text>
 <rect x="26" y="234" width="630" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="251" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/ask-me-preview-dtd [task or leave blank; add --no-gate for autonomous mode]</text>
-<text x="794" y="251" font-size="12" fill="#5b6472" text-anchor="end">35 laws</text>
+<text x="794" y="251" font-size="12" fill="#5b6472" text-anchor="end">36 laws</text>
 <text x="34" y="278" font-size="13" fill="#5b6472">Gather requirements through questions whose every option carries a preview, cut inside</text>
 <text x="34" y="297" font-size="13" fill="#5b6472">the widget and expanded in the transcript with the answer the model predicts, with the</text>
 <text x="34" y="316" font-size="13" fill="#5b6472">back token to return to the question; three rounds of four, bilateral, with the</text>
 <text x="34" y="335" font-size="13" fill="#5b6472">impactful selection on the gate</text>
 <rect x="26" y="354" width="646" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="371" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/ask-me-questions-dtd [task or leave blank; add --no-gate for autonomous mode]</text>
-<text x="794" y="371" font-size="12" fill="#5b6472" text-anchor="end">34 laws</text>
+<text x="794" y="371" font-size="12" fill="#5b6472" text-anchor="end">35 laws</text>
 <text x="34" y="398" font-size="13" fill="#5b6472">Gather requirements through adaptive questioning before executing any task; the intake,</text>
 <text x="34" y="417" font-size="13" fill="#5b6472">its rounds, the bilateral questions, the previews, the impactful selection and the gate</text>
 <text x="34" y="436" font-size="13" fill="#5b6472">are a declared state machine</text>
 <rect x="26" y="455" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="472" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/brainstorm-meta-clear-section-dtd [topic or the prompt to carry over; --verbose prints the ideas discarded, --debug prints the file bytes]</text>
-<text x="794" y="472" font-size="12" fill="#5b6472" text-anchor="end">53 laws</text>
+<text x="794" y="472" font-size="12" fill="#5b6472" text-anchor="end">54 laws</text>
 <text x="34" y="499" font-size="13" fill="#5b6472">DTD-native: brainstorm a topic, choose the schematic, the semantic schemas and the forms</text>
 <text x="34" y="518" font-size="13" fill="#5b6472">the bigger prompt will be written in, transmigrate that prompt into a handoff file for</text>
 <text x="34" y="537" font-size="13" fill="#5b6472">the next context section, and print the instruction to clear and resume through the</text>
@@ -39,24 +39,24 @@
 <text x="34" y="575" font-size="13" fill="#5b6472">itself</text>
 <rect x="26" y="594" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="611" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/coin-flip-best-of-dtd [side A or side B; --of 3|5|7; leave blank to be asked; --debug prints every command run]</text>
-<text x="794" y="611" font-size="12" fill="#5b6472" text-anchor="end">32 laws</text>
+<text x="794" y="611" font-size="12" fill="#5b6472" text-anchor="end">33 laws</text>
 <text x="34" y="638" font-size="13" fill="#5b6472">DTD-native: decide between two named sides by a best-of series of three, five or seven</text>
 <text x="34" y="657" font-size="13" fill="#5b6472">coin tosses, each its own node:crypto randomInt execution quoted as tool output, the</text>
 <text x="34" y="676" font-size="13" fill="#5b6472">majority winning</text>
 <rect x="26" y="695" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="712" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/coin-flip-dtd [side A or side B, or &quot;A | B&quot;; leave blank to be asked; --debug prints the command run]</text>
-<text x="794" y="712" font-size="12" fill="#5b6472" text-anchor="end">32 laws</text>
+<text x="794" y="712" font-size="12" fill="#5b6472" text-anchor="end">33 laws</text>
 <text x="34" y="739" font-size="13" fill="#5b6472">DTD-native: decide between two named sides by one coin toss whose entropy comes from</text>
 <text x="34" y="758" font-size="13" fill="#5b6472">node:crypto randomInt, executed in the foreground and quoted as tool output; the sides</text>
 <text x="34" y="777" font-size="13" fill="#5b6472">come from the argument or from one question</text>
 <rect x="26" y="796" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="813" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/coin-flip-reveal-dtd [side A or side B; leave blank to be asked; --debug prints the command run]</text>
-<text x="794" y="813" font-size="12" fill="#5b6472" text-anchor="end">32 laws</text>
+<text x="794" y="813" font-size="12" fill="#5b6472" text-anchor="end">33 laws</text>
 <text x="34" y="840" font-size="13" fill="#5b6472">DTD-native: toss a coin between two named sides, then ask how the operator felt when it</text>
 <text x="34" y="859" font-size="13" fill="#5b6472">landed; the feeling is the decision and the coin is only the instrument that revealed it</text>
 <rect x="26" y="878" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="895" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/coin-flip-weighted-dtd [side A or side B; --odds 70; leave blank to be asked; --debug prints the command run]</text>
-<text x="794" y="895" font-size="12" fill="#5b6472" text-anchor="end">32 laws</text>
+<text x="794" y="895" font-size="12" fill="#5b6472" text-anchor="end">33 laws</text>
 <text x="34" y="922" font-size="13" fill="#5b6472">DTD-native: decide between two named sides by one toss weighted by the odds the operator</text>
 <text x="34" y="941" font-size="13" fill="#5b6472">declares, the entropy from node:crypto randomInt over one hundred, the odds quoted as</text>
 <text x="34" y="960" font-size="13" fill="#5b6472">the operator's belief and never adjusted</text>

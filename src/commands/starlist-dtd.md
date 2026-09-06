@@ -25,11 +25,16 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   %cc-list;
   <!ENTITY % cc-starlist SYSTEM "../../dtd/cc-starlist.dtd">
   %cc-starlist;
+  <!-- 8.0.0: the local substrates of cross-os.dtd are probed beside the six
+       managers, because a Linux leg through podman or wsl2 is a thing this
+       machine can or cannot reach, like any other tool (LAW.XOS.7). -->
+  <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
+  %cross-os;
   <!-- adopted is starlist-manager-dtd's, not this one's: LAW.SL.4 says this
        command installs nothing, and a slot for the one act its own law forbids
        it is a contradiction the model was carrying (pass 22 of the 7.0.0
        audit). measured stays, and the map below renders it. -->
-  <!ELEMENT starlist_run (args, probe, measured, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
+  <!ELEMENT starlist_run (args, probe, substrates, measured, intake, tools, bounds, verdicts, refused*, next_action, assumption_made*)>
   <!ATTLIST starlist_run
             kind   CDATA #FIXED "starlist"
             layers CDATA #REQUIRED>
@@ -44,6 +49,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   <!ENTITY LAW.SL.2 "SL.default holds: an entry lands in the machine layer unless the argument or the intake says this project relies on it, in which case the repository layer carries it too and wins where they differ (LAW.LIST.3).">
   <!ENTITY LAW.SL.3 "SL.bounds holds: after any write this command re-runs the reachability guard and renders every white entry the starlist can no longer support, because narrowing what the harness reaches can break a promise made elsewhere (LAW.LIST.4, LAW.STAR.6).">
   <!ENTITY LAW.SL.4 "This command installs nothing: it records what is reachable and names starlist-manager-dtd for anything that is not, so the act of changing this machine stays behind that command's confirmation (LAW.STAR.3).">
+  <!ENTITY LAW.SL.5 "The local substrates of XOS.locals, XOS.locals.count of them, are probed beside the managers under XOS.ceiling.probe and rendered in substrates, each present or absent under LAW.XOS.1 and never guessed; a Linux leg is offered only on a substrate found present under LAW.XOS.7, and the macos-latest leg is named to XOS.macos.host because XOS.macos.local is a refusal by licence (LAW.XOS.3).">
 ]>
 
 <trust_boundary>
@@ -65,16 +71,19 @@ Its purpose is to bound the others. SL.bounds holds — a class whitelisted but 
 This command installs nothing (LAW.SL.4). Anything unreachable is named to starlist-manager-dtd, where a confirmation showing the literal line stands between a search and a change to this machine.
 
 The declarations this command reads: STAR.managers and the six adapters STAR.mgr.scoop, STAR.mgr.chocolatey, STAR.mgr.bun, STAR.mgr.vcpkg, STAR.mgr.cargo and STAR.mgr.uv; STAR.no_search and STAR.absent for what a silent binary means; STAR.ceiling.search for the bound on every probe; STAR.file, which is where the list lands and what the writer honours; and LAW.STAR.1 for why a seventh manager is a declaration and no new code.
+
+The declarations of cross-os.dtd this command reads beside them: XOS.legs, the XOS.legs.count hosted legs XOS.leg.ubuntu-latest, XOS.leg.macos-latest and XOS.leg.windows-latest, the four local substrates XOS.local.podman, XOS.local.wsl2, XOS.local.docker and XOS.local.qemu, XOS.macos.host and XOS.macos.local, XOS.ceiling.probe for the bound on each probe and XOS.exit.ceiling for what a fired ceiling exits with, and the XOS.gnu.count forms of XOS.gnu that no gate instrument may use, XOS.gnu.timeout, XOS.gnu.mapfile, XOS.gnu.grep-P, XOS.gnu.grep-U, XOS.gnu.stat-c, XOS.gnu.sha256sum and XOS.gnu.sed-n, each with the leg that lacks it and the portable form, which is what makes a certification of the whole Suite on the three legs a measurement rather than a badge (LAW.XOS.2, LAW.XOS.4, LAW.XOS.5, LAW.XOS.6).
 </objective>
 
 <process>
 1. Walk the argument with the cc-args grammar: bare words are tool names, `--probe` re-measures, `--drop` takes one, `--machine` and its absence select the layer, `--no-gate` skips the intake.
 2. Probe the six managers with `timeout 300 node lib/starlist.mjs managers`, in the foreground, exit codes read directly. Render `probe` with the present set and the absent set named (LAW.SL.1).
-3. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
-4. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
-5. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1).
-6. Re-run `timeout 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
-7. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
+3. Probe the local substrates with `timeout 60 node lib/cross-os.mjs probe`, in the foreground: render `substrates` with the host leg and one line per substrate, podman present only with a machine row, wsl2 only when wsl answers, and the macOS leg named to its hosted runner (LAW.SL.5, LAW.XOS.1).
+4. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
+5. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
+6. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1).
+7. Re-run `timeout 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
+8. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
 </process>
 
 <output_format>
@@ -82,6 +91,7 @@ The declarations this command reads: STAR.managers and the six adapters STAR.mgr
 Render the `starlist_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⭐ Heading` carrying this command's sigil ⭐, with a blank line before and after it (LAW.CORE.6).
 - `args`: **⭐ Arguments**, the walked argument with every flag and every bare word named
 - `probe`: **⭐ Probe**, the managers present and the managers absent, with the seconds
+- `substrates`: **⭐ Substrates**, the host leg and one line per local substrate of XOS.locals, present or absent, with its probe (LAW.SL.5)
 - `measured`: **⭐ Measured**, what the walk found before the first question: the languages, the build files and the managers present (LAW.STAR.4)
 - `intake`: **⭐ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
 - `tools`: **⭐ Tools**, one `tool` per line as read back from disk with its name, whether it is reachable, its layer and the date
@@ -101,6 +111,11 @@ Render the `starlist_run` root declared in the DOCTYPE as the markdown below. On
 - present: [managers that answered]
 - absent: [managers that did not]
 - seconds: [n]
+
+### ⭐ Substrates
+
+host leg [ubuntu-latest|macos-latest|windows-latest] ([how])
+- [podman|wsl2|docker|qemu] [present|absent] via [probe]: [what the answer meant]
 
 ### ⭐ Intake
 

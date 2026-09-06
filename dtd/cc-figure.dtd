@@ -1,0 +1,109 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-figure.dtd : one figure, two renderers.
+
+  A preview is text by declaration (cc-ask.dtd: preview is #PCDATA), the
+  harness renders it as markdown inside a monospace box, and the box is
+  cut at FIG.cut.rows lines of about FIG.cut.cols columns, expanded at
+  FIG.exp.rows of FIG.exp.cols. An svg cannot go inside that widget. But a
+  monospace box is a raster with declared dimensions, in cells instead of
+  pixels, so a figure declared once can be rendered twice: to characters
+  for the widget, to svg for the disk. The character grid is the bound on
+  the svg and never the reverse, because the poorest renderer sets the
+  contract (LAW.FIG.2).
+
+  The vocabulary is drawn from the svg family of the corpus rather than
+  invented: svg11.dtd wraps every module in a switch and parameterises the
+  element names (SVG.rect.qname, SVG.line.qname), and TEI wraps every
+  element in its own switch with the name as a parameter entity (n.abbr).
+  Both ideas are taken and no file is copied: every shape below is a module
+  a command may switch off before the include, and the element name is a
+  parameter entity a command may rename the same way (LAW.FIG.5).
+
+  lib/figure.mjs reads this file, renders both forms from one figure, and
+  refuses a pair that disagrees; its controls trip every law below.
+  Included by a command that declares preview.content as (#PCDATA | figure)*
+  before it includes cc-ask (LAW.ASK.16), and by any command that writes a
+  figure to disk.
+-->
+
+<!-- ===== THE CANVAS, IN CELLS ===== -->
+<!-- The widget's own dimensions, measured: three lines cut, twelve expanded,
+     about sixty and eighty columns. The cells are the bound. -->
+<!ENTITY FIG.cut.cols "60">
+<!ENTITY FIG.cut.rows "3">
+<!ENTITY FIG.exp.cols "80">
+<!ENTITY FIG.exp.rows "12">
+<!-- One cell on the svg plate: the two renderings share a coordinate. -->
+<!ENTITY FIG.cell.w "8">
+<!ENTITY FIG.cell.h "16">
+<!ENTITY FIG.renders "cells|svg">
+<!ENTITY FIG.shapes "rect|line|label|group">
+<!ENTITY FIG.shapes.count "4">
+<!ENTITY FIG.marks "guessed|measured">
+<!-- The glyphs the cells renderer draws with. Box-drawing is refused on
+     purpose: a widget font that lacks a glyph draws a box, and a figure
+     that depends on the font is not a figure. -->
+<!ENTITY FIG.glyph.corner "+">
+<!ENTITY FIG.glyph.h "-">
+<!ENTITY FIG.glyph.v "|">
+<!ENTITY FIG.glyph.diag "/">
+<!ENTITY FIG.glyph.back "\">
+
+<!-- ===== THE SHAPES, EACH A MODULE ===== -->
+<!-- A command switches a shape off by declaring its module IGNORE and
+     fig.content without it BEFORE the include; the first declaration
+     binds, so these lines are the default rather than a cap. -->
+<!ENTITY % fig.content "rect | line | label | group">
+<!ENTITY % fig.rect.module  "INCLUDE">
+<!ENTITY % fig.line.module  "INCLUDE">
+<!ENTITY % fig.label.module "INCLUDE">
+<!ENTITY % fig.group.module "INCLUDE">
+<!ENTITY % fig.n.rect  "rect">
+<!ENTITY % fig.n.line  "line">
+<!ENTITY % fig.n.label "label">
+<!ENTITY % fig.n.group "group">
+
+<![%fig.rect.module;[
+<!ELEMENT %fig.n.rect; EMPTY>
+<!ATTLIST %fig.n.rect;
+          x CDATA #REQUIRED
+          y CDATA #REQUIRED
+          w CDATA #REQUIRED
+          h CDATA #REQUIRED
+          name CDATA #IMPLIED>
+]]>
+<![%fig.line.module;[
+<!ELEMENT %fig.n.line; EMPTY>
+<!ATTLIST %fig.n.line;
+          x1 CDATA #REQUIRED
+          y1 CDATA #REQUIRED
+          x2 CDATA #REQUIRED
+          y2 CDATA #REQUIRED>
+]]>
+<![%fig.label.module;[
+<!ELEMENT %fig.n.label; (#PCDATA)>
+<!ATTLIST %fig.n.label;
+          x CDATA #REQUIRED
+          y CDATA #REQUIRED>
+]]>
+<![%fig.group.module;[
+<!ELEMENT %fig.n.group; (%fig.content;)*>
+<!ATTLIST %fig.n.group; name CDATA #REQUIRED>
+]]>
+
+<!-- ===== THE FIGURE ===== -->
+<!ELEMENT figure (%fig.content;)*>
+<!ATTLIST figure
+          grid    CDATA #REQUIRED
+          renders (cells|svg|both) "both"
+          mark    (guessed|measured) "guessed"
+          title   CDATA #IMPLIED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.FIG.1 "A figure declares its grid as columns by rows in cells and every shape lies inside it: a preview figure whose grid exceeds FIG.cut.cols by FIG.cut.rows, an expanded one that exceeds FIG.exp.cols by FIG.exp.rows, or any figure with a shape crossing its grid, is refused by name and never cut, because a preview that does not fit the widget was never a preview.">
+<!ENTITY LAW.FIG.2 "The character grid is the bound on the svg, never the reverse: the svg plate is the cells rendering scaled by FIG.cell.w and FIG.cell.h, it may add colour and a title, and it carries no shape the cells do not carry; a figure that cannot be read in the cells is too complex to be a preview.">
+<!ENTITY LAW.FIG.3 "The two renderings come from one figure element, and node lib/figure.mjs check refuses a cells rendering and an svg rendering that disagree on the count or the order of the shapes, the way build --check refuses a command that disagrees with its subset.">
+<!ENTITY LAW.FIG.4 "A figure rendered inside a preview carries mark guessed: it is the consequence the model predicts for that choice, not a thing that was run. A figure written into an artifact carries mark measured only when the tree it draws was read by the run that wrote it, and the artifact names what was read.">
+<!ENTITY LAW.FIG.5 "Every shape of FIG.shapes, FIG.shapes.count of them, is a module: a command switches one off by declaring its module entity IGNORE and fig.content without it before the include, the way svg11.dtd switches its own modules, so the grammar lacks the shape rather than the command ignoring it at runtime, and a figure carrying a switched-off shape is invalid against the subset.">

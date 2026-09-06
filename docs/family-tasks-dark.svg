@@ -10,7 +10,7 @@
 <line x1="26" y1="78" x2="794" y2="78" stroke="#242938" stroke-width="1"/>
 <rect x="26" y="94" width="700" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="111" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">/audit-tasks-dtd [a task name to pick, or leave blank to be asked; --verbose prints the ledger tail whole]</text>
-<text x="794" y="111" font-size="12" fill="#9aa3b2" text-anchor="end">39 laws</text>
+<text x="794" y="111" font-size="12" fill="#9aa3b2" text-anchor="end">40 laws</text>
 <text x="34" y="138" font-size="13" fill="#9aa3b2">DTD-native: audit the project tasks folder against its registry in both directions</text>
 <text x="34" y="157" font-size="13" fill="#9aa3b2">through lib/task.mjs (every name declared and present, declared and missing, or present</text>
 <text x="34" y="176" font-size="13" fill="#9aa3b2">and orphan, the drift counted), read the ledger tail as data, elaborate every open task</text>
@@ -18,7 +18,7 @@
 <text x="34" y="214" font-size="13" fill="#9aa3b2">task-run; this command runs no task</text>
 <rect x="26" y="233" width="700" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="250" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">/create-task-dtd [what the task is, or a TO-DOS.md line to import; --no-gate for autonomous defaults]</text>
-<text x="794" y="250" font-size="12" fill="#9aa3b2" text-anchor="end">62 laws</text>
+<text x="794" y="250" font-size="12" fill="#9aa3b2" text-anchor="end">63 laws</text>
 <text x="34" y="277" font-size="13" fill="#9aa3b2">DTD-native: create a task in the project tasks folder through twelve questions in three</text>
 <text x="34" y="296" font-size="13" fill="#9aa3b2">rounds never skipped (length select, variables check, steps elaborate, license mark): a</text>
 <text x="34" y="315" font-size="13" fill="#9aa3b2">task file in the chosen schematic with the parts of the chosen semantic schemas,</text>
@@ -27,14 +27,14 @@
 <text x="34" y="372" font-size="13" fill="#9aa3b2">step the registry refuses</text>
 <rect x="26" y="391" width="700" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="408" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">/create-workflow-tasks-dtd [a workflow name and task names, or leave blank to be asked; --no-gate for autonomous defaults]</text>
-<text x="794" y="408" font-size="12" fill="#9aa3b2" text-anchor="end">39 laws</text>
+<text x="794" y="408" font-size="12" fill="#9aa3b2" text-anchor="end">40 laws</text>
 <text x="34" y="435" font-size="13" fill="#9aa3b2">DTD-native: turn chosen tasks of the project tasks folder into one workflow file for</text>
 <text x="34" y="454" font-size="13" fill="#9aa3b2">lib/workflow.mjs (the tasks marked after elaboration, their order, the failure rule, the</text>
 <text x="34" y="473" font-size="13" fill="#9aa3b2">ceilings), every step's dollar variables expanded from its task alone, validated and</text>
 <text x="34" y="492" font-size="13" fill="#9aa3b2">dry-run before it is reported; the workflow is never run here</text>
 <rect x="26" y="511" width="565" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="528" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">/task-handoff-dtd [the task name; --no-gate for autonomous defaults]</text>
-<text x="794" y="528" font-size="12" fill="#9aa3b2" text-anchor="end">45 laws</text>
+<text x="794" y="528" font-size="12" fill="#9aa3b2" text-anchor="end">46 laws</text>
 <text x="34" y="555" font-size="13" fill="#9aa3b2">DTD-native: close a task of the project tasks folder with its attestation (files, ledger</text>
 <text x="34" y="574" font-size="13" fill="#9aa3b2">lines, exit codes, each read or run in this session), set its status through the runtime</text>
 <text x="34" y="593" font-size="13" fill="#9aa3b2">(done, blocked or handed off), write the record under artifacts with the</text>

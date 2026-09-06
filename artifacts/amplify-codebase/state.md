@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 7
-- verb: 9
+- run: 8
+- verb: 14
 - offset: 0
-- page: 1
-- from: 7.1.3
-- release: mid 7.2.0
+- page: 4
+- from: 7.2.0
+- release: major 8.0.0
 - walked: schematic, form, voice, args, record, report, task, workflow, adiutor, license, rot, generic
 
 | id | class | layer | verdict | verb | refused_at | why | run |
@@ -56,3 +56,16 @@
 | f6a0de03 | gap | guard | done | 8 |  | the trip-every-guard-on-purpose pattern grown to two new instruments, twenty-three controls in the packer and six in the badge generator | 7 |
 | f6a0de04 | gap | guard | done | 6 |  | two commands were shadowed by same-named skills and the only symptom was a count of 129; H11 recomputes the collision set so a future one fails by name | 7 |
 | f6a0de05 | gap | report | done | 7 |  | the hosted method was a story inside one session; docs/HOSTED-PLUGIN.md makes it a recipe another maintainer can repeat | 7 |
+| a8f0de01 | gap | generic | done | 14 |  | the gate ran on one leg five times over and nothing had run on macOS; the single-leg approach is replaced by the three-leg matrix, the ubuntu-only jobs removed | 8 |
+| a8f0de02 | gap | generic | done | 11 |  | cross-OS certification lifted into cross-os.dtd, LAW.XOS.1 to 7, with lib/cross-os.mjs behind it | 8 |
+| a8f0de03 | gap | generic | done | 12 |  | the seven forms of XOS.gnu are refused by file and line | 8 |
+| a8f0de04 | gap | generic | done | 12 |  | lib/ceiling.mjs exits 124 where timeout is absent and checker/portable.sh chooses; both paths are tripped, because a vanishing ceiling cannot trip | 8 |
+| a8f0de05 | idea | schematic | done | 11 |  | the Graphic and Geometric family: geometry.dtd is the first driver in the Suite, fifty-two rungs in three band modules, and three commands whose band is #FIXED | 8 |
+| a8f0de06 | idea | form | done | 13 |  | preview.content is raised before the include, and the ask family changes shape | 8 |
+| a8f0de07 | idea | form | done | 11 |  | cc-figure.dtd, one figure and two renderers under LAW.FIG.1 to 5 | 8 |
+| a8f0de08 | gap | args | done | 3 |  | the arguments sigil sat in two subset comments and the harness substituted it at every call, measured this session; the comments name the document now | 8 |
+| a8f0de09 | gap | voice | done | 2 |  | the encoding sweep reads bytes in Node | 8 |
+| a8f0de10 | gap | generic | refused | 9 | 8 | a local Linux leg through podman needs a machine, which needs WSL2 or Hyper-V; wsl --install needs elevation and a restart, so no command runs it; recorded abse | 8 |
+| a8f0de11 | gap | generic | refused | 9 | 8 | a local macOS leg is refused by licence, XOS.macos.local; the hosted runner is the only substrate that carries it | 8 |
+| a8f0de12 | idea | report | exposed | 13 |  | the preview figure carried out of the intake into the artifact as the first draft, which is the only honest way to lose the guessed mark; not done this run | 8 |
+| a8f0de13 | idea | adiutor | exposed | 9 |  | a dynamic audit for checker/*.dtd, a different instrument from the static one that was widened and reverted as c3e0de05; still unwritten | 8 |

@@ -1,0 +1,34 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  codebase-surveyor.dtd : the variant subset of /codebase-surveyor-dtd.
+
+  geometry.dtd holds everything the three commands share: the fifty-two rung
+  ladder, the three band modules, the survey, the plan, the renovation and
+  LAW.GEOM.1 to LAW.GEOM.8. This file holds only what makes this band itself,
+  as declarations a validator can judge rather than prose a reader must trust.
+
+  The band is a #FIXED attribute, and so is what the command may write:
+  nothing but its own artifact. A rendered answer that carries any other
+  value contradicts the declaration it was rendered under, so "the surveyor
+  writes no code" stops being a rule the model remembers and becomes a rule
+  node lib/geometry.mjs controls reads off the BUILT command.
+-->
+
+<!-- ===== THE BAND, PINNED ===== -->
+<!ATTLIST survey_run
+          band     CDATA #FIXED "1-17"
+          verbs    CDATA #FIXED "planimetry to conspectus"
+          writes   CDATA #FIXED "the survey artifact and nothing else"
+          hands_to CDATA #FIXED "codebase-architect-dtd">
+
+<!ENTITY SURVEYOR.band "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17">
+<!ENTITY SURVEYOR.low "1">
+<!ENTITY SURVEYOR.high "17">
+<!ENTITY SURVEYOR.next "18">
+<!ENTITY SURVEYOR.what "measure and describe: a drawing and a set of numbers that were taken, not guessed; nothing moves">
+
+<!-- ===== THE LAWS OF THIS VARIANT ===== -->
+<!ENTITY LAW.SURVEYOR.1 "This command exposes only the verbs of SURVEYOR.band, planimetry to conspectus; the band is a #FIXED attribute on survey_run, so an answer that claims another band is invalid against this subset, and a shape above the band is rendered as next_band naming SURVEYOR.next and the command codebase-architect-dtd (LAW.GEOM.1).">
+<!ENTITY LAW.SURVEYOR.2 "The writes attribute is fixed: this run writes its survey under GEOM.dir and nothing else, moves no file and changes no line; a survey run that leaves any other file changed is a failed answer, measured by git status before and after (LAW.GEOM.2).">
+<!ENTITY LAW.SURVEYOR.3 "Every measure names the instrument that took it and the seconds it took under GEOM.ceiling, and the figure is rendered from the measures alone with mark measured, so the drawing can be checked against the numbers beside it (LAW.GEOM.7, LAW.FIG.4).">

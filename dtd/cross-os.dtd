@@ -1,0 +1,93 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cross-os.dtd : the three legs a harness is certified on, the substrates
+  that can carry a leg, and the shell forms a gate instrument may not use.
+
+  Until 8.0.0 every job of the gate ran on one leg, ubuntu-latest, five
+  times over, and the tree was developed on a sixth thing, Windows under
+  Git Bash. Nothing had ever run on macOS. Measured the day this file was
+  written: three shell checkers called the timeout binary, the encoding
+  sweep used mapfile and grep -P, and the release job used sha256sum; the
+  macOS runner has none of those, so the gate would have failed there
+  before it measured anything. A suite whose gate cannot run on a user's
+  operating system is not certified for that user, whatever its badges say.
+
+  This subset makes the legs an enumeration, the substrates a measured
+  fact, and the forbidden forms a list a sweep reads. lib/cross-os.mjs
+  reads this file and holds the code to it; its controls trip every law
+  that can be tripped. Included by starlist-dtd, which records the local
+  substrates the way it records any other reachable thing, and by the
+  three commands of the Graphic and Geometric family, whose measurements
+  name the substrate they were taken on.
+-->
+
+<!-- ===== THE LEGS ===== -->
+<!-- The enumeration the certified element is held to. Three, hosted, and
+     the same three the workflow declares as its matrix (LAW.XOS.6). -->
+<!ENTITY % xos.leg "(ubuntu-latest|macos-latest|windows-latest)">
+<!ENTITY XOS.legs "ubuntu-latest|macos-latest|windows-latest">
+<!ENTITY XOS.legs.count "3">
+<!-- name | what the leg's shell is | why it is a leg -->
+<!ENTITY XOS.leg.ubuntu-latest  "hosted|bash 5 with GNU coreutils and GNU grep|the one leg the 7.x gate ran, five jobs over">
+<!ENTITY XOS.leg.macos-latest   "hosted|bash on PATH, BSD grep and sed, no timeout binary|the leg no local substrate may carry, by licence">
+<!ENTITY XOS.leg.windows-latest "hosted|Git Bash with MSYS coreutils and GNU grep, autocrlf true in the system config|the leg this tree is developed on and had never been certified on">
+
+<!-- ===== THE LOCAL SUBSTRATES ===== -->
+<!-- name | the probe | what its answer means. Measured on the machine that
+     wrote this subset: podman 6.1.0 answered with a header and zero rows at
+     exit 0, wsl answered exit 50 not installed, docker was absent, and qemu
+     was present and used by nothing. -->
+<!ENTITY XOS.local.podman "podman|podman machine list|a header with zero rows exits 0: the rows are the measure, never the exit">
+<!ENTITY XOS.local.wsl2   "wsl|wsl --status|absent means exit 50 or no binary; wsl --install needs elevation and a restart, so it is never run by a command">
+<!ENTITY XOS.local.docker "docker|docker --version|absent means no binary; present is a substrate for the Linux leg like podman">
+<!ENTITY XOS.local.qemu   "qemu-system-x86_64|qemu-system-x86_64 --version|present carries no leg of its own: a guest still needs an image the licence allows">
+<!ENTITY XOS.locals "podman|wsl2|docker|qemu">
+<!ENTITY XOS.locals.count "4">
+<!ENTITY XOS.macos.host  "github-actions macos-latest">
+<!ENTITY XOS.macos.local "refused: a macOS guest on hardware Apple did not make is outside the macOS licence, so no local substrate carries the macos-latest leg, whatever the container is called">
+<!ENTITY XOS.ceiling.probe "60">
+<!ENTITY XOS.exit.ceiling "124">
+
+<!-- ===== THE FORMS A GATE INSTRUMENT MAY NOT USE ===== -->
+<!-- form | the leg that lacks it | the portable form. The list is what
+     lib/cross-os.mjs sweep reads; a form added here is refused on the next
+     run without a line of code. -->
+<!ENTITY XOS.gnu.timeout   "timeout N command|macos-latest ships no timeout binary|ceil N command from checker/portable.sh, which is node lib/ceiling.mjs where timeout is absent">
+<!ENTITY XOS.gnu.mapfile   "mapfile -t|bash 3.2, which is /bin/bash on macOS|a while read loop, or a byte read in Node">
+<!ENTITY XOS.gnu.grep-P    "grep -P|BSD grep|grep -E, or a byte read in Node">
+<!ENTITY XOS.gnu.grep-U    "grep -U|BSD grep|a byte read in Node">
+<!ENTITY XOS.gnu.stat-c    "stat -c|BSD stat|wc -c under arithmetic">
+<!ENTITY XOS.gnu.sha256sum "sha256sum|macos-latest ships shasum instead|node with the crypto module">
+<!ENTITY XOS.gnu.sed-n     "a newline escape in a sed replacement|BSD sed writes the letter n|node -e with a string replace">
+<!ENTITY XOS.gnu "timeout|mapfile|grep-P|grep-U|stat-c|sha256sum|sed-n">
+<!ENTITY XOS.gnu.count "7">
+
+<!-- ===== ELEMENTS ===== -->
+<!-- What a run measured about the machine it ran on. A substrate not probed
+     is unmeasured; the enumeration has no value for guessed. -->
+<!ELEMENT substrates (substrate*)>
+<!ELEMENT substrate (#PCDATA)>
+<!ATTLIST substrate
+          name    NMTOKEN #REQUIRED
+          kind    (hosted|local) #REQUIRED
+          present (yes|no|unmeasured) #REQUIRED
+          probe   CDATA #IMPLIED>
+<!-- Certification: one leg per name of XOS.legs, exactly three, so an
+     answer with a leg missing is invalid against this subset rather than
+     merely incomplete. -->
+<!ELEMENT certified (leg, leg, leg)>
+<!ELEMENT leg (#PCDATA)>
+<!ATTLIST leg
+          os      %xos.leg; #REQUIRED
+          verdict (pass|fail|unmeasured) #REQUIRED
+          run     CDATA #IMPLIED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.XOS.1 "A substrate is rendered present only after its probe answered with rows, never after an exit code alone: XOS.local.podman lists machines with a header and zero rows at exit 0, and that reads absent; a substrate not probed is rendered unmeasured, and unmeasured is never present.">
+<!ENTITY LAW.XOS.2 "Certification is the gate run on every leg of XOS.legs, XOS.legs.count of them, and the certified element carries exactly one leg per name; a leg the run did not reach is rendered unmeasured, and unmeasured is never pass.">
+<!ENTITY LAW.XOS.3 "The macos-latest leg runs on XOS.macos.host and nowhere else: XOS.macos.local is a refusal by licence and not by technology, and a command that offers a local macOS substrate answers outside this subset.">
+<!ENTITY LAW.XOS.4 "No shell instrument of the gate uses a form of XOS.gnu, XOS.gnu.count of them, each declared with the leg that lacks it and the portable form; node lib/cross-os.mjs sweep refuses a checker script or a workflow run line carrying one, by file and by line.">
+<!ENTITY LAW.XOS.5 "A ceiling is portable: where the timeout binary is absent the ceiling is node lib/ceiling.mjs, it exits XOS.exit.ceiling when it fires exactly as timeout does, and a control trips both paths on purpose, because a ceiling that vanishes with the platform is a guard that cannot trip.">
+<!ENTITY LAW.XOS.6 "The gate workflow declares its legs as a matrix equal to XOS.legs and runs the install round trip on the same matrix; node lib/cross-os.mjs matrix --check refuses a gate job whose runs-on is one name, and the release job needs every leg green before it ships.">
+<!ENTITY LAW.XOS.7 "A local leg is offered only on a substrate the probe found present under LAW.XOS.1: a Linux leg through XOS.local.podman needs at least one machine row, one through XOS.local.wsl2 needs wsl to answer, and starlist-dtd records each as reachable or absent under LAW.SL.1 rather than assuming it.">

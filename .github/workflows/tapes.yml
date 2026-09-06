@@ -45,7 +45,7 @@ jobs:
           for t in docs/tapes/*.tape; do
             echo "== $t"
             rm -f "docs/gifs/$(basename "$t" .tape).gif"
-            timeout 600 vhs "$t" || { echo "vhs failed on $t"; rc=1; continue; }
+            node lib/ceiling.mjs 600 vhs "$t" || { echo "vhs failed on $t"; rc=1; continue; }
             g="docs/gifs/$(basename "$t" .tape).gif"
             [ -s "$g" ] && echo "rendered $g $(( $(wc -c < "$g") )) bytes" || { echo "no gif for $t"; rc=1; }
           done

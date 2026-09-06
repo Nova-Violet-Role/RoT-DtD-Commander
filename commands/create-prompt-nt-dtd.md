@@ -123,7 +123,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 
 <!-- How a word of the argument string may be embedded in what the command
      writes: the four trust classes the DTD gives it, and the one it never
-     gets. Mirrors the $ARGUMENTS variant tables: PCDATA escapes, a CDATA
+     gets. Mirrors the ARGUMENTS variant tables of the byproducts: PCDATA escapes, a CDATA
      section is the quoted heredoc, NDATA is a reference never read, and a
      parameter entity never takes user input. -->
 <!ENTITY ARG.embed.pcdata  "as parsed text: the ampersand, less-than and greater-than escaped, whitespace normalised">
@@ -271,7 +271,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
   the operator writes specs in, a shell heredoc, a YAML document, a
   NestedText document, an XML document with a DOCTYPE, or a polyglot that
   is valid in more than one of them at once. The table cut from the
-  $ARGUMENTS variant references says, for each schematic, what a literal
+  ARGUMENTS variant reference (the byproducts document) says, for each schematic, what a literal
   string is, what an expanded one is, how a value is referenced, defined,
   escaped, commented, included, made conditional, typed, or left unparsed.
   Each cell is a SCHEMA entity, so a creator that writes a prompt in a
@@ -862,6 +862,13 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ELEMENT option (label, description, preview?, elaboration?)>
 <!ELEMENT label (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
+<!-- 8.0.0: the content of a preview is a parameter entity a command may
+     raise before the include, the way it raises its rounds (LAW.ASK.11).
+     The Graphic and Geometric family declares preview.content as
+     (#PCDATA | figure)* and includes cc-figure first, so a preview there can
+     carry a figure; every other command keeps the text preview it always
+     had, and its resolved declaration reads as it did (LAW.ASK.16). -->
+<!ENTITY % preview.content "(#PCDATA)">
 <!ELEMENT preview (#PCDATA)>
 <!ATTLIST preview mode (cut|expanded) "cut">
 <!-- The model's elaboration of one option, written before the ask for an
@@ -935,6 +942,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY LAW.ASK.13 "Every question declares its variant, select, check, elaborate or mark, and the round names it beside the question: select and check map onto multiSelect false and true; elaborate renders one elaboration per option, cut into the description in the widget and expanded in the transcript above the call; mark elaborates likewise, lists the options as markable lines with ASK.token.mark, asks with multiSelect true, and turns every option into an answer marked yes or no, the unmarked ones dropped; a command that asks offers all four variants across its rounds where its slots allow.">
 <!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
 <!ENTITY LAW.ASK.15 "Every gate carries the re-entries already spent as its round, adds and impactfuls attributes, each an enumeration with a last value; a gate rendered without them has spent none. When all three are spent the gate is offered with start alone and ASK.exhausted as the reason, so a guided intake terminates by declaration rather than by the user's patience, and a bound that lives only in prose is not a bound.">
+<!ENTITY LAW.ASK.16 "A preview has the content model preview.content, which is (#PCDATA) unless a command declares it before the include; a command that declares it as (#PCDATA | figure)* includes cc-figure before this subset so the figure it names is declared, and a preview carrying a figure obeys LAW.FIG.1 to LAW.FIG.5 with the figure marked guessed, because a preview is the consequence the model predicts.">
 <!-- end subset cc-ask -->
 
   <!ELEMENT prompt_forge (args, intake, sections, schemas, forms, embedding, file, guards, proof, assumption_made*)>

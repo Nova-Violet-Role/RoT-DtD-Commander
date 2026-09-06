@@ -11,7 +11,7 @@
 <line x1="26" y1="98" x2="794" y2="98" stroke="#e2e5ec" stroke-width="1"/>
 <rect x="26" y="114" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="131" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/amplify-codebase-dtd [a path to walk, or blank for the current repository; --stage=alpha|beta|pre names a pre-release; --no-gate runs autonomously]</text>
-<text x="794" y="131" font-size="12" fill="#5b6472" text-anchor="end">49 laws</text>
+<text x="794" y="131" font-size="12" fill="#5b6472" text-anchor="end">50 laws</text>
 <text x="34" y="158" font-size="13" fill="#5b6472">DTD-native: walk a codebase through the layers it declares, expose what could be done as</text>
 <text x="34" y="177" font-size="13" fill="#5b6472">measured gaps and reasoned ideas on the amplify band of the fifteen-verb ladder (tweak,</text>
 <text x="34" y="196" font-size="13" fill="#5b6472">enrich, ameliorate, amplification and magnify), ask across five rounds of four which to</text>
@@ -19,7 +19,7 @@
 <text x="34" y="234" font-size="13" fill="#5b6472">to without ever taking it</text>
 <rect x="26" y="253" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="270" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/enhance-codebase-dtd [a path to walk, or blank for the current repository; --stage=alpha|beta|pre names a pre-release; --no-gate runs autonomously]</text>
-<text x="794" y="270" font-size="12" fill="#5b6472" text-anchor="end">49 laws</text>
+<text x="794" y="270" font-size="12" fill="#5b6472" text-anchor="end">50 laws</text>
 <text x="34" y="297" font-size="13" fill="#5b6472">DTD-native: walk a codebase through the layers it declares, expose what could be done as</text>
 <text x="34" y="316" font-size="13" fill="#5b6472">measured gaps and reasoned ideas on the enhance band of the fifteen-verb ladder</text>
 <text x="34" y="335" font-size="13" fill="#5b6472">(heighten, promote, cultivate, enhancement and upgrade), ask across five rounds of four</text>
@@ -27,7 +27,7 @@
 <text x="34" y="373" font-size="13" fill="#5b6472">ones amount to without ever taking it</text>
 <rect x="26" y="392" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="409" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/overhaul-codebase-dtd [a path to walk, or blank for the current repository; --stage=alpha|beta|pre names a pre-release; --no-gate runs autonomously]</text>
-<text x="794" y="409" font-size="12" fill="#5b6472" text-anchor="end">49 laws</text>
+<text x="794" y="409" font-size="12" fill="#5b6472" text-anchor="end">50 laws</text>
 <text x="34" y="436" font-size="13" fill="#5b6472">DTD-native: walk a codebase through the layers it declares, expose what could be done as</text>
 <text x="34" y="455" font-size="13" fill="#5b6472">measured gaps and reasoned ideas on the overhaul band of the fifteen-verb ladder</text>
 <text x="34" y="474" font-size="13" fill="#5b6472">(elevation, intensification, evolve, overhaul and metamorphosis), ask across five rounds</text>

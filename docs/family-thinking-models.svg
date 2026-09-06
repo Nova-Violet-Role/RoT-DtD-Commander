@@ -26,7 +26,7 @@
 <text x="34" y="341" font-size="13" fill="#5b6472">do-first item owes</text>
 <rect x="26" y="360" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="377" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/first-principles-dtd [problem or leave blank for current context; add --no-gate to skip the assumption gate]</text>
-<text x="794" y="377" font-size="12" fill="#5b6472" text-anchor="end">29 laws</text>
+<text x="794" y="377" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
 <text x="34" y="404" font-size="13" fill="#5b6472">Break down to fundamentals and rebuild from base truths; every assumption gets an origin</text>
 <text x="34" y="423" font-size="13" fill="#5b6472">and a verdict, every conclusion names the truths it stands on</text>
 <rect x="26" y="442" width="469" height="24" rx="5" fill="#f2f4f8"/>
@@ -56,7 +56,7 @@
 <text x="34" y="833" font-size="13" fill="#5b6472">you will ignore</text>
 <rect x="26" y="852" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="869" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/second-order-dtd [action or leave blank for current context; add --no-gate to skip the chain gate]</text>
-<text x="794" y="869" font-size="12" fill="#5b6472" text-anchor="end">29 laws</text>
+<text x="794" y="869" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
 <text x="34" y="896" font-size="13" fill="#5b6472">Think through consequences of consequences as a declared causal chain; every effect has</text>
 <text x="34" y="915" font-size="13" fill="#5b6472">an order, a cause, a sign, a horizon and a confidence, and loops are named</text>
 <rect x="26" y="934" width="453" height="24" rx="5" fill="#f2f4f8"/>

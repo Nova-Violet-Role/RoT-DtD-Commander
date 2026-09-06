@@ -1,0 +1,178 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  geometry.dtd : the Graphic and Geometric family, and the first driver in
+  this Suite.
+
+  Until 8.0.0 every family reasoned in prose about structure; none reasoned
+  in structure itself. A codebase has a footprint, a depth, a set of
+  load-bearing walls and a set of walls that only look load-bearing, and
+  nothing here had measured any of it. This family measures it, draws it,
+  and only then changes it, through three commands that are three bands of
+  one ladder: codebase-surveyor-dtd measures and writes nothing, codebase-
+  architect-dtd declares what the shape should be and never rewrites, and
+  codebase-renovator-dtd changes the standing structure only against a
+  survey that exists and a plan that was declared first.
+
+  Two idioms of the corpus meet here, and the reason both are needed is the
+  reason the file exists. From XHTML 1.1 comes the driver: xhtml11.dtd is
+  323 lines of switch entities and module references that resolve to a flat
+  grammar of 4689, and the four-line idiom below (an entity set to INCLUDE,
+  a conditional section keyed by it) had never been used in this tree,
+  where the installer inlined every subset unconditionally and nothing
+  could be switched off. From TEI comes the per-element switch and the
+  element name as a parameter entity, which cc-figure.dtd carries. The
+  driver decides which bands exist; the switch decides which marks a
+  drawing may carry.
+
+  lib/geometry.mjs reads this file and holds the code to it. The ladder is
+  fifty-two rungs in three bands, and a rung is never renumbered or reused,
+  exactly as cc-amplify.dtd holds its fifteen.
+-->
+
+<!-- ===== THE DRIVER ===== -->
+<!-- A repository that wants planimetry but not renovation says so in one
+     entity, declared before the include; the first declaration binds, so
+     these three are the default, not a cap. A band switched off loses its
+     verbs and its elements, and the command of that band refuses to run
+     (LAW.GEOM.6). -->
+<!ENTITY % geom.surveyor.module  "INCLUDE">
+<!ENTITY % geom.architect.module "INCLUDE">
+<!ENTITY % geom.renovator.module "INCLUDE">
+
+<!ENTITY GEOM.ladder.count "52">
+<!ENTITY GEOM.bands "surveyor|architect|renovator">
+<!ENTITY GEOM.band.surveyor  "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17">
+<!ENTITY GEOM.band.architect "18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35">
+<!ENTITY GEOM.band.renovator "36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52">
+<!ENTITY GEOM.dir "artifacts/geometry">
+<!ENTITY GEOM.ceiling "300">
+<!-- The rungs that have an instrument in this release. A rung without one
+     is still a rung: it is never measured by guessing, and a later release
+     adds the instrument without renumbering anything (LAW.GEOM.2). -->
+<!ENTITY GEOM.instrumented "1|2|3|4|5|9|10|12|14|15|16|17|23|26|29|33|34|47|52">
+
+<!-- ===== BAND I: SURVEYOR, 1 to 17. Measure and describe. Nothing moves. ===== -->
+<![%geom.surveyor.module;[
+<!ENTITY GEOM.verb.1  "planimetry: the flat footprint, how much surface the codebase actually covers">
+<!ENTITY GEOM.verb.2  "ichnography: the ground plan, what sits on the foundation">
+<!ENTITY GEOM.verb.3  "goniometry: the angles at which modules meet, where a joint is not square">
+<!ENTITY GEOM.verb.4  "hypsometry: height above the base, how far a module sits from the entry point">
+<!ENTITY GEOM.verb.5  "bathymetry: depth below the surface, how deep the nesting actually goes">
+<!ENTITY GEOM.verb.6  "altimetry: the elevation profile of a call path from first frame to last">
+<!ENTITY GEOM.verb.7  "odometry: distance travelled, how far data moves between where it enters and where it is used">
+<!ENTITY GEOM.verb.8  "tachymetry: rate, what the codebase does per unit of work, measured rather than felt">
+<!ENTITY GEOM.verb.9  "ergonometry: the work a reader must do before the first useful line">
+<!ENTITY GEOM.verb.10 "chronometry: how long each instrument takes under its own ceiling, recorded, not estimated">
+<!ENTITY GEOM.verb.11 "photogrammetry: shape recovered from many flat views, the structure a set of diffs implies">
+<!ENTITY GEOM.verb.12 "triangulation: one fact fixed from three independent instruments">
+<!ENTITY GEOM.verb.13 "trilateration: position from three measured distances rather than three bearings">
+<!ENTITY GEOM.verb.14 "intraspection: the codebase looking into itself, what its own declarations say about it">
+<!ENTITY GEOM.verb.15 "codicology: the artifact as an object, how many files, in what quires, bound how">
+<!ENTITY GEOM.verb.16 "foliation: the numbering of the leaves, whether the ordinals are dense and in order">
+<!ENTITY GEOM.verb.17 "conspectus: the whole seen at once, at the smallest scale that still shows every part">
+<!-- A survey is measures and nothing else. The confidence of a measure is
+     fixed: a survey that guesses is invalid against this subset, not merely
+     wrong. -->
+<!ELEMENT survey (measure+)>
+<!ATTLIST survey
+          target    CDATA #REQUIRED
+          substrate CDATA #REQUIRED
+          read      CDATA #REQUIRED
+          of        CDATA #REQUIRED>
+<!ELEMENT measure (#PCDATA)>
+<!ATTLIST measure
+          verb       CDATA #REQUIRED
+          value      CDATA #REQUIRED
+          unit       CDATA #REQUIRED
+          instrument CDATA #REQUIRED
+          seconds    CDATA #IMPLIED
+          confidence (measured) #FIXED "measured">
+]]>
+
+<!-- ===== BAND II: ARCHITECT, 18 to 35. Declare what the shape should be. A plan, never a rewrite. ===== -->
+<![%geom.architect.module;[
+<!ENTITY GEOM.verb.18 "orthography: the straight-on elevation, and the correct writing of a name">
+<!ENTITY GEOM.verb.19 "scenography: the view as it will actually be seen, foreshortening included">
+<!ENTITY GEOM.verb.20 "axonometry: three axes held true at once, so no dimension is sacrificed to the view">
+<!ENTITY GEOM.verb.21 "isometry: the projection that preserves measure, equal things stay equal">
+<!ENTITY GEOM.verb.22 "stereometry: the solid, volume rather than outline">
+<!ENTITY GEOM.verb.23 "ordinatio: the module chosen, and every part put in proportion to it">
+<!ENTITY GEOM.verb.24 "dispositio: the arrangement of parts once the module is fixed">
+<!ENTITY GEOM.verb.25 "eurythmy: the pleasing measure, the proportion a reader feels before naming it">
+<!ENTITY GEOM.verb.26 "symmetria: the commensurability of part to whole, stated as a ratio a checker can hold">
+<!ENTITY GEOM.verb.27 "distributio: what each part is given, and the economy of giving it no more">
+<!ENTITY GEOM.verb.28 "decor: fitness, the form a thing must take because of what it is for">
+<!ENTITY GEOM.verb.29 "infrastructure: what lies beneath and carries everything, the load-bearing declarations">
+<!ENTITY GEOM.verb.30 "intrastructure: the structure within one part, invisible from outside and load-bearing inside">
+<!ENTITY GEOM.verb.31 "nomography: a chart that computes, the diagram an answer is read off">
+<!ENTITY GEOM.verb.32 "schematism: the shape a thing takes so it survives being carried">
+<!ENTITY GEOM.verb.33 "tessellation: a plane covered with no gap and no overlap, a taxonomy exhaustive and disjoint">
+<!ENTITY GEOM.verb.34 "quadrature: squaring the region, an irregular area reduced to a number that can be compared">
+<!ENTITY GEOM.verb.35 "apparatus: every variant reading carried beside the text it varies from">
+<!-- A plan stands on a survey by path and declares bounds. Its rewrite
+     attribute is fixed at no: an architect that rewrites is invalid. -->
+<!ELEMENT plan (projection+)>
+<!ATTLIST plan
+          survey CDATA #REQUIRED
+          target CDATA #REQUIRED>
+<!ELEMENT projection (#PCDATA)>
+<!ATTLIST projection
+          verb     CDATA #REQUIRED
+          declares CDATA #REQUIRED
+          bound    CDATA #REQUIRED
+          rewrite  (no) #FIXED "no">
+]]>
+
+<!-- ===== BAND III: RENOVATOR, 36 to 52. Change the standing structure, only against a survey and a plan. ===== -->
+<![%geom.renovator.module;[
+<!ENTITY GEOM.verb.36 "rectification: a line made straight where it had drifted, the endpoints unmoved">
+<!ENTITY GEOM.verb.37 "transduction: carried across one form into another, the meaning intact and the substrate changed">
+<!ENTITY GEOM.verb.38 "anamorphosis: a distortion introduced deliberately so the thing reads true from where it is read">
+<!ENTITY GEOM.verb.39 "involution: folded inward, a repetition turned into the structure that generates it">
+<!ENTITY GEOM.verb.40 "evolution: unfolded outward, a generator expanded into the members it implies">
+<!ENTITY GEOM.verb.41 "recension: a text re-established from its witnesses, the authoritative form rebuilt from the copies">
+<!ENTITY GEOM.verb.42 "stemmatics: the family tree of the copies drawn, so the descent of an error can be named">
+<!ENTITY GEOM.verb.43 "collation: witnesses laid side by side and their differences recorded, not resolved">
+<!ENTITY GEOM.verb.44 "lemmatisation: every variant reduced to the head-form it belongs to">
+<!ENTITY GEOM.verb.45 "rubrication: the marks that guide a reader added in a second colour, changing nothing they mark">
+<!ENTITY GEOM.verb.46 "marginalia: what the margin carries, annotation that must survive the text being reset">
+<!ENTITY GEOM.verb.47 "colophon: the closing statement of who made it, when, and under what terms">
+<!ENTITY GEOM.verb.48 "didascalie: the stage direction, what must happen that the spoken text does not say">
+<!ENTITY GEOM.verb.49 "prosopography: every actor in the system described as a person would be, with offices and bounds">
+<!ENTITY GEOM.verb.50 "palimpsest: the earlier layer scraped and written over, and the earlier layer still recoverable">
+<!ENTITY GEOM.verb.51 "facsimile: reproduced so exactly that the reproduction can stand in evidence">
+<!ENTITY GEOM.verb.52 "diplomatics: the authenticity of the document itself judged, is this artifact what it claims to be">
+<!-- A renovation names the survey and the plan it stands on, both by path,
+     and every change names its file with the shape before and after. -->
+<!ELEMENT renovation (change+)>
+<!ATTLIST renovation
+          survey CDATA #REQUIRED
+          plan   CDATA #REQUIRED>
+<!ELEMENT change (#PCDATA)>
+<!ATTLIST change
+          verb   CDATA #REQUIRED
+          file   CDATA #REQUIRED
+          before CDATA #REQUIRED
+          after  CDATA #REQUIRED>
+]]>
+
+<!-- ===== SHARED BY THE THREE ===== -->
+<!ELEMENT survey_ref EMPTY>
+<!ATTLIST survey_ref path CDATA #REQUIRED date CDATA #REQUIRED>
+<!ELEMENT plan_ref EMPTY>
+<!ATTLIST plan_ref path CDATA #REQUIRED date CDATA #REQUIRED>
+<!ELEMENT next_band (#PCDATA)>
+<!ATTLIST next_band
+          n       CDATA #REQUIRED
+          command CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.GEOM.1 "The ladder is GEOM.ladder.count rungs in the three bands of GEOM.bands, seventeen, eighteen and seventeen, a rung never renumbered or reused; each command pins its band as a #FIXED attribute on its root, so a measure, a projection or a change carrying a verb outside the band is invalid against the subset rather than merely out of place.">
+<!ENTITY LAW.GEOM.2 "A survey is measures and nothing else: every measure carries the instrument that produced it, its unit and its seconds, its confidence is fixed at measured, and a rung of the ladder that has no instrument in GEOM.instrumented is left unmeasured and named as such, never estimated; the surveyor writes nothing but its own artifact under GEOM.dir.">
+<!ENTITY LAW.GEOM.3 "A plan stands on a survey by path and declares bounds: every projection carries the number a later survey is held to, its rewrite attribute is fixed at no, and node lib/geometry.mjs plan --check reads a survey against a plan and names each bound the survey exceeds; a plan naming no survey is refused by name.">
+<!ENTITY LAW.GEOM.4 "A renovation stands on both: it names a survey path and a plan path, both must exist under GEOM.dir with the plan dated no earlier than the survey and the change no earlier than the plan, and node lib/geometry.mjs renovate refuses by name a renovation missing either; a renovation can never be its own justification.">
+<!ENTITY LAW.GEOM.5 "Every command of the family runs at least one round of the ask grammar before it draws a line, unless --no-gate is present, and the first slot asked is the scope, because a measurement taken against the wrong scope is worse than none; LAW.ASK.10 bound the creators to their gate, and this law extends the obligation to every command that measures.">
+<!ENTITY LAW.GEOM.6 "A band is a module of the driver: a repository switches one off by declaring its geom module entity IGNORE before the include, the grammar then lacks that band's verbs and elements, and the command of that band refuses to run and says the band is switched off here; a command that runs anyway answers outside its own subset.">
+<!ENTITY LAW.GEOM.7 "Every survey renders one figure from cc-figure with mark measured beside its numbers, and the figure carries no shape a measure did not produce: the drawing is of the numbers, and a figure without numbers is not a survey.">
+<!ENTITY LAW.GEOM.8 "The three commands draw one figure: the plan's figure is the survey's with the projected shapes added, the renovation's plate renders both with the changed shapes marked, and a plan figure carrying a shape that is in neither the survey nor a projection is refused, so nothing is ever drawn as proposed before something was drawn as measured.">

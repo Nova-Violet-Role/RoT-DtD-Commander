@@ -13,11 +13,12 @@
 # the valid instance's pass counts.
 set -u
 cd "$(dirname "$0")/.." || exit 2
+PORTABLE_ROOT="$(pwd)"; . checker/portable.sh
 T=$(mktemp -d)
 mkdir -p "$T/commands"
 cp commands/pareto-dtd.md "$T/commands/pareto-dtd.md"
 fail=0
-run() { timeout 60 node bin/rot-dtd-commander.mjs check "$1" < /dev/null 2>&1; }
+run() { ceil 60 node bin/rot-dtd-commander.mjs check "$1" < /dev/null 2>&1; }
 
 # M1: remove a declaration -> C4
 sed 's/  <!ELEMENT factor (#PCDATA)>//' commands/pareto-dtd.md > "$T/commands/m1.md"
@@ -30,7 +31,7 @@ grep -q 'trivial (CDATA)' "$T/commands/m2.md" || { echo "M2 mutation did not lan
 out=$(run "$T/commands/m2.md"); echo "$out" | grep -q 'ERR  C8' && echo "PASS M2 (CDATA) model -> C8" || { echo "FAIL M2"; fail=1; }
 
 # M3: an element declared but never named -> C5
-sed 's/<!ELEMENT trivial (#PCDATA)>/<!ELEMENT trivial (#PCDATA)>\n  <!ELEMENT orphan (#PCDATA)>/' commands/pareto-dtd.md > "$T/commands/m3.md"
+node -e "const fs=require('fs');const t=fs.readFileSync('commands/pareto-dtd.md','utf8');const u=t.replace('<!ELEMENT trivial (#PCDATA)>','<!ELEMENT trivial (#PCDATA)>\\n  <!ELEMENT orphan (#PCDATA)>');if(u===t){process.exit(3)};fs.writeFileSync(process.argv[1],u)" "$T/commands/m3.md" || { echo "M3 mutation did not land"; fail=1; }
 grep -q '<!ELEMENT orphan' "$T/commands/m3.md" || { echo "M3 mutation did not land"; fail=1; }
 out=$(run "$T/commands/m3.md"); echo "$out" | grep -q 'ERR  C5 element orphan' && echo "PASS M3 orphan element -> C5" || { echo "FAIL M3"; fail=1; }
 

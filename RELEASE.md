@@ -18,6 +18,23 @@
 
 ---
 
+## v8.0.0 — Cross-OS-Commander
+
+The gate runs on `ubuntu-latest`, `macos-latest` and `windows-latest`, or it
+is not a gate. Every 7.x job ran on one leg; the macOS leg would have failed
+before it measured anything.
+
+- **`dtd/cross-os.dtd`** &mdash; the three legs as an enumeration, the local
+  substrates probed and never guessed, the seven forms a leg lacks refused by
+  file and line, a ceiling that exists everywhere.
+- **The fifteenth family** &mdash; `/codebase-surveyor-dtd`,
+  `/codebase-architect-dtd`, `/codebase-renovator-dtd`: fifty-two rungs in
+  three bands, the first driver in the Suite, one figure drawn from the numbers
+  and rendered twice.
+- **`node lib/list.mjs controls` 47 run, 0 failing**; 134 commands, 22 skills,
+  5 agents; 1612 declarations; recognised 8.0.0 (class major) from a top verb
+  of 14, and a top of 13 would have published 7.3.0.
+
 ## v7.2.0 — it installs on claude.ai and Claude Cowork
 
 Download the archive, drag it into Customize. No terminal, no Node, no `npx`,

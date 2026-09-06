@@ -8,7 +8,7 @@
   the operator writes specs in, a shell heredoc, a YAML document, a
   NestedText document, an XML document with a DOCTYPE, or a polyglot that
   is valid in more than one of them at once. The table cut from the
-  $ARGUMENTS variant references says, for each schematic, what a literal
+  ARGUMENTS variant reference (the byproducts document) says, for each schematic, what a literal
   string is, what an expanded one is, how a value is referenced, defined,
   escaped, commented, included, made conditional, typed, or left unparsed.
   Each cell is a SCHEMA entity, so a creator that writes a prompt in a

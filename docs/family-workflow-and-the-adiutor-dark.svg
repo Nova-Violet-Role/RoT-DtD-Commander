@@ -31,7 +31,7 @@
 <text x="34" y="423" font-size="13" fill="#9aa3b2">the verified write</text>
 <rect x="26" y="442" width="700" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="459" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">/RoT-DtD-Commander-Adiutor [blank for the full report; add --last N to review N runs; add --arm or --disarm]</text>
-<text x="794" y="459" font-size="12" fill="#9aa3b2" text-anchor="end">23 laws</text>
+<text x="794" y="459" font-size="12" fill="#9aa3b2" text-anchor="end">24 laws</text>
 <text x="34" y="486" font-size="13" fill="#9aa3b2">The RoT DtD Commander Adiutor. Doctor and advisor in one run; checks the installed -dtd</text>
 <text x="34" y="505" font-size="13" fill="#9aa3b2">set, the hooks and the ledger, then prescribes for every -dtd answer that failed its own</text>
 <text x="34" y="524" font-size="13" fill="#9aa3b2">declared grammar</text>

@@ -123,7 +123,7 @@ argument-hint: [path to a SKILL.md, or its directory]
 
 <!-- How a word of the argument string may be embedded in what the command
      writes: the four trust classes the DTD gives it, and the one it never
-     gets. Mirrors the $ARGUMENTS variant tables: PCDATA escapes, a CDATA
+     gets. Mirrors the ARGUMENTS variant tables of the byproducts: PCDATA escapes, a CDATA
      section is the quoted heredoc, NDATA is a reference never read, and a
      parameter entity never takes user input. -->
 <!ENTITY ARG.embed.pcdata  "as parsed text: the ampersand, less-than and greater-than escaped, whitespace normalised">

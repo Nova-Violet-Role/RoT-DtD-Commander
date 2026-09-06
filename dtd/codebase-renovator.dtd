@@ -1,0 +1,31 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  codebase-renovator.dtd : the variant subset of /codebase-renovator-dtd.
+
+  geometry.dtd holds everything the three commands share. This file holds
+  only what makes this band itself: the band, pinned, and the two things a
+  renovation must stand on, a survey and a plan, fixed as an attribute on
+  its root so that a renovation with no survey behind it is invalid rather
+  than merely unwise. The ladder wraps at its top: the verb after
+  diplomatics is planimetry again, so this is the only band whose next is
+  below its low, and the command it hands to is the surveyor.
+-->
+
+<!-- ===== THE BAND, PINNED ===== -->
+<!ATTLIST renovation_run
+          band     CDATA #FIXED "36-52"
+          verbs    CDATA #FIXED "rectification to diplomatics"
+          needs    CDATA #FIXED "a survey and a plan, both on disk, both earlier"
+          hands_to CDATA #FIXED "codebase-surveyor-dtd">
+
+<!ENTITY RENOVATOR.band "36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52">
+<!ENTITY RENOVATOR.low "36">
+<!ENTITY RENOVATOR.high "52">
+<!ENTITY RENOVATOR.next "1">
+<!ENTITY RENOVATOR.what "change the standing structure, only against a survey that exists and a plan that was declared first; a renovation with no survey behind it is refused by name">
+
+<!-- ===== THE LAWS OF THIS VARIANT ===== -->
+<!ENTITY LAW.RENOVATOR.1 "This command exposes only the verbs of RENOVATOR.band, rectification to diplomatics; the band is a #FIXED attribute on renovation_run, so an answer that claims another band is invalid against this subset, and the ladder wraps: what follows diplomatics is rendered as next_band naming RENOVATOR.next and the command codebase-surveyor-dtd, a fresh survey of the changed structure (LAW.GEOM.1).">
+<!ENTITY LAW.RENOVATOR.2 "The needs attribute is fixed: before the first change this run renders survey_ref and plan_ref naming two files that exist under GEOM.dir, the plan no earlier than the survey, and node lib/geometry.mjs renovate refuses by name when either is missing or out of order; a change made before that refusal was checked is a failed answer (LAW.GEOM.4).">
+<!ENTITY LAW.RENOVATOR.3 "Every change names its file and the shape before and after, the renovation closes with a colophon and a diplomatics record, who made it and the digest of what was made, and the certified element names every leg of XOS.legs the changed tree was gated on, a leg not run rendered unmeasured (LAW.GEOM.8, LAW.XOS.2).">

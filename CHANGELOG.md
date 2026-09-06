@@ -7,6 +7,89 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 8.0.0 (2026-09-06)
+
+### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
+
+Every job of the gate ran on `ubuntu-latest`, five times over, and the tree
+was developed on Windows under Git Bash. Nothing had ever run on macOS.
+Measured before a line was designed: three checkers called the `timeout`
+binary, the encoding sweep used `mapfile`, `grep -P` and `grep -U`, the
+release job used `sha256sum`, and one mutation control used a GNU `sed`
+newline. The macOS runner has none of those, so a `macos-latest` leg would
+have failed before it measured anything. A suite whose gate cannot run on a
+user's operating system is not certified for that user, whatever its badges
+say. The single-leg approach is replaced, not kept beside: `gate` and
+`install-roundtrip` run on the matrix `ubuntu-latest`, `macos-latest`,
+`windows-latest`, and the release job needs every leg green.
+
+- **`dtd/cross-os.dtd`**, LAW.XOS.1 to 7. The three legs are an enumeration,
+  the four local substrates are probed and never guessed, and the seven shell
+  forms a leg lacks are a list the sweep reads. `lib/cross-os.mjs`:
+  `probe`, `sweep`, `matrix --check`, 19 controls.
+- **The podman trap.** `podman machine list` on this machine answers a header
+  and zero rows at exit 0; a script that tests the exit code concludes a
+  substrate exists. LAW.XOS.1 reads the rows. WSL is not installed (exit 50),
+  `wsl --install` needs elevation and a restart, so no command runs it; the
+  local Linux leg is recorded refused and the hosted leg carries it. A local
+  macOS leg is refused by licence, not by technology.
+- **A ceiling that exists on every leg.** `lib/ceiling.mjs` exits 124 where
+  `timeout` is absent, `checker/portable.sh` chooses, and both paths are
+  tripped on purpose. The encoding sweep reads bytes in Node
+  (`lib/encoding.mjs`, 803 files, 0 bad, three planted files caught).
+- **The sigil inside a comment.** `<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+# Changelog
+
+Every number below was produced by the command named beside it on the day of
+the release. If one of them does not re-run for you, open the
+"A claim in our docs is false" issue; the report is credited here.
+ARGUMENTS in two subset comments was
+  substituted by the harness at every invocation; this session's loaded
+  command read "the 8.0.0 Cross-OS-Commander variant tables". The comments
+  name the document instead.
+
+### The fifteenth family: the Graphic and Geometric Suite
+
+Until now every family reasoned in prose about structure. `dtd/geometry.dtd`
+is the first driver in this Suite, the four-line XHTML 1.1 idiom the tree had
+never used: three band modules a repository may switch off before the
+include, and the command of a switched-off band refuses to run. Fifty-two
+rungs, never renumbered. `/codebase-surveyor-dtd` (1 to 17) measures and
+moves nothing, its measures fixed at confidence measured by declaration;
+`/codebase-architect-dtd` (18 to 35) declares bounds a later survey is held
+to, rewrite fixed at no; `/codebase-renovator-dtd` (36 to 52) is refused by
+name unless a survey and a plan exist on disk first, and closes with a
+colophon and the digests of both. Twelve rungs have an instrument in this
+release; the rest are unmeasured and say so.
+
+- **`dtd/cc-figure.dtd`**, one figure, two renderers. A preview is text by
+  declaration and the widget is a monospace box of 60 by 3 cells cut, 80 by 12
+  expanded; that box is a raster in cells, so the figure is declared once and
+  rendered to characters for the widget and to svg for the disk. The character
+  grid bounds the svg, never the reverse. Every shape is a module with its
+  name a parameter entity, after TEI; `lib/figure.mjs`, 23 controls.
+- **The preview may carry a figure.** `preview.content` is a parameter entity
+  a command raises before the include (LAW.ASK.16), the way it raises its
+  rounds; the 131 existing commands keep the text preview they had, and
+  `build --check` proves their resolved text is the same declaration.
+- **The corpus, measured for this family.** `svg` uses conditional sections in
+  33 of 54 files, the densest in the tree; `xhtml11.dtd` is 323 lines against
+  4689 flat; `tei` 21 of 60, `docbook` 18 of 116, `JATS` 4 of 90, `DITA` 4 of
+  159, `daisy` and `office` 0. NDATA appears in none of the 2219 files.
+
+### Measured
+
+- `node lib/cross-os.mjs controls`: 19 run, 0 failing
+- `node lib/figure.mjs controls`: 23 run, 0 failing
+- `node lib/geometry.mjs controls`: 32 run, 0 failing
+- `node lib/ceiling.mjs controls`: 5 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
+- `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
+- `node checker/contract-audit.mjs`: 1612 declarations, 0 unused, 0 law gaps
+- 134 commands, 22 skills, 5 agents; checked 161; 1612 declarations; 62 gate-chain commands
+- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2 at 7.2.0
+
 ## 7.2.0 (2026-09-05)
 
 ### It installs on claude.ai and Claude Cowork

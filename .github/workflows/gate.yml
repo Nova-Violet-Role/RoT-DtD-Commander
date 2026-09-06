@@ -1,16 +1,25 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
 # Copyright 2026 Saimonokuma.
 #
-# The gate, as CI. The `gate` job runs the same chain as `npm run gate`, one
-# step per command, and its first step proves every command of that chain
-# is a run line of this file or a shell segment of one (checker/gate-sync.mjs;
-# a step commented out counts for nothing; this file may run more, and that
+# The gate, as CI, on every leg. The `gate` job runs the same chain as
+# `npm run gate`, one step per command, on the three legs dtd/cross-os.dtd
+# declares as XOS.legs; its first step proves every command of that chain is
+# a run line of this file or a shell segment of one (checker/gate-sync.mjs; a
+# step commented out counts for nothing; this file may run more, and that
 # direction is not claimed). The `install-roundtrip` job installs into a
-# scratch target and uninstalls back to zero files. The `release` job runs
-# only on a tag `v*`, after both, and ships the GitHub release with the
-# CHANGELOG section of that version as its notes; a tag whose version is not
-# package.json's, or whose section is still marked in progress, ships
-# nothing.
+# scratch target and uninstalls back to zero files, on the same three legs.
+# The `release` job runs only on a tag `v*`, after every leg of both, and
+# ships the GitHub release with the CHANGELOG section of that version as its
+# notes; a tag whose version is not package.json's, or whose section is still
+# marked in progress, ships nothing.
+#
+# Until 8.0.0 all five jobs ran on ubuntu-latest and nothing had ever run on
+# macOS: three checkers called the timeout binary and the encoding sweep used
+# mapfile and grep -P, none of which the macOS runner has. node lib/cross-os.mjs
+# matrix --check refuses this file if a job below drops a leg (LAW.XOS.6), and
+# node lib/cross-os.mjs sweep refuses a run line carrying a form a leg lacks
+# (LAW.XOS.4). Every scratch path is made by mktemp and passed through cygpath
+# where it exists, so bash and node name the same directory on Windows.
 name: gate
 on:
   push:
@@ -19,21 +28,35 @@ on:
 
 jobs:
   gate:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      XOS_LEG: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: a scratch directory both bash and node can name on this leg
+        run: |
+          T=$(mktemp -d); T=$(cygpath -m "$T" 2>/dev/null || echo "$T")
+          echo "SCRATCH=$T" >> "$GITHUB_ENV"
+          echo "leg $XOS_LEG, scratch $T, $(node --version), $(bash --version | head -1)"
       - name: this workflow runs every command of the gate script (checker/gate-sync.mjs, with its control)
         run: node checker/gate-sync.mjs
       - name: build drift (committed resolved tree equals a fresh resolve of src/)
         run: node bin/rot-dtd-commander.mjs build --check
       - name: checker C1..C16 on every source
         run: |
-          node bin/rot-dtd-commander.mjs check | tee "$RUNNER_TEMP/check.log"
+          node bin/rot-dtd-commander.mjs check | tee "$SCRATCH/check.log"
           test "${PIPESTATUS[0]}" -eq 0
-          grep -q 'failed 0' "$RUNNER_TEMP/check.log"
+          grep -q 'failed 0' "$SCRATCH/check.log"
       - name: heading shape (every grammar_map heading is a sigil heading with blank lines; the sweep is a no-op)
         run: node checker/heading-sweep.mjs --check
       - name: front matter parses as YAML (no bare colon-space or hash in a value; the sweep is a no-op)
@@ -46,13 +69,13 @@ jobs:
         run: bash checker/checker-controls.sh
       - name: spdx sweep
         run: bash checker/spdx-sweep.sh
-      - name: crlf sweep
+      - name: crlf sweep (bytes read in Node since 8.0.0, so the macOS leg can run it)
         run: bash checker/crlf-sweep.sh
       - name: ordinals controls (IUPAC and Greek prefixes, next and parse)
         run: node lib/ordinals.mjs controls
       - name: ai-slop controls (the sloppy fixture is caught, the clean one passes, the sweep floor)
         run: node lib/ai-slop.mjs controls
-      - name: ceiling controls (every unattended runner ends at its ceiling)
+      - name: ceiling controls (every unattended runner ends at its ceiling, through the portable ceil)
         run: bash checker/ceiling-controls.sh
       - name: form controls (callout, heredoc, yaml, nt, xml, polyglot, alarm)
         run: node lib/form.mjs controls
@@ -74,6 +97,18 @@ jobs:
         run: node lib/amplify.mjs controls
       - name: regression, extention, retenue controls (a lying claim, a negated one, a vestigial declaration reasoned above and below, a real removal, a rewrite that is not one)
         run: node lib/regression.mjs controls
+      - name: the portable ceiling fires with exit 124 on this leg, and keeps a child's own exit otherwise (LAW.XOS.5)
+        run: node lib/ceiling.mjs controls
+      - name: the encoding sweep reads bytes and its three planted files are caught (LAW.XOS.4)
+        run: node lib/encoding.mjs controls
+      - name: cross-os controls (the substrates probed and never guessed, the seven forms refused by name, both ceiling paths, the matrix held)
+        run: node lib/cross-os.mjs controls
+      - name: no gate instrument carries a form a leg lacks, and this workflow runs every leg (LAW.XOS.4, LAW.XOS.6)
+        run: node lib/cross-os.mjs sweep && node lib/cross-os.mjs matrix --check
+      - name: figure controls (one figure, two renderers, the character grid the bound, a shape module switched off through the driver)
+        run: node lib/figure.mjs controls
+      - name: geometry controls (fifty-two rungs in three bands, a survey that moves nothing, a plan that rewrites nothing, a renovation refused by name, a band switched off)
+        run: node lib/geometry.mjs controls
       - name: every engine a shipped command invokes is a file the installer writes (two families once shipped without theirs)
         run: node checker/engines-sweep.mjs && node checker/engines-sweep.mjs --controls
       - name: the About and the three manifest descriptions say what the tree measures (the About sat two majors behind because nothing read it)
@@ -131,18 +166,27 @@ jobs:
           # upload falsified on 2026-09-05: dotbin-wrapped installed on both
           # surfaces. H2 was withdrawn and the step that required these to FAIL
           # went with it. Every candidate is now required to pass.
-          node checker/pack-claude-ai.mjs --all --out "$RUNNER_TEMP/hosted"
-          node checker/pack-claude-ai.mjs --check "$RUNNER_TEMP"/hosted/*.zip
+          node checker/pack-claude-ai.mjs --all --out "$SCRATCH/hosted"
+          node checker/pack-claude-ai.mjs --check "$SCRATCH"/hosted/*.zip
       - name: the proven combination builds under its release name
         run: |
-          node checker/pack-claude-ai.mjs --out "$RUNNER_TEMP/canon"
-          ls -l "$RUNNER_TEMP/canon"
+          node checker/pack-claude-ai.mjs --out "$SCRATCH/canon"
+          ls -l "$SCRATCH/canon"
           v=$(node -e 'process.stdout.write(require("./.claude-plugin/plugin.json").version)')
-          test -f "$RUNNER_TEMP/canon/claude_ai_cowork_rot_dtd_commander_${v}.zip"
+          test -f "$SCRATCH/canon/claude_ai_cowork_rot_dtd_commander_${v}.zip"
           echo "ok: the release asset name follows the manifest version"
 
   install-roundtrip:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      XOS_LEG: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -150,12 +194,15 @@ jobs:
           node-version: 20
       - name: install into a scratch target, doctor, uninstall to zero
         run: |
-          T=$(mktemp -d)
+          # cygpath makes the scratch path one both bash and node resolve to the
+          # same directory on the Windows leg; elsewhere it is absent and the
+          # mktemp path stands.
+          T=$(mktemp -d); T=$(cygpath -m "$T" 2>/dev/null || echo "$T")
           # The logs live outside the target. Written into it, the three of them
           # were the three files the "uninstall to zero" test then found left
           # over, so that test could never pass; it went unseen because the
           # doctor grep above it failed first (pass 27, caught by CI).
-          L=$(mktemp -d)
+          L=$(mktemp -d); L=$(cygpath -m "$L" 2>/dev/null || echo "$L")
           # A GitHub step runs without pipefail, so this took its exit status
           # from tail and a failing install passed (pass 25).
           node bin/rot-dtd-commander.mjs install --yes --target "$T" > "$L/install.log" 2>&1 || { tail -20 "$L/install.log"; exit 1; }
@@ -235,11 +282,12 @@ jobs:
           elif [ "$rc" != "0" ]; then
             exit "$rc"
           fi
-          # Two checksum artifacts beside the archive. GitHub already attaches
-          # its own Source code (zip) and (tar.gz) with digests; these cover the
-          # asset GitHub did not build, so a downloader can verify the one file
-          # that matters without trusting the release page.
-          ( cd dist && for z in *.zip; do sha256sum "$z" > "$z.sha256"; done && sha256sum *.zip > SHA256SUMS )
+          # Two checksum artifacts beside the archive, digested in Node rather
+          # than by sha256sum, which the macOS leg lacks (LAW.XOS.4). GitHub
+          # already attaches its own Source code (zip) and (tar.gz) with digests;
+          # these cover the asset GitHub did not build, so a downloader can
+          # verify the one file that matters without trusting the release page.
+          ( cd dist && node -e 'const c=require("crypto"),f=require("fs");const sums=[];for(const z of f.readdirSync(".").filter((n)=>n.endsWith(".zip")).sort()){const d=c.createHash("sha256").update(f.readFileSync(z)).digest("hex");f.writeFileSync(z+".sha256",d+"  "+z+"\n");sums.push(d+"  "+z)}f.writeFileSync("SHA256SUMS",sums.join("\n")+"\n")' )
           ls -l dist
           cat dist/SHA256SUMS
           rel=$(curl -s "${auth[@]}" "$API/releases/tags/$GITHUB_REF_NAME")

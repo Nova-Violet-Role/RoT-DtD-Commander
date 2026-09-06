@@ -55,6 +55,7 @@ const NOTE = {
   repository: 'Operate on a repository as a whole rather than on a file in it.',
   audits: 'Judge an existing artifact against the contract it claims. They report; they do not rewrite.',
   growth: 'One fifteen-verb ladder. What these record is what sets the version number, because the release class is computed rather than typed.',
+  geometry: 'Measure a codebase, draw it, and only then change it, on one fifty-two rung ladder in three bands: the surveyor moves nothing, the architect declares bounds and rewrites nothing, the renovator changes only against a survey and a plan that exist on disk.',
   lists: 'Per-repository white, grey and black lists, plus the starlist of tools the harness may reach. A grey entry obliges a question and records the answer with a date.',
   workflow: 'The doctor: run it, arm it, read its ledger, compose the workflows it judges. Since 5.0.0 the Adiutor is not armed by default.',
 };
