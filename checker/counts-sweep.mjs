@@ -54,9 +54,13 @@ export function measure(root = ROOT) {
   const geometryControls = Number((/geometry controls: (\d+) run/.exec(runOut('node lib/geometry.mjs controls')) || [])[1] || 0);
   const figureControls = Number((/figure controls: (\d+) run/.exec(runOut('node lib/figure.mjs controls')) || [])[1] || 0);
   const buildTargets = Number((/build --check: (\d+) targets/.exec(runOut('node bin/rot-dtd-commander.mjs build --check')) || [])[1] || 0);
+  // The third pass: the changelog said five ceiling controls and the
+  // instrument answered six. A number printed once is read here or it drifts.
+  const ceilingControls = Number((/ceiling controls: (\d+) run/.exec(runOut('node lib/ceiling.mjs controls')) || [])[1] || 0);
+  const encodingControls = Number((/encoding controls: (\d+) run/.exec(runOut('node lib/encoding.mjs controls')) || [])[1] || 0);
   return {
     gateChain,
-    listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets,
+    listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, declarations: Number(m[1]) };
 }
 
@@ -96,6 +100,7 @@ export function places(c) {
     { file: 'CHANGELOG.md', re: /matrix --check`, (\d+) controls\./, want: [c.crossOsControls], label: 'the changelog cross-os prose' },
     { file: 'CHANGELOG.md', re: /lib\/geometry\.mjs controls`: (\d+) run/, want: [c.geometryControls], label: 'the changelog geometry controls' },
     { file: 'CHANGELOG.md', re: /lib\/figure\.mjs controls`: (\d+) run/, want: [c.figureControls], label: 'the changelog figure controls' },
+    { file: 'CHANGELOG.md', re: /lib\/ceiling\.mjs controls`: (\d+) run, 0 failing; `node lib\/encoding\.mjs controls`: (\d+) run/, want: [c.ceilingControls, c.encodingControls], label: 'the changelog ceiling and encoding controls' },
     { file: 'CHANGELOG.md', re: /checker\/contract-audit\.mjs`: (\d+) declarations/, want: [c.declarations], label: 'the changelog contract audit' },
     { file: 'CHANGELOG.md', re: /checked (\d+); (\d+) declarations; (\d+) gate-chain commands/, want: [c.checked, c.declarations, c.gateChain], label: 'the changelog summary row' },
     { file: 'RELEASE.md', re: /(\d+) declarations; recognised/, want: [c.declarations], label: 'the release notes declarations' },

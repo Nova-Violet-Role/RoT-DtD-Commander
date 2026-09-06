@@ -69,3 +69,10 @@
 | a8f0de11 | gap | generic | refused | 9 | 8 | a local macOS leg is refused by licence, XOS.macos.local; the hosted runner is the only substrate that carries it | 8 |
 | a8f0de12 | idea | report | exposed | 13 |  | the preview figure carried out of the intake into the artifact as the first draft, which is the only honest way to lose the guessed mark; not done this run | 8 |
 | a8f0de13 | idea | adiutor | exposed | 9 |  | a dynamic audit for checker/*.dtd, a different instrument from the static one that was widened and reverted as c3e0de05; still unwritten | 8 |
+| b8c0de01 | gap | report | done | 6 |  | the counts sweep read 22 places and the second companion pass found six stale on the release date; ten more are read now: the control counts, the build targets, | 8 |
+| b8c0de02 | gap | form | done | 12 |  | LAW.GEOM.1 was held by a CDATA attribute and a sentence; the verb of a measure, a projection and a change is an enumeration each band raises before the driver,  | 8 |
+| b8c0de03 | gap | report | done | 6 |  | the 8.0.0 changelog section was spliced with the file's own header and every instrument exited 0; release-notes refuses a section carrying the title or the SPDX | 8 |
+| b8c0de04 | gap | generic | done | 8 |  | the cross-os sweep grown to package.json scripts and to the release job's needs line, so a tag cannot ship with a leg red | 8 |
+| b8c0de05 | gap | adiutor | done | 6 |  | the companion scorer had no control for two verdict lines or for none; M18 and M19 trip both | 8 |
+| b8c0de06 | gap | generic | done | 3 |  | lib/ceiling.mjs reported every signal as 9; the signal is mapped to its own number | 8 |
+| b8c0de07 | gap | voice | refused | 2 | 8 | the sigil document was accused of steering flags: measured 0 MAJOR TRAP, 0 Discrepancy flag, 0 RECORD or adiutor, 384 lines; the two avoid lines are defensive p | 8 |

@@ -59,6 +59,23 @@ M17 is inverted and M17c refuses the old form, the eighth form is declared with
 a reverse control, the `portable.sh` exemption is one form wide, a `timeout`
 with flags is refused, LAW.GEOM.5 has a control, and the table is swept.
 
+The second pass found what the first could not see, because the first had
+not happened yet: this section's own text was spliced. A string replacement
+had expanded a dollar sign, the file's title and its SPDX comment sat inside
+the sigil bullet, and every instrument on the path exited 0; it would have
+shipped as the release body. `checker/release-notes.mjs` refuses a section
+carrying the file header, on every push. LAW.GEOM.1 was held by a CDATA
+attribute and a sentence; the verb of a measure, a projection and a change is
+now an enumeration each band subset raises before the driver, so a surveyor
+measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
+changelog and two README claims rows were stale on the release date while the
+counts sweep reported every place in step: the sweep reads twelve more
+places. The cross-os sweep reads `package.json` scripts and refuses a release
+job that does not need every leg; the scorer refuses two verdict lines and
+none (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil
+document accused of steering flags measured clean, 0 of each, and was left
+as it was.
+
 ### The fifteenth family: the Graphic and Geometric Suite
 
 Until now every family reasoned in prose about structure. `dtd/geometry.dtd`
@@ -93,11 +110,11 @@ release; the rest are unmeasured and say so.
 - `node lib/cross-os.mjs controls`: 26 run, 0 failing
 - `node lib/figure.mjs controls`: 23 run, 0 failing
 - `node lib/geometry.mjs controls`: 38 run, 0 failing
-- `node lib/ceiling.mjs controls`: 5 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
+- `node lib/ceiling.mjs controls`: 6 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
 - `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
 - `node checker/contract-audit.mjs`: 1619 declarations, 0 unused, 0 law gaps
 - 134 commands, 22 skills, 5 agents; checked 161; 1619 declarations; 63 gate-chain commands
-- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2 at 7.2.0
+- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3 at 7.2.0
 
 ## 7.2.0 (2026-09-05)
 

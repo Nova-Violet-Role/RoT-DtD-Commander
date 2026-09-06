@@ -9,3 +9,4 @@
 - walked: yes
 
 - [gap] the encoding sweep reads bytes in Node
+- [gap] the sigil document was accused of steering flags: measured 0 MAJOR TRAP, 0 Discrepancy flag, 0 RECORD or adiutor, 384 lines; the two avoid lines are defensive practice inside the attack table, so nothing is rewritten

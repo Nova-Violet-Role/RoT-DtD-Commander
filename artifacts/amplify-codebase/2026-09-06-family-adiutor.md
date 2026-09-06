@@ -9,3 +9,4 @@
 - walked: yes
 
 - [idea] a dynamic audit for checker/*.dtd, a different instrument from the static one that was widened and reverted as c3e0de05; still unwritten
+- [gap] the companion scorer had no control for two verdict lines or for none; M18 and M19 trip both
