@@ -1068,13 +1068,24 @@ function controls() {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'rot pack space '));
     const copy = path.join(dir, 'pack-claude-ai.mjs');
     fs.copyFileSync(ME, copy);
-    let out = ''; let code = 0;
-    try { out = execFileSync(process.execPath, [copy, '--help'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 60000 }); } catch (e) { code = e.status; out = String(e.stdout || '') + String(e.stderr || ''); }
+    const runCopy = (p) => { try { return { code: 0, out: execFileSync(process.execPath, [p, '--help'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 60000 }) }; } catch (e) { return { code: e.status, out: String(e.stdout || '') + String(e.stderr || '') }; } };
+    const direct = runCopy(copy);
+    // The same file reached through a symlink to its directory: on macOS
+    // os.tmpdir() is one, Node resolves the main module to the real path and
+    // leaves argv[1] as typed, and the predicate compared the two spellings
+    // unequal until it compared real paths. A junction on Windows, a symlink
+    // elsewhere; a leg that cannot make one says so and is not green by
+    // default.
+    const link = path.join(os.tmpdir(), 'rot-pack-link-' + process.pid);
+    let linked = { code: -1, out: 'no symlink could be made' }; let madeLink = false;
+    try { fs.symlinkSync(dir, link, process.platform === 'win32' ? 'junction' : 'dir'); madeLink = true; linked = runCopy(path.join(link, 'pack-claude-ai.mjs')); } catch (e) { linked = { code: -1, out: 'symlink refused: ' + String(e.message).slice(0, 80) }; }
+    if (madeLink) { try { fs.rmSync(link, { recursive: false, force: true }); } catch { /* a junction is removed as a directory */ try { fs.rmdirSync(link); } catch { /* gone */ } } }
     fs.rmSync(dir, { recursive: true, force: true });
     const spaced = 'file:///C:/Program%20Files/x/pack.mjs';
     const predicate = isMainFor(process.platform === 'win32' ? 'C:\\Program Files\\x\\pack.mjs' : '/C:/Program Files/x/pack.mjs', spaced) && !isMainFor('C:\\Program Files\\x\\other.mjs', spaced) && !isMainFor(undefined, spaced);
-    const ok = code === 0 && /usage|Usage|--controls/.test(out) && predicate && dir.includes(' ');
-    return { ok, detail: ok ? 'usage printed from ' + path.basename(dir) + ', predicate true for the decoded path and false for another file' : 'exit ' + code + ', predicate ' + predicate + ': ' + out.trim().slice(0, 160) };
+    const usage = (r) => r.code === 0 && /usage|Usage|--controls/.test(r.out);
+    const ok = usage(direct) && usage(linked) && predicate && dir.includes(' ');
+    return { ok, detail: ok ? 'usage printed from ' + path.basename(dir) + ' directly and through a symlink to it, predicate true for the decoded path and false for another file' : 'direct exit ' + direct.code + ', through the symlink exit ' + linked.code + ', predicate ' + predicate + ': ' + (usage(direct) ? linked.out : direct.out).trim().slice(0, 160) };
   });
 
   run('C17 the clean archive has no command shadowed by a skill', () => {
@@ -1270,7 +1281,16 @@ function main(argv) {
 // the fourth pass exported five functions and the fifth pass, importing one,
 // packed a 5.4 MB archive into dist/ and had its own process exited. Control
 // C24 imports the module in a child and proves nothing is written.
+// Both sides are compared as real paths: Node resolves the main module's
+// symlinks before it sets import.meta.url and leaves process.argv[1] as typed,
+// so on macOS, where os.tmpdir() is /var and the file lives under
+// /private/var, the two spellings of one file compared unequal and C24b
+// failed on the one leg that has that symlink (the gate on d1866a9, macOS
+// red, ubuntu and windows green). A path that does not exist is compared as
+// given, which is what the predicate's own control feeds it.
 export function isMainFor(argv1, url) {
-  return Boolean(argv1) && path.resolve(argv1) === path.resolve(fileURLToPath(url));
+  if (!argv1) return false;
+  const real = (p) => { try { return fs.realpathSync(p); } catch { return p; } };
+  return real(path.resolve(argv1)) === real(path.resolve(fileURLToPath(url)));
 }
 if (isMainFor(process.argv[1], import.meta.url)) process.exit(main(process.argv.slice(2)));

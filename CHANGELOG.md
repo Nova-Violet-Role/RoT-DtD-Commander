@@ -134,6 +134,17 @@ carry what it prints, and the sweep reads all three. C16b plants stale
 family counts so the keys added to the comparison have a trip, and the sweep
 plants a stale one in the marketplace opening.
 
+The matrix then measured what no pass had: on d1866a9 the ubuntu and windows
+legs went green and the macOS leg went red, because `os.tmpdir()` there is a
+symlink, `/var` to `/private/var`, Node resolves the main module to the real
+path and leaves `process.argv[1]` as typed, and the predicate compared the
+two spellings of one file unequal; C24b, the one control that runs from the
+temp directory, failed, and the sweep refused the red suite without naming
+the control. The predicate compares real paths, C24b runs the copy through a
+symlink to its directory on every leg, a junction on Windows, and the sweep's
+refusal quotes the FAIL lines. Measured here before the fix: a copy run
+through a junction printed nothing at exit 0; after it, the usage.
+
 ### The fifteenth family: the Graphic and Geometric Suite
 
 Until now every family reasoned in prose about structure. `dtd/geometry.dtd`
@@ -173,7 +184,7 @@ release; the rest are unmeasured and say so.
 - `node checker/pack-claude-ai.mjs --controls`: 27 run, 0 failing
 - `node checker/contract-audit.mjs`: 1619 declarations, 0 unused, 0 law gaps
 - 134 commands, 22 skills, 5 agents; checked 161; 1619 declarations; 62 gate-chain commands
-- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3, 7, 3, 6, 3, 3, 6 at 7.2.0
+- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3, 7, 3, 6, 3, 3, 6, 3 at 7.2.0
 
 ## 7.2.0 (2026-09-05)
 

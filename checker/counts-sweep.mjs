@@ -55,7 +55,7 @@ export function measure(root = ROOT) {
   // A red control suite is not a count: a total line with a failing count
   // above zero refuses the sweep here, so "36 places in step" can never print
   // green over a script that failed (fourth companion pass).
-  if (Number(ccm[2]) !== 0) throw new Error(`counts-sweep: checker-controls.sh reports ${ccm[2]} failing control(s); the count of a red suite is not read`);
+  if (Number(ccm[2]) !== 0) throw new Error(`counts-sweep: checker-controls.sh reports ${ccm[2]} failing control(s); the count of a red suite is not read: ${ccOut.split(/\r?\n/).filter((l) => /^FAIL/.test(l)).join(' | ').slice(0, 600)}`);
   const checkerControls = Number(ccm[1]);
   const audit = spawnSync(process.execPath, [join(root, 'checker', 'contract-audit.mjs')], { cwd: root, encoding: 'utf8', timeout: 120000 });
   const m = String(audit.stdout || '').match(/contract-audit: (\d+) declarations/);
@@ -86,7 +86,10 @@ export function measure(root = ROOT) {
   const hostedOut = runOut('node checker/pack-claude-ai.mjs --controls');
   const hm = /^(\d+) run, (\d+) failing/m.exec(hostedOut);
   if (!hm) throw new Error(`counts-sweep: pack-claude-ai.mjs --controls printed no total line: ${hostedOut.slice(-200)}`);
-  if (Number(hm[2]) !== 0) throw new Error(`counts-sweep: pack-claude-ai.mjs --controls reports ${hm[2]} failing; the count of a red suite is not read`);
+  // The refusal names the control that failed: on macOS the sweep refused a
+  // red packer suite and the log said only "1 failing", so the leg had to be
+  // diagnosed from the one control that runs in a temp directory.
+  if (Number(hm[2]) !== 0) throw new Error(`counts-sweep: pack-claude-ai.mjs --controls reports ${hm[2]} failing; the count of a red suite is not read: ${hostedOut.split(/\r?\n/).filter((l) => /^FAIL/.test(l)).join(' | ').slice(0, 600)}`);
   const hostedControls = Number(hm[1]);
   const cmdNames = readdirSync(join(root, 'commands'));
   const schematics = cmdNames.filter((f) => /^create-prompt-[a-z]+-dtd\.md$/.test(f)).length;
