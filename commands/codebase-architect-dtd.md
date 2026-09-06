@@ -504,6 +504,46 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
 <!ENTITY LAW.XOS.7 "A local leg is offered only on a substrate the probe found present under LAW.XOS.1: a Linux leg through XOS.local.podman needs at least one machine row, one through XOS.local.wsl2 needs wsl to answer, and starlist-dtd records each as reachable or absent under LAW.SL.1 rather than assuming it.">
 <!-- end subset cross-os -->
 
+  <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
+       enumeration the grammar holds a projection to, and the first declaration
+       binds (LAW.GEOM.1). -->
+  
+  
+<!-- begin subset codebase-architect -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  codebase-architect.dtd : the variant subset of /codebase-architect-dtd.
+
+  geometry.dtd holds everything the three commands share. This file holds
+  only what makes this band itself: the band, pinned; the one thing the
+  command may write, a plan; and the thing it may never do, a rewrite,
+  which is a #FIXED attribute on its root and on every projection, so an
+  architect that rewrites is invalid rather than merely overreaching.
+-->
+
+<!-- ===== THE BAND, PINNED ===== -->
+<!ATTLIST plan_run
+          band     CDATA #FIXED "18-35"
+          verbs    CDATA #FIXED "orthography to apparatus"
+          rewrite  CDATA #FIXED "no"
+          hands_to CDATA #FIXED "codebase-renovator-dtd">
+
+<!-- The enumeration the grammar holds the verb of a projection to; declared before
+     geometry.dtd is included, so it binds (LAW.GEOM.1). -->
+<!ENTITY % geom.verb.projection "(18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35)">
+<!ENTITY ARCHITECT.band "18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35">
+<!ENTITY ARCHITECT.low "18">
+<!ENTITY ARCHITECT.high "35">
+<!ENTITY ARCHITECT.next "36">
+<!ENTITY ARCHITECT.what "declare what the shape should be: a plan, a projection, a set of bounds a later survey is held to; a declaration and never a rewrite">
+
+<!-- ===== THE LAWS OF THIS VARIANT ===== -->
+<!ENTITY LAW.ARCHITECT.1 "This command exposes only the verbs of ARCHITECT.band, orthography to apparatus; the band is a #FIXED attribute on plan_run, so an answer that claims another band is invalid against this subset, and a change above the band is rendered as next_band naming ARCHITECT.next and the command codebase-renovator-dtd (LAW.GEOM.1).">
+<!ENTITY LAW.ARCHITECT.2 "The rewrite attribute is fixed at no on the root and on every projection: this run writes its plan under GEOM.dir, names the survey it stands on by path, and touches no other file; a plan run that rewrites is a failed answer, measured by git status before and after (LAW.GEOM.3).">
+<!ENTITY LAW.ARCHITECT.3 "Every projection carries a bound, a number node lib/geometry.mjs plan --check can hold a later survey to, and the plan's figure is the survey's figure with the projected shapes added and nothing else (LAW.GEOM.3, LAW.GEOM.8).">
+<!-- end subset codebase-architect -->
+
   
   
 <!-- begin subset geometry -->
@@ -560,6 +600,14 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
      is still a rung: it is never measured by guessing, and a later release
      adds the instrument without renumbering anything (LAW.GEOM.2). -->
 <!ENTITY GEOM.instrumented "1|2|3|4|5|9|10|12|14|15|16|17|23|26|29|33|34|47|52">
+<!-- The verb attribute of a measure, a projection and a change is a parameter
+     entity each band subset raises to its own enumeration BEFORE this file is
+     included (the first declaration binds), so a verb outside the band is
+     invalid against the subset and not merely out of place (LAW.GEOM.1). The
+     default below is what a reader of this file alone sees. -->
+<!ENTITY % geom.verb.measure    "CDATA">
+<!ENTITY % geom.verb.projection "CDATA">
+<!ENTITY % geom.verb.change     "CDATA">
 
 <!-- ===== BAND I: SURVEYOR, 1 to 17. Measure and describe. Nothing moves. ===== -->
 
@@ -626,7 +674,7 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
           target CDATA #REQUIRED>
 <!ELEMENT projection (#PCDATA)>
 <!ATTLIST projection
-          verb     CDATA #REQUIRED
+          verb     (18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35) #REQUIRED
           declares CDATA #REQUIRED
           bound    CDATA #REQUIRED
           rewrite  (no) #FIXED "no">
@@ -683,40 +731,6 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
 <!ENTITY LAW.GEOM.7 "Every survey renders one figure from cc-figure with mark measured beside its numbers, and the figure carries no shape a measure did not produce: the drawing is of the numbers, and a figure without numbers is not a survey.">
 <!ENTITY LAW.GEOM.8 "The three commands draw one figure: the plan's figure is the survey's with the projected shapes added, the renovation's plate renders both with the changed shapes marked, and a plan figure carrying a shape that is in neither the survey nor a projection is refused, so nothing is ever drawn as proposed before something was drawn as measured.">
 <!-- end subset geometry -->
-
-  
-  
-<!-- begin subset codebase-architect -->
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
-<!-- Copyright 2026 Saimonokuma. -->
-<!--
-  codebase-architect.dtd : the variant subset of /codebase-architect-dtd.
-
-  geometry.dtd holds everything the three commands share. This file holds
-  only what makes this band itself: the band, pinned; the one thing the
-  command may write, a plan; and the thing it may never do, a rewrite,
-  which is a #FIXED attribute on its root and on every projection, so an
-  architect that rewrites is invalid rather than merely overreaching.
--->
-
-<!-- ===== THE BAND, PINNED ===== -->
-<!ATTLIST plan_run
-          band     CDATA #FIXED "18-35"
-          verbs    CDATA #FIXED "orthography to apparatus"
-          rewrite  CDATA #FIXED "no"
-          hands_to CDATA #FIXED "codebase-renovator-dtd">
-
-<!ENTITY ARCHITECT.band "18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35">
-<!ENTITY ARCHITECT.low "18">
-<!ENTITY ARCHITECT.high "35">
-<!ENTITY ARCHITECT.next "36">
-<!ENTITY ARCHITECT.what "declare what the shape should be: a plan, a projection, a set of bounds a later survey is held to; a declaration and never a rewrite">
-
-<!-- ===== THE LAWS OF THIS VARIANT ===== -->
-<!ENTITY LAW.ARCHITECT.1 "This command exposes only the verbs of ARCHITECT.band, orthography to apparatus; the band is a #FIXED attribute on plan_run, so an answer that claims another band is invalid against this subset, and a change above the band is rendered as next_band naming ARCHITECT.next and the command codebase-renovator-dtd (LAW.GEOM.1).">
-<!ENTITY LAW.ARCHITECT.2 "The rewrite attribute is fixed at no on the root and on every projection: this run writes its plan under GEOM.dir, names the survey it stands on by path, and touches no other file; a plan run that rewrites is a failed answer, measured by git status before and after (LAW.GEOM.3).">
-<!ENTITY LAW.ARCHITECT.3 "Every projection carries a bound, a number node lib/geometry.mjs plan --check can hold a later survey to, and the plan's figure is the survey's figure with the projected shapes added and nothing else (LAW.GEOM.3, LAW.GEOM.8).">
-<!-- end subset codebase-architect -->
 
   <!ELEMENT plan_run (args, intake, substrates, survey_ref, plan, figure, artifact, next_band, assumption_made*)>
   <!ELEMENT artifact EMPTY>

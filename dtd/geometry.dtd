@@ -51,6 +51,14 @@
      is still a rung: it is never measured by guessing, and a later release
      adds the instrument without renumbering anything (LAW.GEOM.2). -->
 <!ENTITY GEOM.instrumented "1|2|3|4|5|9|10|12|14|15|16|17|23|26|29|33|34|47|52">
+<!-- The verb attribute of a measure, a projection and a change is a parameter
+     entity each band subset raises to its own enumeration BEFORE this file is
+     included (the first declaration binds), so a verb outside the band is
+     invalid against the subset and not merely out of place (LAW.GEOM.1). The
+     default below is what a reader of this file alone sees. -->
+<!ENTITY % geom.verb.measure    "CDATA">
+<!ENTITY % geom.verb.projection "CDATA">
+<!ENTITY % geom.verb.change     "CDATA">
 
 <!-- ===== BAND I: SURVEYOR, 1 to 17. Measure and describe. Nothing moves. ===== -->
 <![%geom.surveyor.module;[
@@ -82,7 +90,7 @@
           of        CDATA #REQUIRED>
 <!ELEMENT measure (#PCDATA)>
 <!ATTLIST measure
-          verb       CDATA #REQUIRED
+          verb       %geom.verb.measure; #REQUIRED
           value      CDATA #REQUIRED
           unit       CDATA #REQUIRED
           instrument CDATA #REQUIRED
@@ -118,7 +126,7 @@
           target CDATA #REQUIRED>
 <!ELEMENT projection (#PCDATA)>
 <!ATTLIST projection
-          verb     CDATA #REQUIRED
+          verb     %geom.verb.projection; #REQUIRED
           declares CDATA #REQUIRED
           bound    CDATA #REQUIRED
           rewrite  (no) #FIXED "no">
@@ -151,7 +159,7 @@
           plan   CDATA #REQUIRED>
 <!ELEMENT change (#PCDATA)>
 <!ATTLIST change
-          verb   CDATA #REQUIRED
+          verb   %geom.verb.change; #REQUIRED
           file   CDATA #REQUIRED
           before CDATA #REQUIRED
           after  CDATA #REQUIRED>

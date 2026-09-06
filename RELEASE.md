@@ -32,7 +32,7 @@ before it measured anything.
   three bands, the first driver in the Suite, one figure drawn from the numbers
   and rendered twice.
 - **`node lib/list.mjs controls` 47 run, 0 failing**; 134 commands, 22 skills,
-  5 agents; 1612 declarations; recognised 8.0.0 (class major) from a top verb
+  5 agents; 1619 declarations; recognised 8.0.0 (class major) from a top verb
   of 14, and a top of 13 would have published 7.3.0.
 
 ## v7.2.0 — it installs on claude.ai and Claude Cowork

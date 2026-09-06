@@ -22,6 +22,9 @@
           writes   CDATA #FIXED "the survey artifact and nothing else"
           hands_to CDATA #FIXED "codebase-architect-dtd">
 
+<!-- The enumeration the grammar holds the verb of a measure to; declared before
+     geometry.dtd is included, so it binds (LAW.GEOM.1). -->
+<!ENTITY % geom.verb.measure "(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17)">
 <!ENTITY SURVEYOR.band "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17">
 <!ENTITY SURVEYOR.low "1">
 <!ENTITY SURVEYOR.high "17">

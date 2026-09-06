@@ -18,10 +18,13 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
   %cc-ask;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
-  <!ENTITY % geometry SYSTEM "../../dtd/geometry.dtd">
-  %geometry;
+  <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
+       enumeration the grammar holds a change to, and the first declaration
+       binds (LAW.GEOM.1). -->
   <!ENTITY % codebase-renovator SYSTEM "../../dtd/codebase-renovator.dtd">
   %codebase-renovator;
+  <!ENTITY % geometry SYSTEM "../../dtd/geometry.dtd">
+  %geometry;
   <!ELEMENT renovation_run (args, intake, survey_ref, plan_ref, renovation, figure, certified, artifact, next_band, assumption_made*)>
   <!ELEMENT artifact EMPTY>
   <!ATTLIST artifact

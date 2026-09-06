@@ -26,7 +26,7 @@ say. The single-leg approach is replaced, not kept beside: `gate` and
 - **`dtd/cross-os.dtd`**, LAW.XOS.1 to 7. The three legs are an enumeration,
   the four local substrates are probed and never guessed, and the eight shell
   forms a leg lacks are a list the sweep reads, in both directions. `lib/cross-os.mjs`:
-  `probe`, `sweep`, `matrix --check`, 19 controls.
+  `probe`, `sweep`, `matrix --check`, 26 controls.
 - **The podman trap.** `podman machine list` on this machine answers a header
   and zero rows at exit 0; a script that tests the exit code concludes a
   substrate exists. LAW.XOS.1 reads the rows. WSL is not installed (exit 50),
@@ -36,17 +36,9 @@ say. The single-leg approach is replaced, not kept beside: `gate` and
 - **A ceiling that exists on every leg.** `lib/ceiling.mjs` exits 124 where
   `timeout` is absent, `checker/portable.sh` chooses, and both paths are
   tripped on purpose. The encoding sweep reads bytes in Node
-  (`lib/encoding.mjs`, 803 files, 0 bad, three planted files caught).
-- **The sigil inside a comment.** `<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
-<!-- Copyright 2026 Saimonokuma. -->
-
-# Changelog
-
-Every number below was produced by the command named beside it on the day of
-the release. If one of them does not re-run for you, open the
-"A claim in our docs is false" issue; the report is credited here.
-ARGUMENTS in two subset comments was
-  substituted by the harness at every invocation; this session's loaded
+  (`lib/encoding.mjs`, every tracked file judged, 0 bad, three planted files caught).
+- **The sigil inside a comment.** The arguments sigil in two subset comments
+  was substituted by the harness at every invocation; this session's loaded
   command read "the 8.0.0 Cross-OS-Commander variant tables". The comments
   name the document instead.
 
@@ -98,13 +90,13 @@ release; the rest are unmeasured and say so.
 
 ### Measured
 
-- `node lib/cross-os.mjs controls`: 19 run, 0 failing
+- `node lib/cross-os.mjs controls`: 26 run, 0 failing
 - `node lib/figure.mjs controls`: 23 run, 0 failing
-- `node lib/geometry.mjs controls`: 32 run, 0 failing
+- `node lib/geometry.mjs controls`: 38 run, 0 failing
 - `node lib/ceiling.mjs controls`: 5 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
 - `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
-- `node checker/contract-audit.mjs`: 1612 declarations, 0 unused, 0 law gaps
-- 134 commands, 22 skills, 5 agents; checked 161; 1612 declarations; 63 gate-chain commands
+- `node checker/contract-audit.mjs`: 1619 declarations, 0 unused, 0 law gaps
+- 134 commands, 22 skills, 5 agents; checked 161; 1619 declarations; 63 gate-chain commands
 - recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2 at 7.2.0
 
 ## 7.2.0 (2026-09-05)

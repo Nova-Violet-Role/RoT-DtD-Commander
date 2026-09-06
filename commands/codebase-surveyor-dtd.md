@@ -507,6 +507,51 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
 <!ENTITY LAW.XOS.7 "A local leg is offered only on a substrate the probe found present under LAW.XOS.1: a Linux leg through XOS.local.podman needs at least one machine row, one through XOS.local.wsl2 needs wsl to answer, and starlist-dtd records each as reachable or absent under LAW.SL.1 rather than assuming it.">
 <!-- end subset cross-os -->
 
+  <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
+       enumeration the grammar holds a measure to, and the first declaration
+       binds (LAW.GEOM.1). -->
+  
+  
+<!-- begin subset codebase-surveyor -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  codebase-surveyor.dtd : the variant subset of /codebase-surveyor-dtd.
+
+  geometry.dtd holds everything the three commands share: the fifty-two rung
+  ladder, the three band modules, the survey, the plan, the renovation and
+  LAW.GEOM.1 to LAW.GEOM.8. This file holds only what makes this band itself,
+  as declarations a validator can judge rather than prose a reader must trust.
+
+  The band is a #FIXED attribute, and so is what the command may write:
+  nothing but its own artifact. A rendered answer that carries any other
+  value contradicts the declaration it was rendered under, so "the surveyor
+  writes no code" stops being a rule the model remembers and becomes a rule
+  node lib/geometry.mjs controls reads off the BUILT command.
+-->
+
+<!-- ===== THE BAND, PINNED ===== -->
+<!ATTLIST survey_run
+          band     CDATA #FIXED "1-17"
+          verbs    CDATA #FIXED "planimetry to conspectus"
+          writes   CDATA #FIXED "the survey artifact and nothing else"
+          hands_to CDATA #FIXED "codebase-architect-dtd">
+
+<!-- The enumeration the grammar holds the verb of a measure to; declared before
+     geometry.dtd is included, so it binds (LAW.GEOM.1). -->
+<!ENTITY % geom.verb.measure "(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17)">
+<!ENTITY SURVEYOR.band "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17">
+<!ENTITY SURVEYOR.low "1">
+<!ENTITY SURVEYOR.high "17">
+<!ENTITY SURVEYOR.next "18">
+<!ENTITY SURVEYOR.what "measure and describe: a drawing and a set of numbers that were taken, not guessed; nothing moves">
+
+<!-- ===== THE LAWS OF THIS VARIANT ===== -->
+<!ENTITY LAW.SURVEYOR.1 "This command exposes only the verbs of SURVEYOR.band, planimetry to conspectus; the band is a #FIXED attribute on survey_run, so an answer that claims another band is invalid against this subset, and a shape above the band is rendered as next_band naming SURVEYOR.next and the command codebase-architect-dtd (LAW.GEOM.1).">
+<!ENTITY LAW.SURVEYOR.2 "The writes attribute is fixed: this run writes its survey under GEOM.dir and nothing else, moves no file and changes no line; a survey run that leaves any other file changed is a failed answer, measured by git status before and after (LAW.GEOM.2).">
+<!ENTITY LAW.SURVEYOR.3 "Every measure names the instrument that took it and the seconds it took under GEOM.ceiling, and the figure is rendered from the measures alone with mark measured, so the drawing can be checked against the numbers beside it (LAW.GEOM.7, LAW.FIG.4).">
+<!-- end subset codebase-surveyor -->
+
   
   
 <!-- begin subset geometry -->
@@ -563,6 +608,14 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
      is still a rung: it is never measured by guessing, and a later release
      adds the instrument without renumbering anything (LAW.GEOM.2). -->
 <!ENTITY GEOM.instrumented "1|2|3|4|5|9|10|12|14|15|16|17|23|26|29|33|34|47|52">
+<!-- The verb attribute of a measure, a projection and a change is a parameter
+     entity each band subset raises to its own enumeration BEFORE this file is
+     included (the first declaration binds), so a verb outside the band is
+     invalid against the subset and not merely out of place (LAW.GEOM.1). The
+     default below is what a reader of this file alone sees. -->
+<!ENTITY % geom.verb.measure    "CDATA">
+<!ENTITY % geom.verb.projection "CDATA">
+<!ENTITY % geom.verb.change     "CDATA">
 
 <!-- ===== BAND I: SURVEYOR, 1 to 17. Measure and describe. Nothing moves. ===== -->
 
@@ -594,7 +647,7 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
           of        CDATA #REQUIRED>
 <!ELEMENT measure (#PCDATA)>
 <!ATTLIST measure
-          verb       CDATA #REQUIRED
+          verb       (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17) #REQUIRED
           value      CDATA #REQUIRED
           unit       CDATA #REQUIRED
           instrument CDATA #REQUIRED
@@ -686,45 +739,6 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
 <!ENTITY LAW.GEOM.7 "Every survey renders one figure from cc-figure with mark measured beside its numbers, and the figure carries no shape a measure did not produce: the drawing is of the numbers, and a figure without numbers is not a survey.">
 <!ENTITY LAW.GEOM.8 "The three commands draw one figure: the plan's figure is the survey's with the projected shapes added, the renovation's plate renders both with the changed shapes marked, and a plan figure carrying a shape that is in neither the survey nor a projection is refused, so nothing is ever drawn as proposed before something was drawn as measured.">
 <!-- end subset geometry -->
-
-  
-  
-<!-- begin subset codebase-surveyor -->
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
-<!-- Copyright 2026 Saimonokuma. -->
-<!--
-  codebase-surveyor.dtd : the variant subset of /codebase-surveyor-dtd.
-
-  geometry.dtd holds everything the three commands share: the fifty-two rung
-  ladder, the three band modules, the survey, the plan, the renovation and
-  LAW.GEOM.1 to LAW.GEOM.8. This file holds only what makes this band itself,
-  as declarations a validator can judge rather than prose a reader must trust.
-
-  The band is a #FIXED attribute, and so is what the command may write:
-  nothing but its own artifact. A rendered answer that carries any other
-  value contradicts the declaration it was rendered under, so "the surveyor
-  writes no code" stops being a rule the model remembers and becomes a rule
-  node lib/geometry.mjs controls reads off the BUILT command.
--->
-
-<!-- ===== THE BAND, PINNED ===== -->
-<!ATTLIST survey_run
-          band     CDATA #FIXED "1-17"
-          verbs    CDATA #FIXED "planimetry to conspectus"
-          writes   CDATA #FIXED "the survey artifact and nothing else"
-          hands_to CDATA #FIXED "codebase-architect-dtd">
-
-<!ENTITY SURVEYOR.band "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17">
-<!ENTITY SURVEYOR.low "1">
-<!ENTITY SURVEYOR.high "17">
-<!ENTITY SURVEYOR.next "18">
-<!ENTITY SURVEYOR.what "measure and describe: a drawing and a set of numbers that were taken, not guessed; nothing moves">
-
-<!-- ===== THE LAWS OF THIS VARIANT ===== -->
-<!ENTITY LAW.SURVEYOR.1 "This command exposes only the verbs of SURVEYOR.band, planimetry to conspectus; the band is a #FIXED attribute on survey_run, so an answer that claims another band is invalid against this subset, and a shape above the band is rendered as next_band naming SURVEYOR.next and the command codebase-architect-dtd (LAW.GEOM.1).">
-<!ENTITY LAW.SURVEYOR.2 "The writes attribute is fixed: this run writes its survey under GEOM.dir and nothing else, moves no file and changes no line; a survey run that leaves any other file changed is a failed answer, measured by git status before and after (LAW.GEOM.2).">
-<!ENTITY LAW.SURVEYOR.3 "Every measure names the instrument that took it and the seconds it took under GEOM.ceiling, and the figure is rendered from the measures alone with mark measured, so the drawing can be checked against the numbers beside it (LAW.GEOM.7, LAW.FIG.4).">
-<!-- end subset codebase-surveyor -->
 
   <!ELEMENT survey_run (args, intake, substrates, survey, figure, artifact, next_band, assumption_made*)>
   <!-- The file the run leaves behind. cc-report fixes its artifact to

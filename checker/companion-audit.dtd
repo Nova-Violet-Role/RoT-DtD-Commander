@@ -50,6 +50,7 @@
      redirect is the companion's own breach, and it discloses it in the
      scope. 3, 4 and 6: the scorer in checker/companion-audit.sh (a finding
      element carries file, line, severity and confidence in its opening
-     tag, M16; exactly one verdict line and a fail needs one high finding,
-     counted in the opening tag only, M9 to M11, M14 and M15; the scope
-     line, M12 and M13). 5: the runner's exit 124 branch. -->
+     tag, M16; exactly one verdict line, M18 with two and M19 with none; a
+     fail needs one high finding, counted in the opening tag only, M9 to
+     M11, M14 and M15; the scope line, M12 and M13). 5: the runner's exit
+     124 branch. -->

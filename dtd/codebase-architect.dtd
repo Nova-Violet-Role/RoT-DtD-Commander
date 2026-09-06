@@ -17,6 +17,9 @@
           rewrite  CDATA #FIXED "no"
           hands_to CDATA #FIXED "codebase-renovator-dtd">
 
+<!-- The enumeration the grammar holds the verb of a projection to; declared before
+     geometry.dtd is included, so it binds (LAW.GEOM.1). -->
+<!ENTITY % geom.verb.projection "(18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35)">
 <!ENTITY ARCHITECT.band "18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35">
 <!ENTITY ARCHITECT.low "18">
 <!ENTITY ARCHITECT.high "35">

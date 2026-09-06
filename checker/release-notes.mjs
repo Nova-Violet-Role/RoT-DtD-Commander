@@ -58,6 +58,11 @@ export function section(changelog, version) {
   let j = i + 1;
   while (j < lines.length && !/^## /.test(lines[j])) j++;
   const body = lines.slice(i + 1, j).join('\n').trim() + '\n';
+  // A section that carries the file's own header is spliced: a string
+  // replacement expanded a dollar sign into the text before the match and the
+  // 8.0.0 bullet swallowed the title (second companion pass). It would have
+  // shipped as the release body; every instrument on the path exited 0.
+  if (/^# Changelog\s*$/m.test(body) || /<!-- SPDX-License-Identifier/.test(body)) return { ok: false, reason: `the section for ${version} is spliced: it carries the file's own title or its SPDX comment inside its body` };
   return { ok: true, body, date: paren };
 }
 
@@ -137,6 +142,8 @@ function controls() {
   const two = section(planted, '2.0.0');
   say(!two.ok && /in progress/.test(two.reason), `trip: an in-progress heading is refused: ${two.reason}`);
   const three = section(planted, '3.0.0');
+  const spliced = section(planted.split('- b').join('- b\n<!-- SPDX-License-Identifier: X -->\n\n# Changelog\n'), '1.0.0');
+  say(!spliced.ok && /spliced/.test(spliced.reason), `trip: a section carrying the file header is refused: ${spliced.reason}`);
   say(!three.ok && /no section/.test(three.reason), `trip: a version with no section is refused: ${three.reason}`);
   const sound = { 'package.json': '1.0.0', 'plugin.json': '1.0.0', 'marketplace.json metadata': '1.0.0', 'marketplace.json plugin': '1.0.0', 'CHANGELOG.md top section': '1.0.0', changelogState: '2026-01-01', releaseHeading: true };
   say(versionFindings(sound, 'v1.0.0').length === 0, 'versions that agree everywhere, with their tag, report nothing');
@@ -196,6 +203,9 @@ function main() {
   if (args[0] === '--controls') process.exit(controls() ? 0 : 1);
   if (args[0] === '--versions') {
     const v = versions();
+    // The top section must render: a spliced body is refused here, on every push, not only on the tag.
+    const top = section(readFileSync(join(ROOT, 'CHANGELOG.md'), 'utf8'), v['package.json']);
+    if (!top.ok) console.log(`  SPLICED ${top.reason}`);
     for (const k of ['package.json', 'plugin.json', 'marketplace.json metadata', 'marketplace.json plugin', 'CHANGELOG.md top section']) console.log(`  ${k}: ${v[k]}`);
     console.log(`  RELEASE.md heading "## v${v['package.json']}": ${v.releaseHeading ? 'present' : 'MISSING'}; changelog top section ${v.changelogState}${args[1] ? `; tag ${args[1]}` : ''}`);
     const f = versionFindings(v, args[1] || null);
@@ -223,6 +233,7 @@ function main() {
         console.log('  NOT CHECKED no state record, so this tree names no kept verbs and LAW.AMP.14 does not bind it');
       }
     }
+    if (!top.ok) f.push('the changelog section is spliced');
     console.log(`release-notes versions: ${f.length === 0 ? `one version everywhere, ${v['package.json']}` : `${f.length} disagreements`}`);
     process.exit(f.length === 0 ? 0 : 1);
   }

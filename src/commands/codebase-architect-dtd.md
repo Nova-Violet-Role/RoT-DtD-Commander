@@ -18,10 +18,13 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
   %cc-ask;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
-  <!ENTITY % geometry SYSTEM "../../dtd/geometry.dtd">
-  %geometry;
+  <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
+       enumeration the grammar holds a projection to, and the first declaration
+       binds (LAW.GEOM.1). -->
   <!ENTITY % codebase-architect SYSTEM "../../dtd/codebase-architect.dtd">
   %codebase-architect;
+  <!ENTITY % geometry SYSTEM "../../dtd/geometry.dtd">
+  %geometry;
   <!ELEMENT plan_run (args, intake, substrates, survey_ref, plan, figure, artifact, next_band, assumption_made*)>
   <!ELEMENT artifact EMPTY>
   <!ATTLIST artifact

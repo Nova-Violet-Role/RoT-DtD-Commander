@@ -6,9 +6,10 @@
 # Trip the checker on purpose. M1 to M8: mutations of a resolved command,
 # each asserted PRESENT before the check runs, each expected to fail with
 # its named rule (or, for M8, to pass); M0: the untouched file, expected to
-# pass; M9 to M16: the companion scorer on whole planted answers, each
-# expected to score as its law says; M17: the runner's allow-list, a copy
-# granting Write refused.
+# pass; M9 to M16, M18 and M19: the companion scorer on whole planted answers,
+# each expected to score as its law says, two verdict lines and none among
+# them; M17: the runner's allow-list, a copy granting Write refused, M17c the
+# bare timeout refused.
 # validator: a broken instance must be rejected with a named error before
 # the valid instance's pass counts.
 set -u
@@ -78,6 +79,10 @@ printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="medium" 
 out=$(bash checker/companion-audit.sh --score "$T/m15.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'high findings=0' && echo "$out" | grep -q 'a fail with no high finding' && echo "PASS M15 the attribute quoted in a finding body counts for nothing: high findings=0 and the fail is refused" || { echo "FAIL M15 exit=$rc"; echo "$out" | tail -2; fail=1; }
 printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high">planted without a confidence</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m16.md"
 out=$(bash checker/companion-audit.sh --score "$T/m16.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.3' && echo "PASS M16 a finding element without its confidence is refused under LAW.COMPANION.3" || { echo "FAIL M16 exit=$rc"; echo "$out" | tail -2; fail=1; }
+printf '%s\n\n### 🩺 Findings\n\nnone\n\nCOMPANION VERDICT: pass\nCOMPANION VERDICT: pass\n' "$scope" > "$T/m18.md"
+out=$(bash checker/companion-audit.sh --score "$T/m18.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.4 broken, 2 verdict lines' && echo "PASS M18 two verdict lines are refused under LAW.COMPANION.4 (exit 1, named)" || { echo "FAIL M18 exit=$rc"; echo "$out" | tail -2; fail=1; }
+printf '%s\n\n### 🩺 Findings\n\nnone\n\n### 🩺 Verdict\n\npass, but the line is missing\n' "$scope" > "$T/m19.md"
+out=$(bash checker/companion-audit.sh --score "$T/m19.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q '0 verdict lines' && echo "PASS M19 an answer with no verdict line is refused (exit 1, 0 verdict lines)" || { echo "FAIL M19 exit=$rc"; echo "$out" | tail -2; fail=1; }
 # M17: the runner's allow-list carries no writing or spawning tool and every Bash form starts with its ceiling; a copy granting Write is refused
 # A bare Bash in the allow-list is the widest grant there is, and the old
 # second stage could not see it: grep -o 'Bash([^)]*)' emitted nothing, so the

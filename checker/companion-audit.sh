@@ -28,15 +28,15 @@ vpass="$(grep -o 'COMPANION.verdict.pass *"[^"]*"' "$here/checker/companion-audi
 vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
 [ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
 
-# The scorer, on one answer file. Reads the LAST non-empty line for the
-#
 # The allow-list below IS LAW.COMPANION.1 and LAW.COMPANION.2: the nested
 # session is granted Read, Grep, Glob and Bash under the portable ceiling
-# (node lib/ceiling.mjs 60, because the timeout binary is absent on macOS) and nothing that
-# writes, and its stdin is closed. Those two laws are enforced by this shape
-# rather than by a string the runner checks, and naming them here is what lets
-# the contract audit see that they govern something. The root element the
-# answer must take is companion_audit.
+# (node lib/ceiling.mjs 60, because the timeout binary is absent on macOS) and
+# nothing that writes, and its stdin is closed. Those two laws are enforced by
+# this shape rather than by a string the runner checks, and naming them here is
+# what lets the contract audit see that they govern something. The root element
+# the answer must take is companion_audit.
+#
+# The scorer, on one answer file. Reads the LAST non-empty line for the
 # verdict; counts a high finding only in the OPENING TAG of a line that
 # opens a finding element (the text before its first ">"), the one spelling
 # the prompt commands, so a bold line, a sentence in the prose or a finding
@@ -44,7 +44,7 @@ vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audi
 # element whose opening tag lacks one of file, line, severity, confidence
 # (LAW.COMPANION.3); holds the scope line to this run with a fixed-string,
 # whole-line match. checker/checker-controls.sh trips it on planted answers
-# (M9 to M17).
+# (M9 to M19).
 score() {
   local log="$1" phase="$2" range="$3" model="$4"
   local last nverdict nfind nsound nhigh scope_ok

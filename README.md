@@ -20,8 +20,8 @@
 [![License](https://img.shields.io/badge/License-AGPL--3.0_OR_EUPL--1.2-764ba2?style=for-the-badge)](LICENSE)
 
 [![Checker](https://img.shields.io/badge/checked-161_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Contract](https://img.shields.io/badge/contract_audit-1613_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-30_%2B_18-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Contract](https://img.shields.io/badge/contract_audit-1619_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-30_%2B_20-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Listed on ClaudePluginHub](https://www.claudepluginhub.com/badge/nova-violet-role-rot-dtd-commander)](https://www.claudepluginhub.com/plugins/nova-violet-role-rot-dtd-commander?ref=badge)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
@@ -498,9 +498,9 @@ want the grammar enforced rather than merely declared.
      |---|---|---|
      | 134 commands, 22 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-03 |
      | every source passes rules C1 to C16 | `rdc check`: `checked 161  failed 0` | 2026-09-03 |
-     | the committed resolved tree equals a fresh build | `rdc build --check`: `287 targets, 0 drifted, 0 failing` | 2026-09-03 |
-     | the checker refuses every defect it names &mdash; a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a missing sigil, a front-matter value YAML would misread, a declaration hidden under IGNORE &mdash; and the companion scorer runs under an allow-list with no writing tool | `bash checker/checker-controls.sh`: eighteen controls M0 to M17, `all tripped as designed` | 2026-09-03 |
-     | every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1440 declarations, 0 unused, 0 law gaps`, and the three planted controls | 2026-09-05 |
+     | the committed resolved tree equals a fresh build | `rdc build --check`: `298 targets, 0 drifted, 0 failing` | 2026-09-06 |
+     | the checker refuses every defect it names &mdash; a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a missing sigil, a front-matter value YAML would misread, a declaration hidden under IGNORE &mdash; and the companion scorer runs under an allow-list with no writing tool | `bash checker/checker-controls.sh`: twenty controls M0 to M19, `all tripped as designed` | 2026-09-06 |
+     | every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1619 declarations, 0 unused, 0 law gaps`, and the three planted controls | 2026-09-06 |
      | the Adiutor finds a missing heading, blocks once and never twice, stays silent on `stop_hook_active`, refuses a tampered ledger line, preserves foreign settings keys, completes an answer that lags behind narration, and arms on a trailing `/name-dtd` token (LAW.CORE.7) | `node bin/adiutor.mjs controls`: `20 run, 0 failing` | 2026-09-03 |
      | `rdc install` writes the monitor as `skills/rot-dtd-commander-adiutor/` (a `.claude-plugin/plugin.json` and a `monitors/monitors.json` running the copied script), the doctor's `monitor` row is green, and `rdc uninstall` leaves `skills/` empty | `rdc install --yes --target <scratch> --only pareto-dtd`: `written 17`; `CLAUDE_CONFIG_DIR=<scratch> node bin/adiutor.mjs doctor`: `11 checks, 0 failing`; `rdc uninstall --yes --target <scratch>`: `removed 17  kept 0` | 2026-09-02 |
      | the repository is a valid plugin with its monitor declared | `claude plugin validate .`: `Validation passed` | 2026-09-02 |

@@ -47,9 +47,16 @@ export function measure(root = ROOT) {
   const amplifyControls = Number((/amplify controls: (\d+) run/.exec(runOut('node lib/amplify.mjs controls')) || [])[1] || 0);
   const listControls = Number((/list controls: (\d+) run/.exec(runOut('node lib/list.mjs controls')) || [])[1] || 0);
   const starlistControls = Number((/starlist controls: (\d+) run/.exec(runOut('node lib/starlist.mjs controls')) || [])[1] || 0);
+  // The second companion pass of 8.0.0 found four changelog numbers and two
+  // README claims rows stale on the release date while this sweep reported
+  // every place in step: a number nothing reads drifts by the next minor.
+  const crossOsControls = Number((/cross-os controls: (\d+) run/.exec(runOut('node lib/cross-os.mjs controls')) || [])[1] || 0);
+  const geometryControls = Number((/geometry controls: (\d+) run/.exec(runOut('node lib/geometry.mjs controls')) || [])[1] || 0);
+  const figureControls = Number((/figure controls: (\d+) run/.exec(runOut('node lib/figure.mjs controls')) || [])[1] || 0);
+  const buildTargets = Number((/build --check: (\d+) targets/.exec(runOut('node bin/rot-dtd-commander.mjs build --check')) || [])[1] || 0);
   return {
     gateChain,
-    listControls, starlistControls,
+    listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, declarations: Number(m[1]) };
 }
 
@@ -81,6 +88,17 @@ export function places(c) {
     { file: 'RELEASE.md', re: /lib\/list\.mjs controls` (\d+) run/, want: [c.listControls], label: 'the release notes list controls' },
     { file: 'CHANGELOG.md', re: /lib\/starlist\.mjs controls`: (\d+) run/, want: [c.starlistControls], label: 'the changelog starlist controls' },
     { file: '.claude-plugin/marketplace.json', re: /(\d+) skills and (\d+) agents/, want: [c.skills, c.agents], label: 'the marketplace plugin description, skills and agents' },
+    // The claims rows and the Measured block: prose a reader takes as evidence.
+    { file: 'README.md', re: /`rdc build --check`: `(\d+) targets, 0 drifted/, want: [c.buildTargets], label: 'the claims row of the build' },
+    { file: 'README.md', re: /checker-controls\.sh`: ([a-z-]+) controls M0 to M(\d+)/, want: [c.checkerControls, c.checkerControls - 1], label: 'the claims row of the checker controls' },
+    { file: 'README.md', re: /contract-audit\.mjs`: `(\d+) declarations, 0 unused/, want: [c.declarations], label: 'the claims row of the contract audit' },
+    { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },
+    { file: 'CHANGELOG.md', re: /matrix --check`, (\d+) controls\./, want: [c.crossOsControls], label: 'the changelog cross-os prose' },
+    { file: 'CHANGELOG.md', re: /lib\/geometry\.mjs controls`: (\d+) run/, want: [c.geometryControls], label: 'the changelog geometry controls' },
+    { file: 'CHANGELOG.md', re: /lib\/figure\.mjs controls`: (\d+) run/, want: [c.figureControls], label: 'the changelog figure controls' },
+    { file: 'CHANGELOG.md', re: /checker\/contract-audit\.mjs`: (\d+) declarations/, want: [c.declarations], label: 'the changelog contract audit' },
+    { file: 'CHANGELOG.md', re: /checked (\d+); (\d+) declarations; (\d+) gate-chain commands/, want: [c.checked, c.declarations, c.gateChain], label: 'the changelog summary row' },
+    { file: 'RELEASE.md', re: /(\d+) declarations; recognised/, want: [c.declarations], label: 'the release notes declarations' },
   ];
 }
 

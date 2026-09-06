@@ -504,6 +504,48 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
 <!ENTITY LAW.XOS.7 "A local leg is offered only on a substrate the probe found present under LAW.XOS.1: a Linux leg through XOS.local.podman needs at least one machine row, one through XOS.local.wsl2 needs wsl to answer, and starlist-dtd records each as reachable or absent under LAW.SL.1 rather than assuming it.">
 <!-- end subset cross-os -->
 
+  <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
+       enumeration the grammar holds a change to, and the first declaration
+       binds (LAW.GEOM.1). -->
+  
+  
+<!-- begin subset codebase-renovator -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  codebase-renovator.dtd : the variant subset of /codebase-renovator-dtd.
+
+  geometry.dtd holds everything the three commands share. This file holds
+  only what makes this band itself: the band, pinned, and the two things a
+  renovation must stand on, a survey and a plan, fixed as an attribute on
+  its root so that a renovation with no survey behind it is invalid rather
+  than merely unwise. The ladder wraps at its top: the verb after
+  diplomatics is planimetry again, so this is the only band whose next is
+  below its low, and the command it hands to is the surveyor.
+-->
+
+<!-- ===== THE BAND, PINNED ===== -->
+<!ATTLIST renovation_run
+          band     CDATA #FIXED "36-52"
+          verbs    CDATA #FIXED "rectification to diplomatics"
+          needs    CDATA #FIXED "a survey and a plan, both on disk, both earlier"
+          hands_to CDATA #FIXED "codebase-surveyor-dtd">
+
+<!-- The enumeration the grammar holds the verb of a change to; declared before
+     geometry.dtd is included, so it binds (LAW.GEOM.1). -->
+<!ENTITY % geom.verb.change "(36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52)">
+<!ENTITY RENOVATOR.band "36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52">
+<!ENTITY RENOVATOR.low "36">
+<!ENTITY RENOVATOR.high "52">
+<!ENTITY RENOVATOR.next "1">
+<!ENTITY RENOVATOR.what "change the standing structure, only against a survey that exists and a plan that was declared first; a renovation with no survey behind it is refused by name">
+
+<!-- ===== THE LAWS OF THIS VARIANT ===== -->
+<!ENTITY LAW.RENOVATOR.1 "This command exposes only the verbs of RENOVATOR.band, rectification to diplomatics; the band is a #FIXED attribute on renovation_run, so an answer that claims another band is invalid against this subset, and the ladder wraps: what follows diplomatics is rendered as next_band naming RENOVATOR.next and the command codebase-surveyor-dtd, a fresh survey of the changed structure (LAW.GEOM.1).">
+<!ENTITY LAW.RENOVATOR.2 "The needs attribute is fixed: before the first change this run renders survey_ref and plan_ref naming two files that exist under GEOM.dir, the plan no earlier than the survey, and node lib/geometry.mjs renovate refuses by name when either is missing or out of order; a change made before that refusal was checked is a failed answer (LAW.GEOM.4).">
+<!ENTITY LAW.RENOVATOR.3 "Every change names its file and the shape before and after, the renovation closes with a colophon and a diplomatics record, who made it and the digest of what was made, and the certified element names every leg of XOS.legs the changed tree was gated on, a leg not run rendered unmeasured (LAW.GEOM.8, LAW.XOS.2).">
+<!-- end subset codebase-renovator -->
+
   
   
 <!-- begin subset geometry -->
@@ -560,6 +602,14 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
      is still a rung: it is never measured by guessing, and a later release
      adds the instrument without renumbering anything (LAW.GEOM.2). -->
 <!ENTITY GEOM.instrumented "1|2|3|4|5|9|10|12|14|15|16|17|23|26|29|33|34|47|52">
+<!-- The verb attribute of a measure, a projection and a change is a parameter
+     entity each band subset raises to its own enumeration BEFORE this file is
+     included (the first declaration binds), so a verb outside the band is
+     invalid against the subset and not merely out of place (LAW.GEOM.1). The
+     default below is what a reader of this file alone sees. -->
+<!ENTITY % geom.verb.measure    "CDATA">
+<!ENTITY % geom.verb.projection "CDATA">
+<!ENTITY % geom.verb.change     "CDATA">
 
 <!-- ===== BAND I: SURVEYOR, 1 to 17. Measure and describe. Nothing moves. ===== -->
 
@@ -658,7 +708,7 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
           plan   CDATA #REQUIRED>
 <!ELEMENT change (#PCDATA)>
 <!ATTLIST change
-          verb   CDATA #REQUIRED
+          verb   (36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52) #REQUIRED
           file   CDATA #REQUIRED
           before CDATA #REQUIRED
           after  CDATA #REQUIRED>
@@ -683,42 +733,6 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
 <!ENTITY LAW.GEOM.7 "Every survey renders one figure from cc-figure with mark measured beside its numbers, and the figure carries no shape a measure did not produce: the drawing is of the numbers, and a figure without numbers is not a survey.">
 <!ENTITY LAW.GEOM.8 "The three commands draw one figure: the plan's figure is the survey's with the projected shapes added, the renovation's plate renders both with the changed shapes marked, and a plan figure carrying a shape that is in neither the survey nor a projection is refused, so nothing is ever drawn as proposed before something was drawn as measured.">
 <!-- end subset geometry -->
-
-  
-  
-<!-- begin subset codebase-renovator -->
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
-<!-- Copyright 2026 Saimonokuma. -->
-<!--
-  codebase-renovator.dtd : the variant subset of /codebase-renovator-dtd.
-
-  geometry.dtd holds everything the three commands share. This file holds
-  only what makes this band itself: the band, pinned, and the two things a
-  renovation must stand on, a survey and a plan, fixed as an attribute on
-  its root so that a renovation with no survey behind it is invalid rather
-  than merely unwise. The ladder wraps at its top: the verb after
-  diplomatics is planimetry again, so this is the only band whose next is
-  below its low, and the command it hands to is the surveyor.
--->
-
-<!-- ===== THE BAND, PINNED ===== -->
-<!ATTLIST renovation_run
-          band     CDATA #FIXED "36-52"
-          verbs    CDATA #FIXED "rectification to diplomatics"
-          needs    CDATA #FIXED "a survey and a plan, both on disk, both earlier"
-          hands_to CDATA #FIXED "codebase-surveyor-dtd">
-
-<!ENTITY RENOVATOR.band "36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52">
-<!ENTITY RENOVATOR.low "36">
-<!ENTITY RENOVATOR.high "52">
-<!ENTITY RENOVATOR.next "1">
-<!ENTITY RENOVATOR.what "change the standing structure, only against a survey that exists and a plan that was declared first; a renovation with no survey behind it is refused by name">
-
-<!-- ===== THE LAWS OF THIS VARIANT ===== -->
-<!ENTITY LAW.RENOVATOR.1 "This command exposes only the verbs of RENOVATOR.band, rectification to diplomatics; the band is a #FIXED attribute on renovation_run, so an answer that claims another band is invalid against this subset, and the ladder wraps: what follows diplomatics is rendered as next_band naming RENOVATOR.next and the command codebase-surveyor-dtd, a fresh survey of the changed structure (LAW.GEOM.1).">
-<!ENTITY LAW.RENOVATOR.2 "The needs attribute is fixed: before the first change this run renders survey_ref and plan_ref naming two files that exist under GEOM.dir, the plan no earlier than the survey, and node lib/geometry.mjs renovate refuses by name when either is missing or out of order; a change made before that refusal was checked is a failed answer (LAW.GEOM.4).">
-<!ENTITY LAW.RENOVATOR.3 "Every change names its file and the shape before and after, the renovation closes with a colophon and a diplomatics record, who made it and the digest of what was made, and the certified element names every leg of XOS.legs the changed tree was gated on, a leg not run rendered unmeasured (LAW.GEOM.8, LAW.XOS.2).">
-<!-- end subset codebase-renovator -->
 
   <!ELEMENT renovation_run (args, intake, survey_ref, plan_ref, renovation, figure, certified, artifact, next_band, assumption_made*)>
   <!ELEMENT artifact EMPTY>

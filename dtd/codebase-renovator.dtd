@@ -19,6 +19,9 @@
           needs    CDATA #FIXED "a survey and a plan, both on disk, both earlier"
           hands_to CDATA #FIXED "codebase-surveyor-dtd">
 
+<!-- The enumeration the grammar holds the verb of a change to; declared before
+     geometry.dtd is included, so it binds (LAW.GEOM.1). -->
+<!ENTITY % geom.verb.change "(36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52)">
 <!ENTITY RENOVATOR.band "36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52">
 <!ENTITY RENOVATOR.low "36">
 <!ENTITY RENOVATOR.high "52">

@@ -21,10 +21,13 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
   %cc-ask;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
-  <!ENTITY % geometry SYSTEM "../../dtd/geometry.dtd">
-  %geometry;
+  <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
+       enumeration the grammar holds a measure to, and the first declaration
+       binds (LAW.GEOM.1). -->
   <!ENTITY % codebase-surveyor SYSTEM "../../dtd/codebase-surveyor.dtd">
   %codebase-surveyor;
+  <!ENTITY % geometry SYSTEM "../../dtd/geometry.dtd">
+  %geometry;
   <!ELEMENT survey_run (args, intake, substrates, survey, figure, artifact, next_band, assumption_made*)>
   <!-- The file the run leaves behind. cc-report fixes its artifact to
        artifacts/research, which is the research family's directory; this
