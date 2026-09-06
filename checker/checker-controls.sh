@@ -8,8 +8,11 @@
 # its named rule (or, for M8, to pass); M0: the untouched file, expected to
 # pass; M9 to M16, M18 and M19: the companion scorer on whole planted answers,
 # each expected to score as its law says, two verdict lines and none among
-# them; M17: the runner's allow-list, a copy granting Write refused, M17c the
-# bare timeout refused.
+# them; M17: the runner's allow-list, a copy granting Write refused, M17b a
+# bare Bash refused, M17c the bare timeout refused. The total line at the end,
+# checker controls: N run, F failing, counts once per control, and
+# CC_PLANT_FAIL=1 runs M0 and one control forced to fail, printing 2 run, 1
+# failing at exit 1, the proof checker/counts-sweep.mjs reads.
 # validator: a broken instance must be rejected with a named error before
 # the valid instance's pass counts.
 set -u
@@ -24,11 +27,9 @@ ran=0
 # the total below is the number of controls that ran, never pass plus fail:
 # a mutation that fails to land raises fail without being a control (fourth
 # companion pass), and ko is the only writer of fail on a control line, so a
-# failing control counts once (fifth pass). CC_PLANT_FAIL=1 runs M0 and one
-# control forced to fail, prints the total and exits 1: the proof, read by
-# checker/counts-sweep.mjs, that a failure is counted exactly once. A count derived from the labels missed M17c and published
-# twenty for twenty-one (third pass); M17b fired without a line and was not
-# counted at all (fourth pass).
+# failing control counts once (fifth pass). A count derived from the labels
+# missed M17c and published twenty for twenty-one (third pass); M17b fired
+# without a line and was not counted at all (fourth pass).
 ok() { ran=$((ran+1)); echo "PASS $*"; }
 ko() { fail=$((fail+1)); ran=$((ran+1)); echo "FAIL $*"; }
 run() { ceil 60 node bin/rot-dtd-commander.mjs check "$1" < /dev/null 2>&1; }

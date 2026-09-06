@@ -81,11 +81,18 @@ export function measure(root = ROOT) {
   // the creators as the prompt and meta-prompt variants together (fifth pass:
   // frozen in the packer's template, held by nothing).
   const books = Number((/shelf: (\d+) book-derived commands/.exec(runOut('node lib/ai-slop.mjs controls')) || [])[1] || 0);
+  // The hosted packer's control count, published in docs/HOSTED-PLUGIN.md
+  // twice and read by nothing until the sixth pass found 23 against 26.
+  const hostedOut = runOut('node checker/pack-claude-ai.mjs --controls');
+  const hm = /^(\d+) run, (\d+) failing/m.exec(hostedOut);
+  if (!hm) throw new Error(`counts-sweep: pack-claude-ai.mjs --controls printed no total line: ${hostedOut.slice(-200)}`);
+  if (Number(hm[2]) !== 0) throw new Error(`counts-sweep: pack-claude-ai.mjs --controls reports ${hm[2]} failing; the count of a red suite is not read`);
+  const hostedControls = Number(hm[1]);
   const cmdNames = readdirSync(join(root, 'commands'));
   const schematics = cmdNames.filter((f) => /^create-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   const creators = schematics + cmdNames.filter((f) => /^create-meta-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   return {
-    books, schematics, creators,
+    books, schematics, creators, hostedControls,
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, mutationsRefused, declarations: Number(m[1]) };
@@ -137,6 +144,11 @@ export function places(c) {
     { file: 'CHANGELOG.md', re: /checker\/contract-audit\.mjs`: (\d+) declarations/, want: [c.declarations], label: 'the changelog contract audit' },
     { file: 'CHANGELOG.md', re: /checked (\d+); (\d+) declarations; (\d+) gate-chain commands/, want: [c.checked, c.declarations, c.gateChain], label: 'the changelog summary row' },
     { file: 'RELEASE.md', re: /(\d+) declarations; recognised/, want: [c.declarations], label: 'the release notes declarations' },
+    // The hosted packer's control count, in the doc's prose, its verify block
+    // and the changelog's Measured block (sixth companion pass).
+    { file: 'docs/HOSTED-PLUGIN.md', re: /pack-claude-ai\.mjs --controls` reports `(\d+) run, 0 failing`/, want: [c.hostedControls], label: 'the hosted doc prose of the packer controls' },
+    { file: 'docs/HOSTED-PLUGIN.md', re: /pack-claude-ai\.mjs --controls\s+# (\d+) run, 0 failing/, want: [c.hostedControls], label: 'the hosted doc verify block of the packer controls' },
+    { file: 'CHANGELOG.md', re: /checker\/pack-claude-ai\.mjs --controls`: (\d+) run, 0 failing/, want: [c.hostedControls], label: 'the changelog packer controls' },
   ];
   // The sweep's own size, published in two places: the claims row said 22
   // while the sweep printed 33 (third companion pass). Two rows are added
@@ -186,7 +198,12 @@ function controls(c, texts) {
   const gone = { ...texts, 'package.json': texts['package.json'].replace(/\d+ Claude Code commands/, 'many commands') };
   const d3 = check(c, gone);
   say(d3.length === 1 && /package description not found/.test(d3[0]), `trip: a count removed from a description is reported as not found: ${d3[0] || 'nothing'}`);
-  console.log(`counts-sweep controls: 5 run, ${fail} failing`);
+  // The three family counts in words: a stale one in the marketplace opening
+  // is reported by name (sixth companion pass).
+  const fam = { ...texts, '.claude-plugin/marketplace.json': texts['.claude-plugin/marketplace.json'].replace(/([a-z-]+) book-derived commands/, 'twelve book-derived commands') };
+  const d4 = check(c, fam);
+  say(d4.length === 1 && /three families in words says twelve, the tree measures/.test(d4[0]), `trip: a stale family count in words in the marketplace opening is reported by name: ${d4[0] || 'nothing'}`);
+  console.log(`counts-sweep controls: 6 run, ${fail} failing`);
   return fail === 0;
 }
 

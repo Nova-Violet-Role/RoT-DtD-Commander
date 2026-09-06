@@ -69,7 +69,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 37 places, from 22.
+counts sweep reported every place in step: the sweep reads 40 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document
@@ -120,6 +120,20 @@ schematics, were frozen in the packer's template and held by nothing; the
 sweep measures them from the shelf and the variants on disk, the packer
 reads them from the tree, and C16 compares them.
 
+The sixth pass read the guard the fifth had written and found it built on a
+decode the rest of the tree does not use: the packer turned its module url
+into a path by hand, percent-encoding kept, so on a checkout path carrying a
+space the entry point never matched and the packer exited 0 having built
+nothing, six gate steps green with it. It reads its path through
+fileURLToPath like the other fourteen modules, the predicate is exported and
+tested against an encoded url, and C24b copies the module into a directory
+with a space in its name and proves it runs there. `docs/HOSTED-PLUGIN.md`
+told a reader to run the packer's controls and compare against 23 while the
+instrument answered 26; the doc's two lines and the Measured block above
+carry what it prints, and the sweep reads all three. C16b plants stale
+family counts so the keys added to the comparison have a trip, and the sweep
+plants a stale one in the marketplace opening.
+
 ### The fifteenth family: the Graphic and Geometric Suite
 
 Until now every family reasoned in prose about structure. `dtd/geometry.dtd`
@@ -156,9 +170,10 @@ release; the rest are unmeasured and say so.
 - `node lib/geometry.mjs controls`: 38 run, 0 failing
 - `node lib/ceiling.mjs controls`: 7 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
 - `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
+- `node checker/pack-claude-ai.mjs --controls`: 27 run, 0 failing
 - `node checker/contract-audit.mjs`: 1619 declarations, 0 unused, 0 law gaps
 - 134 commands, 22 skills, 5 agents; checked 161; 1619 declarations; 62 gate-chain commands
-- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3, 7, 3, 6, 3 at 7.2.0
+- recognised 8.0.0 (class major) from the kept verbs 14, 11, 12, 12, 11, 13, 11, 3, 2, 6, 12, 6, 8, 6, 3, 6, 6, 6, 3, 7, 3, 6, 3, 3, 6 at 7.2.0
 
 ## 7.2.0 (2026-09-05)
 

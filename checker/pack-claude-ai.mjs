@@ -45,8 +45,15 @@ import os from 'node:os';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
+// fileURLToPath, as every other module in the tree: the hand-rolled decode of
+// pathname kept its percent-encoding, so on a checkout path carrying a space
+// the file's own location read as Program%20Files and the entry point below
+// never matched process.argv[1], a packer that exits 0 having built nothing
+// (sixth companion pass).
+const ME = fileURLToPath(import.meta.url);
+const ROOT = path.resolve(path.dirname(ME), '..');
 const STATE = path.join(ROOT, 'checker', 'hosted-plugin.json');
 
 // ===== the matrix =====
@@ -1026,10 +1033,12 @@ function controls() {
 
   run('C16b a description carrying the numbers of three releases ago is refused against the tree by name', () => {
     const tree = treeDescriptions().counts;
-    const stale = { ...tree, commands: '131', declarations: '1440', checkerControls: 'eighteen', dtd: '130' };
+    // The three family counts are planted stale too, so the keys added to
+    // descDrift have a trip that fires (sixth companion pass).
+    const stale = { ...tree, commands: '131', declarations: '1440', checkerControls: 'eighteen', dtd: '130', books: 'eighteen', schematics: 'nine' };
     const drift = descDrift(pluginDesc(stale), marketDesc(stale), tree);
-    const named = ['commands', 'declarations', 'checkerControls', 'dtd', 'market commands'].filter((k) => drift.some((d) => d.startsWith(k + ':')));
-    return { ok: named.length === 5 && drift.length === 5, detail: drift.length ? drift.join(' | ') : 'silent' };
+    const named = ['commands', 'declarations', 'checkerControls', 'dtd', 'books', 'schematics', 'market commands'].filter((k) => drift.some((d) => d.startsWith(k + ':')));
+    return { ok: named.length === 7 && drift.length === 7, detail: drift.length ? drift.join(' | ') : 'silent' };
   });
 
   run('C16c a tree manifest that loses a counts-sweep pattern refuses the pack by name', () => {
@@ -1041,17 +1050,31 @@ function controls() {
     }
   });
 
+  // The packer writes to ROOT/dist, never to the cwd, so the arm that would
+  // catch a pack on import is the listing of ROOT/dist before and after and
+  // the absence of the "built into" line (sixth companion pass).
+  const distListing = () => (fs.existsSync(path.join(ROOT, 'dist')) ? fs.readdirSync(path.join(ROOT, 'dist')).sort().join(',') : '(absent)');
   run('C24 importing this module packs nothing and exits nothing: the entry point runs only as a script', () => {
-    const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'rot-pack-import-'));
-    const me = path.resolve(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
+    const before = distListing();
     const script = 'import(' + JSON.stringify(new URL(import.meta.url).href) + ').then(function (m) { console.log("imported " + typeof m.treeCounts + " " + typeof m.descDrift); })';
     let out = ''; let code = 0;
-    try { out = execFileSync(process.execPath, ['--input-type=module', '-e', script], { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 60000 }); } catch (e) { code = e.status; out = String(e.stdout || '') + String(e.stderr || ''); }
-    const wroteHere = fs.existsSync(path.join(cwd, 'dist'));
-    const wroteRoot = fs.existsSync(path.join(ROOT, 'dist')) ? 'dist/ under the repository exists' : '';
-    fs.rmSync(cwd, { recursive: true, force: true });
-    const ok = code === 0 && /^imported function function/m.test(out) && !wroteHere && !/built into/.test(out);
-    return { ok, detail: ok ? 'imported, two exports typed function, no archive written, no exit (' + me.split(/[\\/]/).pop() + ')' : 'exit ' + code + ', dist written here ' + wroteHere + ' ' + wroteRoot + ': ' + out.trim().slice(0, 160) };
+    try { out = execFileSync(process.execPath, ['--input-type=module', '-e', script], { cwd: os.tmpdir(), encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 60000 }); } catch (e) { code = e.status; out = String(e.stdout || '') + String(e.stderr || ''); }
+    const after = distListing();
+    const ok = code === 0 && /^imported function function/m.test(out) && before === after && !/built into/.test(out);
+    return { ok, detail: ok ? 'imported, two exports typed function, ROOT/dist unchanged (' + before + '), no exit' : 'exit ' + code + ', dist before ' + before + ' after ' + after + ': ' + out.trim().slice(0, 160) };
+  });
+
+  run('C24b the entry point fires from a checkout path carrying a space: a copy in such a directory prints its usage, and the predicate reads the encoded url', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'rot pack space '));
+    const copy = path.join(dir, 'pack-claude-ai.mjs');
+    fs.copyFileSync(ME, copy);
+    let out = ''; let code = 0;
+    try { out = execFileSync(process.execPath, [copy, '--help'], { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 60000 }); } catch (e) { code = e.status; out = String(e.stdout || '') + String(e.stderr || ''); }
+    fs.rmSync(dir, { recursive: true, force: true });
+    const spaced = 'file:///C:/Program%20Files/x/pack.mjs';
+    const predicate = isMainFor(process.platform === 'win32' ? 'C:\\Program Files\\x\\pack.mjs' : '/C:/Program Files/x/pack.mjs', spaced) && !isMainFor('C:\\Program Files\\x\\other.mjs', spaced) && !isMainFor(undefined, spaced);
+    const ok = code === 0 && /usage|Usage|--controls/.test(out) && predicate && dir.includes(' ');
+    return { ok, detail: ok ? 'usage printed from ' + path.basename(dir) + ', predicate true for the decoded path and false for another file' : 'exit ' + code + ', predicate ' + predicate + ': ' + out.trim().slice(0, 160) };
   });
 
   run('C17 the clean archive has no command shadowed by a skill', () => {
@@ -1247,5 +1270,7 @@ function main(argv) {
 // the fourth pass exported five functions and the fifth pass, importing one,
 // packed a 5.4 MB archive into dist/ and had its own process exited. Control
 // C24 imports the module in a child and proves nothing is written.
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
-if (isMain) process.exit(main(process.argv.slice(2)));
+export function isMainFor(argv1, url) {
+  return Boolean(argv1) && path.resolve(argv1) === path.resolve(fileURLToPath(url));
+}
+if (isMainFor(process.argv[1], import.meta.url)) process.exit(main(process.argv.slice(2)));

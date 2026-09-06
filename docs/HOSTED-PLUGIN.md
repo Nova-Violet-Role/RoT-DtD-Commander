@@ -252,7 +252,7 @@ is the message to the next session — extend the table, re-prove an upload, mov
 the baseline forward.
 
 Every rule has a control that trips it on purpose. `node
-checker/pack-claude-ai.mjs --controls` reports `23 run, 0 failing`. The one we
+checker/pack-claude-ai.mjs --controls` reports `27 run, 0 failing`. The one we
 are proudest of is the boring one:
 
 ```
@@ -267,7 +267,7 @@ platform.
 ## Verify it yourself
 
 ```sh
-node checker/pack-claude-ai.mjs --controls     # 23 run, 0 failing
+node checker/pack-claude-ai.mjs --controls     # 27 run, 0 failing
 node checker/pack-claude-ai.mjs --all          # every candidate, every rule
 node checker/pack-claude-ai.mjs --strategies   # the matrix and the proven combination
 node checker/badges.mjs --controls             # 6 run, 0 failing
