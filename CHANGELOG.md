@@ -202,7 +202,7 @@ hundreds part. `looseCount` in the controls sweep counts a claim by its
 command rather than by its tail, so a count spelled as `prints 12` or `12
 controls` is a refusal by number, tripped on purpose. `node
 lib/typography.mjs controls`: 32 run, 0 failing; `node
-checker/controls-sweep.mjs --controls`: 10 run, 0 failing.
+checker/controls-sweep.mjs --controls`: 12 run, 0 failing.
 
 ### The companion's fifth pass: a census that could not differ, and a carve-out that reached everything but the command
 
