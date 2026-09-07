@@ -802,11 +802,28 @@ have been invisible.
 
 The hook refuses a Bash call whose `run_in_background` field is set
 whatever the string says, with a control and the header naming the
-field; M36 pipes five payloads through the binary and reads exit 2 and
-the reason for each. The law map names the hook and M36. The reading arm
+field; M36 pipes six payloads through the binary, five blocked with
+their reasons and one passed. The law map names the hook and M36. The reading arm
 excludes only the runner's own stream, since this session's hooks fire
 around the run and never inside it, and M25 plants a fourth file under
 the index cache. The `--table` arm reads with stdin closed.
+
+### The companion's twenty-eighth pass: an empty command is not no command
+
+The twenty-eighth pass returned fail with six findings, two high, both
+from the twenty-sixth fix: `-c diff.external=` set the external diff to
+an empty command rather than to none, so every patch-producing `git
+diff` died through the wrapper, and no control ran a patch-producing
+verb, so the dead diff was an alarm nothing could trip. The lower four:
+`-p` refused as a pager flag where the diff family reads it as patch,
+and three counts off by one on the security page, in the law map and in
+the pass before.
+
+The diff family runs with `--no-ext-diff --no-textconv` as options of its
+own and the config knob is gone; the refusal keeps `-O`, the pager
+opener, `--ext-diff` and `--textconv`. M24 runs `git diff` and `git show
+-p` through the wrapper and reads a patch from each. The three counts
+say four plants and six payloads.
 
 ## 8.0.0 (2026-09-06)
 

@@ -163,11 +163,18 @@ case "$tool" in
     for a in "$@"; do
       case "$a" in
         --output|--output=*|--set*|--unset*|--add|--replace-all|--edit|-e) refuse "git $verb $a writes" ;;
-        -O*|--open-files-in-pager*|--ext-diff|--textconv|--no-textconv|--pager*|-p) refuse "git $verb $a opens a pager, an editor or an external diff, which runs a command (LAW.COMPANION.1)" ;;
+        -O*|--open-files-in-pager*|--ext-diff|--textconv) refuse "git $verb $a opens a pager or an external diff or filter, which runs a command (LAW.COMPANION.1)" ;;
       esac
     done
-    # --no-pager and a cat pager: a reading verb never spawns a pager command
-    exec node "$here/lib/ceiling.mjs" 300 git --no-pager -c core.pager=cat -c diff.external= -C "$here" "$verb" "$@" < /dev/null
+    # --no-pager and a cat pager: a reading verb never spawns a pager command.
+    # The diff family takes --no-ext-diff and --no-textconv as options of its
+    # own: `-c diff.external=` set the external diff to an empty command and
+    # every patch-producing diff died (twenty-eighth companion pass, M24 runs
+    # git diff and git show for a patch now).
+    case "$verb" in
+      diff|show|log|diff-tree) exec node "$here/lib/ceiling.mjs" 300 git --no-pager -c core.pager=cat -C "$here" "$verb" --no-ext-diff --no-textconv "$@" < /dev/null ;;
+      *) exec node "$here/lib/ceiling.mjs" 300 git --no-pager -c core.pager=cat -C "$here" "$verb" "$@" < /dev/null ;;
+    esac
     ;;
   *) refuse "only node and git are run, not $tool" ;;
 esac
