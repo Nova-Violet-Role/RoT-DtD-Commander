@@ -9,51 +9,51 @@
 <text x="26" y="58" font-size="13.5" fill="#5b6472">Gather evidence and save a dated report; every claim marked measured, reasoned or guessed, where</text>
 <text x="26" y="78" font-size="13.5" fill="#5b6472">measured means something was actually run or read.</text>
 <line x1="26" y1="98" x2="794" y2="98" stroke="#e2e5ec" stroke-width="1"/>
-<rect x="26" y="114" width="573" height="24" rx="5" fill="#f2f4f8"/>
-<text x="34" y="131" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/competitive-dtd [product/feature or leave blank for current context]</text>
-<text x="794" y="131" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
-<text x="34" y="158" font-size="13" fill="#5b6472">Who else does this and how: three competitors minimum with sources, a matrix, the gaps,</text>
-<text x="34" y="177" font-size="13" fill="#5b6472">the differentiation options</text>
+<rect x="26" y="114" width="700" height="24" rx="5" fill="#f2f4f8"/>
+<text x="34" y="131" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/deep-dive-dtd [topic or leave blank for current context; add --no-gate for autonomous mode]</text>
+<text x="794" y="131" font-size="12" fill="#5b6472" text-anchor="end">41 laws</text>
+<text x="34" y="158" font-size="13" fill="#5b6472">Comprehensive investigation of a topic; a declared intake, a declared report grammar</text>
+<text x="34" y="177" font-size="13" fill="#5b6472">with local-first sources, and a saved artifact</text>
 <rect x="26" y="196" width="700" height="24" rx="5" fill="#f2f4f8"/>
-<text x="34" y="213" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/deep-dive-dtd [topic or leave blank for current context; add --no-gate for autonomous mode]</text>
-<text x="794" y="213" font-size="12" fill="#5b6472" text-anchor="end">33 laws</text>
-<text x="34" y="240" font-size="13" fill="#5b6472">Comprehensive investigation of a topic; a declared intake, a declared report grammar</text>
-<text x="34" y="259" font-size="13" fill="#5b6472">with local-first sources, and a saved artifact</text>
-<rect x="26" y="278" width="700" height="24" rx="5" fill="#f2f4f8"/>
-<text x="34" y="295" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/deep-scratch-dtd [what to build or change, or leave blank for the current discussion; --no-gate skips the intake and never the merge gate]</text>
-<text x="794" y="295" font-size="12" fill="#5b6472" text-anchor="end">35 laws</text>
-<text x="34" y="322" font-size="13" fill="#5b6472">DTD-native: research a change, build it in a git worktree under .claude/worktrees,</text>
-<text x="34" y="341" font-size="13" fill="#5b6472">review the diff hunk by hunk, amplify the research with the build as evidence, then a</text>
-<text x="34" y="360" font-size="13" fill="#5b6472">merge gate with the pros and cons per file: merge all, merge the marked files, keep or</text>
-<text x="34" y="379" font-size="13" fill="#5b6472">discard, and the project gate runs on the merged tree</text>
+<text x="34" y="213" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/deep-scratch-dtd [what to build or change, or leave blank for the current discussion; --no-gate skips the intake and never the merge gate]</text>
+<text x="794" y="213" font-size="12" fill="#5b6472" text-anchor="end">43 laws</text>
+<text x="34" y="240" font-size="13" fill="#5b6472">DTD-native: research a change, build it in a git worktree under .claude/worktrees,</text>
+<text x="34" y="259" font-size="13" fill="#5b6472">review the diff hunk by hunk, amplify the research with the build as evidence, then a</text>
+<text x="34" y="278" font-size="13" fill="#5b6472">merge gate with the pros and cons per file: merge all, merge the marked files, keep or</text>
+<text x="34" y="297" font-size="13" fill="#5b6472">discard, and the project gate runs on the merged tree</text>
+<rect x="26" y="316" width="573" height="24" rx="5" fill="#f2f4f8"/>
+<text x="34" y="333" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/competitive-dtd [product/feature or leave blank for current context]</text>
+<text x="794" y="333" font-size="12" fill="#5b6472" text-anchor="end">38 laws</text>
+<text x="34" y="360" font-size="13" fill="#5b6472">Who else does this and how: three competitors minimum with sources, a matrix, the gaps,</text>
+<text x="34" y="379" font-size="13" fill="#5b6472">the differentiation options</text>
 <rect x="26" y="398" width="549" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="415" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/feasibility-dtd [idea/project or leave blank for current context]</text>
-<text x="794" y="415" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
+<text x="794" y="415" font-size="12" fill="#5b6472" text-anchor="end">38 laws</text>
 <text x="34" y="442" font-size="13" fill="#5b6472">Can we build it with what we have: technical, resource and external verdicts, blockers</text>
 <text x="34" y="461" font-size="13" fill="#5b6472">with mitigations, one overall go, conditional go or no-go</text>
 <rect x="26" y="480" width="549" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="497" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/history-dtd [problem/approach or leave blank for current context]</text>
-<text x="794" y="497" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
+<text x="794" y="497" font-size="12" fill="#5b6472" text-anchor="end">38 laws</text>
 <text x="34" y="524" font-size="13" fill="#5b6472">What was tried before: dated attempts, why they worked or failed, what is different now,</text>
 <text x="34" y="543" font-size="13" fill="#5b6472">the lessons to adopt or avoid</text>
 <rect x="26" y="562" width="533" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="579" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/landscape-dtd [domain/space or leave blank for current context]</text>
-<text x="794" y="579" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
+<text x="794" y="579" font-size="12" fill="#5b6472" text-anchor="end">38 laws</text>
 <text x="34" y="606" font-size="13" fill="#5b6472">Map a domain: scope, categories, players, trends, white space, and what it implies for</text>
 <text x="34" y="625" font-size="13" fill="#5b6472">us</text>
 <rect x="26" y="644" width="549" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="661" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/open-source-dtd [problem/need or leave blank for current context]</text>
-<text x="794" y="661" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
+<text x="794" y="661" font-size="12" fill="#5b6472" text-anchor="end">38 laws</text>
 <text x="34" y="688" font-size="13" fill="#5b6472">Find the libraries that solve this: licence first, maintenance signals, a comparison,</text>
 <text x="34" y="707" font-size="13" fill="#5b6472">and a build-versus-use call</text>
 <rect x="26" y="726" width="541" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="743" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/options-dtd [what to compare or leave blank for current context]</text>
-<text x="794" y="743" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
+<text x="794" y="743" font-size="12" fill="#5b6472" text-anchor="end">38 laws</text>
 <text x="34" y="770" font-size="13" fill="#5b6472">Compare options against weighted criteria declared first, with a recommendation and the</text>
 <text x="34" y="789" font-size="13" fill="#5b6472">condition that would flip it</text>
 <rect x="26" y="808" width="573" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="825" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/technical-dtd [what to implement or leave blank for current context]</text>
-<text x="794" y="825" font-size="12" fill="#5b6472" text-anchor="end">30 laws</text>
+<text x="794" y="825" font-size="12" fill="#5b6472" text-anchor="end">38 laws</text>
 <text x="34" y="852" font-size="13" fill="#5b6472">How to implement it: three approaches with complexity and best-when, a comparison, the</text>
 <text x="34" y="871" font-size="13" fill="#5b6472">chosen one with its first step</text>
 </svg>

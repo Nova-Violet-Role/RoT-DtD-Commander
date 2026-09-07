@@ -4,13 +4,13 @@
 
 # amplify-codebase: the state between runs
 
-- run: 8
-- verb: 14
+- run: 9
+- verb: 15
 - offset: 0
 - page: 4
-- from: 7.2.0
-- release: major 8.0.0
-- walked: schematic, form, voice, args, record, report, task, workflow, adiutor, license, rot, generic
+- from: 8.0.0
+- release: major 9.0.0
+- walked: contract, schematic, args, report, guard
 
 | id | class | layer | verdict | verb | refused_at | why | run |
 |---|---|---|---|---|---|---|---|
@@ -87,3 +87,15 @@
 | b8c0de16 | gap | generic | done | 3 |  | the packer decoded its module url by hand and on a checkout path with a space its entry point never matched, a packer exiting 0 having built nothing, found by the sixth companion pass; it reads its path through fileURLToPath like the other modules, the predicate is exported and tested, and C24b runs a copy from a directory with a space | 8 |
 | b8c0de17 | gap | report | done | 6 |  | docs/HOSTED-PLUGIN.md told a reader to run the packer controls and compare against 23 while the instrument answered 26; the doc, the changelog and the sweep carry what it prints, C16b plants stale family counts and the sweep plants a stale one in the marketplace opening | 8 |
 | b8c0de18 | gap | generic | done | 3 |  | the macOS leg went red on d1866a9 while ubuntu and windows went green: os.tmpdir() there is a symlink and the entry-point predicate compared the real path against the typed one; it compares real paths, C24b runs the copy through a symlink on every leg, the sweep names the failing control, and a junction on this machine measured the silence before the fix and the usage after | 8 |
+| c9c0de01 | gap | contract | done | 15 |  | several commands in one prompt were several prompts sharing a screen; cc-chain.dtd makes the stack one declared root with one intake and one gate, each artifact the next user-args, every command declaring its successor or none: the Suite becomes a different kind of thing and says so in its major | 9 |
+| c9c0de02 | gap | schematic | done | 13 |  | the ladder was fifty-two rungs of one application; four domain bands above 52, trigonometry, projection, chromatics, restoration, read through three lenses that partition the fifty-six, and the family gains a fourth member that produces | 9 |
+| c9c0de03 | gap | schematic | done | 13 |  | the figure knew four shapes; twenty in seven groups after drawing.mod, three of them owned by one profession each, a layer per band on one plate, a transform applied by one arithmetic in both renderers | 9 |
+| c9c0de04 | gap | contract | done | 11 |  | glyph and plate had no shared contract; typography.dtd declares the guarantee, the cell, the faces, the seven glyphs and the numeral, and its class modules remove a declaration when switched off | 9 |
+| c9c0de05 | gap | args | done | 11 |  | the five study documents held the codebase together and nothing ran them; cc-sigil.dtd names the forms, dtd/sigil spells them, lib/sigil.mjs holds both directions and runs the forms on the leg it is on | 9 |
+| c9c0de06 | gap | report | done | 6 |  | the creators had never been held to the corpus per folder; checker/creators-audit.mjs gives every folder a schematic with its concept cells or a refusal with its reason, measured against the corpus when present | 9 |
+| c9c0de07 | gap | report | done | 4 |  | the README family block said how many commands and not how they hand on; a sentence generated from the resolved hands_to attributes, in band order, beside each cycling family | 9 |
+| c9c0de08 | gap | schematic | done | 9 |  | the four EXPAND items of the 8.0.0 file were measured undelivered; the seed carried out of the intake, three bands on one plate, four thumbnails in the gate, figure in the white list | 9 |
+| c9c0de09 | gap | guard | done | 9 |  | no instrument ran a family end to end through a model on every leg; checker/scala.mjs stacks each family in band order and scores the headings its members own, the scala job on tags and by hand | 9 |
+| c9c0de10 | gap | guard | done | 12 |  | the plan placed its bound labels on rows assumed free and never ran the LAW.FIG.3 check; labels now land on free space measured from the cells beneath, and the plan is held to the same agreement as the survey | 9 |
+| c9c0de11 | gap | contract | done | 12 |  | five typography module switches switched nothing, the XDITA excluded-domains defect in our own file; each wraps the element of its class and a switched-off class is invalid rather than tolerated | 9 |
+| c9c0de12 | gap | guard | done | 6 |  | the cross-OS gate measured shell forms by refusal only; node lib/sigil.mjs run executes forty-one forms per leg and records pass, fail or unsupported with the bash it needs | 9 |

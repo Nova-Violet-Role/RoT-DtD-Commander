@@ -7,6 +7,107 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 9.0.0 (2026-09-07)
+
+### Interoperable-Commander: every command runnable alone and interoperable in a chain
+
+Several command tokens in one prompt were several prompts that happened to
+share a screen: each ran its own intake, each opened its own gate, and what
+one wrote reached the next only if the operator pasted it. `dtd/cc-chain.dtd`
+makes the stack a declaration: one root, one intake, one gate, each band's
+artifact handed on as the next band's user-args, autonomy only by the
+`--no-gate` token, every command declaring its successor or none. The
+Graphic and Geometric Suite is completed and generalised: four domain bands
+above rung 52, twenty figure shapes, a typography contract the plate and the
+widget share, and a fourth member that produces the graphic the three agreed
+on. The five study documents the argument convention came from are in the
+tree and measured by a command of their own. Every count below was produced
+by the instrument named beside it on the release day.
+
+- **`dtd/cc-chain.dtd`**, LAW.CHAIN.1 to 8, flat after `ditaval.dtd`; `lib/chain.mjs`
+  reads the stacked lines both ways and every `hands_to` in the tree resolves
+  (7 declared, 0 dangling); `/chain-dtd` runs a chain as one root.
+- **The ladder grows to 108.** `dtd/geometry.dtd` keeps rungs 1 to 52 unmoved and
+  adds trigonometry 53 to 66, projection 67 to 80, chromatics 81 to 94,
+  restoration 95 to 108, each a module of the driver; three lenses partition the
+  fifty-six and every lens reaches every domain (LAW.GEOM.9 to 11).
+- **The fourth member.** `/codebase-generator-dtd`, band 53 to 108: with a
+  survey, a plan and a renovation on disk it produces one plate of three
+  layers to cells, svg and png through `resvg`, every byte counted after the
+  write; with nothing on disk it launches the three as one chain. The
+  renovator hands to it and it hands back to a fresh survey.
+- **Twenty shapes.** `dtd/cc-figure.dtd` after `office/drawing.mod`: circle,
+  ellipse, polyline, polygon, path, arc, text, fill, stroke, gradient,
+  transform, measure, extrude, rotate3d, contour and layer beside the four of
+  8.0.0, seven glyphs, colour as a token and never a hex value, LAW.FIG.6 to 8:
+  the seed, the overlay, the thumbnails. The four EXPAND items of the 8.0.0
+  file, measured undelivered, are delivered.
+- **`dtd/typography.dtd`**, LAW.TYPO.1 to 8: the guarantee, the cell shared with
+  the figure, the faces, the numeral derived from its number; each class
+  module wraps an element and a switched-off class is invalid against the
+  subset. `/typography-dtd` renders the typeset.
+- **The sigil.** `dtd/cc-sigil.dtd`, `lib/sigil.mjs`, the five documents under
+  `dtd/sigil`, `/sigil-dtd` and `/verbs-dtd`: the forms named in the subset and
+  spelled in the documents, because three characters of the sigil grammar are
+  markup inside an entity value; 125 forms named, 125 spelled by the ranking,
+  both directions; the shell forms run on the leg they are on.
+- **The creators against the corpus.** `checker/creators-audit.mjs`: 27 rows,
+  24 folders on the xml schematic with the concept cells that carry their
+  mechanic, 3 refused for having no grammar, measured against the corpus.
+- **One scala per family.** `checker/scala.mjs` stacks each family in band order
+  and scores the headings its members own; the `scala` job runs every family
+  through a real model on every leg, on a tag or by hand, the credential one
+  masked secret.
+- **The README says how each family hands on**, generated from the resolved
+  `hands_to` attributes, in band order.
+- **The credential, sealed from the live file at every release.**
+  `checker/seal-secret.mjs` reads the CLI's current credential file, seals it
+  as the libsodium box GitHub requires and PUTs it as one repository secret;
+  the value is never printed. A snapshot sealed once goes stale when the CLI
+  refreshes, so the seal is a release step, not a copy.
+- The corpus study behind the design: `artifacts/research/2026-09-07-9-0-0-corpus-study.md`,
+  2219 files, 768 grammar files, thirteen sections.
+
+Measured on the release day:
+
+- `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
+- `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
+- `node checker/contract-audit.mjs`: 1927 declarations, 0 unused, 0 law gaps
+- `node checker/gate-sync.mjs`: 70 commands in the gate chain, 0 missing from gate.yml
+- `node lib/figure.mjs controls`: 44 run, 0 failing
+- `node lib/geometry.mjs controls`: 50 run, 0 failing
+- `node lib/typography.mjs controls`: 26 run, 0 failing
+- `node lib/chain.mjs controls`: 15 run, 0 failing
+- `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported
+- `node checker/scala.mjs --controls`: 8 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
+- 139 commands, 22 skills, 5 agents; checked 166; 1927 declarations; 70 gate-chain commands
+
+### The fifth gate choice: save your cache first
+
+Every gate had four choices, and three of them re-entered a loop that ran
+inside one context that only grew. `dtd/cc-cache.dtd` adds the fifth,
+`GATE.save`: the run writes what it holds into `artifacts/cache/<command>.nt`,
+NestedText through `lib/cache.mjs`, eight fields in declared order
+(`command|saved|reason|task|slots|answers|gate|next`), reads the file back
+whole, renders the `cache` element and stops; the next call of the same
+command resumes from the file, or names it stale after `CACHE.stale` days.
+The form is fixed because it is read in one pass and carries no code: no
+value is ever typed, and the control that measures the weight found the nt
+lighter than the markdown of the same fields, 579 against 639 bytes on the
+sample and 2281 against 2503 on a thirty-answer state. Eight laws,
+`LAW.CACHE.1` to `8`; two of them are about the gate and not the file: a
+command token that arrives mid-run saves first and opens its own intake
+whole (`LAW.CACHE.4`), and an intake that closes on `add`, `more` or
+`impactful` without the gate presented again is a failed answer
+(`LAW.CACHE.5`). The Adiutor enforces both at Stop through
+`lib/render-check.mjs` as findings of kind `gate` and `cache`, guard C31,
+`LAW.ADIUTOR.13`. The subset is included after `cc-ask` by every gated
+source, 119 of them, and `cc-ask` itself gains the choice in its gate
+enumeration, `GATE.save`, `intake (.., gate, cache?)` and an `ASK.exhausted`
+that offers start and save. `.nt` enters the white list. `node lib/cache.mjs
+controls`: 16 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
+failing; `npm run controls:cache` in the gate chain and the workflow.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate

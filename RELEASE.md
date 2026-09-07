@@ -18,6 +18,24 @@
 
 ---
 
+## v9.0.0 — Interoperable-Commander
+
+Every command runnable alone and interoperable in a chain. Several command
+tokens in one prompt are one declared root with one intake and one gate,
+each band's artifact the next band's user-args (`dtd/cc-chain.dtd`).
+
+- **The Graphic and Geometric Suite completed** &mdash; a ladder of 108 rungs,
+  four domain bands above 52 read through three lenses, twenty figure shapes,
+  `dtd/typography.dtd` shared by glyph and plate, and `/codebase-generator-dtd`,
+  the fourth member, producing one plate of three layers or launching the three.
+- **The sigil** &mdash; `dtd/cc-sigil.dtd` and the five study documents under
+  `dtd/sigil`, measured in both directions and run on every leg.
+- **The creators audited per corpus folder**, one scala per family through a
+  real model on every leg, and the README saying how each family hands on.
+- 139 commands, 22 skills,
+  5 agents; 1927 declarations; recognised 9.0.0 (class major) from a top verb
+  of 15 kept in run 9.
+
 ## v8.0.0 — Cross-OS-Commander
 
 The gate runs on `ubuntu-latest`, `macos-latest` and `windows-latest`, or it

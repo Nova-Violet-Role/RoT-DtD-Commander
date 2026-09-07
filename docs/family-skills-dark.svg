@@ -19,7 +19,7 @@
 <text x="34" y="232" font-size="13" fill="#9aa3b2">the way the previous one did.</text>
 <rect x="26" y="251" width="243" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="268" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">ask-gate-dtd  (loads itself)</text>
-<text x="794" y="268" font-size="12" fill="#9aa3b2" text-anchor="end">27 laws</text>
+<text x="794" y="268" font-size="12" fill="#9aa3b2" text-anchor="end">35 laws</text>
 <text x="34" y="295" font-size="13" fill="#9aa3b2">The intake and decision gate as a reusable state machine. Load when a task should start</text>
 <text x="34" y="314" font-size="13" fill="#9aa3b2">with structured questions and a start, more, add gate, when designing a command that</text>
 <text x="34" y="333" font-size="13" fill="#9aa3b2">uses AskUserQuestion, or when a gate must be skipped safely in an autonomous run with</text>
@@ -65,7 +65,7 @@
 <text x="34" y="1028" font-size="13" fill="#9aa3b2">grammar, a trust boundary and laws the checker enforces.</text>
 <rect x="26" y="1047" width="284" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="1064" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">create-prompt-dtd  (loads itself)</text>
-<text x="794" y="1064" font-size="12" fill="#9aa3b2" text-anchor="end">52 laws</text>
+<text x="794" y="1064" font-size="12" fill="#9aa3b2" text-anchor="end">60 laws</text>
 <text x="34" y="1091" font-size="13" fill="#9aa3b2">DTD-native: route a prompt to its schematic creator: ask the schematic, the</text>
 <text x="34" y="1110" font-size="13" fill="#9aa3b2">semantic-schema families and the forms, then hand the purpose and every choice as known</text>
 <text x="34" y="1129" font-size="13" fill="#9aa3b2">slots to create-prompt-&lt;schematic&gt;-dtd, which writes the file; this skill writes no</text>
@@ -117,7 +117,7 @@
 <text x="34" y="1925" font-size="13" fill="#9aa3b2">changing a grammar, or when asked to prove a DOCTYPE is more than decoration.</text>
 <rect x="26" y="1944" width="251" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="1961" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">dtd-forge-dtd  (loads itself)</text>
-<text x="794" y="1961" font-size="12" fill="#9aa3b2" text-anchor="end">27 laws</text>
+<text x="794" y="1961" font-size="12" fill="#9aa3b2" text-anchor="end">35 laws</text>
 <text x="34" y="1988" font-size="13" fill="#9aa3b2">Create a new *-dtd command, or convert an existing command into one, with a declared</text>
 <text x="34" y="2007" font-size="13" fill="#9aa3b2">DOCTYPE, a trust boundary, a grammar map and laws, then prove it with the checker. Use</text>
 <text x="34" y="2026" font-size="13" fill="#9aa3b2">when asked to write a DTD-amplified command, to add a Phantom Books style command, or to</text>
