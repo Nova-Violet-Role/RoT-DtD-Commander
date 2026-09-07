@@ -1389,7 +1389,6 @@ plate [path.svg], dark [path-dark.svg]; mark measured
 ### 🖌️ Assumptions Made
 
 (autonomous run only) one line per assumption made
-
 </output_format>
 
 <success_criteria>

@@ -629,7 +629,6 @@ links [n] autonomy [gated|no-gate] gate [one|none] bands [the string] declared [
 ### ⛓️ Assumptions Made
 
 (autonomous run only) one line per assumption made
-
 </output_format>
 
 <success_criteria>

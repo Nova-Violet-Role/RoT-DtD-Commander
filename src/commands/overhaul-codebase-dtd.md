@@ -151,7 +151,6 @@ class [major|mid|minor|alpha|beta|pre] from [x.y.z] to [x.y.z] taken no
 ### 🦋 Assumptions Made
 
 (autonomous run only) one line per assumption made
-
 </output_format>
 
 <success_criteria>

@@ -631,7 +631,6 @@ scope [form|tier|topic|all], docs 5
 ### 💲 Assumptions Made
 
 (autonomous run only) one line per assumption made
-
 </output_format>
 
 <success_criteria>

@@ -502,7 +502,6 @@ known [slots]; gaps [slots]; round 1 of 3 [headers and answers]; gate [start]
 ### 🔬 Assumptions Made
 
 (autonomous run only) one line per assumption made
-
 </output_format>
 
 <success_criteria>

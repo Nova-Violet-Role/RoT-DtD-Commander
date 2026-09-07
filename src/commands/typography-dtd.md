@@ -92,7 +92,6 @@ known [slots]; gaps [slots]; round 1 of 3 [what to typeset, classes, answers]; g
 ### 🔤 Assumptions Made
 
 (autonomous run only) one line per assumption made
-
 </output_format>
 
 <success_criteria>

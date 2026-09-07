@@ -1298,7 +1298,6 @@ plate [path.svg], dark [path-dark.svg]; mark guessed here, measured on disk
 ### 📏 Assumptions Made
 
 (autonomous run only) one line per assumption made
-
 </output_format>
 
 <success_criteria>

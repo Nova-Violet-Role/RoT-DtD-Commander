@@ -1299,7 +1299,6 @@ plate [path.svg] with the changed shapes marked
 ### 🔨 Assumptions Made
 
 (autonomous run only) one line per assumption made
-
 </output_format>
 
 <success_criteria>
