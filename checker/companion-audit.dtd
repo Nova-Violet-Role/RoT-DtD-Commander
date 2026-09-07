@@ -55,4 +55,7 @@
      tag, M16; exactly one verdict line, M18 with two and M19 with none; a
      fail needs one high finding, counted in the opening tag only, M9 to
      M11, M14 and M15; the scope line, M12 and M13). 5: the runner's exit
-     124 branch. -->
+     124 branch. 7: the stamp, written by the runner and required by the
+     scorer (M20 another run's stamp, M22 a stamped record scored with no
+     stamp). 8: the four headings in declared order (M12 for a pass that
+     carries them, M21 for the order). -->

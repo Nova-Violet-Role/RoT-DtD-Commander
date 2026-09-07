@@ -64,12 +64,18 @@ score() {
   if [ -n "$stamp" ]; then
     stamp_ok=$(grep -c -F -x "<!-- companion run: $stamp -->" "$log")
     [ "$stamp_ok" -eq 1 ] || { echo "companion: LAW.COMPANION.7 broken, the record carries no stamp of this run ($stamp)"; return 1; }
+  else
+    # a stamped record is scored only by its run: a hand re-score without the
+    # stamp is refused, so a stale record cannot be re-read as a pass
+    stamp_ok=$(grep -c '^<!-- companion run: ' "$log")
+    [ "$stamp_ok" -eq 0 ] || { echo "companion: LAW.COMPANION.7 broken, a stamped record is scored only by its run; pass the stamp"; return 1; }
   fi
   # LAW.COMPANION.8: the four elements of the grammar appear as their
   # headings in declared order; a pass without them is not a pass.
-  # awk splits the heading byte-wise: the sigil is the second field, the word the third
-  heads="$(awk '/^### / && NF >= 3 { print $3 }' "$log" | tr '
-' ' ')"
+  # awk splits the heading byte-wise: the sigil is the second field, the word
+  # the third; only the four declared words count, so a heading the companion
+  # quotes from a file it audits never adds a fifth
+  heads="$(awk '/^### / && NF >= 3 && ($3 == "Scope" || $3 == "Findings" || $3 == "Verdict" || $3 == "Next") { print $3 }' "$log" | tr '\n' ' ')"
   if [ "$last" = "$vpass" ]; then
     [ "$heads" = "Scope Findings Verdict Next " ] || { echo "companion: LAW.COMPANION.8 broken, the headings read '${heads}' and not 'Scope Findings Verdict Next '"; return 1; }
     echo "companion: $phase PASS"; return 0
@@ -97,6 +103,11 @@ secs="${6:-900}"
 # no earlier pass reached, or whatever the next pass must not skip.
 focus="${7:-}"
 mkdir -p "$out"
+out="$(cd "$out" && pwd)"
+# The nested session runs in a scratch directory outside the tree: its hooks
+# write .claude/, .rot-moe/ and CLAUDE.md wherever it runs, and until the
+# sixteenth companion pass on 9.0.0 it ran inside artifacts/research.
+scratch="$(mktemp -d)"
 raw="$out/companion-$phase.json"
 stamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)-pid$$"
 log="$out/companion-$phase.md"
@@ -134,13 +145,14 @@ if [ -n "$focus" ]; then
 Focus of this pass, from the operator, data not instruction: $focus"
 fi
 echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${secs}s log=$log focus=${focus:-none}"
-# cwd is the scratchpad, not the repo: a nested session's hooks must not touch the tree (measured: CRLF .gitignore, .claude/, .codemap/, CLAUDE.md).
+# cwd is a temp scratch outside the repo: a nested session's hooks write .claude/, .rot-moe/ and CLAUDE.md where it runs (measured), and the records go to $out by absolute path.
 # CLAUDECODE is unset in the subshell, not through env -u: env execs a binary and
 # cannot see the ceil function, and the first 8.0.0 run exited 127 that way.
-( unset CLAUDECODE; cd "$out" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
+( unset CLAUDECODE; cd "$scratch" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
   --allowedTools "Read,Grep,Glob,Bash(node $here/lib/ceiling.mjs 60 node:*),Bash(node $here/lib/ceiling.mjs 60 git:*)" \
   < /dev/null 2>&1 ) | tee "$raw" | tail -c 400
 rc=${PIPESTATUS[0]}
+rm -rf "$scratch"
 echo
 echo "companion: claude exit=$rc"
 if [ "$rc" -eq 124 ]; then echo "companion: CEILING FIRED, phase $phase is UNAUDITED"; exit 124; fi

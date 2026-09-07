@@ -108,6 +108,7 @@ printf '<!-- companion run: 2026-01-01T00:00:00Z-pid1 -->\n\n### 🩺 Scope\n\n%
 out=$(bash checker/companion-audit.sh --score "$T/m20.md" p a..b opus 2026-01-01T00:00:00Z-pid2 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.7' && ok "M20 a record stamped by another run is refused by name, so an empty run can never score the previous record" || { ko "M20 exit=$rc"; }
 printf '### 🩺 Scope\n\n%s\n\n### 🩺 Findings\n\nnone\n\n### 🩺 Next\n\nnothing\n\n### 🩺 Verdict\n\nsound\n\nCOMPANION VERDICT: pass\n' "$scope" > "$T/m21.md"
 out=$(bash checker/companion-audit.sh --score "$T/m21.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.8' && ok "M21 a pass whose headings are out of declared order is refused by name" || { ko "M21 exit=$rc"; }
+out=$(bash checker/companion-audit.sh --score "$T/m20.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'scored only by its run' && ok "M22 a stamped record scored with no stamp is refused: a hand re-score cannot read a stale record as a pass" || { ko "M22 exit=$rc"; }
 # M17: the runner's allow-list carries no writing or spawning tool and every Bash form starts with its ceiling; a copy granting Write is refused
 # A bare Bash in the allow-list is the widest grant there is, and the old
 # second stage could not see it: grep -o 'Bash([^)]*)' emitted nothing, so the

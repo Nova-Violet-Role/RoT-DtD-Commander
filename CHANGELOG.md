@@ -182,8 +182,8 @@ state: a plugin's distillate under `.rot-moe` had been judged as if the
 Suite had written it. One banned word left the corpus deep dive, and the
 creators sentence says what the audit prints, 24 with a schematic, 14
 folders and 10 root grammars. `node checker/controls-sweep.mjs --controls`:
-13 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil artifacts/research
---max 0`: 22 files, 0 slop.
+13 run, 0 failing; `node lib/ai-slop.mjs sweep --tracked dtd/sigil artifacts/research
+--max 0`: 21 files, 0 slop.
 
 ### The companion's fourth pass: a law with three live counterexamples, pinned by its own control
 
@@ -525,6 +525,30 @@ SPDX test reads the first twenty-five lines and a fourth plant, a file
 whose only tag is quoted prose, is counted missing. `REUSE.toml` names the
 JSON directories the repository owns. The doctor row says thirty-one and
 the counts sweep holds it to `dtd/`: 61 places.
+
+### The companion's sixteenth pass: the runner's own droppings
+
+The sixteenth pass returned fail with eight findings, one high: the nested
+companion session ran with its working directory inside the tree,
+`artifacts/research`, and its own hooks left `.claude/`, `.rot-moe/` (18
+files, 4 MB of session transcripts behind a one-line `.gitignore` of their
+own) and a `CLAUDE.md` there, while the runner's comment said the cwd was
+not the repo. The lower seven: the grammar's law map stopped at 5, a
+CHANGELOG row quoted the untracked sweep form, the committed record
+predated the stamp, the stamp law was skipped on a hand re-score, the
+heading capture counted any third-level heading the companion quoted, and
+the shell glob behind `REUSE.toml` let `*` cross a slash.
+
+The runner runs the session in a temp scratch outside the tree, removed
+after, and writes the records by absolute path; `.rot-moe/` is ignored
+wherever a session ran and the droppings are gone. A stamped record is
+scored only by its run: a hand re-score without the stamp is refused,
+M22, and the checker suite is 25. The heading capture counts only the
+four declared words. The SPDX sweep translates each annotation glob to a
+regex where `*` never crosses a slash, with a planted JSON one level
+below a named directory counted missing, and names any directory under
+`artifacts/` carrying its own `.gitignore`, a planted one tripped. The law
+map names 7 and 8 with their controls.
 
 ## 8.0.0 (2026-09-06)
 

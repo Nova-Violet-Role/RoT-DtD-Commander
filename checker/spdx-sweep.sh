@@ -23,12 +23,15 @@ globs=()
 while IFS= read -r g; do globs+=("$g"); done < <(sed -n 's/^path = \[\(.*\)\]$/\1/p' REUSE.toml | tr ',' '\n' | sed 's/[" ]//g' | sed '/^$/d')
 [ "${#globs[@]}" -ge 1 ] || { echo "spdx-sweep: REUSE.toml declares no annotation path"; exit 2; }
 
+# A REUSE glob: * never crosses a slash, a leading **/ is any depth including
+# the root. Translated to a regex, because a shell case glob lets * cross a
+# slash and covered a vendored JSON one level below a named directory
+# (sixteenth companion pass).
 covered() {
-  local f="$1" g p
+  local f="$1" g re
   for g in "${globs[@]}"; do
-    p="${g#\*\*/}"
-    # shellcheck disable=SC2254
-    case "$f" in $p|*/$p) return 0 ;; esac
+    re="^$(printf '%s' "$g" | sed 's/[.]/\\./g; s|\*\*/|__ANY__|g; s|\*|[^/]*|g; s|__ANY__|(.*/)?|g')$"
+    printf '%s\n' "$f" | grep -q -E "$re" && return 0
   done
   return 1
 }
@@ -63,17 +66,38 @@ printf '%s\n' "$out0" | grep '^MISSING' || true
 # a tagless .json is covered by REUSE.toml and must be counted covered. The
 # counts of a second pass move by exactly those amounts, or the sweep is
 # reporting over a hole it cannot see.
-md="checker/zz-untagged-control.md"; bin="checker/zz-untagged-control.bin"; js="checker/zz-untagged-control.json"; qt="checker/zz-untagged-control-quoted.md"
+md="checker/zz-untagged-control.md"; bin="checker/zz-untagged-control.bin"; js="checker/zz-untagged-control.json"; qt="checker/zz-untagged-control-quoted.md"; deep="checker/zz-deep-control/x.json"
 printf 'no header here\n' > "$md"; printf 'no header here\n' > "$bin"; printf '{"no": "header"}\n' > "$js"
+# a JSON one level below a named directory is covered by nothing: * never crosses a slash
+mkdir -p "$(dirname "$deep")"; printf '{"no": "header"}\n' > "$deep"
 # a file whose only tag is quoted prose past the header lines is untagged (fifteenth companion pass)
 { for i in $(seq 1 30); do echo "line $i"; done; echo "the prose quotes SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 and that is not a header"; } > "$qt"
 out1="$(sweep_once)"
 read -r c1 v1 m1 <<< "$(printf '%s\n' "$out1" | tail -1)"
-rm -f "$md" "$bin" "$js" "$qt"
-if [ "$m1" -ne $((m0+3)) ] || [ "$v1" -ne $((v0+1)) ] || [ "$c1" -ne "$c0" ]; then
-  echo "CONTROL FAIL: planted md, bin and quoted-tag files must add 3 missing and a planted json 1 covered; read missing $m0 to $m1, covered $v0 to $v1, checked $c0 to $c1"
+rm -f "$md" "$bin" "$js" "$qt" "$deep"; rmdir "$(dirname "$deep")"
+if [ "$m1" -ne $((m0+4)) ] || [ "$v1" -ne $((v0+1)) ] || [ "$c1" -ne "$c0" ]; then
+  echo "CONTROL FAIL: planted md, bin, quoted-tag and deep json files must add 4 missing and a planted json 1 covered; read missing $m0 to $m1, covered $v0 to $v1, checked $c0 to $c1"
   exit 1
 fi
-echo "control: two planted tagless files and one whose only tag is quoted prose are counted missing, and a planted json is covered by REUSE.toml (missing $m0 to $m1, covered $v0 to $v1)"
+echo "control: two planted tagless files, one whose only tag is quoted prose and a json one level below a named directory are counted missing, and a planted json is covered by REUSE.toml (missing $m0 to $m1, covered $v0 to $v1)"
+# A directory under artifacts/ carrying its own .gitignore is a tool hiding
+# its droppings from git status; it is named here rather than trusted
+# (sixteenth companion pass: .rot-moe/ held eighteen files behind a one-line
+# .gitignore of its own).
+foreign() { find artifacts -mindepth 2 -name .gitignore 2>/dev/null | sort; }
+f0="$(foreign)"
+mkdir -p artifacts/zz-foreign-control; printf '*\n' > artifacts/zz-foreign-control/.gitignore
+f1="$(foreign)"
+rm -rf artifacts/zz-foreign-control
+if ! printf '%s\n' "$f1" | grep -q -F 'artifacts/zz-foreign-control/.gitignore'; then
+  echo "CONTROL FAIL: a planted foreign .gitignore under artifacts/ was not named"
+  exit 1
+fi
+echo "control: a planted foreign .gitignore under artifacts/ is named"
+if [ -n "$f0" ]; then
+  printf 'FOREIGN IGNORE %s\n' $f0
+  echo "spdx-sweep: a directory under artifacts/ carries its own .gitignore; remove it and ignore the tool's output from the repository's .gitignore"
+  exit 1
+fi
 echo "spdx-sweep: $c0 files checked, $v0 covered by REUSE.toml, $m0 missing"
 [ "$m0" -eq 0 ]
