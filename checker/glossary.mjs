@@ -506,7 +506,8 @@ function write(text) {
 }
 
 export function controls() {
-  const say = (ok, m) => { console.log('  ' + (ok ? 'PASS' : 'FAIL') + ' ' + m); return ok ? 0 : 1; };
+  let ran = 0;
+  const say = (ok, m) => { ran++; console.log('  ' + (ok ? 'PASS' : 'FAIL') + ' ' + m); return ok ? 0 : 1; };
   let bad = 0;
   const e = { name: '/x-dtd', kind: 'command', sigil: '🎯', description: 'a & b < c', hint: '[topic]', laws: 3, root: 'x', sections: ['A', 'B'] };
 
@@ -545,7 +546,7 @@ export function controls() {
   // table nor a second copy of the families.
   bad += say(rm.indexOf('| what you type |') === -1 && rm.indexOf('<details>') === -1, 'the README block repeats neither the table nor the per-family plates the index already carries');
   bad += say(splice('A' + RM_BEGIN + 'old' + RM_END + 'B', RM_BEGIN + 'new' + RM_END) === 'A' + RM_BEGIN + 'new' + RM_END + 'B', 'a splice replaces only what lies between the markers');
-  console.log('glossary controls: 15 run, ' + bad + ' failing');
+  console.log('glossary controls: ' + ran + ' run, ' + bad + ' failing');
   return bad;
 }
 
