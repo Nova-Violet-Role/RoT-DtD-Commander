@@ -3449,7 +3449,10 @@ Several commands in one prompt as one declared root: the chain, its links in sta
 <!-- runs_alone is #REQUIRED and has no default on purpose. Every command in
      this tree must be runnable by itself; a link that answers no has named a
      command that cannot be shipped, and the checker refuses the chain rather
-     than running it (LAW.CHAIN.2). -->
+     than running it (LAW.CHAIN.2). ran admits yes and refused and nothing
+     else: a link that did not run and was not refused by name is the silent
+     drop LAW.CHAIN.8 forbids, and the sixth companion pass on 9.0.0 measured
+     a no that nothing produced standing in the enumeration. -->
 <!ELEMENT link (link_refusal?)>
 <!ATTLIST link
           n          CDATA #REQUIRED
@@ -3460,7 +3463,7 @@ Several commands in one prompt as one declared root: the chain, its links in sta
           runs_alone (yes|no) #REQUIRED
           takes      (user-args|artifact|none) #REQUIRED
           hands_to   CDATA #IMPLIED
-          ran        (yes|no|refused) #REQUIRED>
+          ran        (yes|refused) #REQUIRED>
 
 <!-- A link that did not run says why, by name. A chain that drops a link in
      silence is the 8.0.0 failure with a grammar around it. Every value has a

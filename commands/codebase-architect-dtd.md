@@ -1258,10 +1258,6 @@ Render the `plan_run` root declared in the DOCTYPE as the markdown below. One de
 
 known [slots]; gaps [slots]; round 1 of 3 [scope, projections, answers]; gate [start]
 
-### 🖼️ Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 🖼️ Substrates
 
 host leg [leg] ([how])
@@ -1290,6 +1286,11 @@ plate [path.svg], dark [path-dark.svg]
 ### 🖼️ Next Band
 
 36 rectification — run /codebase-renovator-dtd with the survey and the plan
+
+### 🖼️ Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

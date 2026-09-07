@@ -76,10 +76,6 @@ Render the `typeset_run` root declared in the DOCTYPE as the markdown below. One
 
 known [slots]; gaps [slots]; round 1 of 3 [what to typeset, classes, answers]; gate [start]
 
-### 🔤 Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 🔤 Typeset
 
 - face plate: [family], generic [monospace|serif|sans-serif], weight [w], style [normal|italic]
@@ -92,6 +88,11 @@ known [slots]; gaps [slots]; round 1 of 3 [what to typeset, classes, answers]; g
 ### 🔤 Artifact
 
 [artifacts/typography/YYYY-MM-DD-typeset.md]
+
+### 🔤 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

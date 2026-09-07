@@ -724,10 +724,6 @@ Render the `amplify_run` root declared in the DOCTYPE as the markdown below. One
 
 known [slots]; gaps [slots]; round 1 of 5 [headers, variants, answers]; gate [start]
 
-### 🌱 Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 🌱 Walk
 
 target [path] declared [yes|no] seconds [n]
@@ -755,6 +751,11 @@ class [major|mid|minor|alpha|beta|pre] from [x.y.z] to [x.y.z] taken no
 ### 🌱 Next Verb
 
 [n] [name] — run /[command]
+
+### 🌱 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

@@ -51,6 +51,12 @@ export function claims(section) {
   const out = [];
   const re = /`node\s+((?:lib|checker|bin)\/[\w./-]+\.mjs)\s+(--controls|controls)`:\s*(\d+)\s+(run|passed)/g;
   for (const m of section.matchAll(re)) out.push({ path: m[1], verb: m[2], claimed: Number(m[3]), word: m[4], text: m[0] });
+  // A run tally: `node <path> run` on <leg>: N pass, N fail, N unsupported.
+  // The sixth companion pass measured the sigil tally on the block's own
+  // line 81 outside the reader, so it went stale where the block promised
+  // it could not.
+  const rr = /`node\s+((?:lib|checker|bin)\/[\w./-]+\.mjs)\s+(run)`[^:`]{0,80}:\s*(\d+)\s+(pass)\b/g;
+  for (const m of section.matchAll(rr)) out.push({ path: m[1], verb: m[2], claimed: Number(m[3]), word: m[4], text: m[0] });
   return out;
 }
 
@@ -63,7 +69,7 @@ export function claims(section) {
 // measured the first loose count sharing its tail with the strict one, so
 // a new count spelling was invisible to both.
 export function looseCount(section) {
-  return (section.match(/`node\s+\S+\s+(?:--controls|controls)`\s*:/g) || []).length;
+  return (section.match(/`node\s+\S+\s+(?:--controls|controls)`\s*:/g) || []).length + (section.match(/`node\s+\S+\s+run`[^:`]{0,80}:/g) || []).length;
 }
 
 // The count a suite prints on its total line, which is the line that opens
@@ -71,9 +77,11 @@ export function looseCount(section) {
 // `controls: 31 run`, `cache controls: 17 passed`); the first such line,
 // because lib/cache.mjs prints its total before its rows and a row may quote
 // a number followed by run.
-export function countOf(output) {
+export function countOf(output, word = 'run') {
   for (const l of String(output).split(/\r?\n/)) {
-    const m = /^[\w-]*\s*controls:\s*(\d+)\s+(run|passed)\b/.exec(l.trim());
+    const m = word === 'pass'
+      ? /^tally:\s*pass\s+(\d+)\b/.exec(l.trim())
+      : /^[\w-]*\s*controls:\s*(\d+)\s+(run|passed)\b/.exec(l.trim());
     if (m) return Number(m[1]);
   }
   return null;
@@ -82,7 +90,7 @@ export function countOf(output) {
 export function runOne(claim, root = ROOT) {
   const r = spawnSync(process.execPath, [join(root, 'lib', 'ceiling.mjs'), String(CEILING_SECS), process.execPath, join(root, claim.path), claim.verb], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
   const out = `${r.stdout || ''}\n${r.stderr || ''}`;
-  return { ...claim, measured: countOf(out), exit: r.status };
+  return { ...claim, measured: countOf(out, claim.word), exit: r.status };
 }
 
 export function sweep({ root = ROOT, text = null } = {}) {
@@ -136,6 +144,9 @@ export function controls() {
   let refused = '';
   try { sweep({ text: '## 0.0.0 (unreadable)\n\n- `node lib/x.py controls`: 4 run, 0 failing\n\n## 9.0.0\n' }); } catch (e) { refused = e.message; }
   say(/1 claim shapes and the reader parsed 0/.test(refused), `trip: a claim shape the reader cannot parse refuses the sweep by count: ${refused.slice(0, 90)}`);
+  const tally = claims('- `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported\n');
+  say(tally.length === 2 && tally[1].verb === 'run' && tally[1].claimed === 41 && tally[1].word === 'pass' && countOf('trial x pass\ntally: pass 43, fail 0, unsupported 0', 'pass') === 43 && looseCount('`node lib/sigil.mjs run` on windows: 41 pass') === 1,
+    'a run tally on the same line as a controls claim is read as its own claim, and its total is the tally line');
   let spelled = '';
   try { sweep({ text: '## 0.0.0 (spelled)\n\n- `node lib/ceiling.mjs controls`: prints 12, 0 failing\n- `node lib/ceiling.mjs controls`: 12 controls\n\n## 9.0.0\n' }); } catch (e) { spelled = e.message; }
   say(/2 claim shapes and the reader parsed 0/.test(spelled), `trip: a count spelled as prints 12 or 12 controls is a claim the reader does not read, and the sweep refuses by number: ${spelled.slice(0, 80)}`);

@@ -68,10 +68,6 @@ Render the `verbs_session` root declared in the DOCTYPE as the markdown below. O
 
 known [slots]; gaps [slots]; round 1 of 3 [tier]; gate [start]
 
-### 🔣 Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 🔣 Run
 
 leg [os] bash [version]
@@ -81,6 +77,11 @@ leg [os] bash [version]
 ### 🔣 Artifact
 
 [artifacts/sigil/YYYY-MM-DD-run-<os>.md, or none was written]
+
+### 🔣 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

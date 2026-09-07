@@ -492,7 +492,10 @@ argument-hint: "[two to eight command lines stacked, one /name-dtd per line, the
 <!-- runs_alone is #REQUIRED and has no default on purpose. Every command in
      this tree must be runnable by itself; a link that answers no has named a
      command that cannot be shipped, and the checker refuses the chain rather
-     than running it (LAW.CHAIN.2). -->
+     than running it (LAW.CHAIN.2). ran admits yes and refused and nothing
+     else: a link that did not run and was not refused by name is the silent
+     drop LAW.CHAIN.8 forbids, and the sixth companion pass on 9.0.0 measured
+     a no that nothing produced standing in the enumeration. -->
 <!ELEMENT link (link_refusal?)>
 <!ATTLIST link
           n          CDATA #REQUIRED
@@ -503,7 +506,7 @@ argument-hint: "[two to eight command lines stacked, one /name-dtd per line, the
           runs_alone (yes|no) #REQUIRED
           takes      (user-args|artifact|none) #REQUIRED
           hands_to   CDATA #IMPLIED
-          ran        (yes|no|refused) #REQUIRED>
+          ran        (yes|refused) #REQUIRED>
 
 <!-- A link that did not run says why, by name. A chain that drops a link in
      silence is the 8.0.0 failure with a grammar around it. Every value has a
@@ -608,10 +611,6 @@ Render the `chain_run` root declared in the DOCTYPE as the markdown below. One d
 
 known [slots]; gaps [slots]; round 1 of 3 [scope, one question per open slot of any link]; gate [start]
 
-### ⛓️ Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### ⛓️ Chain
 
 links [n] autonomy [gated|no-gate] gate [one|none] bands [the string] declared [the stacked lines, one per line]
@@ -626,6 +625,11 @@ links [n] autonomy [gated|no-gate] gate [one|none] bands [the string] declared [
 ### ⛓️ Artifact
 
 [artifacts/chain/YYYY-MM-DD-chain.md]
+
+### ⛓️ Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

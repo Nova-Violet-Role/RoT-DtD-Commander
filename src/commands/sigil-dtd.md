@@ -71,10 +71,6 @@ Render the `sigil_session` root declared in the DOCTYPE as the markdown below. O
 
 known [slots]; gaps [slots]; round 1 of 3 [scope, tiers]; gate [start]
 
-### 💲 Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 💲 Study
 
 scope [form|tier|topic|all], docs 5
@@ -86,6 +82,11 @@ scope [form|tier|topic|all], docs 5
 ### 💲 Artifact
 
 [artifacts/sigil/YYYY-MM-DD-study.md]
+
+### 💲 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

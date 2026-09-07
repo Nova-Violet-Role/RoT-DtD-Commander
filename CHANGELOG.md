@@ -76,9 +76,9 @@ Measured on the release day:
 - `node checker/gate-sync.mjs`: 75 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
-- `node lib/typography.mjs controls`: 32 run, 0 failing
-- `node lib/chain.mjs controls`: 25 run, 0 failing
-- `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported
+- `node lib/typography.mjs controls`: 34 run, 0 failing
+- `node lib/chain.mjs controls`: 26 run, 0 failing
+- `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 8 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
 - 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 75 gate-chain commands
 
@@ -159,9 +159,9 @@ producer table. `checker/controls-sweep.mjs` re-runs every `controls`
 count the newest changelog section claims and refuses on disagreement;
 tripped on a planted count, then run over this section, where it found
 the two counts the pass itself had moved. Gate chain 75 commands.
-`node lib/chain.mjs controls`: 25 run, 0 failing; `node lib/typography.mjs
-controls`: 32 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
-12 run, 0 failing.
+`node lib/chain.mjs controls`: 26 run, 0 failing; `node lib/typography.mjs
+controls`: 34 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
+13 run, 0 failing.
 
 ### The companion's third pass: the sweep that under-read its own input
 
@@ -182,7 +182,7 @@ state: a plugin's distillate under `.rot-moe` had been judged as if the
 Suite had written it. One banned word left the corpus deep dive, and the
 creators sentence says what the audit prints, 24 with a schematic, 14
 folders and 10 root grammars. `node checker/controls-sweep.mjs --controls`:
-12 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil artifacts/research
+13 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil artifacts/research
 --max 0`: 22 files, 0 slop.
 
 ### The companion's fourth pass: a law with three live counterexamples, pinned by its own control
@@ -201,8 +201,8 @@ left `TYPO.numeral.join`, since no compound this engine builds carries a
 hundreds part. `looseCount` in the controls sweep counts a claim by its
 command rather than by its tail, so a count spelled as `prints 12` or `12
 controls` is a refusal by number, tripped on purpose. `node
-lib/typography.mjs controls`: 32 run, 0 failing; `node
-checker/controls-sweep.mjs --controls`: 12 run, 0 failing.
+lib/typography.mjs controls`: 34 run, 0 failing; `node
+checker/controls-sweep.mjs --controls`: 13 run, 0 failing.
 
 ### The companion's fifth pass: a census that could not differ, and a carve-out that reached everything but the command
 
@@ -228,9 +228,36 @@ an anchor; it slices by index now, a one-section changelog is tripped, and
 a section with no claim refuses rather than reporting zero drift. `cols`
 and `rows` on `typeset` are implied, since the contract alone has no grid,
 and `classes` is rendered. Gate chain 75 commands. `node lib/sigil.mjs
-controls`: 15 run, 0 failing; `node checker/enum-sweep.mjs --controls`: 7
-run, 0 failing; `node checker/controls-sweep.mjs --controls`: 12 run, 0
+controls`: 15 run, 0 failing; `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0
 failing.
+
+### The companion's sixth pass: the guard drawn at the width of the last failure
+
+Three high findings, and the verdict named their common shape: each new
+instrument was drawn tightly around the defect that produced it and left
+the adjacent inch uncovered. The typography walk read enumeration values
+with a class that had no hyphen, so `generic (monospace|serif|sans-serif)`
+never entered it, `serif` and `sans-serif` had no producer, a literal copy
+of the three stood in the controls, and a pinned count of six made the
+omission permanent; the reader is the one the enumeration sweep uses, the
+count is read twice from the file and never pinned, `genericOf` produces
+every declared generic and refuses a family that ends on none, and a
+fourth value planted in the subset is tripped. The controls sweep read
+`controls` claims and not the `run` tally on the block's own line, so the
+sigil count the fifth pass moved went stale where the block promised it
+could not; it reads `N pass` tallies now and re-runs them, and the block
+and the amplify state say 43. No instrument checked heading order against
+the content model, and thirteen commands rendered against the sentence
+their own grammar_map states: an order arm on the enumeration sweep maps
+the rows and the template headings back to the root and refuses an
+inversion, tripped on a planted transposition, and the thirteen are in
+declared order, `Assumptions Made` last in twelve and `Measured` before
+`Intake` in starlist. `ran` on a link admits `yes` and `refused` and no
+longer a `no` that nothing produced, and the chain suite walks all ten of
+its subset's enumerations against rendered plans. `node lib/typography.mjs
+controls`: 34 run, 0 failing; `node lib/chain.mjs controls`: 26 run, 0
+failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0 failing;
+`node checker/enum-sweep.mjs --controls`: 9 run, 0 failing.
 
 ## 8.0.0 (2026-09-06)
 

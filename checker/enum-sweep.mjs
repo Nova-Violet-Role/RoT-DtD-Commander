@@ -34,6 +34,60 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { splitDoctype, resolveFile } from '../lib/dtd.mjs';
+import { expectedFromCommand } from '../lib/render-check.mjs';
+
+// ---- the order arm ----
+// The grammar_map of every source says "One declared element per heading, in
+// declared order", and the sixth companion pass on 9.0.0 measured thirteen
+// commands rendering against it with nothing checking. The root's content
+// model gives the declared order; the grammar_map rows and the template's
+// headings are each mapped back to it and must be non-decreasing.
+function stripSigil(h) {
+  return String(h).replace(/^[^\w\s]+\s+/, '').trim();
+}
+export function orderOf(resolvedText) {
+  const e = expectedFromCommand(resolvedText);
+  if (!e || !e.children || !e.children.length) return { findings: [], checked: 0 };
+  // An element the model declares more than once (deep-scratch renders report
+  // in phase one and phase three) has no single position and is not walked;
+  // every other element ranks by its one position.
+  const positions = new Map();
+  e.children.forEach((c, i) => { (positions.get(c.name) || positions.set(c.name, []).get(c.name)).push(i); });
+  const rank = new Map([...positions].filter(([, p]) => p.length === 1).map(([n, p]) => [n, p[0]]));
+  const findings = [];
+  const walk = (seq, where) => {
+    let last = null;
+    for (const item of seq) {
+      if (!rank.has(item.element)) continue;
+      if (last && rank.get(item.element) < rank.get(last.element)) {
+        findings.push({ kind: 'order', line: item.line || 0, attr: e.root, text: `${where} renders ${item.element} after ${last.element}, and the root ${e.root} declares ${item.element} before it` });
+      }
+      if (!last || rank.get(item.element) >= rank.get(last.element)) last = item;
+    }
+  };
+  // The rows, in the order the grammar_map lists them.
+  walk(e.headings.map((h) => ({ element: h.element, heading: h.heading })), 'the grammar_map');
+  // The template's headings after the grammar_map, mapped back through the rows.
+  const d = splitDoctype(resolvedText);
+  const body = d ? resolvedText.slice(d.end) : resolvedText;
+  const bodyStart = d ? resolvedText.slice(0, d.end).split('\n').length - 1 : 0;
+  const gmEnd = body.indexOf('</grammar_map>');
+  const lines = body.split('\n');
+  const seq = [];
+  let fence = false;
+  lines.forEach((line, i) => {
+    if (/^\s*(```|~~~)/.test(line)) { fence = !fence; return; }
+    if (fence) return;
+    if (gmEnd >= 0 && body.split('\n').slice(0, i + 1).join('\n').length <= gmEnd) return;
+    const m = /^#{2,4}\s+(.*\S)\s*$/.exec(line);
+    if (!m) return;
+    const plain = stripSigil(m[1]);
+    const row = e.headings.find((h) => h.heading === plain);
+    if (row) seq.push({ element: row.element, heading: plain, line: i + 1 + bodyStart });
+  });
+  walk(seq, 'the template');
+  return { findings, checked: seq.length };
+}
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
@@ -109,6 +163,7 @@ export function holdOne(text, baseDir) {
     if (missing.length) findings.push({ kind: 'omitted', line: l.line + bodyOffset, attr: best.attr, text: `${l.text} spells ${l.values.length} of the ${best.values.length} values ${best.attr} declares (${best.values.join('|')}); omitted ${missing.join('|')}` });
     if (extra.length) findings.push({ kind: 'undeclared', line: l.line + bodyOffset, attr: best.attr, text: `${l.text} spells ${extra.join('|')}, which ${best.attr} (${best.values.join('|')}) does not declare` });
   }
+  for (const f of orderOf(resolved).findings) findings.push(f);
   return { findings, enumerations: enums.length, spelled: lists.length };
 }
 
@@ -163,6 +218,16 @@ export function controls() {
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }
+  // The order arm: a template that renders two declared elements transposed
+  // is a finding naming both, in the rows and in the headings; declared
+  // order passes.
+  const ordered = (rows, heads) => `<!DOCTYPE z_run [\n  <!ELEMENT z_run (alpha, beta, gamma)>\n  <!ELEMENT alpha (#PCDATA)>\n  <!ELEMENT beta (#PCDATA)>\n  <!ELEMENT gamma (#PCDATA)>\n]>\n\n<output_format>\n<grammar_map>\n${rows.map((r) => `- \`${r}\`: **🧭 ${r[0].toUpperCase() + r.slice(1)}**, the ${r}`).join('\n')}\n</grammar_map>\n\n${heads.map((h) => `### 🧭 ${h[0].toUpperCase() + h.slice(1)}\n\n[${h}]\n`).join('\n')}</output_format>\n`;
+  const straight = orderOf(ordered(['alpha', 'beta', 'gamma'], ['alpha', 'beta', 'gamma']));
+  const swappedHeads = orderOf(ordered(['alpha', 'beta', 'gamma'], ['alpha', 'gamma', 'beta']));
+  const swappedRows = orderOf(ordered(['alpha', 'gamma', 'beta'], ['alpha', 'beta', 'gamma']));
+  say(straight.findings.length === 0 && straight.checked === 3, `declared order in the rows and the template is no finding (${straight.checked} headings mapped)`);
+  say(swappedHeads.findings.length === 1 && /the template renders beta after gamma/.test(swappedHeads.findings[0].text) && swappedRows.findings.length === 1 && /the grammar_map renders beta after gamma/.test(swappedRows.findings[0].text),
+    `trip: a transposition in the template and one in the rows are each a finding naming both elements: ${(swappedHeads.findings[0] || {}).text}`);
   const s = sweep();
   say(s.files >= 160 && s.enumerations > 1000 && s.spelled > 200, `the tree is walked: ${s.files} sources, ${s.enumerations} enumerations, ${s.spelled} spelled choices`);
   say(s.findings.length === 0, s.findings.length === 0 ? 'every spelled choice in the tree agrees with its enumeration' : `findings in the tree: ${s.findings.slice(0, 3).map((f) => `${f.file}:${f.line} ${f.text}`).join('; ')}`);

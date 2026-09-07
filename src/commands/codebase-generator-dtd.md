@@ -98,10 +98,6 @@ Render the `production_run` root declared in the DOCTYPE as the markdown below. 
 
 known [slots]; gaps [slots]; round 1 of 3 [target, figure thumbnails, domains, answers]; gate [start]; seed [option|none]
 
-### 🖌️ Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 🖌️ Stands On
 
 - survey [path] ([date]) | absent
@@ -137,6 +133,11 @@ plate [path.svg], dark [path-dark.svg]; mark measured
 ### 🖌️ Next Band
 
 1 planimetry — run /codebase-surveyor-dtd on what was produced
+
+### 🖌️ Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

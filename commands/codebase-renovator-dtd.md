@@ -1262,10 +1262,6 @@ Render the `renovation_run` root declared in the DOCTYPE as the markdown below. 
 
 known [slots]; gaps [slots]; round 1 of 3 [scope, changes, verbs, answers]; gate [start]
 
-### 🔨 Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 🔨 Survey
 
 [artifacts/geometry/YYYY-MM-DD-survey.md] dated [YYYY-MM-DD] sha256 [digest]
@@ -1299,6 +1295,11 @@ plate [path.svg] with the changed shapes marked
 ### 🔨 Next Band
 
 53 chord — run /codebase-generator-dtd on the survey, the plan and this renovation
+
+### 🔨 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

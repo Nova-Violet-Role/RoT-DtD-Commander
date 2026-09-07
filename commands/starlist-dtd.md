@@ -816,16 +816,16 @@ Render the `starlist_run` root declared in the DOCTYPE as the markdown below. On
 host leg [ubuntu-latest|macos-latest|windows-latest] ([how])
 - [podman|wsl2|docker|qemu] [present|absent] via [probe]: [what the answer meant]
 
+### ⭐ Measured
+
+[languages, builds and toolchain as the walk measured them, before any question]
+
 ### ⭐ Intake
 
 - known: [slots the argument and the probe filled]
 - gaps: [slots asked about]
 - round 1 of 8: [headers] answered [labels or Other text]
 - gate: [start|more|add|impactful|save] (round N)
-
-### ⭐ Measured
-
-[languages, builds and toolchain as the walk measured them, before any question]
 
 ### ⭐ Tools
 

@@ -69,10 +69,6 @@ Render the `chain_run` root declared in the DOCTYPE as the markdown below. One d
 
 known [slots]; gaps [slots]; round 1 of 3 [scope, one question per open slot of any link]; gate [start]
 
-### ⛓️ Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### ⛓️ Chain
 
 links [n] autonomy [gated|no-gate] gate [one|none] bands [the string] declared [the stacked lines, one per line]
@@ -87,6 +83,11 @@ links [n] autonomy [gated|no-gate] gate [one|none] bands [the string] declared [
 ### ⛓️ Artifact
 
 [artifacts/chain/YYYY-MM-DD-chain.md]
+
+### ⛓️ Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

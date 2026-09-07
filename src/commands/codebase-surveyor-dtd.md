@@ -95,10 +95,6 @@ Render the `survey_run` root declared in the DOCTYPE as the markdown below. One 
 
 known [slots]; gaps [slots]; round 1 of 3 [scope, rungs, answers]; gate [start]
 
-### 📏 Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 📏 Substrates
 
 host leg [ubuntu-latest|macos-latest|windows-latest] ([how])
@@ -124,6 +120,11 @@ plate [path.svg], dark [path-dark.svg]; mark guessed here, measured on disk
 ### 📏 Next Band
 
 18 orthography — run /codebase-architect-dtd on the survey
+
+### 📏 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>

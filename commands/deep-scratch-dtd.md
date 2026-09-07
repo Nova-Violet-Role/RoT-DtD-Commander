@@ -469,10 +469,6 @@ Render the `deep_scratch` root declared in the DOCTYPE as the markdown below. On
 
 known [slots]; gaps [slots]; round 1 of 3 [headers and answers]; gate [start]
 
-### 🔬 Assumptions Made
-
-(autonomous run only) one line per assumption made
-
 ### 🔬 Research
 
 [strategic summary, then the nine sections, the claude_context, the next action, the sources]
@@ -502,6 +498,11 @@ known [slots]; gaps [slots]; round 1 of 3 [headers and answers]; gate [start]
 ### 🔬 Artifacts
 
 [path one], [path two]
+
+### 🔬 Assumptions Made
+
+(autonomous run only) one line per assumption made
+
 </output_format>
 
 <success_criteria>
