@@ -78,8 +78,8 @@ Measured on the release day:
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
 - `node lib/typography.mjs controls`: 35 run, 0 failing
 - `node lib/chain.mjs controls`: 26 run, 0 failing
-- `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
-- `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
+- `node lib/sigil.mjs controls`: 16 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
+- `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 9 run, 0 failing
 - 139 commands, 22 skills, 5 agents; checked 166; 1929 declarations; 84 gate-chain commands
 
 ### The fifth gate choice: save your cache first
@@ -228,7 +228,7 @@ an anchor; it slices by index now, a one-section changelog is tripped, and
 a section with no claim refuses rather than reporting zero drift. `cols`
 and `rows` on `typeset` are implied, since the contract alone has no grid,
 and `classes` is rendered. Gate chain 75 commands. `node lib/sigil.mjs
-controls`: 15 run, 0 failing; `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0
+controls`: 16 run, 0 failing; `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0
 failing.
 
 ### The companion's sixth pass: the guard drawn at the width of the last failure
@@ -842,7 +842,19 @@ failed on all three legs at M24: its diff arm read `HEAD~1`, which a
 depth-one checkout does not have (exit 128), and a full-history clone
 never showed it; the arm diffs the empty tree against HEAD, proved in a
 depth-one clone, and the tag was moved to the corrected commit before
-any release object existed.
+any release object existed. The second hosted run failed on two faults
+this machine cannot show: the creators audit ran its two corpus trips
+only where the corpus is, so the hosted legs printed 6 controls against
+a claim of 8, and the trips now run on every leg against a planted
+corpus, one entry per row with the grammar the row declares, while the
+record check on such a leg carries the counts the writing machine
+measured and holds the rows, a drifted row refused there too (nine
+controls); and the
+sigil trial `error-if-unset` expected exit 1 where bash 3.2, the macOS
+leg, answers 127, so a trial may carry an older expectation with the
+bash it is below, the run names it beside the trial, and the sigil
+controls count 16. The tag was moved a second time, still before any
+release object existed.
 
 ## 8.0.0 (2026-09-06)
 

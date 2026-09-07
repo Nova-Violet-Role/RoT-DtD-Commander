@@ -16,10 +16,11 @@
 //
 //   node checker/creators-audit.mjs            the audit, exit 1 on a folder with neither
 //   node checker/creators-audit.mjs --write    write artifacts/research/<date>-creators-audit.md
-//   node checker/creators-audit.mjs --check    refuse a record that drifted from the audit
-//   node checker/creators-audit.mjs --controls a planted folder with neither, a planted count, each refused
+//   node checker/creators-audit.mjs --check    refuse a record that drifted from the audit; on a leg with no corpus the counts are carried from the record
+//   node checker/creators-audit.mjs --controls a planted folder with neither, a planted cell, and the two corpus trips against a planted corpus, each refused on every leg
 
-import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -92,6 +93,20 @@ export function measureCorpus(corpus = CORPUS) {
   return { entries, counts };
 }
 
+// A corpus planted from the rows for the two corpus trips, so they run on
+// every leg: one entry per row, a folder holding one grammar file where the
+// row has a schematic and one jar where it is refused, a root file named by
+// the row. The first hosted run of 9.0.0 printed 6 controls against a claim
+// of 8 because the trips skipped themselves where the corpus is absent.
+export function plantCorpus() {
+  const d = mkdtempSync(join(tmpdir(), 'creators-corpus-'));
+  for (const r of ROWS) {
+    if (r.kind === 'folder') { mkdirSync(join(d, r.name)); writeFileSync(join(d, r.name, r.schematic ? 'a.dtd' : 'a.jar'), '', 'utf8'); }
+    else writeFileSync(join(d, r.name), '', 'utf8');
+  }
+  return d;
+}
+
 export function audit({ rows = ROWS, corpus = CORPUS } = {}) {
   const findings = [];
   const c = cells();
@@ -145,6 +160,32 @@ export function render(a, date = '2026-09-07') {
   return L.join('\n');
 }
 
+// The measured half of a record, read back on a leg that has no corpus: the
+// corpus line and the per-row counts. The check on such a leg holds the
+// static half to the tree and carries the numbers the writing machine
+// measured, and says which it did. The record names a corpus the hosted
+// legs do not have, so a check that re-rendered against no corpus there
+// could never be in step (second hosted run of 9.0.0).
+export function carried(text) {
+  const corpus = (/^- corpus: (.+)$/m.exec(text) || [])[1];
+  const counts = {};
+  for (const m of text.matchAll(/^\| ([^|]+?) \| (?:folder|root) \| (\d+) \| (\d+) \|/gm)) counts[m[1]] = { files: Number(m[2]), grammar: Number(m[3]) };
+  const entries = Object.keys(counts);
+  if (!corpus || !entries.length) return null;
+  return { corpus, measured: { entries: entries.length, grammarFolders: entries.filter((e) => counts[e].grammar > 0).length, counts } };
+}
+
+// Whether the record is the audit as rendered: measured against the corpus
+// where it is, the counts carried from the record where it is not.
+export function inStep(a, rec = join(ROOT, RECORD)) {
+  if (!existsSync(rec)) return { same: false, how: `the record ${RECORD} is not written yet` };
+  const text = readFileSync(rec, 'utf8');
+  if (a.measured) return { same: text === render(a), how: `measured against the corpus, ${a.measured.entries} entries` };
+  const c = carried(text);
+  if (!c) return { same: false, how: 'the corpus is absent and the record carries no counts to hold' };
+  return { same: text === render({ ...a, corpus: c.corpus, measured: c.measured }), how: `the corpus absent here, the counts carried from the record, ${c.measured.entries} entries` };
+}
+
 export function controls(io = console) {
   let ran = 0, fail = 0;
   const say = (ok, t) => { ran++; io.log(`  ${ok ? 'PASS' : 'FAIL'} ${t}`); if (!ok) fail++; };
@@ -156,14 +197,26 @@ export function controls(io = console) {
   say(!neither.ok && /planted: neither a schematic nor a refusal/.test(neither.findings[0]), `trip: a folder with neither is refused by name: ${neither.findings[0]}`);
   const badCell = audit({ rows: [...ROWS.slice(1), { ...ROWS[0], carries: ['curve'] }], corpus: '/nonexistent' });
   say(!badCell.ok && /concept curve has no cell/.test(badCell.findings[0]), `trip: a concept the grammar does not declare is refused: ${badCell.findings[0]}`);
-  if (a.measured) {
-    const wrong = audit({ rows: ROWS.map((r) => (r.name === 'org.lwdita' ? { ...r, schematic: 'xml', refusal: null, carries: ['include'] } : r)) });
-    say(!wrong.ok && /org.lwdita is given a schematic and the corpus holds no grammar file/.test(wrong.findings[0]), `trip: a schematic given to a folder with no grammar is refused against the corpus: ${wrong.findings[0]}`);
-    const absent = audit({ rows: [...ROWS, { name: 'ghost', kind: 'folder', schematic: 'xml', carries: ['type'], mechanic: 'x' }] });
-    say(!absent.ok && absent.findings.some((f) => /the audit names ghost and the corpus has no such entry/.test(f)), 'trip: a row the corpus does not hold is refused against the corpus');
-  } else io.log('  UNMEASURED the corpus is absent on this machine; the two corpus trips did not run');
+  // the two corpus trips, on every leg, against the planted corpus: the
+  // audit above measured the real one where it is and said so where it is not
+  const planted = plantCorpus();
+  try {
+    const wrong = audit({ rows: ROWS.map((r) => (r.name === 'org.lwdita' ? { ...r, schematic: 'xml', refusal: null, carries: ['include'] } : r)), corpus: planted });
+    say(!wrong.ok && /org.lwdita is given a schematic and the corpus holds no grammar file/.test(wrong.findings[0]), `trip: a schematic given to a folder with no grammar is refused against the planted corpus: ${wrong.findings[0]}`);
+    const absent = audit({ rows: [...ROWS, { name: 'ghost', kind: 'folder', schematic: 'xml', carries: ['type'], mechanic: 'x' }], corpus: planted });
+    say(!absent.ok && absent.findings.some((f) => /the audit names ghost and the corpus has no such entry/.test(f)), 'trip: a row the corpus does not hold is refused against the planted corpus');
+  } finally { rmSync(planted, { recursive: true, force: true }); }
+  const step = inStep(a);
+  say(step.same, `the record is the audit as rendered, ${step.how}`);
+  // trip: on a leg with no corpus the counts are carried and the rows are not;
+  // a record whose static half drifted is still refused there
   const rec = join(ROOT, RECORD);
-  say(existsSync(rec) && readFileSync(rec, 'utf8') === render(a), existsSync(rec) ? 'the record is the audit as rendered' : `the record ${RECORD} is not written yet`);
+  const text = existsSync(rec) ? readFileSync(rec, 'utf8') : '';
+  const edited = text.replace('33 of 54 grammar files', '34 of 54 grammar files');
+  const cc = carried(edited);
+  const bare = audit({ corpus: '/nonexistent' });
+  say(text !== '' && edited !== text && cc !== null && render({ ...bare, corpus: cc.corpus, measured: cc.measured }) !== edited && render({ ...bare, corpus: cc.corpus, measured: cc.measured }) === text,
+    'trip: on a leg with no corpus a record whose static half drifted is refused; the carried counts do not carry the rows');
   io.log(`creators-audit controls: ${ran} run, ${fail} failing`);
   return fail === 0;
 }
@@ -177,6 +230,6 @@ if (isMain) {
   console.log(`creators-audit: ${a.rows.length} rows, ${a.rows.filter((r) => r.schematic).length} with a schematic, ${a.rows.filter((r) => !r.schematic).length} refused; corpus ${a.measured ? `measured, ${a.measured.entries} entries` : 'absent, unmeasured'}; cells unwitnessed ${a.unwitnessed.join(', ') || 'none'}`);
   const rec = join(ROOT, RECORD);
   if (args.includes('--write')) { writeFileSync(rec, render(a), 'utf8'); console.log(`  wrote ${RECORD}`); }
-  if (args.includes('--check')) { const same = existsSync(rec) && readFileSync(rec, 'utf8') === render(a); console.log(same ? '  the record is in step' : '  DRIFT the record differs from the audit; run --write'); if (!same) process.exit(1); }
+  if (args.includes('--check')) { const step = inStep(a, rec); console.log(step.same ? `  the record is in step, ${step.how}` : `  DRIFT the record differs from the audit (${step.how}); run --write where the corpus is`); if (!step.same) process.exit(1); }
   process.exit(a.ok ? 0 : 1);
 }

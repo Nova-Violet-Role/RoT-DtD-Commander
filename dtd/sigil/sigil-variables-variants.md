@@ -22,7 +22,7 @@ form you write, and the safe form is given with each entry.
 | `${var-word}` | Use `word` only if unset | `${x-def}` | Null stays null |
 | `${var:=word}` | Assign `word` if unset/null | `${x:=def}` | Mutates var |
 | `${var=word}` | Assign only if unset | — | POSIX |
-| `${var:?msg}` | Error+exit if unset/null | `${x:?required}` | Info-leak risk in logs |
+| `${var:?msg}` | Error+exit if unset/null; status 1, and 127 on bash 3.2 | `${x:?required}` | Info-leak risk in logs |
 | `${var?msg}` | Error only if unset | — | — |
 | `${var:+word}` | Use `word` if var IS set | `${x:+--flag}` | Great for optional flags |
 | `${var+word}` | `word` if set (even null) | — | — |
