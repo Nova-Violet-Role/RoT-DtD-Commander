@@ -278,6 +278,10 @@ jobs:
     timeout-minutes: 350
     strategy:
       fail-fast: false
+      # One leg at a time: the three legs together reached the account session
+      # limit after about six families each on the fourth matrix (b64e14a,
+      # 22:05Z); the hosted legs run on the operator credential and share it.
+      max-parallel: 1
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
