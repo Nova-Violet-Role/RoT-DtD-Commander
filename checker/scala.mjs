@@ -141,7 +141,12 @@ export function score(answer, members) {
 // them as answers with no heading.
 export function diagnose(raw) {
   const m = /Unknown command: (\/\S+)/.exec(String(raw || ''));
-  return m ? `the CLI has no command ${m[1]}: the commander is not installed where this leg reads its commands, and no model was called` : '';
+  if (m) return `the CLI has no command ${m[1]}: the commander is not installed where this leg reads its commands, and no model was called`;
+  // The second hosted matrix of 9.1.0: the sealed credential had expired,
+  // every family answered Not logged in inside a result that counted one
+  // turn, and the smoke passed on the turn count alone.
+  if (/Not logged in/.test(String(raw || ''))) return 'the CLI is not logged in on this leg: the sealed credential is expired or absent, and no model was called';
+  return '';
 }
 
 export function runOne(s, { out, model = 'opus', turns = 60, secs = 1500 } = {}) {
@@ -184,6 +189,7 @@ export function runOne(s, { out, model = 'opus', turns = 60, secs = 1500 } = {})
 export function kindOf(text) {
   const t = String(text);
   if (/^the CLI has no command/.test(t)) return { kind: 'refusal', severity: 'high', member: ((/no command \/([\w-]+?)(?:-dtd)?:/.exec(t) || [])[1]) || 'none' };
+  if (/^the CLI is not logged in/.test(t)) return { kind: 'login', severity: 'high', member: 'none' };
   if (/^the answer is empty/.test(t)) return { kind: 'empty', severity: 'high', member: 'none' };
   if (/^the ceiling fired/.test(t)) return { kind: 'unrun', severity: 'high', member: 'none' };
   if (/^no heading of /.test(t)) return { kind: 'heading', severity: 'medium', member: ((/^no heading of (\S+)/.exec(t) || [])[1]) || 'none' };
@@ -272,6 +278,8 @@ export function controls(io = console) {
   const nested = '### ⛓️ Chain\n\n#### 📏 Arguments\n\n#### 🖼️ Plan\n\n- chain_close **ran 2 refused 0** artifact `artifacts/chain/x.md`\n';
   const m5 = score(nested, ['codebase-surveyor-dtd', 'codebase-architect-dtd']);
   say(m5.ok && m5.headings === 3, `a chain whose links render one level deeper and close in bold is read as the run it was: ${m5.headings} headings, ${m5.findings.length} findings`);
+  const login = diagnose('{"type":"result","subtype":"success","is_error":true,"num_turns":1,"result":"Not logged in · Please run /login"}');
+  say(/not logged in/.test(login) && kindOf(login).kind === 'login' && kindOf(login).severity === 'high' && diagnose('{"result":"### x"}') === '', `trip: a Not logged in result is a finding of kind login before any heading is counted: ${login.slice(0, 60)}`);
   const chainFam = all.find((s) => s.id === 'chain');
   const two = all.find((s) => s.members.length >= 2);
   say(chainFam && chainFam.prompt === '/chain-dtd --no-gate' && two && two.prompt.split('\n')[0] === '/chain-dtd --no-gate' && two.prompt.split('\n').length === two.members.length + 1 && promptOf([]) === '',

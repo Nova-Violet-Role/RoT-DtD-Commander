@@ -299,6 +299,7 @@ jobs:
           chmod 600 "$C/.credentials.json"
           echo "CLAUDE_CONFIG_DIR=$C" >> "$GITHUB_ENV"
           echo "credential written, $(wc -c < "$C/.credentials.json") bytes"
+          node -e "const c=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));const o=c.claudeAiOauth||c;const t=Number(o.expiresAt||0);const left=(t-Date.now())/3600000;console.log('the sealed credential expires '+(t?new Date(t).toISOString():'never stated')+', '+left.toFixed(1)+' h from now');if(t&&left<=0){console.log('expired: the sealed token lives eight hours from its login; reseal with node checker/seal-secret.mjs put --name CLAUDE_CREDENTIALS_JSON --file ~/.claude/.credentials.json and dispatch again');process.exit(1);}" "$C/.credentials.json"
       - name: the commander installed into the runner's config dir with the env block, so the chain tokens are commands the CLI knows (the first hosted scala answered Unknown command to every family and called no model)
         if: env.SCALA_SKIP != '1'
         run: |
@@ -320,6 +321,7 @@ jobs:
           node lib/ceiling.mjs 300 claude -p "Answer with the single word ok." --model opus --max-turns 1 --output-format json > "$SCALA_OUT/smoke.json" 2>&1 || true
           head -c 600 "$SCALA_OUT/smoke.json"; echo
           grep -q '"num_turns":[1-9]' "$SCALA_OUT/smoke.json" || { echo "the CLI made no model turn on $XOS_LEG"; exit 1; }
+          grep -q '"is_error":false' "$SCALA_OUT/smoke.json" || { echo "the CLI answered an error on $XOS_LEG (a Not logged in result counts one turn and is not an answer)"; exit 1; }
       - name: one scala per family, every family, scored on the headings each member owns, and this leg's findings written beside the answers
         if: env.SCALA_SKIP != '1'
         run: |

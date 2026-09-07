@@ -23,7 +23,12 @@ what they name.
   findings file, the smoke result and the install log as the run
   artifact `scala-<os>-<sha>`, ninety days, on failure too; a summary
   job downloads the three legs, prints one table across OS and uploads
-  the merged findings file.
+  the merged findings file. The sealed credential lives eight hours from
+  its login: the credential step reads its expiry and refuses an expired
+  one by name before the install, the smoke refuses a result that is an
+  error even when it counts a turn (the second matrix answered Not logged
+  in seventeen times per leg through a smoke that read the turn count
+  alone), and a Not logged in answer is a finding of kind login.
 - **The findings as a record.** `node checker/scala.mjs findings
   <dir>...` reads the answers of one or more legs, scores them again and
   writes a NestedText record, `artifacts/research/<date>-scala-findings.nt`
@@ -81,7 +86,7 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 18 run, 0 failing
+- `node checker/scala.mjs --controls`: 19 run, 0 failing
 - `node lib/chain.mjs controls`: 27 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
