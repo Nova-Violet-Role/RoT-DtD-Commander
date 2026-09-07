@@ -136,6 +136,10 @@ out="$(cd "$out" && pwd)"
 # sixteenth companion pass on 9.0.0 it ran inside artifacts/research.
 scratch="$(mktemp -d)"
 raw="$out/companion-$phase.json"
+# The raw stream is teed outside the tree and moved into place after the
+# tree is read: on the first audit of a phase the runner's own output would
+# otherwise read as a changed tree (twenty-fourth companion pass, M35).
+rawtmp="$(mktemp)"
 stamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)-pid$$"
 # The tree before and after the session: HEAD and the porcelain status. A
 # difference is the companion's breach of LAW.COMPANION.1, whatever the
@@ -158,7 +162,7 @@ $(printf '%s\n' "$files" | sed 's|/[^/]*$||; s|^[^/]*$|.|' | sort | uniq -c | so
 fi
 
 prompt="You are the Scratchpad Companion auditing build phase '$phase' of RoT DtD Commander at $here (git range $range).
-Answer in the grammar declared here, one markdown heading per element in declared order, headings '### 🩺 Scope', '### 🩺 Findings', '### 🩺 Verdict', '### 🩺 Next', each with a blank line before and after. Write every finding as a finding element on its own lines, exactly this spelling: <finding file=\"path\" line=\"n\" severity=\"high|medium|low\" confidence=\"measured|reasoned|guessed\">the text</finding>; the scorer counts severity=\"high\" and no other spelling of a high finding:
+Answer in the grammar declared here, one markdown heading per element in declared order, headings '### 🩺 Scope', '### 🩺 Findings', '### 🩺 Verdict', '### 🩺 Next', each with a blank line before and after. Write every finding as a finding element on one line of its own, opened and closed on that line, exactly this spelling: <finding file=\"path\" line=\"n\" severity=\"high|medium|low\" confidence=\"measured|reasoned|guessed\">the text</finding>; the scorer counts severity=\"high\" and no other spelling of a high finding:
 
 $contract
 
@@ -181,7 +185,7 @@ echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${s
 # cannot see the ceil function, and the first 8.0.0 run exited 127 that way.
 ( unset CLAUDECODE; cd "$scratch" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
   --allowedTools "Read,Grep,Glob,Bash(bash $here/checker/companion-run.sh:*)" --permission-mode default \
-  < /dev/null 2>&1 ) | tee "$raw" | tail -c 400
+  < /dev/null 2>&1 ) | tee "$rawtmp" | tail -c 400
 rc=${PIPESTATUS[0]}
 rm -rf "$scratch"
 echo
@@ -195,6 +199,7 @@ if [ "$tree_before" != "$tree_after" ]; then
   diff <(printf '%s\n' "$tree_before") <(printf '%s\n' "$tree_after") | grep '^[<>]' | head -20
   exit 1
 fi
+mv -f "$rawtmp" "$raw"
 if [ "$rc" -eq 124 ]; then echo "companion: CEILING FIRED, phase $phase is UNAUDITED"; exit 124; fi
 node -e '
 const fs = require("fs");

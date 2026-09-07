@@ -21,7 +21,7 @@
 
 [![Checker](https://img.shields.io/badge/checked-166_files%2C_0_failed-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
 [![Contract](https://img.shields.io/badge/contract_audit-1929_declarations%2C_0_unused-27ae60?style=flat-square)](#-what-is-claimed-and-the-instrument-behind-each-claim)
-[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-31_%2B_37-27ae60?style=flat-square)](#-verify-it-yourself)
+[![Controls](https://img.shields.io/badge/guards_tripped_on_purpose-31_%2B_38-27ae60?style=flat-square)](#-verify-it-yourself)
 [![Listed on ClaudePluginHub](https://www.claudepluginhub.com/badge/nova-violet-role-rot-dtd-commander)](https://www.claudepluginhub.com/plugins/nova-violet-role-rot-dtd-commander?ref=badge)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-D97757?style=flat-square)](https://claude.com/claude-code)
 [![REUSE](https://img.shields.io/badge/REUSE-compliant-blue?style=flat-square)](https://reuse.software/)
@@ -588,7 +588,7 @@ want the grammar enforced rather than merely declared.
      | 139 commands, 22 skills, 5 agents carry a DOCTYPE | `rdc list` | 2026-09-07 |
      | every source passes rules C1 to C16 | `rdc check`: `checked 166  failed 0` | 2026-09-07 |
      | the committed resolved tree equals a fresh build | `rdc build --check`: `303 targets, 0 drifted, 0 failing` | 2026-09-07 |
-     | the checker refuses every defect it names &mdash; a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a missing sigil, a front-matter value YAML would misread, a declaration hidden under IGNORE &mdash; and the companion scorer runs under an allow-list with no writing tool | `bash checker/checker-controls.sh`: thirty-seven controls M0 to M34, `checker controls: 37 run, 0 failing`, `all tripped as designed` | 2026-09-07 |
+     | the checker refuses every defect it names &mdash; a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a missing sigil, a front-matter value YAML would misread, a declaration hidden under IGNORE &mdash; and the companion scorer runs under an allow-list with no writing tool | `bash checker/checker-controls.sh`: thirty-eight controls M0 to M35, `checker controls: 38 run, 0 failing`, `all tripped as designed` | 2026-09-07 |
      | every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1929 declarations, 0 unused, 0 law gaps`, and the three planted controls | 2026-09-07 |
      | the Adiutor finds a missing heading, blocks once and never twice, stays silent on `stop_hook_active`, refuses a tampered ledger line, preserves foreign settings keys, completes an answer that lags behind narration, and arms on a trailing `/name-dtd` token (LAW.CORE.7) | `node bin/adiutor.mjs controls`: `31 run, 0 failing` | 2026-09-07 |
      | `rdc install` writes the monitor as `skills/rot-dtd-commander-adiutor/` (a `.claude-plugin/plugin.json` and a `monitors/monitors.json` running the copied script), the doctor's `monitor` row is green, and `rdc uninstall` leaves `skills/` empty | `rdc install --yes --target <scratch> --only pareto-dtd`: `written 17`; `CLAUDE_CONFIG_DIR=<scratch> node bin/adiutor.mjs doctor`: `11 checks, 0 failing`; `rdc uninstall --yes --target <scratch>`: `removed 17  kept 0` | 2026-09-02 |
@@ -647,7 +647,7 @@ A guard nobody has tripped on purpose is decoration. Every one here has been.
      text because checker/counts-sweep.mjs reads the guard count out of this file.
      Nothing here is hidden that the plate does not also show.
      node bin/adiutor.mjs controls         # thirty-one guards; C31 the gate law of cc-cache at Stop; C21 to C29 the AI_SLOP gate on five spots, the tally and the fields; C3 is the strict block, once and never twice; C12 the monitor, tripped live; C13 the lagging answer, C14 the trailing call, C17 the heading-less file judged
-     bash checker/checker-controls.sh      # M0 to M34: seven mutations refused, one under INCLUDE and the untouched file pass, then twenty-eight scorer and runner controls
+     bash checker/checker-controls.sh      # M0 to M35: seven mutations refused, one under INCLUDE and the untouched file pass, then twenty-nine scorer and runner controls
      node checker/gate-sync.mjs            # every gate command is a run line of the workflow; a line removed or a step commented out is reported
      node checker/release-notes.mjs --controls  # the release job's notes: an in-progress heading and an unknown version refused
      node checker/plates.mjs --check       # the sixteen README plates equal a fresh render from the README's own text

@@ -727,6 +727,24 @@ could write under, and M25 plants under `artifacts/cache/` as well as at
 the root: 37 checker controls. The cache controls say every path they
 print is under a temp root; `--table` takes no argument.
 
+### The companion's twenty-fourth pass: the runner's own stream in the reading
+
+The twenty-fourth pass returned fail with three findings, one high: the
+tree reading now lists the ignored files under `artifacts/research`, and
+the runner tees its own raw stream there during the session, so the first
+audit of any phase would have read its own output as a changed tree. The
+lower two: the grammar's prompt said a finding element goes on its own
+lines, plural, where the scorer counts one line; and M30's coverage
+compared a count to itself.
+
+The raw stream is teed to a temp file outside the tree and moved into
+place after the second reading; M35 proves it with a `claude` that
+answers a pass at once under a phase name with no prior stream, and reads
+PASS rather than UNAUDITED. The prompt says one line, opened and closed
+on that line. M30's expected count is parsed from the wrapper's rows by
+awk, apart from the sed `--table` uses, so the two readers are held to
+each other: 38 checker controls.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate

@@ -11,7 +11,7 @@
 # them; M17: the runner's allow-list, a copy granting Write refused, M17b a
 # bare Bash refused, M17c the bare timeout refused; M20 to M22: the run
 # stamp and the four headings; M33 and M34: M9's mutation proof and a quoted
-# element; M23 to M32: the wrapper checker/companion-run.sh
+# element; M35: the first audit of a phase; M23 to M32: the wrapper checker/companion-run.sh
 # (the old prefix grant refused, its refusals tripped, git config and the
 # engines by the table, the bare arms, every granted spelling walked under
 # the tree state), a changed tree, a fired ceiling, the permission mode, the
@@ -218,7 +218,10 @@ out29d=$(bash $w node lib/arm.mjs controls 2>&1); r29d=$?
 # walked with one (twenty-second companion pass: 124 and a usage exit were
 # excused, and two granted spellings printed usage lines).
 bad30=""; n30=0
-want30=$(bash $w --table | wc -l | tr -d ' ')
+# the expected count is parsed from the wrapper's own rows by awk, apart from
+# the sed that --table uses, so the two readers of the table are held to each
+# other (twenty-fourth companion pass: the count compared to itself)
+want30=$(awk -F'"' '/^      [a-z\/.-]+\.mjs\) verbs="/ { n += split($2, a, " ") } END { print n }' checker/companion-run.sh)
 t0=$(bash checker/companion-audit.sh --tree-state)
 while read -r e s; do
   case "$s" in BARE) args="" ;; FILE) args="README.md" ;; build) args="build --check" ;; sweep) args="sweep --tracked dtd/sigil" ;; check) args="check README.md" ;; *) args="$s" ;; esac
@@ -250,6 +253,13 @@ rm -f checker/zz-m33-runner.sh
 printf '### 🩺 Scope\n\n%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high" confidence="measured">the grammar opens a finding as\n<finding file="y" line="2"\nand closes it later</finding>\n\n### 🩺 Verdict\n\nsound\n\n### 🩺 Next\n\nnothing\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m34.md"
 out34=$(bash checker/companion-audit.sh --score "$T/m34.md" p a..b opus 2>&1); r34=$?
 [ $r34 -eq 1 ] && echo "$out34" | grep -q 'findings=0 sound=0' && echo "$out34" | grep -q 'a fail with no high finding' && ok "M34 a finding element split across lines and a quoted opening tag at column zero are neither counted nor faulted: findings=0, the fail refused for its high count" || { ko "M34 exit=$r34: $(echo "$out34" | head -1 | cut -c1-160)"; }
+# M35: the first audit of a phase, whose raw stream did not exist before, scores instead of reading its own output as a changed tree (a claude that answers a pass at once)
+mkdir -p "$T/bin35" "$T/out35"
+printf '%s\n' '#!/usr/bin/env bash' 'printf %s "{\"result\":\"### 🩺 Scope\\n\\nphase=ctl-first range=v8.0.0..HEAD model=opus\\n\\n### 🩺 Findings\\n\\nnone\\n\\n### 🩺 Verdict\\n\\nsound\\n\\n### 🩺 Next\\n\\nnothing\\n\\nCOMPANION VERDICT: pass\\n\",\"num_turns\":1,\"total_cost_usd\":0,\"duration_ms\":1,\"is_error\":false,\"subtype\":\"success\"}"' > "$T/bin35/claude"; chmod +x "$T/bin35/claude"
+printf '@bash "%%~dp0claude" %%*\r\n' > "$T/bin35/claude.cmd"
+[ ! -e "$T/out35/companion-ctl-first.json" ] || { echo "M35 the raw stream pre-exists"; fail=$((fail+1)); }
+out35=$(PATH="$T/bin35:$PATH" bash checker/companion-audit.sh ctl-first v8.0.0..HEAD "$T/out35" opus 5 60 2>&1); r35=$?
+[ $r35 -eq 0 ] && echo "$out35" | grep -q 'ctl-first PASS' && [ -s "$T/out35/companion-ctl-first.json" ] && ok "M35 the first audit of a phase scores (PASS) and its raw stream lands after the tree is read, never as a changed tree" || { ko "M35 first phase exit=$r35: $(echo "$out35" | grep '^companion:' | tail -2 | tr '\n' ' ' | cut -c1-200)"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"
