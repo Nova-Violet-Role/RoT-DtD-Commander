@@ -160,8 +160,8 @@ count the newest changelog section claims and refuses on disagreement;
 tripped on a planted count, then run over this section, where it found
 the two counts the pass itself had moved. Gate chain 73 commands.
 `node lib/chain.mjs controls`: 25 run, 0 failing; `node lib/typography.mjs
-controls`: 30 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
-9 run, 0 failing.
+controls`: 32 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
+10 run, 0 failing.
 
 ### The companion's third pass: the sweep that under-read its own input
 
