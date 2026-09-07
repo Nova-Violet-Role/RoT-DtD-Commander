@@ -19,8 +19,8 @@
 <text x="42" y="319" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">C29 the AI_SLOP gate on five spots, the tally and the fields; C3 is the strict block, once and</text>
 <text x="42" y="339" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">never twice; C12 the monitor, tripped live; C13 the lagging answer, C14 the trailing call, C17</text>
 <text x="42" y="359" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">the heading-less file judged</text>
-<text x="26" y="379" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">bash checker/checker-controls.sh # M0 to M32: seven mutations refused, one under INCLUDE and the</text>
-<text x="42" y="399" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">untouched file pass, then twenty-six scorer and runner controls</text>
+<text x="26" y="379" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">bash checker/checker-controls.sh # M0 to M34: seven mutations refused, one under INCLUDE and the</text>
+<text x="42" y="399" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">untouched file pass, then twenty-eight scorer and runner controls</text>
 <text x="26" y="419" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">node checker/gate-sync.mjs # every gate command is a run line of the workflow; a line removed or</text>
 <text x="42" y="439" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">a step commented out is reported</text>
 <text x="26" y="459" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">node checker/release-notes.mjs --controls # the release job's notes: an in-progress heading and</text>

@@ -29,7 +29,7 @@ here="$(cd "$(dirname "$0")/.." && pwd -P)"
 refuse() { echo "companion-run: refused: $1"; exit 3; }
 # --table prints every engine and spelling the table grants, one pair per
 # line, for the control that walks them (M30).
-if [ "${1:-}" = "--table" ]; then
+if [ "${1:-}" = "--table" ] && [ $# -eq 1 ]; then
   sed -n 's/^      \([a-z/.-]*\.mjs\)) verbs="\([^"]*\)" ;;$/\1 \2/p' "$0" | while read -r e v; do for s in $v; do echo "$e $s"; done; done
   exit 0
 fi

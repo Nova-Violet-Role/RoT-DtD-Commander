@@ -707,6 +707,26 @@ spelling on a refusal, a usage exit, the ceiling or a usage line, walks
 emits. M32 runs the suite inside itself and reads the refusal by name:
 35 checker controls. The runner treats an unreadable tree as unaudited.
 
+### The companion's twenty-third pass: a control that has never been red
+
+The twenty-third pass returned fail with four findings, one high: M9
+asserted exit 1 alone, and the scorer exits 1 on every path but a pass,
+so M9 could never trip whatever the scorer did. The lower three: the
+table's `cache controls` was read as a writer because its output prints
+paths relative to its temp root; `--table` returned before the syntax
+scan; and a companion quoting `<finding file=` at column zero in a body
+would have added a phantom element to the count.
+
+M9 asserts the FAIL path by its own line, its plant carries the four
+headings, and M33 proves it by gutting the high count in a copy of the
+scorer and reading M9's plant refused for LAW.COMPANION.4. The scorer
+counts an element as one whole line, opened and closed, and M34 plants a
+quoted opening tag at column zero and a split element and reads neither
+counted. `tree_state` reads the ignored artifact directories an engine
+could write under, and M25 plants under `artifacts/cache/` as well as at
+the root: 37 checker controls. The cache controls say every path they
+print is under a temp root; `--table` takes no argument.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate

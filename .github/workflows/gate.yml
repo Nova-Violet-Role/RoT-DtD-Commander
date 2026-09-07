@@ -65,7 +65,7 @@ jobs:
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, three planted controls)
         run: node checker/contract-audit.mjs
-      - name: checker controls (M0 to M32 - seven mutations refused, one under INCLUDE and the untouched file pass, twenty-six scorer and runner controls)
+      - name: checker controls (M0 to M34 - seven mutations refused, one under INCLUDE and the untouched file pass, twenty-eight scorer and runner controls)
         run: bash checker/checker-controls.sh
       - name: spdx sweep
         run: bash checker/spdx-sweep.sh

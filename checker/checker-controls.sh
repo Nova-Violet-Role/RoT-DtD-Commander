@@ -10,7 +10,8 @@
 # each expected to score as its law says, two verdict lines and none among
 # them; M17: the runner's allow-list, a copy granting Write refused, M17b a
 # bare Bash refused, M17c the bare timeout refused; M20 to M22: the run
-# stamp and the four headings; M23 to M32: the wrapper checker/companion-run.sh
+# stamp and the four headings; M33 and M34: M9's mutation proof and a quoted
+# element; M23 to M32: the wrapper checker/companion-run.sh
 # (the old prefix grant refused, its refusals tripped, git config and the
 # engines by the table, the bare arms, every granted spelling walked under
 # the tree state), a changed tree, a fired ceiling, the permission mode, the
@@ -36,7 +37,7 @@ export ROT_CHECKER_CONTROLS_RUNNING=1
 T=$(mktemp -d)
 # M25 plants a file at the repository root to move the tree state; a kill
 # between the write and the rm must not leave it behind
-trap 'rm -f zz-tree-control.tmp' EXIT
+trap 'rm -f zz-tree-control.tmp artifacts/cache/zz-tree-control.nt checker/zz-m33-runner.sh' EXIT
 mkdir -p "$T/commands"
 cp commands/pareto-dtd.md "$T/commands/pareto-dtd.md"
 fail=0
@@ -99,8 +100,9 @@ out=$(run "$T/commands/pareto-dtd.md"); echo "$out" | grep -q 'failed 0' && ok "
 # M9..M17: the companion scorer on planted answers (LAW.COMPANION.3, 4 and 6) and the runner's allow-list (1 and 2)
 scope="phase=p range=a..b model=opus"
 score() { bash checker/companion-audit.sh --score "$1" p a..b opus >/dev/null 2>&1; }
-printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high" confidence="measured">planted</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m9.md"
-score "$T/m9.md"; rc=$?; [ $rc -eq 1 ] && ok "M9 a fail with a high finding in the element spelling scores as a fail (exit 1)" || { ko "M9 exit=$rc"; }
+printf '### 🩺 Scope\n\n%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high" confidence="measured">planted</finding>\n\n### 🩺 Verdict\n\nsound\n\n### 🩺 Next\n\nnothing\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m9.md"
+# M9 asserts the FAIL path by its own line, not exit 1 alone: the scorer exits 1 on every path but a pass (twenty-third companion pass)
+out=$(bash checker/companion-audit.sh --score "$T/m9.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q '^companion: p FAIL$' && ! echo "$out" | grep -q 'broken' && ok "M9 a fail with a high finding in the element spelling scores as a fail through the FAIL path itself (exit 1, no law named broken)" || { ko "M9 exit=$rc: $(echo "$out" | tail -1 | cut -c1-120)"; }
 printf '%s\n\n### 🩺 Findings\n\n**high · measured · x:1** planted in the bold spelling\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m10.md"
 out=$(bash checker/companion-audit.sh --score "$T/m10.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'high findings=0' && echo "$out" | grep -q 'a fail with no high finding' && ok "M10 a bold line is not a finding: high findings=0 and the fail is refused" || { ko "M10 exit=$rc"; }
 printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="low" confidence="measured">planted</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m11.md"
@@ -177,7 +179,9 @@ bash $w git rev-parse HEAD >/dev/null 2>&1; r24f=$?
 [ $r24a -eq 3 ] && [ $r24b -eq 3 ] && [ $r24c -eq 3 ] && [ $r24d -eq 3 ] && echo "$out24d" | grep -q 'shell syntax' && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit and a redirect argument (exit 3 each) and runs an engine and a reading git verb" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f"; }
 # M25: a tree that changed during the audit is read as a breach of LAW.COMPANION.1
 t0=$(bash checker/companion-audit.sh --tree-state); printf 'planted\n' > zz-tree-control.tmp; t1=$(bash checker/companion-audit.sh --tree-state); rm -f zz-tree-control.tmp
-[ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && ok "M25 a file planted during the audit moves the tree state the runner compares before and after the session" || { ko "M25 the tree state did not move"; }
+# and under an ignored artifact directory, which the plain status never lists
+mkdir -p artifacts/cache; printf 'planted\n' > artifacts/cache/zz-tree-control.nt; t2=$(bash checker/companion-audit.sh --tree-state); rm -f artifacts/cache/zz-tree-control.nt
+[ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && [ "$t0" != "$t2" ] && echo "$t2" | grep -q 'artifacts/cache/zz-tree-control.nt' && ok "M25 a file planted during the audit moves the tree state the runner compares, at the root and under an ignored artifact directory" || { ko "M25 the tree state did not move for both plants"; }
 # M26: LAW.COMPANION.5: a ceiling that fires is UNAUDITED, exit 124, never a pass; a claude that sleeps past a one-second ceiling
 mkdir -p "$T/bin" "$T/out"; printf '#!/usr/bin/env bash\nsleep 8\n' > "$T/bin/claude"; chmod +x "$T/bin/claude"
 # on the Windows leg node finds a command through PATHEXT, so the sleeping twin is a .cmd
@@ -235,6 +239,17 @@ allow_ok "$T/m31.sh"; r31=$?
 # M32: a control suite inside a control suite is refused by name (the mark every child inherits)
 out32=$(ROT_CHECKER_CONTROLS_RUNNING=1 bash checker/checker-controls.sh 2>&1); r32=$?
 [ $r32 -eq 3 ] && echo "$out32" | grep -q 'a control suite inside a control suite' && ok "M32 the suite refuses to run inside itself, exit 3 by name: no table and no engine can fork it" || { ko "M32 nested suite exit=$r32"; }
+# M33: the mutation proof of M9: a scorer whose high count is gutted refuses M9's plant for LAW.COMPANION.4, so M9 can go red
+# the copy sits under checker/ so its own here resolves to this repository; the trap removes it
+sed 's/^  nhigh=.*/  nhigh=0/' checker/companion-audit.sh > checker/zz-m33-runner.sh
+grep -q '^  nhigh=0$' checker/zz-m33-runner.sh || { echo "M33 mutation did not land"; fail=$((fail+1)); }
+out33=$(bash checker/zz-m33-runner.sh --score "$T/m9.md" p a..b opus 2>&1); r33=$?
+rm -f checker/zz-m33-runner.sh
+[ $r33 -eq 1 ] && echo "$out33" | grep -q 'a fail with no high finding' && ! echo "$out33" | grep -q '^companion: p FAIL$' && ok "M33 with the high count gutted, M9's plant is refused for LAW.COMPANION.4 and the FAIL line never prints: M9 can go red" || { ko "M33 gutted scorer exit=$r33"; }
+# M34: a finding element quoted at column zero in a body, unclosed on its line, is prose, never a phantom element (LAW.COMPANION.3)
+printf '### 🩺 Scope\n\n%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="high" confidence="measured">the grammar opens a finding as\n<finding file="y" line="2"\nand closes it later</finding>\n\n### 🩺 Verdict\n\nsound\n\n### 🩺 Next\n\nnothing\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m34.md"
+out34=$(bash checker/companion-audit.sh --score "$T/m34.md" p a..b opus 2>&1); r34=$?
+[ $r34 -eq 1 ] && echo "$out34" | grep -q 'findings=0 sound=0' && echo "$out34" | grep -q 'a fail with no high finding' && ok "M34 a finding element split across lines and a quoted opening tag at column zero are neither counted nor faulted: findings=0, the fail refused for its high count" || { ko "M34 exit=$r34: $(echo "$out34" | head -1 | cut -c1-160)"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"

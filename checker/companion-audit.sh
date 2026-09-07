@@ -56,9 +56,12 @@ score() {
   local last nverdict nfind nsound nhigh scope_ok stamp_ok heads
   last="$(grep -v '^[[:space:]]*$' "$log" | tail -1)"
   nverdict=$(grep -c '^COMPANION VERDICT' "$log")
-  nfind=$(grep -c '^<finding ' "$log")
-  nhigh=$(grep '^<finding ' "$log" | sed 's/>.*//' | grep -c 'severity="high"')
-  nsound=$(grep '^<finding ' "$log" | sed 's/>.*//' | grep -E ' file="[^"]+"' | grep -E ' line="[^"]+"' | grep -E ' severity="(high|medium|low)"' | grep -c -E ' confidence="(measured|reasoned|guessed)"')
+  # An element is one whole line, opened and closed: a companion quoting the
+  # grammar it audits may write `<finding file=` at column zero in a body, and
+  # that is prose (twenty-third companion pass, M34).
+  nfind=$(grep -c -E '^<finding .*</finding>$' "$log")
+  nhigh=$(grep -E '^<finding .*</finding>$' "$log" | sed 's/>.*//' | grep -c 'severity="high"')
+  nsound=$(grep -E '^<finding .*</finding>$' "$log" | sed 's/>.*//' | grep -E ' file="[^"]+"' | grep -E ' line="[^"]+"' | grep -E ' severity="(high|medium|low)"' | grep -c -E ' confidence="(measured|reasoned|guessed)"')
   scope_ok=$(grep -c -F -x "phase=$phase range=$range model=$model" "$log")
   echo "companion: last line: $last; verdict lines=$nverdict; findings=$nfind sound=$nsound; high findings=$nhigh; scope line=$scope_ok"
   [ "$nverdict" -eq 1 ] || { echo "companion: LAW.COMPANION.4 broken, $nverdict verdict lines"; return 1; }
@@ -106,8 +109,12 @@ fi
 tree_state() {
   local i out
   for i in 1 2 3 4 5; do
-    if out="$(git -C "$here" rev-parse HEAD 2>/dev/null && git -C "$here" status --porcelain 2>/dev/null)"; then printf '%s
-' "$out"; return 0; fi
+    # the porcelain status, and the ignored artifact directories an engine
+    # could write under (cache, sigil, research), which the plain status never
+    # lists (twenty-third companion pass, M25 plants under one)
+    # ls-files lists the ignored files one by one; status collapses an ignored
+    # directory to its name, so a file planted inside would read as no change
+    if out="$(git -C "$here" rev-parse HEAD 2>/dev/null && git -C "$here" status --porcelain 2>/dev/null && git -C "$here" ls-files --others --ignored --exclude-standard -- artifacts/cache artifacts/sigil artifacts/research 2>/dev/null)"; then printf '%s\n' "$out"; return 0; fi
     sleep 1
   done
   echo "tree_state: git status failed five times"; return 1
