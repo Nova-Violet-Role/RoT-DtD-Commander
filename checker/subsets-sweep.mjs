@@ -39,11 +39,16 @@ export function blocks(text) {
   const out = [];
   heads.forEach((h, k) => {
     const stop = k + 1 < heads.length ? heads[k + 1] : lines.length;
+    // Four of the blocks open with a bare fence and no language tag, and a
+    // grammar that carries three backticks would be fenced with four; the
+    // block closes on the fence it opened with.
     let open = -1;
     let close = -1;
+    let fence = '';
     for (let i = h + 1; i < stop; i++) {
-      if (open < 0 && lines[i] === '```dtd') open = i;
-      else if (open >= 0 && lines[i] === '```') close = i;
+      const m = open < 0 ? /^(`{3,4})(dtd)?$/.exec(lines[i]) : null;
+      if (m) { open = i; fence = m[1]; continue; }
+      if (open >= 0 && lines[i] === fence) close = i;
     }
     if (open < 0 || close < 0) return;
     const bodyStart = offsets[open + 1];

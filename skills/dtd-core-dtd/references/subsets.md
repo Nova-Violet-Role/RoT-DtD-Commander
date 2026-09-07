@@ -288,7 +288,7 @@ How a command reads its argument string at launch: the args and word elements, A
 
 <!-- How a word of the argument string may be embedded in what the command
      writes: the four trust classes the DTD gives it, and the one it never
-     gets. Mirrors the $ARGUMENTS variant tables: PCDATA escapes, a CDATA
+     gets. Mirrors the ARGUMENTS variant tables of the byproducts: PCDATA escapes, a CDATA
      section is the quoted heredoc, NDATA is a reference never read, and a
      parameter entity never takes user input. -->
 <!ENTITY ARG.embed.pcdata  "as parsed text: the ampersand, less-than and greater-than escaped, whitespace normalised">
@@ -871,7 +871,7 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
   the operator writes specs in, a shell heredoc, a YAML document, a
   NestedText document, an XML document with a DOCTYPE, or a polyglot that
   is valid in more than one of them at once. The table cut from the
-  $ARGUMENTS variant references says, for each schematic, what a literal
+  ARGUMENTS variant reference (the byproducts document) says, for each schematic, what a literal
   string is, what an expanded one is, how a value is referenced, defined,
   escaped, commented, included, made conditional, typed, or left unparsed.
   Each cell is a SCHEMA entity, so a creator that writes a prompt in a
