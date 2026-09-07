@@ -606,7 +606,7 @@ want the grammar enforced rather than merely declared.
      | the version is one everywhere: package.json, plugin.json, both marketplace fields, CITATION.cff, the top changelog section, a RELEASE.md heading, and the tag that ships | `node checker/release-notes.mjs --versions`, and the release job with the tag; controls plant a stray manifest, a missing heading and a wrong tag | every push, and the tag |
      | armed, the AI_SLOP gate judges every answer at Stop and every Write, Edit, NotebookEdit, commit message, request body and subagent answer before it lands, strict, with a fence or a quoted element as the only escape | `node bin/adiutor.mjs controls` C21 to C29; `node lib/ai-slop.mjs controls` trips the comment lifter, the command parser and the refusal | every push |
      | a scratch is a git worktree that is opened on its own branch, diffed into findings with counts, merged by marked paths or whole, and discarded with its branch | `node lib/scratch.mjs controls`: `11 run, 0 failing`, among them the red-gate revert and the refusal to overwrite newer work | every push |
-     | every count the repository publishes (the badges, the tagline, the claims rows, the three manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the checker controls, the declarations | `node checker/counts-sweep.mjs`: `57 places in step`; `--controls` plants a stale badge, a stale count in words and a removed count | every push |
+     | every count the repository publishes (the badges, the tagline, the claims rows, the three manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the checker controls, the declarations | `node checker/counts-sweep.mjs`: `60 places in step`; `--controls` plants a stale badge, a stale count in words and a removed count | every push |
      | the growth ladder is fifteen verbs partitioned into three bands with no overlap and no gap, a possibility keeps one id across runs, a refusal returns only as a reopen, the page grows with the answering, and the version a release publishes is the one its own recognizer computes | `node lib/amplify.mjs controls`: `36 run, 0 failing`, among them a ceiling tripped on purpose, a refusal reopened, a study missing a kind refused, and a manifest version the recognizer disputes | every push |
      | the lists refuse a mix that would leave a repository unable to build itself, an entry name that would close its own declaration, a code class the starlist cannot reach, and a write of a blacklisted filetype at the moment it is attempted | `node lib/list.mjs controls`: `47 run, 0 failing` | every gate run |
      | every subset the repository declares is installed, and a version the recognizer disputes is refused | `rdc doctor` row `subsets`: `18 subsets, every one installed` (run against your own installation, not in CI); `node checker/release-notes.mjs --versions`: the recognised class and version printed beside the manifests | every push |
@@ -702,7 +702,7 @@ Ko-fi buys time, never priority. Proving a number on this page wrong is worth mo
 
 ### 🙏 Standing on other people's work
 
-Lex Christopherson's taches-cc-resources (MIT), from which thirty-three commands and eleven skills were converted with their prose retained; the vhs and ttyd authors. The full provenance, including what was deliberately left out, is in NOTICE.md.
+Lex Christopherson's taches-cc-resources (MIT), from which the twenty-four commands and ten skills that carry its MIT today were converted with their prose retained; the vhs and ttyd authors. The full provenance, including what was deliberately left out, is in NOTICE.md.
 -->
 
 <!-- the links the plate draws but cannot make clickable -->
@@ -719,7 +719,7 @@ Lex Christopherson's taches-cc-resources (MIT), from which thirty-three commands
      checker/plates.mjs renders the plate from it and holds the file to the render.
      Nothing here is hidden that the plate does not also show.
 
-AGPL-3.0-or-later OR EUPL-1.2, at your option, for every file in this repository. Root LICENSE is the AGPL text (the one GitHub reads); LICENSE-EUPL-1.2 sits beside it; LICENSES/ holds both plus the upstream MIT for tooling. Forty-four converted files carry an MIT portions line in their header. Copyleft on purpose: what is shared here cannot be enclosed later, by anyone, including us.
+AGPL-3.0-or-later OR EUPL-1.2, at your option, for every file in this repository. Root LICENSE is the AGPL text (the one GitHub reads); LICENSE-EUPL-1.2 sits beside it; LICENSES/ holds both plus the upstream MIT for tooling. 156 converted files carry the upstream MIT in their SPDX expression, (AGPL-3.0-or-later OR EUPL-1.2) AND MIT, with the author's copyright line; REUSE.toml covers the JSON, JSONL and GIF files no comment can head, and checker/spdx-sweep.sh holds every tracked file to one of the three. Copyleft on purpose: what is shared here cannot be enclosed later, by anyone, including us.
 
 <div align="center">
 

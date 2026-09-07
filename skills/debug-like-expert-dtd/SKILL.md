@@ -3,9 +3,10 @@ name: debug-like-expert-dtd
 description: "Deep analysis debugging mode for complex issues. Activates methodical investigation protocol with evidence gathering, hypothesis testing, and rigorous verification. Use when standard troubleshooting fails or when issues require systematic root cause analysis. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
 ---
 
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 
 <!DOCTYPE investigation [
   

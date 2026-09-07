@@ -1,6 +1,7 @@
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 # CLI and API Automation Reference
 
 **Core principle:** If it has a CLI or API, Claude does it. Never ask the human to perform manual steps that Claude can automate.

@@ -1,6 +1,7 @@
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 # Validation Checkpoints
 
 Reusable validation commands, one block per step. Run the block before the step it names, in the foreground with stdin closed, and read the exit code directly; go on only when it is zero, and when it is not, the log the block names says why.

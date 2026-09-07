@@ -1,6 +1,7 @@
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 
 <overview>
 Debugging is applied scientific method. You observe a phenomenon (the bug), form hypotheses about its cause, design experiments to test those hypotheses, and revise based on evidence. This isn't metaphorical - it's literal experimental science.

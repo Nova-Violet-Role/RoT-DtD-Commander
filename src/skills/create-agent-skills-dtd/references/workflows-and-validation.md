@@ -1,6 +1,7 @@
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 <overview>
 
 This reference covers patterns for complex workflows, validation loops, and feedback cycles in skill authoring. All patterns use pure XML structure.

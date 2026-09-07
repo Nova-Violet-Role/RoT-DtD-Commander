@@ -1,6 +1,7 @@
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 <overview>
 
 Standard metadata structure for research and plan outputs. Include it in every research, plan and refine prompt, so the next stage reads the confidence, the dependencies, the open questions and the assumptions from one block instead of hunting for them across the answer.

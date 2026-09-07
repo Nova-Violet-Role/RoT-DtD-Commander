@@ -387,7 +387,9 @@ async function cmdInstall(o) {
 
   for (const rel of runtimeFiles(ROOT)) {
     const src = join(ROOT, rel);
-    if (!existsSync(src)) continue;
+    // A RUNTIME entry with no file used to be dropped in silence and the
+    // install reported success without it (thirteenth companion pass).
+    if (!existsSync(src)) { console.log(`  MISSING runtime ${rel}: RUNTIME names a file the tree does not have`); failed++; continue; }
     writeOne(src, join(target, NAME, rel), `runtime ${rel}`, false);
   }
 

@@ -3,9 +3,10 @@ name: create-mcp-servers-dtd
 description: "Create Model Context Protocol (MCP) servers that expose tools, resources, and prompts to Claude. Use when building custom integrations, APIs, data sources, or any server that Claude should interact with via the MCP protocol. Supports both TypeScript and Python implementations. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
 ---
 
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 
 <!DOCTYPE mcp_creation [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">

@@ -456,6 +456,32 @@ LF, never a file with a NUL byte, with a planted file and a planted GIF
 (`node lib/encoding.mjs controls`: 6 run, 0 failing); the schematic ends
 with LF. The root-documents step runs all nine and the hosted doc.
 
+### The companion's thirteenth pass: the badge, the licence texts and the last four folders
+
+The thirteenth pass, given ninety turns after the first attempt spent
+sixty reading, returned fail with five findings, one high, and reached
+LICENSES, agents, bin and monitors. The README wore a REUSE badge while
+eighteen tracked files (every JSON, JSONL and GIF) carried no SPDX tag,
+no sidecar and no `REUSE.toml`, and the SPDX sweep skipped exactly those
+extensions and reported 0 missing over them; `LICENSES/MIT.txt` was
+referenced by no SPDX expression, the upstream MIT living only in a prose
+Portions line; the installer dropped a `RUNTIME` entry whose file is
+absent in silence; and the contract auditor's description named four
+shared subsets of nineteen.
+
+`REUSE.toml` covers the three extensions under the dual licence. The
+156 files converted from taches-cc-resources carry `(AGPL-3.0-or-later OR
+EUPL-1.2) AND MIT` and the upstream author's `SPDX-FileCopyrightText`, so
+the MIT text is used by the expression that names it. `checker/spdx-sweep.sh`
+has no skip list: a tracked file carries one of the two expressions, or
+matches an annotation path of `REUSE.toml`, or is a licence text, or it is
+missing; its control plants a tagless `.md`, a tagless `.bin` and a
+tagless `.json` and reads missing move by two and covered by one. The
+installer fails by name on a `RUNTIME` file the tree lacks. The agent
+description says every `dtd/cc-*.dtd`, nineteen of them, and the counts
+sweep holds that word, the licence plate's converted count and the
+supporting plate's converted commands and skills to the tree: 60 places.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
@@ -518,7 +544,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 57 places, from 22.
+counts sweep reported every place in step: the sweep reads 60 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document

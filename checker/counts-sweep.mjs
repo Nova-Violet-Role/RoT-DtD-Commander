@@ -96,6 +96,13 @@ export function measure(root = ROOT) {
   // reference quotes, counted by heading.
   const rules = Math.max(...[...readFileSync(join(root, 'lib', 'dtd.mjs'), 'utf8').matchAll(/\/\/ C(\d+):/g)].map((m) => Number(m[1])));
   const quotedGrammars = (readFileSync(join(root, 'src', 'skills', 'dtd-core-dtd', 'references', 'subsets.md'), 'utf8').match(/^## [a-z-]+\.dtd$/gm) || []).length;
+  // Thirteenth companion pass: the shared subsets by count, and the files
+  // converted from taches-cc-resources by the MIT in their SPDX expression.
+  const sharedSubsets = readdirSync(join(root, 'dtd')).filter((f) => /^cc-[a-z-]+\.dtd$/.test(f)).length;
+  const mitOut = runOut('git grep -l -F EUPL-1.2) -- src');
+  const mitFiles = mitOut.split(/\r?\n/).filter((l) => /^src\//.test(l));
+  const mitCommands = mitFiles.filter((l) => /^src\/commands\//.test(l)).length;
+  const mitSkills = new Set(mitFiles.filter((l) => /^src\/skills\//.test(l)).map((l) => l.split('/')[2])).size;
   // Eighth companion pass: a published number nobody re-read. The release
   // notes suite total, the control suites of the gate chain (every
   // controls: script of package.json) and the claims rows of the README.
@@ -112,7 +119,7 @@ export function measure(root = ROOT) {
   const schematics = cmdNames.filter((f) => /^create-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   const creators = schematics + cmdNames.filter((f) => /^create-meta-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   return {
-    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims, rules, quotedGrammars,
+    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims, rules, quotedGrammars, sharedSubsets, mitFiles: mitFiles.length, mitCommands, mitSkills,
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, mutationsRefused, declarations: Number(m[1]) };
@@ -184,6 +191,12 @@ export function places(c) {
     { file: 'CITATION.cff', re: /(\d+) Claude Code slash commands, (\d+) skills and (\d+) agents/, want: [c.commands, c.skills, c.agents], label: 'the citation abstract, counts' },
     { file: 'CITATION.cff', re: /([a-z-]+) guards trip on purpose/, want: [c.guards], label: 'the citation abstract, guards' },
     { file: 'src/skills/dtd-core-dtd/SKILL.md', re: /the (\d+) grammars quoted verbatim/, want: [c.quotedGrammars], label: 'the dtd-core skill, quoted grammars' },
+    // Thirteenth companion pass: the agent's routing surface named four
+    // subsets of nineteen, and the licence plate counted forty-four
+    // converted files where the SPDX expression says how many.
+    { file: 'src/agents/dtd-contract-auditor.md', re: /every dtd\/cc-\*\.dtd, ([a-z-]+) of them/, want: [c.sharedSubsets], label: 'the contract auditor description, shared subsets' },
+    { file: 'README.md', re: /(\d+) converted files carry the upstream MIT/, want: [c.mitFiles], label: 'the licence plate prose of the converted files' },
+    { file: 'README.md', re: /the ([a-z-]+) commands and ([a-z-]+) skills that carry its MIT today/, want: [c.mitCommands, c.mitSkills], label: 'the supporting plate prose of the converted commands and skills' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },
     { file: 'CHANGELOG.md', re: /matrix --check`, (\d+) controls\./, want: [c.crossOsControls], label: 'the changelog cross-os prose' },
     { file: 'CHANGELOG.md', re: /lib\/geometry\.mjs controls`: (\d+) run/, want: [c.geometryControls], label: 'the changelog geometry controls' },

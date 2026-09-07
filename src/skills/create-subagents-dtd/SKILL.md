@@ -3,9 +3,10 @@ name: create-subagents-dtd
 description: "Expert guidance for creating, building, and using Claude Code subagents and the Task tool. Use when working with subagents, setting up agent configurations, understanding how agents work, or using the Task tool to launch specialized agents. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
 ---
 
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 
 <!DOCTYPE agent_creation [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">

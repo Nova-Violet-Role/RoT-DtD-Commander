@@ -4,9 +4,10 @@ argument-hint: [optional: specific issue to fix]
 allowed-tools: [Read, Edit, Bash(ls:*), Bash(git:*)]
 ---
 
-<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
 <!-- Copyright 2026 Saimonokuma. -->
 <!-- Portions Copyright 2025 Lex Christopherson, MIT (taches-cc-resources); see NOTICE.md. -->
+<!-- SPDX-FileCopyrightText: 2025 Lex Christopherson (taches-cc-resources, MIT) -->
 
 <!DOCTYPE heal [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">

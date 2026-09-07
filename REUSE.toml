@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+#
+# REUSE.toml (REUSE specification 3.3): the licensing of every tracked file
+# that cannot carry a comment. Source files carry their own SPDX header;
+# the converted files carry (AGPL-3.0-or-later OR EUPL-1.2) AND MIT with
+# the upstream author's copyright line; the licence texts under LICENSES/
+# and the LICENSE* files are the texts themselves. What remains is JSON,
+# JSONL and GIF, covered here. checker/spdx-sweep.sh reads these paths and
+# refuses a tagless file none of them matches (thirteenth companion pass
+# on 9.0.0: the badge said compliant and eighteen files were covered by
+# nothing).
+version = 1
+SPDX-PackageName = "RoT DtD Commander"
+SPDX-PackageSupplier = "Saimonokuma <https://github.com/Nova-Violet-Role>"
+SPDX-PackageDownloadLocation = "https://github.com/Nova-Violet-Role/RoT-DtD-Commander"
+
+[[annotations]]
+path = ["**/*.json", "**/*.jsonl", "docs/gifs/*.gif"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Saimonokuma"
+SPDX-License-Identifier = "AGPL-3.0-or-later OR EUPL-1.2"
