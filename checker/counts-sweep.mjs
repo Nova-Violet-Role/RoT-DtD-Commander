@@ -102,7 +102,7 @@ export function measure(root = ROOT) {
   const dtdFiles = readdirSync(join(root, 'dtd')).filter((f) => f.endsWith('.dtd')).length;
   // Twenty-second companion pass: the security page described a grant three
   // rewrites old; its ceiling is read from the wrapper.
-  const wrapperCeiling = Number((/ceiling\.mjs" (\d+) node "\$abs"/.exec(readFileSync(join(root, 'checker', 'companion-run.sh'), 'utf8')) || [])[1] || 0);
+  const wrapperCeiling = Number((/^CEILING=(\d+)$/m.exec(readFileSync(join(root, 'checker', 'companion-run.sh'), 'utf8')) || [])[1] || 0);
   const mitOut = runOut('git grep -l -F EUPL-1.2) -- src');
   const mitFiles = mitOut.split(/\r?\n/).filter((l) => /^src\//.test(l));
   const mitCommands = mitFiles.filter((l) => /^src\/commands\//.test(l)).length;

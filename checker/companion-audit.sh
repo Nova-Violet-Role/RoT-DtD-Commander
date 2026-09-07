@@ -84,9 +84,10 @@ score() {
   # LAW.COMPANION.8: the four elements of the grammar appear as their
   # headings in declared order; a pass without them is not a pass.
   # awk splits the heading byte-wise: the sigil is the second field, the word
-  # the third; only the four declared words count, so a heading the companion
-  # quotes from a file it audits never adds a fifth
-  heads="$(awk '/^### / && NF >= 3 && ($3 == "Scope" || $3 == "Findings" || $3 == "Verdict" || $3 == "Next") { print $3 }' "$log" | tr '\n' ' ')"
+  # the third; only the four declared words count, and a line inside a fence
+  # is quotation, so a previous record the companion quotes fenced never
+  # adds a heading (twenty-ninth companion pass, M37)
+  heads="$(awk '/^```/ { f = !f; next } !f && /^### / && NF >= 3 && ($3 == "Scope" || $3 == "Findings" || $3 == "Verdict" || $3 == "Next") { print $3 }' "$log" | tr '\n' ' ')"
   if [ "$last" = "$vpass" ]; then
     [ "$heads" = "Scope Findings Verdict Next " ] || { echo "companion: LAW.COMPANION.8 broken, the headings read '${heads}' and not 'Scope Findings Verdict Next '"; return 1; }
     echo "companion: $phase PASS"; return 0
@@ -107,7 +108,8 @@ fi
 
 # git status refreshes the index and fails on a transient index.lock when
 # another git process holds it; a failed reading is retried, never compared
-# (M30 walks seventy spellings and reads the state twice for each).
+# (M30 walks every spelling the table grants, 67 at 9.0.0, and reads the
+# state around the walk).
 tree_state() {
   local i out
   for i in 1 2 3 4 5; do

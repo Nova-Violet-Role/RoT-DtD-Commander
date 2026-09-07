@@ -12,6 +12,7 @@
 # bare Bash refused, M17c the bare timeout refused; M20 to M22: the run
 # stamp and the four headings; M33 and M34: M9's mutation proof and a quoted
 # element; M35: the first audit of a phase; M36: the nested session's hook;
+# M37: a fenced quotation of the headings;
 # M23 to M32: the wrapper checker/companion-run.sh
 # (the old prefix grant refused, its refusals tripped, git config and the
 # engines by the table, the bare arms, every granted spelling walked under
@@ -272,7 +273,7 @@ printf '@bash "%%~dp0claude" %%*\r\n' > "$T/bin35/claude.cmd"
 [ ! -e "$T/out35/companion-ctl-first.json" ] || { echo "M35 the raw stream pre-exists"; fail=$((fail+1)); }
 out35=$(PATH="$T/bin35:$PATH" bash checker/companion-audit.sh ctl-first v8.0.0..HEAD "$T/out35" opus 5 60 2>&1); r35=$?
 [ $r35 -eq 0 ] && echo "$out35" | grep -q 'ctl-first PASS' && [ -s "$T/out35/companion-ctl-first.json" ] && ok "M35 the first audit of a phase scores (PASS) and its raw stream lands after the tree is read, never as a changed tree" || { ko "M35 first phase exit=$r35: $(echo "$out35" | grep '^companion:' | tail -2 | tr '\n' ' ' | cut -c1-200)"; }
-# M36: the nested session's hook, five payloads piped through the binary: a chain after the wrapper, a redirect, a bare command, a writing tool and a wrapper call sent to the background are each blocked (exit 2, the reason on stderr); one wrapper call proceeds
+# M36: the nested session's hook, six payloads piped through the binary, five blocked and one passed: a chain after the wrapper, a redirect, a bare command, a writing tool and a wrapper call sent to the background are each blocked (exit 2, the reason on stderr); one wrapper call proceeds
 node checker/companion-guard.mjs controls >/dev/null 2>&1; r36a=$?
 hook() { printf '%s' "$1" | node checker/companion-guard.mjs >/dev/null 2>"$T/m36.err"; echo $?; }
 w36="bash $PWD/checker/companion-run.sh"
@@ -283,7 +284,15 @@ r36g=$(hook "{\"tool_name\":\"Write\",\"tool_input\":{\"file_path\":\"zz-write-c
 r36h=$(hook "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"$w36 git log -1\",\"run_in_background\":true}}"); grep -q 'background' "$T/m36.err"; g36h=$?
 r36c=$(hook "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"$w36 git log -1\"}}")
 grep -q 'companion-guard.mjs' checker/companion-audit.sh && grep -q -- '--settings "$scratch/settings.json"' checker/companion-audit.sh; r36d=$?
-[ $r36a -eq 0 ] && [ "$r36b" = 2 ] && [ $g36b -eq 0 ] && [ "$r36e" = 2 ] && [ $g36e -eq 0 ] && [ "$r36f" = 2 ] && [ $g36f -eq 0 ] && [ "$r36g" = 2 ] && [ $g36g -eq 0 ] && [ "$r36h" = 2 ] && [ $g36h -eq 0 ] && [ ! -e zz-chain-control.tmp ] && [ ! -e zz-redirect-control.tmp ] && [ ! -e zz-write-control.tmp ] && [ "$r36c" = 0 ] && [ $r36d -eq 0 ] && ok "M36 the nested session's PreToolUse hook blocks a chain, a redirect, a bare command, a writing tool and a backgrounded wrapper call (exit 2, each reason on stderr), passes one wrapper call, and the runner installs it through --settings" || { ko "M36 guard: controls=$r36a chain=$r36b/$g36b redirect=$r36e/$g36e bare=$r36f/$g36f write=$r36g/$g36g background=$r36h/$g36h plain=$r36c installed=$r36d"; }
+# the wiring assertion with its mutant: a runner copy without --settings must read as unwired
+sed 's/ --settings "$scratch\/settings.json"//' checker/companion-audit.sh > "$T/m36d.sh"
+grep -q -- '--settings "$scratch/settings.json"' "$T/m36d.sh" && { echo "M36 mutation did not land"; fail=$((fail+1)); }
+grep -q -- '--settings "$scratch/settings.json"' "$T/m36d.sh"; r36m=$?
+[ $r36a -eq 0 ] && [ "$r36b" = 2 ] && [ $g36b -eq 0 ] && [ "$r36e" = 2 ] && [ $g36e -eq 0 ] && [ "$r36f" = 2 ] && [ $g36f -eq 0 ] && [ "$r36g" = 2 ] && [ $g36g -eq 0 ] && [ "$r36h" = 2 ] && [ $g36h -eq 0 ] && [ ! -e zz-chain-control.tmp ] && [ ! -e zz-redirect-control.tmp ] && [ ! -e zz-write-control.tmp ] && [ "$r36c" = 0 ] && [ $r36d -eq 0 ] && [ $r36m -eq 1 ] && ok "M36 the nested session's PreToolUse hook blocks a chain, a redirect, a bare command, a writing tool and a backgrounded wrapper call (exit 2, each reason on stderr), passes one wrapper call, and the runner installs it through --settings (a copy without the flag reads as unwired)" || { ko "M36 guard: controls=$r36a chain=$r36b/$g36b redirect=$r36e/$g36e bare=$r36f/$g36f write=$r36g/$g36g background=$r36h/$g36h plain=$r36c installed=$r36d"; }
+# M37: a pass that quotes a previous record, its four headings inside a fence, still scores: a fenced line is quotation, never a heading (LAW.COMPANION.8)
+printf '### 🩺 Scope\n\n%s\n\n### 🩺 Findings\n\nnone; the previous record read:\n\n```\n### 🩺 Scope\n### 🩺 Findings\n### 🩺 Verdict\n### 🩺 Next\n```\n\n### 🩺 Verdict\n\nsound\n\n### 🩺 Next\n\nnothing\n\nCOMPANION VERDICT: pass\n' "$scope" > "$T/m37.md"
+out37=$(bash checker/companion-audit.sh --score "$T/m37.md" p a..b opus 2>&1); r37=$?
+[ $r37 -eq 0 ] && echo "$out37" | grep -q '^companion: p PASS$' && ok "M37 a pass quoting a previous record's four headings inside a fence still scores: a fenced line is quotation" || { ko "M37 exit=$r37: $(echo "$out37" | tail -1 | cut -c1-120)"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"

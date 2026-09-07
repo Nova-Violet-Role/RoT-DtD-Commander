@@ -825,6 +825,20 @@ opener, `--ext-diff` and `--textconv`. M24 runs `git diff` and `git show
 -p` through the wrapper and reads a patch from each. The three counts
 say four plants and six payloads.
 
+### The companion's twenty-ninth pass: pass
+
+The twenty-ninth pass returned pass at `a999e18`: twenty turns, six
+findings, none high, every one a comment or a count beside an instrument
+that holds. Closed after the pass, before the tag: the wrapper's ceiling
+is one variable its three arms and the security page's place read; the
+scorer counts a heading only outside a fence, and M37 quotes a previous
+record's four headings inside one and still scores a pass; M36 reads a
+runner copy without `--settings` as unwired; the `--table` read runs
+under the ceiling; the two stale comments say six payloads and the
+table's own count: 40 checker controls. Twenty-nine passes audited
+9.0.0, every tracked folder reached, the tenth onward under a focus
+line naming what no pass had touched.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate

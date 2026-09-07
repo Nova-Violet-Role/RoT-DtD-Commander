@@ -12,8 +12,9 @@
 # Bash(node lib/ceiling.mjs 60 node:*) and the git twin, and a prefix grant
 # admits everything after the prefix: node -e with writeFileSync, git commit,
 # git checkout. This wrapper runs an engine of this repository or a git verb
-# that reads, under the portable ceiling (300 s: a suite of controls killed at
-# sixty left its plants in the tree, twenty-first pass) with stdin closed, and refuses by
+# that reads, under the portable ceiling (CEILING below, 300 s: a suite of
+# controls killed at sixty left its plants in the tree, twenty-first pass)
+# with stdin closed, and refuses by
 # name: any other executable, a node flag that evaluates or loads code, a
 # script outside the three engine directories, a git verb that writes, and
 # any argument carrying shell syntax (redirect, pipe, chain, background,
@@ -26,12 +27,17 @@ set -u
 here="$(cd "$(dirname "$0")/.." && pwd -P)"
 # A refusal exits 3, apart from an engine's own 2 (a usage line) and 124 (the
 # ceiling), so a caller can tell the wrapper's no from the engine's.
+# The one ceiling of every run this wrapper makes, read by the security page's
+# place in checker/counts-sweep.mjs; the three arms take it from here.
+CEILING=300
 refuse() { echo "companion-run: refused: $1"; exit 3; }
 # --table prints every engine and spelling the table grants, one pair per
 # line, for the control that walks them (M30).
 if [ "${1:-}" = "--table" ] && [ $# -eq 1 ]; then
-  # a read of this file alone, stdin closed as every other arm's is
-  sed -n 's/^      \([a-z/.-]*\.mjs\)) verbs="\([^"]*\)" ;;$/\1 \2/p' "$0" < /dev/null | while read -r e v; do for s in $v; do echo "$e $s"; done; done
+  # a read of this file alone, under the ceiling with stdin closed as every
+  # other arm's is; the grant names node and git, and this arm names no binary
+  # of its own beyond the sed that reads the table
+  node "$here/lib/ceiling.mjs" "$CEILING" sed -n 's/^      \([a-z/.-]*\.mjs\)) verbs="\([^"]*\)" ;;$/\1 \2/p' "$0" < /dev/null | while read -r e v; do for s in $v; do echo "$e $s"; done; done
   exit 0
 fi
 [ $# -ge 2 ] || refuse "usage: node <engine.mjs> <reading spelling | file> [args] | git <reading verb> [args] | --table"
@@ -146,9 +152,7 @@ case "$tool" in
         printf '%s\n' "$@" | grep -q -x -- '--check' || refuse "build writes; only build --check reads"
       fi
     fi
-    # The ceiling of every engine run, read by the security page's place
-    # (checker/counts-sweep.mjs); the number lives here alone.
-    exec node "$here/lib/ceiling.mjs" 300 node "$abs" "$@" < /dev/null
+    exec node "$here/lib/ceiling.mjs" "$CEILING" node "$abs" "$@" < /dev/null
     ;;
   git)
     if [ "${1:-}" = "-C" ]; then shift 2 || refuse "git -C needs a directory"; fi
@@ -172,8 +176,8 @@ case "$tool" in
     # every patch-producing diff died (twenty-eighth companion pass, M24 runs
     # git diff and git show for a patch now).
     case "$verb" in
-      diff|show|log|diff-tree) exec node "$here/lib/ceiling.mjs" 300 git --no-pager -c core.pager=cat -C "$here" "$verb" --no-ext-diff --no-textconv "$@" < /dev/null ;;
-      *) exec node "$here/lib/ceiling.mjs" 300 git --no-pager -c core.pager=cat -C "$here" "$verb" "$@" < /dev/null ;;
+      diff|show|log|diff-tree) exec node "$here/lib/ceiling.mjs" "$CEILING" git --no-pager -c core.pager=cat -C "$here" "$verb" --no-ext-diff --no-textconv "$@" < /dev/null ;;
+      *) exec node "$here/lib/ceiling.mjs" "$CEILING" git --no-pager -c core.pager=cat -C "$here" "$verb" "$@" < /dev/null ;;
     esac
     ;;
   *) refuse "only node and git are run, not $tool" ;;
