@@ -5,7 +5,7 @@
 // checker/scala.mjs
 // One scala per family, run end to end through a real model on the leg it is
 // on. The scala of a family is its members stacked one command token per
-// line in band order (LAW.CORE.7, cc-chain.dtd), with --no-gate on the first
+// line in band order beneath /chain-dtd --no-gate (CHAIN.declared), or the one
 // line so the chain runs without an operator; a family of one member runs
 // that member alone, which is the other half of the same law: every command
 // runnable alone, every command interoperable in a chain.
@@ -52,6 +52,21 @@ const SIGILS = JSON.parse(readFileSync(join(ROOT, 'dtd', 'sigils.json'), 'utf8')
 // measured the prompts family swallowed while the census said one per
 // family. A scala carries at most CHAIN.max links (LAW.CHAIN.1); a family
 // with more stacks its first CHAIN.max and says how many it left.
+// The prompt a family is measured through. Several tokens are one chain only
+// through /chain-dtd (CHAIN.declared; cc-chain is included by the chain
+// command alone), so a family of two or more opens with the chain token
+// carrying the autonomy token, the members stacked beneath it one per line;
+// a family of one is its one command with the token. The first matrix of
+// 9.1.0 stacked the members without the chain token, the CLI expanded the
+// first as itself with the rest as its user-args, and no grammar in that
+// command declared a chain: 32 chains without a close line and 67 skipped
+// headings on ubuntu and macOS were that prompt, not the commands.
+export function promptOf(tokens) {
+  if (!tokens.length) return '';
+  if (tokens.length === 1) return `/${tokens[0]} --no-gate`;
+  return ['/chain-dtd --no-gate', ...tokens.map((t) => `/${t}`)].join('\n');
+}
+
 export function scalas(root = ROOT, families = FAMILIES) {
   const dir = join(root, 'commands');
   const present = existsSync(dir) ? readdirSync(dir).filter((n) => n.endsWith('.md')).map((n) => n.slice(0, -3)).sort() : [];
@@ -70,7 +85,7 @@ export function scalas(root = ROOT, families = FAMILIES) {
     const kept = found.slice(0, MAX);
     const members = kept.map((r) => r.m);
     const tokens = kept.map((r) => r.token);
-    return { id: f.id, name: f.name, members, tokens, missing, overflow: found.length - kept.length, prompt: tokens.map((t, i) => `/${t}${i === 0 ? ' --no-gate' : ''}`).join('\n') };
+    return { id: f.id, name: f.name, members, tokens, missing, overflow: found.length - kept.length, prompt: promptOf(tokens) };
   });
 }
 
@@ -88,21 +103,28 @@ export function census(all = scalas(), families = FAMILIES) {
 
 // The score. Headings only: a line that starts with ### and the member's
 // sigil. Every member present, in stacked order; a chain closes.
+// A heading is any markdown heading of level three or deeper: the chain
+// renders its own at level three and each link's answer beneath it one level
+// deeper, which is what "under its own root" means in markdown, and the first
+// probe of 9.1.0 measured a chain that ran both links, closed, and was refused
+// for #### alone. Emphasis is stripped before the close line is read, because
+// a bold ran is still a ran.
+const plain = (l) => String(l).replace(/[*`]/g, '');
 export function score(answer, members) {
   const lines = String(answer).split(/\r?\n/);
-  const heads = lines.filter((l) => /^### /.test(l));
+  const heads = lines.filter((l) => /^#{3,6} /.test(l)).map((l) => l.replace(/^#{3,6} /, ''));
   const findings = [];
   let cursor = 0;
   for (const m of members) {
     const key = m.replace(/-dtd$/, '');
     const sig = SIGILS[key];
     if (!sig) { findings.push(`${m} has no sigil in dtd/sigils.json`); continue; }
-    const at = heads.findIndex((h, i) => i >= cursor && h.startsWith(`### ${sig}`));
+    const at = heads.findIndex((h, i) => i >= cursor && h.startsWith(sig));
     if (at < 0) findings.push(`no heading of ${m} (${sig}) after position ${cursor} of ${heads.length} headings`);
     else cursor = at + 1;
   }
   if (members.length >= 2) {
-    const close = lines.find((l) => /chain_close\s+ran\s+\d+/.test(l));
+    const close = lines.map(plain).find((l) => /chain_close\s+ran\s+\d+/.test(l));
     if (!close) findings.push('a chain of two or more carries no chain_close line naming how many ran');
     else {
       const ran = Number((/ran\s+(\d+)/.exec(close) || [])[1]);
@@ -127,9 +149,19 @@ export function runOne(s, { out, model = 'opus', turns = 60, secs = 1500 } = {})
   const raw = join(out, `scala-${s.id}.json`);
   const log = join(out, `scala-${s.id}.md`);
   const ceiling = [join(ROOT, 'lib', 'ceiling.mjs'), String(secs)];
+  // The model runs from the checkout: every command's prose names the runtime
+  // as lib/<x>.mjs relative to the tree, the chain writes its record under
+  // artifacts/chain and each link its own under artifacts/<name>, and the
+  // plan and handoff verbs of lib/chain.mjs are Bash calls the prose spells
+  // with the relative ceiling; both spellings are allowed, and Write is,
+  // because a link that cannot write its record cannot hand it on.
+  // MSYS_NO_PATHCONV: on a Windows leg the Bash tool is Git Bash, which
+  // rewrites an argument that opens with a slash as a path, and the first
+  // stacked token of a plan call arrived as C:/Program Files/Git/<token>.
+  const ceil = join(ROOT, 'lib', 'ceiling.mjs');
   const args = ['-p', s.prompt, '--model', model, '--max-turns', String(turns), '--output-format', 'json', '--add-dir', ROOT,
-    '--allowedTools', `Read,Grep,Glob,Bash(node ${join(ROOT, 'lib', 'ceiling.mjs')} 60 node:*),Bash(node ${join(ROOT, 'lib', 'ceiling.mjs')} 60 git:*)`];
-  const r = spawnSync(process.execPath, [...ceiling, 'claude', ...args], { cwd: out, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ROTMOE_VOICE: '0', CCC_HOOK_AUTOINIT: '0', CLAUDECODE: '' }, maxBuffer: 64 * 1024 * 1024 });
+    '--allowedTools', `Read,Grep,Glob,Write,Bash(node lib/ceiling.mjs 60 node:*),Bash(node lib/ceiling.mjs 60 git:*),Bash(node ${ceil} 60 node:*),Bash(node ${ceil} 60 git:*)`];
+  const r = spawnSync(process.execPath, [...ceiling, 'claude', ...args], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ROTMOE_VOICE: '0', CCC_HOOK_AUTOINIT: '0', CLAUDECODE: '', MSYS_NO_PATHCONV: '1' }, maxBuffer: 64 * 1024 * 1024 });
   writeFileSync(raw, (r.stdout || '') + (r.stderr || ''), 'utf8');
   if (r.status === 124) return { id: s.id, status: 124, unrun: true };
   let j = null;
@@ -237,6 +269,13 @@ export function controls(io = console) {
   const wf = all.find((s) => s.id === 'workflow');
   say(wf && wf.members.includes('RoT-DtD-Commander-Adiutor') && wf.tokens.includes('RoT-DtD-Commander-Adiutor') && wf.missing.length === 0,
     `the workflow scala resolves the Adiutor by its own filename: ${wf ? wf.members.length : 0} members, ${wf ? wf.missing.length : '?'} missing`);
+  const nested = '### ⛓️ Chain\n\n#### 📏 Arguments\n\n#### 🖼️ Plan\n\n- chain_close **ran 2 refused 0** artifact `artifacts/chain/x.md`\n';
+  const m5 = score(nested, ['codebase-surveyor-dtd', 'codebase-architect-dtd']);
+  say(m5.ok && m5.headings === 3, `a chain whose links render one level deeper and close in bold is read as the run it was: ${m5.headings} headings, ${m5.findings.length} findings`);
+  const chainFam = all.find((s) => s.id === 'chain');
+  const two = all.find((s) => s.members.length >= 2);
+  say(chainFam && chainFam.prompt === '/chain-dtd --no-gate' && two && two.prompt.split('\n')[0] === '/chain-dtd --no-gate' && two.prompt.split('\n').length === two.members.length + 1 && promptOf([]) === '',
+    `a family of one is its command with the token (${chainFam ? chainFam.prompt : '?'}); a family of two or more opens with the chain token and stacks its members beneath, ${two ? two.members.length + 1 : '?'} lines for ${two ? two.id : '?'}`);
   const pr = all.find((s) => s.id === 'prompts');
   say(pr && pr.members.length === MAX && pr.overflow > 0 && pr.missing.length === 0,
     `the prompts family stacks ${pr ? pr.members.length : 0} of its ${pr ? pr.members.length + pr.overflow : 0} creators (CHAIN.max ${MAX}) and names the ${pr ? pr.overflow : '?'} it left`);

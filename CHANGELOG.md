@@ -52,6 +52,24 @@ what they name.
   without a shell; an argument with a newline through a shim it cannot
   read is refused by name, never truncated; one control passes a two-line
   argument through a planted shim and reads it back whole.
+- **The scala measured the wrong prompt.** Several tokens are one chain
+  only through `/chain-dtd` (CHAIN.declared; cc-chain is included by the
+  chain command alone), and the first matrix stacked the members without
+  it: the CLI expanded the first member as itself with the rest as its
+  user-args, no grammar in that command declared a chain, and the 32
+  chains without a close line and 67 skipped headings on ubuntu and macOS
+  were that prompt. A family of two or more opens with
+  `/chain-dtd --no-gate` and stacks its members beneath; a family of one
+  is its command with the token. The model runs from the checkout, so the
+  relative runtime every prose names resolves, Write is allowed so a link
+  can write the record it hands on, and MSYS_NO_PATHCONV is set because
+  Git Bash on the windows leg rewrote a plan argument opening with a slash
+  as a path. `lib/chain.mjs` never counts the chain token as a link, and
+  the chain command says a link is run by reading its file. The first probe
+  through the chain ran both links of the sigil family and closed, and the
+  scorer refused it for rendering alone: the links' headings sat one level
+  deeper than the chain's own and the close line was bold. The scorer reads
+  a heading of level three or deeper and strips emphasis before the close.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
@@ -63,7 +81,8 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 16 run, 0 failing
+- `node checker/scala.mjs --controls`: 18 run, 0 failing
+- `node lib/chain.mjs controls`: 27 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
 - `node checker/release-notes.mjs --versions`: one version everywhere, 9.1.0, recognised (class mid) from the verbs kept in run 10
