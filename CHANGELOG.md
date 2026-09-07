@@ -73,14 +73,14 @@ Measured on the release day:
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
 - `node checker/contract-audit.mjs`: 1928 declarations, 0 unused, 0 law gaps
-- `node checker/gate-sync.mjs`: 77 commands in the gate chain, 0 missing from gate.yml
+- `node checker/gate-sync.mjs`: 79 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
 - `node lib/typography.mjs controls`: 34 run, 0 failing
 - `node lib/chain.mjs controls`: 26 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 77 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 79 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -119,7 +119,7 @@ banned word at `sigil-variables-variants.md`; and `lib/chain.mjs`
 declared `artifact-missing` as a refusal and produced it nowhere, so the
 one mid-chain failure cc-chain exists to convert into an up-front refusal
 was the one it could not report. The sweep now reads `dtd/sigil` in the
-gate script and the workflow, gate chain 77 commands; the two arguments
+gate script and the workflow, gate chain 79 commands; the two arguments
 documents each carried a ```` ```markdown ```` paste wrapper on line 3
 that was never closed, 65 fences where 64 balance, so their code was
 measured as prose, and cutting that one line brought both above the
@@ -323,7 +323,7 @@ else, a pictured section with no source block refused by name, angle
 brackets and quotes escaped, the fence never drawn, the dark plate
 carrying the light plate's words. `node checker/plates.mjs --controls`:
 8 run, 0 failing; `sweep:plates` and `controls:plates` in the gate chain
-and the workflow, so the chain is 77 commands.
+and the workflow, two more commands in the gate chain.
 
 The counts sweep gains what the pass named: the two claims rows, the gate
 step name, the guard count and the control-suite count in the verify
@@ -375,6 +375,40 @@ the three manifests and every changed file byte-wise), but those seven
 are the folders no pass has yet had to say anything about, so
 `checker/companion-audit.sh` takes a seventh argument, a focus line
 appended to the prompt as data, and the tenth pass names them.
+
+### The companion's tenth pass: the seven folders, named
+
+The tenth pass took the focus line and returned fail with eight findings,
+four of them high, every one in a folder no earlier pass had reached. The
+dtd-core skill's reference of the shared subsets quoted the 8.0.0 gate
+(`start|more|add|impactful`, no save), the nine finding kinds without
+`gate|cache`, and a Greek numbers path that does not exist: five of its
+twenty-six quoted blocks sat behind the files they quote, nothing read
+the file, and its own disclaimer said so. `.claude-plugin/plugin.json`
+said rules C1 to C15 where the checker, the README and every agent say
+C16, and the counts sweep read that file three times for other numbers.
+`CITATION.cff`, the file GitHub and Zenodo render as the citable version,
+said 4.0.0, 2026-09-02, sixty-eight commands and rules C1 to C14, and no
+instrument named it. The skill counted "26 shared subsets" where `dtd/`
+holds 31 grammars and two of the absentees carry the `cc-` prefix. A
+hosted-plugin unknown asked a 7.2.0 question as if it were live.
+
+`checker/subsets-sweep.mjs` re-embeds every quoted block from `dtd/` and
+`--check` holds each byte for byte; every `cc-*.dtd` must have a block, so
+`cc-amplify.dtd` and `cc-rot.dtd` join and the reference quotes 28
+grammars; the reader is line-wise, since four grammars document fences
+themselves; the controls plant the gate enumeration without save and read
+cc-ask drift alone, restore it by re-embed, and refuse a block naming a
+file `dtd/` does not have. `node checker/subsets-sweep.mjs --controls`:
+5 run, 0 failing; `sweep:subsets` and `controls:subsets` in the gate chain
+and the workflow. The counts sweep reads the rule span from the checker's
+own rule comments and holds the manifest, the README row and the citation
+to it, holds the citation's counts and guards, and the skill's quoted
+count to the reference's headings: 57 places. `CITATION.cff` is 9.0.0,
+today, in the tree's counts, and `checker/release-notes.mjs --versions`
+reads its version beside the manifests, a stale one tripped by name:
+`node checker/release-notes.mjs --controls`: 11 run, 0 failing. The
+hosted unknown says it is historical.
 
 ## 8.0.0 (2026-09-06)
 
@@ -438,7 +472,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 51 places, from 22.
+counts sweep reported every place in step: the sweep reads 57 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document

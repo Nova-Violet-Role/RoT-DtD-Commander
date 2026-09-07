@@ -91,6 +91,11 @@ export function measure(root = ROOT) {
   // diagnosed from the one control that runs in a temp directory.
   if (Number(hm[2]) !== 0) throw new Error(`counts-sweep: pack-claude-ai.mjs --controls reports ${hm[2]} failing; the count of a red suite is not read: ${hostedOut.split(/\r?\n/).filter((l) => /^FAIL/.test(l)).join(' | ').slice(0, 600)}`);
   const hostedControls = Number(hm[1]);
+  // Tenth companion pass: the rule span the manifest publishes, read from
+  // the checker's own rule comments, and the grammars the dtd-core
+  // reference quotes, counted by heading.
+  const rules = Math.max(...[...readFileSync(join(root, 'lib', 'dtd.mjs'), 'utf8').matchAll(/\/\/ C(\d+):/g)].map((m) => Number(m[1])));
+  const quotedGrammars = (readFileSync(join(root, 'src', 'skills', 'dtd-core-dtd', 'references', 'subsets.md'), 'utf8').match(/^## [a-z-]+\.dtd$/gm) || []).length;
   // Eighth companion pass: a published number nobody re-read. The release
   // notes suite total, the control suites of the gate chain (every
   // controls: script of package.json) and the claims rows of the README.
@@ -107,7 +112,7 @@ export function measure(root = ROOT) {
   const schematics = cmdNames.filter((f) => /^create-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   const creators = schematics + cmdNames.filter((f) => /^create-meta-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   return {
-    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims,
+    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims, rules, quotedGrammars,
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, mutationsRefused, declarations: Number(m[1]) };
@@ -170,6 +175,15 @@ export function places(c) {
     { file: 'README.md', re: /([A-Za-z-]+) prompt and meta-prompt creators, one per schematic and its meta form over ([a-z-]+) schematics/, want: [c.creators, c.schematics], label: 'the about plate prose of the creators' },
     { file: 'README.md', re: /the shelf of ([a-z-]+) book-derived commands/, want: [c.books], label: 'the about plate prose of the shelf' },
     { file: 'README.md', re: /alt="(\d+) claims, each with the command that proves it"/, want: [c.claims], label: 'the alt text of the claims plate' },
+    // Tenth companion pass: the manifest said rules C1 to C15 where the
+    // checker says C16, CITATION.cff sat at 4.0.0 with counts from 3.x,
+    // and the dtd-core skill counted the copy rather than the corpus.
+    { file: '.claude-plugin/plugin.json', re: /rules C1 to C(\d+)/, want: [c.rules], label: 'the plugin description, rules' },
+    { file: 'README.md', re: /passes rules C1 to C(\d+)/, want: [c.rules], label: 'the claims row of the rules' },
+    { file: 'CITATION.cff', re: /rules C1 to C(\d+)/, want: [c.rules], label: 'the citation abstract, rules' },
+    { file: 'CITATION.cff', re: /(\d+) Claude Code slash commands, (\d+) skills and (\d+) agents/, want: [c.commands, c.skills, c.agents], label: 'the citation abstract, counts' },
+    { file: 'CITATION.cff', re: /([a-z-]+) guards trip on purpose/, want: [c.guards], label: 'the citation abstract, guards' },
+    { file: 'src/skills/dtd-core-dtd/SKILL.md', re: /the (\d+) grammars quoted verbatim/, want: [c.quotedGrammars], label: 'the dtd-core skill, quoted grammars' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },
     { file: 'CHANGELOG.md', re: /matrix --check`, (\d+) controls\./, want: [c.crossOsControls], label: 'the changelog cross-os prose' },
     { file: 'CHANGELOG.md', re: /lib\/geometry\.mjs controls`: (\d+) run/, want: [c.geometryControls], label: 'the changelog geometry controls' },

@@ -76,7 +76,7 @@
 <text x="26" y="1366" font-size="13" fill="#e6e9ef">every command of the gate script is a run line of the gate workflow or a shell segment of</text>
 <text x="26" y="1384" font-size="13" fill="#e6e9ef">one; a step commented out counts for nothing; the workflow may run more, and that direction</text>
 <text x="26" y="1402" font-size="13" fill="#e6e9ef">is not claimed</text>
-<text x="38" y="1426" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">node checker/gate-sync.mjs: 77 commands in the gate chain, 0 missing from gate.yml,</text>
+<text x="38" y="1426" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">node checker/gate-sync.mjs: 79 commands in the gate chain, 0 missing from gate.yml,</text>
 <text x="38" y="1444" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">three controls passing (a run line removed, a step commented out, a file of comments)</text>
 <text x="794" y="1456" font-size="11" fill="#9aa3b2" text-anchor="end">every push</text>
 <text x="26" y="1480" font-size="13" fill="#e6e9ef">every build target under commands, skills and agents is tracked; an ignored one would pass</text>
@@ -88,8 +88,8 @@
 <text x="38" y="1600" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">node checker/readme-index.mjs --check: README block in step; --controls: an unclaimed</text>
 <text x="38" y="1618" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">name refused, a removed row reported</text>
 <text x="794" y="1630" font-size="11" fill="#9aa3b2" text-anchor="end">every push</text>
-<text x="26" y="1654" font-size="13" fill="#e6e9ef">the version is one everywhere: package.json, plugin.json, both marketplace fields, the top</text>
-<text x="26" y="1672" font-size="13" fill="#e6e9ef">changelog section, a RELEASE.md heading, and the tag that ships</text>
+<text x="26" y="1654" font-size="13" fill="#e6e9ef">the version is one everywhere: package.json, plugin.json, both marketplace fields,</text>
+<text x="26" y="1672" font-size="13" fill="#e6e9ef">CITATION.cff, the top changelog section, a RELEASE.md heading, and the tag that ships</text>
 <text x="38" y="1696" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">node checker/release-notes.mjs --versions, and the release job with the tag; controls</text>
 <text x="38" y="1714" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">plant a stray manifest, a missing heading and a wrong tag</text>
 <text x="794" y="1726" font-size="11" fill="#9aa3b2" text-anchor="end">every push, and the tag</text>
@@ -107,7 +107,7 @@
 <text x="26" y="1960" font-size="13" fill="#e6e9ef">every count the repository publishes (the badges, the tagline, the claims rows, the three</text>
 <text x="26" y="1978" font-size="13" fill="#e6e9ef">manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the</text>
 <text x="26" y="1996" font-size="13" fill="#e6e9ef">checker controls, the declarations</text>
-<text x="38" y="2020" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">node checker/counts-sweep.mjs: 51 places in step; --controls plants a stale badge, a</text>
+<text x="38" y="2020" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">node checker/counts-sweep.mjs: 57 places in step; --controls plants a stale badge, a</text>
 <text x="38" y="2038" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">stale count in words and a removed count</text>
 <text x="794" y="2050" font-size="11" fill="#9aa3b2" text-anchor="end">every push</text>
 <text x="26" y="2074" font-size="13" fill="#e6e9ef">the growth ladder is fifteen verbs partitioned into three bands with no overlap and no gap,</text>
@@ -133,6 +133,6 @@
 <text x="26" y="2452" font-size="13" fill="#e6e9ef">tag that is not package.json's version, a section still in progress, or a release already on</text>
 <text x="26" y="2470" font-size="13" fill="#e6e9ef">the tag ships nothing</text>
 <text x="38" y="2494" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">the release job in .github/workflows/gate.yml; node checker/release-notes.mjs</text>
-<text x="38" y="2512" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">--controls: 10 run, 0 failing</text>
+<text x="38" y="2512" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">--controls: 11 run, 0 failing</text>
 <text x="794" y="2524" font-size="11" fill="#9aa3b2" text-anchor="end">on the tag</text>
 </svg>

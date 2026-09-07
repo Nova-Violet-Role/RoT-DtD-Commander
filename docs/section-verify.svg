@@ -11,7 +11,7 @@
 <text x="26" y="139" font-size="12.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">npm run gate; echo &quot;exit=$?&quot;</text>
 <text x="26" y="169" font-size="13.5" fill="#1a1d24">gate opens by proving the workflow runs the same chain (checker/gate-sync.mjs), then</text>
 <text x="26" y="189" font-size="13.5" fill="#1a1d24">runs build --check, check, the thirty-one Adiutor controls, the contract audit, the</text>
-<text x="26" y="209" font-size="13.5" fill="#1a1d24">checker controls, the sweeps, the thirty-one control suites of the gate chain, the slop</text>
+<text x="26" y="209" font-size="13.5" fill="#1a1d24">checker controls, the sweeps, the thirty-two control suites of the gate chain, the slop</text>
 <text x="26" y="229" font-size="13.5" fill="#1a1d24">sweep at zero, the slop measures on README and CHANGELOG (the release ships a changelog</text>
 <text x="26" y="249" font-size="13.5" fill="#1a1d24">section), the tracked-targets sweep, the plates and the release-notes controls; each</text>
 <text x="26" y="269" font-size="13.5" fill="#1a1d24">ends with a line of counts, and the exit code is read directly. Then break it:</text>

@@ -100,11 +100,16 @@ export function versions(root = ROOT) {
   const top = readFileSync(join(root, 'CHANGELOG.md'), 'utf8').match(/^## (\d+\.\d+\.\d+) \(([^)]*)\)/m) || [];
   const esc = String(pkg).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const releaseHeading = new RegExp(`^## v${esc}\\b`, 'm').test(readFileSync(join(root, 'RELEASE.md'), 'utf8'));
+  // CITATION.cff: GitHub and Zenodo render it as the citable version, and it
+  // sat at 4.0.0 through five majors with nothing reading it (tenth
+  // companion pass on 9.0.0).
+  const citation = (readFileSync(join(root, 'CITATION.cff'), 'utf8').match(/^version: (\S+)$/m) || [])[1];
   return {
     'package.json': pkg,
     'plugin.json': plugin,
     'marketplace.json metadata': mk.metadata && mk.metadata.version,
     'marketplace.json plugin': mk.plugins && mk.plugins[0] && mk.plugins[0].version,
+    'CITATION.cff': citation,
     'CHANGELOG.md top section': top[1],
     changelogState: top[2] || '',
     releaseHeading,
@@ -114,7 +119,7 @@ export function versions(root = ROOT) {
 export function versionFindings(v, tag = null) {
   const want = v['package.json'];
   const out = [];
-  for (const n of ['plugin.json', 'marketplace.json metadata', 'marketplace.json plugin', 'CHANGELOG.md top section']) {
+  for (const n of ['plugin.json', 'marketplace.json metadata', 'marketplace.json plugin', 'CITATION.cff', 'CHANGELOG.md top section']) {
     if (v[n] !== want) out.push(`${n} says ${v[n]}, package.json says ${want}`);
   }
   if (!v.releaseHeading) out.push(`RELEASE.md has no heading "## v${want}"`);
@@ -145,8 +150,10 @@ function controls() {
   const spliced = section(planted.split('- b').join('- b\n<!-- SPDX-License-Identifier: X -->\n\n# Changelog\n'), '1.0.0');
   say(!spliced.ok && /spliced/.test(spliced.reason), `trip: a section carrying the file header is refused: ${spliced.reason}`);
   say(!three.ok && /no section/.test(three.reason), `trip: a version with no section is refused: ${three.reason}`);
-  const sound = { 'package.json': '1.0.0', 'plugin.json': '1.0.0', 'marketplace.json metadata': '1.0.0', 'marketplace.json plugin': '1.0.0', 'CHANGELOG.md top section': '1.0.0', changelogState: '2026-01-01', releaseHeading: true };
+  const sound = { 'package.json': '1.0.0', 'plugin.json': '1.0.0', 'marketplace.json metadata': '1.0.0', 'marketplace.json plugin': '1.0.0', 'CITATION.cff': '1.0.0', 'CHANGELOG.md top section': '1.0.0', changelogState: '2026-01-01', releaseHeading: true };
   say(versionFindings(sound, 'v1.0.0').length === 0, 'versions that agree everywhere, with their tag, report nothing');
+  const cited = versionFindings({ ...sound, 'CITATION.cff': '4.0.0' });
+  say(cited.length === 1 && /CITATION\.cff says 4\.0\.0, package\.json says 1\.0\.0/.test(cited[0]), `trip: a CITATION.cff left at an old version is reported by name: ${cited[0] || 'nothing'}`);
   const stray = versionFindings({ ...sound, 'plugin.json': '1.0.1', releaseHeading: false });
   say(stray.length === 2 && /plugin\.json says 1\.0\.1/.test(stray[0]) && /RELEASE\.md/.test(stray[1]),
     `trip: a stray plugin.json version and a missing RELEASE.md heading are both reported: ${stray.join('; ')}`);
