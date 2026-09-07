@@ -943,9 +943,11 @@ argument-hint: "[a number of sides to name, or a figure file whose shapes to che
 <!ELEMENT typeset (face+, glyph*, rule_glyphs?, arrow_glyphs?, math_glyphs?, greek_glyphs?, missing_glyph, numeral*)>
 <!-- cols and rows describe the grid a figure was typeset on; a run asked for
      the contract alone has no grid, so both are implied and the answer says
-     so; classes is the list kept on and is always rendered (the fifth
-     companion pass on 9.0.0 measured three required attributes with no place
-     in the rendering). -->
+     so; classes is the list kept on and the answer's template renders it
+     on every typeset (the fifth companion pass on 9.0.0 measured three
+     required attributes with no place in the rendering; no engine emits a
+     typeset element, the answer does, and lib/typography.mjs reads the
+     declaration back). -->
 <!ATTLIST typeset
           cols    CDATA #IMPLIED
           rows    CDATA #IMPLIED
