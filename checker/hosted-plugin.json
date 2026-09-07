@@ -28,7 +28,7 @@
       "commands": 129,
       "skills": 22,
       "agents": 5,
-      "why": "two command names were also skill names, so two commands were shadowed; the archive renames those skills and the surface should report 131",
+      "why": "last read as 129 on the 7.2.0 upload, when two command names were also skill names and shadowed two commands; the archive renames those skills, so the 9.0.0 upload should report 137 (139 minus the two collisions); unconfirmed until that upload is read",
       "confirmed": false
     },
     "collisions": [

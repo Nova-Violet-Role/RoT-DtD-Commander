@@ -335,7 +335,7 @@ echo${IFS}hello        # → hello  (space replaced by $IFS)
 ## UTILITY RANKING (cross-cutting tiers)
 
 **Tier S — Daily Driver (master these):**
-`$1`–`$9`/`$@`/`$*`/`$#` (shell positionals); `${var:-default}`, `${var:=}`, `${var:?}`, `${var:+}`; `${var#pat}`/`${var%pat}`/`${##}`/`${%%}`; `${var/pat/rep}`/`//`; `${#var}`; `$(...)`; `$((...))`; `$?`/`$$`/`$!`; `"${arr[@]}"`; Make `$@`/`$<`/`$^`; Docker/Compose `${VAR:-default}`; GitHub Actions `${{ }}`; PostgreSQL `$$...$$` and `$1`; jq `$var`; regex `$1`/`$&`; JS `${}` template literals; Claude Code `$ARGUMENTS`. — *High leverage, used constantly.*
+`$1`–`$9`/`$@`/`$*`/`$#` (shell positionals); `${var:-default}`, `${var:=}`, `${var:?}`, `${var:+}`; `${var#pat}`/`${var%pat}`/`${##}`/`${%%}`; `${var/pat/rep}`/`//`; `${#var}`; `$(...)`; `$((...))`; `$?`/`$$`/`$!`; `"${arr[@]}"`; Make `$@`/`$<`/`$^`; Docker/Compose `${VAR:-default}`; GitHub Actions `${{ }}`; PostgreSQL `$$...$$` and `$1`; jq `$var`; regex `$1`/`$&`; JS `${}` template literals; Claude Code `$ARGUMENTS`. — *High use, used constantly.*
 
 **Tier A — Frequently Useful:**
 `${var^^}`/`${var,,}`; `${!var}` indirect; `$IFS`; `$LINENO`/`$FUNCNAME`/`$BASH_SOURCE`; `$PIPESTATUS`; `$BASH_REMATCH`; `${var@Q}`; CMake `${VAR}`/`$<CONFIG>`/`$<TARGET_FILE>`; Terraform `${}`/`$${}`; nginx `$host`/`$remote_addr`; Grafana `$__interval`/`$__rate_interval`; MongoDB `$$ROOT`/`$$NOW`; PowerShell `$_`/`$PSItem`; Perl `$_`/`$!`/`$@`; PHP superglobals; VS Code `$1`/`${1:default}`. — *Reach for these weekly.*

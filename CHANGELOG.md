@@ -73,14 +73,14 @@ Measured on the release day:
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
 - `node checker/contract-audit.mjs`: 1928 declarations, 0 unused, 0 law gaps
-- `node checker/gate-sync.mjs`: 70 commands in the gate chain, 0 missing from gate.yml
+- `node checker/gate-sync.mjs`: 71 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
 - `node lib/typography.mjs controls`: 26 run, 0 failing
 - `node lib/chain.mjs controls`: 15 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 8 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 70 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 71 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -107,6 +107,35 @@ enumeration, `GATE.save`, `intake (.., gate, cache?)` and an `ASK.exhausted`
 that offers start and save. `.nt` enters the white list. `node lib/cache.mjs
 controls`: 17 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
 failing; `npm run controls:cache` in the gate chain and the workflow.
+
+### The companion's first pass on 9.0.0: seven findings, all sound
+
+`bash checker/companion-audit.sh 9.0.0 v8.0.0..HEAD artifacts/research opus 60 1800`
+closed its first pass as fail in 50 turns with seven findings and no
+guess among them. Three were high: the AI_SLOP sweep had never been
+pointed at `dtd/sigil`, so four of the five study documents failed a
+recognizer that judges every answer before it lands, one on the flat
+banned word at `sigil-variables-variants.md`; and `lib/chain.mjs`
+declared `artifact-missing` as a refusal and produced it nowhere, so the
+one mid-chain failure cc-chain exists to convert into an up-front refusal
+was the one it could not report. The sweep now reads `dtd/sigil` in the
+gate script and the workflow, gate chain 71 commands; the two arguments
+documents each carried a ```` ```markdown ```` paste wrapper on line 3
+that was never closed, 65 fences where 64 balance, so their code was
+measured as prose, and cutting that one line brought both above the
+vocabulary bound without a word of the study touched; the greek-numbers
+note gained one long sentence and holds its rhythm at 0.8653; the banned
+word became `use`. The chain planner refuses a link that takes an
+artifact from a predecessor declaring none, the new `handoff` verb
+refuses at run time when the file under `CHAIN.dir` is absent and carries
+its bytes when present, `--decline` produces `declined`, `chain_intake`
+carries the rounds and questions the plan was given instead of two
+literal zeros, the `runs_alone` comment now says what the code computes,
+and the subset's rationale names `lib/chain.mjs` rather than a checker
+that does not exist. `checker/hosted-plugin.json` says 137 where it said
+131, still unconfirmed until the 9.0.0 upload is read. `node lib/chain.mjs
+controls`: 20 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil --max
+0`: 5 files, 0 slop.
 
 ## 8.0.0 (2026-09-06)
 

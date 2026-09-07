@@ -183,7 +183,7 @@ Examples:
          →  "enneakischilienneahectenneacontennea"
 ```
 
-> **Note:** In practice, names beyond ~12 sides (polygons) or ~10 atoms (chemistry) are rarely used. The system is theoretically infinite but becomes unwieldy past ~999.
+> **Note:** In practice, names beyond ~12 sides (polygons) or ~10 atoms (chemistry) are rarely used. The system is theoretically infinite, but past ~999 the compound names grow unwieldy, and a figure or a chain that large is named by its number instead, which is what the plates of the Graphic and Geometric Suite do beyond the plain limit their typography declares.
 
 ## 13. Quick-Reference: "Decamono" Pattern (10×N)
 

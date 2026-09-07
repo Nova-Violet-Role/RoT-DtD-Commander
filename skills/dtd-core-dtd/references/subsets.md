@@ -3394,7 +3394,7 @@ Several commands in one prompt as one declared root: the chain, its links in sta
   filterconfig, OpenOffice's draw:custom-shape) or a declaration nothing
   ever references (XDITA's excluded-domains), and no parser reports any of
   them. A link naming a successor that does not exist is exactly that
-  defect, so checker/chain.mjs resolves every hands_to against commands/
+  defect, so lib/chain.mjs resolves every hands_to against commands/
   and the contract audit reads this file in both directions.
 
   lib/chain.mjs reads this file and holds the code to it.
@@ -3458,7 +3458,15 @@ Several commands in one prompt as one declared root: the chain, its links in sta
           ran        (yes|no|refused) #REQUIRED>
 
 <!-- A link that did not run says why, by name. A chain that drops a link in
-     silence is the 8.0.0 failure with a grammar around it. -->
+     silence is the 8.0.0 failure with a grammar around it. Every value has a
+     producer in lib/chain.mjs, and the companion audit of 9.0.0 measured
+     which did not before they did: not-runnable and no-successor from the
+     resolve of each link; over-cap from the count; artifact-missing at plan
+     time when a link takes an artifact from a predecessor that declares
+     none, and at run time from the handoff verb when the file under
+     CHAIN.dir is absent; declined from the links the one gate declined
+     (--decline); band-off from a link whose band the run switched off, which
+     the planner cannot see and the run reports through the same element. -->
 <!ELEMENT link_refusal (#PCDATA)>
 <!ATTLIST link_refusal
           why (band-off|no-successor|artifact-missing|not-runnable|over-cap|declined) #REQUIRED>
