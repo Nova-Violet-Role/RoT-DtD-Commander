@@ -160,7 +160,7 @@ count the newest changelog section claims and refuses on disagreement;
 tripped on a planted count, then run over this section, where it found
 the two counts the pass itself had moved. Gate chain 75 commands.
 `node lib/chain.mjs controls`: 26 run, 0 failing; `node lib/typography.mjs
-controls`: 34 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
+controls`: 35 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
 13 run, 0 failing.
 
 ### The companion's third pass: the sweep that under-read its own input
@@ -255,7 +255,7 @@ declared order, `Assumptions Made` last in twelve and `Measured` before
 `Intake` in starlist. `ran` on a link admits `yes` and `refused` and no
 longer a `no` that nothing produced, and the chain suite walks all ten of
 its subset's enumerations against rendered plans. `node lib/typography.mjs
-controls`: 34 run, 0 failing; `node lib/chain.mjs controls`: 26 run, 0
+controls`: 35 run, 0 failing; `node lib/chain.mjs controls`: 26 run, 0
 failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0 failing;
 `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing.
 
