@@ -37,7 +37,7 @@ export ROT_CHECKER_CONTROLS_RUNNING=1
 T=$(mktemp -d)
 # M25 plants a file at the repository root to move the tree state; a kill
 # between the write and the rm must not leave it behind
-trap 'rm -f zz-tree-control.tmp artifacts/cache/zz-tree-control.nt checker/zz-m33-runner.sh' EXIT
+trap 'rm -f zz-tree-control.tmp artifacts/cache/zz-tree-control.nt dist/zz-tree-control.txt checker/zz-m33-runner.sh' EXIT
 mkdir -p "$T/commands"
 cp commands/pareto-dtd.md "$T/commands/pareto-dtd.md"
 fail=0
@@ -181,7 +181,9 @@ bash $w git rev-parse HEAD >/dev/null 2>&1; r24f=$?
 t0=$(bash checker/companion-audit.sh --tree-state); printf 'planted\n' > zz-tree-control.tmp; t1=$(bash checker/companion-audit.sh --tree-state); rm -f zz-tree-control.tmp
 # and under an ignored artifact directory, which the plain status never lists
 mkdir -p artifacts/cache; printf 'planted\n' > artifacts/cache/zz-tree-control.nt; t2=$(bash checker/companion-audit.sh --tree-state); rm -f artifacts/cache/zz-tree-control.nt
-[ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && [ "$t0" != "$t2" ] && echo "$t2" | grep -q 'artifacts/cache/zz-tree-control.nt' && ok "M25 a file planted during the audit moves the tree state the runner compares, at the root and under an ignored artifact directory" || { ko "M25 the tree state did not move for both plants"; }
+# and under an ignored region outside any artifact directory (dist/ is the packer's, ignored whole)
+mkdir -p dist; printf 'planted\n' > dist/zz-tree-control.txt; t3=$(bash checker/companion-audit.sh --tree-state); rm -f dist/zz-tree-control.txt
+[ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && [ "$t0" != "$t2" ] && echo "$t2" | grep -q 'artifacts/cache/zz-tree-control.nt' && [ "$t0" != "$t3" ] && echo "$t3" | grep -q 'dist/zz-tree-control.txt' && ok "M25 a file planted during the audit moves the tree state the runner compares: at the root, under an ignored artifact directory and under dist/" || { ko "M25 the tree state did not move for all three plants"; }
 # M26: LAW.COMPANION.5: a ceiling that fires is UNAUDITED, exit 124, never a pass; a claude that sleeps past a one-second ceiling
 mkdir -p "$T/bin" "$T/out"; printf '#!/usr/bin/env bash\nsleep 8\n' > "$T/bin/claude"; chmod +x "$T/bin/claude"
 # on the Windows leg node finds a command through PATHEXT, so the sleeping twin is a .cmd

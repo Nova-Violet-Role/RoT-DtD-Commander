@@ -109,12 +109,12 @@ fi
 tree_state() {
   local i out
   for i in 1 2 3 4 5; do
-    # the porcelain status, and the ignored artifact directories an engine
-    # could write under (cache, sigil, research), which the plain status never
-    # lists (twenty-third companion pass, M25 plants under one)
-    # ls-files lists the ignored files one by one; status collapses an ignored
-    # directory to its name, so a file planted inside would read as no change
-    if out="$(git -C "$here" rev-parse HEAD 2>/dev/null && git -C "$here" status --porcelain 2>/dev/null && git -C "$here" ls-files --others --ignored --exclude-standard -- artifacts/cache artifacts/sigil artifacts/research 2>/dev/null)"; then printf '%s\n' "$out"; return 0; fi
+    # the porcelain status, then every ignored file of the whole tree, minus the
+    # plugin's state (.rot-moe), the index cache (.codemap), node_modules and
+    # the runner's own stream; ls-files lists them one by one where status
+    # collapses an ignored directory to its name (twenty-fifth companion
+    # pass: three pathspecs left dist/ and every other ignored region unread)
+    if out="$(git -C "$here" rev-parse HEAD 2>/dev/null && git -C "$here" status --porcelain 2>/dev/null && { git -C "$here" ls-files --others --ignored --exclude-standard 2>/dev/null | grep -v -E '^(\.rot-moe|\.codemap|node_modules)/|^artifacts/research/companion-' || true; })"; then printf '%s\n' "$out"; return 0; fi
     sleep 1
   done
   echo "tree_state: git status failed five times"; return 1
@@ -166,7 +166,7 @@ Answer in the grammar declared here, one markdown heading per element in declare
 
 $contract
 
-Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run is 'bash $here/checker/companion-run.sh node <engine.mjs under lib/, checker/ or bin/> [args]' or 'bash $here/checker/companion-run.sh git <reading verb> [args]'; the wrapper applies the portable ceiling, closes stdin and refuses any other form by name, so a command it refuses is not to be retried another way, and the only binaries the allow-list grants behind that ceiling are node and git; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'node $here/lib/ceiling.mjs 60 node $here/lib/ai-slop.mjs controls < /dev/null' and 'node $here/lib/ceiling.mjs 60 node $here/lib/ordinals.mjs controls < /dev/null' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
+Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run is 'bash $here/checker/companion-run.sh node <engine.mjs under lib/, checker/ or bin/> [args]' or 'bash $here/checker/companion-run.sh git <reading verb> [args]'; the wrapper applies the portable ceiling, closes stdin and refuses any other form by name, so a command it refuses is not to be retried another way, and the only binaries the allow-list grants behind that ceiling are node and git; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'bash $here/checker/companion-run.sh node lib/ai-slop.mjs controls < /dev/null' and 'bash $here/checker/companion-run.sh node lib/ordinals.mjs controls < /dev/null' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
 
 Diff stat:
 $stat

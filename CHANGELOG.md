@@ -745,6 +745,22 @@ on that line. M30's expected count is parsed from the wrapper's rows by
 awk, apart from the sed `--table` uses, so the two readers are held to
 each other: 38 checker controls.
 
+### The companion's twenty-fifth pass: three pathspecs
+
+The twenty-fifth pass returned fail with five findings, one high: the
+ignored-file arm of the tree reading named three artifact directories, so
+a write under `dist/` or any other ignored region stayed unread, and M25
+planted only where the arm looked. The lower four: the prompt still
+ordered two runs in the `ceiling.mjs 60 node` form the grant now refuses,
+the security page described the narrower comparison, and
+`artifacts/research` carried only the runner's own ignore rules.
+
+The arm reads every ignored file of the whole tree, minus the plugin's
+state, the index cache, `node_modules` and the runner's own stream; M25
+plants a third file under `dist/` and reads the state move for all three.
+The prompt orders its two runs through the wrapper. The security page
+says what is compared.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
