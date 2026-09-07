@@ -18,6 +18,27 @@
 
 ---
 
+## v9.1.0 — Matrix-Commander (in progress)
+
+Every family clean on every leg. The first three-OS scala matrix, run on
+the 9.0.0 tree, passed one family and failed sixteen on every leg, and its
+answers died in the runners' temp directories; 9.1.0 keeps the answers as
+run artifacts, reads them as a findings record and fixes what they name.
+
+- **The answers survive the runner** &mdash; every leg uploads its seventeen
+  answers, its findings file, the smoke result and the install tail; a
+  summary job prints one table across OS.
+- **The findings as a record** &mdash; `node checker/scala.mjs findings`
+  writes `artifacts/research/<date>-scala-findings.nt`, fix and status
+  carried over by key from the previous file.
+- **The env block** &mdash; `dtd/claude-env.json` merged on install, removed
+  on uninstall, reported by doctor, written to the runner before the chains.
+- **The Windows shim path** &mdash; `lib/ceiling.mjs` runs an npm shim's node
+  script without a shell, so a newline in an argument survives.
+- **The gate's fifth choice, visible** &mdash; one ask of two questions.
+- 139 commands, 22 skills, 5 agents; 1932 declarations; recognised 9.1.0
+  (class mid) from a top verb of 9 kept in run 10.
+
 ## v9.0.0 — Interoperable-Commander
 
 Every command runnable alone and interoperable in a chain. Several command

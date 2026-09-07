@@ -77,7 +77,7 @@ The shapes are DocBook's: a productionset of lhs and rhs for the thought structu
 <grammar_map>
 Render the `ot_creation` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧠 Heading` carrying this command's sigil 🧠, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🧠 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🧠 Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the multi-select variants as chosen, the `impactful` selections when asked for, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🧠 Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the multi-select variants as chosen, the `impactful` selections when asked for, the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `variants`: **🧠 Variants**, one line per variant: kind, name, depth, branching
 - `grammar`: **🧠 Grammar**, the productions per variant, lhs and rhs
 - `walk`: **🧠 Walk**, the fixture walked: one line per step with performance, degree and alternatives

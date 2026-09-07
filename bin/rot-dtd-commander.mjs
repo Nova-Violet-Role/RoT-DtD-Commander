@@ -6,13 +6,14 @@
 // Guided NPX installer for RoT DtD Commander.
 //
 //   rdc install   [--yes] [--project | --target <dir>] [--commands] [--skills] [--agents]
-//                 [--only a,b] [--force] [--dry-run] [--arm]
+//                 [--only a,b] [--force] [--dry-run] [--arm] [--no-env]
 //   rdc uninstall [--project | --target <dir>] [--force] [--yes]
 //   rdc list      [--project | --target <dir>]
 //   rdc check     [paths...]
 //   rdc build     [--check]
 //   rdc resolve   <src.md> <out.md>
 //   rdc forge     <spec.json|spec.mjs> [names...]
+//   rdc env       [--yes | --check] [--project | --target <dir>]   merge dtd/claude-env.json into settings.json under env, or compare (9.1.0)
 //   rdc arm | disarm | doctor | controls
 //   rdc watch     [--once] [--poll <ms>] [--secs <n>]   run the Commander-Adiutor monitor by hand (300 s ceiling)
 //
@@ -43,7 +44,7 @@ import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
 import os from 'node:os';
 import { readText, resolveFile, check, extractDtd, forge, forgeNew, writeLF, verifyFile, normalize } from '../lib/dtd.mjs';
-import { armSettings, disarmSettings, EVENTS } from '../lib/arm.mjs';
+import { armSettings, disarmSettings, EVENTS, mergeEnv, envDrift, removeEnv } from '../lib/arm.mjs';
 import { applyHeadings, sigilFor } from '../lib/headings.mjs';
 
 const ROOT = presolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -53,6 +54,10 @@ const NAME = 'rot-dtd-commander';
 const TEXT_EXT = new Set(['.md', '.dtd', '.sh', '.mjs', '.js', '.json', '.yml', '.yaml', '.txt', '.tsv', '.csv', '.ps1', '.nu', '.py', '.toml', '.tape']);
 const JUNK = new Set(['.DS_Store', 'Thumbs.db', 'desktop.ini']);
 const MANIFEST = `.${NAME}-manifest.json`;
+// The env block the Commander ships (9.1.0): six keys a session runs under,
+// merged into settings.json on install, removed on uninstall, compared by doctor.
+const ENV_FILE = join(ROOT, 'dtd', 'claude-env.json');
+const envBlock = () => JSON.parse(readFileSync(ENV_FILE, 'utf8')).env;
 // Every subset in dtd/ ships: the list is read from disk, never kept by hand.
 // A hand-kept list is how cc-amplify.dtd was written, forged against and never
 // installed, with the installer reporting 0 failed the whole time.
@@ -80,7 +85,7 @@ function runtimeFiles(root) {
   const fixed = RUNTIME.filter((f) => !(f.startsWith('dtd/') && f.endsWith('.dtd')));
   return [...new Set([...fixed, ...subsetFiles(root)])];
 }
-const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/amplify.mjs', 'lib/scratch.mjs', 'lib/list.mjs', 'lib/starlist.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-args.dtd', 'dtd/cc-form.dtd', 'lib/form.mjs', 'dtd/cc-lexicon.dtd', 'lib/args.mjs', 'dtd/cc-schematic.dtd', 'lib/schematic.mjs', 'dtd/cc-license.dtd', 'dtd/cc-workflow.dtd', 'lib/workflow.mjs', 'dtd/cc-task.dtd', 'lib/task.mjs', 'lib/record.mjs', 'lib/ordinals.mjs', 'lib/license.mjs', 'dtd/licenses.json', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd', 'dtd/ai-slop.dtd', 'lib/ai-slop.mjs', 'lib/geometry.mjs', 'lib/figure.mjs', 'lib/cross-os.mjs', 'lib/ceiling.mjs', 'lib/encoding.mjs', 'lib/typography.mjs', 'lib/chain.mjs', 'lib/sigil.mjs', 'lib/cache.mjs', 'dtd/sigil/arguments-variant-examples.md', 'dtd/sigil/arguments-variant-examples-dtd-variants.md', 'dtd/sigil/sigil-variables-variants.md', 'dtd/sigil/dtd-guide-prompt-polyglot-examples.md', 'dtd/sigil/greek-numbers.md'];
+const RUNTIME = ['bin/adiutor.mjs', 'lib/dtd.mjs', 'lib/amplify.mjs', 'lib/scratch.mjs', 'lib/list.mjs', 'lib/starlist.mjs', 'lib/render-check.mjs', 'lib/headings.mjs', 'lib/arm.mjs', 'lib/ledger.mjs', 'monitors/commander-adiutor.mjs', 'dtd/sigils.json', 'dtd/cc-core.dtd', 'dtd/cc-ask.dtd', 'dtd/cc-args.dtd', 'dtd/cc-form.dtd', 'lib/form.mjs', 'dtd/cc-lexicon.dtd', 'lib/args.mjs', 'dtd/cc-schematic.dtd', 'lib/schematic.mjs', 'dtd/cc-license.dtd', 'dtd/cc-workflow.dtd', 'lib/workflow.mjs', 'dtd/cc-task.dtd', 'lib/task.mjs', 'lib/record.mjs', 'lib/ordinals.mjs', 'lib/license.mjs', 'dtd/licenses.json', 'dtd/cc-report.dtd', 'dtd/cc-record.dtd', 'dtd/cc-rot.dtd', 'dtd/adiutor.dtd', 'dtd/ai-slop.dtd', 'lib/ai-slop.mjs', 'lib/geometry.mjs', 'lib/figure.mjs', 'lib/cross-os.mjs', 'lib/ceiling.mjs', 'lib/encoding.mjs', 'lib/typography.mjs', 'lib/chain.mjs', 'lib/sigil.mjs', 'lib/cache.mjs', 'dtd/claude-env.json', 'dtd/sigil/arguments-variant-examples.md', 'dtd/sigil/arguments-variant-examples-dtd-variants.md', 'dtd/sigil/sigil-variables-variants.md', 'dtd/sigil/dtd-guide-prompt-polyglot-examples.md', 'dtd/sigil/greek-numbers.md'];
 // The skills-directory plugin older installs wrote to auto-start the monitor;
 // 5.0.0 writes none, and the doctor turns red while one is still present.
 const MONITOR_PLUGIN = 'rot-dtd-commander-adiutor';
@@ -105,6 +110,7 @@ function parseArgs(argv) {
     else if (a === '--check') o.check = true;
     else if (a === '--arm') o.arm = true;
     else if (a === '--no-arm') o.arm = false;
+    else if (a === '--no-env') o.env = false;
     else if (a === '--secs') o.secs = argv[++i];
     else if (a === '--guided') o.guided = true;
     else if (a === '--once') o.once = true;
@@ -312,6 +318,7 @@ async function cmdInstall(o) {
     if (kinds.commands) console.log(`  commands (${inv.commands.length}): ${inv.commands.map((f) => f.replace(/\.md$/, '')).join(', ')}`);
     if (kinds.skills) console.log(`  skills   (${inv.skills.length}): ${inv.skills.join(', ')}`);
     if (kinds.agents) console.log(`  agents   (${inv.agents.length}): ${inv.agents.map((f) => f.replace(/\.md$/, '')).join(', ')}`);
+    if (o.env !== false) console.log(`  env      : ${Object.keys(envBlock()).length} keys of dtd/claude-env.json merged into ${join(target, 'settings.json')} under env (a key you already set is kept; --no-env skips)`);
     if (o.arm) console.log(capabilities(target));
     const go = (await ask('proceed? [y/N]: ')).trim().toLowerCase();
     if (rl) rl.close();
@@ -440,6 +447,22 @@ async function cmdInstall(o) {
   }
   console.log(`\nwritten ${written.length}  skipped ${skipped}  failed ${failed}  verify-bad ${bad}  manifest ${manifestPath}`);
 
+  // The env block (9.1.0): merged after the files, recorded in the manifest so
+  // the uninstall removes exactly what this tool added and nothing the user set.
+  if (o.env !== false && !failed && !bad) {
+    try {
+      const sp = join(target, 'settings.json');
+      const r = mergeEnv(sp, envBlock());
+      manifest.envAdded = [...new Set([...(prev.envAdded || []), ...r.added])];
+      if (r.created) manifest.settingsCreated = true;
+      writeLF(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+      console.log(`env: ${r.added.length} key(s) added to ${sp}${r.kept.length ? `, ${r.kept.length} already set and kept (${r.kept.join(', ')})` : ''}${r.created ? ' (created)' : ''}${r.backup ? `; restore: copy "${r.backup}" over settings.json` : ''}`);
+    } catch (e) {
+      console.log(`ENV FAIL ${e.message}`);
+      bad++;
+    }
+  } else if (o.env === false) console.log('env: skipped (--no-env); rdc env --yes merges dtd/claude-env.json later');
+
   if (o.arm && !failed && !bad) {
     try {
       const hadSettings = existsSync(join(target, 'settings.json'));
@@ -500,6 +523,10 @@ async function cmdUninstall(o) {
     const sp = join(target, 'settings.json');
     const r = disarmSettings(sp);
     console.log(`disarmed ${r.removed} hook entry(ies)${r.backup ? `; backup ${r.backup}` : ''}`);
+    if (Array.isArray(m.envAdded) && m.envAdded.length) {
+      const e = removeEnv(sp, envBlock(), m.envAdded);
+      console.log(`env: removed ${e.removed} key(s) this tool added${e.kept.length ? `; kept ${e.kept.join(', ')} (changed since)` : ''}`);
+    }
     // A settings.json this tool created from nothing is removed again once it
     // is empty after the disarm; the backups this tool took are removed with
     // it, since the disarm was verified by re-reading the file from disk.
@@ -680,6 +707,34 @@ function delegate(sub, o) {
   process.exit(r.status === null ? 1 : r.status);
 }
 
+// ---------- env ----------
+
+function cmdEnv(o) {
+  const target = targetDir(o);
+  const sp = join(target, 'settings.json');
+  const env = envBlock();
+  if (o.check) {
+    const d = envDrift(sp, env);
+    console.log(d.ok ? `env: ${Object.keys(env).length} keys of dtd/claude-env.json present with the shipped values in ${sp}` : `env drift in ${sp}: missing ${d.missing.join(', ') || 'none'}; differing ${d.differ.join(', ') || 'none'}; rdc env --yes merges the missing ones`);
+    process.exit(d.ok ? 0 : 1);
+  }
+  if (!o.yes) {
+    console.log(`env: would merge ${Object.keys(env).length} keys into ${sp} under env (a key already set is kept):`);
+    for (const [k, v] of Object.entries(env)) console.log(`  ${k}=${v}`);
+    console.log('pass --yes to write, --check to compare');
+    process.exit(0);
+  }
+  const r = mergeEnv(sp, env);
+  const mp = join(target, MANIFEST);
+  if (existsSync(mp)) {
+    const m = JSON.parse(readFileSync(mp, 'utf8'));
+    m.envAdded = [...new Set([...(m.envAdded || []), ...r.added])];
+    if (r.created) m.settingsCreated = true;
+    writeLF(mp, JSON.stringify(m, null, 2) + '\n');
+  }
+  console.log(`env: ${r.added.length} added, ${r.kept.length} kept in ${sp}${r.created ? ' (created)' : ''}${r.backup ? `; restore: copy "${r.backup}" over settings.json` : ''}`);
+}
+
 // ---------- main ----------
 
 const [cmd, ...rest] = process.argv.slice(2);
@@ -709,6 +764,9 @@ switch (cmd) {
   case 'forge':
     await cmdForge(o);
     break;
+  case 'env':
+    cmdEnv(o);
+    break;
   case 'arm':
   case 'disarm':
   case 'doctor':
@@ -730,6 +788,6 @@ switch (cmd) {
     break;
   }
   default:
-    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | prune-plugin | list | check | build | resolve | forge | arm | disarm | doctor | controls | ledger | suggest | watch\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --arm (hooks are not armed unless asked)\n  prune-plugin  remove what the plugin CLI leaves under plugins/cache and plugins/marketplaces after uninstall; refuses while still registered\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C16\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose; both end at a 300 s ceiling\n  watch     [--once] [--poll <ms>] [--secs <n>]   the Commander-Adiutor monitor by hand, its only way to run: one line per -dtd answer that failed its grammar; stops at 300 s unless --secs says otherwise\n`);
+    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | prune-plugin | list | check | build | resolve | forge | env | arm | disarm | doctor | controls | ledger | suggest | watch\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --arm (hooks are not armed unless asked) | --no-env (the env block of dtd/claude-env.json is merged unless asked not to)\n  env       [--yes | --check]   merge the six keys of dtd/claude-env.json into settings.json under env, or compare; uninstall removes what install added\n  prune-plugin  remove what the plugin CLI leaves under plugins/cache and plugins/marketplaces after uninstall; refuses while still registered\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C16\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose; both end at a 300 s ceiling\n  watch     [--once] [--poll <ms>] [--secs <n>]   the Commander-Adiutor monitor by hand, its only way to run: one line per -dtd answer that failed its grammar; stops at 300 s unless --secs says otherwise\n`);
     process.exit(cmd ? 2 : 0);
 }

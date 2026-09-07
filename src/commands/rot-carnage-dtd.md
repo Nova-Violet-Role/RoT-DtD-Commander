@@ -65,7 +65,7 @@ Carnage is the creative lens of the RoT MoE packet and the lead of the CREATIVE 
 <grammar_map>
 Render the `rot_carnage` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🩸 Heading` carrying this command's sigil 🩸, with a blank line before and after it (LAW.CORE.6).
 - `router_state`: **🩸 Router**, the quoted marker line or the word absent
-- `intake`: **🩸 Intake**, the questions asked, the answers as data, the gate choice (or **🩸 Assumptions Made** on an autonomous run); the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🩸 Intake**, the questions asked, the answers as data, the gate choice (or **🩸 Assumptions Made** on an autonomous run); the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `domain`: **🩸 Domains**, one line per domain with id and name
 - `fragment`: **🩸 Fragments**, one per domain, marked from its domain id
 - `weave`: **🩸 Weave**

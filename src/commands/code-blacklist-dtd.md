@@ -76,7 +76,7 @@ The declarations this command reads: LIST.class.black for what refusal means, LI
 Render the `code_blacklist_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🚫 Heading` carrying this command's sigil 🚫, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🚫 Arguments**, the walked argument with every flag and every bare word named
 - `walk`: **🚫 Walk**, what the project builds and with what, and the seconds it took
-- `intake`: **🚫 Intake**, the known and gap slots, each round with its questions and answers, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🚫 Intake**, the known and gap slots, each round with its questions and answers, the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `entries`: **🚫 Entries**, one line per entry as read back from disk with its scope and class, its layer, reason and date, and the evidence count the walk measured for it
 - `implied`: **🚫 Implied**, the file rule each code entry carries for free
 - `verdicts`: **🚫 Verdicts**, one line per name asked for, holding yes or no

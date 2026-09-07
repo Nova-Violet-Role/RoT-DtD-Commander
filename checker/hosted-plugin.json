@@ -18,7 +18,7 @@
   },
   "baseline": {
     "measuredOn": "2026-09-07",
-    "version": "9.0.0",
+    "version": "9.1.0",
     "components": {
       "commands": 139,
       "skills": 22,

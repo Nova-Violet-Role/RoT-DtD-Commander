@@ -67,7 +67,7 @@ Ask "and then what?" until the chain is declared, not implied. First-order think
 Render the `second_order` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌊 Heading` carrying this command's sigil 🌊, with a blank line before and after it (LAW.CORE.6).
 - `action`: **🌊 Action**
 - `effect`: **🌊 First-Order Effects**, **🌊 Second-Order Effects** and **🌊 Third-Order Effects**, one line per effect with id, causes, sign, horizon, confidence
-- `intake`: the chain gate, one AskUserQuestion round, shown as the ids chosen; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: the chain gate, one AskUserQuestion round, shown as the ids chosen; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `loop`: **🌊 Feedback Loops**, one line per loop with kind and the ids in between
 - `delayed`: **🌊 Delayed Consequences**, one line per item with its effect id and surfaces_after
 - `assessment`: **🌊 Revised Assessment**, with worth and decided_by

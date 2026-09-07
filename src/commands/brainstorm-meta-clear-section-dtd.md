@@ -74,7 +74,7 @@ The shape is borrowed from the instruction channel of the RoT DTD GOAL trust con
 <grammar_map>
 Render the `clear_section` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌀 Heading` carrying this command's sigil 🌀, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🌀 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🌀 Intake**, each round with its questions and the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🌀 Intake**, each round with its questions and the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `brainstorm`: **🌀 Brainstorm**, the ideas ranked, kept ones marked
 - `launch`: **🌀 Launch**, the schematic, the kind, the creator selected, the schemas with their parts, the forms
 - `transmigration`: **🌀 Transmigration**, the handoff file written, its path and bytes, what it carries

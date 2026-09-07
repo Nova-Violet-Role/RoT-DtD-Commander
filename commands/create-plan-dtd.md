@@ -414,6 +414,15 @@ argument-hint: [what the plan is for, or leave blank; --no-gate for autonomous d
 <!ENTITY GATE.add       "Let me add context">
 <!ENTITY GATE.impactful "Let me pick an impactful selection">
 <!ENTITY GATE.save      "Save your cache first">
+<!-- 9.1.0: a question carries at most ASK.max_options options, so the fifth
+     choice cannot be a fifth option and a choice that rides in Other is not
+     offered; measured 2026-09-07, the 9.0.0 gate lost it and the operator
+     watched it vanish. The gate is one ask of two questions: the four
+     re-entries under Gate, and the cache choice under its own header with
+     GATE.continue beside GATE.save. -->
+<!ENTITY GATE.cache.header   "Cache">
+<!ENTITY GATE.cache.question "Save your cache first?">
+<!ENTITY GATE.continue       "No, continue with the gate choice above">
 
 <!ENTITY ASK.max_questions     "4">
 <!ENTITY ASK.max_options       "4">
@@ -544,7 +553,7 @@ argument-hint: [what the plan is for, or leave blank; --no-gate for autonomous d
 
 <!-- ===== THE LAWS ===== -->
 <!-- Numbered, never reused, never reordered. -->
-<!ENTITY LAW.CACHE.1 "Every gate of a command that includes this subset offers GATE.save as a fifth choice beside start, more, add and impactful; save is not a re-entry, it is never spent, and it is offered on every gate including the exhausted one, so ASK.exhausted offers start and save.">
+<!ENTITY LAW.CACHE.1 "Every gate of a command that includes this subset offers GATE.save as a fifth choice beside start, more, add and impactful, rendered as the second question of the same ask, GATE.cache.question under GATE.cache.header with GATE.continue beside it, because a question carries at most ASK.max_options options and a choice that rides in Other is not offered; save is not a re-entry, it is never spent, and it is offered on every gate including the exhausted one, so ASK.exhausted offers start and save.">
 <!ENTITY LAW.CACHE.2 "On gate choice save the command writes CACHE.file in the CACHE.form form with the CACHE.fields fields in declared order, reads the file back whole in one pass, holds every guard CACHE.guards names (LAW.FORM.3), renders one cache element with the file, its bytes, the fields and the reread, and ends the answer with CACHE.compact as its last line; no other work runs in that turn.">
 <!ENTITY LAW.CACHE.3 "The next call of the same command reads its cache before its context analysis: every answer the file carries is a known slot (LAW.ASK.1), the gate is offered with the saved round, adds and impactfuls, and the cache element is rendered with state resumed; a file older than CACHE.stale days is rendered with state stale and offered, never reused silently; the file is deleted only by the run that started from it, after its gate said start.">
 <!ENTITY LAW.CACHE.4 "A command token that arrives while another run is open, at either end of its prompt (LAW.CORE.7), opens its own intake whole at the next safe point: the open run saves its cache first with reason token, the arriving command runs every round and its gate, and the open run resumes from its file; a token treated as added context to the open run is a failed answer.">
@@ -616,7 +625,7 @@ This command is the door in front of the create-plans-dtd skill. It asks the twe
 <grammar_map>
 Render the `plan_forge` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🗺️ Heading` carrying this command's sigil 🗺️, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🗺️ Args**, the launch walk: count, the flags, the positional words, the known slots
-- `intake`: **🗺️ Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🗺️ Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `plan`: **🗺️ Plan**, the artifact, its path, the emoji, the form
 - `license`: **🗺️ License**, the expression, single, double or triple, listed yes
 - `invocation`: **🗺️ Invocation**, the one Skill call to create-plans-dtd with its argument

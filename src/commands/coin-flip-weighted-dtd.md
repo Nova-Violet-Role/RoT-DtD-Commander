@@ -59,7 +59,7 @@ The weight is the operator's, quoted; the entropy is real, one execution of WEIG
 <grammar_map>
 Render the `weighted` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🎚️ Heading` carrying this command's sigil 🎚️, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🎚️ Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🎚️ Intake**, the round when asked, its answers, the gate choice; one line saying the sides and odds came from the argument otherwise; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🎚️ Intake**, the round when asked, its answers, the gate choice; one line saying the sides and odds came from the argument otherwise; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `call`: **🎚️ Call**, the odds, heads with its weight, tails with its weight
 - `toss`: **🎚️ Toss**, the command run and its printed value, quoted
 - `result`: **🎚️ Result**, the rule and the winning side by name

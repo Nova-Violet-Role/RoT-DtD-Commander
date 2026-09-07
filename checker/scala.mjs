@@ -23,18 +23,21 @@
 //   node checker/scala.mjs list                       the families and their scalas
 //   node checker/scala.mjs run <family|--all> [--out <dir>] [--model <m>] [--turns <n>] [--secs <n>]
 //   node checker/scala.mjs score <answer.md> <family>  score a saved answer
+//   node checker/scala.mjs findings <dir>... [--leg <name>] [--run <label>] [--previous <file.nt>] [--out <file.nt>] [--table]
+//                                                     the answers of one or more legs read as a NestedText record of findings (9.1.0)
 //   node checker/scala.mjs --controls                  three planted answers, each judged as it should be
 //
 // Exit 0 every scala passed; 1 a scala failed its score; 124 a ceiling fired
 // and that family is UNRUN; 2 the arguments are wrong.
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, mkdtempSync, rmSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
+import { join, dirname, resolve, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { FAMILIES, classify } from './readme-index.mjs';
 import { MAX } from '../lib/chain.mjs';
+import { toNt, fromNt } from '../lib/cache.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SIGILS = JSON.parse(readFileSync(join(ROOT, 'dtd', 'sigils.json'), 'utf8'));
@@ -138,6 +141,92 @@ export function runOne(s, { out, model = 'opus', turns = 60, secs = 1500 } = {})
   return { id: s.id, status: r.status, unrun: false, ok: sc.ok && !why, findings: why ? [why, ...sc.findings] : sc.findings, headings: sc.headings, turns: j ? j.num_turns : null, cost: j ? j.total_cost_usd : null, log };
 }
 
+// ---------- the findings as a record (9.1.0) ----------
+// The answers a leg leaves behind, read again: every family scored as the run
+// scored it, the CLI's own refusal and an empty answer named as findings of
+// their own, and each finding classified by kind and severity. The record is
+// NestedText through lib/cache.mjs, one entry per finding with leg, family,
+// member, kind, severity, text, fix and status; a previous record's fix and
+// status are carried over by key, so a regeneration never loses what was
+// written by hand, and a finding the new run no longer shows is kept as fixed.
+export function kindOf(text) {
+  const t = String(text);
+  if (/^the CLI has no command/.test(t)) return { kind: 'refusal', severity: 'high', member: ((/no command \/([\w-]+?)(?:-dtd)?:/.exec(t) || [])[1]) || 'none' };
+  if (/^the answer is empty/.test(t)) return { kind: 'empty', severity: 'high', member: 'none' };
+  if (/^the ceiling fired/.test(t)) return { kind: 'unrun', severity: 'high', member: 'none' };
+  if (/^no heading of /.test(t)) return { kind: 'heading', severity: 'medium', member: ((/^no heading of (\S+)/.exec(t) || [])[1]) || 'none' };
+  if (/carries no chain_close line/.test(t)) return { kind: 'close', severity: 'medium', member: 'none' };
+  if (/^chain_close says ran/.test(t)) return { kind: 'count', severity: 'low', member: 'none' };
+  return { kind: 'other', severity: 'low', member: 'none' };
+}
+export function legOf(dir, given = '') {
+  if (given) return String(given).replace(/-latest$/, '');
+  const m = /scala-(ubuntu|macos|windows)/.exec(String(dir));
+  return m ? m[1] : basename(String(dir));
+}
+export function readLeg(dir, leg) {
+  const rows = [];
+  const summary = { leg, pass: 0, fail: 0, findings: 0, families: [] };
+  for (const s of scalas()) {
+    const md = join(dir, `scala-${s.id}.md`);
+    const raw = join(dir, `scala-${s.id}.json`);
+    if (!existsSync(md) && !existsSync(raw)) continue;
+    const answer = existsSync(md) ? readFileSync(md, 'utf8') : '';
+    const rawText = existsSync(raw) ? readFileSync(raw, 'utf8') : '';
+    const findings = [];
+    const why = diagnose(rawText);
+    if (why) findings.push(why);
+    if (!existsSync(md)) findings.push('the ceiling fired: no answer file was written for this family');
+    else if (!answer.trim()) findings.push('the answer is empty: no result came back from the CLI');
+    const sc = score(answer, s.members);
+    for (const f of sc.findings) findings.push(f);
+    let j = null;
+    try { j = JSON.parse(rawText); } catch { const i = rawText.indexOf('{'); try { j = JSON.parse(rawText.slice(i)); } catch { j = null; } }
+    const fam = { family: s.id, ok: findings.length === 0, headings: sc.headings, turns: j && j.num_turns != null ? String(j.num_turns) : 'none', cost: j && j.total_cost_usd != null ? Number(j.total_cost_usd).toFixed(2) : 'none' };
+    summary.families.push(fam);
+    if (fam.ok) summary.pass++; else summary.fail++;
+    for (const text of findings) { const k = kindOf(text); rows.push({ leg, family: s.id, member: k.member, kind: k.kind, severity: k.severity, text }); }
+  }
+  summary.findings = rows.length;
+  return { rows, summary };
+}
+const keyOf = (r) => `${r.leg}|${r.family}|${r.kind}|${r.member}|${r.n || '1'}`;
+export function findingsRecord(legs, { run = '', previous = null, generated = new Date().toISOString() } = {}) {
+  let prevRows = [];
+  if (previous) {
+    const text = typeof previous === 'string' && existsSync(previous) ? readFileSync(previous, 'utf8') : (typeof previous === 'string' ? previous : '');
+    const p = text ? fromNt(text) : null;
+    prevRows = p && Array.isArray(p.findings) ? p.findings : [];
+  }
+  const seen = new Map();
+  const out = [];
+  for (const l of legs) for (const r of l.rows) {
+    const base = `${r.leg}|${r.family}|${r.kind}|${r.member}`;
+    const n = (seen.get(base) || 0) + 1;
+    seen.set(base, n);
+    const row = { n: String(n), leg: r.leg, family: r.family, member: r.member, kind: r.kind, severity: r.severity, text: r.text, fix: 'none yet', status: 'open' };
+    const p = prevRows.find((x) => keyOf(x) === keyOf(row));
+    if (p) { if (p.fix) row.fix = p.fix; if (p.status) row.status = p.status; }
+    out.push(row);
+  }
+  for (const x of prevRows) {
+    if (out.some((r) => keyOf(r) === keyOf(x))) continue;
+    if (/^fixed/.test(String(x.status || ''))) { out.push({ ...x }); continue; }
+    out.push({ ...x, status: `fixed in ${run || 'this run'}` });
+  }
+  const summary = {};
+  for (const l of legs) summary[l.summary.leg] = `pass ${l.summary.pass}, fail ${l.summary.fail}, findings ${l.summary.findings}`;
+  const record = { run: run || 'unnamed', generated, legs: legs.map((l) => l.summary.leg).join(', ') || 'none', families: String(scalas().length), summary: Object.keys(summary).length ? summary : 'none', findings: out.length ? out : 'none' };
+  return { record, text: toNt(record, 'scala findings, written by node checker/scala.mjs findings; fix and status are kept by hand and carried over by key on the next write') };
+}
+export function table(legs) {
+  const fams = scalas().map((s) => s.id);
+  const L = [`| family | ${legs.map((l) => l.summary.leg).join(' | ')} |`, `|---|${legs.map(() => '---').join('|')}|`];
+  for (const f of fams) L.push(`| ${f} | ${legs.map((l) => { const x = l.summary.families.find((y) => y.family === f); return x ? (x.ok ? 'PASS' : `FAIL ${x.headings} headings, ${l.rows.filter((r) => r.family === f).length} findings, turns ${x.turns}`) : 'absent'; }).join(' | ')} |`);
+  L.push(`| total | ${legs.map((l) => `pass ${l.summary.pass}, fail ${l.summary.fail}, findings ${l.summary.findings}`).join(' | ')} |`);
+  return L.join('\n');
+}
+
 export function controls(io = console) {
   let ran = 0, fail = 0;
   const say = (ok, t) => { ran++; io.log(`  ${ok ? 'PASS' : 'FAIL'} ${t}`); if (!ok) fail++; };
@@ -182,6 +271,30 @@ export function controls(io = console) {
   const refused = diagnose('Unknown command: /chain-dtd\n');
   say(/the CLI has no command \/chain-dtd/.test(refused) && diagnose('{"type":"result","result":"Unknown command: /sigil-dtd","num_turns":0}') !== '' && diagnose('{"result":"### x"}') === '',
     `trip: the CLI's Unknown command line, bare or inside a json result, is a finding by token before any heading is counted: ${refused.slice(0, 60)}`);
+  // The findings as a record (9.1.0): a planted leg with one passing and one
+  // failing family, read, classified, written as NestedText and read back;
+  // a previous record's fix and status carried over by key, a vanished
+  // finding kept as fixed; the leg named from the artifact directory.
+  const kinds = ['the CLI has no command /chain-dtd: x', 'the answer is empty: y', 'the ceiling fired: z', 'no heading of pareto (x) after position 0 of 4 headings', 'a chain of two or more carries no chain_close line naming how many ran', 'chain_close says ran 4; the scala stacked 5'].map(kindOf);
+  say(kinds.map((k) => `${k.kind}/${k.severity}/${k.member}`).join(' ') === 'refusal/high/chain empty/high/none unrun/high/none heading/medium/pareto close/medium/none count/low/none', `every finding text has a kind, a severity and a member: ${kinds.map((k) => k.kind).join(', ')}`);
+  say(legOf('/tmp/legs/scala-macos-latest-abc123') === 'macos' && legOf('/x', 'windows-latest') === 'windows' && legOf('/tmp/other') === 'other', 'the leg is read from the artifact directory name, or from --leg without its -latest');
+  const legDir = mkdtempSync(join(tmpdir(), 'scala-leg-'));
+  try {
+    const th = scalas().find((s) => s.id === 'thinking');
+    writeFileSync(join(legDir, 'scala-chain.md'), `### ${SIGILS[one.members[0]]} Chain\n`, 'utf8');
+    writeFileSync(join(legDir, 'scala-chain.json'), '{"result":"x","num_turns":3,"total_cost_usd":0.5}', 'utf8');
+    writeFileSync(join(legDir, 'scala-thinking.md'), `### ${SIGILS[th.members[0]]} First\n`, 'utf8');
+    writeFileSync(join(legDir, 'scala-thinking.json'), '{"result":"y","num_turns":1,"total_cost_usd":0.1}', 'utf8');
+    const leg = readLeg(legDir, 'ubuntu');
+    const prevText = toNt({ run: 'before', generated: 'x', legs: 'ubuntu', families: '17', summary: 'none', findings: [{ n: '1', leg: 'ubuntu', family: 'thinking', member: 'none', kind: 'close', severity: 'medium', text: 'old', fix: 'the close line added to the prose', status: 'in progress' }, { n: '1', leg: 'ubuntu', family: 'chain', member: 'none', kind: 'empty', severity: 'high', text: 'was empty', fix: 'none yet', status: 'open' }] });
+    const rec = findingsRecord([leg], { run: 'r2', previous: prevText, generated: 'now' });
+    const back = fromNt(rec.text);
+    const close = back.findings.find((f) => f.family === 'thinking' && f.kind === 'close');
+    const vanished = back.findings.find((f) => f.family === 'chain' && f.kind === 'empty');
+    say(leg.summary.pass === 1 && leg.summary.fail === 1 && leg.summary.findings === th.members.length && back.findings.length === leg.summary.findings + 1 && close && close.fix === 'the close line added to the prose' && close.status === 'in progress' && vanished && vanished.status === 'fixed in r2' && back.summary.ubuntu === `pass 1, fail 1, findings ${leg.summary.findings}`,
+      `a planted leg reads as pass 1, fail 1, ${leg.summary.findings} findings; written as NestedText and read back; the previous fix and status carried over by key; the vanished finding kept as fixed in r2`);
+    say(/^\| family \| ubuntu \|/.test(table([leg])) && /\| chain \| PASS \|/.test(table([leg])) && /\| thinking \| FAIL /.test(table([leg])), 'the table has one column per leg and one row per family with PASS or the counts');
+  } finally { rmSync(legDir, { recursive: true, force: true }); }
   io.log(`scala controls: ${ran} run, ${fail} failing`);
   return fail === 0;
 }
@@ -199,6 +312,30 @@ if (isMain) {
     for (const f of sc.findings) console.log(`  FINDING ${f}`);
     console.log(`scala ${s.id}: ${sc.ok ? 'PASS' : 'FAIL'}, ${sc.headings} headings`);
     process.exit(sc.ok ? 0 : 1);
+  }
+  if (args[0] === 'findings' && args[1]) {
+    const dirs = [];
+    const o = {};
+    for (let i = 1; i < args.length; i++) {
+      if (args[i] === '--table') o.table = true;
+      else if (/^--(out|leg|run|previous)$/.test(args[i])) o[args[i].slice(2)] = args[++i];
+      else dirs.push(args[i]);
+    }
+    if (!dirs.length) { console.error('findings: no directory given'); process.exit(2); }
+    const legs = dirs.map((d) => readLeg(d, legOf(d, dirs.length === 1 ? o.leg || '' : '')));
+    const read = legs.reduce((n, l) => n + l.summary.families.length, 0);
+    if (!read) { console.error(`findings: no scala answer under ${dirs.join(', ')}`); process.exit(1); }
+    const { record, text } = findingsRecord(legs, { run: o.run || '', previous: o.previous || null });
+    if (o.table) console.log(table(legs));
+    if (o.out) {
+      writeFileSync(o.out, text, 'utf8');
+      const back = fromNt(readFileSync(o.out, 'utf8'));
+      if (JSON.stringify(back) !== JSON.stringify(JSON.parse(JSON.stringify(record)))) { console.error(`findings: ${o.out} did not read back as written`); process.exit(1); }
+      console.log(`  wrote ${o.out}, ${Buffer.byteLength(text)} bytes, read back equal`);
+    }
+    const total = Array.isArray(record.findings) ? record.findings.length : 0;
+    console.log(`scala findings: ${legs.length} leg(s) ${record.legs}, ${read} answers read, ${total} findings (${Array.isArray(record.findings) ? record.findings.filter((f) => f.status === 'open').length : 0} open)`);
+    process.exit(0);
   }
   if (args[0] === 'run' && args[1]) {
     const out = resolve(opt('--out', join(tmpdir(), 'scala')));
@@ -219,6 +356,6 @@ if (isMain) {
     }
     process.exit(worst);
   }
-  console.error('usage: node checker/scala.mjs list | run <family|--all> [--out d] [--model m] [--turns n] [--secs n] | score <answer.md> <family> | --controls');
+  console.error('usage: node checker/scala.mjs list | run <family|--all> [--out d] [--model m] [--turns n] [--secs n] | score <answer.md> <family> | findings <dir>... [--leg l] [--run r] [--previous f] [--out f] [--table] | --controls');
   process.exit(2);
 }

@@ -73,7 +73,7 @@ Four questions in one round: the outcome, the evidence to carry, the next step e
 Render the `task_handoff` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🤝 Heading` carrying this command's sigil 🤝, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🤝 Args**, the launch walk: count, the flags, the positional words
 - `task_ref`: **🤝 Task**, the name, the status before and after
-- `intake`: **🤝 Intake**, the one round with its four questions, the variant beside each, the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🤝 Intake**, the one round with its four questions, the variant beside each, the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `attestation`: **🤝 Attestation**, one line per item: kind, confidence, the thing
 - `record_file`: **🤝 Record**, the path, the bytes, the revision count, and the check line
 - `instruction`: **🤝 Instruction**, the goal and the one step

@@ -73,7 +73,7 @@ The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM
 <grammar_map>
 Render the `renovation_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔨 Heading` carrying this command's sigil 🔨, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🔨 Arguments**, the walk with its count and its four guards
-- `intake`: **🔨 Intake**, the known and gap slots, each round with its questions, variants and answers, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🔨 Intake**, the known and gap slots, each round with its questions, variants and answers, the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `survey_ref`: **🔨 Survey**, the path and date of the survey this renovation stands on, and its digest
 - `plan_ref`: **🔨 Plan**, the path and date of the plan, and its digest
 - `renovation`: **🔨 Renovation**, one line per change: verb, file, before, after; or one line saying nothing was changed and why

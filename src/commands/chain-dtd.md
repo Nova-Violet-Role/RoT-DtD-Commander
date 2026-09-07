@@ -55,7 +55,7 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.6). The `intake` c
 <grammar_map>
 Render the `chain_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⛓️ Heading` carrying this command's sigil ⛓️, with a blank line before and after it (LAW.CORE.6).
 - `args`: **⛓️ Arguments**, the walk with its count and its four guards, and whether the autonomy token was found as its own word
-- `intake`: **⛓️ Intake**, the one gate: known and gap slots for every link, the round, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **⛓️ Intake**, the one gate: known and gap slots for every link, the round, the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `chain`: **⛓️ Chain**, the chain intake, one line per link, each link's answer under its own sigil, one line per handoff, the close
 - `artifact`: **⛓️ Artifact**, the record under artifacts/chain
 - `assumption_made`: **⛓️ Assumptions Made**, autonomous run only

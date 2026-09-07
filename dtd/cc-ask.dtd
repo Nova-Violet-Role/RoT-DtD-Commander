@@ -116,6 +116,15 @@
 <!ENTITY GATE.add       "Let me add context">
 <!ENTITY GATE.impactful "Let me pick an impactful selection">
 <!ENTITY GATE.save      "Save your cache first">
+<!-- 9.1.0: a question carries at most ASK.max_options options, so the fifth
+     choice cannot be a fifth option and a choice that rides in Other is not
+     offered; measured 2026-09-07, the 9.0.0 gate lost it and the operator
+     watched it vanish. The gate is one ask of two questions: the four
+     re-entries under Gate, and the cache choice under its own header with
+     GATE.continue beside GATE.save. -->
+<!ENTITY GATE.cache.header   "Cache">
+<!ENTITY GATE.cache.question "Save your cache first?">
+<!ENTITY GATE.continue       "No, continue with the gate choice above">
 
 <!ENTITY ASK.max_questions     "4">
 <!ENTITY ASK.max_options       "4">

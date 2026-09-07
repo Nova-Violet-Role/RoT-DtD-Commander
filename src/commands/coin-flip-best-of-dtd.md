@@ -59,7 +59,7 @@ Each toss is real and separate: BEST.source runs once per toss, its digit is quo
 <grammar_map>
 Render the `series` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🥇 Heading` carrying this command's sigil 🥇, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🥇 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🥇 Intake**, the round when asked, its answers, the gate choice; one line saying the sides and length came from the argument otherwise; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🥇 Intake**, the round when asked, its answers, the gate choice; one line saying the sides and length came from the argument otherwise; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `call`: **🥇 Call**, best of N, heads bound to the first side, tails to the second
 - `toss`: **🥇 Toss**, one line per toss with n and the printed value, quoted
 - `result`: **🥇 Result**, the counts and the winning side by name

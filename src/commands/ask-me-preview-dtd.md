@@ -56,7 +56,7 @@ Use the Intake and Decision Gate pattern with previews to gather requirements be
 
 This is the ask-me-questions command with the preview made mandatory: every option shows what choosing it leads to, cut in the widget and expanded in the transcript with the predicted answer, and the back token returns to the question. The previews are guesses and are labelled so; the answers are data; the gate is the same four-way choice.
 
-The gate's fifth choice is GATE.save (LAW.CACHE.1): the run writes its cache as CACHE.file under CACHE.dir, reads it back whole, renders the `cache` element and stops with CACHE.compact; the next call resumes from the file (LAW.CACHE.2, LAW.CACHE.3). The gate is presented again after every re-entry (LAW.CACHE.5).
+The gate's fifth choice is GATE.save, the second question of the same ask, GATE.cache.question under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1): the run writes its cache as CACHE.file under CACHE.dir, reads it back whole, renders the `cache` element and stops with CACHE.compact; the next call resumes from the file (LAW.CACHE.2, LAW.CACHE.3). The gate is presented again after every re-entry (LAW.CACHE.5).
 </objective>
 
 <process>
@@ -72,7 +72,7 @@ The gate's fifth choice is GATE.save (LAW.CACHE.1): the run writes its cache as 
 <grammar_map>
 Render the `preview_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔭 Heading` carrying this command's sigil 🔭, with a blank line before and after it (LAW.CORE.6).
 - `task`: **🔭 Task**, with its kind when it came from TASK.question
-- `intake`: **🔭 Intake**, the known and gap slots, then each round as n of 3 with its questions, the expanded previews as rendered, and the answers (Other answers quoted as typed), the impactful selections when asked for, then the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🔭 Intake**, the known and gap slots, then each round as n of 3 with its questions, the expanded previews as rendered, and the answers (Other answers quoted as typed), the impactful selections when asked for, then the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `execution`: **🔭 Execution**, opening with the restatement, then the work itself
 - `artifact`: **🔭 Artifact**, the record this run wrote, as one `<artifact>` naming its file under the fixed directory; a run that wrote none says so on that line
 - `assumption_made`: **🔭 Assumptions Made**, autonomous mode only

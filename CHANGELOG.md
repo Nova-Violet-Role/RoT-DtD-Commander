@@ -7,6 +7,68 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 9.1.0 (2026-09-07)
+
+### Matrix-Commander: every family clean on every leg
+
+The first real three-OS scala matrix, run on the 9.0.0 tree at a4b9b6b,
+passed the chain family on every leg and failed the other sixteen on
+every leg: 99 findings on ubuntu, 98 on macOS, 114 on windows. The
+answers died in the runners' temp directories and only the logs
+survived. 9.1.0 keeps the answers, reads them as a record, and fixes
+what they name.
+
+- **The scala job keeps its answers.** Every leg uploads
+  `scala-<family>.md` and `.json` for the seventeen families, its
+  findings file, the smoke result and the install log as the run
+  artifact `scala-<os>-<sha>`, ninety days, on failure too; a summary
+  job downloads the three legs, prints one table across OS and uploads
+  the merged findings file.
+- **The findings as a record.** `node checker/scala.mjs findings
+  <dir>...` reads the answers of one or more legs, scores them again and
+  writes a NestedText record, `artifacts/research/<date>-scala-findings.nt`
+  when run here: one entry per finding with leg, family, member, kind,
+  severity, text, fix and status. A previous file's fix and status are
+  carried over by key, so a regeneration never loses what was written by
+  hand, and a finding the new run no longer shows is kept as fixed.
+- **The env block.** `dtd/claude-env.json` ships six keys
+  (`CLAUDE_CODE_MAX_OUTPUT_TOKENS`, `BASH_MAX_OUTPUT_LENGTH`,
+  `TASK_MAX_OUTPUT_LENGTH`, `MAX_MCP_OUTPUT_TOKENS`,
+  `CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY`,
+  `CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS`). `rdc install` merges them
+  into the target `settings.json` under `env`, a key the user already set
+  is kept and named, a backup is taken first, `--no-env` skips it;
+  `rdc env --yes` does the same on demand and `rdc env --check` compares;
+  `rdc uninstall` removes exactly the keys it added; `rdc doctor` has an
+  `env` row naming the drift; the scala job writes the block into the
+  runner's config dir before the chains. `node lib/arm.mjs controls` runs
+  the env path on a planted settings.json, 6 controls; `npm run
+  controls:arm` in the gate chain and the workflow, gate chain 85 commands.
+- **The Windows shim path.** `lib/ceiling.mjs` ran a `.cmd` shim through
+  a shell with every argument quoted, and a prompt with a newline lost
+  every argument after it: the windows leg's answers were plain text
+  where json was asked for, and only the one-link family survived. The
+  ceiling reads an npm shim for the node script it wraps and runs that
+  without a shell; an argument with a newline through a shim it cannot
+  read is refused by name, never truncated; one control passes a two-line
+  argument through a planted shim and reads it back whole.
+- **The gate's fifth choice, visible.** A question carries at most four
+  options, so save could only ride in Other, and the operator watched it
+  vanish from the gate. The gate is one ask of two questions now: the
+  four re-entries under Gate, and GATE.cache.question under
+  GATE.cache.header with GATE.continue beside GATE.save (LAW.CACHE.1);
+  every intake row says so.
+
+Measured so far:
+
+- `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
+- `node lib/arm.mjs controls`: 6 run, 0 failing
+- `node checker/scala.mjs --controls`: 16 run, 0 failing
+- `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
+- `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
+- `node checker/release-notes.mjs --versions`: one version everywhere, 9.1.0, recognised (class mid) from the verbs kept in run 10
+- 139 commands, 22 skills, 5 agents; checked 166; 1932 declarations; 85 gate-chain commands
+
 ## 9.0.0 (2026-09-07)
 
 ### Interoperable-Commander: every command runnable alone and interoperable in a chain

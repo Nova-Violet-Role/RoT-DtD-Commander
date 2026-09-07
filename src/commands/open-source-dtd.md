@@ -103,7 +103,7 @@ After intake complete:
 <output_format>
 <grammar_map>
 Render the `open_source_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌐 Heading` carrying this command's sigil 🌐, with a blank line before and after it (LAW.CORE.6).
-- `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.open_source in that order, then `claude_context` blocks if_use, if_build, integration, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-open-source.md
 </grammar_map>

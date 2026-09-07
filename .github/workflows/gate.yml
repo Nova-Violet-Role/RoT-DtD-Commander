@@ -99,6 +99,8 @@ jobs:
         run: node lib/regression.mjs controls
       - name: the portable ceiling fires with exit 124 on this leg, and keeps a child's own exit otherwise (LAW.XOS.5)
         run: node lib/ceiling.mjs controls
+      - name: the env block merged, kept, compared and removed against a planted settings.json (9.1.0)
+        run: node lib/arm.mjs controls
       - name: the encoding sweep reads bytes and its three planted files are caught (LAW.XOS.4)
         run: node lib/encoding.mjs controls
       - name: cross-os controls (the substrates probed and never guessed, the eight forms refused by name, both ceiling paths, the matrix held)
@@ -297,30 +299,74 @@ jobs:
           chmod 600 "$C/.credentials.json"
           echo "CLAUDE_CONFIG_DIR=$C" >> "$GITHUB_ENV"
           echo "credential written, $(wc -c < "$C/.credentials.json") bytes"
-      - name: the commander installed into the runner's config dir, so the chain tokens are commands the CLI knows (the first hosted scala answered Unknown command to every family and called no model)
+      - name: the commander installed into the runner's config dir with the env block, so the chain tokens are commands the CLI knows (the first hosted scala answered Unknown command to every family and called no model)
         if: env.SCALA_SKIP != '1'
         run: |
-          node bin/rot-dtd-commander.mjs install --yes --target "$CLAUDE_CONFIG_DIR" | tail -3
+          O="$RUNNER_TEMP/scala"; O=$(cygpath -m "$O" 2>/dev/null || echo "$O"); mkdir -p "$O"
+          echo "SCALA_OUT=$O" >> "$GITHUB_ENV"
+          set +e
+          node bin/rot-dtd-commander.mjs install --yes --target "$CLAUDE_CONFIG_DIR" > "$O/install.log" 2>&1
+          rc=$?
+          set -e
+          tail -4 "$O/install.log"
+          [ $rc -eq 0 ] || exit $rc
           n=$(ls "$CLAUDE_CONFIG_DIR/commands" | grep -c -- '-dtd.md$')
           echo "commands installed: $n"
           [ "$n" -gt 100 ] || { echo "the install left fewer than 100 commands"; exit 1; }
+          node bin/rot-dtd-commander.mjs env --check --target "$CLAUDE_CONFIG_DIR"
       - name: the CLI answers one turn on this leg, its raw result cut at 600 bytes, so a silent leg is readable
         if: env.SCALA_SKIP != '1'
         run: |
-          node lib/ceiling.mjs 300 claude -p "Answer with the single word ok." --model opus --max-turns 1 --output-format json > smoke.json 2>&1 || true
-          head -c 600 smoke.json; echo
-          grep -q '"num_turns":[1-9]' smoke.json || { echo "the CLI made no model turn on $XOS_LEG"; exit 1; }
-      - name: one scala per family, every family, scored on the headings each member owns
+          node lib/ceiling.mjs 300 claude -p "Answer with the single word ok." --model opus --max-turns 1 --output-format json > "$SCALA_OUT/smoke.json" 2>&1 || true
+          head -c 600 "$SCALA_OUT/smoke.json"; echo
+          grep -q '"num_turns":[1-9]' "$SCALA_OUT/smoke.json" || { echo "the CLI made no model turn on $XOS_LEG"; exit 1; }
+      - name: one scala per family, every family, scored on the headings each member owns, and this leg's findings written beside the answers
         if: env.SCALA_SKIP != '1'
         run: |
-          O=$(mktemp -d); O=$(cygpath -m "$O" 2>/dev/null || echo "$O")
           set +e
-          node checker/scala.mjs run --all --out "$O" --turns 60 --secs 1500
+          node checker/scala.mjs run --all --out "$SCALA_OUT" --turns 60 --secs 1500
           rc=$?
           set -e
-          ls -l "$O"
-          for f in "$O"/scala-*.md; do n=$(wc -c < "$f"); if [ "$n" -lt 4 ]; then echo "--- $(basename "$f") is empty; the raw head:"; head -c 300 "${f%.md}.json"; echo; fi; done
+          ls -l "$SCALA_OUT"
+          node checker/scala.mjs findings "$SCALA_OUT" --leg "$XOS_LEG" --run "$GITHUB_SHA" --out "$SCALA_OUT/findings-$XOS_LEG.nt"
           exit $rc
+      - name: the answers, the raw results, the findings, the smoke and the install log kept as the run's artifact, on failure too (the first matrix's answers died in tmp)
+        if: ${{ always() && env.SCALA_SKIP != '1' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: scala-${{ matrix.os }}-${{ github.sha }}
+          path: ${{ runner.temp }}/scala
+          retention-days: 90
+          if-no-files-found: error
+  scala-summary:
+    # The three legs read as one: every leg's artifact downloaded, the answers
+    # scored again, one table across OS printed and one merged findings file
+    # uploaded, so the matrix is read from one place and not from three logs.
+    if: ${{ always() && (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') }}
+    needs: [scala]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: scala-*-${{ github.sha }}
+          path: ${{ runner.temp }}/legs
+      - name: one table across the three legs, and the merged findings file
+        run: |
+          ls "$RUNNER_TEMP/legs" 2>/dev/null || { echo "no leg artifact: the scala was UNRUN on every leg"; exit 0; }
+          node checker/scala.mjs findings "$RUNNER_TEMP"/legs/scala-* --run "$GITHUB_SHA" --out "$RUNNER_TEMP/legs/scala-findings.nt" --table
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scala-findings-${{ github.sha }}
+          path: ${{ runner.temp }}/legs/scala-findings.nt
+          retention-days: 90
+          if-no-files-found: ignore
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')

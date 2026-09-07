@@ -196,6 +196,15 @@ description: The intake and decision gate as a reusable state machine. Load when
 <!ENTITY GATE.add       "Let me add context">
 <!ENTITY GATE.impactful "Let me pick an impactful selection">
 <!ENTITY GATE.save      "Save your cache first">
+<!-- 9.1.0: a question carries at most ASK.max_options options, so the fifth
+     choice cannot be a fifth option and a choice that rides in Other is not
+     offered; measured 2026-09-07, the 9.0.0 gate lost it and the operator
+     watched it vanish. The gate is one ask of two questions: the four
+     re-entries under Gate, and the cache choice under its own header with
+     GATE.continue beside GATE.save. -->
+<!ENTITY GATE.cache.header   "Cache">
+<!ENTITY GATE.cache.question "Save your cache first?">
+<!ENTITY GATE.continue       "No, continue with the gate choice above">
 
 <!ENTITY ASK.max_questions     "4">
 <!ENTITY ASK.max_options       "4">
@@ -326,7 +335,7 @@ description: The intake and decision gate as a reusable state machine. Load when
 
 <!-- ===== THE LAWS ===== -->
 <!-- Numbered, never reused, never reordered. -->
-<!ENTITY LAW.CACHE.1 "Every gate of a command that includes this subset offers GATE.save as a fifth choice beside start, more, add and impactful; save is not a re-entry, it is never spent, and it is offered on every gate including the exhausted one, so ASK.exhausted offers start and save.">
+<!ENTITY LAW.CACHE.1 "Every gate of a command that includes this subset offers GATE.save as a fifth choice beside start, more, add and impactful, rendered as the second question of the same ask, GATE.cache.question under GATE.cache.header with GATE.continue beside it, because a question carries at most ASK.max_options options and a choice that rides in Other is not offered; save is not a re-entry, it is never spent, and it is offered on every gate including the exhausted one, so ASK.exhausted offers start and save.">
 <!ENTITY LAW.CACHE.2 "On gate choice save the command writes CACHE.file in the CACHE.form form with the CACHE.fields fields in declared order, reads the file back whole in one pass, holds every guard CACHE.guards names (LAW.FORM.3), renders one cache element with the file, its bytes, the fields and the reread, and ends the answer with CACHE.compact as its last line; no other work runs in that turn.">
 <!ENTITY LAW.CACHE.3 "The next call of the same command reads its cache before its context analysis: every answer the file carries is a known slot (LAW.ASK.1), the gate is offered with the saved round, adds and impactfuls, and the cache element is rendered with state resumed; a file older than CACHE.stale days is rendered with state stale and offered, never reused silently; the file is deleted only by the run that started from it, after its gate said start.">
 <!ENTITY LAW.CACHE.4 "A command token that arrives while another run is open, at either end of its prompt (LAW.CORE.7), opens its own intake whole at the next safe point: the open run saves its cache first with reason token, the arriving command runs every round and its gate, and the open run resumes from its file; a token treated as added context to the open run is a failed answer.">
@@ -373,7 +382,7 @@ The `round_shape` is one `ask` of one to four `question` elements, each with a h
 
 <gate_rules>
 
-The `gate_rules`: after the answers, one AskUserQuestion with header Gate, the question GATE.question, and the five options GATE.start, GATE.more, GATE.add, GATE.impactful and GATE.save. On more: two or three follow-ups from the accumulated answers, then the gate again. On add: receive the input as an `answer`, then the gate again. On impactful: one to four ranked selections with their provenance, one picked as an `answer`, then the gate again. On save: write the `cache` under CACHE.dir as CACHE.file in the CACHE.form form, read it back whole, render the `cache` element and stop with CACHE.compact as the last line; nothing else runs in that turn, and the next call of the same command resumes from the file (LAW.CACHE.1 to LAW.CACHE.3). On start: execution, opening with a restatement of every known slot and every answer. Round numbers increase by one per gate. A gate is presented again after every more, add or impactful; an intake that closes on one of them is a failed answer (LAW.CACHE.5), which the Adiutor holds at Stop as a finding of kind gate (LAW.ADIUTOR.13), and a command token that arrives mid-run saves first and opens its own intake whole (LAW.CACHE.4).
+The `gate_rules`: after the answers, one AskUserQuestion of two questions: the first with header Gate, the question GATE.question and the four options GATE.start, GATE.more, GATE.add and GATE.impactful; the second with header GATE.cache.header, the question GATE.cache.question and the options GATE.continue and GATE.save, because a question carries at most ASK.max_options options and a choice that rides in Other is not offered. On more: two or three follow-ups from the accumulated answers, then the gate again. On add: receive the input as an `answer`, then the gate again. On impactful: one to four ranked selections with their provenance, one picked as an `answer`, then the gate again. On save: write the `cache` under CACHE.dir as CACHE.file in the CACHE.form form, read it back whole, render the `cache` element and stop with CACHE.compact as the last line; nothing else runs in that turn, and the next call of the same command resumes from the file (LAW.CACHE.1 to LAW.CACHE.3). On start: execution, opening with a restatement of every known slot and every answer. Round numbers increase by one per gate. A gate is presented again after every more, add or impactful; an intake that closes on one of them is a failed answer (LAW.CACHE.5), which the Adiutor holds at Stop as a finding of kind gate (LAW.ADIUTOR.13), and a command token that arrives mid-run saves first and opens its own intake whole (LAW.CACHE.4).
 
 </gate_rules>
 

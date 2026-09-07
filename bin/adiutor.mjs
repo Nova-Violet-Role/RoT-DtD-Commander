@@ -30,7 +30,7 @@ import { spawnSync, spawn } from 'node:child_process';
 import os from 'node:os';
 import { readText, resolveFile, check, parseSubset, splitDoctype } from '../lib/dtd.mjs';
 import { expectedFromCommand, checkAnswer, prescribe } from '../lib/render-check.mjs';
-import { armSettings, disarmSettings, armedIn, EVENTS, hookCommand } from '../lib/arm.mjs';
+import { armSettings, disarmSettings, armedIn, EVENTS, hookCommand, envDrift } from '../lib/arm.mjs';
 import { claudeDir, stateDir, ledgerPath, safeId, RECORD_FIELDS, parseLedger } from '../lib/ledger.mjs';
 import { scan as slopScan, summary as slopSummary, SLOPPY_FIXTURE, judgeSpot, refusal, bashText } from '../lib/ai-slop.mjs';
 import { nestingOf, declaredRecords, recordFindings, RECORD_DIR } from '../lib/record.mjs';
@@ -547,6 +547,13 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
     parsed = false;
   }
   row('settings.json', parsed, parsed ? 'parses' : 'does not parse; hooks cannot load');
+  // The env block (9.1.0): the keys dtd/claude-env.json ships, present with
+  // their shipped values, or the drift named per key with the verb that mends it.
+  try {
+    const env = JSON.parse(readFileSync(join(ROOT, 'dtd', 'claude-env.json'), 'utf8')).env;
+    const d = parsed ? envDrift(settings, env) : { ok: false, missing: Object.keys(env), differ: [] };
+    row('env', d.ok, d.ok ? `${Object.keys(env).length} keys of dtd/claude-env.json present with the shipped values` : `drift: missing ${d.missing.join(', ') || 'none'}; differing ${d.differ.join(', ') || 'none'}; rdc env --yes merges`);
+  } catch (e) { row('env', false, `dtd/claude-env.json unreadable: ${e.message}`); }
   const armed = parsed ? armedIn(settings) : [];
   row('slop gate', armed.length === EVENTS.length, armed.length === EVENTS.length ? 'armed with the hooks: the answer at Stop, a Write, an Edit, a NotebookEdit, a commit message and a request body, strict (LAW.SLOP.7, LAW.SLOP.8)' : 'not armed (rdc arm); the -dtd Stop gate and the sweep stand');
   row('hooks', armed.length === EVENTS.length, `${armed.length}/${EVENTS.length} Adiutor events armed${armed.length ? ': ' + armed.join(', ') : ''}`);

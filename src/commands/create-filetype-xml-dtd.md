@@ -84,7 +84,7 @@ A file type here is a declaration and an exemplar. The declaration is a NOTATION
 <grammar_map>
 Render the `filetype_forge` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧿 Heading` carrying this command's sigil 🧿, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🧿 Args**, the launch walk: count, the flags, the positional words, the known slots
-- `intake`: **🧿 Intake**, each `round` n of 3 with its questions, the variant beside each, the labels, marks or Other text chosen; the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
+- `intake`: **🧿 Intake**, each `round` n of 3 with its questions, the variant beside each, the labels, marks or Other text chosen; the gate choice; the gate offers GATE.save as its fifth choice, the second question of the same ask under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `filetype`: **🧿 Filetype**, the name, the extension, the notation, the kind
 - `schemas`: **🧿 Schemas**, one `semantic` per schema chosen with its parts, or none
 - `forms`: **🧿 Forms**, one `form` per kind chosen
