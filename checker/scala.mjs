@@ -146,6 +146,10 @@ export function diagnose(raw) {
   // every family answered Not logged in inside a result that counted one
   // turn, and the smoke passed on the turn count alone.
   if (/Not logged in/.test(String(raw || ''))) return 'the CLI is not logged in on this leg: the sealed credential is expired or absent, and no model was called';
+  // The windows leg of 38e4906: the ceiling refused to run the CLI through a
+  // shim it could not read, and no model was called.
+  const c = /^ceiling: cannot run [^\n]*/m.exec(String(raw || ''));
+  if (c) return `the ceiling could not run the CLI on this leg: ${c[0].slice(0, 200)}`;
   return '';
 }
 
@@ -190,6 +194,7 @@ export function kindOf(text) {
   const t = String(text);
   if (/^the CLI has no command/.test(t)) return { kind: 'refusal', severity: 'high', member: ((/no command \/([\w-]+?)(?:-dtd)?:/.exec(t) || [])[1]) || 'none' };
   if (/^the CLI is not logged in/.test(t)) return { kind: 'login', severity: 'high', member: 'none' };
+  if (/^the ceiling could not run/.test(t)) return { kind: 'ceiling', severity: 'high', member: 'none' };
   if (/^the answer is empty/.test(t)) return { kind: 'empty', severity: 'high', member: 'none' };
   if (/^the ceiling fired/.test(t)) return { kind: 'unrun', severity: 'high', member: 'none' };
   if (/^no heading of /.test(t)) return { kind: 'heading', severity: 'medium', member: ((/^no heading of (\S+)/.exec(t) || [])[1]) || 'none' };
@@ -280,6 +285,8 @@ export function controls(io = console) {
   say(m5.ok && m5.headings === 3, `a chain whose links render one level deeper and close in bold is read as the run it was: ${m5.headings} headings, ${m5.findings.length} findings`);
   const login = diagnose('{"type":"result","subtype":"success","is_error":true,"num_turns":1,"result":"Not logged in · Please run /login"}');
   say(/not logged in/.test(login) && kindOf(login).kind === 'login' && kindOf(login).severity === 'high' && diagnose('{"result":"### x"}') === '', `trip: a Not logged in result is a finding of kind login before any heading is counted: ${login.slice(0, 60)}`);
+  const refusedShim = diagnose('ceiling: cannot run claude: C:\\npm\\prefix\\claude.cmd is a shell shim whose target could not be read, and an argument carries a newline; refused rather than truncated; the shim reads "@ECHO off"');
+  say(/^the ceiling could not run the CLI/.test(refusedShim) && kindOf(refusedShim).kind === 'ceiling' && kindOf(refusedShim).severity === 'high', `trip: a ceiling refusal is a finding of kind ceiling before any heading is counted: ${refusedShim.slice(0, 70)}`);
   const chainFam = all.find((s) => s.id === 'chain');
   const two = all.find((s) => s.members.length >= 2);
   say(chainFam && chainFam.prompt === '/chain-dtd --no-gate' && two && two.prompt.split('\n')[0] === '/chain-dtd --no-gate' && two.prompt.split('\n').length === two.members.length + 1 && promptOf([]) === '',

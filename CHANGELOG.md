@@ -53,10 +53,15 @@ what they name.
   a shell with every argument quoted, and a prompt with a newline lost
   every argument after it: the windows leg's answers were plain text
   where json was asked for, and only the one-link family survived. The
-  ceiling reads an npm shim for the node script it wraps and runs that
-  without a shell; an argument with a newline through a shim it cannot
-  read is refused by name, never truncated; one control passes a two-line
-  argument through a planted shim and reads it back whole.
+  ceiling reads the shim for the target it wraps and runs that without a
+  shell: a modern claude shim wraps a native `claude.exe` (measured on the
+  windows leg of 38e4906, `"%dp0%\node_modules\@anthropic-ai\claude-code\bin\claude.exe" %*`,
+  where the first reading looked for a `.js` alone and refused every
+  family), the classic npm shim a `.js` run through node. An argument with
+  a newline through a shim it cannot read is refused by name, never
+  truncated, and the refusal quotes the shim's head; a ceiling refusal in
+  a scala answer is a finding of kind ceiling. One control parses both
+  templates and passes a two-line argument through a planted shim.
 - **The scala measured the wrong prompt.** Several tokens are one chain
   only through `/chain-dtd` (CHAIN.declared; cc-chain is included by the
   chain command alone), and the first matrix stacked the members without
@@ -86,7 +91,7 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 19 run, 0 failing
+- `node checker/scala.mjs --controls`: 20 run, 0 failing
 - `node lib/chain.mjs controls`: 27 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
