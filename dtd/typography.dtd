@@ -181,7 +181,7 @@
 <!ENTITY TYPO.numeral.hundreds "hecta">
 <!ENTITY TYPO.numeral.thousands "chilia">
 <!ENTITY TYPO.numeral.myriads "myria">
-<!ENTITY TYPO.numeral.join "the compound is hundreds then tens then unit, concatenated, and 13 to 19 take the -kaideca- form rather than deca plus unit">
+<!ENTITY TYPO.numeral.join "the compound is tens then unit, concatenated, and bounded above by TYPO.numeral.plain so no compound carries a hundreds part; 13 to 19 take the -kaideca- form rather than deca plus unit">
 <!ENTITY TYPO.numeral.plain "99">
 <!ENTITY TYPO.numeral.beyond "an n-gon: past TYPO.numeral.plain sides the constructed name is not used and the figure is named by its number">
 
@@ -189,7 +189,7 @@
 <!ATTLIST numeral
           n      CDATA #REQUIRED
           name   CDATA #REQUIRED
-          form   (unit|teen|ten|compound|plain) #REQUIRED
+          form   (unit|teen|ten|compound|scale|plain) #REQUIRED
           suffix (gon|hedron|ad|meter) #IMPLIED>
 
 <!-- ===== THE PLATE ===== -->
@@ -210,5 +210,5 @@
 <!ENTITY LAW.TYPO.4 "Every class of TYPO.classes but ascii is a module: a command switches one off by declaring its typo module entity IGNORE before the include, the grammar then lacks that class, and a typeset carrying a glyph of a switched-off class is invalid against the subset rather than silently substituted at runtime.">
 <!ENTITY LAW.TYPO.5 "Every face names a generic family it falls back to; a plate that names a font and no generic is refused, because a plate rendered in whatever the viewer happens to have is the font dependence this file exists to forbid.">
 <!ENTITY LAW.TYPO.6 "The names of the dimensional types are carried for provenance and reading and check nothing: a DTD cannot constrain a coordinate, an advance or a colour, the corpus measured 63 of 64 TEI datatypes and 42 of 47 OpenOffice datatypes carrying no constraint at all, and every value below is checked by lib/typography.mjs or it is not checked.">
-<!ENTITY LAW.TYPO.7 "A figure's name is derived from its number and never typed: the series of TYPO.numeral.units, TYPO.numeral.teens, TYPO.numeral.tens, TYPO.numeral.hundreds, TYPO.numeral.thousands and TYPO.numeral.myriads is joined by TYPO.numeral.join, and past TYPO.numeral.plain sides the numeral element carries form plain and the figure is named by its number under TYPO.numeral.beyond.">
+<!ENTITY LAW.TYPO.7 "A figure's name is derived from its number and never typed: the series of TYPO.numeral.units, TYPO.numeral.teens, TYPO.numeral.tens, TYPO.numeral.hundreds, TYPO.numeral.thousands and TYPO.numeral.myriads is joined by TYPO.numeral.join; an exact scale, TYPO.numeral.hundreds, TYPO.numeral.thousands or TYPO.numeral.myriads, keeps its name with form scale; and past TYPO.numeral.plain sides every other numeral element carries form plain and the figure is named by its number under TYPO.numeral.beyond.">
 <!ENTITY LAW.TYPO.8 "A glyph is data, never a decoration the answer may add: a rendering carries only glyphs this file declares, in the classes it declares, and a renderer that reaches for a character outside the declared repertoire has left the contract and its output is refused by name.">

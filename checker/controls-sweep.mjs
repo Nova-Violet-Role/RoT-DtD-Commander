@@ -50,11 +50,16 @@ export function claims(section) {
   return out;
 }
 
-// The loose count of claim shapes in a section, read without the path: every
-// `controls`: N run|passed. The strict reader above must find exactly as
-// many, so a claim it cannot parse is a refusal and never a silent miss.
+// The loose count of claims in a section, read by the command alone: every
+// backticked `node <anything> controls` or `--controls` followed by a colon,
+// whatever is written after it. The strict reader above must find exactly
+// as many, so a claim whose path it cannot parse, or whose count is spelled
+// in a shape it does not read (prints 12, 12 controls, 0 failing alone), is
+// a refusal by number and never a silent miss. The fourth companion pass
+// measured the first loose count sharing its tail with the strict one, so
+// a new count spelling was invisible to both.
 export function looseCount(section) {
-  return (section.match(/controls`:\s*\d+\s+(?:run|passed)\b/g) || []).length;
+  return (section.match(/`node\s+\S+\s+(?:--controls|controls)`\s*:/g) || []).length;
 }
 
 // The count a suite prints on its total line, which is the line that opens
@@ -118,6 +123,9 @@ export function controls() {
   let refused = '';
   try { sweep({ text: '## 0.0.0 (unreadable)\n\n- `node lib/x.py controls`: 4 run, 0 failing\n\n## 9.0.0\n' }); } catch (e) { refused = e.message; }
   say(/1 claim shapes and the reader parsed 0/.test(refused), `trip: a claim shape the reader cannot parse refuses the sweep by count: ${refused.slice(0, 90)}`);
+  let spelled = '';
+  try { sweep({ text: '## 0.0.0 (spelled)\n\n- `node lib/ceiling.mjs controls`: prints 12, 0 failing\n- `node lib/ceiling.mjs controls`: 12 controls\n\n## 9.0.0\n' }); } catch (e) { spelled = e.message; }
+  say(/2 claim shapes and the reader parsed 0/.test(spelled), `trip: a count spelled as prints 12 or 12 controls is a claim the reader does not read, and the sweep refuses by number: ${spelled.slice(0, 80)}`);
   // One real claim re-run, a cheap suite that prints a count (ordinals prints
   // ok with no count, which is exactly the absence countOf reports as null).
   const one = runOne({ path: 'lib/ceiling.mjs', verb: 'controls', claimed: 0, word: 'run' });

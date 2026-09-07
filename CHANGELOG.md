@@ -76,7 +76,7 @@ Measured on the release day:
 - `node checker/gate-sync.mjs`: 73 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
-- `node lib/typography.mjs controls`: 30 run, 0 failing
+- `node lib/typography.mjs controls`: 32 run, 0 failing
 - `node lib/chain.mjs controls`: 25 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 8 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
@@ -182,8 +182,27 @@ state: a plugin's distillate under `.rot-moe` had been judged as if the
 Suite had written it. One banned word left the corpus deep dive, and the
 creators sentence says what the audit prints, 24 with a schematic, 14
 folders and 10 root grammars. `node checker/controls-sweep.mjs --controls`:
-9 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil artifacts/research
+10 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil artifacts/research
 --max 0`: 22 files, 0 slop.
+
+### The companion's fourth pass: a law with three live counterexamples, pinned by its own control
+
+One high finding, and it was the shape this Suite says an instrument must
+never have. LAW.TYPO.7 said that past 99 a numeral is plain and named by
+its number; `lib/typography.mjs` named 100, 1000 and 10000 `hecta`,
+`chilia` and `myria` under form `ten`; and the derivation control listed
+`[100, 'hecta', 'ten']` as a case that must pass, so the suite went green
+only while the engine broke the law and would have gone red had it
+obeyed. The carve-out is declared now: the form enumeration carries
+`scale`, LAW.TYPO.7 names the three exact scales that keep their names
+under it, the control asserts the declaration and trips at 1000 and 10000
+beside 101, 999 and 1001 as plain, and the unreachable hundreds clause
+left `TYPO.numeral.join`, since no compound this engine builds carries a
+hundreds part. `looseCount` in the controls sweep counts a claim by its
+command rather than by its tail, so a count spelled as `prints 12` or `12
+controls` is a refusal by number, tripped on purpose. `node
+lib/typography.mjs controls`: 32 run, 0 failing; `node
+checker/controls-sweep.mjs --controls`: 10 run, 0 failing.
 
 ## 8.0.0 (2026-09-06)
 
