@@ -144,7 +144,15 @@ if (isMain || (process.argv[1] && /seal-secret\.mjs$/.test(process.argv[1]))) {
   const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
   const verb = args[0];
   const repo = opt('--repo', REPO_DEFAULT);
-  if (verb === 'controls') process.exit(controls(opt('--nacl', '.')) ? 0 : 1);
+  if (verb === 'controls') {
+    // Ninth companion pass: a missing module read as a red suite. The
+    // dependency is named, with where to put it, at exit 2.
+    const dir = opt('--nacl', '.');
+    let why = '';
+    try { nacl(dir); } catch (e) { why = String(e.message).split('\n')[0]; }
+    if (why) { console.error(`seal-secret: controls need tweetnacl resolvable from --nacl ${dir} (its node_modules/tweetnacl, or the directory itself): npm install tweetnacl there, or point --nacl at a directory that has it (${why})`); process.exit(2); }
+    process.exit(controls(dir) ? 0 : 1);
+  }
   const tok = token();
   if (!tok) { console.error('seal-secret: no github token in the credential helper'); process.exit(2); }
   if (verb === 'check') {

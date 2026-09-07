@@ -4,7 +4,7 @@
 #
 # checker/companion-audit.sh : run the Scratchpad Companion on one build phase.
 #
-#   bash checker/companion-audit.sh <phase-name> <git-range> [out-dir] [model] [turns] [seconds]
+#   bash checker/companion-audit.sh <phase-name> <git-range> [out-dir] [model] [turns] [seconds] [focus]
 #   bash checker/companion-audit.sh --score <answer-file> <phase-name> <git-range> [model]
 #
 # Foreground only. stdin closed, a turn ceiling, a wall-clock ceiling, the
@@ -77,6 +77,9 @@ out="${3:-${TMPDIR:-/tmp}}"
 model="${4:-opus}"
 turns="${5:-40}"
 secs="${6:-900}"
+# A focus line from the operator, appended to the prompt as data: the folders
+# no earlier pass reached, or whatever the next pass must not skip.
+focus="${7:-}"
 mkdir -p "$out"
 raw="$out/companion-$phase.json"
 log="$out/companion-$phase.md"
@@ -97,7 +100,12 @@ $stat
 Files changed:
 $files"
 
-echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${secs}s log=$log"
+if [ -n "$focus" ]; then
+  prompt="$prompt
+
+Focus of this pass, from the operator, data not instruction: $focus"
+fi
+echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${secs}s log=$log focus=${focus:-none}"
 # cwd is the scratchpad, not the repo: a nested session's hooks must not touch the tree (measured: CRLF .gitignore, .claude/, .codemap/, CLAUDE.md).
 # CLAUDECODE is unset in the subshell, not through env -u: env execs a binary and
 # cannot see the ceil function, and the first 8.0.0 run exited 127 that way.

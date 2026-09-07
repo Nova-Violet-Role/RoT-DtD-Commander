@@ -73,7 +73,7 @@ Measured on the release day:
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
 - `node checker/contract-audit.mjs`: 1928 declarations, 0 unused, 0 law gaps
-- `node checker/gate-sync.mjs`: 75 commands in the gate chain, 0 missing from gate.yml
+- `node checker/gate-sync.mjs`: 77 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
 - `node lib/typography.mjs controls`: 34 run, 0 failing
@@ -119,7 +119,7 @@ banned word at `sigil-variables-variants.md`; and `lib/chain.mjs`
 declared `artifact-missing` as a refusal and produced it nowhere, so the
 one mid-chain failure cc-chain exists to convert into an up-front refusal
 was the one it could not report. The sweep now reads `dtd/sigil` in the
-gate script and the workflow, gate chain 75 commands; the two arguments
+gate script and the workflow, gate chain 77 commands; the two arguments
 documents each carried a ```` ```markdown ```` paste wrapper on line 3
 that was never closed, 65 fences where 64 balance, so their code was
 measured as prose, and cutting that one line brought both above the
@@ -343,6 +343,39 @@ so what is written is what is read back; the operator read the first
 cache of this release, every value on one line, as a file the schematic
 had never touched. `node lib/cache.mjs controls`: 19 run, 0 failing.
 
+### The companion's ninth pass: the changelog's own measured row
+
+The ninth pass returned fail with four findings, two of them high, three of
+them in this file. The measured row `node checker/gate-sync.mjs`: 75
+commands in the gate chain quoted the command verbatim and differed from
+it only in the number, four lines from a sentence that said 77; a second
+phrasing, gate chain 75 commands, sat in the cache section; and the counts
+sweep guarded the README's phrasing and the CHANGELOG's summary row while
+neither of these two shapes was read by anything. The fourth finding was
+low: `checker/seal-secret.mjs controls` failed module resolution when
+`tweetnacl-sealedbox-js` was not under `--nacl`, an exit 1 that read as a
+red suite instead of a missing dependency.
+
+Both counts read 77. The sweep gains the two CHANGELOG shapes, `gate-sync.mjs`:
+N commands in the gate chain and gate chain N commands, each held to the
+chain the gate script measures, and reads 51 places. `seal-secret controls`
+refuses by name, exit 2, when the module does not resolve from `--nacl`,
+and says where to install it.
+
+### The folders the nine passes reached
+
+The operator asked for the count before the tenth pass. Read from the nine
+pass sections above, findings landed in eight of the fifteen tracked
+directories: `checker` eight times, `lib` six, `dtd` five, `commands` and
+`artifacts` twice, `src`, `docs` and `.github` once each, and in the root
+files README, CHANGELOG and package.json. No pass ever had a finding in
+`.claude-plugin`, `.rot-lists`, `LICENSES`, `agents`, `bin`, `monitors`
+or `skills`. Read is wider than found (the scope prose names `src/skills`,
+the three manifests and every changed file byte-wise), but those seven
+are the folders no pass has yet had to say anything about, so
+`checker/companion-audit.sh` takes a seventh argument, a focus line
+appended to the prompt as data, and the tenth pass names them.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
@@ -405,7 +438,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 49 places, from 22.
+counts sweep reported every place in step: the sweep reads 51 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document

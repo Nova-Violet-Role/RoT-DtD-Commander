@@ -135,6 +135,11 @@ export function places(c) {
     // re-runs is exactly what this sweep exists to refuse.
     { file: 'README.md', re: /gate-sync\.mjs`: `(\d+) commands in the gate chain/, want: [c.gateChain], label: 'the claims row of the gate chain' },
     { file: 'CHANGELOG.md', re: /(\d+) gate-chain commands/, want: [c.gateChain], label: 'the changelog gate chain' },
+    // Ninth companion pass: the changelog's own measured row quoted the
+    // command and differed from it only in the number, in two shapes the
+    // sweep did not read.
+    { file: 'CHANGELOG.md', re: /gate-sync\.mjs`: (\d+) commands in the gate chain/, want: [c.gateChain], label: 'the changelog measured row of the gate chain' },
+    { file: 'CHANGELOG.md', re: /gate chain (\d+) commands/, want: [c.gateChain], label: 'the changelog prose of the gate chain' },
     { file: 'README.md', re: /amplify\.mjs controls`: `(\d+) run, 0 failing/, want: [c.amplifyControls], label: 'the claims row of the amplify controls' },
     { file: 'README.md', re: /list\.mjs controls`: `(\d+) run, 0 failing/, want: [c.listControls], label: 'the claims row of the list controls' },
     { file: 'CHANGELOG.md', re: /lib\/list\.mjs controls`: (\d+) run/, want: [c.listControls], label: 'the changelog list controls' },
