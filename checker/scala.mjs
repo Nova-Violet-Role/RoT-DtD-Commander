@@ -109,6 +109,16 @@ export function score(answer, members) {
   return { ok: findings.length === 0, findings, headings: heads.length };
 }
 
+// The CLI's own refusal, read before any scoring. A chain whose first token
+// is a command the CLI does not know answers Unknown command and never calls
+// a model: the first hosted scala of 9.0.0 read 18 bytes plus the first
+// token from every one of its seventeen families, on three legs, and scored
+// them as answers with no heading.
+export function diagnose(raw) {
+  const m = /Unknown command: (\/\S+)/.exec(String(raw || ''));
+  return m ? `the CLI has no command ${m[1]}: the commander is not installed where this leg reads its commands, and no model was called` : '';
+}
+
 export function runOne(s, { out, model = 'opus', turns = 60, secs = 1500 } = {}) {
   mkdirSync(out, { recursive: true });
   const raw = join(out, `scala-${s.id}.json`);
@@ -124,7 +134,8 @@ export function runOne(s, { out, model = 'opus', turns = 60, secs = 1500 } = {})
   const answer = j && typeof j.result === 'string' ? j.result : '';
   writeFileSync(log, answer.replace(/\r/g, '') + (answer.endsWith('\n') ? '' : '\n'), 'utf8');
   const sc = score(answer, s.members);
-  return { id: s.id, status: r.status, unrun: false, ok: sc.ok, findings: sc.findings, headings: sc.headings, turns: j ? j.num_turns : null, cost: j ? j.total_cost_usd : null, log };
+  const why = diagnose((r.stdout || '') + (r.stderr || ''));
+  return { id: s.id, status: r.status, unrun: false, ok: sc.ok && !why, findings: why ? [why, ...sc.findings] : sc.findings, headings: sc.headings, turns: j ? j.num_turns : null, cost: j ? j.total_cost_usd : null, log };
 }
 
 export function controls(io = console) {
@@ -168,6 +179,9 @@ export function controls(io = console) {
   say(!score(quoted, geo.members).ok, 'trip: a sigil heading quoted inside prose is not a heading and does not count');
   const one = all.find((s) => s.members.length === 1);
   say(one && score(`### ${SIGILS[one.members[0]]} Anything\n`, one.members).ok, `a family of one member passes on its own heading with no close required: ${one ? one.id : 'none'}`);
+  const refused = diagnose('Unknown command: /chain-dtd\n');
+  say(/the CLI has no command \/chain-dtd/.test(refused) && diagnose('{"type":"result","result":"Unknown command: /sigil-dtd","num_turns":0}') !== '' && diagnose('{"result":"### x"}') === '',
+    `trip: the CLI's Unknown command line, bare or inside a json result, is a finding by token before any heading is counted: ${refused.slice(0, 60)}`);
   io.log(`scala controls: ${ran} run, ${fail} failing`);
   return fail === 0;
 }

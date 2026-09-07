@@ -79,7 +79,7 @@ Measured on the release day:
 - `node lib/typography.mjs controls`: 35 run, 0 failing
 - `node lib/chain.mjs controls`: 26 run, 0 failing
 - `node lib/sigil.mjs controls`: 16 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
-- `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 9 run, 0 failing
+- `node checker/scala.mjs --controls`: 12 run, 0 failing; `node checker/creators-audit.mjs --controls`: 9 run, 0 failing
 - 139 commands, 22 skills, 5 agents; checked 166; 1929 declarations; 84 gate-chain commands
 
 ### The fifth gate choice: save your cache first
@@ -285,7 +285,7 @@ failure instead of skipping it. The controls hold equality against the
 family count, the Adiutor by its own filename, the prompts overflow, a
 planted ghost family that trips the census red and a planted family
 missing one member that names it. `node checker/scala.mjs --controls`:
-11 run, 0 failing.
+12 run, 0 failing.
 
 The pass also closed the seam the operator measured in the cache itself:
 the first save of this release went through a JSON state file in a
@@ -861,7 +861,20 @@ the macOS leg prints 39 pass and 4 unsupported, so a run claim is held on
 the leg it names by its pass count and on another leg as pass and
 unsupported together with no fail, said beside the claim (fourteen sweep
 controls). The tag was moved a third time, still before any release
-object existed.
+object existed, and the fourth hosted run shipped the release: every
+gate leg green, every install roundtrip green, the release object on
+the tag with its three assets. The tag's scala job, the first run of the
+hosted chains there has been, failed on all three legs within a minute:
+every family answered in 18 bytes plus its first token, the CLI's
+`Unknown command` line, because the runner had the repository and the
+credential but no commander installed where the CLI reads its commands,
+and no model was called (the credential, resealed on suspicion first,
+was not the cause). The scala job installs the commander into the
+runner's config dir, answers one smoke turn whose raw result is printed,
+prints the raw head of any empty answer, and `checker/scala.mjs` names
+the refusal as a finding by token before it counts a heading (twelve
+controls). The release object was already on the tag, so the tag stays
+where it is and the corrected job runs by dispatch on main.
 
 ## 8.0.0 (2026-09-06)
 
