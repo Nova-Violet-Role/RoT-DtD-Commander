@@ -3465,7 +3465,7 @@ Several commands in one prompt as one declared root: the chain, its links in sta
      time when a link takes an artifact from a predecessor that declares
      none, and at run time from the handoff verb when the file under
      CHAIN.dir is absent; declined from the links the one gate declined
-     (--decline); band-off from a link whose band the run switched off, which
+     (the decline flag of the plan verb); band-off from a link whose band the run switched off, which
      the planner cannot see and the run reports through the same element. -->
 <!ELEMENT link_refusal (#PCDATA)>
 <!ATTLIST link_refusal
