@@ -855,14 +855,19 @@ argument-hint: "[the survey, the plan and the renovation markdown to stand on, i
 
 <!-- A link that did not run says why, by name. A chain that drops a link in
      silence is the 8.0.0 failure with a grammar around it. Every value has a
-     producer in lib/chain.mjs, and the companion audit of 9.0.0 measured
-     which did not before they did: not-runnable and no-successor from the
-     resolve of each link; over-cap from the count; artifact-missing at plan
-     time when a link takes an artifact from a predecessor that declares
-     none, and at run time from the handoff verb when the file under
-     CHAIN.dir is absent; declined from the links the one gate declined
-     (the decline flag of the plan verb); band-off from a link whose band the run switched off, which
-     the planner cannot see and the run reports through the same element. -->
+     producer in lib/chain.mjs and a control that asserts the enumeration
+     and the producers agree in both directions; the companion audit of
+     9.0.0 measured three values with no producer on its first pass and one
+     on its second before that control existed. not-runnable and
+     no-successor come from the resolve of each link; over-cap from the
+     count, rendered on every link since none runs; artifact-missing at
+     plan time when a link takes an artifact from a predecessor that
+     declares none, and at run time from the handoff verb when the file
+     under CHAIN.dir is absent; declined from the links the one gate
+     declined (the decline flag of the plan verb); band-off from the bands
+     the run switched off and named to the plan (the band-off flag), since
+     a domain module switched off before an include (LAW.GEOM.9) is a
+     declaration the planner cannot see from outside the run. -->
 <!ELEMENT link_refusal (#PCDATA)>
 <!ATTLIST link_refusal
           why (band-off|no-successor|artifact-missing|not-runnable|over-cap|declined) #REQUIRED>

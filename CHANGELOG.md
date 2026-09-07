@@ -73,14 +73,14 @@ Measured on the release day:
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
 - `node checker/contract-audit.mjs`: 1928 declarations, 0 unused, 0 law gaps
-- `node checker/gate-sync.mjs`: 71 commands in the gate chain, 0 missing from gate.yml
+- `node checker/gate-sync.mjs`: 73 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
-- `node lib/typography.mjs controls`: 26 run, 0 failing
-- `node lib/chain.mjs controls`: 15 run, 0 failing
+- `node lib/typography.mjs controls`: 30 run, 0 failing
+- `node lib/chain.mjs controls`: 25 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 8 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 71 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 73 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -119,7 +119,7 @@ banned word at `sigil-variables-variants.md`; and `lib/chain.mjs`
 declared `artifact-missing` as a refusal and produced it nowhere, so the
 one mid-chain failure cc-chain exists to convert into an up-front refusal
 was the one it could not report. The sweep now reads `dtd/sigil` in the
-gate script and the workflow, gate chain 71 commands; the two arguments
+gate script and the workflow, gate chain 73 commands; the two arguments
 documents each carried a ```` ```markdown ```` paste wrapper on line 3
 that was never closed, 65 fences where 64 balance, so their code was
 measured as prose, and cutting that one line brought both above the
@@ -133,9 +133,35 @@ carries the rounds and questions the plan was given instead of two
 literal zeros, the `runs_alone` comment now says what the code computes,
 and the subset's rationale names `lib/chain.mjs` rather than a checker
 that does not exist. `checker/hosted-plugin.json` says 137 where it said
-131, still unconfirmed until the 9.0.0 upload is read. `node lib/chain.mjs
-controls`: 20 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil --max
-0`: 5 files, 0 slop.
+131, still unconfirmed until the 9.0.0 upload is read. The chain suite
+closed that pass at 20 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil
+--max 0`: 5 files, 0 slop.
+
+### The companion's second pass: a refusal nobody could trip, and a number the command contradicted
+
+The second pass closed as fail in 48 turns with six findings, none guessed.
+`band-off` was a declared `link_refusal` value with no producer under a
+comment of mine that claimed every value had one; the changelog said the
+chain suite ran 15 where the command printed 20; `over-cap` was enforced
+through a chain-level entry no element renders; `WHY` and `TAKES` were
+read from the subset and read by nothing; `numeral()` took any string as
+a suffix against an enumeration of four; and `italic` had no producer.
+Every one has an instrument now. The plan takes `--band-off` and refuses
+a link on a switched-off band; over the cap every link carries
+`link_refusal why="over-cap"` and the close counts them; a link whose
+command declares no `args` takes `none`; a fixture tree trips
+`no-successor` on purpose; and two controls hold the `why` and `takes`
+enumerations to their producers in both directions, so the next dead
+value cannot pass. `numeral()` refuses a suffix outside `gon|hedron|ad|meter`
+by name, `face()` renders both declared styles and refuses a third, and a
+control walks every ATTLIST enumeration of typography.dtd against a
+producer table. `checker/controls-sweep.mjs` re-runs every `controls`
+count the newest changelog section claims and refuses on disagreement;
+tripped on a planted count, then run over this section, where it found
+the two counts the pass itself had moved. Gate chain 73 commands.
+`node lib/chain.mjs controls`: 25 run, 0 failing; `node lib/typography.mjs
+controls`: 30 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
+7 run, 0 failing.
 
 ## 8.0.0 (2026-09-06)
 

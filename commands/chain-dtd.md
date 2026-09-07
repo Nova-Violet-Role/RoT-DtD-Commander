@@ -507,14 +507,19 @@ argument-hint: "[two to eight command lines stacked, one /name-dtd per line, the
 
 <!-- A link that did not run says why, by name. A chain that drops a link in
      silence is the 8.0.0 failure with a grammar around it. Every value has a
-     producer in lib/chain.mjs, and the companion audit of 9.0.0 measured
-     which did not before they did: not-runnable and no-successor from the
-     resolve of each link; over-cap from the count; artifact-missing at plan
-     time when a link takes an artifact from a predecessor that declares
-     none, and at run time from the handoff verb when the file under
-     CHAIN.dir is absent; declined from the links the one gate declined
-     (the decline flag of the plan verb); band-off from a link whose band the run switched off, which
-     the planner cannot see and the run reports through the same element. -->
+     producer in lib/chain.mjs and a control that asserts the enumeration
+     and the producers agree in both directions; the companion audit of
+     9.0.0 measured three values with no producer on its first pass and one
+     on its second before that control existed. not-runnable and
+     no-successor come from the resolve of each link; over-cap from the
+     count, rendered on every link since none runs; artifact-missing at
+     plan time when a link takes an artifact from a predecessor that
+     declares none, and at run time from the handoff verb when the file
+     under CHAIN.dir is absent; declined from the links the one gate
+     declined (the decline flag of the plan verb); band-off from the bands
+     the run switched off and named to the plan (the band-off flag), since
+     a domain module switched off before an include (LAW.GEOM.9) is a
+     declaration the planner cannot see from outside the run. -->
 <!ELEMENT link_refusal (#PCDATA)>
 <!ATTLIST link_refusal
           why (band-off|no-successor|artifact-missing|not-runnable|over-cap|declined) #REQUIRED>
@@ -580,7 +585,7 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.6). The `intake` c
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements; read the CHAIN.autonomy.token as its own word only (LAW.ARGS.2, LAW.CHAIN.4).
 2. Run `node lib/ceiling.mjs 60 node lib/chain.mjs plan` on the stacked lines in the foreground, exit code read directly, and render `chain` from what it printed: links, autonomy, gate, bands, declared, one `link` per line with its n, of, command, root, band, runs_alone, takes and hands_to. A refusal ends the run here: every refused link carries its `link_refusal` with why, the `chain_close` says ran 0, and the `artifact` names the record of the refusal (LAW.CHAINRUN.1, LAW.CHAIN.8).
-3. Run the one intake (LAW.CHAIN.3): the slots of every link gathered into one round, the scope first, then the gate; a link the gate declines is passed to the plan as --decline, and the rounds and questions spent are passed as --rounds and --questions so `chain_intake` carries them. With the token present, skip it, render `chain_intake` with asked no and the reason, and list every gap as an `assumption_made`.
+3. Run the one intake (LAW.CHAIN.3): the slots of every link gathered into one round, the scope first, then the gate; a link the gate declines is passed to the plan as --decline, and the rounds and questions spent are passed as --rounds and --questions so `chain_intake` carries them, and a band this run switched off is passed as --band-off so its link is refused band-off before link one. With the token present, skip it, render `chain_intake` with asked no and the reason, and list every gap as an `assumption_made`.
 4. For each link in order: invoke the command with its user-args, the first from the prompt and each later one the previous link's artifact quoted as CDATA; render the link's answer under its own root and sigil; then run `node lib/ceiling.mjs 60 node lib/chain.mjs handoff <this link>` and render the `handoff` it prints, the artifact and its bytes read from the file; a file it does not find refuses the next link with why artifact-missing (LAW.CHAINRUN.2, LAW.CHAIN.5).
 5. Write the record under CHAIN.dir as the date and chain, its frontmatter carrying the bands string the chain element carries (LAW.CHAIN.7), then render `chain_close` with ran, refused and the artifact, and `artifact` naming the same file.
 </process>
