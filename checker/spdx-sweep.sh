@@ -42,7 +42,7 @@ sweep_once() {
       LICENSE*|LICENSES/*) continue ;;
     esac
     [ -f "$f" ] || continue
-    if grep -q -E "$TAG_RE" "$f"; then
+    if head -n 25 "$f" | grep -q -E "$TAG_RE"; then
       checked=$((checked+1))
     elif covered "$f"; then
       covered_n=$((covered_n+1))
@@ -63,15 +63,17 @@ printf '%s\n' "$out0" | grep '^MISSING' || true
 # a tagless .json is covered by REUSE.toml and must be counted covered. The
 # counts of a second pass move by exactly those amounts, or the sweep is
 # reporting over a hole it cannot see.
-md="checker/zz-untagged-control.md"; bin="checker/zz-untagged-control.bin"; js="checker/zz-untagged-control.json"
+md="checker/zz-untagged-control.md"; bin="checker/zz-untagged-control.bin"; js="checker/zz-untagged-control.json"; qt="checker/zz-untagged-control-quoted.md"
 printf 'no header here\n' > "$md"; printf 'no header here\n' > "$bin"; printf '{"no": "header"}\n' > "$js"
+# a file whose only tag is quoted prose past the header lines is untagged (fifteenth companion pass)
+{ for i in $(seq 1 30); do echo "line $i"; done; echo "the prose quotes SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 and that is not a header"; } > "$qt"
 out1="$(sweep_once)"
 read -r c1 v1 m1 <<< "$(printf '%s\n' "$out1" | tail -1)"
-rm -f "$md" "$bin" "$js"
-if [ "$m1" -ne $((m0+2)) ] || [ "$v1" -ne $((v0+1)) ] || [ "$c1" -ne "$c0" ]; then
-  echo "CONTROL FAIL: planted md and bin must add 2 missing and a planted json 1 covered; read missing $m0 to $m1, covered $v0 to $v1, checked $c0 to $c1"
+rm -f "$md" "$bin" "$js" "$qt"
+if [ "$m1" -ne $((m0+3)) ] || [ "$v1" -ne $((v0+1)) ] || [ "$c1" -ne "$c0" ]; then
+  echo "CONTROL FAIL: planted md, bin and quoted-tag files must add 3 missing and a planted json 1 covered; read missing $m0 to $m1, covered $v0 to $v1, checked $c0 to $c1"
   exit 1
 fi
-echo "control: two planted tagless files are counted missing and a planted json is covered by REUSE.toml (missing $m0 to $m1, covered $v0 to $v1)"
+echo "control: two planted tagless files and one whose only tag is quoted prose are counted missing, and a planted json is covered by REUSE.toml (missing $m0 to $m1, covered $v0 to $v1)"
 echo "spdx-sweep: $c0 files checked, $v0 covered by REUSE.toml, $m0 missing"
 [ "$m0" -eq 0 ]

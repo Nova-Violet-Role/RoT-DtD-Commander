@@ -41,6 +41,8 @@
 <!ENTITY LAW.COMPANION.4 "The answer ends with exactly one verdict line, COMPANION.verdict.pass or COMPANION.verdict.fail, and fail requires at least one high finding.">
 <!ENTITY LAW.COMPANION.5 "A ceiling that fires (exit 124) is a result: the phase is recorded as unaudited, never as passed.">
 <!ENTITY LAW.COMPANION.6 "The scope opens with one line carrying the three attributes of companion_audit, phase= range= model=, and the runner refuses an answer whose line does not match the run it launched.">
+<!ENTITY LAW.COMPANION.7 "The runner stamps the record it writes with the run that wrote it and scores no record carrying another stamp; a run that produced no answer is unaudited, never scored on an older record.">
+<!ENTITY LAW.COMPANION.8 "The four elements appear in the answer as their headings in declared order, Scope, Findings, Verdict, Next; a pass without them is not a pass.">
 
 <!-- Which instrument holds which law. 1 and 2: the runner's tool allow-list
      (Read, Grep, Glob, and Bash only in forms that start with the portable

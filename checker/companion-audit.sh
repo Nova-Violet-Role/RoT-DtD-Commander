@@ -5,7 +5,7 @@
 # checker/companion-audit.sh : run the Scratchpad Companion on one build phase.
 #
 #   bash checker/companion-audit.sh <phase-name> <git-range> [out-dir] [model] [turns] [seconds] [focus]
-#   bash checker/companion-audit.sh --score <answer-file> <phase-name> <git-range> [model]
+#   bash checker/companion-audit.sh --score <answer-file> <phase-name> <git-range> [model] [stamp]
 #
 # Foreground only. stdin closed, a turn ceiling, a wall-clock ceiling, the
 # raw JSON stream teed to <out-dir>/companion-<phase>.json, the answer
@@ -46,8 +46,8 @@ vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audi
 # whole-line match. checker/checker-controls.sh trips it on planted answers
 # (M9 to M19).
 score() {
-  local log="$1" phase="$2" range="$3" model="$4"
-  local last nverdict nfind nsound nhigh scope_ok
+  local log="$1" phase="$2" range="$3" model="$4" stamp="${5:-}"
+  local last nverdict nfind nsound nhigh scope_ok stamp_ok heads
   last="$(grep -v '^[[:space:]]*$' "$log" | tail -1)"
   nverdict=$(grep -c '^COMPANION VERDICT' "$log")
   nfind=$(grep -c '^<finding ' "$log")
@@ -58,16 +58,32 @@ score() {
   [ "$nverdict" -eq 1 ] || { echo "companion: LAW.COMPANION.4 broken, $nverdict verdict lines"; return 1; }
   [ "$nsound" -eq "$nfind" ] || { echo "companion: LAW.COMPANION.3 broken, $((nfind - nsound)) finding elements lack a file, a line, a severity or a confidence in the opening tag"; return 1; }
   [ "$scope_ok" -eq 1 ] || { echo "companion: LAW.COMPANION.6 broken, the scope line does not match this run"; return 1; }
-  if [ "$last" = "$vpass" ]; then echo "companion: $phase PASS"; return 0; fi
+  # LAW.COMPANION.7: the record carries the stamp of the run that scores it,
+  # so a run that produced nothing can never be scored on an older record
+  # whose scope line happens to match (fifteenth companion pass on 9.0.0).
+  if [ -n "$stamp" ]; then
+    stamp_ok=$(grep -c -F -x "<!-- companion run: $stamp -->" "$log")
+    [ "$stamp_ok" -eq 1 ] || { echo "companion: LAW.COMPANION.7 broken, the record carries no stamp of this run ($stamp)"; return 1; }
+  fi
+  # LAW.COMPANION.8: the four elements of the grammar appear as their
+  # headings in declared order; a pass without them is not a pass.
+  # awk splits the heading byte-wise: the sigil is the second field, the word the third
+  heads="$(awk '/^### / && NF >= 3 { print $3 }' "$log" | tr '
+' ' ')"
+  if [ "$last" = "$vpass" ]; then
+    [ "$heads" = "Scope Findings Verdict Next " ] || { echo "companion: LAW.COMPANION.8 broken, the headings read '${heads}' and not 'Scope Findings Verdict Next '"; return 1; }
+    echo "companion: $phase PASS"; return 0
+  fi
   if [ "$last" = "$vfail" ]; then
     [ "$nhigh" -ge 1 ] || { echo "companion: LAW.COMPANION.4 broken, a fail with no high finding"; return 1; }
+    [ "$heads" = "Scope Findings Verdict Next " ] || echo "companion: LAW.COMPANION.8 broken, the headings read '${heads}' and not 'Scope Findings Verdict Next '"
     echo "companion: $phase FAIL"; return 1
   fi
   echo "companion: no verdict on the last line of $log"; return 1
 }
 
 if [ "${1:-}" = "--score" ]; then
-  score "${2:?answer file}" "${3:?phase}" "${4:?range}" "${5:-opus}"
+  score "${2:?answer file}" "${3:?phase}" "${4:?range}" "${5:-opus}" "${6:-}"
   exit $?
 fi
 
@@ -82,6 +98,7 @@ secs="${6:-900}"
 focus="${7:-}"
 mkdir -p "$out"
 raw="$out/companion-$phase.json"
+stamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)-pid$$"
 log="$out/companion-$phase.md"
 contract="$(cat "$here/checker/companion-audit.dtd")"
 stat="$(git -C "$here" diff --stat "$range" | tail -40)"
@@ -139,15 +156,16 @@ const result = j && typeof j.result === "string" ? j.result : "";
 // (fourteenth companion pass on 9.0.0: an empty run left a one-byte file
 // and the next commit swept it in).
 if (result.trim()) {
-  const header = "<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->\n<!-- Copyright 2026 Saimonokuma. -->\n\n";
+  const header = "<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->\n<!-- Copyright 2026 Saimonokuma. -->\n<!-- companion run: " + process.argv[3] + " -->\n\n";
   const tmp = process.argv[2] + ".tmp";
   fs.writeFileSync(tmp, header + result.replace(/\r/g, "") + (result.endsWith("\n") ? "" : "\n"), "utf8");
   fs.renameSync(tmp, process.argv[2]);
 } else {
-  console.log("companion: no answer; the previous record " + process.argv[2] + " is kept");
+  console.log("companion: no answer; the previous record " + process.argv[2] + " is kept and not scored");
+  process.exit(3);
 }
 const meta = j ? `turns=${j.num_turns} cost_usd=${j.total_cost_usd} duration_ms=${j.duration_ms} is_error=${j.is_error} subtype=${j.subtype}` : "no json parsed";
 console.log("companion: " + meta + " answer_bytes=" + Buffer.byteLength(result));
-' "$raw" "$log"
-score "$log" "$phase" "$range" "$model"
+' "$raw" "$log" "$stamp" || { echo "companion: phase $phase is UNAUDITED, no answer to score"; exit 1; }
+score "$log" "$phase" "$range" "$model" "$stamp"
 exit $?

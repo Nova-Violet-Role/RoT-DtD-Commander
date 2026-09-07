@@ -20,7 +20,7 @@
 <text x="26" y="286" font-size="13" fill="#1a1d24">orphan element, a crammed heading, a missing sigil, a front-matter value YAML would misread,</text>
 <text x="26" y="304" font-size="13" fill="#1a1d24">a declaration hidden under IGNORE -- and the companion scorer runs under an allow-list with</text>
 <text x="26" y="322" font-size="13" fill="#1a1d24">no writing tool</text>
-<text x="38" y="346" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">bash checker/checker-controls.sh: twenty-two controls M0 to M19, checker controls: 22</text>
+<text x="38" y="346" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">bash checker/checker-controls.sh: twenty-four controls M0 to M21, checker controls: 22</text>
 <text x="38" y="364" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">run, 0 failing, all tripped as designed</text>
 <text x="794" y="376" font-size="11" fill="#5b6472" text-anchor="end">2026-09-06</text>
 <text x="26" y="400" font-size="13" fill="#1a1d24">every declaration in the subsets and the Adiutor contract is used by a source, every law</text>
@@ -109,7 +109,7 @@
 <text x="26" y="1996" font-size="13" fill="#1a1d24">every count the repository publishes (the badges, the tagline, the claims rows, the three</text>
 <text x="26" y="2014" font-size="13" fill="#1a1d24">manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the</text>
 <text x="26" y="2032" font-size="13" fill="#1a1d24">checker controls, the declarations</text>
-<text x="38" y="2056" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">node checker/counts-sweep.mjs: 60 places in step; --controls plants a stale badge, a</text>
+<text x="38" y="2056" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">node checker/counts-sweep.mjs: 61 places in step; --controls plants a stale badge, a</text>
 <text x="38" y="2074" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">stale count in words and a removed count</text>
 <text x="794" y="2086" font-size="11" fill="#5b6472" text-anchor="end">every push</text>
 <text x="26" y="2110" font-size="13" fill="#1a1d24">the growth ladder is fifteen verbs partitioned into three bands with no overlap and no gap,</text>
@@ -127,7 +127,7 @@
 <text x="794" y="2332" font-size="11" fill="#5b6472" text-anchor="end">every gate run</text>
 <text x="26" y="2356" font-size="13" fill="#1a1d24">every subset the repository declares is installed, and a version the recognizer disputes is</text>
 <text x="26" y="2374" font-size="13" fill="#1a1d24">refused</text>
-<text x="38" y="2398" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">rdc doctor row subsets: 18 subsets, every one installed (run against your own</text>
+<text x="38" y="2398" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">rdc doctor row subsets: 31 subsets, every one installed (run against your own</text>
 <text x="38" y="2416" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">installation, not in CI); node checker/release-notes.mjs --versions: the recognised</text>
 <text x="38" y="2434" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">class and version printed beside the manifests</text>
 <text x="794" y="2446" font-size="11" fill="#5b6472" text-anchor="end">every push</text>

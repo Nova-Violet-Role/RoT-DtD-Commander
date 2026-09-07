@@ -504,6 +504,28 @@ record. The raw JSON transcript is ignored, a scratch and never a record.
 The README's SPDX row says what the sweep holds now, and the licence prose
 says 156 converted sources mirrored into the installed copy.
 
+### The companion's fifteenth pass: a record that could score an older run
+
+The fifteenth pass returned fail with five findings, two high. The
+keep-the-previous-record branch of the pass before had a hole: a run that
+produced nothing left the previous record in place and the runner then
+scored it, and its scope line matched this run's byte for byte. The
+README's doctor row said eighteen subsets where the instrument counts
+every file under `dtd/`, thirty-one, and nothing read the number. The
+SPDX test grepped the whole file, so a body quoting the expression passed
+as tagged; the companion scorer never checked the `next` element its
+grammar declares; and `**/*.json` claimed every future JSON at any depth.
+
+The runner stamps each record with the run that wrote it and scores no
+record carrying another stamp (LAW.COMPANION.7); a run with no answer is
+unaudited, exit 1, never scored. The four headings must appear in declared
+order for a pass (LAW.COMPANION.8). Both are tripped in the checker
+controls, M20 and M21, and the planted pass M12 carries the headings. The
+SPDX test reads the first twenty-five lines and a fourth plant, a file
+whose only tag is quoted prose, is counted missing. `REUSE.toml` names the
+JSON directories the repository owns. The doctor row says thirty-one and
+the counts sweep holds it to `dtd/`: 61 places.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
@@ -566,7 +588,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 60 places, from 22.
+counts sweep reported every place in step: the sweep reads 61 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document

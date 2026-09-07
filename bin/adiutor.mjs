@@ -525,7 +525,7 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
   }
   const node = process.versions.node;
   // The subsets the repository declares against the subsets on disk. A hand-kept
-  // install list once shipped fourteen of the eighteen this tree now carries and reported nothing wrong;
+  // install list once shipped fourteen of the eighteen the tree then carried and reported nothing wrong;
   // nothing compared the two directories, so nothing could tell.
   try {
     const here = readdirSync(join(ROOT, 'dtd')).filter((f) => f.endsWith('.dtd')).sort();

@@ -99,6 +99,7 @@ export function measure(root = ROOT) {
   // Thirteenth companion pass: the shared subsets by count, and the files
   // converted from taches-cc-resources by the MIT in their SPDX expression.
   const sharedSubsets = readdirSync(join(root, 'dtd')).filter((f) => /^cc-[a-z-]+\.dtd$/.test(f)).length;
+  const dtdFiles = readdirSync(join(root, 'dtd')).filter((f) => f.endsWith('.dtd')).length;
   const mitOut = runOut('git grep -l -F EUPL-1.2) -- src');
   const mitFiles = mitOut.split(/\r?\n/).filter((l) => /^src\//.test(l));
   const mitCommands = mitFiles.filter((l) => /^src\/commands\//.test(l)).length;
@@ -119,7 +120,7 @@ export function measure(root = ROOT) {
   const schematics = cmdNames.filter((f) => /^create-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   const creators = schematics + cmdNames.filter((f) => /^create-meta-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   return {
-    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims, rules, quotedGrammars, sharedSubsets, mitFiles: mitFiles.length, mitCommands, mitSkills,
+    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims, rules, quotedGrammars, sharedSubsets, dtdFiles, mitFiles: mitFiles.length, mitCommands, mitSkills,
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, mutationsRefused, declarations: Number(m[1]) };
@@ -195,6 +196,9 @@ export function places(c) {
     // subsets of nineteen, and the licence plate counted forty-four
     // converted files where the SPDX expression says how many.
     { file: 'src/agents/dtd-contract-auditor.md', re: /every dtd\/cc-\*\.dtd, ([a-z-]+) of them/, want: [c.sharedSubsets], label: 'the contract auditor description, shared subsets' },
+    // Fifteenth companion pass: the doctor's subsets row said eighteen where
+    // the instrument counts every dtd file, thirty-one.
+    { file: 'README.md', re: /row `subsets`: `(\d+) subsets, every one installed`/, want: [c.dtdFiles], label: 'the claims row of the doctor subsets' },
     { file: 'README.md', re: /(\d+) converted sources, mirrored into the installed copy under commands\/ and skills\/, carry the upstream MIT/, want: [c.mitFiles], label: 'the licence plate prose of the converted files' },
     { file: 'README.md', re: /the ([a-z-]+) commands and ([a-z-]+) skills that carry its MIT today/, want: [c.mitCommands, c.mitSkills], label: 'the supporting plate prose of the converted commands and skills' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },

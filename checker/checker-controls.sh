@@ -87,7 +87,7 @@ printf '%s\n\n### 🩺 Findings\n\n**high · measured · x:1** planted in the bo
 out=$(bash checker/companion-audit.sh --score "$T/m10.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'high findings=0' && echo "$out" | grep -q 'a fail with no high finding' && ok "M10 a bold line is not a finding: high findings=0 and the fail is refused" || { ko "M10 exit=$rc"; }
 printf '%s\n\n### 🩺 Findings\n\n<finding file="x" line="1" severity="low" confidence="measured">planted</finding>\n\nCOMPANION VERDICT: fail\n' "$scope" > "$T/m11.md"
 out=$(bash checker/companion-audit.sh --score "$T/m11.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'a fail with no high finding' && ok "M11 a fail with no high finding breaks LAW.COMPANION.4 (exit 1, named)" || { ko "M11 exit=$rc"; }
-printf '%s\n\n### 🩺 Findings\n\nnone\n\nCOMPANION VERDICT: pass\n' "$scope" > "$T/m12.md"
+printf '### 🩺 Scope\n\n%s\n\n### 🩺 Findings\n\nnone\n\n### 🩺 Verdict\n\nsound\n\n### 🩺 Next\n\nnothing\n\nCOMPANION VERDICT: pass\n' "$scope" > "$T/m12.md"
 score "$T/m12.md"; rc=$?; [ $rc -eq 0 ] && ok "M12 a pass with the scope line scores as a pass (exit 0)" || { ko "M12 exit=$rc"; }
 printf 'phase=p range=axxb model=opus\n\nCOMPANION VERDICT: pass\n' > "$T/m13.md"
 old=$(grep -c "^phase=p range=a..b model=opus\$" "$T/m13.md"); [ "$old" -eq 1 ] || { echo "M13 landed proof failed: the replaced expression should have matched axxb, got $old"; fail=$((fail+1)); }
@@ -103,6 +103,11 @@ printf '%s\n\n### 🩺 Findings\n\nnone\n\nCOMPANION VERDICT: pass\nCOMPANION VE
 out=$(bash checker/companion-audit.sh --score "$T/m18.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.4 broken, 2 verdict lines' && ok "M18 two verdict lines are refused under LAW.COMPANION.4 (exit 1, named)" || { ko "M18 exit=$rc"; echo "$out" | tail -2; }
 printf '%s\n\n### 🩺 Findings\n\nnone\n\n### 🩺 Verdict\n\npass, but the line is missing\n' "$scope" > "$T/m19.md"
 out=$(bash checker/companion-audit.sh --score "$T/m19.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q '0 verdict lines' && ok "M19 an answer with no verdict line is refused (exit 1, 0 verdict lines)" || { ko "M19 exit=$rc"; echo "$out" | tail -2; }
+# M20, M21: the stamp of the run (LAW.COMPANION.7) and the four headings in order (LAW.COMPANION.8)
+printf '<!-- companion run: 2026-01-01T00:00:00Z-pid1 -->\n\n### 🩺 Scope\n\n%s\n\n### 🩺 Findings\n\nnone\n\n### 🩺 Verdict\n\nsound\n\n### 🩺 Next\n\nnothing\n\nCOMPANION VERDICT: pass\n' "$scope" > "$T/m20.md"
+out=$(bash checker/companion-audit.sh --score "$T/m20.md" p a..b opus 2026-01-01T00:00:00Z-pid2 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.7' && ok "M20 a record stamped by another run is refused by name, so an empty run can never score the previous record" || { ko "M20 exit=$rc"; }
+printf '### 🩺 Scope\n\n%s\n\n### 🩺 Findings\n\nnone\n\n### 🩺 Next\n\nnothing\n\n### 🩺 Verdict\n\nsound\n\nCOMPANION VERDICT: pass\n' "$scope" > "$T/m21.md"
+out=$(bash checker/companion-audit.sh --score "$T/m21.md" p a..b opus 2>&1); rc=$?; [ $rc -eq 1 ] && echo "$out" | grep -q 'LAW.COMPANION.8' && ok "M21 a pass whose headings are out of declared order is refused by name" || { ko "M21 exit=$rc"; }
 # M17: the runner's allow-list carries no writing or spawning tool and every Bash form starts with its ceiling; a copy granting Write is refused
 # A bare Bash in the allow-list is the widest grant there is, and the old
 # second stage could not see it: grep -o 'Bash([^)]*)' emitted nothing, so the
