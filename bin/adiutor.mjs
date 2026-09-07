@@ -1227,6 +1227,31 @@ export async function controls(io = console) {
     } finally { if (before === undefined) delete process.env.CLAUDE_PROJECT_DIR; else process.env.CLAUDE_PROJECT_DIR = before; }
   }, results);
 
+  control('C31 the gate law of cc-cache: an intake that closed on add, more or impactful is a finding of kind gate, a gate answered save without a cache line is a finding of kind cache, a gate that closed on start or on save with its cache passes, and a command without the subset is asked nothing', () => {
+    const doc = (withCache) => '<!DOCTYPE x [\n' + (withCache ? '  <!ENTITY LAW.CACHE.1 "declared">\n' : '') + '  <!ELEMENT x (intake)>\n  <!ELEMENT intake (#PCDATA)>\n]>\n<grammar_map>\n- `intake`: **🧭 Intake**, the slots, the rounds and the gate\n</grammar_map>\n';
+    const held = expectedFromCommand(doc(true));
+    const free = expectedFromCommand(doc(false));
+    const answer = (gateLine, extra = '') => `\n### 🧭 Intake\n\n- known: what\n- round 1 of 3: Scope answered Narrow\n- gate: add (round 1)\n${gateLine}\n${extra}`;
+    const kinds = (exp, text) => checkAnswer(text, exp).findings.map((f) => f.kind);
+    const onAdd = kinds(held, answer('- gate: more (round 2)'));
+    const onImpactful = kinds(held, answer('- gate: impactful (round 2)'));
+    const onStart = kinds(held, answer('- gate: start (round 2)'));
+    const saveBare = kinds(held, answer('- gate: save (round 2)'));
+    const saveWith = kinds(held, answer('- gate: save (round 2)', '- cache: `artifacts/cache/x-dtd.nt` 512 bytes, form nt, state saved\n\ncache saved; run /compact\n'));
+    const unheld = kinds(free, answer('- gate: more (round 2)'));
+    // The subset itself: eight laws dense from one, and cc-ask declares the choice and its label.
+    const cacheDtd = readFileSync(join(ROOT, 'dtd', 'cc-cache.dtd'), 'utf8');
+    const askDtd = readFileSync(join(ROOT, 'dtd', 'cc-ask.dtd'), 'utf8');
+    const laws = [...cacheDtd.matchAll(/<!ENTITY LAW\.CACHE\.(\d+) /g)].map((m) => Number(m[1]));
+    const declared = laws.length === 8 && laws.every((n, i) => n === i + 1) && /\|impactful\|save\)/.test(askDtd) && /<!ENTITY GATE\.save\s+"Save your cache first"/.test(askDtd);
+    const rx = prescribe([{ kind: 'gate', msg: 'x' }], held, 'x-dtd');
+    const ok = held.cache === true && free.cache === false
+      && onAdd.includes('gate') && onImpactful.includes('gate') && !onStart.includes('gate') && !onStart.includes('cache')
+      && saveBare.includes('cache') && !saveBare.includes('gate') && !saveWith.includes('cache') && !saveWith.includes('gate')
+      && unheld.length === 0 && declared && /LAW\.CACHE\.5/.test(rx.charm) && /lib\/cache\.mjs save/.test(rx.charm);
+    return { ok, detail: `more=${onAdd.join(',') || 'clean'} impactful=${onImpactful.join(',') || 'clean'} start=${onStart.join(',') || 'clean'} save-bare=${saveBare.join(',') || 'clean'} save-with=${saveWith.join(',') || 'clean'} unheld=${unheld.join(',') || 'clean'} laws=${laws.join(',')} declared=${declared}` };
+  }, results);
+
   control('C28 a NotebookEdit is judged whichever field carries its text, and a payload with no text field is not judged', () => {
     const names = ['new_source', 'content', 'new_string', 'source', 'text'];
     const denials = names.map((n) => denied(preTool('S28', 'NotebookEdit', { notebook_path: join(tmp, 'nb.md'), [n]: sloppyText })));

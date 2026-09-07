@@ -38,7 +38,7 @@
 <!ELEMENT error (#PCDATA)>
 <!ATTLIST error tool CDATA #REQUIRED>
 <!ELEMENT finding (#PCDATA)>
-<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer|slop|record) #REQUIRED>
+<!ATTLIST finding kind (missing_heading|order|spacing|sigil|dangling_ref|missing_assumptions|no_answer|slop|record|gate|cache) #REQUIRED>
 <!ELEMENT prescription (charm, rite)>
 <!ELEMENT charm (#PCDATA)>
 <!ELEMENT rite (#PCDATA)>
@@ -73,3 +73,4 @@
 <!ENTITY LAW.ADIUTOR.10 "The Adiutor and its monitor run only when the operator runs them: no plugin manifest arms a hook, no loader file starts the monitor, an install arms nothing unless --arm is given, and every run of either ends at a 300 second ceiling (the Stop hook timeout when armed, the delegate timeout of rdc doctor and rdc controls, and --secs of rdc watch).">
 <!ENTITY LAW.ADIUTOR.11 "At Stop the Adiutor reads the record nesting the command declared (LAW.REC.5): a command whose command-info-types is record must have written its record under RECORD.dir with the command's own name or a spelled ordinal, its declared fields dense and at least one revision with evidence (LAW.REC.6); a RECORD.* entity that names a file must find that file written in the run; a fault is a finding of kind record, closes the run as fail, and the monitor prints it as MONITOR.record; a command that declares nothing is asked nothing.">
 <!ENTITY LAW.ADIUTOR.12 "When armed, the Adiutor judges the four AI_SLOP spots of LAW.SLOP.7 on every turn and every tool, strict by LAW.SLOP.8: a refused spot is one ledger line whose command is slop and the spot, the open -dtd run, if any, is untouched, and the doctor shows a slop gate row beside the hooks row.">
+<!ENTITY LAW.ADIUTOR.13 "At Stop the Adiutor holds a command that includes cc-cache to its gate law: an intake that closed on add, more or impactful is a finding of kind gate, a gate answered save without a cache line naming the .nt file is a finding of kind cache, both close the run as fail with a prescription naming LAW.CACHE.5 and node lib/cache.mjs save, and a command without the subset is asked nothing (LAW.CACHE.2, LAW.CACHE.5, control C31).">

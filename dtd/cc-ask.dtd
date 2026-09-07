@@ -23,6 +23,14 @@
   the back token that re-asks a question (LAW.ASK.12), the four variants a
   question may take with the token each renders as (LAW.ASK.13), and the
   elaborated preview (LAW.ASK.14).
+
+  9.0.0 adds the fifth choice of the gate, save (GATE.save): the run writes
+  what it holds into one NestedText file, reads it back whole and stops, so
+  the context can be evicted and the next call of the same command resumes
+  from the file. The choice is declared here, in the gate's enumeration and
+  its label, because the gate is this subset's; what the choice does is the
+  cc-cache subset, included after this one by every command that presents a
+  gate (LAW.CACHE.1 to 8). save is never a re-entry and is never spent.
 -->
 
 <!-- The rounds a prompt may chain, as an enumeration. A command that
@@ -39,7 +47,7 @@
 <!ENTITY % ask.adds       "(1|2|3)">
 <!ENTITY % ask.impactfuls "(1|2)">
 
-<!ELEMENT intake (context_analysis, (ask, answer+)*, (round, (impactful, answer)*)*, gate)>
+<!ELEMENT intake (context_analysis, (ask, answer+)*, (round, (impactful, answer)*)*, gate, cache?)>
 <!ATTLIST intake mode (guided|autonomous) "guided">
 
 <!ELEMENT context_analysis (known*, gap*)>
@@ -97,7 +105,7 @@
 
 <!ELEMENT gate EMPTY>
 <!ATTLIST gate
-          choice     (start|more|add|impactful) #REQUIRED
+          choice     (start|more|add|impactful|save) #REQUIRED
           round      %ask.rounds;    "1"
           adds       %ask.adds;    "1"
           impactfuls %ask.impactfuls;      "1">
@@ -107,6 +115,7 @@
 <!ENTITY GATE.more      "Ask more questions">
 <!ENTITY GATE.add       "Let me add context">
 <!ENTITY GATE.impactful "Let me pick an impactful selection">
+<!ENTITY GATE.save      "Save your cache first">
 
 <!ENTITY ASK.max_questions     "4">
 <!ENTITY ASK.max_options       "4">
@@ -117,7 +126,7 @@
 <!ENTITY ASK.preview.expanded_lines "12">
 <!ENTITY ASK.adds_per_prompt       "3">
 <!ENTITY ASK.impactfuls_per_prompt "2">
-<!ENTITY ASK.exhausted "every re-entry this prompt allows has been spent; the gate is offered with start alone">
+<!ENTITY ASK.exhausted "every re-entry this prompt allows has been spent; the gate is offered with start and save alone">
 
 <!-- The four variants a question may take, and the token each renders as in the transcript. -->
 <!ENTITY ASK.variant.select    "one option of the list, a single choice; multiSelect false">
@@ -144,5 +153,5 @@
 <!ENTITY LAW.ASK.12 "The token ASK.back typed into Other returns to the question just asked, which is asked again without loss of the answers already taken; it is a navigation token, never an answer.">
 <!ENTITY LAW.ASK.13 "Every question declares its variant, select, check, elaborate or mark, and the round names it beside the question: select and check map onto multiSelect false and true; elaborate renders one elaboration per option, cut into the description in the widget and expanded in the transcript above the call; mark elaborates likewise, lists the options as markable lines with ASK.token.mark, asks with multiSelect true, and turns every option into an answer marked yes or no, the unmarked ones dropped; a command that asks offers all four variants across its rounds where its slots allow.">
 <!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
-<!ENTITY LAW.ASK.15 "Every gate carries the re-entries already spent as its round, adds and impactfuls attributes, each an enumeration with a last value; a gate rendered without them has spent none. When all three are spent the gate is offered with start alone and ASK.exhausted as the reason, so a guided intake terminates by declaration rather than by the user's patience, and a bound that lives only in prose is not a bound.">
+<!ENTITY LAW.ASK.15 "Every gate carries the re-entries already spent as its round, adds and impactfuls attributes, each an enumeration with a last value; a gate rendered without them has spent none. When all three are spent the gate is offered with start and save alone and ASK.exhausted as the reason, so a guided intake terminates by declaration rather than by the user's patience, and a bound that lives only in prose is not a bound.">
 <!ENTITY LAW.ASK.16 "A preview has the content model preview.content, which is (#PCDATA) unless a command declares it before the include; a command that declares it as (#PCDATA | figure)* includes cc-figure before this subset so the figure it names is declared, and a preview carrying a figure obeys LAW.FIG.1 to LAW.FIG.5 with the figure marked guessed, because a preview is the consequence the model predicts.">

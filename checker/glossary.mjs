@@ -30,7 +30,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 // The family table is readme-index's, not a copy of it: the index and this page
 // must never disagree about what a family contains.
-import { FAMILIES as INDEX_FAMILIES } from './readme-index.mjs';
+import { FAMILIES as INDEX_FAMILIES, orderRows } from './readme-index.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'docs', 'glossary.xhtml');
@@ -55,7 +55,7 @@ const NOTE = {
   repository: 'Operate on a repository as a whole rather than on a file in it.',
   audits: 'Judge an existing artifact against the contract it claims. They report; they do not rewrite.',
   growth: 'One fifteen-verb ladder. What these record is what sets the version number, because the release class is computed rather than typed.',
-  geometry: 'Measure a codebase, draw it, and only then change it, on one fifty-two rung ladder in three bands: the surveyor moves nothing, the architect declares bounds and rewrites nothing, the renovator changes only against a survey and a plan that exist on disk.',
+  geometry: 'Measure a codebase, draw it, change it, and produce the graphic the three agreed on, on one ladder of one hundred and eight rungs: three profession bands and four domain bands above them, read through the lens of each profession; the surveyor moves nothing, the architect declares bounds and rewrites nothing, the renovator changes only against a survey and a plan on disk, the generator launches the three or produces, and typography is the contract glyph and plate share.',
   lists: 'Per-repository white, grey and black lists, plus the starlist of tools the harness may reach. A grey entry obliges a question and records the answer with a date.',
   workflow: 'The doctor: run it, arm it, read its ledger, compose the workflows it judges. Since 5.0.0 the Adiutor is not armed by default.',
 };
@@ -392,7 +392,9 @@ export function renderFamilySvg(entries, famName, theme) {
   const chip = dark ? '#1d2230' : '#f2f4f8';
   const fam = INDEX_FAMILIES.find((x) => x.name === famName);
   const accent = fam ? '#' + fam.color : (dark ? '#4b5563' : '#94a3b8');
-  const rows = entries.filter((e) => familyOf(e) === famName);
+  // The family's own declared order, not the alphabetical one collect() sorts
+  // by: a members array is an order (readme-index.mjs orderRows).
+  const rows = orderRows(entries.filter((e) => familyOf(e) === famName), fam, (e) => keyOf(e.name));
   const callOf = (e) =>
     e.kind === 'command' ? (e.hint ? e.name + ' ' + e.hint : e.name)
       : e.kind === 'skill' ? e.name + '  (loads itself)' : e.name + '  (subagent)';

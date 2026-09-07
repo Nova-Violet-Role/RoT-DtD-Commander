@@ -26,8 +26,17 @@
   drawing may carry.
 
   lib/geometry.mjs reads this file and holds the code to it. The ladder is
-  fifty-two rungs in three bands, and a rung is never renumbered or reused,
-  exactly as cc-amplify.dtd holds its fifteen.
+  one hundred and eight rungs, and a rung is never renumbered or reused,
+  exactly as cc-amplify.dtd holds its fifteen. The first fifty-two are the
+  three bands of the codebase application, one profession each; 9.0.0 adds
+  fifty-six above them in four domain bands, trigonometry, projection,
+  chromatics and restoration, the way DITA 1.1 grew to 1.3 by appending
+  modules and renaming nothing (36, 97 and 159 grammar files, the earlier
+  set a subset of the later at every step). The domains are shared: each
+  profession reads its own rungs inside every domain through a lens, so the
+  surveyor measures an angle, the architect projects it, the renovator
+  restores it, and the fourth command, the generator, produces the graphic
+  the three agreed on across all four (LAW.GEOM.9 to LAW.GEOM.11).
 -->
 
 <!-- ===== THE DRIVER ===== -->
@@ -39,12 +48,36 @@
 <!ENTITY % geom.surveyor.module  "INCLUDE">
 <!ENTITY % geom.architect.module "INCLUDE">
 <!ENTITY % geom.renovator.module "INCLUDE">
+<!-- The four domain bands above 52, each a module the same way. A repository
+     that wants no chromatics says so in one entity and the generator loses
+     that domain (LAW.GEOM.9). -->
+<!ENTITY % geom.trigonometry.module "INCLUDE">
+<!ENTITY % geom.projection.module   "INCLUDE">
+<!ENTITY % geom.chromatics.module   "INCLUDE">
+<!ENTITY % geom.restoration.module  "INCLUDE">
 
-<!ENTITY GEOM.ladder.count "52">
+<!ENTITY GEOM.ladder.count "108">
+<!-- The rungs of the codebase application, the three professions of 8.0.0;
+     everything above is the graphic domains of 9.0.0. Neither number moves. -->
+<!ENTITY GEOM.ladder.codebase "52">
 <!ENTITY GEOM.bands "surveyor|architect|renovator">
 <!ENTITY GEOM.band.surveyor  "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17">
 <!ENTITY GEOM.band.architect "18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35">
 <!ENTITY GEOM.band.renovator "36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52">
+<!-- The domains, fourteen rungs each, 53 to 108. The generator's band is the
+     union; a profession sees a domain through its lens below. -->
+<!ENTITY GEOM.domains "trigonometry|projection|chromatics|restoration">
+<!ENTITY GEOM.domain.trigonometry "53|54|55|56|57|58|59|60|61|62|63|64|65|66">
+<!ENTITY GEOM.domain.projection   "67|68|69|70|71|72|73|74|75|76|77|78|79|80">
+<!ENTITY GEOM.domain.chromatics   "81|82|83|84|85|86|87|88|89|90|91|92|93|94">
+<!ENTITY GEOM.domain.restoration  "95|96|97|98|99|100|101|102|103|104|105|106|107|108">
+<!ENTITY GEOM.band.generator "53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|106|107|108">
+<!-- The lenses: which domain rungs each profession reads. Every domain rung
+     is in exactly one lens and every lens reaches every domain, so the three
+     partition the fifty-six as they partition the fifty-two (LAW.GEOM.10). -->
+<!ENTITY GEOM.lens.surveyor  "53|54|55|56|59|60|63|64|69|74|77|78|80|81|82|83|94|103|104|108">
+<!ENTITY GEOM.lens.architect "57|58|61|62|66|67|68|70|71|72|73|75|84|85|86|87|88|89|93|102|107">
+<!ENTITY GEOM.lens.renovator "65|76|79|90|91|92|95|96|97|98|99|100|101|105|106">
 <!ENTITY GEOM.dir "artifacts/geometry">
 <!ENTITY GEOM.ceiling "300">
 <!-- The rungs that have an instrument in this release. A rung without one
@@ -59,6 +92,7 @@
 <!ENTITY % geom.verb.measure    "CDATA">
 <!ENTITY % geom.verb.projection "CDATA">
 <!ENTITY % geom.verb.change     "CDATA">
+<!ENTITY % geom.verb.produce    "CDATA">
 
 <!-- ===== BAND I: SURVEYOR, 1 to 17. Measure and describe. Nothing moves. ===== -->
 <![%geom.surveyor.module;[
@@ -165,6 +199,94 @@
           after  CDATA #REQUIRED>
 ]]>
 
+<!-- ===== BAND IV: TRIGONOMETRY, 53 to 66. The base: the ratios of a triangle, and the angle recovered from its ratio. ===== -->
+<![%geom.trigonometry.module;[
+<!ENTITY GEOM.verb.53 "chord: the straight line between two points of an arc, the first thing a compass gives">
+<!ENTITY GEOM.verb.54 "sagitta: the height of the arc above its chord, the arrow on the bow">
+<!ENTITY GEOM.verb.55 "sine: the half chord, the opposite over the hypotenuse">
+<!ENTITY GEOM.verb.56 "cosine: the sine of the complement, the adjacent over the hypotenuse">
+<!ENTITY GEOM.verb.57 "tangent: the line that touches the circle once, the opposite over the adjacent">
+<!ENTITY GEOM.verb.58 "secant: the line that cuts the circle twice, one over the cosine">
+<!ENTITY GEOM.verb.59 "versine: one less the cosine, the sagitta of the unit circle">
+<!ENTITY GEOM.verb.60 "haversine: the half versine, the distance between two points on a sphere">
+<!ENTITY GEOM.verb.61 "arcus: the angle recovered from its ratio, arcsine, arccosine, arctangent, the inverse of the four above">
+<!ENTITY GEOM.verb.62 "radian: the angle whose arc equals its radius, the unit every ratio is taken in">
+<!ENTITY GEOM.verb.63 "azimuth: the bearing in the plane, measured from north through east">
+<!ENTITY GEOM.verb.64 "inclination: the angle above the horizontal plane, measured from the horizon up">
+<!ENTITY GEOM.verb.65 "resection: the position of the observer re-established from bearings to three known points, the inverse of triangulation">
+<!ENTITY GEOM.verb.66 "intersection: the position of an unknown point fixed from bearings taken at two known ones">
+]]>
+
+<!-- ===== BAND V: PROJECTION, 67 to 80. How a solid is put on a plane, and what each way keeps and gives up. ===== -->
+<![%geom.projection.module;[
+<!ENTITY GEOM.verb.67 "perspective: the view from one eye, parallels meeting as they recede">
+<!ENTITY GEOM.verb.68 "vanishing: the point on the horizon where a set of parallels meets">
+<!ENTITY GEOM.verb.69 "horizon: the line at the height of the eye, where every vanishing point lies">
+<!ENTITY GEOM.verb.70 "foreshortening: a length shortened by the cosine of its angle to the picture plane">
+<!ENTITY GEOM.verb.71 "multiview: the six faces of the box unfolded, first angle or third angle, each face true">
+<!ENTITY GEOM.verb.72 "oblique: the front face true and the depth drawn at an angle, the cavalier projection">
+<!ENTITY GEOM.verb.73 "cabinet: the oblique with the depth halved, so the solid does not look stretched">
+<!ENTITY GEOM.verb.74 "section: the cut through, what the interior shows when a wall is removed along a plane">
+<!ENTITY GEOM.verb.75 "sciagraphy: the drawing of shadows, where the light falls and what it leaves dark">
+<!ENTITY GEOM.verb.76 "development: a surface unfolded into the plane it is cut from, the pattern of a solid">
+<!ENTITY GEOM.verb.77 "gnomonic: the sphere projected from its centre, every great circle a straight line">
+<!ENTITY GEOM.verb.78 "stereographic: the sphere projected from a pole, every angle preserved">
+<!ENTITY GEOM.verb.79 "exploded: the parts drawn apart along the lines of their assembly, so each is seen whole">
+<!ENTITY GEOM.verb.80 "cutaway: the outer layer removed over part of the drawing to show what it covers">
+]]>
+
+<!-- ===== BAND VI: CHROMATICS, 81 to 94. Colour as measure, as choice, and as paint. ===== -->
+<![%geom.chromatics.module;[
+<!ENTITY GEOM.verb.81 "hue: the position on the circle of colour, the name a colour goes by">
+<!ENTITY GEOM.verb.82 "value: the lightness, how far from black and how far from white">
+<!ENTITY GEOM.verb.83 "chroma: the strength of the colour, how far from the grey of the same value">
+<!ENTITY GEOM.verb.84 "tint: a hue with white added, lighter and weaker">
+<!ENTITY GEOM.verb.85 "shade: a hue with black added, darker">
+<!ENTITY GEOM.verb.86 "tone: a hue with grey added, quieter at the same value">
+<!ENTITY GEOM.verb.87 "gradation: the passage from one value or hue to another across a surface">
+<!ENTITY GEOM.verb.88 "complement: the hue opposite on the circle, the one that cancels this one to grey">
+<!ENTITY GEOM.verb.89 "palette: the set of colours chosen before the first stroke, and nothing outside it">
+<!ENTITY GEOM.verb.90 "glaze: a transparent layer over a dried one, the colour beneath still showing">
+<!ENTITY GEOM.verb.91 "impasto: paint laid thick enough to hold the mark of the brush, texture as structure">
+<!ENTITY GEOM.verb.92 "sfumato: the edge softened until it cannot be found, form without a line">
+<!ENTITY GEOM.verb.93 "chiaroscuro: light against dark, the form built from the contrast alone">
+<!ENTITY GEOM.verb.94 "grisaille: the painting in grey alone, the underpainting every colour is laid on">
+]]>
+
+<!-- ===== BAND VII: RESTORATION, 95 to 108. The standing work made sound, the loss named, the intervention recorded. ===== -->
+<![%geom.restoration.module;[
+<!ENTITY GEOM.verb.95  "consolidation: the structure made sound before any other hand touches it">
+<!ENTITY GEOM.verb.96  "inpainting: a loss filled so the whole reads, and the fill still known for a fill">
+<!ENTITY GEOM.verb.97  "retouching: the small correction to the surface, changing nothing beneath it">
+<!ENTITY GEOM.verb.98  "tratteggio: the loss filled with fine vertical lines, whole from a distance and honest up close">
+<!ENTITY GEOM.verb.99  "lining: a new support fixed behind the old one, so the old can carry its own weight again">
+<!ENTITY GEOM.verb.100 "cleaning: the later accretion removed and the original left as it was">
+<!ENTITY GEOM.verb.101 "anastylosis: a ruin re-erected from its own fallen members, nothing added that was not found">
+<!ENTITY GEOM.verb.102 "reversibility: every intervention undoable by the next hand, declared before the first">
+<!ENTITY GEOM.verb.103 "lacuna: the loss named and bounded, never hidden, so the next reader knows what is not original">
+<!ENTITY GEOM.verb.104 "georeference: the drawing pinned to measured coordinates, so a point on it is a point in the world">
+<!ENTITY GEOM.verb.105 "vectorisation: the raster traced into geometry, a contour with its source named">
+<!ENTITY GEOM.verb.106 "restructure: the standing structure rebuilt to the plan with the survey as witness">
+<!ENTITY GEOM.verb.107 "specification: the intervention declared before it is made, materials and limits">
+<!ENTITY GEOM.verb.108 "documentation: the record of every intervention, before and after, that the next restorer reads">
+<!-- The generator's product: one figure the three agreed on, rendered through
+     cc-figure to a plate and its cells, and one production per target. The
+     three attributes name the survey, the plan and the renovation it stands
+     on, so a production with any of the three missing is refused by name. -->
+<!ELEMENT production (produced+)>
+<!ATTLIST production
+          survey     CDATA #REQUIRED
+          plan       CDATA #REQUIRED
+          renovation CDATA #REQUIRED
+          target     CDATA #REQUIRED>
+<!ELEMENT produced (#PCDATA)>
+<!ATTLIST produced
+          verb   %geom.verb.produce; #REQUIRED
+          format (svg|png|cells) #REQUIRED
+          path   CDATA #REQUIRED
+          bytes  CDATA #REQUIRED>
+]]>
+
 <!-- ===== SHARED BY THE THREE ===== -->
 <!ELEMENT survey_ref EMPTY>
 <!ATTLIST survey_ref path CDATA #REQUIRED date CDATA #REQUIRED>
@@ -176,11 +298,14 @@
           command CDATA #REQUIRED>
 
 <!-- ===== LAWS ===== -->
-<!ENTITY LAW.GEOM.1 "The ladder is GEOM.ladder.count rungs in the three bands of GEOM.bands, seventeen, eighteen and seventeen, a rung never renumbered or reused; each command pins its band as a #FIXED attribute on its root, so a measure, a projection or a change carrying a verb outside the band is invalid against the subset rather than merely out of place.">
+<!ENTITY LAW.GEOM.1 "The ladder is GEOM.ladder.count rungs, the first GEOM.ladder.codebase of them in the three bands of GEOM.bands, seventeen, eighteen and seventeen, and the rest in the four domains of GEOM.domains, fourteen each, a rung never renumbered or reused; each command pins its band as a #FIXED attribute on its root, so a measure, a projection, a change or a production carrying a verb outside the band is invalid against the subset rather than merely out of place.">
 <!ENTITY LAW.GEOM.2 "A survey is measures and nothing else: every measure carries the instrument that produced it, its unit and its seconds, its confidence is fixed at measured, and a rung of the ladder that has no instrument in GEOM.instrumented is left unmeasured and named as such, never estimated; the surveyor writes nothing but its own artifact under GEOM.dir.">
 <!ENTITY LAW.GEOM.3 "A plan stands on a survey by path and declares bounds: every projection carries the number a later survey is held to, its rewrite attribute is fixed at no, and node lib/geometry.mjs plan --check reads a survey against a plan and names each bound the survey exceeds; a plan naming no survey is refused by name.">
 <!ENTITY LAW.GEOM.4 "A renovation stands on both: it names a survey path and a plan path, both must exist under GEOM.dir with the plan dated no earlier than the survey and the change no earlier than the plan, and node lib/geometry.mjs renovate refuses by name a renovation missing either; a renovation can never be its own justification.">
 <!ENTITY LAW.GEOM.5 "Every command of the family runs at least one round of the ask grammar before it draws a line, unless --no-gate is present, and the first slot asked is the scope, because a measurement taken against the wrong scope is worse than none; LAW.ASK.10 bound the creators to their gate, and this law extends the obligation to every command that measures.">
 <!ENTITY LAW.GEOM.6 "A band is a module of the driver: a repository switches one off by declaring its geom module entity IGNORE before the include, the grammar then lacks that band's verbs and elements, and the command of that band refuses to run and says the band is switched off here; a command that runs anyway answers outside its own subset.">
 <!ENTITY LAW.GEOM.7 "Every survey renders one figure from cc-figure with mark measured beside its numbers, and the figure carries no shape a measure did not produce: the drawing is of the numbers, and a figure without numbers is not a survey.">
-<!ENTITY LAW.GEOM.8 "The three commands draw one figure: the plan's figure is the survey's with the projected shapes added, the renovation's plate renders both with the changed shapes marked, and a plan figure carrying a shape that is in neither the survey nor a projection is refused, so nothing is ever drawn as proposed before something was drawn as measured.">
+<!ENTITY LAW.GEOM.8 "The three commands draw one figure: the plan's figure is the survey's with the projected shapes added, the renovation's plate renders both with the changed shapes marked, and a plan figure carrying a shape that is in neither the survey nor a projection is refused, so nothing is ever drawn as proposed before something was drawn as measured; on the plate the three are three layers of one figure, each coloured by its band (LAW.FIG.7).">
+<!ENTITY LAW.GEOM.9 "The rungs above GEOM.ladder.codebase are the four domains of GEOM.domains, each a module of the driver switched off the way a band is, and the generator's band is their union: a repository that switches a domain off loses its rungs, and a production carrying a verb of that domain is invalid against the subset.">
+<!ENTITY LAW.GEOM.10 "Each profession reads the domains through its lens, GEOM.lens.surveyor, GEOM.lens.architect and GEOM.lens.renovator: every domain rung is in exactly one lens, every lens reaches every domain, and a command of the codebase application that names a domain rung outside its own lens answers outside its subset; node lib/geometry.mjs controls refuses a lens set that leaves a rung unlensed or twice lensed.">
+<!ENTITY LAW.GEOM.11 "The generator produces only what the three agreed on: it names a survey, a plan and a renovation that exist under GEOM.dir, in that order of date, all three on one target, and node lib/geometry.mjs produce refuses by name when any is missing; a generator run with nothing on disk launches the three in band order first, which is what it exists for, and a production is one figure through cc-figure rendered to the formats it names, each with its bytes counted after the write.">

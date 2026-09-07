@@ -3,7 +3,7 @@
 <!--
   codebase-architect.dtd : the variant subset of /codebase-architect-dtd.
 
-  geometry.dtd holds everything the three commands share. This file holds
+  geometry.dtd holds everything the four commands share. This file holds
   only what makes this band itself: the band, pinned; the one thing the
   command may write, a plan; and the thing it may never do, a rewrite,
   which is a #FIXED attribute on its root and on every projection, so an

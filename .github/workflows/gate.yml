@@ -107,8 +107,22 @@ jobs:
         run: node lib/cross-os.mjs sweep && node lib/cross-os.mjs matrix --check
       - name: figure controls (one figure, two renderers, the character grid the bound, a shape module switched off through the driver)
         run: node lib/figure.mjs controls
-      - name: geometry controls (fifty-two rungs in three bands, a survey that moves nothing, a plan that rewrites nothing, a renovation refused by name, a band switched off)
+      - name: geometry controls (one hundred and eight rungs, three profession bands and four domain bands, the lenses a partition, a survey that moves nothing, a plan that rewrites nothing, a renovation and a production refused by name, a band and a domain switched off)
         run: node lib/geometry.mjs controls
+      - name: typography controls (the cell shared with cc-figure, the seven glyphs glyph for glyph, the guarantee and what falls outside it, the numeral derived from the number, every declaration spent)
+        run: node lib/typography.mjs controls
+      - name: chain controls (stacked command lines read both ways, the cap, a link that cannot run alone, a successor that does not exist, every hands_to in the tree resolving)
+        run: node lib/chain.mjs controls
+      - name: sigil controls (the five documents present, the forms named to tokens to the ranking in both directions, a planted miss each way, the one convention measured on the tree, a trial past the ceiling killed)
+        run: node lib/sigil.mjs controls
+      - name: the sigil's forms run on this leg (pass, fail or unsupported with the bash it needs; three legs, three honest tallies)
+        run: node lib/sigil.mjs run
+      - name: cache controls (the eight fields in order, a byte-equal reread, both nt guards, no value ever typed, stale by date, every refusal by name, and the nt lighter than the markdown of the same state)
+        run: node lib/cache.mjs controls
+      - name: scala controls (one scala per family stacked in band order, a planted answer missing a heading, out of order, short of its close, or quoting a heading in prose, each refused by name)
+        run: node checker/scala.mjs --controls
+      - name: the creators against the corpus, per folder (one schematic with its concept cells or a refusal with its reason; the corpus absent here and said so; the record in step)
+        run: node checker/creators-audit.mjs --check && node checker/creators-audit.mjs --controls
       - name: every engine a shipped command invokes is a file the installer writes (two families once shipped without theirs)
         run: node checker/engines-sweep.mjs && node checker/engines-sweep.mjs --controls
       - name: the About and the three manifest descriptions say what the tree measures (the About sat two majors behind because nothing read it)
@@ -227,6 +241,54 @@ jobs:
           left=$(find "$T" -type f | wc -l)
           echo "files left: $left"
           test "$left" -eq 0
+
+  scala:
+    # One scala per family run end to end through a real model on every leg
+    # (9.0.0). It runs on a release tag and by hand, never on every push:
+    # sixteen chains on three legs is a cost the operator chooses. The model
+    # credential arrives as one masked secret written to the config dir of the
+    # runner and nowhere else; a leg without the secret says so and stops with
+    # exit 0, because a check that did not run must never look like one that
+    # passed.
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
+    needs: [gate]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      XOS_LEG: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: the claude CLI on this leg
+        run: |
+          npm install -g @anthropic-ai/claude-code > /dev/null 2>&1
+          claude --version
+      - name: the credential, one masked secret, written to the runner's config dir and nowhere else
+        env:
+          CLAUDE_CREDENTIALS_JSON: ${{ secrets.CLAUDE_CREDENTIALS_JSON }}
+        run: |
+          if [ -z "$CLAUDE_CREDENTIALS_JSON" ]; then echo "no CLAUDE_CREDENTIALS_JSON secret on this repository: the scala is UNRUN on $XOS_LEG"; echo "SCALA_SKIP=1" >> "$GITHUB_ENV"; exit 0; fi
+          C=$(mktemp -d); C=$(cygpath -m "$C" 2>/dev/null || echo "$C")
+          printf '%s' "$CLAUDE_CREDENTIALS_JSON" > "$C/.credentials.json"
+          chmod 600 "$C/.credentials.json"
+          echo "CLAUDE_CONFIG_DIR=$C" >> "$GITHUB_ENV"
+          echo "credential written, $(wc -c < "$C/.credentials.json") bytes"
+      - name: one scala per family, every family, scored on the headings each member owns
+        if: env.SCALA_SKIP != '1'
+        run: |
+          O=$(mktemp -d); O=$(cygpath -m "$O" 2>/dev/null || echo "$O")
+          node checker/scala.mjs run --all --out "$O" --turns 60 --secs 1500
+          rc=$?
+          ls -l "$O"
+          exit $rc
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')

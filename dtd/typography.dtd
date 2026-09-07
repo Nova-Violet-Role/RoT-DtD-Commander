@@ -1,0 +1,214 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  typography.dtd : one contract for the glyph and the plate.
+
+  cc-figure.dtd renders one figure twice, to characters for the widget and
+  to svg for the disk, and it named its glyphs inline as entities with a
+  comment explaining why box-drawing is refused. That comment was the whole
+  contract. It said the right thing and it was not checkable: nothing
+  refused a sixth glyph, nothing said what the svg plate must do when a
+  glyph is drawn, and nothing connected the character grid to a font.
+
+  This file is that contract, and it ships BEFORE the generator so a glyph
+  and a plate cannot disagree.
+
+  Sourced from svg/ and xhtml/. From svg-font.mod comes the vocabulary a
+  font actually needs and the shape of the answer: eleven elements (font,
+  font-face, glyph, missing-glyph, hkern, vkern, font-face-src,
+  font-face-uri, font-face-format, font-face-name, definition-src), a
+  metric block (units-per-em, ascent, descent, cap-height, x-height,
+  horiz-adv-x, vert-adv-y, horiz-origin-x, horiz-origin-y, bbox), and
+  missing-glyph, which is the corpus' own name for the question this file
+  exists to answer: what is drawn when the glyph is not there. From
+  svg-datatypes.mod comes the naming of the dimensional types (Coordinate,
+  Length, Number, Color) and, measured across the corpus, the fact that
+  every one of them is CDATA: TEI declares 64 teidata.* of which 63 are
+  CDATA, and OpenOffice declares 47 datatypes of which 42 carry no
+  constraint at all. So the names below are for provenance and reading;
+  lib/typography.mjs does the checking, because a DTD cannot check a
+  coordinate and a subset that pretends otherwise is lying in public.
+
+  From xhtml/ comes the discipline of the repertoire: xhtml1.dcl sets
+  NAMECASE GENERAL NO and marks each change from the SGML default with the
+  reason, and the three entity sets (Latin-1, special, symbol) partition
+  the characters a document may name. The repertoire below is partitioned
+  the same way, and every class outside the guaranteed one is a module a
+  command switches off, the way svg11.dtd switches its own.
+
+  The guaranteed repertoire is ASCII printable and nothing else. A widget
+  font that lacks a glyph draws a box, and a figure that depends on the
+  font is not a figure (cc-figure.dtd). So every glyph outside the
+  guarantee declares a fallback INSIDE it, and a glyph with no fallback may
+  not sit in a switchable class (LAW.TYPO.3).
+
+  The numeral prefixes are here rather than in geometry.dtd for the same
+  reason the version is not typed: a figure of n sides has a name, the name
+  is derived from n, and a name typed by hand is a name that can disagree
+  with its own number. GREEK_NUMBERS.md is the source and its own closing
+  note is kept: past about twelve sides the constructed names are rarely
+  used, so TYPO.numeral.plain is where the series stops being a name and
+  starts being a description (LAW.TYPO.7).
+
+  lib/typography.mjs reads this file; lib/figure.mjs renders against it.
+-->
+
+<!-- ===== THE GUARANTEE ===== -->
+<!-- What every renderer on every leg can draw. Measured, not assumed: these
+     are the code points the three CI legs' default monospace faces all
+     carry, and the set is closed at printable ASCII because that is the
+     largest set for which the claim is true without probing a font. -->
+<!ENTITY TYPO.guaranteed "U+0020 to U+007E, printable ASCII, space through tilde">
+<!ENTITY TYPO.guaranteed.lo "32">
+<!ENTITY TYPO.guaranteed.hi "126">
+<!-- The two control bytes the encoding law allows, named here so a renderer
+     never has to guess which whitespace is legal in a plate. -->
+<!ENTITY TYPO.allowed.control "TAB U+0009 and LF U+000A, and nothing else">
+
+<!-- ===== THE CELL, SHARED WITH cc-figure ===== -->
+<!-- One cell is one character. These must equal FIG.cell.w and FIG.cell.h;
+     lib/typography.mjs reads both files and refuses a disagreement, because
+     two files that each declare the cell will drift and the drift is
+     invisible until a plate is a pixel wrong. -->
+<!ENTITY TYPO.cell.w "8">
+<!ENTITY TYPO.cell.h "16">
+<!ENTITY TYPO.units_per_em "1000">
+<!ENTITY TYPO.ascent "800">
+<!ENTITY TYPO.descent "-200">
+<!ENTITY TYPO.cap_height "700">
+<!ENTITY TYPO.x_height "520">
+<!ENTITY TYPO.horiz_adv_x "500">
+<!-- The advance is half the em and the cell is half its height: a monospace
+     grid, stated once so the plate and the widget agree by arithmetic rather
+     than by eye. -->
+<!ENTITY TYPO.baseline "the cell's top plus TYPO.cell.h times TYPO.ascent over TYPO.units_per_em, rounded down">
+
+<!-- ===== THE FACE ===== -->
+<!-- Every face names a generic family it falls back to. A plate that names
+     one font and no generic renders in whatever the viewer happens to have,
+     which is the same defect as a figure that depends on the font. -->
+<!ELEMENT face EMPTY>
+<!ATTLIST face
+          family   CDATA #REQUIRED
+          generic  (monospace|serif|sans-serif) #REQUIRED
+          role     (plate|widget) #REQUIRED
+          weight   CDATA #IMPLIED
+          style    (normal|italic) "normal">
+<!ENTITY TYPO.face.plate  "ui-monospace, SFMono-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace">
+<!ENTITY TYPO.face.widget "the harness monospace box; the face is the viewer's and is never named by us">
+
+<!-- ===== THE REPERTOIRE, EACH CLASS A MODULE ===== -->
+<!-- svg11.dtd wraps every module in a switch; TEI wraps every element in its
+     own switch with the name as a parameter entity. Both ideas are taken:
+     a command switches a class off by declaring its module IGNORE before the
+     include, and the grammar then lacks that class rather than the renderer
+     ignoring it at runtime (LAW.TYPO.4). The ascii class has no switch,
+     because the guarantee is what everything else falls back to. -->
+<!ENTITY % typo.rule.module    "INCLUDE">
+<!ENTITY % typo.arrow.module   "INCLUDE">
+<!ENTITY % typo.math.module    "INCLUDE">
+<!ENTITY % typo.greek.module   "INCLUDE">
+<!ENTITY % typo.block.module   "IGNORE">
+<!ENTITY TYPO.classes "ascii|rule|arrow|math|greek|block">
+<!ENTITY TYPO.classes.count "6">
+<!-- Each class is one element holding its glyphs, declared only while its
+     module is INCLUDE, and the content of typeset admits the classes through
+     typo.classes.content, which a command redeclares before the include when
+     it switches one on or off (the cc-figure idiom, fig.content). So a
+     switch here removes a declaration, and a typeset carrying the class is
+     invalid against the subset rather than tolerated (LAW.TYPO.4). block is
+     off by default and absent from the default content. -->
+<!ENTITY % typo.classes.content "rule_glyphs?, arrow_glyphs?, math_glyphs?, greek_glyphs?">
+<![%typo.rule.module;[
+<!ELEMENT rule_glyphs (glyph+)>
+]]>
+<![%typo.arrow.module;[
+<!ELEMENT arrow_glyphs (glyph+)>
+]]>
+<![%typo.math.module;[
+<!ELEMENT math_glyphs (glyph+)>
+]]>
+<![%typo.greek.module;[
+<!ELEMENT greek_glyphs (glyph+)>
+]]>
+<![%typo.block.module;[
+<!ELEMENT block_glyphs (glyph+)>
+]]>
+
+<!-- One glyph. `fallback` is the character drawn where the class is off or
+     the face lacks the code point; for the ascii class it is the glyph
+     itself, which is what makes the guarantee terminate. -->
+<!ELEMENT glyph EMPTY>
+<!ATTLIST glyph
+          unicode  CDATA #REQUIRED
+          name     CDATA #REQUIRED
+          class    (ascii|rule|arrow|math|greek|block) #REQUIRED
+          fallback CDATA #REQUIRED
+          advance  CDATA #IMPLIED>
+
+<!-- The corpus' own name for the answer to "what is drawn when the glyph is
+     not there" (svg-font.mod). Ours is a declaration rather than a drawing. -->
+<!ELEMENT missing_glyph EMPTY>
+<!ATTLIST missing_glyph
+          draws  CDATA #REQUIRED
+          reason CDATA #REQUIRED>
+<!ENTITY TYPO.missing.draws "?">
+<!ENTITY TYPO.missing.reason "a question mark is in the guarantee and a box is not; a renderer that draws a box has told the reader nothing">
+
+<!-- The seven glyphs cc-figure names, declared here too with their class
+     and their fallback. Every one is in the guarantee, so every fallback is
+     itself. -->
+<!ENTITY TYPO.glyph.corner "+">
+<!ENTITY TYPO.glyph.h      "-">
+<!ENTITY TYPO.glyph.v      "|">
+<!ENTITY TYPO.glyph.diag   "/">
+<!ENTITY TYPO.glyph.back   "\">
+<!ENTITY TYPO.glyph.fill   ":">
+<!ENTITY TYPO.glyph.light  ".">
+<!-- The rule class: the same five drawn heavier where the face allows it,
+     each falling back to its ascii twin. -->
+<!ENTITY TYPO.rule.fallback "every rule glyph falls back to its ascii twin: corner to +, horizontal to -, vertical to |">
+
+<!-- ===== THE NUMERAL SERIES ===== -->
+<!-- A polygon of n sides has a name and the name is derived from n, never
+     typed. Source: GREEK_NUMBERS.md. The series is the units 1 to 12, then
+     the -kaideca- compounds to 19, then the tens to 90, then hecta and
+     chilia; past TYPO.numeral.plain the name is a description and the
+     grammar says so rather than minting a word nobody uses. -->
+<!ENTITY TYPO.numeral.units "mono|di|tri|tetra|penta|hexa|hepta|octa|ennea|deca|hendeca|dodeca">
+<!ENTITY TYPO.numeral.teens "triskaideca|tetrakaideca|pentakaideca|hexakaideca|heptakaideca|octakaideca|enneakaideca">
+<!ENTITY TYPO.numeral.tens  "icosa|triaconta|tetraconta|pentaconta|hexaconta|heptaconta|octaconta|enneaconta">
+<!ENTITY TYPO.numeral.hundreds "hecta">
+<!ENTITY TYPO.numeral.thousands "chilia">
+<!ENTITY TYPO.numeral.myriads "myria">
+<!ENTITY TYPO.numeral.join "the compound is hundreds then tens then unit, concatenated, and 13 to 19 take the -kaideca- form rather than deca plus unit">
+<!ENTITY TYPO.numeral.plain "99">
+<!ENTITY TYPO.numeral.beyond "an n-gon: past TYPO.numeral.plain sides the constructed name is not used and the figure is named by its number">
+
+<!ELEMENT numeral EMPTY>
+<!ATTLIST numeral
+          n      CDATA #REQUIRED
+          name   CDATA #REQUIRED
+          form   (unit|teen|ten|compound|plain) #REQUIRED
+          suffix (gon|hedron|ad|meter) #IMPLIED>
+
+<!-- ===== THE PLATE ===== -->
+<!-- What a glyph becomes on the svg side. One declaration, so the two
+     renderings are the same figure and not two drawings that resemble one
+     another (LAW.TYPO.2). -->
+<!ELEMENT typeset (face+, glyph*, %typo.classes.content;, missing_glyph, numeral*)>
+<!ATTLIST typeset
+          cols    CDATA #REQUIRED
+          rows    CDATA #REQUIRED
+          renders (cells|svg|both) "both"
+          classes CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.TYPO.1 "The guaranteed repertoire is TYPO.guaranteed, code points TYPO.guaranteed.lo to TYPO.guaranteed.hi, and the only control bytes anywhere in a rendering are the two of TYPO.allowed.control; a glyph outside the guarantee that reaches a widget without a fallback is a failed rendering, not a degraded one.">
+<!ENTITY LAW.TYPO.2 "The cell is declared once and shared: TYPO.cell.w and TYPO.cell.h must equal cc-figure's FIG.cell.w and FIG.cell.h, lib/typography.mjs reads both files and refuses a disagreement by name, and the baseline is computed by TYPO.baseline rather than chosen per plate.">
+<!ENTITY LAW.TYPO.3 "Every glyph declares a fallback inside the guarantee, and a glyph whose fallback is outside it is refused; where a class is switched off or a face lacks the code point the fallback is drawn, and where no glyph and no fallback resolve, missing_glyph draws TYPO.missing.draws for the reason TYPO.missing.reason.">
+<!ENTITY LAW.TYPO.4 "Every class of TYPO.classes but ascii is a module: a command switches one off by declaring its typo module entity IGNORE before the include, the grammar then lacks that class, and a typeset carrying a glyph of a switched-off class is invalid against the subset rather than silently substituted at runtime.">
+<!ENTITY LAW.TYPO.5 "Every face names a generic family it falls back to; a plate that names a font and no generic is refused, because a plate rendered in whatever the viewer happens to have is the font dependence this file exists to forbid.">
+<!ENTITY LAW.TYPO.6 "The names of the dimensional types are carried for provenance and reading and check nothing: a DTD cannot constrain a coordinate, an advance or a colour, the corpus measured 63 of 64 TEI datatypes and 42 of 47 OpenOffice datatypes carrying no constraint at all, and every value below is checked by lib/typography.mjs or it is not checked.">
+<!ENTITY LAW.TYPO.7 "A figure's name is derived from its number and never typed: the series of TYPO.numeral.units, TYPO.numeral.teens, TYPO.numeral.tens, TYPO.numeral.hundreds, TYPO.numeral.thousands and TYPO.numeral.myriads is joined by TYPO.numeral.join, and past TYPO.numeral.plain sides the numeral element carries form plain and the figure is named by its number under TYPO.numeral.beyond.">
+<!ENTITY LAW.TYPO.8 "A glyph is data, never a decoration the answer may add: a rendering carries only glyphs this file declares, in the classes it declares, and a renderer that reaches for a character outside the declared repertoire has left the contract and its output is refused by name.">

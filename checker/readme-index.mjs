@@ -51,7 +51,11 @@ export const FAMILIES = [
   { id: 'growth', name: 'Codebase growth', rep: 'amplify-codebase', color: '16a34a',
     members: ['amplify-codebase', 'enhance-codebase', 'overhaul-codebase'] },
   { id: 'geometry', name: 'The Graphic and Geometric Suite', rep: 'codebase-surveyor', color: '0e7490',
-    members: ['codebase-surveyor', 'codebase-architect', 'codebase-renovator'] },
+    members: ['codebase-surveyor', 'codebase-architect', 'codebase-renovator', 'codebase-generator', 'typography'] },
+  { id: 'chain', name: 'Inter-operation', rep: 'chain', color: '6b21a8',
+    members: ['chain'] },
+  { id: 'sigil', name: 'The sigil', rep: 'sigil', color: '0f766e',
+    members: ['sigil', 'verbs'] },
   { id: 'lists', name: 'The lists', rep: 'file-blacklist', color: 'c0392b',
     members: ['file-blacklist', 'code-blacklist', 'file-graylist', 'code-graylist', 'file-whitelist', 'code-whitelist', 'starlist', 'starlist-manager'] },
   { id: 'workflow', name: 'Workflow and the Adiutor', rep: 'RoT-DtD-Commander-Adiutor', color: 'e67e22',
@@ -62,6 +66,46 @@ export function classify(key) {
   const hits = FAMILIES.filter((f) => (f.members || []).includes(key) || (f.patterns || []).some((p) => p.test(key)));
   if (hits.length !== 1) throw new Error(`readme-index: ${key} is claimed by ${hits.length} families (${hits.map((h) => h.id).join(', ') || 'none'}); place it in exactly one`);
   return hits[0];
+}
+
+// A members array is an ORDER, not only a membership. The geometry bands run
+// surveyor, architect, renovator; the lists run black, grey, white within each
+// scope. Both render paths used to filter one globally alphabetical list and
+// never read the array sitting beside them, so the plates published
+// architect, renovator, surveyor and code-black, code-grey, code-white,
+// file-black... -- measured 2026-09-07 in docs/family-the-graphic-and-
+// geometric-suite.svg and docs/family-the-lists.svg. A pattern family declares
+// no order and keeps the alphabetical one; an entry a members array does not
+// name sorts after every entry it does.
+export function memberRank(f, key) {
+  const at = f && f.members ? f.members.indexOf(key) : -1;
+  return at === -1 ? Number.MAX_SAFE_INTEGER : at;
+}
+
+// The hands_to a resolved command pins as a #FIXED attribute, or ''.
+export function handsTo(key) {
+  const p = join(ROOT, 'commands', `${key}-dtd.md`);
+  if (!existsSync(p)) return '';
+  const m = /hands_to\s+CDATA\s+#FIXED\s+"([^"]*)"/.exec(readFileSync(p, 'utf8'));
+  return m ? m[1].replace(/-dtd$/, '') : '';
+}
+// One sentence per family that hands: each member in band order and where it
+// hands, the cycle closed when the last hands to the first, and the members
+// with no successor named as running alone.
+export function handsSentence(f) {
+  const keys = f.rows.map((r) => r.key);
+  const hands = keys.map((k) => [k, handsTo(k)]).filter(([, to]) => to);
+  if (!hands.length) return '';
+  const parts = hands.map(([k, to], i) => (i === 0 ? `\`/${k}-dtd\` hands to \`/${to}-dtd\`` : `which hands ${to === hands[0][0] ? 'back ' : ''}to \`/${to}-dtd\``));
+  const alone = keys.filter((k) => !hands.some(([h]) => h === k));
+  return `_${parts.join(', ')}${alone.length ? `; ${alone.map((k) => `\`/${k}-dtd\``).join(' and ')} ${alone.length === 1 ? 'runs' : 'run'} alone` : ''}._`;
+}
+
+export function orderRows(rows, fam, keyOf = (r) => r.key) {
+  return rows.slice().sort((a, b) => {
+    const d = memberRank(fam, keyOf(a)) - memberRank(fam, keyOf(b));
+    return d !== 0 ? d : String(keyOf(a)).localeCompare(String(keyOf(b)));
+  });
 }
 
 function frontmatter(text) {
@@ -157,7 +201,7 @@ export function plateSlug(name) {
 }
 
 export function render({ sigils, commands, skills, agents }) {
-  const fams = FAMILIES.map((f) => ({ ...f, sigil: sigils[f.rep] || '', rows: commands.filter((c) => c.family === f.id) }));
+  const fams = FAMILIES.map((f) => ({ ...f, sigil: sigils[f.rep] || '', rows: orderRows(commands.filter((c) => c.family === f.id), f) }));
   const out = [];
   out.push(BEGIN);
   out.push(`*${commands.length} commands in ${fams.length} families, ${skills.length} skills, ${agents.length} agents. Every family opens below; the rest of this page is folded.*`);
@@ -177,6 +221,11 @@ export function render({ sigils, commands, skills, agents }) {
     out.push('<details>');
     out.push(`<summary><b>${f.sigil} ${f.name}</b> · ${f.rows.length} commands</summary>`);
     out.push('');
+    // The hand-off sentence: a family whose members declare hands_to says how
+    // each hands to the next, in band order, and names the members that run
+    // alone. Read from the resolved commands, never typed (9.0.0).
+    const hand = handsSentence(f);
+    if (hand) { out.push(hand); out.push(''); }
     // The plate, not a table. The same 131 commands were being listed twice on
     // one page -- here as markdown rows and again under the glossary as
     // drawings -- and the duplication was the bloat, not the rendering. The
@@ -250,7 +299,7 @@ export function sigilCollisions(sigils) {
   return out;
 }
 
-function controls(readme, block) {
+function controls(readme, block, data) {
   let fail = 0;
   let ran = 0;
   const say = (ok, text) => { ran++; console.log(`  ${ok ? 'PASS' : 'FAIL'} ${text}`); if (!ok) fail++; };
@@ -268,6 +317,27 @@ function controls(readme, block) {
   let threw = '';
   try { classify('zz-unclaimed-control'); } catch (e) { threw = e.message; }
   say(/claimed by 0 families/.test(threw), `trip: an unclaimed command name is refused: ${threw.slice(0, 80)}`);
+  // A members array is an order. Until 9.0.0 both render paths filtered one
+  // globally alphabetical list, so the geometry plate published architect,
+  // renovator, surveyor and the lists plate put every code- entry before every
+  // file- entry. This asserts the declared order AND that the alphabetical
+  // order it replaces is genuinely different, so a silent revert goes red
+  // instead of passing on a coincidence.
+  const geom = FAMILIES.find((f) => f.id === 'geometry');
+  const geomRows = orderRows(data.commands.filter((c) => c.family === 'geometry'), geom).map((c) => c.key);
+  say(geomRows.join(',') === geom.members.join(','),
+    `the geometry rows run in band order: ${geomRows.join(', ')}`);
+  const alpha = geomRows.slice().sort((a, b) => a.localeCompare(b));
+  say(alpha.join(',') !== geom.members.join(','),
+    `trip: the alphabetical order differs and would be wrong: ${alpha.join(', ')}`);
+  const listsFam = FAMILIES.find((f) => f.id === 'lists');
+  const listRows = orderRows(data.commands.filter((c) => c.family === 'lists'), listsFam).map((c) => c.key);
+  say(listRows.join(',') === listsFam.members.join(','),
+    `the lists rows run black, grey, white in both scopes: ${listRows.length} rows`);
+  const pat = FAMILIES.find((f) => f.id === 'prompts');
+  const patRows = orderRows(data.commands.filter((c) => c.family === 'prompts'), pat).map((c) => c.key);
+  say(patRows.join(',') === patRows.slice().sort((a, b) => a.localeCompare(b)).join(','),
+    `a family with no members array stays alphabetical: ${patRows.length} prompt creators`);
   const lines = readme.split('\n');
   // The index publishes plates, not rows: the same 131 commands were listed twice
   // on one page and the tables came out. These two controls asserted the pareto
@@ -295,11 +365,11 @@ function main() {
   const readme = readFileSync(path, 'utf8');
   const fams = FAMILIES.length;
   const summary = `${data.commands.length} commands, ${fams} families, ${data.skills.length} skills, ${data.agents.length} agents`;
-  if (args[0] === '--controls') process.exit(controls(readme, block) ? 0 : 1);
+  if (args[0] === '--controls') process.exit(controls(readme, block, data) ? 0 : 1);
   // The two map plates the block points at. Held to the tree the same way the
   // block is: a drawing that disagrees with the families is a drift like any
   // other, and a picture nobody checks is worse than a fence nobody reads.
-  const famRows = FAMILIES.map((f) => ({ ...f, sigil: data.sigils[f.rep] || '', rows: data.commands.filter((c) => c.family === f.id) }));
+  const famRows = FAMILIES.map((f) => ({ ...f, sigil: data.sigils[f.rep] || '', rows: orderRows(data.commands.filter((c) => c.family === f.id), f) }));
   const totals = { commands: data.commands.length, skills: data.skills.length, agents: data.agents.length };
   const plates = [
     [join(ROOT, 'docs', 'families-map.svg'), renderMapSvg(famRows, totals, 'light')],

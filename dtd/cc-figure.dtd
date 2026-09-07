@@ -21,6 +21,20 @@
   a command may switch off before the include, and the element name is a
   parameter entity a command may rename the same way (LAW.FIG.5).
 
+  9.0.0 grows the vocabulary from four shapes to twenty, after the one
+  grammar of the corpus that draws for a living: office/drawing.mod declares
+  60 elements and 637 attribute lists, ten to one, because a drawing grows
+  by what a shape can carry more than by how many shapes exist. The twenty
+  fall into seven groups, and three of the groups belong to one profession
+  each: measure is the surveyor's dimension line, extrude and rotate3d are
+  the architect's solids, contour is the renovator's geometry traced from a
+  raster. A layer is how the three draw on one plate (LAW.FIG.7).
+
+  The glyphs are declared here and mirrored in typography.dtd, whose
+  controls refuse a cell or a glyph the two files disagree on; every glyph
+  is inside the printable ASCII typography.dtd guarantees, so no widget
+  font can turn a figure into boxes (LAW.TYPO.1, LAW.TYPO.2).
+
   lib/figure.mjs reads this file, renders both forms from one figure, and
   refuses a pair that disagrees; its controls trip every law below.
   Included by a command that declares preview.content as (#PCDATA | figure)*
@@ -35,36 +49,109 @@
 <!ENTITY FIG.cut.rows "3">
 <!ENTITY FIG.exp.cols "80">
 <!ENTITY FIG.exp.rows "12">
-<!-- One cell on the svg plate: the two renderings share a coordinate. -->
+<!-- One cell on the svg plate: the two renderings share a coordinate. The
+     same two numbers are TYPO.cell.w and TYPO.cell.h, and node
+     lib/typography.mjs controls refuses the pair when they disagree. -->
 <!ENTITY FIG.cell.w "8">
 <!ENTITY FIG.cell.h "16">
 <!ENTITY FIG.renders "cells|svg">
-<!ENTITY FIG.shapes "rect|line|label|group">
-<!ENTITY FIG.shapes.count "4">
+<!ENTITY FIG.shapes "rect|line|label|group|circle|ellipse|polyline|polygon|path|arc|text|fill|stroke|gradient|transform|measure|extrude|rotate3d|contour|layer">
+<!ENTITY FIG.shapes.count "20">
+<!-- The seven groups the twenty shapes fall into, and which profession owns
+     the three that belong to one. Read by lib/figure.mjs contract(). -->
+<!ENTITY FIG.groups "geometric|text|paint|transform|surveyor|architect|renovator">
+<!ENTITY FIG.group.geometric "rect|line|group|circle|ellipse|polyline|polygon|path|arc|layer">
+<!ENTITY FIG.group.text      "label|text">
+<!ENTITY FIG.group.paint     "fill|stroke|gradient">
+<!ENTITY FIG.group.transform "transform">
+<!ENTITY FIG.group.surveyor  "measure">
+<!ENTITY FIG.group.architect "extrude|rotate3d">
+<!ENTITY FIG.group.renovator "contour">
 <!ENTITY FIG.marks "guessed|measured">
 <!-- The glyphs the cells renderer draws with. Box-drawing is refused on
      purpose: a widget font that lacks a glyph draws a box, and a figure
-     that depends on the font is not a figure. -->
+     that depends on the font is not a figure. Seven glyphs: the five of
+     8.0.0 and two for paint, a dense fill and a light one, so a gradient
+     can pass from one to the other in cells as it passes between two
+     colours on the plate. -->
 <!ENTITY FIG.glyph.corner "+">
 <!ENTITY FIG.glyph.h "-">
 <!ENTITY FIG.glyph.v "|">
 <!ENTITY FIG.glyph.diag "/">
 <!ENTITY FIG.glyph.back "\">
+<!ENTITY FIG.glyph.fill ":">
+<!ENTITY FIG.glyph.light ".">
+<!-- The colour tokens a paint shape may name. A token, never a hex value:
+     the plate resolves a token per theme (light and dark are two plates of
+     one figure), and cells have no colour at all, so a figure that named a
+     hex value would carry something one renderer cannot honour. -->
+<!ENTITY FIG.colours "ink|dim|box|measured|proposed|changed|ground">
+<!-- The bands a layer may belong to, in ladder order; the plate colours a
+     layer by its band, which is how the renovation's plate shows the survey,
+     the plan and the change at once (LAW.FIG.7, LAW.GEOM.8). -->
+<!ENTITY FIG.bands "surveyor|architect|renovator|generator">
+<!-- What a path may carry: absolute moves, lines and closes, so the cells
+     renderer can draw every segment it is given. A curve command would be a
+     shape the cells cannot carry, and LAW.FIG.2 forbids it. -->
+<!ENTITY FIG.path.commands "M|L|Z">
+<!-- Thumbnails: how many figures one cut preview may set side by side, one
+     per option of an ask (LAW.FIG.8). -->
+<!ENTITY FIG.thumbnails.max "4">
 
 <!-- ===== THE SHAPES, EACH A MODULE ===== -->
 <!-- A command switches a shape off by declaring its module IGNORE and
      fig.content without it BEFORE the include; the first declaration
      binds, so these lines are the default rather than a cap. -->
-<!ENTITY % fig.content "rect | line | label | group">
-<!ENTITY % fig.rect.module  "INCLUDE">
-<!ENTITY % fig.line.module  "INCLUDE">
-<!ENTITY % fig.label.module "INCLUDE">
-<!ENTITY % fig.group.module "INCLUDE">
-<!ENTITY % fig.n.rect  "rect">
-<!ENTITY % fig.n.line  "line">
-<!ENTITY % fig.n.label "label">
-<!ENTITY % fig.n.group "group">
+<!ENTITY % fig.content "rect | line | label | group | circle | ellipse | polyline | polygon | path | arc | text | fill | stroke | gradient | transform | measure | extrude | rotate3d | contour | layer">
+<!ENTITY % fig.rect.module      "INCLUDE">
+<!ENTITY % fig.line.module      "INCLUDE">
+<!ENTITY % fig.label.module     "INCLUDE">
+<!ENTITY % fig.group.module     "INCLUDE">
+<!ENTITY % fig.circle.module    "INCLUDE">
+<!ENTITY % fig.ellipse.module   "INCLUDE">
+<!ENTITY % fig.polyline.module  "INCLUDE">
+<!ENTITY % fig.polygon.module   "INCLUDE">
+<!ENTITY % fig.path.module      "INCLUDE">
+<!ENTITY % fig.arc.module       "INCLUDE">
+<!ENTITY % fig.text.module      "INCLUDE">
+<!ENTITY % fig.fill.module      "INCLUDE">
+<!ENTITY % fig.stroke.module    "INCLUDE">
+<!ENTITY % fig.gradient.module  "INCLUDE">
+<!ENTITY % fig.transform.module "INCLUDE">
+<!ENTITY % fig.measure.module   "INCLUDE">
+<!ENTITY % fig.extrude.module   "INCLUDE">
+<!ENTITY % fig.rotate3d.module  "INCLUDE">
+<!ENTITY % fig.contour.module   "INCLUDE">
+<!ENTITY % fig.layer.module     "INCLUDE">
+<!ENTITY % fig.n.rect      "rect">
+<!ENTITY % fig.n.line      "line">
+<!ENTITY % fig.n.label     "label">
+<!ENTITY % fig.n.group     "group">
+<!ENTITY % fig.n.circle    "circle">
+<!ENTITY % fig.n.ellipse   "ellipse">
+<!ENTITY % fig.n.polyline  "polyline">
+<!ENTITY % fig.n.polygon   "polygon">
+<!ENTITY % fig.n.path      "path">
+<!ENTITY % fig.n.arc       "arc">
+<!ENTITY % fig.n.text      "text">
+<!ENTITY % fig.n.fill      "fill">
+<!ENTITY % fig.n.stroke    "stroke">
+<!ENTITY % fig.n.gradient  "gradient">
+<!ENTITY % fig.n.transform "transform">
+<!ENTITY % fig.n.measure   "measure">
+<!ENTITY % fig.n.extrude   "extrude">
+<!ENTITY % fig.n.rotate3d  "rotate3d">
+<!ENTITY % fig.n.contour   "contour">
+<!ENTITY % fig.n.layer     "layer">
+<!-- The enumerations the attribute lists below hold a value to. Each is a
+     parameter entity so a command may narrow it before the include. -->
+<!ENTITY % fig.colour "(ink|dim|box|measured|proposed|changed|ground)">
+<!ENTITY % fig.band   "(surveyor|architect|renovator|generator)">
+<!ENTITY % fig.kind   "(translate|scale|rotate|skew)">
+<!ENTITY % fig.axis   "(x|y|z)">
+<!ENTITY % fig.role   "(plate|widget)">
 
+<!-- ..... geometric ..... -->
 <![%fig.rect.module;[
 <!ELEMENT %fig.n.rect; EMPTY>
 <!ATTLIST %fig.n.rect;
@@ -82,15 +169,167 @@
           x2 CDATA #REQUIRED
           y2 CDATA #REQUIRED>
 ]]>
+<![%fig.circle.module;[
+<!ELEMENT %fig.n.circle; EMPTY>
+<!ATTLIST %fig.n.circle;
+          cx CDATA #REQUIRED
+          cy CDATA #REQUIRED
+          r  CDATA #REQUIRED
+          name CDATA #IMPLIED>
+]]>
+<![%fig.ellipse.module;[
+<!ELEMENT %fig.n.ellipse; EMPTY>
+<!ATTLIST %fig.n.ellipse;
+          cx CDATA #REQUIRED
+          cy CDATA #REQUIRED
+          rx CDATA #REQUIRED
+          ry CDATA #REQUIRED
+          name CDATA #IMPLIED>
+]]>
+<!-- points is a list of x,y pairs separated by spaces, in cells. -->
+<![%fig.polyline.module;[
+<!ELEMENT %fig.n.polyline; EMPTY>
+<!ATTLIST %fig.n.polyline; points CDATA #REQUIRED>
+]]>
+<![%fig.polygon.module;[
+<!ELEMENT %fig.n.polygon; EMPTY>
+<!ATTLIST %fig.n.polygon;
+          points CDATA #REQUIRED
+          name   CDATA #IMPLIED>
+]]>
+<!-- d holds only the commands of FIG.path.commands, absolute, in cells. -->
+<![%fig.path.module;[
+<!ELEMENT %fig.n.path; EMPTY>
+<!ATTLIST %fig.n.path; d CDATA #REQUIRED>
+]]>
+<!-- a1 and a2 are degrees, counterclockwise from three o'clock. -->
+<![%fig.arc.module;[
+<!ELEMENT %fig.n.arc; EMPTY>
+<!ATTLIST %fig.n.arc;
+          cx CDATA #REQUIRED
+          cy CDATA #REQUIRED
+          r  CDATA #REQUIRED
+          a1 CDATA #REQUIRED
+          a2 CDATA #REQUIRED>
+]]>
+<![%fig.group.module;[
+<!ELEMENT %fig.n.group; (%fig.content;)*>
+<!ATTLIST %fig.n.group; name CDATA #REQUIRED>
+]]>
+<!-- A layer is a group with a band: the plate colours it by the band, so
+     the survey, the plan and the change are three layers of one figure. -->
+<![%fig.layer.module;[
+<!ELEMENT %fig.n.layer; (%fig.content;)*>
+<!ATTLIST %fig.n.layer;
+          name CDATA #REQUIRED
+          band %fig.band; #REQUIRED>
+]]>
+
+<!-- ..... text ..... -->
 <![%fig.label.module;[
 <!ELEMENT %fig.n.label; (#PCDATA)>
 <!ATTLIST %fig.n.label;
           x CDATA #REQUIRED
           y CDATA #REQUIRED>
 ]]>
-<![%fig.group.module;[
-<!ELEMENT %fig.n.group; (%fig.content;)*>
-<!ATTLIST %fig.n.group; name CDATA #REQUIRED>
+<!-- text is a label that knows its face: the role names the face of
+     typography.dtd it is set in, and its advance is TYPO.horiz_adv_x per
+     glyph, so the width in cells is the width on the plate. -->
+<![%fig.text.module;[
+<!ELEMENT %fig.n.text; (#PCDATA)>
+<!ATTLIST %fig.n.text;
+          x    CDATA #REQUIRED
+          y    CDATA #REQUIRED
+          role %fig.role; "plate">
+]]>
+
+<!-- ..... paint ..... -->
+<!-- Paint names the shape it paints by the name attribute of that shape.
+     In cells a fill is the fill glyph inside the named shape; on the plate
+     it is the colour token resolved for the theme. -->
+<![%fig.fill.module;[
+<!ELEMENT %fig.n.fill; EMPTY>
+<!ATTLIST %fig.n.fill;
+          of     CDATA #REQUIRED
+          colour %fig.colour; #REQUIRED>
+]]>
+<![%fig.stroke.module;[
+<!ELEMENT %fig.n.stroke; EMPTY>
+<!ATTLIST %fig.n.stroke;
+          of     CDATA #REQUIRED
+          colour %fig.colour; #REQUIRED
+          width  CDATA "1">
+]]>
+<!-- A gradient passes from one token to another across the named shape; in
+     cells it passes from the fill glyph to the light one. -->
+<![%fig.gradient.module;[
+<!ELEMENT %fig.n.gradient; EMPTY>
+<!ATTLIST %fig.n.gradient;
+          of   CDATA #REQUIRED
+          from %fig.colour; #REQUIRED
+          to   %fig.colour; #REQUIRED
+          axis %fig.axis;   "x">
+]]>
+
+<!-- ..... transform ..... -->
+<!-- Applied to a named group before either renderer draws it. Both
+     renderers apply the same arithmetic in cells, so the two cannot drift
+     (LAW.FIG.3). args is a list of numbers the kind expects: translate dx
+     dy, scale sx sy, rotate degrees cx cy, skew degrees. -->
+<![%fig.transform.module;[
+<!ELEMENT %fig.n.transform; EMPTY>
+<!ATTLIST %fig.n.transform;
+          of   CDATA #REQUIRED
+          kind %fig.kind; #REQUIRED
+          args CDATA #REQUIRED>
+]]>
+
+<!-- ..... the surveyor's shape ..... -->
+<!-- The dimension line: two ticks, a rule between them, and the value with
+     its unit written on the rule. A measure carries a number that was
+     taken, so a figure with a measure and no measure element beside it in
+     the survey is refused (LAW.GEOM.7). -->
+<![%fig.measure.module;[
+<!ELEMENT %fig.n.measure; EMPTY>
+<!ATTLIST %fig.n.measure;
+          x1    CDATA #REQUIRED
+          y1    CDATA #REQUIRED
+          x2    CDATA #REQUIRED
+          y2    CDATA #REQUIRED
+          value CDATA #REQUIRED
+          unit  CDATA #REQUIRED>
+]]>
+
+<!-- ..... the architect's shapes ..... -->
+<!-- extrude draws the named group again offset by depth along the diagonal
+     and joins the corners: the cabinet projection, rung 73 of the ladder.
+     rotate3d turns the named group about one axis: about z it is a plane
+     rotation, about x or y it is the orthographic foreshortening of that
+     axis by the cosine of the angle, rung 70. -->
+<![%fig.extrude.module;[
+<!ELEMENT %fig.n.extrude; EMPTY>
+<!ATTLIST %fig.n.extrude;
+          of    CDATA #REQUIRED
+          depth CDATA #REQUIRED>
+]]>
+<![%fig.rotate3d.module;[
+<!ELEMENT %fig.n.rotate3d; EMPTY>
+<!ATTLIST %fig.n.rotate3d;
+          of      CDATA #REQUIRED
+          axis    %fig.axis; #REQUIRED
+          degrees CDATA #REQUIRED>
+]]>
+
+<!-- ..... the renovator's shape ..... -->
+<!-- Geometry traced from a raster, rung 105. The source names what was
+     traced, for provenance; the points are the result, so the figure is
+     whole without the raster, and the cells draw the points as a polygon. -->
+<![%fig.contour.module;[
+<!ELEMENT %fig.n.contour; EMPTY>
+<!ATTLIST %fig.n.contour;
+          source    CDATA #REQUIRED
+          points    CDATA #REQUIRED
+          tolerance CDATA "1">
 ]]>
 
 <!-- ===== THE FIGURE ===== -->
@@ -99,11 +338,15 @@
           grid    CDATA #REQUIRED
           renders (cells|svg|both) "both"
           mark    (guessed|measured) "guessed"
-          title   CDATA #IMPLIED>
+          title   CDATA #IMPLIED
+          seed    CDATA #IMPLIED>
 
 <!-- ===== LAWS ===== -->
 <!ENTITY LAW.FIG.1 "A figure declares its grid as columns by rows in cells and every shape lies inside it: a preview figure whose grid exceeds FIG.cut.cols by FIG.cut.rows, an expanded one that exceeds FIG.exp.cols by FIG.exp.rows, or any figure with a shape crossing its grid, is refused by name and never cut, because a preview that does not fit the widget was never a preview.">
-<!ENTITY LAW.FIG.2 "The character grid is the bound on the svg, never the reverse: the svg plate is the cells rendering scaled by FIG.cell.w and FIG.cell.h, it may add colour and a title, and it carries no shape the cells do not carry; a figure that cannot be read in the cells is too complex to be a preview.">
-<!ENTITY LAW.FIG.3 "The two renderings come from one figure element, and node lib/figure.mjs check refuses a cells rendering and an svg rendering that disagree on the count or the order of the shapes, the way build --check refuses a command that disagrees with its subset.">
+<!ENTITY LAW.FIG.2 "The character grid is the bound on the svg, never the reverse: the svg plate is the cells rendering scaled by FIG.cell.w and FIG.cell.h, it may add colour and a title, and it carries no shape the cells do not carry; a figure that cannot be read in the cells is too complex to be a preview, and a path carrying a command outside FIG.path.commands is such a figure.">
+<!ENTITY LAW.FIG.3 "The two renderings come from one figure element, and node lib/figure.mjs check refuses a cells rendering and an svg rendering that disagree on the count or the order of the shapes, the way build --check refuses a command that disagrees with its subset; a transform is applied by the same arithmetic in both, so a transformed group cannot drift between them.">
 <!ENTITY LAW.FIG.4 "A figure rendered inside a preview carries mark guessed: it is the consequence the model predicts for that choice, not a thing that was run. A figure written into an artifact carries mark measured only when the tree it draws was read by the run that wrote it, and the artifact names what was read.">
 <!ENTITY LAW.FIG.5 "Every shape of FIG.shapes, FIG.shapes.count of them, is a module: a command switches one off by declaring its module entity IGNORE and fig.content without it before the include, the way svg11.dtd switches its own modules, so the grammar lacks the shape rather than the command ignoring it at runtime, and a figure carrying a switched-off shape is invalid against the subset.">
+<!ENTITY LAW.FIG.6 "A figure chosen at a gate is a seed: the run carries it out of the intake into its artifact under the same figure element with its seed attribute naming the option it was chosen from, so the preview stops being a promise about the work and becomes its first draft; a seed carried into an artifact is marked measured only when every shape it carries was drawn from something the run read, and stays guessed otherwise.">
+<!ENTITY LAW.FIG.7 "A layer carries a band of FIG.bands, and one plate may carry one layer per band: the plate colours each layer by its band token, measured, proposed or changed, so the survey, the plan and the change are three layers of one figure and never three figures, and a layer whose band names a command that did not run is refused.">
+<!ENTITY LAW.FIG.8 "An ask of a command that includes this subset may carry one figure per option, at most FIG.thumbnails.max of them, and node lib/figure.mjs thumbnails sets them side by side inside one cut preview of FIG.cut.cols by FIG.cut.rows, each thumbnail its share of the columns; a thumbnail that does not fit its share is refused as a preview is, never cut.">

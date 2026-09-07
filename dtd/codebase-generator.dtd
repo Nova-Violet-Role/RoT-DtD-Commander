@@ -1,0 +1,59 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  codebase-generator.dtd : the variant subset of /codebase-generator-dtd, the
+  fourth member of the Graphic and Geometric family.
+
+  geometry.dtd holds everything the four commands share: the ladder of one
+  hundred and eight rungs, the three profession bands and the four domain
+  bands as modules, the survey, the plan, the renovation, the production,
+  and LAW.GEOM.1 to LAW.GEOM.11. This file holds only what makes this band
+  itself, as declarations a validator can judge rather than prose a reader
+  must trust.
+
+  The generator does two things and the declarations say which it is doing.
+  With nothing on disk it LAUNCHES: it renders a chain of the three
+  professions in band order through cc-chain.dtd, one intake, one gate, each
+  artifact handed on as the next band's user-args, which is what a user who
+  skipped the reading needs. With all three on disk it PRODUCES: one figure
+  the three agreed on, rendered through cc-figure to every format it names,
+  each with its bytes counted after the write. The band is a #FIXED
+  attribute, and so is what it needs and what it launches, so a production
+  with a precondition missing is invalid against this subset and not merely
+  refused in prose (LAW.GEOM.11).
+-->
+
+<!-- ===== THE BAND, PINNED ===== -->
+<!ATTLIST production_run
+          band     CDATA #FIXED "53-108"
+          verbs    CDATA #FIXED "chord to documentation"
+          needs    CDATA #FIXED "a survey, a plan and a renovation, all three on disk, in that order of date"
+          launches CDATA #FIXED "codebase-surveyor-dtd codebase-architect-dtd codebase-renovator-dtd"
+          hands_to CDATA #FIXED "codebase-surveyor-dtd">
+
+<!-- The enumeration the grammar holds the verb of a production to; declared
+     before geometry.dtd is included, so it binds (LAW.GEOM.1). The union of
+     the four domains, GEOM.band.generator. -->
+<!ENTITY % geom.verb.produce "(53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|106|107|108)">
+<!ENTITY GENERATOR.band "53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|106|107|108">
+<!ENTITY GENERATOR.low "53">
+<!ENTITY GENERATOR.high "108">
+<!ENTITY GENERATOR.next "1">
+<!ENTITY GENERATOR.what "produce the real graphic the three professions agreed on, once a survey, a plan and a renovation exist on one target; with nothing on disk, launch the three in band order so the user who skipped the reading still climbs the ladder in order">
+<!-- The formats one production may write. cells and svg come from
+     lib/figure.mjs and need nothing installed; png comes from the
+     rasteriser GENERATOR.png, and when that binary is absent on the leg the
+     png line is rendered unmeasured with the reason, never faked and never
+     drawn by another tool (LAW.GENERATOR.3). -->
+<!ENTITY GENERATOR.formats "cells|svg|png">
+<!ENTITY GENERATOR.png "resvg">
+<!ENTITY GENERATOR.dir "artifacts/geometry">
+<!-- The third precondition, beside survey_ref and plan_ref of geometry.dtd. -->
+<!ELEMENT renovation_ref EMPTY>
+<!ATTLIST renovation_ref path CDATA #REQUIRED date CDATA #REQUIRED>
+
+<!-- ===== THE LAWS OF THIS VARIANT ===== -->
+<!ENTITY LAW.GENERATOR.1 "This command exposes only the verbs of GENERATOR.band, chord to documentation, the union of the four domains; the band is a #FIXED attribute on production_run, so an answer that claims a rung of the codebase application is invalid against this subset, and what follows the last domain is rendered as next_band naming GENERATOR.next and codebase-surveyor-dtd, a fresh survey of what was produced (LAW.GEOM.1, LAW.GEOM.9).">
+<!ENTITY LAW.GENERATOR.2 "The needs attribute is fixed: before a production this run renders survey_ref, plan_ref and renovation_ref naming three files that exist under GENERATOR.dir on one target, each dated no earlier than the one before, and node lib/geometry.mjs produce refuses by name when any is missing or out of order; with all three missing the run does not refuse, it launches, rendering the chain the launches attribute declares through cc-chain.dtd with one intake and one gate, and a production made without the three is a failed answer (LAW.GEOM.11, LAW.CHAIN.1).">
+<!ENTITY LAW.GENERATOR.3 "A production is one figure and every format it names: the figure is the renovation's plate, three layers of one figure coloured by band, carried out of the intake as a seed when one was chosen there (LAW.FIG.6, LAW.FIG.7); each produced element names its format of GENERATOR.formats, its path under GENERATOR.dir and its bytes read back from the file after the write, and a png is produced only through GENERATOR.png, rendered unmeasured with the reason when that binary is absent on this leg.">
+<!ENTITY LAW.GENERATOR.4 "The graphic is general: a production names its rungs from the four domains through the lenses, GEOM.lens.surveyor for what was measured, GEOM.lens.architect for what was projected, GEOM.lens.renovator for what was restored, and a production that names no rung of a domain the driver has switched on says which domain it left unused and why, so a plate that is only a survey redrawn is named as one (LAW.GEOM.10).">

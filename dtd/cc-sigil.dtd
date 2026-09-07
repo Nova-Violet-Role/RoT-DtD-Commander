@@ -1,0 +1,156 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-sigil.dtd : the dollar sign as a contract.
+
+  Five documents under dtd/sigil hold the study the Suite's argument
+  convention, its trust classes and its schematics came from, and until
+  9.0.0 nothing ran them. This subset is what runs them: the forms the
+  study ranks are named here, the documents spell them, and
+  lib/sigil.mjs holds the two to each other in both directions, so a form
+  the subset names that the study does not spell is a finding, and a form
+  the study ranks that the subset does not name is a finding too (LAW.SIGIL.3).
+
+  Why the forms are named and not spelled: three characters of the shell's
+  sigil grammar are markup inside a DTD entity value. An ampersand opens an
+  entity reference, a percent sign opens a parameter entity reference and a
+  less-than sign opens a tag, so ${var%pat}, $< and $& cannot be written as
+  the value of an ENTITY, and rule C11 refuses them (SIGIL.markup). A name
+  can be written; the spelling lives in the document and in the engine.
+
+  Two roots. sigil_study reads the documents for one form, one tier or all
+  of them, and renders every form with its token, its context, its tier
+  and whether the document was found to spell it. sigil_run executes the
+  shell forms on the leg it is on, with stdin closed and a ceiling, and
+  records what each form actually expanded to beside what the study says
+  it should, so a form a leg's bash lacks is a measured result and not a
+  pass (LAW.SIGIL.7). Fired as a ladder, the topics are the rungs
+  (LAW.SIGIL.8).
+-->
+
+<!-- ===== THE DOCUMENTS ===== -->
+<!ENTITY SIGIL.docs.dir "dtd/sigil">
+<!ENTITY SIGIL.docs "arguments-variant-examples.md|arguments-variant-examples-dtd-variants.md|sigil-variables-variants.md|dtd-guide-prompt-polyglot-examples.md|greek-numbers.md">
+<!ENTITY SIGIL.docs.count "5">
+<!-- The document the ranking and the collision table are read from. -->
+<!ENTITY SIGIL.docs.ranking "sigil-variables-variants.md">
+<!-- The one convention of this tree, and what the study measured: every
+     command reads the whole argument string, and the positional shorthand
+     is used by none of them; where it is used elsewhere it is zero based. -->
+<!ENTITY SIGIL.convention "ARGUMENTS">
+<!ENTITY SIGIL.positional.uses "0">
+<!ENTITY SIGIL.index.base "0">
+<!ENTITY SIGIL.markup "ampersand, percent sign and less-than sign: the three characters of the sigil grammar a DTD cannot carry in an entity value">
+
+<!-- ===== THE TOPICS, THE RUNGS OF THE LADDER ===== -->
+<!ENTITY SIGIL.topics "1|2|3|4|5|6|7|8|9|10">
+<!ENTITY SIGIL.topic.1  "shell parameter expansion">
+<!ENTITY SIGIL.topic.2  "shell special and environment variables">
+<!ENTITY SIGIL.topic.3  "cross-shell divergence">
+<!ENTITY SIGIL.topic.4  "build systems">
+<!ENTITY SIGIL.topic.5  "CI, CD and container configuration">
+<!ENTITY SIGIL.topic.6  "templating, regex and text processing">
+<!ENTITY SIGIL.topic.7  "database, query and data tools">
+<!ENTITY SIGIL.topic.8  "version control and document systems">
+<!ENTITY SIGIL.topic.9  "AI tooling, Claude Code">
+<!ENTITY SIGIL.topic.10 "security, the attack classes of the sigil">
+<!ENTITY % sigil.topic "(1|2|3|4|5|6|7|8|9|10)">
+
+<!-- ===== THE TIERS, BY NAME ===== -->
+<!-- The utility ranking of the study, the forms named rather than spelled
+     (SIGIL.markup). A form is in exactly one tier (LAW.SIGIL.4); tier D is
+     used only under its stated rule (LAW.SIGIL.6). -->
+<!ENTITY SIGIL.tiers "S|A|B|C|D">
+<!ENTITY % sigil.tier "(S|A|B|C|D)">
+<!ENTITY SIGIL.tier.S "positional|all-args-at|all-args-star|arg-count|default-value|assign-default|error-if-unset|alternate-value|strip-shortest-prefix|strip-shortest-suffix|strip-longest-prefix|strip-longest-suffix|replace-first|replace-all|length|command-substitution|arithmetic|last-exit|pid|last-background-pid|array-all|make-target|make-first-prerequisite|make-all-prerequisites|compose-default|actions-expression|postgres-dollar-quote|postgres-bind|jq-variable|regex-group|regex-whole-match|js-template|claude-arguments">
+<!ENTITY SIGIL.tier.A "upper-all|lower-all|indirect|ifs|lineno|funcname|bash-source|pipestatus|bash-rematch|quote-transform|cmake-variable|cmake-config|cmake-target-file|terraform-interpolation|terraform-literal|nginx-host|nginx-remote|grafana-interval|grafana-rate-interval|mongo-root|mongo-now|powershell-pipeline-item|powershell-psitem|perl-default|perl-errno|perl-eval-error|vscode-tabstop|vscode-placeholder">
+<!ENTITY SIGIL.tier.B "substring|replace-prefix|replace-suffix|seconds|random|epochseconds|prefix-names|process-substitution-in|process-substitution-out|ansi-c-quote|locale-quote|make-dir-part|make-file-part|make-stem|make-archive-member|make-order-only|k8s-variable|azure-macro|azure-expression|jq-env|jq-named|jq-base64|awk-last-field|awk-second-last|vcs-id|zsh-lines-flag|zsh-join-flag">
+<!ENTITY SIGIL.tier.C "transform-assignment|transform-attributes|transform-keys|transform-keys-quoted|transform-escape|transform-upper-first|transform-lower-first|toggle-case-all|srandom|bash-subshell|bashpid|bash-argc|bash-argv|comp-words|compreply|funcnest|ksh-match|nushell-in|velocity-quiet|regex-prematch|regex-postmatch|vcs-log|vcs-locker|sysv-make-target">
+<!ENTITY SIGIL.tier.D "deprecated-arithmetic|unquoted-at|unquoted-star|make-shell-confusion|prompt-transform-untrusted|indirect-untrusted|jndi-lookup|actions-event-in-run|eval-args|error-secret-leak|cvs-log-keyword|toggle-case-undocumented|toggle-case-first-undocumented">
+<!ENTITY SIGIL.forms.count "125">
+
+<!-- ===== THE COLLISION TABLE, BY NAME ===== -->
+<!-- Eleven tokens with more than one meaning across contexts. A command that
+     uses one names its context (LAW.SIGIL.5). -->
+<!ENTITY SIGIL.collisions "at|star|question|dollar|less|one|zero|underscore|brace|ampersand|bang">
+<!ENTITY SIGIL.collisions.count "11">
+
+<!-- ===== THE TRUST MATRIX, AS THE STUDY DREW IT ===== -->
+<!-- Section 4 of the DTD variants document is the design source of the
+     trust classes in cc-core.dtd; the row that maps them onto the shell is
+     repeated here because the sigil is where the two meet (LAW.SIGIL.2). -->
+<!ENTITY SIGIL.trust.pcdata "parsed text, the unquoted heredoc: the sigil expands">
+<!ENTITY SIGIL.trust.cdata  "literal text, the quoted heredoc: the sigil is data">
+<!ENTITY SIGIL.trust.ndata  "a file reference the parser never reads: the sigil is never seen">
+
+<!-- ===== THE RUN ===== -->
+<!ENTITY SIGIL.ceiling "10">
+<!ENTITY SIGIL.dir "artifacts/sigil">
+<!ENTITY SIGIL.unsupported "the form needs a bash this leg does not have; a result, never a pass">
+
+<!-- ===== THE STUDY ===== -->
+<!ELEMENT sigil_study (sigil_doc+, sigil_form+, sigil_collision*, sigil_verdict)>
+<!ATTLIST sigil_study
+          scope CDATA #REQUIRED
+          docs  CDATA #FIXED "5">
+<!ELEMENT sigil_doc EMPTY>
+<!ATTLIST sigil_doc
+          name   CDATA #REQUIRED
+          bytes  CDATA #REQUIRED
+          sha256 CDATA #REQUIRED>
+<!-- One form: its name from a tier, the token the engine spells it with,
+     the context it belongs to, and whether the ranking document was found to
+     spell that token. -->
+<!ELEMENT sigil_form (#PCDATA)>
+<!ATTLIST sigil_form
+          name    NMTOKEN #REQUIRED
+          token   CDATA #REQUIRED
+          context CDATA #REQUIRED
+          tier    %sigil.tier;  #REQUIRED
+          topic   %sigil.topic; #REQUIRED
+          found   (yes|no) #REQUIRED
+          rule    CDATA #IMPLIED>
+<!ELEMENT sigil_collision EMPTY>
+<!ATTLIST sigil_collision
+          name     NMTOKEN #REQUIRED
+          token    CDATA #REQUIRED
+          contexts CDATA #REQUIRED>
+<!ELEMENT sigil_verdict EMPTY>
+<!ATTLIST sigil_verdict
+          declared CDATA #REQUIRED
+          found    CDATA #REQUIRED
+          missing  CDATA #REQUIRED
+          unranked CDATA #REQUIRED>
+
+<!-- ===== THE RUN ===== -->
+<!ELEMENT sigil_run (sigil_leg, sigil_trial+, sigil_tally)>
+<!ELEMENT sigil_leg EMPTY>
+<!ATTLIST sigil_leg
+          os   CDATA #REQUIRED
+          bash CDATA #REQUIRED>
+<!-- One trial: the form, the script the leg ran, what the study expects,
+     what the leg printed, and the result. needs names the bash a form
+     requires when the result is unsupported. -->
+<!ELEMENT sigil_trial (#PCDATA)>
+<!ATTLIST sigil_trial
+          form   NMTOKEN #REQUIRED
+          tier   %sigil.tier; #REQUIRED
+          expect CDATA #REQUIRED
+          actual CDATA #REQUIRED
+          result (pass|fail|unsupported) #REQUIRED
+          needs  CDATA #IMPLIED>
+<!ELEMENT sigil_tally EMPTY>
+<!ATTLIST sigil_tally
+          pass        CDATA #REQUIRED
+          fail        CDATA #REQUIRED
+          unsupported CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.SIGIL.1 "This tree has one argument convention, SIGIL.convention: every command reads the whole argument string, the positional shorthand is used by SIGIL.positional.uses of them, and where the shorthand exists it is zero based (SIGIL.index.base), so a command that reaches for a positional form has left the convention and says so.">
+<!ENTITY LAW.SIGIL.2 "The trust matrix of the study binds the sigil: a form inside parsed text expands (SIGIL.trust.pcdata), a form inside literal text is data (SIGIL.trust.cdata), a form inside a file reference is never seen (SIGIL.trust.ndata); a sigil found inside a quoted element of an answer is reported as data and never expanded.">
+<!ENTITY LAW.SIGIL.3 "The forms are named in this subset and spelled in the documents under SIGIL.docs.dir, SIGIL.docs.count of them, because SIGIL.markup; node lib/sigil.mjs measure holds the names to their tokens and the tokens to SIGIL.docs.ranking in both directions, and a name with no token, a token the document does not spell, or a ranked token no name covers is a finding with the name or the token in it.">
+<!ENTITY LAW.SIGIL.4 "A form belongs to exactly one tier of SIGIL.tiers, and the five tiers name SIGIL.forms.count forms between them; a form outside every tier is not a form of this contract, and a form in two tiers is refused by name.">
+<!ENTITY LAW.SIGIL.5 "The eleven tokens of SIGIL.collisions carry more than one meaning across contexts: a study renders every context of a colliding token as one sigil_collision, and a command of this tree that writes such a token names the context it means it in.">
+<!ENTITY LAW.SIGIL.6 "A tier D form is used only under the rule that travels with it: the study renders the rule in the rule attribute of the form, and a run executes a tier D form only inside the condition the rule states, never on untrusted input.">
+<!ENTITY LAW.SIGIL.7 "A run executes every trial on the leg it is on, with stdin closed and under SIGIL.ceiling seconds each, and records the actual expansion beside the expected one; a form the leg's bash lacks is rendered unsupported with the version it needs (SIGIL.unsupported), and a tally with a fail above zero is a failed run on that leg.">
+<!ENTITY LAW.SIGIL.8 "Fired as a ladder, the topics of SIGIL.topics are the rungs: one sigil-dtd per topic stacked, or verbs-dtd for every form together, is one chain with one intake and one gate through cc-chain, and the trailing form of LAW.CORE.7 invokes either on the text before it.">

@@ -3,9 +3,10 @@
 <!--
   codebase-surveyor.dtd : the variant subset of /codebase-surveyor-dtd.
 
-  geometry.dtd holds everything the three commands share: the fifty-two rung
-  ladder, the three band modules, the survey, the plan, the renovation and
-  LAW.GEOM.1 to LAW.GEOM.8. This file holds only what makes this band itself,
+  geometry.dtd holds everything the four commands share: the ladder of one
+  hundred and eight rungs, the three profession bands and the four domain
+  bands as modules, the survey, the plan, the renovation, the production and
+  LAW.GEOM.1 to LAW.GEOM.11. This file holds only what makes this band itself,
   as declarations a validator can judge rather than prose a reader must trust.
 
   The band is a #FIXED attribute, and so is what the command may write:

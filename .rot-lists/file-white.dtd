@@ -20,6 +20,8 @@
 <!ENTITY LIST.entry.gif "the recorded demonstrations the README shows|2026-09-04|||">
 <!ENTITY LIST.entry.xhtml "the generated glossary; valid XHTML 1.1 so a DTD-reading validator can judge the reference page of a project about declared grammars|2026-09-05|||">
 <!ENTITY LIST.entry.svg "the generated plates the README renders; drawn rather than written, because GitHub sanitises style out of markdown but serves a committed image untouched|2026-09-05|||">
+<!ENTITY LIST.entry.figure "one figure element on disk, the source both renderers of lib/figure.mjs read; the third generated class after xhtml and svg, listed with the family that writes it rather than after LAW.CORE.8 refused it mid-build|2026-09-07|||">
+<!ENTITY LIST.entry.nt "the cache a gated command saves on the save choice of its gate: NestedText, three types, no code, read whole in one pass and lighter than markdown, under artifacts/cache (cc-cache.dtd)|2026-09-07|||">
 <!ENTITY LIST.entry.txt "the licence texts|2026-09-04|||">
 <!ENTITY LIST.entry.jsonl "the Adiutor ledger, one line per run|2026-09-04|||">
 <!ENTITY LIST.entry.cff "the citation file|2026-09-04|||">
