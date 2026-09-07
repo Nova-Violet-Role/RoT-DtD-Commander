@@ -100,6 +100,9 @@ export function measure(root = ROOT) {
   // converted from taches-cc-resources by the MIT in their SPDX expression.
   const sharedSubsets = readdirSync(join(root, 'dtd')).filter((f) => /^cc-[a-z-]+\.dtd$/.test(f)).length;
   const dtdFiles = readdirSync(join(root, 'dtd')).filter((f) => f.endsWith('.dtd')).length;
+  // Twenty-second companion pass: the security page described a grant three
+  // rewrites old; its ceiling is read from the wrapper.
+  const wrapperCeiling = Number((/ceiling\.mjs" (\d+) node "\$abs"/.exec(readFileSync(join(root, 'checker', 'companion-run.sh'), 'utf8')) || [])[1] || 0);
   const mitOut = runOut('git grep -l -F EUPL-1.2) -- src');
   const mitFiles = mitOut.split(/\r?\n/).filter((l) => /^src\//.test(l));
   const mitCommands = mitFiles.filter((l) => /^src\/commands\//.test(l)).length;
@@ -120,7 +123,7 @@ export function measure(root = ROOT) {
   const schematics = cmdNames.filter((f) => /^create-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   const creators = schematics + cmdNames.filter((f) => /^create-meta-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   return {
-    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims, rules, quotedGrammars, sharedSubsets, dtdFiles, mitFiles: mitFiles.length, mitCommands, mitSkills,
+    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims, rules, quotedGrammars, sharedSubsets, dtdFiles, wrapperCeiling, mitFiles: mitFiles.length, mitCommands, mitSkills,
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, mutationsRefused, declarations: Number(m[1]) };
@@ -201,6 +204,8 @@ export function places(c) {
     { file: 'README.md', re: /row `subsets`: `(\d+) subsets, every one installed`/, want: [c.dtdFiles], label: 'the claims row of the doctor subsets' },
     // Seventeenth companion pass: the same row quotes the suite's total line.
     { file: 'README.md', re: /`checker controls: (\d+) run, 0 failing`/, want: [c.checkerControls], label: 'the claims row quoting the checker total line' },
+    { file: 'SECURITY.md', re: /node lib\/ceiling\.mjs (\d+)` with stdin closed/, want: [c.wrapperCeiling], label: 'the security page, the wrapper ceiling' },
+    { file: 'SECURITY.md', re: /M23 to M(\d+) in `checker\/checker-controls\.sh`/, want: [c.checkerSpan], label: 'the security page, the controls that hold the companion' },
     { file: 'README.md', re: /(\d+) converted sources, mirrored into the installed copy under commands\/ and skills\/, carry the upstream MIT/, want: [c.mitFiles], label: 'the licence plate prose of the converted files' },
     { file: 'README.md', re: /the ([a-z-]+) commands and ([a-z-]+) skills that carry its MIT today/, want: [c.mitCommands, c.mitSkills], label: 'the supporting plate prose of the converted commands and skills' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },

@@ -10,10 +10,11 @@
 # each expected to score as its law says, two verdict lines and none among
 # them; M17: the runner's allow-list, a copy granting Write refused, M17b a
 # bare Bash refused, M17c the bare timeout refused; M20 to M22: the run
-# stamp and the four headings; M23 to M31: the wrapper checker/companion-run.sh
+# stamp and the four headings; M23 to M32: the wrapper checker/companion-run.sh
 # (the old prefix grant refused, its refusals tripped, git config and the
 # engines by the table, the bare arms, every granted spelling walked under
-# the tree state), a changed tree, a fired ceiling, the permission mode. The total line at the end,
+# the tree state), a changed tree, a fired ceiling, the permission mode, the
+# suite inside itself refused. The total line at the end,
 # checker controls: N run, F failing, counts once per control, and
 # CC_PLANT_FAIL=1 runs M0 and one control forced to fail, printing 2 run, 1
 # failing at exit 1, the proof checker/counts-sweep.mjs reads.
@@ -207,30 +208,33 @@ bash $w node checker/engines-sweep.mjs >/dev/null 2>&1; r29b=$?
 out29c=$(bash $w node checker/glossary.mjs 2>&1); r29c=$?
 out29d=$(bash $w node lib/arm.mjs controls 2>&1); r29d=$?
 [ $r29a -eq 0 ] && [ $r29b -eq 0 ] && [ $r29c -eq 3 ] && echo "$out29c" | grep -q 'run bare is not admitted' && [ $r29d -eq 3 ] && echo "$out29d" | grep -q 'not an engine the companion may run' && ok "M29 gate-sync and engines-sweep run bare (exit 0); glossary bare and an engine outside the table are refused by name (exit 3)" || { ko "M29 bare arms: sync=$r29a engines=$r29b glossary=$r29c arm=$r29d"; }
-# M30: every spelling the table grants runs without a refusal and leaves the tree as it was; 124 is the ceiling, an engine's own 1 or 2 is its verdict or usage
-# The tree is read once before and once after the whole walk (two readings
-# per spelling doubled the suite's time past the counts sweep's ceiling, and
-# a killed suite left its engines running into the next reading).
+# A spelling is bad on the wrapper's refusal (3), an engine's usage exit (2),
+# the ceiling (124), or a usage line in its output; an engine's own 1 is a
+# verdict (doctor on a stale install). A spelling that takes an argument is
+# walked with one (twenty-second companion pass: 124 and a usage exit were
+# excused, and two granted spellings printed usage lines).
 bad30=""; n30=0
+want30=$(bash $w --table | wc -l | tr -d ' ')
 t0=$(bash checker/companion-audit.sh --tree-state)
 while read -r e s; do
-  case "$s" in BARE) args="" ;; FILE) args="README.md" ;; build) args="build --check" ;; *) args="$s" ;; esac
+  case "$s" in BARE) args="" ;; FILE) args="README.md" ;; build) args="build --check" ;; sweep) args="sweep --tracked dtd/sigil" ;; check) args="check README.md" ;; *) args="$s" ;; esac
   # shellcheck disable=SC2086
-  bash $w node "$e" $args >/dev/null 2>&1; rc=$?
+  out30=$(bash $w node "$e" $args 2>&1); rc=$?
   n30=$((n30+1))
-  [ $rc -eq 3 ] && bad30="$bad30 $e[$s]=refused"
+  case $rc in 3) bad30="$bad30 $e[$s]=refused" ;; 2) bad30="$bad30 $e[$s]=usage-exit" ;; 124) bad30="$bad30 $e[$s]=ceiling" ;; esac
+  echo "$out30" | grep -q -i -E '^usage:|unknown argument' && bad30="$bad30 $e[$s]=usage-line"
 done < <(bash $w --table)
 t1=$(bash checker/companion-audit.sh --tree-state)
-[ "$t0" != "$t1" ] && bad30="$bad30 tree-moved($(diff <(printf '%s
-' "$t0") <(printf '%s
-' "$t1") | grep '^[<>]' | tr '
-' ' ' | cut -c1-160))"
-[ $n30 -ge 40 ] && [ -z "$bad30" ] && ok "M30 every spelling the table grants runs without a refusal and the walk leaves the tree as it was ($n30 spellings walked)" || { ko "M30 table walk: $n30 spellings;$bad30"; }
+[ "$t0" != "$t1" ] && bad30="$bad30 tree-moved($(diff <(printf '%s\n' "$t0") <(printf '%s\n' "$t1") | grep '^[<>]' | tr '\n' ' ' | cut -c1-160))"
+[ "$n30" -eq "$want30" ] && [ "$n30" -ge 60 ] && [ -z "$bad30" ] && ok "M30 every spelling the table grants runs without a refusal, a usage exit, a usage line or the ceiling, and the walk leaves the tree as it was ($n30 of $want30 spellings walked)" || { ko "M30 table walk: $n30 of $want30 spellings;$bad30"; }
 # M31: a runner copy with no explicit permission mode is refused: a parent in bypass mode would hand the nested session every tool
 sed 's/ --permission-mode default//' checker/companion-audit.sh > "$T/m31.sh"
 grep -q -- '--permission-mode default' "$T/m31.sh" && { echo "M31 mutation did not land"; fail=$((fail+1)); }
 allow_ok "$T/m31.sh"; r31=$?
 [ $r31 -eq 1 ] && ok "M31 a runner copy without --permission-mode default is refused" || { ko "M31 a runner without a permission mode was admitted"; }
+# M32: a control suite inside a control suite is refused by name (the mark every child inherits)
+out32=$(ROT_CHECKER_CONTROLS_RUNNING=1 bash checker/checker-controls.sh 2>&1); r32=$?
+[ $r32 -eq 3 ] && echo "$out32" | grep -q 'a control suite inside a control suite' && ok "M32 the suite refuses to run inside itself, exit 3 by name: no table and no engine can fork it" || { ko "M32 nested suite exit=$r32"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"

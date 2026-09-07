@@ -84,10 +84,10 @@ case "$tool" in
       lib/ai-slop.mjs) verbs="controls table sweep FILE" ;;
       lib/encoding.mjs) verbs="controls sweep check" ;;
       lib/form.mjs) verbs="controls FILE" ;;
-      lib/cache.mjs) verbs="controls load" ;;
+      lib/cache.mjs) verbs="controls" ;;
       lib/list.mjs) verbs="controls reach show md table" ;;
       lib/cross-os.mjs) verbs="controls matrix" ;;
-      lib/schematic.mjs) verbs="controls check" ;;
+      lib/schematic.mjs) verbs="controls" ;;
       lib/ordinals.mjs) verbs="controls" ;;
       lib/typography.mjs) verbs="controls" ;;
       lib/starlist.mjs) verbs="controls" ;;
@@ -145,6 +145,8 @@ case "$tool" in
         printf '%s\n' "$@" | grep -q -x -- '--check' || refuse "build writes; only build --check reads"
       fi
     fi
+    # The ceiling of every engine run, read by the security page's place
+    # (checker/counts-sweep.mjs); the number lives here alone.
     exec node "$here/lib/ceiling.mjs" 300 node "$abs" "$@" < /dev/null
     ;;
   git)

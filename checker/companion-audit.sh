@@ -133,7 +133,7 @@ stamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)-pid$$"
 # The tree before and after the session: HEAD and the porcelain status. A
 # difference is the companion's breach of LAW.COMPANION.1, whatever the
 # allow-list admitted (M25 plants one).
-tree_before="$(tree_state)"
+tree_before="$(tree_state)" || { echo "companion: the tree could not be read before the session; phase $phase is UNAUDITED"; exit 1; }
 log="$out/companion-$phase.md"
 contract="$(cat "$here/checker/companion-audit.dtd")"
 stat="$(git -C "$here" diff --stat "$range" | tail -40)"
@@ -182,7 +182,7 @@ echo "companion: claude exit=$rc"
 # The tree is compared before the ceiling branch returns, so a session that
 # wrote and then ran past the ceiling is reported for the write too
 # (twentieth companion pass).
-tree_after="$(tree_state)"
+tree_after="$(tree_state)" || { echo "companion: the tree could not be read after the session; phase $phase is UNAUDITED"; exit 1; }
 if [ "$tree_before" != "$tree_after" ]; then
   echo "companion: LAW.COMPANION.1 broken, the tree changed during the audit; phase $phase is UNAUDITED"
   diff <(printf '%s\n' "$tree_before") <(printf '%s\n' "$tree_after") | grep '^[<>]' | head -20

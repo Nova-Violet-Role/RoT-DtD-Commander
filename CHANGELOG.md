@@ -686,6 +686,27 @@ again, 521 processes before the kill; `about-sweep` is refused by name and
 the suite refuses to run inside itself through an environment mark every
 child inherits.
 
+### The companion's twenty-second pass: the security page, three rewrites old
+
+The twenty-second pass returned fail with seven findings, one high: the
+security surface table still described the companion's grant as Bash
+forms starting with `timeout 60`, verified by M17 alone, three rewrites
+after the fact. The lower six: the table's comment claimed every spelling
+measured while `schematic check` and `cache load` print a usage line
+without an argument; M30 excused a usage exit and the ceiling, the very
+properties the table claims; its `-ge 40` guard sat below the 69 pairs
+the table emits; the recursion guard had no control; and `tree_state`'s
+failure string was captured as data by both callers.
+
+`SECURITY.md` names the wrapper, the 300 s ceiling, the permission mode
+and the tree comparison, and its evidence cell names M17 to M32; the
+counts sweep holds the page's ceiling to the wrapper and its span to the
+suite (64 places). The two spellings leave the table. M30 fails a
+spelling on a refusal, a usage exit, the ceiling or a usage line, walks
+`sweep` and `check` with an argument, and requires the count the table
+emits. M32 runs the suite inside itself and reads the refusal by name:
+35 checker controls. The runner treats an unreadable tree as unaudited.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
@@ -748,7 +769,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 62 places, from 22.
+counts sweep reported every place in step: the sweep reads 64 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document
