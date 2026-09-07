@@ -837,7 +837,12 @@ runner copy without `--settings` as unwired; the `--table` read runs
 under the ceiling; the two stale comments say six payloads and the
 table's own count: 40 checker controls. Twenty-nine passes audited
 9.0.0, every tracked folder reached, the tenth onward under a focus
-line naming what no pass had touched.
+line naming what no pass had touched. The first hosted run of the tag
+failed on all three legs at M24: its diff arm read `HEAD~1`, which a
+depth-one checkout does not have (exit 128), and a full-history clone
+never showed it; the arm diffs the empty tree against HEAD, proved in a
+depth-one clone, and the tag was moved to the corrected commit before
+any release object existed.
 
 ## 8.0.0 (2026-09-06)
 
