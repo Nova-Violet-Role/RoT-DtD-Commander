@@ -86,6 +86,17 @@ log="$out/companion-$phase.md"
 contract="$(cat "$here/checker/companion-audit.dtd")"
 stat="$(git -C "$here" diff --stat "$range" | tail -40)"
 files="$(git -C "$here" diff --name-only "$range")"
+# The prompt travels as one argument. A range that has grown past a few
+# hundred files (9.0.0 after thirteen passes: 156 converted headers and
+# their built copies) pushed it past the argument limit and claude never
+# started, exit 126, "Argument list too long". Past 200 files the list is
+# folded to one line per directory with its count, and the companion is
+# told where the full list is.
+nfiles="$(printf '%s\n' "$files" | sed '/^$/d' | wc -l | tr -d ' ')"
+if [ "$nfiles" -gt 200 ]; then
+  files="$nfiles files changed, folded by directory (count, directory); the full list is git -C $here diff --name-only $range
+$(printf '%s\n' "$files" | sed 's|/[^/]*$||; s|^[^/]*$|.|' | sort | uniq -c | sort -rn | head -60)"
+fi
 
 prompt="You are the Scratchpad Companion auditing build phase '$phase' of RoT DtD Commander at $here (git range $range).
 Answer in the grammar declared here, one markdown heading per element in declared order, headings '### 🩺 Scope', '### 🩺 Findings', '### 🩺 Verdict', '### 🩺 Next', each with a blank line before and after. Write every finding as a finding element on its own lines, exactly this spelling: <finding file=\"path\" line=\"n\" severity=\"high|medium|low\" confidence=\"measured|reasoned|guessed\">the text</finding>; the scorer counts severity=\"high\" and no other spelling of a high finding:
