@@ -796,7 +796,7 @@ argument-hint: "[a number of sides to name, or a figure file whose shapes to che
   The numeral prefixes are here rather than in geometry.dtd for the same
   reason the version is not typed: a figure of n sides has a name, the name
   is derived from n, and a name typed by hand is a name that can disagree
-  with its own number. GREEK_NUMBERS.md is the source and its own closing
+  with its own number. dtd/sigil/greek-numbers.md is the source and its own closing
   note is kept: past about twelve sides the constructed names are rarely
   used, so TYPO.numeral.plain is where the series stops being a name and
   starts being a description (LAW.TYPO.7).
@@ -915,7 +915,7 @@ argument-hint: "[a number of sides to name, or a figure file whose shapes to che
 
 <!-- ===== THE NUMERAL SERIES ===== -->
 <!-- A polygon of n sides has a name and the name is derived from n, never
-     typed. Source: GREEK_NUMBERS.md. The series is the units 1 to 12, then
+     typed. Source: dtd/sigil/greek-numbers.md. The series is the units 1 to 12, then
      the -kaideca- compounds to 19, then the tens to 90, then hecta and
      chilia; past TYPO.numeral.plain the name is a description and the
      grammar says so rather than minting a word nobody uses. -->

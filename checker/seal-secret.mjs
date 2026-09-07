@@ -26,7 +26,7 @@
 // Its controls seal a known message under a generated key pair and open it
 // again, and prove that nothing the tool prints contains the value; they need
 // the library the operator installs, so the gate does not run them and this
-// line records why (LAW.RER.4).
+// line records why (LAW.RER.6).
 
 import { readFileSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';

@@ -28,23 +28,59 @@
 // Exit 0 every scala passed; 1 a scala failed its score; 124 a ceiling fired
 // and that family is UNRUN; 2 the arguments are wrong.
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, mkdtempSync, rmSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
-import { FAMILIES } from './readme-index.mjs';
+import { FAMILIES, classify } from './readme-index.mjs';
+import { MAX } from '../lib/chain.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SIGILS = JSON.parse(readFileSync(join(ROOT, 'dtd', 'sigils.json'), 'utf8'));
 
-// The scala of a family: its declared members in order, or, for a family
-// with no members list, its representative alone.
-export function scalas(root = ROOT) {
-  return FAMILIES.map((f) => {
-    const members = (f.members && f.members.length ? f.members : [f.rep]).filter((m) => existsSync(join(root, 'commands', `${m}-dtd.md`)));
-    return { id: f.id, name: f.name, members, prompt: members.map((m, i) => `/${m}-dtd${i === 0 ? ' --no-gate' : ''}`).join('\n') };
-  }).filter((s) => s.members.length);
+// The scala of a family: its declared members in order; for a family with no
+// members list, the commands the index assigns to it (first family whose
+// members name the command, else first whose patterns match it), in name
+// order; for one with neither, its representative alone. A member file is
+// commands/<m>-dtd.md or, for the Adiutor, commands/<m>.md. A family whose
+// files are all absent is returned with no members and every name it lost
+// under missing, never filtered away: the seventh companion pass on 9.0.0
+// measured the prompts family swallowed while the census said one per
+// family. A scala carries at most CHAIN.max links (LAW.CHAIN.1); a family
+// with more stacks its first CHAIN.max and says how many it left.
+export function scalas(root = ROOT, families = FAMILIES) {
+  const dir = join(root, 'commands');
+  const present = existsSync(dir) ? readdirSync(dir).filter((n) => n.endsWith('.md')).map((n) => n.slice(0, -3)).sort() : [];
+  const assign = (name) => {
+    const key = name.replace(/-dtd$/, '');
+    if (families === FAMILIES) { try { return classify(key); } catch { return null; } }
+    return families.find((f) => f.members && f.members.includes(key)) || families.find((f) => f.patterns && f.patterns.some((p) => p.test(key))) || null;
+  };
+  return families.map((f) => {
+    const declared = f.members && f.members.length
+      ? f.members
+      : (f.patterns && f.patterns.length ? present.filter((n) => assign(n) === f).map((n) => n.replace(/-dtd$/, '')) : [f.rep]);
+    const resolved = declared.map((m) => ({ m, token: present.includes(`${m}-dtd`) ? `${m}-dtd` : (present.includes(m) ? m : null) }));
+    const found = resolved.filter((r) => r.token);
+    const missing = resolved.filter((r) => !r.token).map((r) => r.m);
+    const kept = found.slice(0, MAX);
+    const members = kept.map((r) => r.m);
+    const tokens = kept.map((r) => r.token);
+    return { id: f.id, name: f.name, members, tokens, missing, overflow: found.length - kept.length, prompt: tokens.map((t, i) => `/${t}${i === 0 ? ' --no-gate' : ''}`).join('\n') };
+  });
+}
+
+// The census, held in both directions: one scala per family, every family
+// with at least one member file, every declared member resolved to a file.
+export function census(all = scalas(), families = FAMILIES) {
+  const findings = [];
+  if (all.length !== families.length) findings.push(`${all.length} scalas for ${families.length} families`);
+  for (const s of all) {
+    if (!s.members.length) findings.push(`${s.id} has no member file (${s.missing.join(', ') || 'nothing declared'})`);
+    else if (s.missing.length) findings.push(`${s.id} lost ${s.missing.join(', ')}: no command file`);
+  }
+  return { ok: findings.length === 0, findings };
 }
 
 // The score. Headings only: a line that starts with ### and the member's
@@ -95,7 +131,27 @@ export function controls(io = console) {
   let ran = 0, fail = 0;
   const say = (ok, t) => { ran++; io.log(`  ${ok ? 'PASS' : 'FAIL'} ${t}`); if (!ok) fail++; };
   const all = scalas();
-  say(all.length >= 15 && all.every((s) => s.members.length >= 1 && /--no-gate/.test(s.prompt.split('\n')[0])), `${all.length} scalas, one per family, each stacked in band order with the autonomy token on line one`);
+  const cen = census(all);
+  say(all.length === FAMILIES.length && cen.ok && all.every((s) => /--no-gate/.test(s.prompt.split('\n')[0])),
+    `${all.length} scalas for ${FAMILIES.length} families, every family with a member file and every declared member resolved, the autonomy token on line one${cen.ok ? '' : `; ${cen.findings.join('; ')}`}`);
+  const wf = all.find((s) => s.id === 'workflow');
+  say(wf && wf.members.includes('RoT-DtD-Commander-Adiutor') && wf.tokens.includes('RoT-DtD-Commander-Adiutor') && wf.missing.length === 0,
+    `the workflow scala resolves the Adiutor by its own filename: ${wf ? wf.members.length : 0} members, ${wf ? wf.missing.length : '?'} missing`);
+  const pr = all.find((s) => s.id === 'prompts');
+  say(pr && pr.members.length === MAX && pr.overflow > 0 && pr.missing.length === 0,
+    `the prompts family stacks ${pr ? pr.members.length : 0} of its ${pr ? pr.members.length + pr.overflow : 0} creators (CHAIN.max ${MAX}) and names the ${pr ? pr.overflow : '?'} it left`);
+  const ghostTmp = mkdtempSync(join(tmpdir(), 'scala-ghost-'));
+  try {
+    mkdirSync(join(ghostTmp, 'commands'), { recursive: true });
+    writeFileSync(join(ghostTmp, 'commands', 'a-dtd.md'), '# a\n', 'utf8');
+    const fams = [{ id: 'ghost', name: 'Ghost', rep: 'nobody' }, { id: 'half', name: 'Half', rep: 'x', members: ['a', 'b'] }];
+    const ghost = scalas(ghostTmp, fams);
+    const gc = census(ghost, fams);
+    say(ghost.length === 2 && ghost[0].members.length === 0 && ghost[0].missing.join() === 'nobody' && ghost[1].members.join() === 'a' && !gc.ok && /ghost has no member file \(nobody\)/.test(gc.findings.join(';')) && /half lost b/.test(gc.findings.join(';')),
+      `trip: a family with no command file is returned with its lost name and the census goes red, and a family missing one member names it: ${gc.findings.join('; ')}`);
+  } finally {
+    rmSync(ghostTmp, { recursive: true, force: true });
+  }
   const geo = all.find((s) => s.id === 'geometry');
   say(geo && geo.members.join(',') === 'codebase-surveyor,codebase-architect,codebase-renovator,codebase-generator,typography', `the geometry scala is the four bands then the contract: ${geo ? geo.members.join(' > ') : 'absent'}`);
   const full = '### 📏 Arguments\n\n### 📏 Survey\n\n### 🖼️ Plan\n\n### 🔨 Renovation\n\n### 🖌️ Production\n\n### 🔤 Typeset\n\n- chain_close ran 5 refused 0 artifact x\n';
@@ -121,7 +177,7 @@ if (isMain) {
   const args = process.argv.slice(2);
   const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
   if (args[0] === '--controls') process.exit(controls() ? 0 : 1);
-  if (args[0] === 'list') { for (const s of scalas()) console.log(`${s.id.padEnd(12)} ${s.members.length} ${s.members.map((m) => '/' + m + '-dtd').join(' ')}`); process.exit(0); }
+  if (args[0] === 'list') { for (const s of scalas()) console.log(`${s.id.padEnd(12)} ${s.members.length} ${s.tokens.map((t) => '/' + t).join(' ')}${s.overflow ? ` (+${s.overflow} not stacked)` : ''}${s.missing.length ? ` missing ${s.missing.join(',')}` : ''}`); process.exit(0); }
   if (args[0] === 'score' && args[1] && args[2]) {
     const s = scalas().find((x) => x.id === args[2]);
     if (!s) { console.error(`no family ${args[2]}`); process.exit(2); }
@@ -139,6 +195,7 @@ if (isMain) {
     if (!want.length) { console.error(`no family ${args[1]}`); process.exit(2); }
     let worst = 0;
     for (const s of want) {
+      if (!s.members.length) { console.log(`  NO MEMBERS: ${s.id} has no command file (${s.missing.join(', ')})`); worst = Math.max(worst, 1); continue; }
       console.log(`scala ${s.id}: ${s.members.length} link(s), model ${model}, turns ${turns}, ceiling ${secs}s`);
       const r = runOne(s, { out, model, turns, secs });
       if (r.unrun) { console.log(`  CEILING FIRED: ${s.id} is UNRUN`); worst = Math.max(worst, 124); continue; }

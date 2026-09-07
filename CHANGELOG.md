@@ -79,7 +79,7 @@ Measured on the release day:
 - `node lib/typography.mjs controls`: 34 run, 0 failing
 - `node lib/chain.mjs controls`: 26 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
-- `node checker/scala.mjs --controls`: 8 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
+- `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
 - 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 75 gate-chain commands
 
 ### The fifth gate choice: save your cache first
@@ -105,7 +105,7 @@ whole (`LAW.CACHE.4`), and an intake that closes on `add`, `more` or
 source, 119 of them, and `cc-ask` itself gains the choice in its gate
 enumeration, `GATE.save`, `intake (.., gate, cache?)` and an `ASK.exhausted`
 that offers start and save. `.nt` enters the white list. `node lib/cache.mjs
-controls`: 17 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
+controls`: 18 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
 failing; `npm run controls:cache` in the gate chain and the workflow.
 
 ### The companion's first pass on 9.0.0: seven findings, all sound
@@ -260,6 +260,41 @@ failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0 failing;
 `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing.
 
 ## 8.0.0 (2026-09-06)
+
+### The companion's seventh pass: a census that filtered away what it was counting
+
+The seventh pass returned fail with six findings, two of them high, all
+sound. `checker/scala.mjs` built one scala per family and then filtered
+away every family whose member files it could not find, so the prompts
+family, whose representative `create-prompt` is a skill, vanished before
+the census counted, and the census control asked for at least fifteen
+scalas where the index declares seventeen: a bound no census could fail.
+The workflow scala resolved its members as `commands/<m>-dtd.md` and lost
+the Adiutor, whose file is `commands/RoT-DtD-Commander-Adiutor.md`, so
+the scala ran seven of eight. `lib/typography.mjs` and `dtd/typography.dtd`
+cited the Greek numbers at a scratch path under `artifacts/_sweep/`; they
+name `dtd/sigil/greek-numbers.md`. `checker/seal-secret.mjs` cited
+`LAW.RER.4` for the law that is `LAW.RER.6`.
+
+`scalas(root, families)` now derives a pattern family's members through
+the index's own `classify`, resolves `<m>-dtd.md` or `<m>.md`, stacks at
+most `CHAIN.max` links and says how many it left (prompts: 8 of 17, 9 not
+stacked; creators: 8 of 13), and returns a family with no files with its
+lost names under `missing`, never filtered. `census()` holds both
+directions: one scala per family, every family with a member file, every
+declared member resolved; `run --all` marks a family with no members as a
+failure instead of skipping it. The controls hold equality against the
+family count, the Adiutor by its own filename, the prompts overflow, a
+planted ghost family that trips the census red and a planted family
+missing one member that names it. `node checker/scala.mjs --controls`:
+11 run, 0 failing.
+
+The pass also closed the seam the operator measured in the cache itself:
+the first save of this release went through a JSON state file in a
+scratch directory, the one form the subset exists to keep out of the loop.
+`lib/cache.mjs save --state <state.nt>` reads the state in NestedText,
+answers in any of the three shapes the form carries, and refuses a JSON
+state by name. `node lib/cache.mjs controls`: 18 run, 0 failing.
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
 
