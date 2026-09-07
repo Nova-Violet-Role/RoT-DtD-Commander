@@ -161,7 +161,7 @@ tripped on a planted count, then run over this section, where it found
 the two counts the pass itself had moved. Gate chain 75 commands.
 `node lib/chain.mjs controls`: 26 run, 0 failing; `node lib/typography.mjs
 controls`: 35 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
-13 run, 0 failing.
+14 run, 0 failing.
 
 ### The companion's third pass: the sweep that under-read its own input
 
@@ -182,7 +182,7 @@ state: a plugin's distillate under `.rot-moe` had been judged as if the
 Suite had written it. One banned word left the corpus deep dive, and the
 creators sentence says what the audit prints, 24 with a schematic, 14
 folders and 10 root grammars. `node checker/controls-sweep.mjs --controls`:
-13 run, 0 failing; `node lib/ai-slop.mjs sweep --tracked dtd/sigil artifacts/research
+14 run, 0 failing; `node lib/ai-slop.mjs sweep --tracked dtd/sigil artifacts/research
 --max 0`: 21 files, 0 slop.
 
 ### The companion's fourth pass: a law with three live counterexamples, pinned by its own control
@@ -202,7 +202,7 @@ hundreds part. `looseCount` in the controls sweep counts a claim by its
 command rather than by its tail, so a count spelled as `prints 12` or `12
 controls` is a refusal by number, tripped on purpose. `node
 lib/typography.mjs controls`: 35 run, 0 failing; `node
-checker/controls-sweep.mjs --controls`: 13 run, 0 failing.
+checker/controls-sweep.mjs --controls`: 14 run, 0 failing.
 
 ### The companion's fifth pass: a census that could not differ, and a carve-out that reached everything but the command
 
@@ -228,7 +228,7 @@ an anchor; it slices by index now, a one-section changelog is tripped, and
 a section with no claim refuses rather than reporting zero drift. `cols`
 and `rows` on `typeset` are implied, since the contract alone has no grid,
 and `classes` is rendered. Gate chain 75 commands. `node lib/sigil.mjs
-controls`: 16 run, 0 failing; `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0
+controls`: 16 run, 0 failing; `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing; `node checker/controls-sweep.mjs --controls`: 14 run, 0
 failing.
 
 ### The companion's sixth pass: the guard drawn at the width of the last failure
@@ -256,7 +256,7 @@ declared order, `Assumptions Made` last in twelve and `Measured` before
 longer a `no` that nothing produced, and the chain suite walks all ten of
 its subset's enumerations against rendered plans. `node lib/typography.mjs
 controls`: 35 run, 0 failing; `node lib/chain.mjs controls`: 26 run, 0
-failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0 failing;
+failing; `node checker/controls-sweep.mjs --controls`: 14 run, 0 failing;
 `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing.
 
 ### The companion's seventh pass: a census that filtered away what it was counting
@@ -853,8 +853,15 @@ controls); and the
 sigil trial `error-if-unset` expected exit 1 where bash 3.2, the macOS
 leg, answers 127, so a trial may carry an older expectation with the
 bash it is below, the run names it beside the trial, and the sigil
-controls count 16. The tag was moved a second time, still before any
-release object existed.
+controls count 16. The third hosted run failed on two more: the wrapper
+`checker/companion-run.sh` sat at mode 644 in the index where every other
+script is 755 and the executable-bits step refuses it, invisible on a
+tree whose filemode is off; and the sigil run claim names windows while
+the macOS leg prints 39 pass and 4 unsupported, so a run claim is held on
+the leg it names by its pass count and on another leg as pass and
+unsupported together with no fail, said beside the claim (fourteen sweep
+controls). The tag was moved a third time, still before any release
+object existed.
 
 ## 8.0.0 (2026-09-06)
 

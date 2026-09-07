@@ -56,7 +56,7 @@ export function claims(section) {
   // line 81 outside the reader, so it went stale where the block promised
   // it could not.
   const rr = /`node\s+((?:lib|checker|bin)\/[\w./-]+\.mjs)\s+(run)`[^:`]{0,80}:\s*(\d+)\s+(pass)\b/g;
-  for (const m of section.matchAll(rr)) out.push({ path: m[1], verb: m[2], claimed: Number(m[3]), word: m[4], text: m[0] });
+  for (const m of section.matchAll(rr)) out.push({ path: m[1], verb: m[2], claimed: Number(m[3]), word: m[4], text: m[0], leg: (/\bon ([a-z]+)\b/.exec(m[0]) || [, ''])[1] });
   return out;
 }
 
@@ -87,10 +87,35 @@ export function countOf(output, word = 'run') {
   return null;
 }
 
+// The whole tally line of a run: pass, fail and unsupported.
+export function tallyOf(output) {
+  for (const l of String(output).split(/\r?\n/)) {
+    const m = /^tally:\s*pass\s+(\d+),\s*fail\s+(\d+),\s*unsupported\s+(\d+)/.exec(l.trim());
+    if (m) return { pass: Number(m[1]), fail: Number(m[2]), unsupported: Number(m[3]) };
+  }
+  return null;
+}
+
+// The leg this sweep runs on, spelled as lib/sigil.mjs spells it.
+export const LEG = process.platform === 'win32' ? 'windows' : process.platform === 'darwin' ? 'macos' : process.platform;
+
+// How a run claim is held. The claim names the leg it was measured on; on
+// that leg the pass count is held exactly. On another leg the trials are the
+// same and the bash is not, so the claim is held as pass and unsupported
+// together with no fail: the third hosted run of 9.0.0 read 39 pass and 4
+// unsupported on macOS, bash 3.2, against a claim of 43 on windows, and a
+// pass count compared across legs is a drift on every leg but one.
+export function holdRun(claim, t, here = LEG) {
+  if (!t) return { measured: null, sound: false, how: '' };
+  if (!claim.leg || claim.leg === here) return { measured: t.pass, sound: t.fail === 0, how: '' };
+  return { measured: t.pass + t.unsupported, sound: t.fail === 0, how: `the claim names ${claim.leg}; held on ${here} as ${t.pass} pass and ${t.unsupported} unsupported, ${t.fail} fail` };
+}
+
 export function runOne(claim, root = ROOT) {
   const r = spawnSync(process.execPath, [join(root, 'lib', 'ceiling.mjs'), String(CEILING_SECS), process.execPath, join(root, claim.path), claim.verb], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
   const out = `${r.stdout || ''}\n${r.stderr || ''}`;
-  return { ...claim, measured: countOf(out, claim.word), exit: r.status };
+  if (claim.verb === 'run') return { ...claim, ...holdRun(claim, tallyOf(out)), exit: r.status };
+  return { ...claim, measured: countOf(out, claim.word), exit: r.status, sound: true, how: '' };
 }
 
 export function sweep({ root = ROOT, text = null } = {}) {
@@ -109,14 +134,14 @@ export function sweep({ root = ROOT, text = null } = {}) {
     const key = `${c.path} ${c.verb}`;
     if (!seen.has(key)) seen.set(key, runOne(c, root));
     const r = seen.get(key);
-    rows.push({ ...c, measured: r.measured, exit: r.exit, agree: r.measured === c.claimed });
+    rows.push({ ...c, measured: r.measured, exit: r.exit, how: r.how || '', agree: r.measured === c.claimed && r.sound !== false });
   }
   return { section: section.split('\n')[0], claims: rows, drifted: rows.filter((r) => !r.agree) };
 }
 
 export function report(s) {
   const lines = [];
-  for (const r of s.claims) lines.push(`  ${r.agree ? 'ok   ' : 'DRIFT'} ${r.path} ${r.verb}: the changelog says ${r.claimed}, the command prints ${r.measured === null ? 'no total line' : r.measured}`);
+  for (const r of s.claims) lines.push(`  ${r.agree ? 'ok   ' : 'DRIFT'} ${r.path} ${r.verb}: the changelog says ${r.claimed}, the command prints ${r.measured === null ? 'no total line' : r.measured}${r.how ? ` (${r.how})` : ''}`);
   lines.push(`controls-sweep: ${s.claims.length} claims in ${JSON.stringify(s.section)}, ${s.drifted.length} drifted`);
   return lines.join('\n');
 }
@@ -147,6 +172,14 @@ export function controls() {
   const tally = claims('- `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported\n');
   say(tally.length === 2 && tally[1].verb === 'run' && tally[1].claimed === 41 && tally[1].word === 'pass' && countOf('trial x pass\ntally: pass 43, fail 0, unsupported 0', 'pass') === 43 && looseCount('`node lib/sigil.mjs run` on windows: 41 pass') === 1,
     'a run tally on the same line as a controls claim is read as its own claim, and its total is the tally line');
+  // A run claim names its leg and is held per leg.
+  const rc = claims('- `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported\n')[0];
+  const mac = tallyOf('leg macos bash 3.2\ntally: pass 39, fail 0, unsupported 4');
+  const other = holdRun(rc, mac, 'macos');
+  const same = holdRun(rc, mac, 'windows');
+  const broken = holdRun(rc, tallyOf('tally: pass 38, fail 1, unsupported 4'), 'macos');
+  say(rc.leg === 'windows' && other.measured === 43 && other.sound && /the claim names windows; held on macos as 39 pass and 4 unsupported, 0 fail/.test(other.how) && same.measured === 39 && same.how === '' && broken.measured === 42 && !broken.sound && holdRun(rc, null, 'macos').measured === null,
+    `a run claim names its leg (${rc.leg}): held there by its pass count, and on another leg as pass and unsupported with no fail (39 and 4 on macos read as 43; a fail of 1 is unsound; no tally is no total line)`);
   let spelled = '';
   try { sweep({ text: '## 0.0.0 (spelled)\n\n- `node lib/ceiling.mjs controls`: prints 12, 0 failing\n- `node lib/ceiling.mjs controls`: 12 controls\n\n## 9.0.0\n' }); } catch (e) { spelled = e.message; }
   say(/2 claim shapes and the reader parsed 0/.test(spelled), `trip: a count spelled as prints 12 or 12 controls is a claim the reader does not read, and the sweep refuses by number: ${spelled.slice(0, 80)}`);
