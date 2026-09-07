@@ -12,14 +12,15 @@
 // running the chained echo under the grant. A hook sees the whole string.
 // This one refuses any Bash command that is not exactly one wrapper call,
 // `bash <here>/checker/companion-run.sh <args>`, carrying no shell syntax
-// (chain, pipe, background, redirect, substitution, backtick, newline), and
-// refuses every writing tool by name whatever the allow-list says.
+// (chain, pipe, background, redirect, substitution, backtick, newline), any
+// Bash call whose own run_in_background field is set, and every writing
+// tool by name whatever the allow-list says.
 //
 //   payload on stdin (the hook contract): { tool_name, tool_input }
 //   exit 0   the call may proceed
 //   exit 2   the call is blocked; the reason on stderr reaches the model
 //
-//   node checker/companion-guard.mjs controls   the payloads planted, six controls
+//   node checker/companion-guard.mjs controls   the payloads planted, eight controls
 
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -37,7 +38,12 @@ export function judge(payload, root = ROOT) {
   const tool = String(payload.tool_name || '');
   if (WRITERS.test(tool)) return { ok: false, why: `${tool} is not a tool the companion may use (LAW.COMPANION.1)` };
   if (tool !== 'Bash') return { ok: true, why: `${tool} reads` };
-  const cmd = String((payload.tool_input || {}).command || '');
+  // The Bash tool's own field, apart from the shell's ampersand: a wrapper
+  // call sent to the background is the one thing LAW.COMPANION.1 names
+  // (twenty-seventh companion pass).
+  const input = payload.tool_input || {};
+  if (input.run_in_background === true || String(input.run_in_background) === 'true') return { ok: false, why: 'a Bash command is never run in the background; the field run_in_background is refused (LAW.COMPANION.1)' };
+  const cmd = String(input.command || '');
   const roots = [root, root.replace(/\\/g, '/'), root.replace(/^([A-Za-z]):/, (m, d) => `/${d.toLowerCase()}`).replace(/\\/g, '/')];
   const head = roots.map((r) => `bash ${r}/checker/companion-run.sh`);
   const matched = head.find((h) => cmd === h || cmd.startsWith(h + ' '));
@@ -64,7 +70,9 @@ export function controls(io = console) {
   say(!write.ok && /Write/.test(write.why), 'trip: a writing tool is refused by name whatever the allow-list says');
   const msys = judge({ tool_name: 'Bash', tool_input: { command: 'bash /c/r/checker/companion-run.sh git status' } }, root);
   say(msys.ok, 'the MSYS spelling of the root is the same wrapper');
-  io.log(`companion-guard controls: 7 run, ${fail} failing`);
+  const bg = judge({ tool_name: 'Bash', tool_input: { command: `${w} git log -1`, run_in_background: true } }, root);
+  say(!bg.ok && /background/.test(bg.why), 'trip: a wrapper call with run_in_background set is refused by the field, whatever the string says');
+  io.log(`companion-guard controls: 8 run, ${fail} failing`);
   return fail === 0;
 }
 

@@ -38,7 +38,7 @@ export ROT_CHECKER_CONTROLS_RUNNING=1
 T=$(mktemp -d)
 # M25 plants a file at the repository root to move the tree state; a kill
 # between the write and the rm must not leave it behind
-trap 'rm -f zz-tree-control.tmp artifacts/cache/zz-tree-control.nt dist/zz-tree-control.txt checker/zz-m33-runner.sh' EXIT
+trap 'rm -f zz-tree-control.tmp artifacts/cache/zz-tree-control.nt dist/zz-tree-control.txt .codemap/zz-tree-control.txt checker/zz-m33-runner.sh' EXIT
 mkdir -p "$T/commands"
 cp commands/pareto-dtd.md "$T/commands/pareto-dtd.md"
 fail=0
@@ -185,7 +185,9 @@ t0=$(bash checker/companion-audit.sh --tree-state); printf 'planted\n' > zz-tree
 mkdir -p artifacts/cache; printf 'planted\n' > artifacts/cache/zz-tree-control.nt; t2=$(bash checker/companion-audit.sh --tree-state); rm -f artifacts/cache/zz-tree-control.nt
 # and under an ignored region outside any artifact directory (dist/ is the packer's, ignored whole)
 mkdir -p dist; printf 'planted\n' > dist/zz-tree-control.txt; t3=$(bash checker/companion-audit.sh --tree-state); rm -f dist/zz-tree-control.txt
-[ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && [ "$t0" != "$t2" ] && echo "$t2" | grep -q 'artifacts/cache/zz-tree-control.nt' && [ "$t0" != "$t3" ] && echo "$t3" | grep -q 'dist/zz-tree-control.txt' && ok "M25 a file planted during the audit moves the tree state the runner compares: at the root, under an ignored artifact directory and under dist/" || { ko "M25 the tree state did not move for all three plants"; }
+# and under the index cache, once excluded from the reading (twenty-seventh companion pass)
+mkdir -p .codemap; printf 'planted\n' > .codemap/zz-tree-control.txt; t4=$(bash checker/companion-audit.sh --tree-state); rm -f .codemap/zz-tree-control.txt
+[ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && [ "$t0" != "$t2" ] && echo "$t2" | grep -q 'artifacts/cache/zz-tree-control.nt' && [ "$t0" != "$t3" ] && echo "$t3" | grep -q 'dist/zz-tree-control.txt' && [ "$t0" != "$t4" ] && echo "$t4" | grep -q '.codemap/zz-tree-control.txt' && ok "M25 a file planted during the audit moves the tree state the runner compares: at the root, under an ignored artifact directory, under dist/ and under the index cache" || { ko "M25 the tree state did not move for all four plants"; }
 # M26: LAW.COMPANION.5: a ceiling that fires is UNAUDITED, exit 124, never a pass; a claude that sleeps past a one-second ceiling
 mkdir -p "$T/bin" "$T/out"; printf '#!/usr/bin/env bash\nsleep 8\n' > "$T/bin/claude"; chmod +x "$T/bin/claude"
 # on the Windows leg node finds a command through PATHEXT, so the sleeping twin is a .cmd
@@ -268,12 +270,18 @@ printf '@bash "%%~dp0claude" %%*\r\n' > "$T/bin35/claude.cmd"
 [ ! -e "$T/out35/companion-ctl-first.json" ] || { echo "M35 the raw stream pre-exists"; fail=$((fail+1)); }
 out35=$(PATH="$T/bin35:$PATH" bash checker/companion-audit.sh ctl-first v8.0.0..HEAD "$T/out35" opus 5 60 2>&1); r35=$?
 [ $r35 -eq 0 ] && echo "$out35" | grep -q 'ctl-first PASS' && [ -s "$T/out35/companion-ctl-first.json" ] && ok "M35 the first audit of a phase scores (PASS) and its raw stream lands after the tree is read, never as a changed tree" || { ko "M35 first phase exit=$r35: $(echo "$out35" | grep '^companion:' | tail -2 | tr '\n' ' ' | cut -c1-200)"; }
-# M36: the nested session's hook: a chain after the wrapper, a redirect, a bare command and a writing tool are blocked (exit 2 with the reason); one wrapper call proceeds
+# M36: the nested session's hook, five payloads piped through the binary: a chain after the wrapper, a redirect, a bare command, a writing tool and a wrapper call sent to the background are each blocked (exit 2, the reason on stderr); one wrapper call proceeds
 node checker/companion-guard.mjs controls >/dev/null 2>&1; r36a=$?
-printf '%s' "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"bash $PWD/checker/companion-run.sh git log -1; touch zz-chain-control.tmp\"}}" | node checker/companion-guard.mjs >/dev/null 2>"$T/m36.err"; r36b=$?
-printf '%s' "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"bash $PWD/checker/companion-run.sh git log -1\"}}" | node checker/companion-guard.mjs >/dev/null 2>&1; r36c=$?
+hook() { printf '%s' "$1" | node checker/companion-guard.mjs >/dev/null 2>"$T/m36.err"; echo $?; }
+w36="bash $PWD/checker/companion-run.sh"
+r36b=$(hook "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"$w36 git log -1; touch zz-chain-control.tmp\"}}"); grep -q 'no chain' "$T/m36.err"; g36b=$?
+r36e=$(hook "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"$w36 git log -1 > zz-redirect-control.tmp\"}}"); grep -q 'no chain' "$T/m36.err"; g36e=$?
+r36f=$(hook "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"node lib/ordinals.mjs controls\"}}"); grep -q 'one wrapper call' "$T/m36.err"; g36f=$?
+r36g=$(hook "{\"tool_name\":\"Write\",\"tool_input\":{\"file_path\":\"zz-write-control.tmp\",\"content\":\"x\"}}"); grep -q 'not a tool the companion may use' "$T/m36.err"; g36g=$?
+r36h=$(hook "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"$w36 git log -1\",\"run_in_background\":true}}"); grep -q 'background' "$T/m36.err"; g36h=$?
+r36c=$(hook "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"$w36 git log -1\"}}")
 grep -q 'companion-guard.mjs' checker/companion-audit.sh && grep -q -- '--settings "$scratch/settings.json"' checker/companion-audit.sh; r36d=$?
-[ $r36a -eq 0 ] && [ $r36b -eq 2 ] && grep -q 'no chain' "$T/m36.err" && [ ! -e zz-chain-control.tmp ] && [ $r36c -eq 0 ] && [ $r36d -eq 0 ] && ok "M36 the nested session's PreToolUse hook blocks a chain after the wrapper (exit 2, the reason on stderr), passes one wrapper call, and the runner installs it through --settings" || { ko "M36 guard: controls=$r36a chain=$r36b plain=$r36c installed=$r36d"; }
+[ $r36a -eq 0 ] && [ "$r36b" = 2 ] && [ $g36b -eq 0 ] && [ "$r36e" = 2 ] && [ $g36e -eq 0 ] && [ "$r36f" = 2 ] && [ $g36f -eq 0 ] && [ "$r36g" = 2 ] && [ $g36g -eq 0 ] && [ "$r36h" = 2 ] && [ $g36h -eq 0 ] && [ ! -e zz-chain-control.tmp ] && [ ! -e zz-redirect-control.tmp ] && [ ! -e zz-write-control.tmp ] && [ "$r36c" = 0 ] && [ $r36d -eq 0 ] && ok "M36 the nested session's PreToolUse hook blocks a chain, a redirect, a bare command, a writing tool and a backgrounded wrapper call (exit 2, each reason on stderr), passes one wrapper call, and the runner installs it through --settings" || { ko "M36 guard: controls=$r36a chain=$r36b/$g36b redirect=$r36e/$g36e bare=$r36f/$g36f write=$r36g/$g36g background=$r36h/$g36h plain=$r36c installed=$r36d"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"

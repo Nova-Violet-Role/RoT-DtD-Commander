@@ -777,7 +777,7 @@ ending in `< /dev/null`.
 installed by the runner through `--settings`: it refuses any Bash string
 that is not one wrapper call with no chain, pipe, background, redirect,
 substitution, backtick or newline, and every writing tool by name; its
-seven controls plant the payloads, and M36 pipes a chained command
+eight controls plant the payloads, and M36 pipes a chained command
 through it and reads the block, then reads the runner installing it. The
 wrapper refuses `-O`, `--open-files-in-pager`, `--ext-diff` and the
 textconv and pager flags, and runs git with `--no-pager` and a `cat`
@@ -788,6 +788,25 @@ reader, the prompt's runs carry no redirect: 39 checker controls,
 gate: a two-turn nested session told to run the chained wrapper command
 reported "Blocked before execution" with the hook's reason in its tool
 error, and the chained echo never printed.
+
+### The companion's twenty-seventh pass: the field beside the string
+
+The twenty-seventh pass returned fail with six findings, one high: the
+hook read only the command string, so a wrapper call sent through the
+Bash tool's own `run_in_background` field would have passed it, the one
+act LAW.COMPANION.1 names. The lower five: the law map did not name the
+hook, M36 piped one payload where its comment claimed four, the guard's
+usage said six controls over seven, the `--table` arm ran with stdin
+open, and the reading arm excluded three regions where a write would
+have been invisible.
+
+The hook refuses a Bash call whose `run_in_background` field is set
+whatever the string says, with a control and the header naming the
+field; M36 pipes five payloads through the binary and reads exit 2 and
+the reason for each. The law map names the hook and M36. The reading arm
+excludes only the runner's own stream, since this session's hooks fire
+around the run and never inside it, and M25 plants a fourth file under
+the index cache. The `--table` arm reads with stdin closed.
 
 ## 8.0.0 (2026-09-06)
 

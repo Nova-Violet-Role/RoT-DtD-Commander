@@ -50,7 +50,10 @@
      reading git verb under the portable ceiling with stdin closed and
      refuses everything else; since 9.0.0, after a prefix grant admitted
      node -e; M17 refuses a copy granting Write, M23 a copy granting the old
-     prefix, M24 the wrapper's own refusals) and the tree compared before and
+     prefix, M24 the wrapper's own refusals), the nested session's PreToolUse
+     hook checker/companion-guard.mjs (one wrapper call per Bash command, no
+     chain, redirect or background field, no writing tool; M36 pipes five
+     payloads through it) and the tree compared before and
      after the session (M25 plants a changed tree); a write reached some
      other way is the companion's own breach, and it discloses it in the
      scope. 3, 4 and 6: the scorer in checker/companion-audit.sh (a finding

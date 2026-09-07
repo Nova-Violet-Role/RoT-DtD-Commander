@@ -111,12 +111,14 @@ fi
 tree_state() {
   local i out
   for i in 1 2 3 4 5; do
-    # the porcelain status, then every ignored file of the whole tree, minus the
-    # plugin's state (.rot-moe), the index cache (.codemap), node_modules and
-    # the runner's own stream; ls-files lists them one by one where status
+    # the porcelain status, then every ignored file of the whole tree, minus
+    # only the runner's own stream: the plugin's state and the index cache are
+    # written by this session's hooks, which fire around the run and never
+    # inside it (twenty-seventh companion pass dropped the three exclusions);
+    # ls-files lists them one by one where status
     # collapses an ignored directory to its name (twenty-fifth companion
     # pass: three pathspecs left dist/ and every other ignored region unread)
-    if out="$(git -C "$here" rev-parse HEAD 2>/dev/null && git -C "$here" status --porcelain 2>/dev/null && { git -C "$here" ls-files --others --ignored --exclude-standard 2>/dev/null | grep -v -E '^(\.rot-moe|\.codemap|node_modules)/|^artifacts/research/companion-' || true; })"; then printf '%s\n' "$out"; return 0; fi
+    if out="$(git -C "$here" rev-parse HEAD 2>/dev/null && git -C "$here" status --porcelain 2>/dev/null && { git -C "$here" ls-files --others --ignored --exclude-standard 2>/dev/null | grep -v -E '^artifacts/research/companion-' || true; })"; then printf '%s\n' "$out"; return 0; fi
     sleep 1
   done
   echo "tree_state: git status failed five times"; return 1
