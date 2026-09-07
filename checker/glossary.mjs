@@ -522,7 +522,13 @@ export function controls() {
 
   const page = render([e]);
   bad += say(page.indexOf('-//W3C//DTD XHTML 1.1//EN') !== -1, 'the page declares the XHTML 1.1 DOCTYPE, so a DTD-reading validator can judge it');
-  bad += say(page.indexOf('http') === page.lastIndexOf('http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd') || true, 'no external stylesheet or script is referenced');
+  // Twelfth companion pass: this line read `|| true` and could not fail.
+  // A network URL is any http(s) URL that is not the W3C DOCTYPE or
+  // namespace; the planted stylesheet below proves the count moves.
+  const network = (p) => (p.match(/https?:\/\/[^"'\s<>]+/g) || []).filter((u) => !/\/\/www\.w3\.org\//.test(u));
+  bad += say(network(page).length === 0, 'no external stylesheet or script is referenced: ' + network(page).length + ' network URLs outside w3.org');
+  const evil = page.replace('</head>', '<link rel="stylesheet" href="http://example.com/evil.css" /></head>');
+  bad += say(evil !== page && network(evil).length === 1 && /<link[^>]+href="http/.test(evil), 'trip: a planted network stylesheet is counted, so the control above can fail');
   bad += say(!/<(script|link)[^>]+src=|<link[^>]+href="http/.test(page), 'trip: the page loads nothing from the network, so it works from disk offline');
   const scripts = page.split('<script').length - 1;
   bad += say(scripts === 1 && page.indexOf('/*<![CDATA[*/') !== -1, 'the one script is wrapped in a CDATA section, which XHTML requires');
@@ -580,7 +586,7 @@ function main(argv) {
       console.log('glossary: ' + summary + '; the page differs from the tree on ' + diff + ' lines, run node checker/glossary.mjs');
       process.exit(1);
     }
-    console.log('glossary: ' + summary + '; the xhtml page, both svg plates and the README block are in step');
+    console.log('glossary: ' + summary + '; the xhtml page, ' + (familyPlates(entries).length + 2) + ' svg plates and the README block are in step');
     process.exit(0);
   }
 
@@ -596,10 +602,10 @@ function main(argv) {
   }
   if (spliced !== rm) writeFileSync(README, spliced, 'utf8');
   const unfiled = entries.filter((e) => familyOf(e) === 'Unfiled').length;
-  console.log('glossary: ' + summary + '; xhtml page, 2 svg plates and the README block written'
+  console.log('glossary: ' + summary + '; xhtml page, ' + (familyPlates(entries).length + 2) + ' svg plates and the README block written'
     + (unfiled ? ' (' + unfiled + ' unfiled, shown on the page)' : ''));
 }
 
-if (import.meta.url === `file://${process.argv[1].split('\\').join('/')}` || import.meta.url.endsWith(process.argv[1].split('\\').pop())) {
+if (process.argv[1] && (import.meta.url === `file://${process.argv[1].split('\\').join('/')}` || import.meta.url.endsWith(process.argv[1].split('\\').pop()))) {
   main(process.argv.slice(2));
 }

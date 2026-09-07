@@ -432,6 +432,30 @@ failing. The hosted record predicts 139 and says what 137 would mean;
 none yet and its figures are drawn from answers; a sweep handed a file
 refuses by name at exit 2, tripped on purpose in the slop controls.
 
+### The companion's twelfth pass: the control that could not fail
+
+The twelfth pass returned fail with seven findings, one high: a glossary
+control asserting no external stylesheet or script ended in `|| true`,
+and a planted `<link href="http://example.com/evil.css">` left it green.
+The lower six: the glossary reported two plates written where forty were,
+its main-detection dereferenced `process.argv[1]` unchecked so the
+module could not be imported, the slop sweep walked directories so an
+untracked note beside the records was measured here and absent in CI,
+`dtd/cc-schematic.dtd` ended on its last `>` with no final LF and the
+encoding sweep had no arm to see it, the "root documents" step covered
+six of nine, and `docs/HOSTED-PLUGIN.md` sat outside every sweep.
+
+The glossary counts network URLs outside w3.org and a planted stylesheet
+moves the count (`node checker/glossary.mjs --controls`: 16 run, 0
+failing); both messages compute the plate count; the guard reads
+`process.argv[1] &&`. `lib/ai-slop.mjs sweep --tracked` takes its file
+set from `git ls-files`, prints tracked N of M, and its control plants an
+untracked file the tracked sweep leaves out; the gate and the script sweep
+tracked. `lib/encoding.mjs` judges a fourth arm, a text file with no final
+LF, never a file with a NUL byte, with a planted file and a planted GIF
+(`node lib/encoding.mjs controls`: 6 run, 0 failing); the schematic ends
+with LF. The root-documents step runs all nine and the hosted doc.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
@@ -604,7 +628,7 @@ release; the rest are unmeasured and say so.
 - `node lib/cross-os.mjs controls`: 27 run, 0 failing
 - `node lib/figure.mjs controls`: 23 run, 0 failing
 - `node lib/geometry.mjs controls`: 38 run, 0 failing
-- `node lib/ceiling.mjs controls`: 7 run, 0 failing; `node lib/encoding.mjs controls`: 5 run, 0 failing
+- `node lib/ceiling.mjs controls`: 7 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/list.mjs controls`: 47 run, 0 failing; `node lib/starlist.mjs controls`: 41 run, 0 failing
 - `node checker/pack-claude-ai.mjs --controls`: 27 run, 0 failing
 - `node checker/contract-audit.mjs`: 1619 declarations, 0 unused, 0 law gaps
@@ -705,7 +729,7 @@ surface that carries every string untruncated and searchable.
 
 ### Measured
 
-- `node checker/glossary.mjs --controls`: 15 run, 0 failing
+- `node checker/glossary.mjs --controls`: 16 run, 0 failing
 - `node checker/readme-index.mjs --controls`: 6 run, 0 failing
 - 36 plates, every one 820px wide so GitHub renders it 1:1 rather than scaling it down; 0 ellipses; every plate valid XML
 - 131 commands, 22 skills, 5 agents; checked 158; 1440 declarations; 52 gate-chain commands

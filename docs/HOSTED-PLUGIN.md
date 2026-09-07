@@ -137,7 +137,7 @@ So `plugin.json` had to lose **54%** of its length and `marketplace.json`
 **61%**, while keeping every machine-checked token. Both now sit at 497
 characters with all five patterns intact.
 
-That is not truncation. It is editing against a specification — the good kind of
+That is not truncation. It is editing against a specification — the disciplined sort of
 problem, because every constraint is testable before a byte ships.
 
 ### Two things worth stealing
@@ -247,7 +247,7 @@ baseline.
 ```
 
 That failure is the point. It is deliberately **not** self-healing: a guard that
-silently absorbs drift hides the very thing it exists to surface. The red build
+silently absorbs drift hides the one thing it exists to surface. The red build
 is the message to the next session — extend the table, re-prove an upload, move
 the baseline forward.
 
