@@ -172,7 +172,8 @@ mkdir -p "$T/bin" "$T/out"; printf '#!/usr/bin/env bash\nsleep 8\n' > "$T/bin/cl
 # on the Windows leg node finds a command through PATHEXT, so the sleeping twin is a .cmd
 printf '@ping -n 9 127.0.0.1 >nul\r\n' > "$T/bin/claude.cmd"
 out=$(PATH="$T/bin:$PATH" bash checker/companion-audit.sh ctl-ceiling v8.0.0..HEAD "$T/out" opus 5 1 2>&1); r26=$?
-[ $r26 -eq 124 ] && echo "$out" | grep -q 'CEILING FIRED' && echo "$out" | grep -q 'UNAUDITED' && ok "M26 a ceiling that fires records the phase UNAUDITED at exit 124 (LAW.COMPANION.5), never a pass" || { ko "M26 exit=$r26"; }
+[ $r26 -eq 124 ] && echo "$out" | grep -q 'CEILING FIRED' && echo "$out" | grep -q 'UNAUDITED' && ok "M26 a ceiling that fires records the phase UNAUDITED at exit 124 (LAW.COMPANION.5), never a pass" || { ko "M26 exit=$r26: $(echo "$out" | grep "^companion:" | tail -3 | tr '
+' ' ' | cut -c1-300)"; }
 # M27: git config in its writing forms is refused and writes nothing; its readers run
 bash $w git config --file "$T/cfg" a.b c >/dev/null 2>&1; r27a=$?
 bash $w git config core.hooksPath x >/dev/null 2>&1; r27b=$?
