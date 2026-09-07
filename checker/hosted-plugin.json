@@ -28,7 +28,7 @@
       "commands": 129,
       "skills": 22,
       "agents": 5,
-      "why": "last read as 129 on the 7.2.0 upload, when two command names were also skill names and shadowed two commands; the archive renames those skills, so the 9.0.0 upload should report 137 (139 minus the two collisions); unconfirmed until that upload is read",
+      "why": "last read as 129 on the 7.2.0 upload, when two command names were also skill names and shadowed two commands; the archive renames those skills (control C18 reports both renamed), so the 9.0.0 upload should report 139; a reading of 137 would mean the renames did not land; unconfirmed until that upload is read",
       "confirmed": false
     },
     "collisions": [
@@ -55,7 +55,7 @@
     ],
     "open": [
       {
-        "question": "Historical, asked at the 7.2.0 upload: does the surface now report 131 commands instead of 129? The baseline has since moved to 139 and surfaceReported.why predicts 137; the 9.0.0 upload closes this.",
+        "question": "Historical, asked at the 7.2.0 upload: does the surface now report 131 commands instead of 129? The baseline has since moved to 139 and surfaceReported.why predicts 139 with the two skills renamed; the 9.0.0 upload closes this.",
         "assumption": "Yes, since 131 minus 2 was exactly the reported figure and the two collisions are renamed. Only an upload settles it, and a reading of 129 would mean the collision was NOT the cause, which is the more valuable finding.",
         "closableBy": "uploading claude_ai_cowork_rot_dtd_commander_7.2.0.zip and reading the inventory line"
       },

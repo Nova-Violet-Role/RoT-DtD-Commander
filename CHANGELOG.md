@@ -105,7 +105,7 @@ whole (`LAW.CACHE.4`), and an intake that closes on `add`, `more` or
 source, 119 of them, and `cc-ask` itself gains the choice in its gate
 enumeration, `GATE.save`, `intake (.., gate, cache?)` and an `ASK.exhausted`
 that offers start and save. `.nt` enters the white list. `node lib/cache.mjs
-controls`: 19 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
+controls`: 20 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
 failing; `npm run controls:cache` in the gate chain and the workflow.
 
 ### The companion's first pass on 9.0.0: seven findings, all sound
@@ -292,7 +292,7 @@ the first save of this release went through a JSON state file in a
 scratch directory, the one form the subset exists to keep out of the loop.
 `lib/cache.mjs save --state <state.nt>` reads the state in NestedText,
 answers in any of the three shapes the form carries, and refuses a JSON
-state by name. `node lib/cache.mjs controls`: 19 run, 0 failing.
+state by name. `node lib/cache.mjs controls`: 20 run, 0 failing.
 
 ### The companion's eighth pass: the plates nobody could re-draw
 
@@ -341,7 +341,7 @@ is an angle bracket per line, and a value longer than one line of prose
 is folded at a word boundary into that block, the fold part of the value,
 so what is written is what is read back; the operator read the first
 cache of this release, every value on one line, as a file the schematic
-had never touched. `node lib/cache.mjs controls`: 19 run, 0 failing.
+had never touched. `node lib/cache.mjs controls`: 20 run, 0 failing.
 
 ### The companion's ninth pass: the changelog's own measured row
 
@@ -409,6 +409,28 @@ today, in the tree's counts, and `checker/release-notes.mjs --versions`
 reads its version beside the manifests, a stale one tripped by name:
 `node checker/release-notes.mjs --controls`: 11 run, 0 failing. The
 hosted unknown says it is historical.
+
+### The companion's eleventh pass: the cache in the work tree
+
+The eleventh pass returned fail with five findings, one high: the cache
+this release introduces writes `artifacts/cache/<command>.nt` under the
+working directory and `.gitignore` had no rule over it, so a save made
+inside a repository would have shipped the operator's session in the next
+`git add -A`; the sigil census's `artifacts/sigil/run.json` sat in the
+same gap. The lower four: the hosted record predicted 137 for an upload
+whose renames remove the two collisions (139 is the number, 137 would mean
+the renames did not land), `--versions` printed five of the six sources it
+compares, `LIST.entry.figure` described a file the tree does not hold,
+and `lib/ai-slop.mjs sweep` handed a file died on a scandir stack.
+
+`.gitignore` names both directories, `git check-ignore -v` answers with
+the rule, and the cache controls assert it: `CACHE.dir` is ignored by the
+repository the module lives in, so the next writer a subset declares
+cannot ship without a rule. `node lib/cache.mjs controls`: 20 run, 0
+failing. The hosted record predicts 139 and says what 137 would mean;
+`--versions` prints CITATION.cff; the figure entry says the tree keeps
+none yet and its figures are drawn from answers; a sweep handed a file
+refuses by name at exit 2, tripped on purpose in the slop controls.
 
 ## 8.0.0 (2026-09-06)
 

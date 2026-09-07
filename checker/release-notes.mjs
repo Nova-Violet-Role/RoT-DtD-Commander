@@ -213,7 +213,7 @@ function main() {
     // The top section must render: a spliced body is refused here, on every push, not only on the tag.
     const top = section(readFileSync(join(ROOT, 'CHANGELOG.md'), 'utf8'), v['package.json']);
     if (!top.ok) console.log(`  SPLICED ${top.reason}`);
-    for (const k of ['package.json', 'plugin.json', 'marketplace.json metadata', 'marketplace.json plugin', 'CHANGELOG.md top section']) console.log(`  ${k}: ${v[k]}`);
+    for (const k of ['package.json', 'plugin.json', 'marketplace.json metadata', 'marketplace.json plugin', 'CITATION.cff', 'CHANGELOG.md top section']) console.log(`  ${k}: ${v[k]}`);
     console.log(`  RELEASE.md heading "## v${v['package.json']}": ${v.releaseHeading ? 'present' : 'MISSING'}; changelog top section ${v.changelogState}${args[1] ? `; tag ${args[1]}` : ''}`);
     const f = versionFindings(v, args[1] || null);
     for (const line of f) console.log(`  DISAGREE ${line}`);

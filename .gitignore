@@ -40,3 +40,10 @@ dist/
 # the memory plugin writes its own CLAUDE.md and .claude/ beside any file it recalls; neither is this repository
 **/artifacts/**/CLAUDE.md
 **/artifacts/**/.claude/
+
+# Session content, never source: the cache a gated command saves on the save
+# choice of its gate (cc-cache.dtd, lib/cache.mjs) and the run record the sigil
+# census writes (lib/sigil.mjs). A save inside a work tree must not land in a
+# commit (eleventh companion pass).
+artifacts/cache/
+artifacts/sigil/
