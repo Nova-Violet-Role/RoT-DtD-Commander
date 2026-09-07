@@ -19,8 +19,8 @@
 <rect x="26" y="232" width="276" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="249" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">dtd-contract-auditor  (subagent)</text>
 <text x="794" y="249" font-size="12" fill="#9aa3b2" text-anchor="end">12 laws</text>
-<text x="34" y="276" font-size="13" fill="#9aa3b2">Audits the shared DTD subsets (dtd/cc-core.dtd, cc-ask.dtd, cc-report.dtd,</text>
-<text x="34" y="295" font-size="13" fill="#9aa3b2">cc-record.dtd) against every *-dtd command, skill and agent in a repository or an</text>
+<text x="34" y="276" font-size="13" fill="#9aa3b2">Audits the shared DTD subsets (every dtd/cc-*.dtd, nineteen of them, and the root</text>
+<text x="34" y="295" font-size="13" fill="#9aa3b2">grammars beside them) against every *-dtd command, skill and agent in a repository or an</text>
 <text x="34" y="314" font-size="13" fill="#9aa3b2">installed .claude tree, in both directions. Invoke after editing a shared subset, adding</text>
 <text x="34" y="333" font-size="13" fill="#9aa3b2">a *-dtd artifact, or before an install, to find declarations nothing uses and files that</text>
 <text x="34" y="352" font-size="13" fill="#9aa3b2">drift from the contract.</text>
