@@ -181,7 +181,8 @@ bash $w git rev-parse HEAD >/dev/null 2>&1; r24f=$?
 out24g=$(bash $w git grep -Ozz-no-such-pager-zz -l LAW.COMPANION.4 2>&1); r24g=$?
 # the empty tree against HEAD: a patch in every clone, a depth-one checkout included (HEAD~1 exits 128 there, measured on the first hosted run of v9.0.0)
 out24h=$(bash $w git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD -- README.md 2>&1); r24h=$?
-out24i=$(bash $w git show --format=%h -p HEAD -- checker/companion-run.sh 2>&1); r24i=$?
+# no path on the show: a commit always carries a patch, a path only when the commit touched it
+out24i=$(bash $w git show --format=%h -p HEAD 2>&1); r24i=$?
 [ $r24a -eq 3 ] && [ $r24b -eq 3 ] && [ $r24c -eq 3 ] && [ $r24d -eq 3 ] && echo "$out24d" | grep -q 'shell syntax' && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && [ $r24g -eq 3 ] && ! echo "$out24g" | grep -q 'cannot spawn' && [ $r24h -eq 0 ] && echo "$out24h" | grep -q '^diff --git' && [ $r24i -eq 0 ] && echo "$out24i" | grep -q '^diff --git' && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit, a redirect argument and git grep -O (exit 3 each, the pager never spawned) and runs an engine, a reading git verb and two patch-producing ones, git diff and git show -p, each printing a patch" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f pager=$r24g diff=$r24h show=$r24i"; }
 # M25: a tree that changed during the audit is read as a breach of LAW.COMPANION.1
 t0=$(bash checker/companion-audit.sh --tree-state); printf 'planted\n' > zz-tree-control.tmp; t1=$(bash checker/companion-audit.sh --tree-state); rm -f zz-tree-control.tmp
