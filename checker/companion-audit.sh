@@ -6,6 +6,7 @@
 #
 #   bash checker/companion-audit.sh <phase-name> <git-range> [out-dir] [model] [turns] [seconds] [focus]
 #   bash checker/companion-audit.sh --score <answer-file> <phase-name> <git-range> [model] [stamp]
+#   bash checker/companion-audit.sh --tree-state          HEAD and the porcelain status, the state compared around a run
 #
 # Foreground only. stdin closed, a turn ceiling, a wall-clock ceiling, the
 # raw JSON stream teed to <out-dir>/companion-<phase>.json, the answer
@@ -28,13 +29,16 @@ vpass="$(grep -o 'COMPANION.verdict.pass *"[^"]*"' "$here/checker/companion-audi
 vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audit.dtd" | sed 's/.*"\(.*\)"/\1/')"
 [ -n "$vpass" ] && [ -n "$vfail" ] || { echo 'companion: verdict entities not found in checker/companion-audit.dtd'; exit 2; }
 
-# The allow-list below IS LAW.COMPANION.1 and LAW.COMPANION.2: the nested
-# session is granted Read, Grep, Glob and Bash under the portable ceiling
-# (node lib/ceiling.mjs 60, because the timeout binary is absent on macOS) and
-# nothing that writes, and its stdin is closed. Those two laws are enforced by
-# this shape rather than by a string the runner checks, and naming them here is
-# what lets the contract audit see that they govern something. The root element
-# the answer must take is companion_audit.
+# The allow-list below grants Read, Grep, Glob and one Bash form, the wrapper
+# checker/companion-run.sh, which runs an engine of this repository or a
+# reading git verb under the portable ceiling with stdin closed and refuses
+# everything else by name (LAW.COMPANION.1 and 2). A prefix grant such as
+# Bash(node lib/ceiling.mjs 60 node:*) admitted node -e and git commit
+# (eighteenth companion pass on 9.0.0); the wrapper is the shape, the
+# tree is compared before and after the session (tree_state), and the
+# checker controls plant the old grant, the wrapper's refusals, a changed
+# tree and a fired ceiling. The root element the answer must take is
+# companion_audit.
 #
 # The scorer, on one answer file. Reads the LAST non-empty line for the
 # verdict; counts a high finding only in the OPENING TAG of a line that
@@ -82,7 +86,7 @@ score() {
   fi
   if [ "$last" = "$vfail" ]; then
     [ "$nhigh" -ge 1 ] || { echo "companion: LAW.COMPANION.4 broken, a fail with no high finding"; return 1; }
-    [ "$heads" = "Scope Findings Verdict Next " ] || echo "companion: LAW.COMPANION.8 broken, the headings read '${heads}' and not 'Scope Findings Verdict Next '"
+    [ "$heads" = "Scope Findings Verdict Next " ] || { echo "companion: LAW.COMPANION.8 broken, the headings read '${heads}' and not 'Scope Findings Verdict Next '"; return 1; }
     echo "companion: $phase FAIL"; return 1
   fi
   echo "companion: no verdict on the last line of $log"; return 1
@@ -94,6 +98,7 @@ if [ "${1:-}" = "--score" ]; then
   exit $?
 fi
 
+if [ "${1:-}" = "--tree-state" ]; then git -C "$here" rev-parse HEAD 2>/dev/null; git -C "$here" status --porcelain 2>/dev/null; exit 0; fi
 phase="${1:?phase name}"
 range="${2:?git range, e.g. abc123..HEAD}"
 out="${3:-${TMPDIR:-/tmp}}"
@@ -111,6 +116,11 @@ out="$(cd "$out" && pwd)"
 scratch="$(mktemp -d)"
 raw="$out/companion-$phase.json"
 stamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)-pid$$"
+# The tree before and after the session: HEAD and the porcelain status. A
+# difference is the companion's breach of LAW.COMPANION.1, whatever the
+# allow-list admitted (M25 plants one).
+tree_state() { git -C "$here" rev-parse HEAD 2>/dev/null; git -C "$here" status --porcelain 2>/dev/null; }
+tree_before="$(tree_state)"
 log="$out/companion-$phase.md"
 contract="$(cat "$here/checker/companion-audit.dtd")"
 stat="$(git -C "$here" diff --stat "$range" | tail -40)"
@@ -132,7 +142,7 @@ Answer in the grammar declared here, one markdown heading per element in declare
 
 $contract
 
-Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run must start with 'node $here/lib/ceiling.mjs 60 ' (the portable ceiling, because the timeout binary does not exist on every leg) and end with ' < /dev/null', and the only binaries the allow-list grants behind that ceiling are node and git; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'node $here/lib/ceiling.mjs 60 node $here/lib/ai-slop.mjs controls < /dev/null' and 'node $here/lib/ceiling.mjs 60 node $here/lib/ordinals.mjs controls < /dev/null' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
+Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run is 'bash $here/checker/companion-run.sh node <engine.mjs under lib/, checker/ or bin/> [args]' or 'bash $here/checker/companion-run.sh git <reading verb> [args]'; the wrapper applies the portable ceiling, closes stdin and refuses any other form by name, so a command it refuses is not to be retried another way, and the only binaries the allow-list grants behind that ceiling are node and git; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'node $here/lib/ceiling.mjs 60 node $here/lib/ai-slop.mjs controls < /dev/null' and 'node $here/lib/ceiling.mjs 60 node $here/lib/ordinals.mjs controls < /dev/null' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
 
 Diff stat:
 $stat
@@ -150,13 +160,19 @@ echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${s
 # CLAUDECODE is unset in the subshell, not through env -u: env execs a binary and
 # cannot see the ceil function, and the first 8.0.0 run exited 127 that way.
 ( unset CLAUDECODE; cd "$scratch" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
-  --allowedTools "Read,Grep,Glob,Bash(node $here/lib/ceiling.mjs 60 node:*),Bash(node $here/lib/ceiling.mjs 60 git:*)" \
+  --allowedTools "Read,Grep,Glob,Bash(bash $here/checker/companion-run.sh:*)" \
   < /dev/null 2>&1 ) | tee "$raw" | tail -c 400
 rc=${PIPESTATUS[0]}
 rm -rf "$scratch"
 echo
 echo "companion: claude exit=$rc"
 if [ "$rc" -eq 124 ]; then echo "companion: CEILING FIRED, phase $phase is UNAUDITED"; exit 124; fi
+tree_after="$(tree_state)"
+if [ "$tree_before" != "$tree_after" ]; then
+  echo "companion: LAW.COMPANION.1 broken, the tree changed during the audit; phase $phase is UNAUDITED"
+  printf '%s\n' "$tree_after" | head -20
+  exit 1
+fi
 node -e '
 const fs = require("fs");
 const raw = fs.readFileSync(process.argv[1], "utf8");

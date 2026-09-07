@@ -122,14 +122,16 @@ allow_ok() {
   # Every Bash form starts with the portable ceiling. The 7.x control required
   # the literal timeout binary here, which the macOS leg lacks: it mandated the
   # form LAW.XOS.4 forbids (first companion pass of 8.0.0).
-  echo "$a" | grep -o 'Bash([^)]*)' | grep -v -q 'Bash(node $here/lib/ceiling.mjs 60 ' && return 1
+  # Every Bash form is the wrapper, checker/companion-run.sh, since 9.0.0: a
+  # prefix grant of node or git admitted node -e and git commit (M23).
+  echo "$a" | grep -o 'Bash([^)]*)' | grep -v -q -F 'Bash(bash $here/checker/companion-run.sh:*)' && return 1
   return 0
 }
 sed 's/--allowedTools "Read,/--allowedTools "Write,Read,/' checker/companion-audit.sh > "$T/m17.sh"
 grep -q -- '--allowedTools "Write,Read,' "$T/m17.sh" || { echo "M17 mutation did not land"; fail=$((fail+1)); }
 sed 's/--allowedTools "Read,\([^"]*\)"/--allowedTools "Read,Bash"/' checker/companion-audit.sh > "$T/m17b.sh"
 # M17c: the 7.x form, a bare timeout in the allow-list, is refused now (LAW.XOS.4)
-sed 's/Bash(node $here\/lib\/ceiling.mjs 60 node:\*)/Bash(timeout 60 node:*)/' checker/companion-audit.sh > "$T/m17c.sh"
+sed 's/Bash(bash $here\/checker\/companion-run.sh:\*)/Bash(timeout 60 node:*)/' checker/companion-audit.sh > "$T/m17c.sh"
 grep -q -- 'Bash(timeout 60 node:\*)' "$T/m17c.sh" || { echo "M17c mutation did not land"; fail=$((fail+1)); }
 allow_ok "$T/m17c.sh"; r3=$?
 [ $r3 -eq 1 ] && ok "M17c a bare timeout in the allow-list is refused: the ceiling must be the portable one" || { ko "M17c a bare timeout in the allow-list was admitted"; }
@@ -138,6 +140,29 @@ allow_ok "$T/m17b.sh"; r2=$?
 [ $r2 -eq 1 ] && ok "M17b a bare Bash in the allow-list, the widest grant there is, is refused" || ko "M17b DID NOT FIRE: a bare Bash in the allow-list was admitted"
 allow_ok "$T/m17.sh"; r1=$?; allow_ok checker/companion-audit.sh; r0=$?
 [ $r1 -eq 1 ] && [ $r0 -eq 0 ] && ok "M17 the runner's allow-list carries no writing or spawning tool and every Bash form starts with the portable ceiling; a copy granting Write is refused" || { ko "M17 planted=$r1 real=$r0"; }
+# M23: the old prefix grant, Bash(node lib/ceiling.mjs 60 node:*), is refused: a prefix admits node -e and git commit
+sed 's/Bash(bash $here\/checker\/companion-run.sh:\*)/Bash(node $here\/lib\/ceiling.mjs 60 node:*),Bash(node $here\/lib\/ceiling.mjs 60 git:*)/' checker/companion-audit.sh > "$T/m23.sh"
+grep -q -- 'Bash(node $here/lib/ceiling.mjs 60 node:\*)' "$T/m23.sh" || { echo "M23 mutation did not land"; fail=$((fail+1)); }
+allow_ok "$T/m23.sh"; r23=$?
+[ $r23 -eq 1 ] && ok "M23 a copy granting the old node and git prefixes is refused: a prefix grant is an interpreter" || { ko "M23 the old prefix grant was admitted"; }
+# M24: the wrapper refuses by name: node -e, a script outside the engines, git commit, an argument with a redirect; and runs an engine
+w=checker/companion-run.sh
+bash $w node -e 'process.exit(0)' >/dev/null 2>&1; r24a=$?
+bash $w node "$T/m9.md" >/dev/null 2>&1; r24b=$?
+bash $w git commit -m x >/dev/null 2>&1; r24c=$?
+bash $w git log '-1' '>' "$T/redirect" >/dev/null 2>&1; r24d=$?
+bash $w node lib/ceiling.mjs controls >/dev/null 2>&1; r24e=$?
+bash $w git rev-parse HEAD >/dev/null 2>&1; r24f=$?
+[ $r24a -eq 2 ] && [ $r24b -eq 2 ] && [ $r24c -eq 2 ] && [ $r24d -eq 2 ] && [ ! -e "$T/redirect" ] && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit and a redirect argument (exit 2 each) and runs an engine and a reading git verb" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f"; }
+# M25: a tree that changed during the audit is read as a breach of LAW.COMPANION.1
+t0=$(bash checker/companion-audit.sh --tree-state); printf 'planted\n' > zz-tree-control.tmp; t1=$(bash checker/companion-audit.sh --tree-state); rm -f zz-tree-control.tmp
+[ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && ok "M25 a file planted during the audit moves the tree state the runner compares before and after the session" || { ko "M25 the tree state did not move"; }
+# M26: LAW.COMPANION.5: a ceiling that fires is UNAUDITED, exit 124, never a pass; a claude that sleeps past a one-second ceiling
+mkdir -p "$T/bin" "$T/out"; printf '#!/usr/bin/env bash\nsleep 8\n' > "$T/bin/claude"; chmod +x "$T/bin/claude"
+# on the Windows leg node finds a command through PATHEXT, so the sleeping twin is a .cmd
+printf '@ping -n 9 127.0.0.1 >nul\r\n' > "$T/bin/claude.cmd"
+out=$(PATH="$T/bin:$PATH" bash checker/companion-audit.sh ctl-ceiling v8.0.0..HEAD "$T/out" opus 5 1 2>&1); r26=$?
+[ $r26 -eq 124 ] && echo "$out" | grep -q 'CEILING FIRED' && echo "$out" | grep -q 'UNAUDITED' && ok "M26 a ceiling that fires records the phase UNAUDITED at exit 124 (LAW.COMPANION.5), never a pass" || { ko "M26 exit=$r26"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"

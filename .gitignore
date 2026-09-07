@@ -40,7 +40,6 @@ dist/
 # the memory plugin writes its own CLAUDE.md and .claude/ beside any file it recalls; neither is this repository
 **/artifacts/**/CLAUDE.md
 **/artifacts/**/.claude/
-**/artifacts/**/.rot-moe/
 # The RoT MoE plugin's state, written where a session runs, the repository
 # root included; the repository's own rule covers it, never the one-line
 # .gitignore the plugin writes inside (seventeenth companion pass).

@@ -45,17 +45,21 @@
 <!ENTITY LAW.COMPANION.8 "The four elements appear in the answer as their headings in declared order, Scope, Findings, Verdict, Next; a pass without them is not a pass.">
 
 <!-- Which instrument holds which law. 1 and 2: the runner's tool allow-list
-     (Read, Grep, Glob, and Bash only in forms that start with the portable
-     ceiling, node lib/ceiling.mjs 60, since 8.0.0;
-     no Write, Edit or Agent; control M17 refuses a copy that grants Write)
-     and stdin closed on the nested session; a write reached through a
-     redirect is the companion's own breach, and it discloses it in the
+     (Read, Grep, Glob, and one Bash form, the wrapper
+     checker/companion-run.sh, which runs an engine of this repository or a
+     reading git verb under the portable ceiling with stdin closed and
+     refuses everything else; since 9.0.0, after a prefix grant admitted
+     node -e; M17 refuses a copy granting Write, M23 a copy granting the old
+     prefix, M24 the wrapper's own refusals) and the tree compared before and
+     after the session (M25 plants a changed tree); a write reached some
+     other way is the companion's own breach, and it discloses it in the
      scope. 3, 4 and 6: the scorer in checker/companion-audit.sh (a finding
      element carries file, line, severity and confidence in its opening
      tag, M16; exactly one verdict line, M18 with two and M19 with none; a
      fail needs one high finding, counted in the opening tag only, M9 to
      M11, M14 and M15; the scope line, M12 and M13). 5: the runner's exit
-     124 branch. 7: the stamp, written by the runner and required by the
+     124 branch, M26 fires it with a claude that sleeps past a one-second
+     ceiling and reads UNAUDITED. 7: the stamp, written by the runner and required by the
      scorer (M20 another run's stamp, M22 a stamped record scored with no
      stamp). 8: the four headings in declared order (M12 for a pass that
      carries them, M21 for the order). -->

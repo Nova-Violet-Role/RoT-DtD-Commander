@@ -17,8 +17,9 @@ set -u
 cd "$(dirname "$0")/.." || exit 2
 TAG_RE='SPDX-License-Identifier: (\(AGPL-3\.0-or-later OR EUPL-1\.2\) AND MIT|AGPL-3\.0-or-later OR EUPL-1\.2)'
 
-# The annotation paths of REUSE.toml, one glob per line. A leading **/ means
-# any depth including the root, which a bash case pattern says as two arms.
+# The annotation paths of REUSE.toml, one glob per line; covered() below
+# turns each into a regex where * never crosses a slash and a leading **/
+# is any depth including the root.
 globs=()
 while IFS= read -r g; do globs+=("$g"); done < <(sed -n 's/^path = \[\(.*\)\]$/\1/p' REUSE.toml | tr ',' '\n' | sed 's/[" ]//g' | sed '/^$/d')
 # ${globs[0]:-} rather than ${#globs[@]}: an empty array under set -u is an
@@ -90,7 +91,7 @@ echo "control: two planted tagless files, one whose only tag is quoted prose and
 # each behind a one-line .gitignore of its own).
 foreign() {
   local g d rule
-  find . -name .gitignore -not -path ./.gitignore -not -path './.git/*' -not -path './node_modules/*' 2>/dev/null | sed 's|^\./||' | sort | while IFS= read -r g; do
+  find . \( -name .git -o -name node_modules \) -prune -o -name .gitignore -not -path ./.gitignore -print 2>/dev/null | sed 's|^\./||' | sort | while IFS= read -r g; do
     git ls-files --error-unmatch "$g" >/dev/null 2>&1 && continue
     d="$(dirname "$g")"
     rule="$(git check-ignore -v "$d" 2>/dev/null | cut -d: -f1)"

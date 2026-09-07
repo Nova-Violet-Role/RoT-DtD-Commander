@@ -576,6 +576,35 @@ typography control reads the table's own row against the constructor.
 The glob count is `${globs[0]:-}`, the `--score` guard exits 2 as the
 header says, and the staging path is ignored.
 
+### The companion's eighteenth pass: a prefix grant is an interpreter
+
+The eighteenth pass returned fail with eight findings, one high: the
+runner granted `Bash(node lib/ceiling.mjs 60 node:*)` and the git twin,
+and a prefix grant admits everything after the prefix, `node -e` with
+`writeFileSync`, `git commit`, `git checkout`, while the comment above it
+said that shape was LAW.COMPANION.1 and 2. The lower seven: law 5 had no
+control that fires the ceiling; a comment above `globs` still described
+the case arms; the narrower `.rot-moe` rule sat beside the bare one; the
+typography control proved one row of the Greek table and asserted the
+rest; the fail branch printed the LAW.COMPANION.8 message and then `FAIL`;
+`find` descended `.git/` and `node_modules/` before filtering; and the
+README's checker row kept its old date.
+
+`checker/companion-run.sh` is the one Bash form the companion may run: an
+engine of this repository under `lib/`, `checker/` or `bin/`, or a git verb
+that reads, under the portable ceiling with stdin closed, refusing by name
+any other executable, a node flag that evaluates or loads code, a script
+outside the engines, a git verb that writes and any argument carrying
+shell syntax. The grant is that wrapper alone, the prompt says so, and the
+runner compares HEAD and the porcelain status before and after the
+session, a changed tree read as the companion's breach. The checker suite
+is 29: M23 refuses a copy granting the old prefixes, M24 trips the
+wrapper's refusals and runs an engine, M25 plants a changed tree, M26
+fires the ceiling with a `claude` that sleeps and reads UNAUDITED at exit
+124 (LAW.COMPANION.5). The typography control compares every row of the
+Greek table the constructor names and counts the rows beyond the
+carve-out named by number. The seams are closed and the row is dated.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
