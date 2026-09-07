@@ -51,28 +51,51 @@ case "$tool" in
     # report when bare; otherwise the first argument is a verb from the
     # reading set, or an existing text file the engine judges; build only
     # with --check.
+    # The engines the companion may run and the spellings each one reads by,
+    # one line per engine (twentieth companion pass: a universal verb set let
+    # `readme-index check` reach the writer, and two bare reporters planted
+    # in the tree or ran the checker suite). FILE stands for an existing text
+    # file the engine judges; BARE for a bare run; build only with --check.
+    # counts-sweep, controls-sweep and contract-audit are refused by name:
+    # their own controls plant files in the tree or spawn every other suite.
     name="$(basename "$abs")"
-    case "$name" in
-      spdx-add.mjs|seal-secret.mjs|scratch.mjs|arm.mjs) refuse "$name writes or publishes" ;;
+    rel="${abs#"$here"/}"
+    case "$rel" in
+      lib/ai-slop.mjs) verbs="controls table sweep FILE" ;;
+      lib/encoding.mjs) verbs="controls sweep check" ;;
+      lib/form.mjs) verbs="controls FILE" ;;
+      lib/cache.mjs) verbs="controls load" ;;
+      lib/list.mjs) verbs="controls reach files" ;;
+      lib/cross-os.mjs) verbs="controls matrix" ;;
+      lib/schematic.mjs) verbs="controls check" ;;
+      lib/ordinals.mjs|lib/typography.mjs|lib/starlist.mjs|lib/geometry.mjs|lib/figure.mjs|lib/ceiling.mjs|lib/amplify.mjs|lib/chain.mjs|lib/license.mjs|lib/record.mjs|lib/task.mjs|lib/workflow.mjs|lib/args.mjs|lib/regression.mjs|lib/headings.mjs|lib/render-check.mjs|lib/dtd.mjs|lib/ledger.mjs|lib/sigil.mjs) verbs="controls" ;;
+      checker/enum-sweep.mjs|checker/subsets-sweep.mjs|checker/plates.mjs|checker/glossary.mjs|checker/readme-index.mjs|checker/heading-sweep.mjs|checker/frontmatter-sweep.mjs|checker/badges.mjs|checker/about-sweep.mjs|checker/live-sweep.mjs) verbs="--check --controls" ;;
+      checker/gate-sync.mjs|checker/engines-sweep.mjs) verbs="BARE" ;;
+      checker/release-notes.mjs) verbs="--versions --controls" ;;
+      checker/scala.mjs) verbs="list --controls" ;;
+      checker/creators-audit.mjs|checker/pack-claude-ai.mjs) verbs="--controls" ;;
+      bin/rot-dtd-commander.mjs) verbs="check list build" ;;
+      bin/adiutor.mjs) verbs="doctor ledger suggest controls" ;;
+      checker/counts-sweep.mjs|checker/controls-sweep.mjs|checker/contract-audit.mjs) refuse "$name plants in the tree or runs every other suite during its own controls" ;;
+      *) refuse "$name is not an engine the companion may run (writer, publisher, or not in the table)" ;;
     esac
     verb="${1:-}"
     if [ -z "$verb" ]; then
-      case "$name" in
-        gate-sync.mjs|contract-audit.mjs|engines-sweep.mjs|enum-sweep.mjs|counts-sweep.mjs|controls-sweep.mjs) ;;
-        *) refuse "$name run bare may write (plates, glossary, subsets-sweep re-embed); name a reading verb" ;;
-      esac
+      [ "$verbs" = "BARE" ] || refuse "$name run bare is not admitted; its reading spellings are: $verbs"
     elif [ -f "$verb" ]; then
+      case " $verbs " in *" FILE "*) ;; *) refuse "$name does not judge a file; its reading spellings are: $verbs" ;; esac
       case "$verb" in
         *.md|*.nt|*.dtd|*.mjs|*.json|*.yml|*.svg|*.txt|*.cff|*.toml) ;;
         *) refuse "$verb is not a text file an engine judges" ;;
       esac
     else
-      case "$verb" in
-        controls|--controls|check|--check|--versions|list|reach|sweep|table|doctor|ledger|suggest|load|measure|--score|--tree-state|census|scalas|matrix|--matrix|score) ;;
-        build)
-          printf '%s\n' "$@" | grep -q -x -- '--check' || refuse "build writes; only build --check reads" ;;
-        *) refuse "$verb is not a reading verb of $name" ;;
+      case " $verbs " in
+        *" $verb "*) ;;
+        *) refuse "$verb is not a reading spelling of $name; its reading spellings are: $verbs" ;;
       esac
+      if [ "$verb" = "build" ]; then
+        printf '%s\n' "$@" | grep -q -x -- '--check' || refuse "build writes; only build --check reads"
+      fi
     fi
     exec node "$here/lib/ceiling.mjs" 60 node "$abs" "$@" < /dev/null
     ;;

@@ -166,13 +166,16 @@ rc=${PIPESTATUS[0]}
 rm -rf "$scratch"
 echo
 echo "companion: claude exit=$rc"
-if [ "$rc" -eq 124 ]; then echo "companion: CEILING FIRED, phase $phase is UNAUDITED"; exit 124; fi
+# The tree is compared before the ceiling branch returns, so a session that
+# wrote and then ran past the ceiling is reported for the write too
+# (twentieth companion pass).
 tree_after="$(tree_state)"
 if [ "$tree_before" != "$tree_after" ]; then
   echo "companion: LAW.COMPANION.1 broken, the tree changed during the audit; phase $phase is UNAUDITED"
   printf '%s\n' "$tree_after" | head -20
   exit 1
 fi
+if [ "$rc" -eq 124 ]; then echo "companion: CEILING FIRED, phase $phase is UNAUDITED"; exit 124; fi
 node -e '
 const fs = require("fs");
 const raw = fs.readFileSync(process.argv[1], "utf8");

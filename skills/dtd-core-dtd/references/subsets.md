@@ -3266,6 +3266,12 @@ The glyph and plate contract of the Graphic and Geometric Suite: the printable A
      invalid against the subset rather than tolerated (LAW.TYPO.4). block is
      off by default and absent from the default content. -->
 <!ENTITY % typo.classes.content "rule_glyphs?, arrow_glyphs?, math_glyphs?, greek_glyphs?">
+<!-- The classes a glyph may name, the same switch: block is absent from the
+     default enumeration, and a command that switches block on redeclares
+     this too before the include, so a glyph in a switched-off class is
+     invalid against the subset rather than tolerated (LAW.TYPO.4; the
+     twentieth companion pass measured the enumeration unconditional). -->
+<!ENTITY % typo.glyph.classes "ascii|rule|arrow|math|greek">
 <![%typo.rule.module;[
 <!ELEMENT rule_glyphs (glyph+)>
 ]]>
@@ -3289,7 +3295,7 @@ The glyph and plate contract of the Graphic and Geometric Suite: the printable A
 <!ATTLIST glyph
           unicode  CDATA #REQUIRED
           name     CDATA #REQUIRED
-          class    (ascii|rule|arrow|math|greek|block) #REQUIRED
+          class    (%typo.glyph.classes;) #REQUIRED
           fallback CDATA #REQUIRED
           advance  CDATA #IMPLIED>
 

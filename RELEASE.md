@@ -33,7 +33,7 @@ each band's artifact the next band's user-args (`dtd/cc-chain.dtd`).
 - **The creators audited per corpus folder**, one scala per family through a
   real model on every leg, and the README saying how each family hands on.
 - 139 commands, 22 skills,
-  5 agents; 1928 declarations; recognised 9.0.0 (class major) from a top verb
+  5 agents; 1929 declarations; recognised 9.0.0 (class major) from a top verb
   of 15 kept in run 9.
 
 ## v8.0.0 — Cross-OS-Commander

@@ -72,15 +72,15 @@ Measured on the release day:
 
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
-- `node checker/contract-audit.mjs`: 1928 declarations, 0 unused, 0 law gaps
+- `node checker/contract-audit.mjs`: 1929 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 83 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
-- `node lib/typography.mjs controls`: 34 run, 0 failing
+- `node lib/typography.mjs controls`: 35 run, 0 failing
 - `node lib/chain.mjs controls`: 26 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 83 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1929 declarations; 83 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -201,7 +201,7 @@ left `TYPO.numeral.join`, since no compound this engine builds carries a
 hundreds part. `looseCount` in the controls sweep counts a claim by its
 command rather than by its tail, so a count spelled as `prints 12` or `12
 controls` is a refusal by number, tripped on purpose. `node
-lib/typography.mjs controls`: 34 run, 0 failing; `node
+lib/typography.mjs controls`: 35 run, 0 failing; `node
 checker/controls-sweep.mjs --controls`: 13 run, 0 failing.
 
 ### The companion's fifth pass: a census that could not differ, and a carve-out that reached everything but the command
@@ -630,6 +630,34 @@ and runs `ordinals controls` and `gate-sync`; M24 reads the refusal by name:
 31 checker controls. The `renders` producer renders the figure fixture
 through each driver, the `typeset` comment names the answer as its
 renderer, and the header inventory reaches M28.
+
+### The companion's twentieth pass: one engine at a time
+
+The twentieth pass returned fail with eight findings, three high, all on
+the wrapper's verb set: a universal reading set let `readme-index check`
+reach the writer, since four engines treat any token that is not `--check`
+or `--controls` as their write mode; `counts-sweep` run bare ran the
+checker suite, which plants at the root; and `contract-audit` run bare
+plants `dtd/zz-control.dtd` in the tracked tree during its own controls.
+The lower five: M28 exercised three arms, the glyph class enumeration
+named block unconditionally while its module is IGNORE, the ceiling branch
+returned before the tree was compared, M25's plant had no trap, and
+`lib/arm.mjs` spelled the BOM with the character itself.
+
+The wrapper carries a table, one engine per line with the spellings it
+reads by: FILE for an engine that judges a file, BARE for the two
+reporters, `build` only with `--check`; `counts-sweep`, `controls-sweep`
+and `contract-audit` are refused by name; an engine outside the table is
+refused. M28 adds the dashless `check` against `readme-index`, the two
+refused by name and a verb outside an engine's set; M29 runs the two
+reporters bare and refuses `glossary` bare and an engine outside the
+table; M25 cleans up under a trap: 32 checker controls. The runner
+compares the tree before the ceiling branch returns. The glyph class
+enumeration is `typo.glyph.classes`, a parameter entity a command
+redeclares with the two others when it switches block on, so a glyph in a
+switched-off class is invalid against the subset; the enumerations walk
+reads the resolved default driver and the class producer follows the
+modules; 1929 declarations. The BOM is `\uFEFF`.
 
 ## 8.0.0 (2026-09-06)
 

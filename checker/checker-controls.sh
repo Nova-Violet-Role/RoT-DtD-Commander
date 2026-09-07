@@ -10,9 +10,9 @@
 # each expected to score as its law says, two verdict lines and none among
 # them; M17: the runner's allow-list, a copy granting Write refused, M17b a
 # bare Bash refused, M17c the bare timeout refused; M20 to M22: the run
-# stamp and the four headings; M23 to M28: the wrapper checker/companion-run.sh
+# stamp and the four headings; M23 to M29: the wrapper checker/companion-run.sh
 # (the old prefix grant refused, its refusals tripped, git config and the
-# engines by what they do), a changed tree, a fired ceiling. The total line at the end,
+# engines by the table, the bare arms), a changed tree, a fired ceiling. The total line at the end,
 # checker controls: N run, F failing, counts once per control, and
 # CC_PLANT_FAIL=1 runs M0 and one control forced to fail, printing 2 run, 1
 # failing at exit 1, the proof checker/counts-sweep.mjs reads.
@@ -22,6 +22,9 @@ set -u
 cd "$(dirname "$0")/.." || exit 2
 PORTABLE_ROOT="$(pwd)"; . checker/portable.sh
 T=$(mktemp -d)
+# M25 plants a file at the repository root to move the tree state; a kill
+# between the write and the rm must not leave it behind
+trap 'rm -f zz-tree-control.tmp' EXIT
 mkdir -p "$T/commands"
 cp commands/pareto-dtd.md "$T/commands/pareto-dtd.md"
 fail=0
@@ -178,7 +181,17 @@ bash $w node lib/cache.mjs save x --state y >/dev/null 2>&1; r28c=$?
 bash $w node bin/rot-dtd-commander.mjs build >/dev/null 2>&1; r28d=$?
 bash $w node lib/ordinals.mjs controls >/dev/null 2>&1; r28e=$?
 bash $w node checker/gate-sync.mjs >/dev/null 2>&1; r28f=$?
-[ $r28a -eq 2 ] && [ $r28b -eq 2 ] && [ $r28c -eq 2 ] && [ $r28d -eq 2 ] && [ $r28e -eq 0 ] && [ $r28f -eq 0 ] && ok "M28 spdx-add by name, plates run bare, cache save and build without --check are refused (exit 2); ordinals controls and gate-sync run" || { ko "M28 engines: add=$r28a bare=$r28b save=$r28c build=$r28d check=$r28e sync=$r28f"; }
+out28g=$(bash $w node checker/readme-index.mjs check 2>&1); r28g=$?
+bash $w node checker/counts-sweep.mjs >/dev/null 2>&1; r28h=$?
+bash $w node checker/contract-audit.mjs >/dev/null 2>&1; r28i=$?
+bash $w node lib/ceiling.mjs check >/dev/null 2>&1; r28j=$?
+[ $r28a -eq 2 ] && [ $r28b -eq 2 ] && [ $r28c -eq 2 ] && [ $r28d -eq 2 ] && [ $r28e -eq 0 ] && [ $r28f -eq 0 ] && [ $r28g -eq 2 ] && echo "$out28g" | grep -q 'not a reading spelling' && [ $r28h -eq 2 ] && [ $r28i -eq 2 ] && [ $r28j -eq 2 ] && ok "M28 spdx-add by name, plates bare, cache save, build without --check, a dashless check against readme-index, counts-sweep and contract-audit by name and a verb outside ceiling's set are refused (exit 2); ordinals controls and gate-sync run" || { ko "M28 engines: add=$r28a bare=$r28b save=$r28c build=$r28d ordinals=$r28e sync=$r28f dashless=$r28g counts=$r28h contract=$r28i ceiling=$r28j"; }
+# M29: the bare arms: every reporter the table names as BARE runs bare at exit 0, a bare run of an admitted engine that is not one is refused, and an engine outside the table is refused
+bash $w node checker/gate-sync.mjs >/dev/null 2>&1; r29a=$?
+bash $w node checker/engines-sweep.mjs >/dev/null 2>&1; r29b=$?
+out29c=$(bash $w node checker/glossary.mjs 2>&1); r29c=$?
+out29d=$(bash $w node lib/arm.mjs controls 2>&1); r29d=$?
+[ $r29a -eq 0 ] && [ $r29b -eq 0 ] && [ $r29c -eq 2 ] && echo "$out29c" | grep -q 'run bare is not admitted' && [ $r29d -eq 2 ] && echo "$out29d" | grep -q 'not an engine the companion may run' && ok "M29 gate-sync and engines-sweep run bare (exit 0); glossary bare and an engine outside the table are refused by name (exit 2)" || { ko "M29 bare arms: sync=$r29a engines=$r29b glossary=$r29c arm=$r29d"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"
