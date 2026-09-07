@@ -80,7 +80,7 @@ Measured on the release day:
 - `node lib/chain.mjs controls`: 26 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 75 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 77 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -105,7 +105,7 @@ whole (`LAW.CACHE.4`), and an intake that closes on `add`, `more` or
 source, 119 of them, and `cc-ask` itself gains the choice in its gate
 enumeration, `GATE.save`, `intake (.., gate, cache?)` and an `ASK.exhausted`
 that offers start and save. `.nt` enters the white list. `node lib/cache.mjs
-controls`: 18 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
+controls`: 19 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
 failing; `npm run controls:cache` in the gate chain and the workflow.
 
 ### The companion's first pass on 9.0.0: seven findings, all sound
@@ -259,8 +259,6 @@ controls`: 34 run, 0 failing; `node lib/chain.mjs controls`: 26 run, 0
 failing; `node checker/controls-sweep.mjs --controls`: 13 run, 0 failing;
 `node checker/enum-sweep.mjs --controls`: 9 run, 0 failing.
 
-## 8.0.0 (2026-09-06)
-
 ### The companion's seventh pass: a census that filtered away what it was counting
 
 The seventh pass returned fail with six findings, two of them high, all
@@ -294,7 +292,58 @@ the first save of this release went through a JSON state file in a
 scratch directory, the one form the subset exists to keep out of the loop.
 `lib/cache.mjs save --state <state.nt>` reads the state in NestedText,
 answers in any of the three shapes the form carries, and refuses a JSON
-state by name. `node lib/cache.mjs controls`: 18 run, 0 failing.
+state by name. `node lib/cache.mjs controls`: 19 run, 0 failing.
+
+### The companion's eighth pass: the plates nobody could re-draw
+
+The eighth pass returned fail with six findings, two of them high, every
+one a published number no instrument read back. The Adiutor claims row
+said `20 run` and the release-notes row `4 run` where the commands print
+31 and 10; the gate step name said thirty guards; the two verify plates
+drew `thirty guards; C21 to C29` to every reader, light and dark, under a
+header claiming they were generated from README prose, and the claims
+plate named a renderer, `checker/claims-plate.mjs`, that had never entered
+the tree; and the scala job's `rc=$?` sat after a line `set -e` aborts on,
+so the artifact listing was lost on exactly the run that needed it. The
+plates were stale far beyond the guards: 131 commands and 158 checked from
+2026-09-03, and prose no reader of the README could find as text.
+
+`checker/plates.mjs` ends the class. Every pictured section keeps its
+prose in the README beside its picture, `<!-- rdc-section:<name> -->`,
+the way the claims rows and the verify commands already did, and the
+renderer draws the sixteen plates (seven sections, light and dark, and
+the claims pair) from that text: prose wrapped, fences in monospace, a
+sub-heading, an indented line, a rule, a centred close. The verify plate
+draws the commands of the `rdc-verify:machine-readable` comment, the one
+copy the counts sweep reads the guard count from, through a `{{rdc-verify}}`
+line, and the comment now carries every command the plate shows.
+`--check` holds every file to a fresh render; `--controls` plants a stale
+count in the verify source and reads both verify plates drift and nothing
+else, a pictured section with no source block refused by name, angle
+brackets and quotes escaped, the fence never drawn, the dark plate
+carrying the light plate's words. `node checker/plates.mjs --controls`:
+8 run, 0 failing; `sweep:plates` and `controls:plates` in the gate chain
+and the workflow, so the chain is 77 commands.
+
+The counts sweep gains what the pass named: the two claims rows, the gate
+step name, the guard count and the control-suite count in the verify
+prose, the checker-controls numbers in the verify comment, the creators
+and the shelf in the About prose, and the alt text of the claims plate,
+each held against the tree (the release-notes total and the claims rows
+measured, the control suites counted from package.json); a stale guard
+count planted in the step name is reported by name. The sweep reads 49
+places. `node checker/counts-sweep.mjs --controls`: 7 run, 0 failing. The
+scala job captures `rc` between `set +e` and `set -e`, as the release job
+does.
+
+The cache writes the literal its schematic declares: `SCHEMA.nt.literal`
+is an angle bracket per line, and a value longer than one line of prose
+is folded at a word boundary into that block, the fold part of the value,
+so what is written is what is read back; the operator read the first
+cache of this release, every value on one line, as a file the schematic
+had never touched. `node lib/cache.mjs controls`: 19 run, 0 failing.
+
+## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate
 
@@ -356,7 +405,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 40 places, from 22.
+counts sweep reported every place in step: the sweep reads 49 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document

@@ -91,11 +91,23 @@ export function measure(root = ROOT) {
   // diagnosed from the one control that runs in a temp directory.
   if (Number(hm[2]) !== 0) throw new Error(`counts-sweep: pack-claude-ai.mjs --controls reports ${hm[2]} failing; the count of a red suite is not read: ${hostedOut.split(/\r?\n/).filter((l) => /^FAIL/.test(l)).join(' | ').slice(0, 600)}`);
   const hostedControls = Number(hm[1]);
+  // Eighth companion pass: a published number nobody re-read. The release
+  // notes suite total, the control suites of the gate chain (every
+  // controls: script of package.json) and the claims rows of the README.
+  const rnOut = runOut('node checker/release-notes.mjs --controls');
+  const rn = /release-notes controls: (\d+) run, (\d+) failing/.exec(rnOut);
+  if (!rn || rn[2] !== '0') throw new Error(`counts-sweep: release-notes.mjs --controls printed no green total line: ${rnOut.slice(-200)}`);
+  const releaseNotesControls = Number(rn[1]);
+  const controlSuites = Object.keys(JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).scripts || {}).filter((k) => /^controls:/.test(k)).length;
+  const readmeText = readFileSync(join(root, 'README.md'), 'utf8');
+  const claimsAt = readmeText.indexOf('<!-- rdc-claims:machine-readable');
+  const claimsBlock = claimsAt < 0 ? '' : readmeText.slice(claimsAt, readmeText.indexOf('-->', claimsAt));
+  const claims = claimsBlock.split('\n').filter((l) => /^\s*\| /.test(l) && !/^\s*\| claim \|/.test(l) && !/^\s*\|-{3,}/.test(l)).length;
   const cmdNames = readdirSync(join(root, 'commands'));
   const schematics = cmdNames.filter((f) => /^create-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   const creators = schematics + cmdNames.filter((f) => /^create-meta-prompt-[a-z]+-dtd\.md$/.test(f)).length;
   return {
-    books, schematics, creators, hostedControls,
+    books, schematics, creators, hostedControls, releaseNotesControls, controlSuites, claims,
     gateChain,
     listControls, starlistControls, crossOsControls, geometryControls, figureControls, buildTargets, ceilingControls, encodingControls,
     amplifyControls, commands, skills, agents, checked: commands + skills + agents, guards, checkerControls, checkerSpan, mutationsRefused, declarations: Number(m[1]) };
@@ -139,6 +151,20 @@ export function places(c) {
     // a constant subtracted from a total (fourth companion pass).
     { file: '.github/workflows/gate.yml', re: /checker controls \(M0 to M(\d+) - ([a-z-]+) mutations refused, one under INCLUDE and the untouched file pass, ([a-z-]+) scorer and runner controls\)/, want: [c.checkerSpan, c.mutationsRefused, c.checkerControls - c.mutationsRefused - 2], label: 'the gate step name of the checker controls' },
     { file: 'README.md', re: /contract-audit\.mjs`: `(\d+) declarations, 0 unused/, want: [c.declarations], label: 'the claims row of the contract audit' },
+    // Eighth companion pass: the Adiutor and release-notes claims rows, the
+    // gate step name, the plate prose the README keeps beside each picture,
+    // the verify comment and the alt text of the claims plate. A plate is
+    // held to its source by checker/plates.mjs; the source is held to the
+    // tree here.
+    { file: 'README.md', re: /adiutor\.mjs controls`: `(\d+) run, 0 failing/, want: [c.guards], label: 'the claims row of the Adiutor guards' },
+    { file: 'README.md', re: /release-notes\.mjs --controls`: `(\d+) run, 0 failing/, want: [c.releaseNotesControls], label: 'the claims row of the release-notes controls' },
+    { file: '.github/workflows/gate.yml', re: /adiutor controls \(([a-z-]+) guards tripped on purpose/, want: [c.guards], label: 'the gate step name of the Adiutor guards' },
+    { file: 'README.md', re: /the ([a-z-]+) Adiutor controls, the contract audit/, want: [c.guards], label: 'the verify plate prose of the Adiutor guards' },
+    { file: 'README.md', re: /the ([a-z-]+) control suites of the gate chain/, want: [c.controlSuites], label: 'the verify plate prose of the control suites' },
+    { file: 'README.md', re: /checker-controls\.sh\s+# M0 to M(\d+): ([a-z-]+) mutations refused, one under INCLUDE and the untouched file pass, then ([a-z-]+) scorer and runner controls/, want: [c.checkerSpan, c.mutationsRefused, c.checkerControls - c.mutationsRefused - 2], label: 'the verify comment of the checker controls' },
+    { file: 'README.md', re: /([A-Za-z-]+) prompt and meta-prompt creators, one per schematic and its meta form over ([a-z-]+) schematics/, want: [c.creators, c.schematics], label: 'the about plate prose of the creators' },
+    { file: 'README.md', re: /the shelf of ([a-z-]+) book-derived commands/, want: [c.books], label: 'the about plate prose of the shelf' },
+    { file: 'README.md', re: /alt="(\d+) claims, each with the command that proves it"/, want: [c.claims], label: 'the alt text of the claims plate' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },
     { file: 'CHANGELOG.md', re: /matrix --check`, (\d+) controls\./, want: [c.crossOsControls], label: 'the changelog cross-os prose' },
     { file: 'CHANGELOG.md', re: /lib\/geometry\.mjs controls`: (\d+) run/, want: [c.geometryControls], label: 'the changelog geometry controls' },
@@ -206,7 +232,12 @@ function controls(c, texts) {
   const fam = { ...texts, '.claude-plugin/marketplace.json': texts['.claude-plugin/marketplace.json'].replace(/([a-z-]+) book-derived commands/, 'twelve book-derived commands') };
   const d4 = check(c, fam);
   say(d4.length === 1 && /three families in words says twelve, the tree measures/.test(d4[0]), `trip: a stale family count in words in the marketplace opening is reported by name: ${d4[0] || 'nothing'}`);
-  console.log(`counts-sweep controls: 6 run, ${fail} failing`);
+  // The gate step name of the Adiutor guards, in words: a stale one is
+  // reported by name (eighth companion pass).
+  const step = { ...texts, '.github/workflows/gate.yml': texts['.github/workflows/gate.yml'].replace(/adiutor controls \(([a-z-]+) guards tripped on purpose/, 'adiutor controls (twenty guards tripped on purpose') };
+  const d5 = check(c, step);
+  say(d5.length === 1 && /gate step name of the Adiutor guards says twenty, the tree measures/.test(d5[0]), `trip: a stale guard count in the gate step name is reported by name: ${d5[0] || 'nothing'}`);
+  console.log(`counts-sweep controls: 7 run, ${fail} failing`);
   return fail === 0;
 }
 

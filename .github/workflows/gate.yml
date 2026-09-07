@@ -61,7 +61,7 @@ jobs:
         run: node checker/heading-sweep.mjs --check
       - name: front matter parses as YAML (no bare colon-space or hash in a value; the sweep is a no-op)
         run: node checker/frontmatter-sweep.mjs --check
-      - name: adiutor controls (thirty guards tripped on purpose; C21 to C29 the AI_SLOP gate on five spots, the tally and the fields)
+      - name: adiutor controls (thirty-one guards tripped on purpose; C21 to C29 the AI_SLOP gate on five spots, the tally and the fields; C30 the lists at Write; C31 the gate law of cc-cache at Stop)
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, three planted controls)
         run: node checker/contract-audit.mjs
@@ -157,6 +157,8 @@ jobs:
         run: node checker/readme-index.mjs --check && node checker/readme-index.mjs --controls
       - name: the glossary agrees with the tree, and every guard on it trips
         run: node checker/glossary.mjs --check && node checker/glossary.mjs --controls
+      - name: plates (sixteen README plates rendered from the README's own text and held to a fresh render; planted drift tripped)
+        run: node checker/plates.mjs --check && node checker/plates.mjs --controls
       - name: no comment claims a reader that does not read it, no declaration survives unread without its reason, and no controls verb the gate never runs stays unexplained
         run: node lib/regression.mjs claims && node lib/regression.mjs retenue && node lib/regression.mjs unreached
       - name: every published count equals the tree (badges, tagline, claims rows, the three manifests; its controls)
@@ -295,8 +297,10 @@ jobs:
         if: env.SCALA_SKIP != '1'
         run: |
           O=$(mktemp -d); O=$(cygpath -m "$O" 2>/dev/null || echo "$O")
+          set +e
           node checker/scala.mjs run --all --out "$O" --turns 60 --secs 1500
           rc=$?
+          set -e
           ls -l "$O"
           exit $rc
 

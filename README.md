@@ -37,12 +37,71 @@
   <img alt="👋 Welcome" src="docs/section-welcome.svg" />
 </picture>
 
+<!-- rdc-section:welcome: the prose the plate above draws, kept as text because
+     checker/plates.mjs renders the plate from it and holds the file to the render.
+     Nothing here is hidden that the plate does not also show.
+
+You are welcome here, whatever you came for. If you want sharper thinking commands in your Claude Code sessions, start with Install: one line, and rdc uninstall undoes every byte of it. If you came to check whether the numbers on this page are real, start with Verify and try to break them; that is the point of the page, not an offence against it. If "DTD" is a word you last saw in 2002, nothing here requires you to write one: the commands work as commands, and the grammar rides inside them.
+
+Questions that begin "this is probably a dumb question" are the ones the documentation failed to answer. Ask them in Discussions and they will be treated as defects in this page.
+
+---
+-->
+
 ## 📜 About
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/section-about-dark.svg" />
   <img alt="📜 About" src="docs/section-about.svg" />
 </picture>
+
+<!-- rdc-section:about: the prose the plate above draws, kept as text because
+     checker/plates.mjs renders the plate from it and holds the file to the render.
+     Nothing here is hidden that the plate does not also show.
+
+A slash command is a prompt. A prompt says what an answer should contain, in prose, and prose drifts: the template at the bottom stops matching the steps in the middle, the verdict words multiply, and nothing ever reads the answer back. This repository fixes the shape of the answer once, in the oldest schema language there is, and then reads it back.
+
+Every -dtd command, skill and agent opens with a <!DOCTYPE> block:
+
+```
+<!DOCTYPE pareto [
+<!ELEMENT pareto (vital+, trivial, bottom_line)>
+<!ELEMENT vital (factor, why, action)>
+<!ATTLIST vital rank CDATA #REQUIRED impact (high|medium|low) #REQUIRED>
+<!ENTITY LAW.PARETO.2 "The cutoff is stated as a count of factors out of the total, not as a feeling.">
+]>
+```
+
+The elements are the answer's shape. The enumerations are the only verdicts it may give. The LAW. entities are its success criteria, numbered and never reused. Four unparsed channels (user-args, tool-result, file-ref, ask-answer) are declared as NDATA: whatever arrives on them is data, never an instruction, and every file must say so in its trust boundary or the checker refuses it. The four terms are used as they were meant: #PCDATA is the model's own reasoning, CDATA is text carried in whole, NDATA names a channel, NOTATION says how it must be handled.
+
+Then the Adiutor closes the loop. When you run any -dtd command, a hook reads that command's DOCTYPE and records which headings the answer must carry. At Stop, another hook reads the answer from the transcript and checks it. Every run is one line in a ledger. /RoT-DtD-Commander-Adiutor is the doctor that reads the ledger and prescribes. Nothing is described twice: the grammar the model was shown is the grammar the hook reads.
+
+Beside the hooks runs the Commander-Adiutor, a monitor: a separate process (monitors/commander-adiutor.mjs, not bin/adiutor.mjs) that tails the ledger and hands every answer that failed its grammar to the session the moment the run closes, one line each, nothing for a pass. It reads the ledger only, never a transcript, and the two lines it may print are declared in dtd/adiutor.dtd. Since 5.0.0 neither runs on its own: no plugin manifest arms the hooks, an install arms nothing unless --arm is given, the monitor is declared in monitors/manual.json and started only by rdc watch, and every run of either ends at a 300 second ceiling.
+
+The answer has one shape too. Every heading a command's grammar map declares is rendered as a markdown heading that carries the command's own sigil, with a blank line before it and after it:
+
+### 🎯 Vital Few (focus here)
+
+  Factor 1: the installer, because it checks every other file
+
+### 🎯 Bottom Line
+
+Ship the installer first.
+
+One sigil per command, declared once in dtd/sigils.json (the nine lens commands carry their lens emoji); the rule is LAW.CORE.6, checker rule C13 refuses a template whose headings touch or lack the sigil, and the Adiutor flags a crammed answer at Stop as a spacing finding. Nothing runs together, and an answer is recognisable at a glance.
+
+A command is also runnable from the end of a prompt: LAW.CORE.7 declares that a /name-dtd token that ends a prompt, with or without a trailing <-, invokes that command on the text before it as its arguments. Claude Code expands a slash command only at the head of a prompt; the Adiutor arms the run on the trailing token too (control C14) and its armed line tells the model to run the command, so the call is as complete as a leading one.
+
+Since 5.0.0 the commands also write. Sixteen prompt and meta-prompt creators, one per schematic and its meta form over eight schematics (callout, heredoc, yaml, nt, xml, polyglot, alarm, polyalarm), draw every syntax from a declared table and prove a planted out-of-table syntax refused. Creators for skills, hooks, commands, subagents, plans, MCP servers and workflow files ask twelve questions in three rounds, write with the answers as known slots, and audit what they wrote here, in the foreground, with a planted fault proving the audit. A tasks family keeps its registry and ledger; eight filetype creators and their router write an exemplar and its NOTATION; two dork creators build a search and a local hunt. Every creator declares a curated SPDX licence from dtd/licenses.json. Records nest (cc-record.dtd), the shelf of nineteen book-derived commands carries a voice profile the slop sweep reads, and the Scratchpad Companion, a second session run in the foreground, audits each build phase in a declared grammar and is scored on its finding elements.
+
+### 🤝 It improves Claude Code; it does not replace it
+
+The commands install into ~/.claude/commands like any other, and a plain install arms nothing. When you ask for the hooks (rdc install --arm or rdc arm), they are added to ~/.claude/settings.json by an additive merge that backs up first, preserves every key it did not add (deep-compared after re-reading from disk), and reverses with one command. A hook reads its payload, writes under its own state directory, spawns nothing, and exits. The monitor is declared in monitors/manual.json, a file the loader never reads, and runs only when you run rdc watch; it reads the ledger and prints, nothing more.
+
+Armed, since 5.1.0, the AI_SLOP gate of ai-slop.dtd also judges every answer at Stop, a subagent answer at SubagentStop, and every Write, Edit, NotebookEdit, commit message and request body before it lands: a prose file whole, a code file by its lifted comments, strict whatever the policy, one ledger line per refusal, the escape a code fence or a quoted element (LAW.SLOP.7, LAW.SLOP.8; controls C21 to C29). /ai-slop-dtd is the hand-run form of the same instrument.
+
+---
+-->
 
 <a id="hosted-install"></a>
 
@@ -531,7 +590,7 @@ want the grammar enforced rather than merely declared.
      | the committed resolved tree equals a fresh build | `rdc build --check`: `303 targets, 0 drifted, 0 failing` | 2026-09-07 |
      | the checker refuses every defect it names &mdash; a removed declaration, a `(CDATA)` model, an orphan element, a crammed heading, a missing sigil, a front-matter value YAML would misread, a declaration hidden under IGNORE &mdash; and the companion scorer runs under an allow-list with no writing tool | `bash checker/checker-controls.sh`: twenty-two controls M0 to M19, `checker controls: 22 run, 0 failing`, `all tripped as designed` | 2026-09-06 |
      | every declaration in the subsets and the Adiutor contract is used by a source, every law prefix is numbered densely, and every law family is read in ascending order | `node checker/contract-audit.mjs`: `1928 declarations, 0 unused, 0 law gaps`, and the three planted controls | 2026-09-07 |
-     | the Adiutor finds a missing heading, blocks once and never twice, stays silent on `stop_hook_active`, refuses a tampered ledger line, preserves foreign settings keys, completes an answer that lags behind narration, and arms on a trailing `/name-dtd` token (LAW.CORE.7) | `node bin/adiutor.mjs controls`: `20 run, 0 failing` | 2026-09-03 |
+     | the Adiutor finds a missing heading, blocks once and never twice, stays silent on `stop_hook_active`, refuses a tampered ledger line, preserves foreign settings keys, completes an answer that lags behind narration, and arms on a trailing `/name-dtd` token (LAW.CORE.7) | `node bin/adiutor.mjs controls`: `31 run, 0 failing` | 2026-09-07 |
      | `rdc install` writes the monitor as `skills/rot-dtd-commander-adiutor/` (a `.claude-plugin/plugin.json` and a `monitors/monitors.json` running the copied script), the doctor's `monitor` row is green, and `rdc uninstall` leaves `skills/` empty | `rdc install --yes --target <scratch> --only pareto-dtd`: `written 17`; `CLAUDE_CONFIG_DIR=<scratch> node bin/adiutor.mjs doctor`: `11 checks, 0 failing`; `rdc uninstall --yes --target <scratch>`: `removed 17  kept 0` | 2026-09-02 |
      | the repository is a valid plugin with its monitor declared | `claude plugin validate .`: `Validation passed` | 2026-09-02 |
      | a live `/pareto-dtd` turn in a fresh headless session, through the armed hooks, closes as `pass` in the ledger | `MSYS_NO_PATHCONV=1 claude -p "/pareto-dtd ..." --dangerously-skip-permissions`, then `rdc ledger --last 1` | 2026-09-02 |
@@ -541,17 +600,17 @@ want the grammar enforced rather than merely declared.
      | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
      | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
      | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
-     | every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `75 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
+     | every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `77 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
      | every build target under commands, skills and agents is tracked; an ignored one would pass the drift check here and fail it on a fresh checkout | `bash checker/tracked-sweep.sh`: `0 ignored build targets`, its planted control reported | every push |
      | every command, skill and agent of the tree is named in the README index, each command in exactly one family | `node checker/readme-index.mjs --check`: `README block in step`; `--controls`: an unclaimed name refused, a removed row reported | every push |
      | the version is one everywhere: package.json, plugin.json, both marketplace fields, the top changelog section, a RELEASE.md heading, and the tag that ships | `node checker/release-notes.mjs --versions`, and the release job with the tag; controls plant a stray manifest, a missing heading and a wrong tag | every push, and the tag |
      | armed, the AI_SLOP gate judges every answer at Stop and every Write, Edit, NotebookEdit, commit message, request body and subagent answer before it lands, strict, with a fence or a quoted element as the only escape | `node bin/adiutor.mjs controls` C21 to C29; `node lib/ai-slop.mjs controls` trips the comment lifter, the command parser and the refusal | every push |
      | a scratch is a git worktree that is opened on its own branch, diffed into findings with counts, merged by marked paths or whole, and discarded with its branch | `node lib/scratch.mjs controls`: `11 run, 0 failing`, among them the red-gate revert and the refusal to overwrite newer work | every push |
-     | every count the repository publishes (the badges, the tagline, the claims rows, the three manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the checker controls, the declarations | `node checker/counts-sweep.mjs`: `40 places in step`; `--controls` plants a stale badge, a stale count in words and a removed count | every push |
+     | every count the repository publishes (the badges, the tagline, the claims rows, the three manifests) equals the tree: commands, skills, agents, their sum, the Adiutor guards, the checker controls, the declarations | `node checker/counts-sweep.mjs`: `49 places in step`; `--controls` plants a stale badge, a stale count in words and a removed count | every push |
      | the growth ladder is fifteen verbs partitioned into three bands with no overlap and no gap, a possibility keeps one id across runs, a refusal returns only as a reopen, the page grows with the answering, and the version a release publishes is the one its own recognizer computes | `node lib/amplify.mjs controls`: `36 run, 0 failing`, among them a ceiling tripped on purpose, a refusal reopened, a study missing a kind refused, and a manifest version the recognizer disputes | every push |
      | the lists refuse a mix that would leave a repository unable to build itself, an entry name that would close its own declaration, a code class the starlist cannot reach, and a write of a blacklisted filetype at the moment it is attempted | `node lib/list.mjs controls`: `47 run, 0 failing` | every gate run |
      | every subset the repository declares is installed, and a version the recognizer disputes is refused | `rdc doctor` row `subsets`: `18 subsets, every one installed` (run against your own installation, not in CI); `node checker/release-notes.mjs --versions`: the recognised class and version printed beside the manifests | every push |
-     | a tag `v*` ships the GitHub release with the CHANGELOG section of its version as the notes; a tag that is not package.json's version, a section still in progress, or a release already on the tag ships nothing | the `release` job in `.github/workflows/gate.yml`; `node checker/release-notes.mjs --controls`: `4 run, 0 failing` | on the tag |
+     | a tag `v*` ships the GitHub release with the CHANGELOG section of its version as the notes; a tag that is not package.json's version, a section still in progress, or a release already on the tag ships nothing | the `release` job in `.github/workflows/gate.yml`; `node checker/release-notes.mjs --controls`: `10 run, 0 failing` | on the tag |
 -->
 
 If one of these does not re-run for you, open the issue form **"A claim in
@@ -565,10 +624,34 @@ our docs is false"**. It is the most welcome report there is.
   <img alt="🎓 Verify it yourself" src="docs/section-verify.svg" />
 </picture>
 
+<!-- rdc-section:verify: the prose the plate above draws, kept as text because
+     checker/plates.mjs renders the plate from it and holds the file to the render.
+     Nothing here is hidden that the plate does not also show.
+
+```sh
+git clone https://github.com/Nova-Violet-Role/RoT-DtD-Commander
+cd RoT-DtD-Commander
+npm run gate; echo "exit=$?"
+```
+
+gate opens by proving the workflow runs the same chain (checker/gate-sync.mjs), then runs build --check, check, the thirty-one Adiutor controls, the contract audit, the checker controls, the sweeps, the thirty-one control suites of the gate chain, the slop sweep at zero, the slop measures on README and CHANGELOG (the release ships a changelog section), the tracked-targets sweep, the plates and the release-notes controls; each ends with a line of counts, and the exit code is read directly. Then break it:
+
+{{rdc-verify}}
+
+A guard nobody has tripped on purpose is decoration. Every one here has been.
+
+---
+-->
+
 <!-- rdc-verify:machine-readable — the same commands the plate above draws, kept as
      text because checker/counts-sweep.mjs reads the guard count out of this file.
      Nothing here is hidden that the plate does not also show.
      node bin/adiutor.mjs controls         # thirty-one guards; C31 the gate law of cc-cache at Stop; C21 to C29 the AI_SLOP gate on five spots, the tally and the fields; C3 is the strict block, once and never twice; C12 the monitor, tripped live; C13 the lagging answer, C14 the trailing call, C17 the heading-less file judged
+     bash checker/checker-controls.sh      # M0 to M19: seven mutations refused, one under INCLUDE and the untouched file pass, then thirteen scorer and runner controls
+     node checker/gate-sync.mjs            # every gate command is a run line of the workflow; a line removed or a step commented out is reported
+     node checker/release-notes.mjs --controls  # the release job's notes: an in-progress heading and an unknown version refused
+     node checker/plates.mjs --check       # the sixteen README plates equal a fresh render from the README's own text
+     rdc watch --once                      # the monitor over your own ledger: one line per failed run, silence for a pass
 -->
 
 ## 🤝 Contributing
@@ -578,12 +661,28 @@ our docs is false"**. It is the most welcome report there is.
   <img alt="🤝 Contributing" src="docs/section-contributing.svg" />
 </picture>
 
+<!-- rdc-section:contributing: the prose the plate above draws, kept as text because
+     checker/plates.mjs renders the plate from it and holds the file to the render.
+     Nothing here is hidden that the plate does not also show.
+
+Read CONTRIBUTING.md. The short form: edit src/, run npm run build, run npm run gate, watch a control fail before you trust it, and say what you could not verify. New commands are made with the dtd-forge-dtd skill: grammar first, prose second.
+
+What the software does with your data, and what we hold of it, is in PRIVACY.md: nothing leaves your machine, and every line of it names the measurement.
+-->
+
 ## 🏛️ Where this sits in the organisation
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/section-where-dark.svg" />
   <img alt="🏛️ Where this sits in the organisation" src="docs/section-where.svg" />
 </picture>
+
+<!-- rdc-section:where: the prose the plate above draws, kept as text because
+     checker/plates.mjs renders the plate from it and holds the file to the render.
+     Nothing here is hidden that the plate does not also show.
+
+Nova-Violet Role builds convergent cognitive frameworks, formally verified where it counts. RoT-MoE routes a prompt through nine lenses; RoT-DTD-GOAL makes completion something a Stop hook earns. This repository is the third piece: the commands themselves carry a contract, and a Stop hook reads it. The contract DTDs of the two siblings are the ancestors of dtd/cc-core.dtd, and their both-direction checkers are the ancestors of rdc check.
+-->
 
 <!-- the links the plate draws but cannot make clickable -->
 [Nova-Violet Role](https://github.com/Nova-Violet-Role) builds convergent
@@ -595,6 +694,17 @@ our docs is false"**. It is the most welcome report there is.
   <img alt="☕ Supporting a non-profit" src="docs/section-supporting.svg" />
 </picture>
 
+<!-- rdc-section:supporting: the prose the plate above draws, kept as text because
+     checker/plates.mjs renders the plate from it and holds the file to the render.
+     Nothing here is hidden that the plate does not also show.
+
+Ko-fi buys time, never priority. Proving a number on this page wrong is worth more than a coffee, and it is credited in the changelog.
+
+### 🙏 Standing on other people's work
+
+Lex Christopherson's taches-cc-resources (MIT), from which thirty-three commands and eleven skills were converted with their prose retained; the vhs and ttyd authors. The full provenance, including what was deliberately left out, is in NOTICE.md.
+-->
+
 <!-- the links the plate draws but cannot make clickable -->
 [Ko-fi](https://ko-fi.com/saimonokuma) buys time, never priority. Proving a
 
@@ -604,3 +714,16 @@ our docs is false"**. It is the most welcome report there is.
   <source media="(prefers-color-scheme: dark)" srcset="docs/section-licence-dark.svg" />
   <img alt="📄 Licence" src="docs/section-licence.svg" />
 </picture>
+
+<!-- rdc-section:licence: the prose the plate above draws, kept as text because
+     checker/plates.mjs renders the plate from it and holds the file to the render.
+     Nothing here is hidden that the plate does not also show.
+
+AGPL-3.0-or-later OR EUPL-1.2, at your option, for every file in this repository. Root LICENSE is the AGPL text (the one GitHub reads); LICENSE-EUPL-1.2 sits beside it; LICENSES/ holds both plus the upstream MIT for tooling. Forty-four converted files carry an MIT portions line in their header. Copyleft on purpose: what is shared here cannot be enclosed later, by anyone, including us.
+
+<div align="center">
+
+Reality is the judge.
+
+</div>
+-->
