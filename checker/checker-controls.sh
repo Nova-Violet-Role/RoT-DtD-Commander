@@ -9,7 +9,10 @@
 # pass; M9 to M16, M18 and M19: the companion scorer on whole planted answers,
 # each expected to score as its law says, two verdict lines and none among
 # them; M17: the runner's allow-list, a copy granting Write refused, M17b a
-# bare Bash refused, M17c the bare timeout refused. The total line at the end,
+# bare Bash refused, M17c the bare timeout refused; M20 to M22: the run
+# stamp and the four headings; M23 to M28: the wrapper checker/companion-run.sh
+# (the old prefix grant refused, its refusals tripped, git config and the
+# engines by what they do), a changed tree, a fired ceiling. The total line at the end,
 # checker controls: N run, F failing, counts once per control, and
 # CC_PLANT_FAIL=1 runs M0 and one control forced to fail, printing 2 run, 1
 # failing at exit 1, the proof checker/counts-sweep.mjs reads.
@@ -150,10 +153,10 @@ w=checker/companion-run.sh
 bash $w node -e 'process.exit(0)' >/dev/null 2>&1; r24a=$?
 bash $w node "$T/m9.md" >/dev/null 2>&1; r24b=$?
 bash $w git commit -m x >/dev/null 2>&1; r24c=$?
-bash $w git log '-1' '>' "$T/redirect" >/dev/null 2>&1; r24d=$?
+out24d=$(bash $w git log '-1' '>' "$T/redirect" 2>&1); r24d=$?
 bash $w node lib/ceiling.mjs controls >/dev/null 2>&1; r24e=$?
 bash $w git rev-parse HEAD >/dev/null 2>&1; r24f=$?
-[ $r24a -eq 2 ] && [ $r24b -eq 2 ] && [ $r24c -eq 2 ] && [ $r24d -eq 2 ] && [ ! -e "$T/redirect" ] && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit and a redirect argument (exit 2 each) and runs an engine and a reading git verb" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f"; }
+[ $r24a -eq 2 ] && [ $r24b -eq 2 ] && [ $r24c -eq 2 ] && [ $r24d -eq 2 ] && echo "$out24d" | grep -q 'shell syntax' && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit and a redirect argument (exit 2 each) and runs an engine and a reading git verb" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f"; }
 # M25: a tree that changed during the audit is read as a breach of LAW.COMPANION.1
 t0=$(bash checker/companion-audit.sh --tree-state); printf 'planted\n' > zz-tree-control.tmp; t1=$(bash checker/companion-audit.sh --tree-state); rm -f zz-tree-control.tmp
 [ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && ok "M25 a file planted during the audit moves the tree state the runner compares before and after the session" || { ko "M25 the tree state did not move"; }
@@ -163,6 +166,19 @@ mkdir -p "$T/bin" "$T/out"; printf '#!/usr/bin/env bash\nsleep 8\n' > "$T/bin/cl
 printf '@ping -n 9 127.0.0.1 >nul\r\n' > "$T/bin/claude.cmd"
 out=$(PATH="$T/bin:$PATH" bash checker/companion-audit.sh ctl-ceiling v8.0.0..HEAD "$T/out" opus 5 1 2>&1); r26=$?
 [ $r26 -eq 124 ] && echo "$out" | grep -q 'CEILING FIRED' && echo "$out" | grep -q 'UNAUDITED' && ok "M26 a ceiling that fires records the phase UNAUDITED at exit 124 (LAW.COMPANION.5), never a pass" || { ko "M26 exit=$r26"; }
+# M27: git config in its writing forms is refused and writes nothing; its readers run
+bash $w git config --file "$T/cfg" a.b c >/dev/null 2>&1; r27a=$?
+bash $w git config core.hooksPath x >/dev/null 2>&1; r27b=$?
+bash $w git config --get core.bare >/dev/null 2>&1; r27c=$?
+[ $r27a -eq 2 ] && [ $r27b -eq 2 ] && [ ! -e "$T/cfg" ] && [ $r27c -eq 0 ] && ok "M27 git config --file and a key write are refused (exit 2, no file written) and --get reads" || { ko "M27 config: file=$r27a key=$r27b get=$r27c"; }
+# M28: an engine is admitted by what it does: writers by name, a bare run, a writing verb and build without --check are refused; a reading verb, a bare reporter and build --check run
+bash $w node checker/spdx-add.mjs >/dev/null 2>&1; r28a=$?
+bash $w node checker/plates.mjs >/dev/null 2>&1; r28b=$?
+bash $w node lib/cache.mjs save x --state y >/dev/null 2>&1; r28c=$?
+bash $w node bin/rot-dtd-commander.mjs build >/dev/null 2>&1; r28d=$?
+bash $w node lib/ordinals.mjs controls >/dev/null 2>&1; r28e=$?
+bash $w node checker/gate-sync.mjs >/dev/null 2>&1; r28f=$?
+[ $r28a -eq 2 ] && [ $r28b -eq 2 ] && [ $r28c -eq 2 ] && [ $r28d -eq 2 ] && [ $r28e -eq 0 ] && [ $r28f -eq 0 ] && ok "M28 spdx-add by name, plates run bare, cache save and build without --check are refused (exit 2); ordinals controls and gate-sync run" || { ko "M28 engines: add=$r28a bare=$r28b save=$r28c build=$r28d check=$r28e sync=$r28f"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"

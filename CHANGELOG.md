@@ -595,7 +595,8 @@ engine of this repository under `lib/`, `checker/` or `bin/`, or a git verb
 that reads, under the portable ceiling with stdin closed, refusing by name
 any other executable, a node flag that evaluates or loads code, a script
 outside the engines, a git verb that writes and any argument carrying
-shell syntax. The grant is that wrapper alone, the prompt says so, and the
+shell syntax (the nineteenth pass narrowed the engine test to what an
+engine does). The grant is that wrapper alone, the prompt says so, and the
 runner compares HEAD and the porcelain status before and after the
 session, a changed tree read as the companion's breach. The checker suite
 is 29: M23 refuses a copy granting the old prefixes, M24 trips the
@@ -604,6 +605,31 @@ fires the ceiling with a `claude` that sleeps and reads UNAUDITED at exit
 124 (LAW.COMPANION.5). The typography control compares every row of the
 Greek table the constructor names and counts the rows beyond the
 carve-out named by number. The seams are closed and the row is dated.
+
+### The companion's nineteenth pass: an engine is what it does
+
+The nineteenth pass returned fail with eight findings, two high, both on
+the wrapper of the pass before: its engine test was a directory test, so
+`spdx-add`, `subsets-sweep` run bare, `seal-secret` and the installer were
+admitted through it, and `config` sat among the reading git verbs where
+`git config --file <any path> a.b c` writes anywhere on disk. The lower
+six: M24 asserted a file's absence that nothing could have created, the
+`renders` producer was a typeof test over exports, the `typeset` comment
+said classes is always rendered where the answer renders it and no engine
+does, the controls header inventory stopped at M19, and a label lost its
+apostrophe.
+
+The wrapper admits an engine by what it does: writers and publishers are
+refused by name, a bare run is refused except for the engines that only
+report when bare, otherwise the first argument is a verb from the reading
+set or a text file the engine judges, and `build` runs only with
+`--check`; `git config` runs only as `--get`, `--get-all`, `--get-regexp`
+or `--list`. M27 refuses `config --file` and a key write and reads with
+`--get`; M28 refuses `spdx-add`, `plates` bare, `cache save` and `build`,
+and runs `ordinals controls` and `gate-sync`; M24 reads the refusal by name:
+31 checker controls. The `renders` producer renders the figure fixture
+through each driver, the `typeset` comment names the answer as its
+renderer, and the header inventory reaches M28.
 
 ## 8.0.0 (2026-09-06)
 
