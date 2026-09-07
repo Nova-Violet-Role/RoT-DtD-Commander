@@ -858,6 +858,7 @@ argument-hint: "[the survey, the plan and the renovation markdown to stand on, i
           n          CDATA #REQUIRED
           of         CDATA #REQUIRED
           command    CDATA #REQUIRED
+          sigil      CDATA #IMPLIED
           root       CDATA #REQUIRED
           band       CDATA #IMPLIED
           runs_alone (yes|no) #REQUIRED

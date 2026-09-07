@@ -1,0 +1,2312 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# scala findings, written by node checker/scala.mjs findings; fix and status are kept by hand and carried over by key on the next write
+run: 38e4906
+generated: 2026-09-07T21:36:31.554Z
+legs: ubuntu, macos, windows
+families: 17
+summary:
+  ubuntu: pass 12, fail 5, findings 38
+  macos: pass 14, fail 3, findings 17
+  windows: pass 1, fail 16, findings 145
+findings:
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: none
+    kind: unrun
+    severity: high
+    text: the ceiling fired: no answer file was written for this family
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: create-plugin
+    kind: heading
+    severity: medium
+    text: no heading of create-plugin (🧩) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: create-moe
+    kind: heading
+    severity: medium
+    text: no heading of create-moe (🎛️) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: create-router
+    kind: heading
+    severity: medium
+    text: no heading of create-router (🚦) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: create-ot-variants
+    kind: heading
+    severity: medium
+    text: no heading of create-ot-variants (🧠) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: create-db
+    kind: heading
+    severity: medium
+    text: no heading of create-db (🗄️) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: create-monitor
+    kind: heading
+    severity: medium
+    text: no heading of create-monitor (📡) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: create-mcp
+    kind: heading
+    severity: medium
+    text: no heading of create-mcp (🔌) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: create-workflowjson
+    kind: heading
+    severity: medium
+    text: no heading of create-workflowjson (🧰) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: none
+    kind: unrun
+    severity: high
+    text: the ceiling fired: no answer file was written for this family
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: create-meta-prompt-alarm
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-alarm (📯) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: create-meta-prompt-callout
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-callout (🗯️) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: create-meta-prompt
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt (🪞) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: create-meta-prompt-heredoc
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-heredoc (🧬) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: create-meta-prompt-nt
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-nt (🪆) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: create-meta-prompt-polyalarm
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-polyalarm (🪅) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: create-meta-prompt-polyglot
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-polyglot (🎩) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: create-meta-prompt-xml
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-xml (🔖) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: filetypes
+    member: create-filetype-callout
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-callout (📍) after position 6 of 13 headings
+    fix: the plan names each link sigil from dtd/sigils.json and the chain prose renders a link under the sigil the plan names
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: filetypes
+    member: create-filetype-heredoc
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-heredoc (🛎️) after position 8 of 13 headings
+    fix: the plan names each link sigil from dtd/sigils.json and the chain prose renders a link under the sigil the plan names
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: filetypes
+    member: create-filetype-nt
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-nt (🧲) after position 8 of 13 headings
+    fix: the plan names each link sigil from dtd/sigils.json and the chain prose renders a link under the sigil the plan names
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: filetypes
+    member: create-filetype-polyalarm
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-polyalarm (🧊) after position 8 of 13 headings
+    fix: the plan names each link sigil from dtd/sigils.json and the chain prose renders a link under the sigil the plan names
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: none
+    kind: turns
+    severity: high
+    text: the run reached its turn cap of 60 before the answer; the chain needs more turns or a lighter link
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: create-task
+    kind: heading
+    severity: medium
+    text: no heading of create-task (📌) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: audit-tasks
+    kind: heading
+    severity: medium
+    text: no heading of audit-tasks (📋) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: create-workflow-tasks
+    kind: heading
+    severity: medium
+    text: no heading of create-workflow-tasks (🏗️) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: task-run
+    kind: heading
+    severity: medium
+    text: no heading of task-run (🏃) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: task-handoff
+    kind: heading
+    severity: medium
+    text: no heading of task-handoff (🤝) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: codebase-surveyor
+    kind: heading
+    severity: medium
+    text: no heading of codebase-surveyor (📏) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: codebase-architect
+    kind: heading
+    severity: medium
+    text: no heading of codebase-architect (🖼️) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: codebase-renovator
+    kind: heading
+    severity: medium
+    text: no heading of codebase-renovator (🔨) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: codebase-generator
+    kind: heading
+    severity: medium
+    text: no heading of codebase-generator (🖌️) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: typography
+    kind: heading
+    severity: medium
+    text: no heading of typography (🔤) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: none
+    kind: count
+    severity: low
+    text: chain_close says ran 0; the scala stacked 5
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: tasks
+    member: none
+    kind: turns
+    severity: high
+    text: the run reached its turn cap of 60 before the answer; the chain needs more turns or a lighter link
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: tasks
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: tasks
+    member: create-task
+    kind: heading
+    severity: medium
+    text: no heading of create-task (📌) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: tasks
+    member: audit-tasks
+    kind: heading
+    severity: medium
+    text: no heading of audit-tasks (📋) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: tasks
+    member: create-workflow-tasks
+    kind: heading
+    severity: medium
+    text: no heading of create-workflow-tasks (🏗️) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: tasks
+    member: task-run
+    kind: heading
+    severity: medium
+    text: no heading of task-run (🏃) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: tasks
+    member: task-handoff
+    kind: heading
+    severity: medium
+    text: no heading of task-handoff (🤝) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: tasks
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: geometry
+    member: none
+    kind: turns
+    severity: high
+    text: the run reached its turn cap of 60 before the answer; the chain needs more turns or a lighter link
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: geometry
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: geometry
+    member: codebase-surveyor
+    kind: heading
+    severity: medium
+    text: no heading of codebase-surveyor (📏) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: geometry
+    member: codebase-architect
+    kind: heading
+    severity: medium
+    text: no heading of codebase-architect (🖼️) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: geometry
+    member: codebase-renovator
+    kind: heading
+    severity: medium
+    text: no heading of codebase-renovator (🔨) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: geometry
+    member: codebase-generator
+    kind: heading
+    severity: medium
+    text: no heading of codebase-generator (🖌️) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: geometry
+    member: typography
+    kind: heading
+    severity: medium
+    text: no heading of typography (🔤) after position 0 of 0 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: geometry
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: sigil
+    member: none
+    kind: count
+    severity: low
+    text: chain_close says ran 1; the scala stacked 2
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: pareto
+    kind: heading
+    severity: medium
+    text: no heading of pareto (🎯) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: swot
+    kind: heading
+    severity: medium
+    text: no heading of swot (⚖️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: 5-whys
+    kind: heading
+    severity: medium
+    text: no heading of 5-whys (🔁) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: 10-10-10
+    kind: heading
+    severity: medium
+    text: no heading of 10-10-10 (⏳) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: eisenhower-matrix
+    kind: heading
+    severity: medium
+    text: no heading of eisenhower-matrix (🗂️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: occams-razor
+    kind: heading
+    severity: medium
+    text: no heading of occams-razor (🪒) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: inversion
+    kind: heading
+    severity: medium
+    text: no heading of inversion (🔃) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: one-thing
+    kind: heading
+    severity: medium
+    text: no heading of one-thing (🔑) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: thinking
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: deep-dive
+    kind: heading
+    severity: medium
+    text: no heading of deep-dive (🤿) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: deep-scratch
+    kind: heading
+    severity: medium
+    text: no heading of deep-scratch (🔬) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: competitive
+    kind: heading
+    severity: medium
+    text: no heading of competitive (🏁) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: feasibility
+    kind: heading
+    severity: medium
+    text: no heading of feasibility (🧪) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: history
+    kind: heading
+    severity: medium
+    text: no heading of history (🕰️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: landscape
+    kind: heading
+    severity: medium
+    text: no heading of landscape (🌄) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: open-source
+    kind: heading
+    severity: medium
+    text: no heading of open-source (🌐) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: options
+    kind: heading
+    severity: medium
+    text: no heading of options (🔀) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: research
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: asking
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: asking
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: asking
+    member: ask-me-questions
+    kind: heading
+    severity: medium
+    text: no heading of ask-me-questions (❓) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: asking
+    member: ask-me-many-questions
+    kind: heading
+    severity: medium
+    text: no heading of ask-me-many-questions (❔) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: asking
+    member: ask-me-preview
+    kind: heading
+    severity: medium
+    text: no heading of ask-me-preview (🔭) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: asking
+    member: brainstorm-meta-clear-section
+    kind: heading
+    severity: medium
+    text: no heading of brainstorm-meta-clear-section (🌀) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: asking
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: phantom
+    kind: heading
+    severity: medium
+    text: no heading of phantom (👻) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: tetralemma
+    kind: heading
+    severity: medium
+    text: no heading of tetralemma (🔲) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: loci
+    kind: heading
+    severity: medium
+    text: no heading of loci (🏛️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: babel
+    kind: heading
+    severity: medium
+    text: no heading of babel (📚) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: catalog
+    kind: heading
+    severity: medium
+    text: no heading of catalog (🗃️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: count-the-library
+    kind: heading
+    severity: medium
+    text: no heading of count-the-library (🔢) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: goetia
+    kind: heading
+    severity: medium
+    text: no heading of goetia (🔱) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: clean-unclean
+    kind: heading
+    severity: medium
+    text: no heading of clean-unclean (🧼) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: shelf
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: rot-antivenom
+    kind: heading
+    severity: medium
+    text: no heading of rot-antivenom (⚪) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: rot-carnage
+    kind: heading
+    severity: medium
+    text: no heading of rot-carnage (🩸) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: rot-chroma
+    kind: heading
+    severity: medium
+    text: no heading of rot-chroma (🔮) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: rot-claude
+    kind: heading
+    severity: medium
+    text: no heading of rot-claude (🧭) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: rot-eidolon
+    kind: heading
+    severity: medium
+    text: no heading of rot-eidolon (🜏) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: rot-elevate
+    kind: heading
+    severity: medium
+    text: no heading of rot-elevate (🌌) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: rot-nova
+    kind: heading
+    severity: medium
+    text: no heading of rot-nova (⚜️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: rot-soleil
+    kind: heading
+    severity: medium
+    text: no heading of rot-soleil (⬜) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lenses
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: create-plugin
+    kind: heading
+    severity: medium
+    text: no heading of create-plugin (🧩) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: create-moe
+    kind: heading
+    severity: medium
+    text: no heading of create-moe (🎛️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: create-router
+    kind: heading
+    severity: medium
+    text: no heading of create-router (🚦) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: create-ot-variants
+    kind: heading
+    severity: medium
+    text: no heading of create-ot-variants (🧠) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: create-db
+    kind: heading
+    severity: medium
+    text: no heading of create-db (🗄️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: create-monitor
+    kind: heading
+    severity: medium
+    text: no heading of create-monitor (📡) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: create-mcp
+    kind: heading
+    severity: medium
+    text: no heading of create-mcp (🔌) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: create-workflowjson
+    kind: heading
+    severity: medium
+    text: no heading of create-workflowjson (🧰) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: creators
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: create-meta-prompt-alarm
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-alarm (📯) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: create-meta-prompt-callout
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-callout (🗯️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: create-meta-prompt
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt (🪞) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: create-meta-prompt-heredoc
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-heredoc (🧬) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: create-meta-prompt-nt
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-nt (🪆) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: create-meta-prompt-polyalarm
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-polyalarm (🪅) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: create-meta-prompt-polyglot
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-polyglot (🎩) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: create-meta-prompt-xml
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-xml (🔖) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: prompts
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: create-dork-local
+    kind: heading
+    severity: medium
+    text: no heading of create-dork-local (🔦) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: create-dork-search
+    kind: heading
+    severity: medium
+    text: no heading of create-dork-search (🕸️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: create-filetype-alarm
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-alarm (🪁) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: create-filetype-callout
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-callout (📍) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: create-filetype
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype (🪃) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: create-filetype-heredoc
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-heredoc (🛎️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: create-filetype-nt
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-nt (🧲) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: create-filetype-polyalarm
+    kind: heading
+    severity: medium
+    text: no heading of create-filetype-polyalarm (🧊) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: filetypes
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: tasks
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: tasks
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: tasks
+    member: create-task
+    kind: heading
+    severity: medium
+    text: no heading of create-task (📌) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: tasks
+    member: audit-tasks
+    kind: heading
+    severity: medium
+    text: no heading of audit-tasks (📋) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: tasks
+    member: create-workflow-tasks
+    kind: heading
+    severity: medium
+    text: no heading of create-workflow-tasks (🏗️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: tasks
+    member: task-run
+    kind: heading
+    severity: medium
+    text: no heading of task-run (🏃) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: tasks
+    member: task-handoff
+    kind: heading
+    severity: medium
+    text: no heading of task-handoff (🤝) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: tasks
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: repository
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: repository
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: repository
+    member: git-gh-amplification
+    kind: heading
+    severity: medium
+    text: no heading of git-gh-amplification (🐙) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: repository
+    member: repo-git-scalar
+    kind: heading
+    severity: medium
+    text: no heading of repo-git-scalar (🌿) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: repository
+    member: repo-creativity-askingstorm
+    kind: heading
+    severity: medium
+    text: no heading of repo-creativity-askingstorm (🎨) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: repository
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: audits
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: audits
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: audits
+    member: audit-skill
+    kind: heading
+    severity: medium
+    text: no heading of audit-skill (🔍) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: audits
+    member: audit-slash-command
+    kind: heading
+    severity: medium
+    text: no heading of audit-slash-command (🔎) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: audits
+    member: audit-subagent
+    kind: heading
+    severity: medium
+    text: no heading of audit-subagent (🕵️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: audits
+    member: ai-slop
+    kind: heading
+    severity: medium
+    text: no heading of ai-slop (🫧) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: audits
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: growth
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: growth
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: growth
+    member: amplify-codebase
+    kind: heading
+    severity: medium
+    text: no heading of amplify-codebase (🌱) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: growth
+    member: enhance-codebase
+    kind: heading
+    severity: medium
+    text: no heading of enhance-codebase (🪴) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: growth
+    member: overhaul-codebase
+    kind: heading
+    severity: medium
+    text: no heading of overhaul-codebase (🦋) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: growth
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: geometry
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: geometry
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: geometry
+    member: codebase-surveyor
+    kind: heading
+    severity: medium
+    text: no heading of codebase-surveyor (📏) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: geometry
+    member: codebase-architect
+    kind: heading
+    severity: medium
+    text: no heading of codebase-architect (🖼️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: geometry
+    member: codebase-renovator
+    kind: heading
+    severity: medium
+    text: no heading of codebase-renovator (🔨) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: geometry
+    member: codebase-generator
+    kind: heading
+    severity: medium
+    text: no heading of codebase-generator (🖌️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: geometry
+    member: typography
+    kind: heading
+    severity: medium
+    text: no heading of typography (🔤) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: geometry
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: sigil
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: sigil
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: sigil
+    member: sigil
+    kind: heading
+    severity: medium
+    text: no heading of sigil (💲) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: sigil
+    member: verbs
+    kind: heading
+    severity: medium
+    text: no heading of verbs (🔣) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: sigil
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: file-blacklist
+    kind: heading
+    severity: medium
+    text: no heading of file-blacklist (⛔) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: code-blacklist
+    kind: heading
+    severity: medium
+    text: no heading of code-blacklist (🚫) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: file-graylist
+    kind: heading
+    severity: medium
+    text: no heading of file-graylist (🟨) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: code-graylist
+    kind: heading
+    severity: medium
+    text: no heading of code-graylist (🟧) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: file-whitelist
+    kind: heading
+    severity: medium
+    text: no heading of file-whitelist (🟩) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: code-whitelist
+    kind: heading
+    severity: medium
+    text: no heading of code-whitelist (✅) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: starlist
+    kind: heading
+    severity: medium
+    text: no heading of starlist (⭐) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: starlist-manager
+    kind: heading
+    severity: medium
+    text: no heading of starlist-manager (🌟) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: lists
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: none
+    kind: ceiling
+    severity: high
+    text: the ceiling could not run the CLI on this leg: ceiling: cannot run claude: C:\npm\prefix\claude.cmd is a shell shim that names no node script, and an argument carries a newline or a quote the shell would cut; refused rather than truncated
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: none
+    kind: empty
+    severity: high
+    text: the answer is empty: no result came back from the CLI
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: whats-next
+    kind: heading
+    severity: medium
+    text: no heading of whats-next (⏭️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: add-to-todos
+    kind: heading
+    severity: medium
+    text: no heading of add-to-todos (➕) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: check-todos
+    kind: heading
+    severity: medium
+    text: no heading of check-todos (☑️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: run-plan
+    kind: heading
+    severity: medium
+    text: no heading of run-plan (▶️) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: heal-skill
+    kind: heading
+    severity: medium
+    text: no heading of heal-skill (🩹) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: debug
+    kind: heading
+    severity: medium
+    text: no heading of debug (🐛) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: setup-ralph
+    kind: heading
+    severity: medium
+    text: no heading of setup-ralph (🔄) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: shelf
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the scorer reads a close written as (ran 8, refused 0), the counts LAW.CHAIN.8 names
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: file-blacklist
+    kind: heading
+    severity: medium
+    text: no heading of file-blacklist (⛔) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: code-blacklist
+    kind: heading
+    severity: medium
+    text: no heading of code-blacklist (🚫) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: file-graylist
+    kind: heading
+    severity: medium
+    text: no heading of file-graylist (🟨) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: code-graylist
+    kind: heading
+    severity: medium
+    text: no heading of code-graylist (🟧) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: file-whitelist
+    kind: heading
+    severity: medium
+    text: no heading of file-whitelist (🟩) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: code-whitelist
+    kind: heading
+    severity: medium
+    text: no heading of code-whitelist (✅) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: starlist
+    kind: heading
+    severity: medium
+    text: no heading of starlist (⭐) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: starlist-manager
+    kind: heading
+    severity: medium
+    text: no heading of starlist-manager (🌟) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: workflow
+    member: RoT-DtD-Commander-Adiutor
+    kind: heading
+    severity: medium
+    text: no heading of RoT-DtD-Commander-Adiutor (🩺) after position 28 of 31 headings
+    fix: the Adiutor is not a -dtd token and is named as unchained, stacked nowhere; the scorer reads the close from its counts
+    status: in progress
+  -
+    n: 1
+    leg: ubuntu
+    family: workflow
+    member: none
+    kind: count
+    severity: low
+    text: chain_close says ran 7; the scala stacked 8
+    fix: the Adiutor is not a -dtd token and is named as unchained, stacked nowhere; the scorer reads the close from its counts
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: lenses
+    member: rot-antivenom
+    kind: heading
+    severity: medium
+    text: no heading of rot-antivenom (⚪) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: lenses
+    member: rot-carnage
+    kind: heading
+    severity: medium
+    text: no heading of rot-carnage (🩸) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: lenses
+    member: rot-chroma
+    kind: heading
+    severity: medium
+    text: no heading of rot-chroma (🔮) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: lenses
+    member: rot-claude
+    kind: heading
+    severity: medium
+    text: no heading of rot-claude (🧭) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: lenses
+    member: rot-eidolon
+    kind: heading
+    severity: medium
+    text: no heading of rot-eidolon (🜏) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: lenses
+    member: rot-elevate
+    kind: heading
+    severity: medium
+    text: no heading of rot-elevate (🌌) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: lenses
+    member: rot-nova
+    kind: heading
+    severity: medium
+    text: no heading of rot-nova (⚜️) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: lenses
+    member: rot-soleil
+    kind: heading
+    severity: medium
+    text: no heading of rot-soleil (⬜) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: prompts
+    member: create-meta-prompt-alarm
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-alarm (📯) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: prompts
+    member: create-meta-prompt-callout
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-callout (🗯️) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: prompts
+    member: create-meta-prompt
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt (🪞) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: prompts
+    member: create-meta-prompt-heredoc
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-heredoc (🧬) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: prompts
+    member: create-meta-prompt-nt
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-nt (🪆) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: prompts
+    member: create-meta-prompt-polyalarm
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-polyalarm (🪅) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: prompts
+    member: create-meta-prompt-polyglot
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-polyglot (🎩) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: prompts
+    member: create-meta-prompt-xml
+    kind: heading
+    severity: medium
+    text: no heading of create-meta-prompt-xml (🔖) after position 0 of 13 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: workflow
+    member: RoT-DtD-Commander-Adiutor
+    kind: heading
+    severity: medium
+    text: no heading of RoT-DtD-Commander-Adiutor (🩺) after position 10 of 12 headings
+    fix: the Adiutor is not a -dtd token and is named as unchained, stacked nowhere; the scorer reads the close from its counts
+    status: in progress
+  -
+    n: 1
+    leg: macos
+    family: workflow
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the Adiutor is not a -dtd token and is named as unchained, stacked nowhere; the scorer reads the close from its counts
+    status: in progress
+  -
+    n: 1
+    leg: windows
+    family: workflow
+    member: RoT-DtD-Commander-Adiutor
+    kind: heading
+    severity: medium
+    text: no heading of RoT-DtD-Commander-Adiutor (🩺) after position 0 of 0 headings
+    fix: the ceiling reads a shim target of any extension and runs claude.exe as itself (b19b68e)
+    status: in progress

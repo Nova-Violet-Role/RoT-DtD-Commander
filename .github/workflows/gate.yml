@@ -270,6 +270,12 @@ jobs:
     # passed.
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     needs: [gate]
+    # Seventeen chains of up to eight links each through a real model: the
+    # ubuntu leg of 38e4906 took two and a half hours with two families at
+    # their 1500 s ceiling; 2400 s per family and 150 turns, under the job's
+    # own ceiling, so a leg that runs long is still uploaded by the step that
+    # always runs.
+    timeout-minutes: 350
     strategy:
       fail-fast: false
       matrix:
@@ -326,7 +332,7 @@ jobs:
         if: env.SCALA_SKIP != '1'
         run: |
           set +e
-          node checker/scala.mjs run --all --out "$SCALA_OUT" --turns 60 --secs 1500
+          node checker/scala.mjs run --all --out "$SCALA_OUT" --turns 150 --secs 2400
           rc=$?
           set -e
           ls -l "$SCALA_OUT"

@@ -3485,6 +3485,7 @@ Several commands in one prompt as one declared root: the chain, its links in sta
           n          CDATA #REQUIRED
           of         CDATA #REQUIRED
           command    CDATA #REQUIRED
+          sigil      CDATA #IMPLIED
           root       CDATA #REQUIRED
           band       CDATA #IMPLIED
           runs_alone (yes|no) #REQUIRED

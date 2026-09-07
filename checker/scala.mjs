@@ -31,7 +31,7 @@
 // and that family is UNRUN; 2 the arguments are wrong.
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, mkdtempSync, rmSync } from 'node:fs';
-import { join, dirname, resolve, basename } from 'node:path';
+import { join, dirname, resolve, basename, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
@@ -82,10 +82,17 @@ export function scalas(root = ROOT, families = FAMILIES) {
     const resolved = declared.map((m) => ({ m, token: present.includes(`${m}-dtd`) ? `${m}-dtd` : (present.includes(m) ? m : null) }));
     const found = resolved.filter((r) => r.token);
     const missing = resolved.filter((r) => !r.token).map((r) => r.m);
-    const kept = found.slice(0, MAX);
+    // A chain admits /name-dtd tokens alone (lib/chain.mjs TOKEN_RE), so a
+    // member whose name does not end in -dtd is never a link: the workflow
+    // family stacked the Adiutor as its eighth and every leg of 38e4906
+    // closed with ran 7 of 8. Such a member is named as unchained and left out
+    // of the stack and of the score.
+    const chainable = found.filter((r) => /-dtd$/.test(r.token));
+    const unchained = found.filter((r) => !/-dtd$/.test(r.token)).map((r) => r.m);
+    const kept = chainable.slice(0, MAX);
     const members = kept.map((r) => r.m);
     const tokens = kept.map((r) => r.token);
-    return { id: f.id, name: f.name, members, tokens, missing, overflow: found.length - kept.length, prompt: promptOf(tokens) };
+    return { id: f.id, name: f.name, members, tokens, missing, unchained, overflow: chainable.length - kept.length, prompt: promptOf(tokens) };
   });
 }
 
@@ -119,15 +126,21 @@ export function score(answer, members) {
     const key = m.replace(/-dtd$/, '');
     const sig = SIGILS[key];
     if (!sig) { findings.push(`${m} has no sigil in dtd/sigils.json`); continue; }
-    const at = heads.findIndex((h, i) => i >= cursor && h.startsWith(sig));
+    // Carrying, not leading (LAW.CORE.6): the chain renders a link as
+    // "#### Link 1 — ⚪ Anti-Venom" and the sigil sits after the ordinal.
+    const at = heads.findIndex((h, i) => i >= cursor && h.includes(sig));
     if (at < 0) findings.push(`no heading of ${m} (${sig}) after position ${cursor} of ${heads.length} headings`);
     else cursor = at + 1;
   }
   if (members.length >= 2) {
-    const close = lines.map(plain).find((l) => /chain_close\s+ran\s+\d+/.test(l));
+    // The close is the line that names how many ran and how many were refused
+    // (LAW.CHAIN.8): the chain_close token is preferred, the counts are the
+    // contract, and a close written as (ran 8, refused 0) still closes.
+    const plains = lines.map(plain);
+    const close = plains.find((l) => /chain_close\s+ran\s+\d+/.test(l)) || plains.find((l) => /\bran\s+\d+\b.*\brefused\s+\d+\b/.test(l));
     if (!close) findings.push('a chain of two or more carries no chain_close line naming how many ran');
     else {
-      const ran = Number((/ran\s+(\d+)/.exec(close) || [])[1]);
+      const ran = Number((/\bran\s+(\d+)/.exec(close) || [])[1]);
       if (ran !== members.length) findings.push(`chain_close says ran ${ran}; the scala stacked ${members.length}`);
     }
   }
@@ -150,10 +163,14 @@ export function diagnose(raw) {
   // shim it could not read, and no model was called.
   const c = /^ceiling: cannot run [^\n]*/m.exec(String(raw || ''));
   if (c) return `the ceiling could not run the CLI on this leg: ${c[0].slice(0, 200)}`;
+  // The tasks family on both legs of 38e4906: sixty turns spent before the
+  // answer, an empty result and a raw that names the cap.
+  const t = /Reached maximum number of turns \((\d+)\)/.exec(String(raw || ''));
+  if (t) return `the run reached its turn cap of ${t[1]} before the answer; the chain needs more turns or a lighter link`;
   return '';
 }
 
-export function runOne(s, { out, model = 'opus', turns = 60, secs = 1500 } = {}) {
+export function runOne(s, { out, model = 'opus', turns = 150, secs = 2400 } = {}) {
   mkdirSync(out, { recursive: true });
   const raw = join(out, `scala-${s.id}.json`);
   const log = join(out, `scala-${s.id}.md`);
@@ -169,7 +186,11 @@ export function runOne(s, { out, model = 'opus', turns = 60, secs = 1500 } = {})
   // stacked token of a plan call arrived as C:/Program Files/Git/<token>.
   const ceil = join(ROOT, 'lib', 'ceiling.mjs');
   const args = ['-p', s.prompt, '--model', model, '--max-turns', String(turns), '--output-format', 'json', '--add-dir', ROOT,
-    '--allowedTools', `Read,Grep,Glob,Write,Bash(node lib/ceiling.mjs 60 node:*),Bash(node lib/ceiling.mjs 60 git:*),Bash(node ${ceil} 60 node:*),Bash(node ${ceil} 60 git:*)`];
+    // The runtime under any ceiling and bare: the sigil prose spells a 300 s
+    // ceiling for its run verb and the geometry prose calls its engine bare,
+    // and both were declined by a pattern that admitted 60 alone (38e4906:
+    // sigil link 2 partial on macOS, geometry not run on ubuntu).
+    '--allowedTools', `Read,Grep,Glob,Write,Bash(node lib/:*),Bash(node ${join(ROOT, 'lib')}${sep}:*),Bash(node ${ceil}:*)`];
   const r = spawnSync(process.execPath, [...ceiling, 'claude', ...args], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ROTMOE_VOICE: '0', CCC_HOOK_AUTOINIT: '0', CLAUDECODE: '', MSYS_NO_PATHCONV: '1' }, maxBuffer: 64 * 1024 * 1024 });
   writeFileSync(raw, (r.stdout || '') + (r.stderr || ''), 'utf8');
   if (r.status === 124) return { id: s.id, status: 124, unrun: true };
@@ -195,6 +216,7 @@ export function kindOf(text) {
   if (/^the CLI has no command/.test(t)) return { kind: 'refusal', severity: 'high', member: ((/no command \/([\w-]+?)(?:-dtd)?:/.exec(t) || [])[1]) || 'none' };
   if (/^the CLI is not logged in/.test(t)) return { kind: 'login', severity: 'high', member: 'none' };
   if (/^the ceiling could not run/.test(t)) return { kind: 'ceiling', severity: 'high', member: 'none' };
+  if (/^the run reached its turn cap/.test(t)) return { kind: 'turns', severity: 'high', member: 'none' };
   if (/^the answer is empty/.test(t)) return { kind: 'empty', severity: 'high', member: 'none' };
   if (/^the ceiling fired/.test(t)) return { kind: 'unrun', severity: 'high', member: 'none' };
   if (/^no heading of /.test(t)) return { kind: 'heading', severity: 'medium', member: ((/^no heading of (\S+)/.exec(t) || [])[1]) || 'none' };
@@ -260,7 +282,10 @@ export function findingsRecord(legs, { run = '', previous = null, generated = ne
   const summary = {};
   for (const l of legs) summary[l.summary.leg] = `pass ${l.summary.pass}, fail ${l.summary.fail}, findings ${l.summary.findings}`;
   const record = { run: run || 'unnamed', generated, legs: legs.map((l) => l.summary.leg).join(', ') || 'none', families: String(scalas().length), summary: Object.keys(summary).length ? summary : 'none', findings: out.length ? out : 'none' };
-  return { record, text: toNt(record, 'scala findings, written by node checker/scala.mjs findings; fix and status are kept by hand and carried over by key on the next write') };
+  // The record lives in the tree under artifacts/research, so it carries the
+  // SPDX header the sweep asks of every file; the reader skips a comment line.
+  const text = '# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2\n# Copyright 2026 Saimonokuma.\n' + toNt(record, 'scala findings, written by node checker/scala.mjs findings; fix and status are kept by hand and carried over by key on the next write');
+  return { record, text };
 }
 export function table(legs) {
   const fams = scalas().map((s) => s.id);
@@ -278,8 +303,8 @@ export function controls(io = console) {
   say(all.length === FAMILIES.length && cen.ok && all.every((s) => /--no-gate/.test(s.prompt.split('\n')[0])),
     `${all.length} scalas for ${FAMILIES.length} families, every family with a member file and every declared member resolved, the autonomy token on line one${cen.ok ? '' : `; ${cen.findings.join('; ')}`}`);
   const wf = all.find((s) => s.id === 'workflow');
-  say(wf && wf.members.includes('RoT-DtD-Commander-Adiutor') && wf.tokens.includes('RoT-DtD-Commander-Adiutor') && wf.missing.length === 0,
-    `the workflow scala resolves the Adiutor by its own filename: ${wf ? wf.members.length : 0} members, ${wf ? wf.missing.length : '?'} missing`);
+  say(wf && !wf.members.includes('RoT-DtD-Commander-Adiutor') && wf.unchained.includes('RoT-DtD-Commander-Adiutor') && wf.missing.length === 0,
+    `the workflow scala resolves the Adiutor by its own filename and names it unchained: ${wf ? wf.members.length : 0} members, ${wf ? wf.missing.length : '?'} missing, unchained ${wf ? wf.unchained.join(', ') : '?'}`);
   const nested = '### ⛓️ Chain\n\n#### 📏 Arguments\n\n#### 🖼️ Plan\n\n- chain_close **ran 2 refused 0** artifact `artifacts/chain/x.md`\n';
   const m5 = score(nested, ['codebase-surveyor-dtd', 'codebase-architect-dtd']);
   say(m5.ok && m5.headings === 3, `a chain whose links render one level deeper and close in bold is read as the run it was: ${m5.headings} headings, ${m5.findings.length} findings`);
@@ -287,6 +312,13 @@ export function controls(io = console) {
   say(/not logged in/.test(login) && kindOf(login).kind === 'login' && kindOf(login).severity === 'high' && diagnose('{"result":"### x"}') === '', `trip: a Not logged in result is a finding of kind login before any heading is counted: ${login.slice(0, 60)}`);
   const refusedShim = diagnose('ceiling: cannot run claude: C:\\npm\\prefix\\claude.cmd is a shell shim whose target could not be read, and an argument carries a newline; refused rather than truncated; the shim reads "@ECHO off"');
   say(/^the ceiling could not run the CLI/.test(refusedShim) && kindOf(refusedShim).kind === 'ceiling' && kindOf(refusedShim).severity === 'high', `trip: a ceiling refusal is a finding of kind ceiling before any heading is counted: ${refusedShim.slice(0, 70)}`);
+  const carried = '### ⛓️ Chain\n\n#### Link 1 — ⚪ Anti-Venom\n\n#### Link 2 — 🩸 Carnage\n\n**Bottom line:** the plan was read before link one (`ran 2, refused 0`).\n';
+  const m6 = score(carried, ['rot-antivenom-dtd', 'rot-carnage-dtd']);
+  say(m6.ok, `a heading carrying the sigil after an ordinal counts, and a close written as (ran 2, refused 0) closes: ${m6.findings.length} findings`);
+  const wfam = all.find((s) => s.id === 'workflow');
+  say(wfam && wfam.unchained.length === 1 && wfam.unchained[0] === 'RoT-DtD-Commander-Adiutor' && wfam.members.length === 7 && !wfam.prompt.includes('Adiutor'), `a member whose name does not end in -dtd is named as unchained and stacked nowhere: workflow stacks ${wfam ? wfam.members.length : '?'}, unchained ${wfam ? wfam.unchained.join(', ') : '?'}`);
+  const capped = diagnose('{"type":"result","subtype":"error_max_turns","is_error":false,"num_turns":61,"result":"","errors":["Reached maximum number of turns (60)"]}');
+  say(/turn cap of 60/.test(capped) && kindOf(capped).kind === 'turns', `trip: a run that reached its turn cap is a finding of kind turns: ${capped.slice(0, 60)}`);
   const chainFam = all.find((s) => s.id === 'chain');
   const two = all.find((s) => s.members.length >= 2);
   say(chainFam && chainFam.prompt === '/chain-dtd --no-gate' && two && two.prompt.split('\n')[0] === '/chain-dtd --no-gate' && two.prompt.split('\n').length === two.members.length + 1 && promptOf([]) === '',

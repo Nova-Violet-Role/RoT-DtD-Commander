@@ -510,6 +510,7 @@ argument-hint: "[two to eight command lines stacked, one /name-dtd per line, the
           n          CDATA #REQUIRED
           of         CDATA #REQUIRED
           command    CDATA #REQUIRED
+          sigil      CDATA #IMPLIED
           root       CDATA #REQUIRED
           band       CDATA #IMPLIED
           runs_alone (yes|no) #REQUIRED
@@ -596,9 +597,9 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.6). The `intake` c
 
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements; read the CHAIN.autonomy.token as its own word only (LAW.ARGS.2, LAW.CHAIN.4).
-2. Run `node lib/ceiling.mjs 60 node lib/chain.mjs plan` on the stacked lines in the foreground, exit code read directly, and render `chain` from what it printed: links, autonomy, gate, bands, declared, one `link` per line with its n, of, command, root, band, runs_alone, takes and hands_to. A refusal ends the run here: every refused link carries its `link_refusal` with why, the `chain_close` says ran 0, and the `artifact` names the record of the refusal (LAW.CHAINRUN.1, LAW.CHAIN.8).
+2. Run `node lib/ceiling.mjs 60 node lib/chain.mjs plan` on the stacked lines in the foreground, exit code read directly, and render `chain` from what it printed: links, autonomy, gate, bands, declared, one `link` per line with its n, of, command, sigil, root, band, runs_alone, takes and hands_to. A refusal ends the run here: every refused link carries its `link_refusal` with why, the `chain_close` says ran 0, and the `artifact` names the record of the refusal (LAW.CHAINRUN.1, LAW.CHAIN.8).
 3. Run the one intake (LAW.CHAIN.3): the slots of every link gathered into one round, the scope first, then the gate; a link the gate declines is passed to the plan as --decline, and the rounds and questions spent are passed as --rounds and --questions so `chain_intake` carries them, and a band this run switched off is passed as --band-off so its link is refused band-off before link one. With the token present, skip it, render `chain_intake` with asked no and the reason, and list every gap as an `assumption_made`.
-4. For each link in order: invoke the command with its user-args, the first from the prompt and each later one the previous link's artifact quoted as CDATA; a link is invoked by reading its file, `commands/<name>.md` in the tree that carries `lib/chain.mjs` or the commands directory it was installed to, and rendering its root as that file declares, every heading of its grammar map under its own sigil; a link summarised in place of being run is a dropped link (LAW.CHAIN.8); render the link's answer under its own root and sigil; then run `node lib/ceiling.mjs 60 node lib/chain.mjs handoff <this link>` and render the `handoff` it prints, the artifact and its bytes read from the file; a file it does not find refuses the next link with why artifact-missing (LAW.CHAINRUN.2, LAW.CHAIN.5).
+4. For each link in order: invoke the command with its user-args, the first from the prompt and each later one the previous link's artifact quoted as CDATA; a link is invoked by reading its file, `commands/<name>.md` in the tree that carries `lib/chain.mjs` or the commands directory it was installed to, and rendering its root as that file declares, every heading of its grammar map under its own sigil, the one the plan names on its link line; a link summarised in place of being run is a dropped link (LAW.CHAIN.8); render the link's answer under its own root and sigil; then run `node lib/ceiling.mjs 60 node lib/chain.mjs handoff <this link>` and render the `handoff` it prints, the artifact and its bytes read from the file; a file it does not find refuses the next link with why artifact-missing (LAW.CHAINRUN.2, LAW.CHAIN.5).
 5. Write the record under CHAIN.dir as the date and chain, its frontmatter carrying the bands string the chain element carries (LAW.CHAIN.7), then render `chain_close` with ran, refused and the artifact, and `artifact` naming the same file.
 </process>
 
@@ -624,7 +625,7 @@ known [slots]; gaps [slots]; round 1 of 3 [scope, one question per open slot of 
 
 links [n] autonomy [gated|no-gate] gate [one|none] bands [the string] declared [the stacked lines, one per line]
 - chain_intake rounds [n] questions [n] asked [yes|no] [reason]
-- link [n] of [n] /[command] root [root] band [band] runs_alone yes takes [user-args|artifact|none] hands_to [command|none] ran [yes|no|refused: why]
+- link [n] of [n] /[command] sigil [sigil] root [root] band [band] runs_alone yes takes [user-args|artifact|none] hands_to [command|none] ran [yes|no|refused: why]
 
 [each link's answer, under its own sigil headings]
 
