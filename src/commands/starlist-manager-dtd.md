@@ -105,7 +105,7 @@ Render the `starlist_manager_run` root declared in the DOCTYPE as the markdown b
 - known: [slots the walk filled]
 - gaps: [slots asked about]
 - block 1, round 1 of 8: [headers] answered [labels or Other text]
-- gate: [start|more|add|impactful] (block N, round M)
+- gate: [start|more|add|impactful|save] (block N, round M)
 
 ### 🌟 Hits
 

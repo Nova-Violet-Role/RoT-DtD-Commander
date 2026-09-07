@@ -95,7 +95,7 @@ count [n]; debug [0|1]; words [each positional word]
 - round 1 of 3: Name, Store, Records, Fields answered [labels or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🗄️ Schema
 

@@ -86,8 +86,8 @@ known [slots]; gaps [slots]; round 1 of 3 [what to typeset, classes, answers]; g
 - face widget: the viewer's, never named by us
 - glyph [name] U+[hex] class [ascii|rule|arrow|math|greek|block] fallback [ch] advance [n]  (seven lines)
 - missing_glyph draws [?] because [reason]
-- numeral [n] [name] form [unit|teen|ten|compound|plain] suffix [gon|hedron|ad|meter]
-- cell [w]x[h] agrees with cc-figure [yes|no]; baseline [n]; controls [n] run, [n] failing; declarations spent [n] of [n]
+- numeral [n] [name] form [unit|teen|ten|compound|scale|plain] suffix [gon|hedron|ad|meter]
+- cell [w]x[h] agrees with cc-figure [yes|no]; baseline [n]; classes [the classes kept on]; renders [cells|svg|both]; cols [n] rows [n] when a figure was typeset, none for the contract alone; controls [n] run, [n] failing; declarations spent [n] of [n]
 
 ### 🔤 Artifact
 

@@ -107,7 +107,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 - round 1 of 3: Name, Creations A, Creations B, Creations C answered [labels, the check answers listed, or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🧩 Shell
 

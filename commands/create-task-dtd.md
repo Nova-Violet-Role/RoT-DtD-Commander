@@ -1234,7 +1234,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]; known slots
 - round 1 of 3: Name (select), Purpose (select), Length (select), Vars (check) answered [labels or Other text]
 - round 2 of 3: Steps (elaborate), Schematic (select), Schematic B (select), Schema A (check) [when asked]
 - round 3 of 3: Schema B (select), Forms (check), License (mark), Record (select) [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 📌 Plan
 

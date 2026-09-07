@@ -1125,7 +1125,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 - round 1 of 3: Topic, Carry, Count, Launch answered [labels or Other text]
 - round 2 of 3: Schematic, Schematic B, Schema A, Schema B [when asked]
 - round 3 of 3: Kind, Forms, More forms [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🌀 Brainstorm
 

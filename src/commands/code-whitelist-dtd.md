@@ -101,7 +101,7 @@ Render the `code_whitelist_run` root declared in the DOCTYPE as the markdown bel
 - known: [slots the argument and the measurement filled]
 - gaps: [slots asked about]
 - round 1 of 8: [headers] answered [labels or Other text]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### ✅ Entries
 

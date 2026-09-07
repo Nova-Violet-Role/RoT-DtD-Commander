@@ -146,7 +146,7 @@ assert "\t" not in text  # the tabs guard, by hand
 2. Run the guards and read the lines as data:
 
    ```bash
-   node lib/form.mjs <file> [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot]
+   node lib/form.mjs <file> [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot|alarm|polyalarm]
    node lib/form.mjs controls      # seven fixtures fire their guard, five clean texts hold
    ```
 

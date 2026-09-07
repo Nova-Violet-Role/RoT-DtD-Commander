@@ -1173,7 +1173,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]; known slots
 - round 1 of 3: Name (select), Extension (select), Notation (select), Purpose (select) answered [labels or Other text]
 - round 2 of 3: Schema A (check), Schema B (select), Forms (check), Variants (mark) [when asked]
 - round 3 of 3: Embedding (elaborate), License (mark), Record (select), Proof (select) [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🎲 Filetype
 

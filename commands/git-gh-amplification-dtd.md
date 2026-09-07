@@ -491,7 +491,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 - round 1 of 8: [headers] answered [labels or Other text]
 - round N of 8: [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🐙 Plan
 

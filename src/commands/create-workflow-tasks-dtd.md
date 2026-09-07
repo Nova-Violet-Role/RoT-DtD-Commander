@@ -82,7 +82,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 ### 🏗️ Intake
 
 - round 1 of 1: Tasks (mark), Order (select), Failure (select), Ceiling (select) answered [marked names, labels or Other text]
-- gate: [start|more|add|impactful]
+- gate: [start|more|add|impactful|save]
 
 ### 🏗️ Selection
 

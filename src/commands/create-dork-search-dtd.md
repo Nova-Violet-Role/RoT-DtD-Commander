@@ -96,7 +96,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 - round 1 of 2: Target (select), Subject (select), Operators (check), Filetypes (mark) answered [labels, marks or Other text]
 - round 2 of 2: Phrasings (elaborate), Forms (check), Record (select), Run (select) [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🕸️ Target
 

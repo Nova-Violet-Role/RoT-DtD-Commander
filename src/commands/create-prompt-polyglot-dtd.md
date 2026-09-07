@@ -96,7 +96,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 - round 1 of 3: [headers] answered [labels or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🎴 Sections
 
@@ -108,7 +108,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🎴 Forms
 
-- [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot]: variant [name], expansion no; or: nt, the default
+- [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot|alarm|polyalarm]: variant [name], expansion no; or: nt, the default
 
 ### 🎴 Embedding
 

@@ -405,7 +405,7 @@ Render the `monitor_creation` root declared in the DOCTYPE as the markdown below
 - round 1 of 3: Name, Source, Event, Emit answered [labels or Other text]
 - round 2 of 3: [when asked]
 - round 3 of 3: [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 📡 Monitor
 

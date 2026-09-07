@@ -941,9 +941,14 @@ argument-hint: "[a number of sides to name, or a figure file whose shapes to che
      renderings are the same figure and not two drawings that resemble one
      another (LAW.TYPO.2). -->
 <!ELEMENT typeset (face+, glyph*, rule_glyphs?, arrow_glyphs?, math_glyphs?, greek_glyphs?, missing_glyph, numeral*)>
+<!-- cols and rows describe the grid a figure was typeset on; a run asked for
+     the contract alone has no grid, so both are implied and the answer says
+     so; classes is the list kept on and is always rendered (the fifth
+     companion pass on 9.0.0 measured three required attributes with no place
+     in the rendering). -->
 <!ATTLIST typeset
-          cols    CDATA #REQUIRED
-          rows    CDATA #REQUIRED
+          cols    CDATA #IMPLIED
+          rows    CDATA #IMPLIED
           renders (cells|svg|both) "both"
           classes CDATA #REQUIRED>
 
@@ -1023,8 +1028,8 @@ known [slots]; gaps [slots]; round 1 of 3 [what to typeset, classes, answers]; g
 - face widget: the viewer's, never named by us
 - glyph [name] U+[hex] class [ascii|rule|arrow|math|greek|block] fallback [ch] advance [n]  (seven lines)
 - missing_glyph draws [?] because [reason]
-- numeral [n] [name] form [unit|teen|ten|compound|plain] suffix [gon|hedron|ad|meter]
-- cell [w]x[h] agrees with cc-figure [yes|no]; baseline [n]; controls [n] run, [n] failing; declarations spent [n] of [n]
+- numeral [n] [name] form [unit|teen|ten|compound|scale|plain] suffix [gon|hedron|ad|meter]
+- cell [w]x[h] agrees with cc-figure [yes|no]; baseline [n]; classes [the classes kept on]; renders [cells|svg|both]; cols [n] rows [n] when a figure was typeset, none for the contract alone; controls [n] run, [n] failing; declarations spent [n] of [n]
 
 ### 🔤 Artifact
 

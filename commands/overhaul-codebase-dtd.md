@@ -738,7 +738,7 @@ target [path] declared [yes|no] seconds [n]
 ### 🦋 Possibilities
 
 exposed [n] shown [n] unshown [n] offset [n]
-- [id] [gap|idea] verb [n] [layer] [measured|reasoned|guessed] [exposed|marked|refused|done]
+- [id] [gap|idea] verb [n] [layer] [measured|reasoned|guessed] [exposed|marked|refused|done|reopen]
   - why: [one sentence]
   - evidence: instrument [command and path] or adds [law, entity or file]
   - cost: files [n] risk [high|medium|low]

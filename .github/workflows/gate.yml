@@ -123,6 +123,10 @@ jobs:
         run: node checker/controls-sweep.mjs --controls
       - name: every controls count the release block claims is re-run and agrees (the companion found one that did not)
         run: node checker/controls-sweep.mjs --check
+      - name: the enumeration sweep is tripped on a planted omission and a planted undeclared value
+        run: node checker/enum-sweep.mjs --controls
+      - name: every choice a template spells is the enumeration its grammar declares (the fifth companion pass found a carve-out that reached everything but the command)
+        run: node checker/enum-sweep.mjs --check
       - name: scala controls (one scala per family stacked in band order, a planted answer missing a heading, out of order, short of its close, or quoting a heading in prose, each refused by name)
         run: node checker/scala.mjs --controls
       - name: the creators against the corpus, per folder (one schematic with its concept cells or a refusal with its reason; the corpus absent here and said so; the record in step)

@@ -627,7 +627,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [the task name]
 ### 🤝 Intake
 
 - round 1 of 1: Outcome (select), Evidence (check), Next (elaborate), Record (select) answered [labels or Other text]
-- gate: [start|more|add|impactful]
+- gate: [start|more|add|impactful|save]
 
 ### 🤝 Attestation
 

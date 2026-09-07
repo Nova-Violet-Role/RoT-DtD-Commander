@@ -30,13 +30,17 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
 const CEILING_SECS = 300;
 
-// The newest section: from the first `## ` heading to the next one.
+// The newest section: from the first `## ` heading to the next one, or to
+// the end of the file when it is the last. Sliced by index, because the
+// fifth companion pass measured the first version leaning on \Z, which is
+// not an anchor in JavaScript but the letter Z, correct by accident only
+// while a later section followed.
 export function newestSection(text) {
-  const m = /^## [^\n]*\n([\s\S]*?)(?=^## |\Z)/m.exec(text);
-  if (!m) return '';
-  const rest = text.slice(m.index + m[0].length);
+  const first = /^## /m.exec(text);
+  if (!first) return '';
+  const rest = text.slice(first.index + 3);
   const next = /^## /m.exec(rest);
-  return m[0] + (next ? rest.slice(0, next.index) : rest);
+  return next ? text.slice(first.index, first.index + 3 + next.index) : text.slice(first.index);
 }
 
 // Every claim: `node <path> controls`: N run|passed, or `--controls`. The
@@ -87,6 +91,10 @@ export function sweep({ root = ROOT, text = null } = {}) {
   const found = claims(section);
   const loose = looseCount(section);
   if (found.length !== loose) throw new Error(`controls-sweep: the section carries ${loose} claim shapes and the reader parsed ${found.length}; a claim it cannot read is not swept and the sweep refuses rather than under-reads`);
+  // A release block with no claim is not swept: zero claims and zero drift
+  // is a green from a sweep that read nothing, and the section that ships
+  // has carried at least one since the sweep was written.
+  if (found.length === 0) throw new Error(`controls-sweep: the newest section ${JSON.stringify(section.split('\n')[0])} carries no controls claim; a sweep that read nothing does not report zero drift`);
   const seen = new Map();
   const rows = [];
   for (const c of found) {
@@ -113,6 +121,11 @@ export function controls() {
   const text = readFileSync(join(ROOT, 'CHANGELOG.md'), 'utf8');
   const section = newestSection(text);
   say(section.startsWith('## ') && !/\n## /.test(section.slice(3)), `the newest section is one section: ${JSON.stringify(section.split('\n')[0])}`);
+  const lone = newestSection('# title\n\n## 1.0.0 (only)\n\n- `node lib/ceiling.mjs controls`: 7 run, 0 failing\n');
+  say(lone.startsWith('## 1.0.0') && claims(lone).length === 1, 'trip: a changelog whose newest section is its last, with no capital letter after it, is read whole');
+  let empty = '';
+  try { sweep({ text: '## 2.0.0 (silent)\n\nno claims here\n\n## 1.0.0\n' }); } catch (e) { empty = e.message; }
+  say(/carries no controls claim/.test(empty), `trip: a section with no claim refuses the sweep rather than reporting zero drift: ${empty.slice(0, 70)}`);
   const found = claims(section);
   say(found.length >= 3 && found.length === looseCount(section), `the release block carries controls claims to re-run, and the reader parses every claim shape the section carries: ${found.length} of ${looseCount(section)}`);
   say(countOf('cache controls: 17 passed, 0 failed\n  PASS a row that quotes 3 run and 2 passed') === 17 && countOf('  PASS a row quoting 9 run\ncontrols: 31 run, 0 failing') === 31 && countOf('nothing here') === null,

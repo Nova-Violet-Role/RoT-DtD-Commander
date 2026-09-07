@@ -73,14 +73,14 @@ Measured on the release day:
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
 - `node checker/contract-audit.mjs`: 1928 declarations, 0 unused, 0 law gaps
-- `node checker/gate-sync.mjs`: 73 commands in the gate chain, 0 missing from gate.yml
+- `node checker/gate-sync.mjs`: 75 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
 - `node lib/typography.mjs controls`: 32 run, 0 failing
 - `node lib/chain.mjs controls`: 25 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 8 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 73 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 75 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -119,7 +119,7 @@ banned word at `sigil-variables-variants.md`; and `lib/chain.mjs`
 declared `artifact-missing` as a refusal and produced it nowhere, so the
 one mid-chain failure cc-chain exists to convert into an up-front refusal
 was the one it could not report. The sweep now reads `dtd/sigil` in the
-gate script and the workflow, gate chain 73 commands; the two arguments
+gate script and the workflow, gate chain 75 commands; the two arguments
 documents each carried a ```` ```markdown ```` paste wrapper on line 3
 that was never closed, 65 fences where 64 balance, so their code was
 measured as prose, and cutting that one line brought both above the
@@ -158,10 +158,10 @@ control walks every ATTLIST enumeration of typography.dtd against a
 producer table. `checker/controls-sweep.mjs` re-runs every `controls`
 count the newest changelog section claims and refuses on disagreement;
 tripped on a planted count, then run over this section, where it found
-the two counts the pass itself had moved. Gate chain 73 commands.
+the two counts the pass itself had moved. Gate chain 75 commands.
 `node lib/chain.mjs controls`: 25 run, 0 failing; `node lib/typography.mjs
 controls`: 32 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
-10 run, 0 failing.
+12 run, 0 failing.
 
 ### The companion's third pass: the sweep that under-read its own input
 
@@ -182,7 +182,7 @@ state: a plugin's distillate under `.rot-moe` had been judged as if the
 Suite had written it. One banned word left the corpus deep dive, and the
 creators sentence says what the audit prints, 24 with a schematic, 14
 folders and 10 root grammars. `node checker/controls-sweep.mjs --controls`:
-10 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil artifacts/research
+12 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil artifacts/research
 --max 0`: 22 files, 0 slop.
 
 ### The companion's fourth pass: a law with three live counterexamples, pinned by its own control
@@ -203,6 +203,34 @@ command rather than by its tail, so a count spelled as `prints 12` or `12
 controls` is a refusal by number, tripped on purpose. `node
 lib/typography.mjs controls`: 32 run, 0 failing; `node
 checker/controls-sweep.mjs --controls`: 10 run, 0 failing.
+
+### The companion's fifth pass: a census that could not differ, and a carve-out that reached everything but the command
+
+Two high findings of one shape: a declaration that reached the subset and
+the engine but not the artifact that renders it, with no instrument
+between. The sigil run compared its trials to its own trial table, which at
+scope all is the same array, so 42 shell forms of tiers S, A and B ran 40
+behind a green; the census now holds the tiers to the trials by name in
+both directions, `process-substitution-out` and `locale-quote` have trials,
+and the run executes 43. The `scale` value of the fourth pass reached
+typography.dtd, lib/typography.mjs and its control and not the template of
+`typography-dtd`, and no checker walked an enumeration against a template.
+`checker/enum-sweep.mjs` does now: every ATTLIST enumeration of a resolved
+DOCTYPE against every bracketed choice a source spells, held to its best
+match, tripped on a planted omission and a planted undeclared value. Run
+over the tree it read 5,619 enumerations against 430 spelled choices and
+found 96: seventy-six templates that still spelled four gate choices where
+cc-ask declares five, seventeen form-kind lists that never followed
+`alarm|polyalarm`, three verdict lists that never followed `reopen`; every
+one is spelled whole now and the sweep reports zero. `newestSection` in the
+controls sweep leaned on `\Z`, which is the letter Z in JavaScript and not
+an anchor; it slices by index now, a one-section changelog is tripped, and
+a section with no claim refuses rather than reporting zero drift. `cols`
+and `rows` on `typeset` are implied, since the contract alone has no grid,
+and `classes` is rendered. Gate chain 75 commands. `node lib/sigil.mjs
+controls`: 15 run, 0 failing; `node checker/enum-sweep.mjs --controls`: 7
+run, 0 failing; `node checker/controls-sweep.mjs --controls`: 12 run, 0
+failing.
 
 ## 8.0.0 (2026-09-06)
 

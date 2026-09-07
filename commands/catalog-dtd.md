@@ -901,7 +901,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 ### 🗃️ Intake
 
 - round 1 of 1: Subject, Depth, Record, Voice answered [labels or Other text]
-- gate: [start|more|add|impactful]
+- gate: [start|more|add|impactful|save]
 
 ### 🗃️ Voice
 

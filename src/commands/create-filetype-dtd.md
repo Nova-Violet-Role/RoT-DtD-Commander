@@ -72,7 +72,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 - round 1 of 3: Schematic (select), Schematic B (select), Schema A (check), Schema B (select) answered [labels or Other text]
 - round 2 of 3: Forms (check), More forms (check), Purpose (elaborate) [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🪃 Launch
 

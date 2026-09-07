@@ -91,7 +91,7 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 - round 1 of 2: Root (select), Filetypes (mark), Content (elaborate), Tools (check) answered [labels, marks or Other text]
 - round 2 of 2: Cap (select), Forms (check), Record (select), Ceiling (select) [when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🔦 Hunt
 
