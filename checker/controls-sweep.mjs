@@ -39,20 +39,35 @@ export function newestSection(text) {
   return m[0] + (next ? rest.slice(0, next.index) : rest);
 }
 
-// Every claim: `node <path> controls`: N run|passed, or `--controls`.
+// Every claim: `node <path> controls`: N run|passed, or `--controls`. The
+// separator between the path and the verb is any whitespace, because
+// markdown wraps a backticked span across a line and the third companion
+// pass measured the one claim that wrapped, lib/cache.mjs, swept never.
 export function claims(section) {
   const out = [];
-  const re = /`node ((?:lib|checker|bin)\/[\w./-]+\.mjs) (--controls|controls)`:\s*(\d+)\s+(run|passed)/g;
+  const re = /`node\s+((?:lib|checker|bin)\/[\w./-]+\.mjs)\s+(--controls|controls)`:\s*(\d+)\s+(run|passed)/g;
   for (const m of section.matchAll(re)) out.push({ path: m[1], verb: m[2], claimed: Number(m[3]), word: m[4], text: m[0] });
   return out;
 }
 
-// The count a suite prints on its total line: the last `N run` or `N passed`.
+// The loose count of claim shapes in a section, read without the path: every
+// `controls`: N run|passed. The strict reader above must find exactly as
+// many, so a claim it cannot parse is a refusal and never a silent miss.
+export function looseCount(section) {
+  return (section.match(/controls`:\s*\d+\s+(?:run|passed)\b/g) || []).length;
+}
+
+// The count a suite prints on its total line, which is the line that opens
+// with the suite's name and the word controls (`chain controls: 25 run`,
+// `controls: 31 run`, `cache controls: 17 passed`); the first such line,
+// because lib/cache.mjs prints its total before its rows and a row may quote
+// a number followed by run.
 export function countOf(output) {
-  const lines = String(output).split(/\r?\n/).filter((l) => /\b\d+\s+(run|passed)\b/.test(l));
-  if (!lines.length) return null;
-  const m = /(\d+)\s+(run|passed)/.exec(lines[lines.length - 1]);
-  return m ? Number(m[1]) : null;
+  for (const l of String(output).split(/\r?\n/)) {
+    const m = /^[\w-]*\s*controls:\s*(\d+)\s+(run|passed)\b/.exec(l.trim());
+    if (m) return Number(m[1]);
+  }
+  return null;
 }
 
 export function runOne(claim, root = ROOT) {
@@ -65,6 +80,8 @@ export function sweep({ root = ROOT, text = null } = {}) {
   const changelog = text === null ? readFileSync(join(root, 'CHANGELOG.md'), 'utf8') : text;
   const section = newestSection(changelog);
   const found = claims(section);
+  const loose = looseCount(section);
+  if (found.length !== loose) throw new Error(`controls-sweep: the section carries ${loose} claim shapes and the reader parsed ${found.length}; a claim it cannot read is not swept and the sweep refuses rather than under-reads`);
   const seen = new Map();
   const rows = [];
   for (const c of found) {
@@ -92,9 +109,15 @@ export function controls() {
   const section = newestSection(text);
   say(section.startsWith('## ') && !/\n## /.test(section.slice(3)), `the newest section is one section: ${JSON.stringify(section.split('\n')[0])}`);
   const found = claims(section);
-  say(found.length >= 3, `the release block carries controls claims to re-run: ${found.length} found`);
-  say(countOf('cache controls: 17 passed, 0 failed') === 17 && countOf('controls: 31 run, 0 failing') === 31 && countOf('nothing here') === null,
-    'the total line is read in both spellings, run and passed, and its absence is null');
+  say(found.length >= 3 && found.length === looseCount(section), `the release block carries controls claims to re-run, and the reader parses every claim shape the section carries: ${found.length} of ${looseCount(section)}`);
+  say(countOf('cache controls: 17 passed, 0 failed\n  PASS a row that quotes 3 run and 2 passed') === 17 && countOf('  PASS a row quoting 9 run\ncontrols: 31 run, 0 failing') === 31 && countOf('nothing here') === null,
+    'the total line is the one that opens with the suite name and controls, first or last, never a row quoting a count, and its absence is null');
+  const wrapped = '## 0.0.0 (wrapped)\n\n- `node lib/cache.mjs\ncontrols`: 17 passed, 0 failed\n\n## 9.0.0\n';
+  const w = claims(newestSection(wrapped));
+  say(w.length === 1 && w[0].path === 'lib/cache.mjs' && looseCount(newestSection(wrapped)) === 1, 'trip: a claim markdown wrapped across a line is read, path and count');
+  let refused = '';
+  try { sweep({ text: '## 0.0.0 (unreadable)\n\n- `node lib/x.py controls`: 4 run, 0 failing\n\n## 9.0.0\n' }); } catch (e) { refused = e.message; }
+  say(/1 claim shapes and the reader parsed 0/.test(refused), `trip: a claim shape the reader cannot parse refuses the sweep by count: ${refused.slice(0, 90)}`);
   // One real claim re-run, a cheap suite that prints a count (ordinals prints
   // ok with no count, which is exactly the absence countOf reports as null).
   const one = runOne({ path: 'lib/ceiling.mjs', verb: 'controls', claimed: 0, word: 'run' });

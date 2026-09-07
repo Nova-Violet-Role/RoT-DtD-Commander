@@ -141,8 +141,8 @@ jobs:
         run: node lib/starlist.mjs controls
       - name: ai-slop sweep over every source (no tell allowed)
         run: node lib/ai-slop.mjs sweep src/commands src/skills src/agents --max 0
-      - name: the five sigil study documents pass the same measures (the companion audit of 9.0.0 found them outside every sweep)
-        run: node lib/ai-slop.mjs sweep dtd/sigil --max 0
+      - name: the sigil study documents and the research records pass the same measures (the companion audit of 9.0.0 found both directories outside every sweep)
+        run: node lib/ai-slop.mjs sweep dtd/sigil artifacts/research --max 0
       - name: the two generated contracts and the growth state record pass the same measures
         run: node lib/ai-slop.mjs dtd/ladder.md && node lib/ai-slop.mjs dtd/geometry.md && node lib/ai-slop.mjs sweep artifacts/amplify-codebase
       - name: the root documents pass the slop measures (the release ships a changelog section)

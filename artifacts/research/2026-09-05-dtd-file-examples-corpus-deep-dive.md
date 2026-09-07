@@ -194,7 +194,7 @@ failing on purpose, because it is the only instrument in the world that reads th
   and schema-also. That constrains what we should ever try to express in a DOCTYPE.
 - **`grep -lE` over `.dtd`/`.mod`/`.ent` is a text search, not a parse.** A construct
   inside a comment counts. The counts are upper bounds, and the two that matter most
-  (NDATA at 0, conditional sections at 90) are robust to that: zero cannot be inflated,
+  (NDATA at 0, conditional sections at 90) are sturdy to that: zero cannot be inflated,
   and the conditional-section pattern was read verbatim from DocBook and TEI.
 - **`org.oasis-open.dita.v1_3` alone is 656 files**, 30% of the corpus, so DITA
   practice is over-represented in every percentage above.

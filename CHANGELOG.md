@@ -52,7 +52,7 @@ by the instrument named beside it on the release day.
   markup inside an entity value; 125 forms named, 125 spelled by the ranking,
   both directions; the shell forms run on the leg they are on.
 - **The creators against the corpus.** `checker/creators-audit.mjs`: 27 rows,
-  24 folders on the xml schematic with the concept cells that carry their
+  24 with a schematic, 14 corpus folders and 10 root grammars, all xml, with the concept cells that carry their
   mechanic, 3 refused for having no grammar, measured against the corpus.
 - **One scala per family.** `checker/scala.mjs` stacks each family in band order
   and scores the headings its members own; the `scala` job runs every family
@@ -161,7 +161,29 @@ tripped on a planted count, then run over this section, where it found
 the two counts the pass itself had moved. Gate chain 73 commands.
 `node lib/chain.mjs controls`: 25 run, 0 failing; `node lib/typography.mjs
 controls`: 30 run, 0 failing; `node checker/controls-sweep.mjs --controls`:
-7 run, 0 failing.
+9 run, 0 failing.
+
+### The companion's third pass: the sweep that under-read its own input
+
+Four findings, one high, and the high one was in the instrument the second
+pass had built. `checker/controls-sweep.mjs` read its claims with a literal
+space between the path and the verb, so the one claim markdown had wrapped
+across a line, `lib/cache.mjs`, was never re-run, and its only count guard
+passed at three where twelve were on the page: a gate step that reports
+zero drift after reading ten of twelve is indistinguishable from one that
+read everything. The separator is any whitespace now, a loose count of
+claim shapes must equal the strict count or the sweep refuses by number,
+and the total line is the one that opens with the suite name, first or
+last, never a row quoting a count; a wrapped claim and an unreadable one
+are both tripped on purpose. `artifacts/research` joined `dtd/sigil` in the
+sweep line, which is the same gap the first pass closed one directory
+over, and the recognizer's walker learned that a dot-directory is tool
+state: a plugin's distillate under `.rot-moe` had been judged as if the
+Suite had written it. One banned word left the corpus deep dive, and the
+creators sentence says what the audit prints, 24 with a schematic, 14
+folders and 10 root grammars. `node checker/controls-sweep.mjs --controls`:
+9 run, 0 failing; `node lib/ai-slop.mjs sweep dtd/sigil artifacts/research
+--max 0`: 22 files, 0 slop.
 
 ## 8.0.0 (2026-09-06)
 
