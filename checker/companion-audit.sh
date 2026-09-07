@@ -185,7 +185,7 @@ echo "companion: claude exit=$rc"
 tree_after="$(tree_state)"
 if [ "$tree_before" != "$tree_after" ]; then
   echo "companion: LAW.COMPANION.1 broken, the tree changed during the audit; phase $phase is UNAUDITED"
-  printf '%s\n' "$tree_after" | head -20
+  diff <(printf '%s\n' "$tree_before") <(printf '%s\n' "$tree_after") | grep '^[<>]' | head -20
   exit 1
 fi
 if [ "$rc" -eq 124 ]; then echo "companion: CEILING FIRED, phase $phase is UNAUDITED"; exit 124; fi

@@ -12,7 +12,8 @@
 # Bash(node lib/ceiling.mjs 60 node:*) and the git twin, and a prefix grant
 # admits everything after the prefix: node -e with writeFileSync, git commit,
 # git checkout. This wrapper runs an engine of this repository or a git verb
-# that reads, under the portable ceiling with stdin closed, and refuses by
+# that reads, under the portable ceiling (300 s: a suite of controls killed at
+# sixty left its plants in the tree, twenty-first pass) with stdin closed, and refuses by
 # name: any other executable, a node flag that evaluates or loads code, a
 # script outside the three engine directories, a git verb that writes, and
 # any argument carrying shell syntax (redirect, pipe, chain, background,
@@ -72,8 +73,10 @@ case "$tool" in
     # line granted --controls to two sweeps that parse only --check and fall
     # through to their writer). FILE stands for an existing text file the
     # engine judges; BARE for a bare run; build only with --check.
-    # counts-sweep, controls-sweep and contract-audit are refused by name
-    # (their own controls plant in the tree or run every other suite);
+    # counts-sweep, controls-sweep, contract-audit and about-sweep are refused
+    # by name (their own controls plant in the tree or run every other suite;
+    # about-sweep measures through counts-sweep, which runs the checker suite,
+    # whose walk would run about-sweep again);
     # live-sweep reaches the network and is refused by name.
     name="$(basename "$abs")"
     rel="${abs#"$here"/}"
@@ -112,7 +115,6 @@ case "$tool" in
       checker/badges.mjs) verbs="--check --controls" ;;
       checker/heading-sweep.mjs) verbs="--check" ;;
       checker/frontmatter-sweep.mjs) verbs="--check" ;;
-      checker/about-sweep.mjs) verbs="--controls" ;;
       checker/gate-sync.mjs) verbs="BARE" ;;
       checker/engines-sweep.mjs) verbs="BARE --controls" ;;
       checker/release-notes.mjs) verbs="--versions --controls" ;;
@@ -121,7 +123,7 @@ case "$tool" in
       checker/pack-claude-ai.mjs) verbs="--controls" ;;
       bin/rot-dtd-commander.mjs) verbs="check list build" ;;
       bin/adiutor.mjs) verbs="doctor ledger suggest controls" ;;
-      checker/counts-sweep.mjs|checker/controls-sweep.mjs|checker/contract-audit.mjs) refuse "$name plants in the tree or runs every other suite during its own controls" ;;
+      checker/counts-sweep.mjs|checker/controls-sweep.mjs|checker/contract-audit.mjs|checker/about-sweep.mjs) refuse "$name plants in the tree or runs every other suite during its own controls" ;;
       checker/live-sweep.mjs) refuse "$name reaches the network" ;;
       *) refuse "$name is not an engine the companion may run (writer, publisher, or not in the table)" ;;
     esac
@@ -143,7 +145,7 @@ case "$tool" in
         printf '%s\n' "$@" | grep -q -x -- '--check' || refuse "build writes; only build --check reads"
       fi
     fi
-    exec node "$here/lib/ceiling.mjs" 60 node "$abs" "$@" < /dev/null
+    exec node "$here/lib/ceiling.mjs" 300 node "$abs" "$@" < /dev/null
     ;;
   git)
     if [ "${1:-}" = "-C" ]; then shift 2 || refuse "git -C needs a directory"; fi
@@ -160,7 +162,7 @@ case "$tool" in
         --output|--output=*|--set*|--unset*|--add|--replace-all|--edit|-e) refuse "git $verb $a writes" ;;
       esac
     done
-    exec node "$here/lib/ceiling.mjs" 60 git -C "$here" "$verb" "$@" < /dev/null
+    exec node "$here/lib/ceiling.mjs" 300 git -C "$here" "$verb" "$@" < /dev/null
     ;;
   *) refuse "only node and git are run, not $tool" ;;
 esac

@@ -679,7 +679,12 @@ nested session runs under `--permission-mode default` and `allow_ok`
 holds the line to it. M30 walks every spelling the table grants under
 the tree state, red on a refusal of the table's own spelling or a moved
 tree; M31 refuses a runner copy without the mode: 34 checker controls.
-`resolve(ch, { fallback })` says where the class switch lives.
+`resolve(ch, { fallback })` says where the class switch lives. The walk
+itself forked the suite once: `about-sweep --controls` measures through
+`counts-sweep`, which runs the checker suite, whose walk ran `about-sweep`
+again, 521 processes before the kill; `about-sweep` is refused by name and
+the suite refuses to run inside itself through an environment mark every
+child inherits.
 
 ## 8.0.0 (2026-09-06)
 

@@ -22,6 +22,16 @@
 set -u
 cd "$(dirname "$0")/.." || exit 2
 PORTABLE_ROOT="$(pwd)"; . checker/portable.sh
+# A control suite inside a control suite is refused by name. The twenty-first
+# pass's table walk ran about-sweep --controls, whose measurement runs this
+# suite, whose walk runs about-sweep again: 521 processes before the kill.
+# The mark is inherited by every child, so no table and no engine can fork
+# this suite through any path.
+if [ -n "${ROT_CHECKER_CONTROLS_RUNNING:-}" ]; then
+  echo "checker-controls: refused, a control suite inside a control suite (ROT_CHECKER_CONTROLS_RUNNING is set)"
+  exit 3
+fi
+export ROT_CHECKER_CONTROLS_RUNNING=1
 T=$(mktemp -d)
 # M25 plants a file at the repository root to move the tree state; a kill
 # between the write and the rm must not leave it behind
