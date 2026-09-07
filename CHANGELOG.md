@@ -73,14 +73,14 @@ Measured on the release day:
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
 - `node checker/contract-audit.mjs`: 1928 declarations, 0 unused, 0 law gaps
-- `node checker/gate-sync.mjs`: 79 commands in the gate chain, 0 missing from gate.yml
+- `node checker/gate-sync.mjs`: 83 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
 - `node lib/typography.mjs controls`: 34 run, 0 failing
 - `node lib/chain.mjs controls`: 26 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 79 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 83 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -119,7 +119,7 @@ banned word at `sigil-variables-variants.md`; and `lib/chain.mjs`
 declared `artifact-missing` as a refusal and produced it nowhere, so the
 one mid-chain failure cc-chain exists to convert into an up-front refusal
 was the one it could not report. The sweep now reads `dtd/sigil` in the
-gate script and the workflow, gate chain 79 commands; the two arguments
+gate script and the workflow, gate chain 83 commands; the two arguments
 documents each carried a ```` ```markdown ```` paste wrapper on line 3
 that was never closed, 65 fences where 64 balance, so their code was
 measured as prose, and cutting that one line brought both above the

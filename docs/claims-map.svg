@@ -76,7 +76,7 @@
 <text x="26" y="1366" font-size="13" fill="#1a1d24">every command of the gate script is a run line of the gate workflow or a shell segment of</text>
 <text x="26" y="1384" font-size="13" fill="#1a1d24">one; a step commented out counts for nothing; the workflow may run more, and that direction</text>
 <text x="26" y="1402" font-size="13" fill="#1a1d24">is not claimed</text>
-<text x="38" y="1426" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">node checker/gate-sync.mjs: 79 commands in the gate chain, 0 missing from gate.yml,</text>
+<text x="38" y="1426" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">node checker/gate-sync.mjs: 83 commands in the gate chain, 0 missing from gate.yml,</text>
 <text x="38" y="1444" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">three controls passing (a run line removed, a step commented out, a file of comments)</text>
 <text x="794" y="1456" font-size="11" fill="#5b6472" text-anchor="end">every push</text>
 <text x="26" y="1480" font-size="13" fill="#1a1d24">every build target under commands, skills and agents is tracked; an ignored one would pass</text>
