@@ -199,6 +199,8 @@ export function places(c) {
     // Fifteenth companion pass: the doctor's subsets row said eighteen where
     // the instrument counts every dtd file, thirty-one.
     { file: 'README.md', re: /row `subsets`: `(\d+) subsets, every one installed`/, want: [c.dtdFiles], label: 'the claims row of the doctor subsets' },
+    // Seventeenth companion pass: the same row quotes the suite's total line.
+    { file: 'README.md', re: /`checker controls: (\d+) run, 0 failing`/, want: [c.checkerControls], label: 'the claims row quoting the checker total line' },
     { file: 'README.md', re: /(\d+) converted sources, mirrored into the installed copy under commands\/ and skills\/, carry the upstream MIT/, want: [c.mitFiles], label: 'the licence plate prose of the converted files' },
     { file: 'README.md', re: /the ([a-z-]+) commands and ([a-z-]+) skills that carry its MIT today/, want: [c.mitCommands, c.mitSkills], label: 'the supporting plate prose of the converted commands and skills' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },

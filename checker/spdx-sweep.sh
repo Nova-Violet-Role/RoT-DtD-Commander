@@ -21,7 +21,9 @@ TAG_RE='SPDX-License-Identifier: (\(AGPL-3\.0-or-later OR EUPL-1\.2\) AND MIT|AG
 # any depth including the root, which a bash case pattern says as two arms.
 globs=()
 while IFS= read -r g; do globs+=("$g"); done < <(sed -n 's/^path = \[\(.*\)\]$/\1/p' REUSE.toml | tr ',' '\n' | sed 's/[" ]//g' | sed '/^$/d')
-[ "${#globs[@]}" -ge 1 ] || { echo "spdx-sweep: REUSE.toml declares no annotation path"; exit 2; }
+# ${globs[0]:-} rather than ${#globs[@]}: an empty array under set -u is an
+# unbound variable on the bash 3.2 the macOS leg ships
+[ -n "${globs[0]:-}" ] || { echo "spdx-sweep: REUSE.toml declares no annotation path"; exit 2; }
 
 # A REUSE glob: * never crosses a slash, a leading **/ is any depth including
 # the root. Translated to a regex, because a shell case glob lets * cross a
@@ -80,23 +82,35 @@ if [ "$m1" -ne $((m0+4)) ] || [ "$v1" -ne $((v0+1)) ] || [ "$c1" -ne "$c0" ]; th
   exit 1
 fi
 echo "control: two planted tagless files, one whose only tag is quoted prose and a json one level below a named directory are counted missing, and a planted json is covered by REUSE.toml (missing $m0 to $m1, covered $v0 to $v1)"
-# A directory under artifacts/ carrying its own .gitignore is a tool hiding
-# its droppings from git status; it is named here rather than trusted
-# (sixteenth companion pass: .rot-moe/ held eighteen files behind a one-line
-# .gitignore of its own).
-foreign() { find artifacts -mindepth 2 -name .gitignore 2>/dev/null | sort; }
+# A directory anywhere in the tree carrying a .gitignore this repository does
+# not track is a tool hiding its droppings from git status. It is named here
+# unless the repository's own .gitignore already ignores that directory, in
+# which case the tool's file is moot (sixteenth and seventeenth companion
+# passes: .rot-moe/ under artifacts/research, then at the repository root,
+# each behind a one-line .gitignore of its own).
+foreign() {
+  local g d rule
+  find . -name .gitignore -not -path ./.gitignore -not -path './.git/*' -not -path './node_modules/*' 2>/dev/null | sed 's|^\./||' | sort | while IFS= read -r g; do
+    git ls-files --error-unmatch "$g" >/dev/null 2>&1 && continue
+    d="$(dirname "$g")"
+    rule="$(git check-ignore -v "$d" 2>/dev/null | cut -d: -f1)"
+    [ "$rule" = ".gitignore" ] && continue
+    printf '%s\n' "$g"
+  done
+}
 f0="$(foreign)"
-mkdir -p artifacts/zz-foreign-control; printf '*\n' > artifacts/zz-foreign-control/.gitignore
+mkdir -p zz-foreign-control artifacts/zz-foreign-control
+printf '*\n' > zz-foreign-control/.gitignore; printf '*\n' > artifacts/zz-foreign-control/.gitignore
 f1="$(foreign)"
-rm -rf artifacts/zz-foreign-control
-if ! printf '%s\n' "$f1" | grep -q -F 'artifacts/zz-foreign-control/.gitignore'; then
-  echo "CONTROL FAIL: a planted foreign .gitignore under artifacts/ was not named"
+rm -rf zz-foreign-control artifacts/zz-foreign-control
+if ! printf '%s\n' "$f1" | grep -q -x 'zz-foreign-control/.gitignore' || ! printf '%s\n' "$f1" | grep -q -x 'artifacts/zz-foreign-control/.gitignore'; then
+  echo "CONTROL FAIL: a planted foreign .gitignore at the root and one under artifacts/ must both be named; read: $(printf '%s' "$f1" | tr '\n' ' ')"
   exit 1
 fi
-echo "control: a planted foreign .gitignore under artifacts/ is named"
+echo "control: a planted foreign .gitignore is named at the root and under artifacts/"
 if [ -n "$f0" ]; then
   printf 'FOREIGN IGNORE %s\n' $f0
-  echo "spdx-sweep: a directory under artifacts/ carries its own .gitignore; remove it and ignore the tool's output from the repository's .gitignore"
+  echo "spdx-sweep: a directory carries a .gitignore this repository does not track and its own .gitignore does not ignore the directory; ignore the tool's output from the repository's .gitignore"
   exit 1
 fi
 echo "spdx-sweep: $c0 files checked, $v0 covered by REUSE.toml, $m0 missing"

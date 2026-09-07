@@ -41,6 +41,10 @@ dist/
 **/artifacts/**/CLAUDE.md
 **/artifacts/**/.claude/
 **/artifacts/**/.rot-moe/
+# The RoT MoE plugin's state, written where a session runs, the repository
+# root included; the repository's own rule covers it, never the one-line
+# .gitignore the plugin writes inside (seventeenth companion pass).
+.rot-moe/
 
 # Session content, never source: the cache a gated command saves on the save
 # choice of its gate (cc-cache.dtd, lib/cache.mjs) and the run record the sigil
@@ -51,3 +55,4 @@ artifacts/sigil/
 # The companion runner's raw JSON transcript; the markdown record beside it
 # is tracked and written by the runner with its header (fourteenth pass).
 artifacts/research/companion-*.json
+artifacts/research/companion-*.md.tmp

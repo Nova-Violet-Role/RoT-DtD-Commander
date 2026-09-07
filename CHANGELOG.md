@@ -540,8 +540,9 @@ heading capture counted any third-level heading the companion quoted, and
 the shell glob behind `REUSE.toml` let `*` cross a slash.
 
 The runner runs the session in a temp scratch outside the tree, removed
-after, and writes the records by absolute path; `.rot-moe/` is ignored
-wherever a session ran and the droppings are gone. A stamped record is
+after, and writes the records by absolute path; `.rot-moe/` was ignored
+under `artifacts/` and those droppings removed (the seventeenth pass found
+the live ones at the repository root). A stamped record is
 scored only by its run: a hand re-score without the stamp is refused,
 M22, and the checker suite is 25. The heading capture counts only the
 four declared words. The SPDX sweep translates each annotation glob to a
@@ -549,6 +550,31 @@ regex where `*` never crosses a slash, with a planted JSON one level
 below a named directory counted missing, and names any directory under
 `artifacts/` carrying its own `.gitignore`, a planted one tripped. The law
 map names 7 and 8 with their controls.
+
+### The companion's seventeenth pass: the arm aimed at last week's example
+
+The seventeenth pass returned fail with eight findings, two high: the
+foreign-ignore arm of the pass before searched under `artifacts/` while
+the live `.rot-moe/`, the RoT MoE plugin's state for the build session
+itself, sat at the repository root behind its own one-line `.gitignore`,
+and the ignore rule was scoped to `artifacts/` too, so the sixteenth
+pass's paragraph said the droppings were gone and the tree said
+otherwise. The lower six: the README's checker row quoted `22 run` where
+the suite prints 25; the Greek table wrote 29 as `icosienna-` against its
+own rule while the constructor's control passed by remembering the
+divergence; `${#globs[@]}` under `set -u` is an unbound variable on bash
+3.2; the runner's usage header promised exit 2 for a bare `--score` and
+`${2:?}` gave 1; and the record's `.tmp` staging path was unignored.
+
+The arm walks from the root and names any `.gitignore` the repository does
+not track unless the repository's own rule already ignores that
+directory, planted at the root and under `artifacts/`; a bare `.rot-moe/`
+covers the plugin's state wherever a session runs, and the live directory
+stays, it is the running session's. The README row quotes 25 and the
+counts sweep holds it (62 places). The table writes `icosiennea-` and the
+typography control reads the table's own row against the constructor.
+The glob count is `${globs[0]:-}`, the `--score` guard exits 2 as the
+header says, and the staging path is ignored.
 
 ## 8.0.0 (2026-09-06)
 
@@ -612,7 +638,7 @@ attribute and a sentence; the verb of a measure, a projection and a change is
 now an enumeration each band subset raises before the driver, so a surveyor
 measure carrying 41 is invalid against its own DOCTYPE. Four numbers in this
 changelog and two README claims rows were stale on the release date while the
-counts sweep reported every place in step: the sweep reads 61 places, from 22.
+counts sweep reported every place in step: the sweep reads 62 places, from 22.
 The cross-os sweep reads `package.json` scripts and refuses a release job
 that does not need every leg; the scorer refuses two verdict lines and none
 (M18, M19); `lib/ceiling.mjs` maps a signal to its number. The sigil document

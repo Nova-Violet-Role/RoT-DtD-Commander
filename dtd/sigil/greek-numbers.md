@@ -58,7 +58,7 @@ Pattern: **tens + unit** (e.g., 21 = icosi + hena)
 | 26 | **icosihexa-** | 20 + 6 |
 | 27 | **icosihepta-** | 20 + 7 |
 | 28 | **icosiocta-** | 20 + 8 |
-| 29 | **icosienna-** | 20 + 9 |
+| 29 | **icosiennea-** | 20 + 9 |
 | 31 | **triacontahena-** | 30 + 1 |
 | 32 | **triacontadi-** | 30 + 2 |
 | 41 | **tetracontahena-** | 40 + 1 |

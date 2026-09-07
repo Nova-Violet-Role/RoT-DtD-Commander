@@ -89,7 +89,8 @@ score() {
 }
 
 if [ "${1:-}" = "--score" ]; then
-  score "${2:?answer file}" "${3:?phase}" "${4:?range}" "${5:-opus}" "${6:-}"
+  [ -n "${2:-}" ] && [ -n "${3:-}" ] && [ -n "${4:-}" ] || { echo "usage: bash checker/companion-audit.sh --score <answer-file> <phase-name> <git-range> [model] [stamp]"; exit 2; }
+  score "$2" "$3" "$4" "${5:-opus}" "${6:-}"
   exit $?
 fi
 
