@@ -47,3 +47,6 @@ dist/
 # commit (eleventh companion pass).
 artifacts/cache/
 artifacts/sigil/
+# The companion runner's raw JSON transcript; the markdown record beside it
+# is tracked and written by the runner with its header (fourteenth pass).
+artifacts/research/companion-*.json

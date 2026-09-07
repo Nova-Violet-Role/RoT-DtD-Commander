@@ -482,6 +482,28 @@ description says every `dtd/cc-*.dtd`, nineteen of them, and the counts
 sweep holds that word, the licence plate's converted count and the
 supporting plate's converted commands and skills to the tree: 60 places.
 
+### The companion's fourteenth pass: the runner's own record
+
+The fourteenth pass could not start until the runner was repaired: after
+thirteen passes the range's changed-file list, folded into one prompt
+argument, exceeded the argument limit and `claude` never ran (exit 126,
+"Argument list too long"); the runner now folds a list past 200 files to
+one line per directory. It then returned fail with five findings, two
+high, every one about the records the runner owns: the run that failed had
+truncated `artifacts/research/companion-9.0.0.md` to a bare newline before
+it started, the next commit swept that in, and a tracked one-byte file
+with no header turned the SPDX sweep red; the runner truncated both files
+on every pass, so a header committed by hand could not survive one run;
+the README's SPDX row read against that state; the licence prose counted
+the source half as the repository total; and the `**/*.json` annotation
+licensed the runner's raw transcript as package content.
+
+The runner writes the record with its header to a temp file and moves it
+into place only when an answer parsed, so an empty run keeps the previous
+record. The raw JSON transcript is ignored, a scratch and never a record.
+The README's SPDX row says what the sweep holds now, and the licence prose
+says 156 converted sources mirrored into the installed copy.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate

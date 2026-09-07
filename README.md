@@ -597,7 +597,7 @@ want the grammar enforced rather than merely declared.
      | a live `/rot-chroma-dtd ... --no-gate` turn renders all thirteen lens headings with the sigil and closes as `pass` | the same, then `rdc ledger --last 1` | 2026-09-02 |
      | the marketplace round-trip (add, install, uninstall, remove) leaves the registry clean and the npx set intact, and `rdc prune-plugin` removes the cache directory the plugin CLI leaves behind, refusing while the plugin is still registered | `claude plugin marketplace add`, `install`, `rdc doctor`, `uninstall`, `marketplace remove`, `rdc prune-plugin`, `rdc doctor` | 2026-09-02 |
      | the front matter of every source parses as YAML (no bare `: ` or ` #` in a value), so GitHub renders it without an error | `rdc check` rule C14; `node checker/frontmatter-sweep.mjs --check`: `0 would change, 91 already parse`; confirmed once with js-yaml 4.1.0 outside the repository | 2026-09-02 |
-     | every source file carries the SPDX header | `bash checker/spdx-sweep.sh`: `0 missing` | 2026-09-02 |
+     | every tracked file carries an SPDX expression, or is covered by an annotation of REUSE.toml, or is a licence text | `bash checker/spdx-sweep.sh`: `0 missing`, with a planted covered json and two planted uncovered files moving the counts | 2026-09-07 |
      | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
      | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
      | every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `83 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
@@ -719,7 +719,7 @@ Lex Christopherson's taches-cc-resources (MIT), from which the twenty-four comma
      checker/plates.mjs renders the plate from it and holds the file to the render.
      Nothing here is hidden that the plate does not also show.
 
-AGPL-3.0-or-later OR EUPL-1.2, at your option, for every file in this repository. Root LICENSE is the AGPL text (the one GitHub reads); LICENSE-EUPL-1.2 sits beside it; LICENSES/ holds both plus the upstream MIT for tooling. 156 converted files carry the upstream MIT in their SPDX expression, (AGPL-3.0-or-later OR EUPL-1.2) AND MIT, with the author's copyright line; REUSE.toml covers the JSON, JSONL and GIF files no comment can head, and checker/spdx-sweep.sh holds every tracked file to one of the three. Copyleft on purpose: what is shared here cannot be enclosed later, by anyone, including us.
+AGPL-3.0-or-later OR EUPL-1.2, at your option, for every file in this repository. Root LICENSE is the AGPL text (the one GitHub reads); LICENSE-EUPL-1.2 sits beside it; LICENSES/ holds both plus the upstream MIT for tooling. 156 converted sources, mirrored into the installed copy under commands/ and skills/, carry the upstream MIT in their SPDX expression, (AGPL-3.0-or-later OR EUPL-1.2) AND MIT, with the author's copyright line; REUSE.toml covers the JSON, JSONL and GIF files no comment can head, and checker/spdx-sweep.sh holds every tracked file to one of the three. Copyleft on purpose: what is shared here cannot be enclosed later, by anyone, including us.
 
 <div align="center">
 

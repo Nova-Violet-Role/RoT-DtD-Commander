@@ -87,7 +87,7 @@ contract="$(cat "$here/checker/companion-audit.dtd")"
 stat="$(git -C "$here" diff --stat "$range" | tail -40)"
 files="$(git -C "$here" diff --name-only "$range")"
 # The prompt travels as one argument. A range that has grown past a few
-# hundred files (9.0.0 after thirteen passes: 156 converted headers and
+# hundred files (9.0.0 after thirteen passes: the converted headers and
 # their built copies) pushed it past the argument limit and claude never
 # started, exit 126, "Argument list too long". Past 200 files the list is
 # folded to one line per directory with its count, and the companion is
@@ -133,7 +133,19 @@ const raw = fs.readFileSync(process.argv[1], "utf8");
 let j = null;
 try { j = JSON.parse(raw); } catch (e) { const i = raw.indexOf("{"); try { j = JSON.parse(raw.slice(i)); } catch (e2) { j = null; } }
 const result = j && typeof j.result === "string" ? j.result : "";
-fs.writeFileSync(process.argv[2], result.replace(/\r/g, "") + (result.endsWith("\n") ? "" : "\n"), "utf8");
+// The record is tracked and carries the licence header; it is written to a
+// temp file and moved into place only when an answer parsed, so a run that
+// produced nothing keeps the previous record instead of a bare newline
+// (fourteenth companion pass on 9.0.0: an empty run left a one-byte file
+// and the next commit swept it in).
+if (result.trim()) {
+  const header = "<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->\n<!-- Copyright 2026 Saimonokuma. -->\n\n";
+  const tmp = process.argv[2] + ".tmp";
+  fs.writeFileSync(tmp, header + result.replace(/\r/g, "") + (result.endsWith("\n") ? "" : "\n"), "utf8");
+  fs.renameSync(tmp, process.argv[2]);
+} else {
+  console.log("companion: no answer; the previous record " + process.argv[2] + " is kept");
+}
 const meta = j ? `turns=${j.num_turns} cost_usd=${j.total_cost_usd} duration_ms=${j.duration_ms} is_error=${j.is_error} subtype=${j.subtype}` : "no json parsed";
 console.log("companion: " + meta + " answer_bytes=" + Buffer.byteLength(result));
 ' "$raw" "$log"

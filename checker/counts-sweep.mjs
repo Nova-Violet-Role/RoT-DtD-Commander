@@ -195,7 +195,7 @@ export function places(c) {
     // subsets of nineteen, and the licence plate counted forty-four
     // converted files where the SPDX expression says how many.
     { file: 'src/agents/dtd-contract-auditor.md', re: /every dtd\/cc-\*\.dtd, ([a-z-]+) of them/, want: [c.sharedSubsets], label: 'the contract auditor description, shared subsets' },
-    { file: 'README.md', re: /(\d+) converted files carry the upstream MIT/, want: [c.mitFiles], label: 'the licence plate prose of the converted files' },
+    { file: 'README.md', re: /(\d+) converted sources, mirrored into the installed copy under commands\/ and skills\/, carry the upstream MIT/, want: [c.mitFiles], label: 'the licence plate prose of the converted files' },
     { file: 'README.md', re: /the ([a-z-]+) commands and ([a-z-]+) skills that carry its MIT today/, want: [c.mitCommands, c.mitSkills], label: 'the supporting plate prose of the converted commands and skills' },
     { file: 'CHANGELOG.md', re: /lib\/cross-os\.mjs controls`: (\d+) run/, want: [c.crossOsControls], label: 'the changelog cross-os controls' },
     { file: 'CHANGELOG.md', re: /matrix --check`, (\d+) controls\./, want: [c.crossOsControls], label: 'the changelog cross-os prose' },
