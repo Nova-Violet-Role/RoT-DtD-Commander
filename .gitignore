@@ -36,3 +36,7 @@ dist/
 
 # The codemap tool caches an index beside the tree; it is not the tree.
 .codemap/
+
+# the memory plugin writes its own CLAUDE.md and .claude/ beside any file it recalls; neither is this repository
+**/artifacts/**/CLAUDE.md
+**/artifacts/**/.claude/
