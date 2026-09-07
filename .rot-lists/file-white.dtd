@@ -22,6 +22,7 @@
 <!ENTITY LIST.entry.svg "the generated plates the README renders; drawn rather than written, because GitHub sanitises style out of markdown but serves a committed image untouched|2026-09-05|||">
 <!ENTITY LIST.entry.figure "the source a figure is drawn from when one is kept on disk, one figure element both renderers of lib/figure.mjs read; the tree keeps none yet, its figures are drawn from answers, and the class is listed with the family that writes it rather than after LAW.CORE.8 refused it mid-build|2026-09-07|||">
 <!ENTITY LIST.entry.nt "the cache a gated command saves on the save choice of its gate: NestedText, three types, no code, read whole in one pass and lighter than markdown, under artifacts/cache (cc-cache.dtd)|2026-09-07|||">
+<!ENTITY LIST.entry.toml "REUSE.toml, the licensing of the files no comment can head (REUSE 3.3), read by checker/spdx-sweep.sh for every tagless file|2026-09-07|||">
 <!ENTITY LIST.entry.txt "the licence texts|2026-09-04|||">
 <!ENTITY LIST.entry.jsonl "the Adiutor ledger, one line per run|2026-09-04|||">
 <!ENTITY LIST.entry.cff "the citation file|2026-09-04|||">
