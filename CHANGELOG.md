@@ -72,7 +72,7 @@ Measured on the release day:
 
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
-- `node checker/contract-audit.mjs`: 1927 declarations, 0 unused, 0 law gaps
+- `node checker/contract-audit.mjs`: 1928 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 70 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
@@ -80,7 +80,7 @@ Measured on the release day:
 - `node lib/chain.mjs controls`: 15 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 41 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 8 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1927 declarations; 70 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1928 declarations; 70 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -105,7 +105,7 @@ whole (`LAW.CACHE.4`), and an intake that closes on `add`, `more` or
 source, 119 of them, and `cc-ask` itself gains the choice in its gate
 enumeration, `GATE.save`, `intake (.., gate, cache?)` and an `ASK.exhausted`
 that offers start and save. `.nt` enters the white list. `node lib/cache.mjs
-controls`: 16 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
+controls`: 17 run, 0 failing; `node bin/adiutor.mjs controls`: 31 run, 0
 failing; `npm run controls:cache` in the gate chain and the workflow.
 
 ## 8.0.0 (2026-09-06)

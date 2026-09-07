@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: the fourth member of the Graphic and Geometric Suite, the one that produces. With a survey, a plan and a renovation on disk it renders the graphic the three agreed on, one figure of three layers through cc-figure, to cells, svg and png, every byte counted after the write; with nothing on disk it launches the three in band order as one chain with one gate. Bands IV to VII of the one hundred and eight rung ladder, trigonometry to restoration, read through the professions' lenses. Gates before it draws"
+description: "DTD-native: the fourth member of the Graphic and Geometric Suite, the one that produces. With a survey, a plan and a renovation on disk it renders the graphic the three agreed on, one figure of three layers through cc-figure, to cells, svg and png, every byte read back; with nothing on disk it launches the three in band order as one chain with one gate. Bands IV to VII of the one hundred and eight rung ladder, trigonometry to restoration, through the professions' lenses. Gates before it draws"
 argument-hint: "[the survey, the plan and the renovation markdown to stand on, in that order, or blank to launch the three; --no-gate runs autonomously; --no-png skips the rasteriser; --seed=<option> carries the figure chosen at the gate]"
 ---
 

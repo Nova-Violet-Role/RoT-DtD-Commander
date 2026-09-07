@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: the dollar sign as a contract. Studies one form, one tier or every form of the sigil against the five documents under dtd/sigil: the form's token, its context, its tier and its topic, whether the ranking document spells it, the eleven tokens that collide across contexts, and the trust matrix that decides when a sigil expands and when it is data. lib/sigil.mjs holds the names in the subset to the spellings in the documents in both directions; a form the documents do not spell, or a ranked form no name covers, is a finding. Gates on what to study"
+description: "DTD-native: the dollar sign as a contract. Studies one form, one tier or every form against the five documents under dtd/sigil: the form's token, context, tier and topic, whether the ranking document spells it, the eleven tokens that collide across contexts, and the trust matrix of when a sigil expands and when it is data. lib/sigil.mjs holds subset names to document spellings both ways; a form the documents do not spell, or a ranked form no name covers, is a finding. Gates on what to study"
 argument-hint: "[a form by name or token, a tier S to D, a topic 1 to 10, or all; --no-gate runs autonomously]"
 ---
 
