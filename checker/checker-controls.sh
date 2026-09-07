@@ -10,9 +10,10 @@
 # each expected to score as its law says, two verdict lines and none among
 # them; M17: the runner's allow-list, a copy granting Write refused, M17b a
 # bare Bash refused, M17c the bare timeout refused; M20 to M22: the run
-# stamp and the four headings; M23 to M29: the wrapper checker/companion-run.sh
+# stamp and the four headings; M23 to M31: the wrapper checker/companion-run.sh
 # (the old prefix grant refused, its refusals tripped, git config and the
-# engines by the table, the bare arms), a changed tree, a fired ceiling. The total line at the end,
+# engines by the table, the bare arms, every granted spelling walked under
+# the tree state), a changed tree, a fired ceiling, the permission mode. The total line at the end,
 # checker controls: N run, F failing, counts once per control, and
 # CC_PLANT_FAIL=1 runs M0 and one control forced to fail, printing 2 run, 1
 # failing at exit 1, the proof checker/counts-sweep.mjs reads.
@@ -131,6 +132,9 @@ allow_ok() {
   # Every Bash form is the wrapper, checker/companion-run.sh, since 9.0.0: a
   # prefix grant of node or git admitted node -e and git commit (M23).
   echo "$a" | grep -o 'Bash([^)]*)' | grep -v -q -F 'Bash(bash $here/checker/companion-run.sh:*)' && return 1
+  # The permission mode is explicit on the same line, or a parent in bypass
+  # mode hands the nested session every tool (M31).
+  grep -q -- '--allowedTools "[^"]*" --permission-mode default' "$1" || return 1
   return 0
 }
 sed 's/--allowedTools "Read,/--allowedTools "Write,Read,/' checker/companion-audit.sh > "$T/m17.sh"
@@ -159,7 +163,7 @@ bash $w git commit -m x >/dev/null 2>&1; r24c=$?
 out24d=$(bash $w git log '-1' '>' "$T/redirect" 2>&1); r24d=$?
 bash $w node lib/ceiling.mjs controls >/dev/null 2>&1; r24e=$?
 bash $w git rev-parse HEAD >/dev/null 2>&1; r24f=$?
-[ $r24a -eq 2 ] && [ $r24b -eq 2 ] && [ $r24c -eq 2 ] && [ $r24d -eq 2 ] && echo "$out24d" | grep -q 'shell syntax' && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit and a redirect argument (exit 2 each) and runs an engine and a reading git verb" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f"; }
+[ $r24a -eq 3 ] && [ $r24b -eq 3 ] && [ $r24c -eq 3 ] && [ $r24d -eq 3 ] && echo "$out24d" | grep -q 'shell syntax' && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit and a redirect argument (exit 3 each) and runs an engine and a reading git verb" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f"; }
 # M25: a tree that changed during the audit is read as a breach of LAW.COMPANION.1
 t0=$(bash checker/companion-audit.sh --tree-state); printf 'planted\n' > zz-tree-control.tmp; t1=$(bash checker/companion-audit.sh --tree-state); rm -f zz-tree-control.tmp
 [ "$t0" != "$t1" ] && echo "$t1" | grep -q 'zz-tree-control.tmp' && ok "M25 a file planted during the audit moves the tree state the runner compares before and after the session" || { ko "M25 the tree state did not move"; }
@@ -173,7 +177,7 @@ out=$(PATH="$T/bin:$PATH" bash checker/companion-audit.sh ctl-ceiling v8.0.0..HE
 bash $w git config --file "$T/cfg" a.b c >/dev/null 2>&1; r27a=$?
 bash $w git config core.hooksPath x >/dev/null 2>&1; r27b=$?
 bash $w git config --get core.bare >/dev/null 2>&1; r27c=$?
-[ $r27a -eq 2 ] && [ $r27b -eq 2 ] && [ ! -e "$T/cfg" ] && [ $r27c -eq 0 ] && ok "M27 git config --file and a key write are refused (exit 2, no file written) and --get reads" || { ko "M27 config: file=$r27a key=$r27b get=$r27c"; }
+[ $r27a -eq 3 ] && [ $r27b -eq 3 ] && [ ! -e "$T/cfg" ] && [ $r27c -eq 0 ] && ok "M27 git config --file and a key write are refused (exit 3, no file written) and --get reads" || { ko "M27 config: file=$r27a key=$r27b get=$r27c"; }
 # M28: an engine is admitted by what it does: writers by name, a bare run, a writing verb and build without --check are refused; a reading verb, a bare reporter and build --check run
 bash $w node checker/spdx-add.mjs >/dev/null 2>&1; r28a=$?
 bash $w node checker/plates.mjs >/dev/null 2>&1; r28b=$?
@@ -185,13 +189,37 @@ out28g=$(bash $w node checker/readme-index.mjs check 2>&1); r28g=$?
 bash $w node checker/counts-sweep.mjs >/dev/null 2>&1; r28h=$?
 bash $w node checker/contract-audit.mjs >/dev/null 2>&1; r28i=$?
 bash $w node lib/ceiling.mjs check >/dev/null 2>&1; r28j=$?
-[ $r28a -eq 2 ] && [ $r28b -eq 2 ] && [ $r28c -eq 2 ] && [ $r28d -eq 2 ] && [ $r28e -eq 0 ] && [ $r28f -eq 0 ] && [ $r28g -eq 2 ] && echo "$out28g" | grep -q 'not a reading spelling' && [ $r28h -eq 2 ] && [ $r28i -eq 2 ] && [ $r28j -eq 2 ] && ok "M28 spdx-add by name, plates bare, cache save, build without --check, a dashless check against readme-index, counts-sweep and contract-audit by name and a verb outside ceiling's set are refused (exit 2); ordinals controls and gate-sync run" || { ko "M28 engines: add=$r28a bare=$r28b save=$r28c build=$r28d ordinals=$r28e sync=$r28f dashless=$r28g counts=$r28h contract=$r28i ceiling=$r28j"; }
+[ $r28a -eq 3 ] && [ $r28b -eq 3 ] && [ $r28c -eq 3 ] && [ $r28d -eq 3 ] && [ $r28e -eq 0 ] && [ $r28f -eq 0 ] && [ $r28g -eq 3 ] && echo "$out28g" | grep -q 'not a reading spelling' && [ $r28h -eq 3 ] && [ $r28i -eq 3 ] && [ $r28j -eq 3 ] && ok "M28 spdx-add by name, plates bare, cache save, build without --check, a dashless check against readme-index, counts-sweep and contract-audit by name and a verb outside ceiling's set are refused (exit 3); ordinals controls and gate-sync run" || { ko "M28 engines: add=$r28a bare=$r28b save=$r28c build=$r28d ordinals=$r28e sync=$r28f dashless=$r28g counts=$r28h contract=$r28i ceiling=$r28j"; }
 # M29: the bare arms: every reporter the table names as BARE runs bare at exit 0, a bare run of an admitted engine that is not one is refused, and an engine outside the table is refused
 bash $w node checker/gate-sync.mjs >/dev/null 2>&1; r29a=$?
 bash $w node checker/engines-sweep.mjs >/dev/null 2>&1; r29b=$?
 out29c=$(bash $w node checker/glossary.mjs 2>&1); r29c=$?
 out29d=$(bash $w node lib/arm.mjs controls 2>&1); r29d=$?
-[ $r29a -eq 0 ] && [ $r29b -eq 0 ] && [ $r29c -eq 2 ] && echo "$out29c" | grep -q 'run bare is not admitted' && [ $r29d -eq 2 ] && echo "$out29d" | grep -q 'not an engine the companion may run' && ok "M29 gate-sync and engines-sweep run bare (exit 0); glossary bare and an engine outside the table are refused by name (exit 2)" || { ko "M29 bare arms: sync=$r29a engines=$r29b glossary=$r29c arm=$r29d"; }
+[ $r29a -eq 0 ] && [ $r29b -eq 0 ] && [ $r29c -eq 3 ] && echo "$out29c" | grep -q 'run bare is not admitted' && [ $r29d -eq 3 ] && echo "$out29d" | grep -q 'not an engine the companion may run' && ok "M29 gate-sync and engines-sweep run bare (exit 0); glossary bare and an engine outside the table are refused by name (exit 3)" || { ko "M29 bare arms: sync=$r29a engines=$r29b glossary=$r29c arm=$r29d"; }
+# M30: every spelling the table grants runs without a refusal and leaves the tree as it was; 124 is the ceiling, an engine's own 1 or 2 is its verdict or usage
+# The tree is read once before and once after the whole walk (two readings
+# per spelling doubled the suite's time past the counts sweep's ceiling, and
+# a killed suite left its engines running into the next reading).
+bad30=""; n30=0
+t0=$(bash checker/companion-audit.sh --tree-state)
+while read -r e s; do
+  case "$s" in BARE) args="" ;; FILE) args="README.md" ;; build) args="build --check" ;; *) args="$s" ;; esac
+  # shellcheck disable=SC2086
+  bash $w node "$e" $args >/dev/null 2>&1; rc=$?
+  n30=$((n30+1))
+  [ $rc -eq 3 ] && bad30="$bad30 $e[$s]=refused"
+done < <(bash $w --table)
+t1=$(bash checker/companion-audit.sh --tree-state)
+[ "$t0" != "$t1" ] && bad30="$bad30 tree-moved($(diff <(printf '%s
+' "$t0") <(printf '%s
+' "$t1") | grep '^[<>]' | tr '
+' ' ' | cut -c1-160))"
+[ $n30 -ge 40 ] && [ -z "$bad30" ] && ok "M30 every spelling the table grants runs without a refusal and the walk leaves the tree as it was ($n30 spellings walked)" || { ko "M30 table walk: $n30 spellings;$bad30"; }
+# M31: a runner copy with no explicit permission mode is refused: a parent in bypass mode would hand the nested session every tool
+sed 's/ --permission-mode default//' checker/companion-audit.sh > "$T/m31.sh"
+grep -q -- '--permission-mode default' "$T/m31.sh" && { echo "M31 mutation did not land"; fail=$((fail+1)); }
+allow_ok "$T/m31.sh"; r31=$?
+[ $r31 -eq 1 ] && ok "M31 a runner copy without --permission-mode default is refused" || { ko "M31 a runner without a permission mode was admitted"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"

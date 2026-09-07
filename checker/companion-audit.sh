@@ -38,7 +38,9 @@ vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audi
 # tree is compared before and after the session (tree_state), and the
 # checker controls plant the old grant, the wrapper's refusals, a changed
 # tree and a fired ceiling. The root element the answer must take is
-# companion_audit.
+# companion_audit. The permission mode is explicit, default, so a parent
+# session in bypass mode cannot hand the nested one a grant wider than the
+# allow-list (twenty-first companion pass measured the list inert under it).
 #
 # The scorer, on one answer file. Reads the LAST non-empty line for the
 # verdict; counts a high finding only in the OPENING TAG of a line that
@@ -98,7 +100,19 @@ if [ "${1:-}" = "--score" ]; then
   exit $?
 fi
 
-if [ "${1:-}" = "--tree-state" ]; then git -C "$here" rev-parse HEAD 2>/dev/null; git -C "$here" status --porcelain 2>/dev/null; exit 0; fi
+# git status refreshes the index and fails on a transient index.lock when
+# another git process holds it; a failed reading is retried, never compared
+# (M30 walks seventy spellings and reads the state twice for each).
+tree_state() {
+  local i out
+  for i in 1 2 3 4 5; do
+    if out="$(git -C "$here" rev-parse HEAD 2>/dev/null && git -C "$here" status --porcelain 2>/dev/null)"; then printf '%s
+' "$out"; return 0; fi
+    sleep 1
+  done
+  echo "tree_state: git status failed five times"; return 1
+}
+if [ "${1:-}" = "--tree-state" ]; then tree_state; exit $?; fi
 phase="${1:?phase name}"
 range="${2:?git range, e.g. abc123..HEAD}"
 out="${3:-${TMPDIR:-/tmp}}"
@@ -119,7 +133,6 @@ stamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)-pid$$"
 # The tree before and after the session: HEAD and the porcelain status. A
 # difference is the companion's breach of LAW.COMPANION.1, whatever the
 # allow-list admitted (M25 plants one).
-tree_state() { git -C "$here" rev-parse HEAD 2>/dev/null; git -C "$here" status --porcelain 2>/dev/null; }
 tree_before="$(tree_state)"
 log="$out/companion-$phase.md"
 contract="$(cat "$here/checker/companion-audit.dtd")"
@@ -160,7 +173,7 @@ echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${s
 # CLAUDECODE is unset in the subshell, not through env -u: env execs a binary and
 # cannot see the ceil function, and the first 8.0.0 run exited 127 that way.
 ( unset CLAUDECODE; cd "$scratch" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
-  --allowedTools "Read,Grep,Glob,Bash(bash $here/checker/companion-run.sh:*)" \
+  --allowedTools "Read,Grep,Glob,Bash(bash $here/checker/companion-run.sh:*)" --permission-mode default \
   < /dev/null 2>&1 ) | tee "$raw" | tail -c 400
 rc=${PIPESTATUS[0]}
 rm -rf "$scratch"

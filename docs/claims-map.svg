@@ -20,7 +20,7 @@
 <text x="26" y="286" font-size="13" fill="#1a1d24">orphan element, a crammed heading, a missing sigil, a front-matter value YAML would misread,</text>
 <text x="26" y="304" font-size="13" fill="#1a1d24">a declaration hidden under IGNORE -- and the companion scorer runs under an allow-list with</text>
 <text x="26" y="322" font-size="13" fill="#1a1d24">no writing tool</text>
-<text x="38" y="346" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">bash checker/checker-controls.sh: thirty-two controls M0 to M29, checker controls: 32</text>
+<text x="38" y="346" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">bash checker/checker-controls.sh: thirty-four controls M0 to M31, checker controls: 34</text>
 <text x="38" y="364" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#5b6472">run, 0 failing, all tripped as designed</text>
 <text x="794" y="376" font-size="11" fill="#5b6472" text-anchor="end">2026-09-07</text>
 <text x="26" y="400" font-size="13" fill="#1a1d24">every declaration in the subsets and the Adiutor contract is used by a source, every law</text>

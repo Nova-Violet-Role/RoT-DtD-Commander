@@ -31,7 +31,7 @@ const num = (s) => (/^\d+$/.test(s) ? Number(s) : WORDS[s.toLowerCase()]);
 // in a claim row is only a claim until this reads it back.
 function runOut(cmd) {
   const parts = cmd.split(' ');
-  const r = spawnSync(parts[0], parts.slice(1), { cwd: ROOT, encoding: 'utf8', timeout: 300000, stdio: ['ignore', 'pipe', 'pipe'] });
+  const r = spawnSync(parts[0], parts.slice(1), { cwd: ROOT, encoding: 'utf8', timeout: 900000, stdio: ['ignore', 'pipe', 'pipe'] });
   return (r.stdout || '') + (r.stderr || '');
 }
 

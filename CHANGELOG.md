@@ -659,6 +659,28 @@ switched-off class is invalid against the subset; the enumerations walk
 reads the resolved default driver and the class producer follows the
 modules; 1929 declarations. The BOM is `\uFEFF`.
 
+### The companion's twenty-first pass: a spelling is measured, not assumed
+
+The twenty-first pass returned fail with eight findings, two high: the
+table's shared `--check --controls` line granted `--controls` to two
+sweeps that parse only `--check` and fall through to their writer, and
+the nested session ran with no permission mode, so a parent in bypass
+mode left the allow-list inert and a shell pipeline outside the granted
+form ran. The lower six: `live-sweep` reaches the network, the comment
+said one line per engine over grouped lines, the node arm ran engines
+from the scratch directory, a refusal shared exit 2 with an engine's own
+usage line, `about-sweep --check` reached a credential, and `resolve`
+carried a parameter it never read.
+
+The table is one line per engine, each spelling measured to exit without
+a usage line and to leave the tree as it was; `live-sweep` is refused by
+name; the node arm runs from the repository root; a refusal exits 3. The
+nested session runs under `--permission-mode default` and `allow_ok`
+holds the line to it. M30 walks every spelling the table grants under
+the tree state, red on a refusal of the table's own spelling or a moved
+tree; M31 refuses a runner copy without the mode: 34 checker controls.
+`resolve(ch, { fallback })` says where the class switch lives.
+
 ## 8.0.0 (2026-09-06)
 
 ### Cross-OS-Commander: the gate runs on every leg, or it is not a gate

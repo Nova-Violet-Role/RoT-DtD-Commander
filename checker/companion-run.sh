@@ -16,11 +16,23 @@
 # name: any other executable, a node flag that evaluates or loads code, a
 # script outside the three engine directories, a git verb that writes, and
 # any argument carrying shell syntax (redirect, pipe, chain, background,
-# substitution). Exit 2 on refusal; the command's own exit otherwise.
+# substitution). Exit 3 on refusal; the command's own exit otherwise (its
+# own 2 is a usage line, 124 the ceiling).
 set -u
-here="$(cd "$(dirname "$0")/.." && pwd)"
-refuse() { echo "companion-run: refused: $1"; exit 2; }
-[ $# -ge 2 ] || refuse "usage: node <engine.mjs> [args] | git <reading verb> [args]"
+# pwd -P on both sides: a shell spawned from node inherits a Windows-style
+# cwd and answers pwd in that style until the first explicit cd, after which
+# it answers in the MSYS style, and the two never compare equal
+here="$(cd "$(dirname "$0")/.." && pwd -P)"
+# A refusal exits 3, apart from an engine's own 2 (a usage line) and 124 (the
+# ceiling), so a caller can tell the wrapper's no from the engine's.
+refuse() { echo "companion-run: refused: $1"; exit 3; }
+# --table prints every engine and spelling the table grants, one pair per
+# line, for the control that walks them (M30).
+if [ "${1:-}" = "--table" ]; then
+  sed -n 's/^      \([a-z/.-]*\.mjs\)) verbs="\([^"]*\)" ;;$/\1 \2/p' "$0" | while read -r e v; do for s in $v; do echo "$e $s"; done; done
+  exit 0
+fi
+[ $# -ge 2 ] || refuse "usage: node <engine.mjs> <reading spelling | file> [args] | git <reading verb> [args] | --table"
 tool="$1"; shift
 for a in "$@"; do
   case "$a" in
@@ -31,8 +43,11 @@ case "$tool" in
   node)
     script="${1:-}"; shift || true
     [ -n "$script" ] || refuse "node needs an engine path"
+    # the engine runs from the repository root, as the git arm does with -C:
+    # an engine that reads the tree relative to cwd must not read the scratch
+    cd "$here" || refuse "cannot enter $here"
     case "$script" in -*) refuse "a node flag is not an engine ($script)" ;; esac
-    dir="$(cd "$(dirname "$script")" 2>/dev/null && pwd)" || refuse "no such engine: $script"
+    dir="$(cd "$(dirname "$script")" 2>/dev/null && pwd -P)" || refuse "no such engine: $script"
     abs="$dir/$(basename "$script")"
     [ -f "$abs" ] || refuse "no such engine: $script"
     case "$abs" in
@@ -52,12 +67,14 @@ case "$tool" in
     # reading set, or an existing text file the engine judges; build only
     # with --check.
     # The engines the companion may run and the spellings each one reads by,
-    # one line per engine (twentieth companion pass: a universal verb set let
-    # `readme-index check` reach the writer, and two bare reporters planted
-    # in the tree or ran the checker suite). FILE stands for an existing text
-    # file the engine judges; BARE for a bare run; build only with --check.
-    # counts-sweep, controls-sweep and contract-audit are refused by name:
-    # their own controls plant files in the tree or spawn every other suite.
+    # one line per engine, each spelling measured to exit without a usage line
+    # and to leave the tree as it was (twenty-first companion pass: a shared
+    # line granted --controls to two sweeps that parse only --check and fall
+    # through to their writer). FILE stands for an existing text file the
+    # engine judges; BARE for a bare run; build only with --check.
+    # counts-sweep, controls-sweep and contract-audit are refused by name
+    # (their own controls plant in the tree or run every other suite);
+    # live-sweep reaches the network and is refused by name.
     name="$(basename "$abs")"
     rel="${abs#"$here"/}"
     case "$rel" in
@@ -65,23 +82,52 @@ case "$tool" in
       lib/encoding.mjs) verbs="controls sweep check" ;;
       lib/form.mjs) verbs="controls FILE" ;;
       lib/cache.mjs) verbs="controls load" ;;
-      lib/list.mjs) verbs="controls reach files" ;;
+      lib/list.mjs) verbs="controls reach show md table" ;;
       lib/cross-os.mjs) verbs="controls matrix" ;;
       lib/schematic.mjs) verbs="controls check" ;;
-      lib/ordinals.mjs|lib/typography.mjs|lib/starlist.mjs|lib/geometry.mjs|lib/figure.mjs|lib/ceiling.mjs|lib/amplify.mjs|lib/chain.mjs|lib/license.mjs|lib/record.mjs|lib/task.mjs|lib/workflow.mjs|lib/args.mjs|lib/regression.mjs|lib/headings.mjs|lib/render-check.mjs|lib/dtd.mjs|lib/ledger.mjs|lib/sigil.mjs) verbs="controls" ;;
-      checker/enum-sweep.mjs|checker/subsets-sweep.mjs|checker/plates.mjs|checker/glossary.mjs|checker/readme-index.mjs|checker/heading-sweep.mjs|checker/frontmatter-sweep.mjs|checker/badges.mjs|checker/about-sweep.mjs|checker/live-sweep.mjs) verbs="--check --controls" ;;
-      checker/gate-sync.mjs|checker/engines-sweep.mjs) verbs="BARE" ;;
+      lib/ordinals.mjs) verbs="controls" ;;
+      lib/typography.mjs) verbs="controls" ;;
+      lib/starlist.mjs) verbs="controls" ;;
+      lib/geometry.mjs) verbs="controls" ;;
+      lib/figure.mjs) verbs="controls" ;;
+      lib/ceiling.mjs) verbs="controls" ;;
+      lib/amplify.mjs) verbs="controls" ;;
+      lib/chain.mjs) verbs="controls" ;;
+      lib/license.mjs) verbs="controls" ;;
+      lib/record.mjs) verbs="controls" ;;
+      lib/task.mjs) verbs="controls" ;;
+      lib/workflow.mjs) verbs="controls" ;;
+      lib/args.mjs) verbs="controls" ;;
+      lib/regression.mjs) verbs="controls" ;;
+      lib/headings.mjs) verbs="controls" ;;
+      lib/render-check.mjs) verbs="controls" ;;
+      lib/dtd.mjs) verbs="controls" ;;
+      lib/ledger.mjs) verbs="controls" ;;
+      lib/sigil.mjs) verbs="controls" ;;
+      checker/enum-sweep.mjs) verbs="--check --controls" ;;
+      checker/subsets-sweep.mjs) verbs="--check --controls" ;;
+      checker/plates.mjs) verbs="--check --controls" ;;
+      checker/glossary.mjs) verbs="--check --controls" ;;
+      checker/readme-index.mjs) verbs="--check --controls" ;;
+      checker/badges.mjs) verbs="--check --controls" ;;
+      checker/heading-sweep.mjs) verbs="--check" ;;
+      checker/frontmatter-sweep.mjs) verbs="--check" ;;
+      checker/about-sweep.mjs) verbs="--controls" ;;
+      checker/gate-sync.mjs) verbs="BARE" ;;
+      checker/engines-sweep.mjs) verbs="BARE --controls" ;;
       checker/release-notes.mjs) verbs="--versions --controls" ;;
       checker/scala.mjs) verbs="list --controls" ;;
-      checker/creators-audit.mjs|checker/pack-claude-ai.mjs) verbs="--controls" ;;
+      checker/creators-audit.mjs) verbs="--controls" ;;
+      checker/pack-claude-ai.mjs) verbs="--controls" ;;
       bin/rot-dtd-commander.mjs) verbs="check list build" ;;
       bin/adiutor.mjs) verbs="doctor ledger suggest controls" ;;
       checker/counts-sweep.mjs|checker/controls-sweep.mjs|checker/contract-audit.mjs) refuse "$name plants in the tree or runs every other suite during its own controls" ;;
+      checker/live-sweep.mjs) refuse "$name reaches the network" ;;
       *) refuse "$name is not an engine the companion may run (writer, publisher, or not in the table)" ;;
     esac
     verb="${1:-}"
     if [ -z "$verb" ]; then
-      [ "$verbs" = "BARE" ] || refuse "$name run bare is not admitted; its reading spellings are: $verbs"
+      case " $verbs " in *" BARE "*) ;; *) refuse "$name run bare is not admitted; its reading spellings are: $verbs" ;; esac
     elif [ -f "$verb" ]; then
       case " $verbs " in *" FILE "*) ;; *) refuse "$name does not judge a file; its reading spellings are: $verbs" ;; esac
       case "$verb" in
