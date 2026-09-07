@@ -65,7 +65,7 @@ jobs:
         run: node bin/adiutor.mjs controls
       - name: contract audit (both directions, three planted controls)
         run: node checker/contract-audit.mjs
-      - name: checker controls (M0 to M35 - seven mutations refused, one under INCLUDE and the untouched file pass, twenty-nine scorer and runner controls)
+      - name: checker controls (M0 to M36 - seven mutations refused, one under INCLUDE and the untouched file pass, thirty scorer and runner controls)
         run: bash checker/checker-controls.sh
       - name: spdx sweep
         run: bash checker/spdx-sweep.sh
@@ -161,6 +161,8 @@ jobs:
         run: node checker/plates.mjs --check && node checker/plates.mjs --controls
       - name: subsets (every grammar the dtd-core reference quotes equals its file in dtd/; every cc-*.dtd quoted; a planted character tripped)
         run: node checker/subsets-sweep.mjs --check && node checker/subsets-sweep.mjs --controls
+      - name: the companion's hook (a chain after the wrapper, a redirect, a bare command and a writing tool blocked; one wrapper call passes)
+        run: node checker/companion-guard.mjs controls
       - name: no comment claims a reader that does not read it, no declaration survives unread without its reason, and no controls verb the gate never runs stays unexplained
         run: node lib/regression.mjs claims && node lib/regression.mjs retenue && node lib/regression.mjs unreached
       - name: every published count equals the tree (badges, tagline, claims rows, the three manifests; its controls)

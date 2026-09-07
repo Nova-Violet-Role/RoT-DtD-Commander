@@ -73,14 +73,14 @@ Measured on the release day:
 - `node bin/rot-dtd-commander.mjs check`: checked 166, failed 0
 - `node bin/rot-dtd-commander.mjs build --check`: 303 targets, 0 drifted, 0 failing
 - `node checker/contract-audit.mjs`: 1929 declarations, 0 unused, 0 law gaps
-- `node checker/gate-sync.mjs`: 83 commands in the gate chain, 0 missing from gate.yml
+- `node checker/gate-sync.mjs`: 84 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
 - `node lib/geometry.mjs controls`: 50 run, 0 failing
 - `node lib/typography.mjs controls`: 35 run, 0 failing
 - `node lib/chain.mjs controls`: 26 run, 0 failing
 - `node lib/sigil.mjs controls`: 15 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported
 - `node checker/scala.mjs --controls`: 11 run, 0 failing; `node checker/creators-audit.mjs --controls`: 8 run, 0 failing
-- 139 commands, 22 skills, 5 agents; checked 166; 1929 declarations; 83 gate-chain commands
+- 139 commands, 22 skills, 5 agents; checked 166; 1929 declarations; 84 gate-chain commands
 
 ### The fifth gate choice: save your cache first
 
@@ -119,7 +119,7 @@ banned word at `sigil-variables-variants.md`; and `lib/chain.mjs`
 declared `artifact-missing` as a refusal and produced it nowhere, so the
 one mid-chain failure cc-chain exists to convert into an up-front refusal
 was the one it could not report. The sweep now reads `dtd/sigil` in the
-gate script and the workflow, gate chain 83 commands; the two arguments
+gate script and the workflow, gate chain 84 commands; the two arguments
 documents each carried a ```` ```markdown ```` paste wrapper on line 3
 that was never closed, 65 fences where 64 balance, so their code was
 measured as prose, and cutting that one line brought both above the
@@ -760,6 +760,34 @@ state, the index cache, `node_modules` and the runner's own stream; M25
 plants a third file under `dist/` and reads the state move for all three.
 The prompt orders its two runs through the wrapper. The security page
 says what is compared.
+
+### The companion's twenty-sixth pass: the grant is a prefix on a shell string
+
+The twenty-sixth pass returned fail with six findings, two high, both
+measured: `bash checker/companion-run.sh … ; echo EXIT` ran the chained
+echo under the one Bash grant, since a prefix grant matches the string
+and the shell resolves the chain before the wrapper sees an argument; and
+`git grep -O<cmd>` had git spawn the named command with the matched
+paths, inside a "reading" verb. The lower four: the security row's
+wording, a `sed` fold that collapsed every one-level directory to `.`,
+the two table readers keyed on one row shape, and two prompt runs still
+ending in `< /dev/null`.
+
+`checker/companion-guard.mjs` is the nested session's PreToolUse hook,
+installed by the runner through `--settings`: it refuses any Bash string
+that is not one wrapper call with no chain, pipe, background, redirect,
+substitution, backtick or newline, and every writing tool by name; its
+seven controls plant the payloads, and M36 pipes a chained command
+through it and reads the block, then reads the runner installing it. The
+wrapper refuses `-O`, `--open-files-in-pager`, `--ext-diff` and the
+textconv and pager flags, and runs git with `--no-pager` and a `cat`
+pager; M24 probes `git grep -O` and reads exit 3 with no spawn. The fold
+keeps a one-level directory, M30 reads the table's rows by a third
+reader, the prompt's runs carry no redirect: 39 checker controls,
+`controls:guard` in the gate chain (84). Proved live once, outside the
+gate: a two-turn nested session told to run the chained wrapper command
+reported "Blocked before execution" with the hook's reason in its tool
+error, and the chained echo never printed.
 
 ## 8.0.0 (2026-09-06)
 

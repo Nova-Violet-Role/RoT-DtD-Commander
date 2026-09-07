@@ -11,7 +11,8 @@
 # them; M17: the runner's allow-list, a copy granting Write refused, M17b a
 # bare Bash refused, M17c the bare timeout refused; M20 to M22: the run
 # stamp and the four headings; M33 and M34: M9's mutation proof and a quoted
-# element; M35: the first audit of a phase; M23 to M32: the wrapper checker/companion-run.sh
+# element; M35: the first audit of a phase; M36: the nested session's hook;
+# M23 to M32: the wrapper checker/companion-run.sh
 # (the old prefix grant refused, its refusals tripped, git config and the
 # engines by the table, the bare arms, every granted spelling walked under
 # the tree state), a changed tree, a fired ceiling, the permission mode, the
@@ -176,7 +177,8 @@ bash $w git commit -m x >/dev/null 2>&1; r24c=$?
 out24d=$(bash $w git log '-1' '>' "$T/redirect" 2>&1); r24d=$?
 bash $w node lib/ceiling.mjs controls >/dev/null 2>&1; r24e=$?
 bash $w git rev-parse HEAD >/dev/null 2>&1; r24f=$?
-[ $r24a -eq 3 ] && [ $r24b -eq 3 ] && [ $r24c -eq 3 ] && [ $r24d -eq 3 ] && echo "$out24d" | grep -q 'shell syntax' && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit and a redirect argument (exit 3 each) and runs an engine and a reading git verb" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f"; }
+out24g=$(bash $w git grep -Ozz-no-such-pager-zz -l LAW.COMPANION.4 2>&1); r24g=$?
+[ $r24a -eq 3 ] && [ $r24b -eq 3 ] && [ $r24c -eq 3 ] && [ $r24d -eq 3 ] && echo "$out24d" | grep -q 'shell syntax' && [ $r24e -eq 0 ] && [ $r24f -eq 0 ] && [ $r24g -eq 3 ] && ! echo "$out24g" | grep -q 'cannot spawn' && ok "M24 the wrapper refuses node -e, a script outside the engines, git commit, a redirect argument and git grep -O (exit 3 each, the pager never spawned) and runs an engine and a reading git verb" || { ko "M24 wrapper: -e=$r24a outside=$r24b commit=$r24c redirect=$r24d engine=$r24e git=$r24f"; }
 # M25: a tree that changed during the audit is read as a breach of LAW.COMPANION.1
 t0=$(bash checker/companion-audit.sh --tree-state); printf 'planted\n' > zz-tree-control.tmp; t1=$(bash checker/companion-audit.sh --tree-state); rm -f zz-tree-control.tmp
 # and under an ignored artifact directory, which the plain status never lists
@@ -235,6 +237,10 @@ while read -r e s; do
 done < <(bash $w --table)
 t1=$(bash checker/companion-audit.sh --tree-state)
 [ "$t0" != "$t1" ] && bad30="$bad30 tree-moved($(diff <(printf '%s\n' "$t0") <(printf '%s\n' "$t1") | grep '^[<>]' | tr '\n' ' ' | cut -c1-160))"
+# a third reader of the table: rows counted by their verbs= mark regardless of shape, against the engines --table emits
+rows30=$(grep -v 'sed -n' checker/companion-run.sh | grep -c 'verbs="')
+engines30=$(bash $w --table | cut -d' ' -f1 | sort -u | wc -l | tr -d ' ')
+[ "$rows30" -eq "$engines30" ] || bad30="$bad30 rows=$rows30 engines=$engines30"
 [ "$n30" -eq "$want30" ] && [ "$n30" -ge 60 ] && [ -z "$bad30" ] && ok "M30 every spelling the table grants runs without a refusal, a usage exit, a usage line or the ceiling, and the walk leaves the tree as it was ($n30 of $want30 spellings walked)" || { ko "M30 table walk: $n30 of $want30 spellings;$bad30"; }
 # M31: a runner copy with no explicit permission mode is refused: a parent in bypass mode would hand the nested session every tool
 sed 's/ --permission-mode default//' checker/companion-audit.sh > "$T/m31.sh"
@@ -262,6 +268,12 @@ printf '@bash "%%~dp0claude" %%*\r\n' > "$T/bin35/claude.cmd"
 [ ! -e "$T/out35/companion-ctl-first.json" ] || { echo "M35 the raw stream pre-exists"; fail=$((fail+1)); }
 out35=$(PATH="$T/bin35:$PATH" bash checker/companion-audit.sh ctl-first v8.0.0..HEAD "$T/out35" opus 5 60 2>&1); r35=$?
 [ $r35 -eq 0 ] && echo "$out35" | grep -q 'ctl-first PASS' && [ -s "$T/out35/companion-ctl-first.json" ] && ok "M35 the first audit of a phase scores (PASS) and its raw stream lands after the tree is read, never as a changed tree" || { ko "M35 first phase exit=$r35: $(echo "$out35" | grep '^companion:' | tail -2 | tr '\n' ' ' | cut -c1-200)"; }
+# M36: the nested session's hook: a chain after the wrapper, a redirect, a bare command and a writing tool are blocked (exit 2 with the reason); one wrapper call proceeds
+node checker/companion-guard.mjs controls >/dev/null 2>&1; r36a=$?
+printf '%s' "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"bash $PWD/checker/companion-run.sh git log -1; touch zz-chain-control.tmp\"}}" | node checker/companion-guard.mjs >/dev/null 2>"$T/m36.err"; r36b=$?
+printf '%s' "{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"bash $PWD/checker/companion-run.sh git log -1\"}}" | node checker/companion-guard.mjs >/dev/null 2>&1; r36c=$?
+grep -q 'companion-guard.mjs' checker/companion-audit.sh && grep -q -- '--settings "$scratch/settings.json"' checker/companion-audit.sh; r36d=$?
+[ $r36a -eq 0 ] && [ $r36b -eq 2 ] && grep -q 'no chain' "$T/m36.err" && [ ! -e zz-chain-control.tmp ] && [ $r36c -eq 0 ] && [ $r36d -eq 0 ] && ok "M36 the nested session's PreToolUse hook blocks a chain after the wrapper (exit 2, the reason on stderr), passes one wrapper call, and the runner installs it through --settings" || { ko "M36 guard: controls=$r36a chain=$r36b plain=$r36c installed=$r36d"; }
 
 rm -rf "$T"
 echo "checker controls: $ran run, $fail failing"

@@ -162,9 +162,11 @@ case "$tool" in
     for a in "$@"; do
       case "$a" in
         --output|--output=*|--set*|--unset*|--add|--replace-all|--edit|-e) refuse "git $verb $a writes" ;;
+        -O*|--open-files-in-pager*|--ext-diff|--textconv|--no-textconv|--pager*|-p) refuse "git $verb $a opens a pager, an editor or an external diff, which runs a command (LAW.COMPANION.1)" ;;
       esac
     done
-    exec node "$here/lib/ceiling.mjs" 300 git -C "$here" "$verb" "$@" < /dev/null
+    # --no-pager and a cat pager: a reading verb never spawns a pager command
+    exec node "$here/lib/ceiling.mjs" 300 git --no-pager -c core.pager=cat -c diff.external= -C "$here" "$verb" "$@" < /dev/null
     ;;
   *) refuse "only node and git are run, not $tool" ;;
 esac

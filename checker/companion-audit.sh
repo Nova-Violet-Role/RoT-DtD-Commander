@@ -38,7 +38,9 @@ vfail="$(grep -o 'COMPANION.verdict.fail *"[^"]*"' "$here/checker/companion-audi
 # tree is compared before and after the session (tree_state), and the
 # checker controls plant the old grant, the wrapper's refusals, a changed
 # tree and a fired ceiling. The root element the answer must take is
-# companion_audit. The permission mode is explicit, default, so a parent
+# companion_audit. The PreToolUse hook checker/companion-guard.mjs, passed
+# through --settings, refuses any Bash string that is not one wrapper call
+# (M36). The permission mode is explicit, default, so a parent
 # session in bypass mode cannot hand the nested one a grant wider than the
 # allow-list (twenty-first companion pass measured the list inert under it).
 #
@@ -135,6 +137,12 @@ out="$(cd "$out" && pwd)"
 # write .claude/, .rot-moe/ and CLAUDE.md wherever it runs, and until the
 # sixteenth companion pass on 9.0.0 it ran inside artifacts/research.
 scratch="$(mktemp -d)"
+# The nested session's PreToolUse hook: checker/companion-guard.mjs refuses any
+# Bash string that is not one wrapper call with no chain or redirect, and
+# every writing tool by name. The allow-list grant is a prefix on a shell
+# string, and the twenty-sixth companion pass measured a chained echo running
+# under it; the hook sees the whole string.
+printf '{"hooks":{"PreToolUse":[{"matcher":"Bash|Write|Edit|MultiEdit|NotebookEdit|Task|Agent|WebFetch|WebSearch","hooks":[{"type":"command","command":"node %s/checker/companion-guard.mjs"}]}]}}\n' "$here" > "$scratch/settings.json"
 raw="$out/companion-$phase.json"
 # The raw stream is teed outside the tree and moved into place after the
 # tree is read: on the first audit of a phase the runner's own output would
@@ -158,7 +166,7 @@ files="$(git -C "$here" diff --name-only "$range")"
 nfiles="$(printf '%s\n' "$files" | sed '/^$/d' | wc -l | tr -d ' ')"
 if [ "$nfiles" -gt 200 ]; then
   files="$nfiles files changed, folded by directory (count, directory); the full list is git -C $here diff --name-only $range
-$(printf '%s\n' "$files" | sed 's|/[^/]*$||; s|^[^/]*$|.|' | sort | uniq -c | sort -rn | head -60)"
+$(printf '%s\n' "$files" | sed -E 's|^[^/]*$|.|; t; s|/[^/]*$||' | sort | uniq -c | sort -rn | head -60)"
 fi
 
 prompt="You are the Scratchpad Companion auditing build phase '$phase' of RoT DtD Commander at $here (git range $range).
@@ -166,7 +174,7 @@ Answer in the grammar declared here, one markdown heading per element in declare
 
 $contract
 
-Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run is 'bash $here/checker/companion-run.sh node <engine.mjs under lib/, checker/ or bin/> [args]' or 'bash $here/checker/companion-run.sh git <reading verb> [args]'; the wrapper applies the portable ceiling, closes stdin and refuses any other form by name, so a command it refuses is not to be retried another way, and the only binaries the allow-list grants behind that ceiling are node and git; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'bash $here/checker/companion-run.sh node lib/ai-slop.mjs controls < /dev/null' and 'bash $here/checker/companion-run.sh node lib/ordinals.mjs controls < /dev/null' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
+Your working directory is a scratchpad; the repository is $here, so use absolute paths and 'git -C $here'. Anti-stall laws bind you: read and run only, never write, edit, commit, spawn or background anything; every Bash command you run is 'bash $here/checker/companion-run.sh node <engine.mjs under lib/, checker/ or bin/> [args]' or 'bash $here/checker/companion-run.sh git <reading verb> [args]'; the wrapper applies the portable ceiling, closes stdin and refuses any other form by name, so a command it refuses is not to be retried another way, and the only binaries the allow-list grants behind that ceiling are node and git; never run a command that reads stdin. Cite every finding as file:line you actually read, with severity high|medium|low and confidence measured|reasoned|guessed. Audit for: a declaration in a DTD that the code does not honour, a control that cannot trip, an encoding fault (CR, BOM), a law numbered out of sequence, a claim in a commit message or doc that the tree contradicts, and prose that the AI_SLOP gate (lib/ai-slop.mjs) would fail. Start from the diff stat and file list below, open the files, run 'bash $here/checker/companion-run.sh node lib/ai-slop.mjs controls' and 'bash $here/checker/companion-run.sh node lib/ordinals.mjs controls' yourself. Open the Scope with exactly this line, then a blank line: 'phase=$phase range=$range model=$model'. A fail verdict needs at least one finding with severity high. The very last line of your answer must be exactly '$vpass' or '$vfail', it must be the only line that starts with 'COMPANION VERDICT', and nothing may follow it.
 
 Diff stat:
 $stat
@@ -184,7 +192,7 @@ echo "companion: phase=$phase range=$range model=$model turns=$turns ceiling=${s
 # CLAUDECODE is unset in the subshell, not through env -u: env execs a binary and
 # cannot see the ceil function, and the first 8.0.0 run exited 127 that way.
 ( unset CLAUDECODE; cd "$scratch" && ROTMOE_VOICE=0 CCC_HOOK_AUTOINIT=0 ceil "$secs" claude -p "$prompt" --model "$model" --max-turns "$turns" --output-format json --add-dir "$here" \
-  --allowedTools "Read,Grep,Glob,Bash(bash $here/checker/companion-run.sh:*)" --permission-mode default \
+  --allowedTools "Read,Grep,Glob,Bash(bash $here/checker/companion-run.sh:*)" --permission-mode default --settings "$scratch/settings.json" \
   < /dev/null 2>&1 ) | tee "$rawtmp" | tail -c 400
 rc=${PIPESTATUS[0]}
 rm -rf "$scratch"
