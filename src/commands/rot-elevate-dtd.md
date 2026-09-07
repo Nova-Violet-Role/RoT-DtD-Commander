@@ -11,6 +11,8 @@ argument-hint: [the question dense enough to need all nine; blank for the curren
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-rot SYSTEM "../../dtd/cc-rot.dtd">
   %cc-rot;
   <!ELEMENT rot_elevate (router_state, intake, tier1, axis, axis, axis, axis, axis, axis, decision, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, stanza, hybrid*, tension+, gauge, convergence, bound, next_action)>
@@ -58,7 +60,7 @@ ELEVATE is the fifth NSIL decision of the RoT MoE packet: no single trigger fire
 <grammar_map>
 Render the `rot_elevate` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌌 Heading` carrying this command's sigil 🌌, with a blank line before and after it (LAW.CORE.6).
 - `router_state`: **🌌 Router**, the quoted marker line or the word absent
-- `intake`: **🌌 Intake**, the questions asked, the answers as data, the gate choice (or **🌌 Assumptions Made** on an autonomous run)
+- `intake`: **🌌 Intake**, the questions asked, the answers as data, the gate choice (or **🌌 Assumptions Made** on an autonomous run); the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `tier1`: **🌌 TIER 1**, the lane and the stems that matched
 - `axis`: **🌌 Six Axes**, one line per axis
 - `decision`: **🌌 NSIL Decision**, ELEVATE, all nine lenses

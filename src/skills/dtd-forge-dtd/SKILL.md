@@ -11,6 +11,8 @@ description: Create a new *-dtd command, or convert an existing command into one
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT forge_session (intake, design, spec_entry, forged, verification)>
   <!ELEMENT design (#PCDATA)>
   <!ELEMENT spec_entry (#PCDATA)>
@@ -39,7 +41,7 @@ Produce one `*-dtd` command file that passes `rdc check`, either new (from a phi
 
 <process>
 
-1. `intake`: read the request. Ask, with AskUserQuestion and at most four questions, only what is open: the source (a method, a book, an existing file), the shape of the answer (a fixed section order, a chain with ids, a roster, a record), whether the command should gate on AskUserQuestion during its own run, and the allowed tools. Skip anything the request already states.
+1. `intake`: read the request. Ask, with AskUserQuestion and at most four questions, only what is open: the source (a method, a book, an existing file), the shape of the answer (a fixed section order, a chain with ids, a roster, a record), whether the command should gate on AskUserQuestion during its own run, and the allowed tools. Skip anything the request already states. The gate that follows offers GATE.save beside start, more, add and impactful, and a run that was saved resumes from its cache before it asks (LAW.CACHE.1, LAW.CACHE.3).
 2. `design`: write the grammar first. Name the root (a noun, lowercase, underscores). List the children in the order the answer reads, with cardinality (`?`, `*`, `+`, or exactly one). Decide attributes: enumerations for verdicts, `ID`/`IDREF`/`IDREFS` for anything that must point at something else, `%confidence;` wherever a claim can be measured. Write two to four laws that constrain the answer, numbered from 1 under a new prefix; a law that restates the objective is not a law.
 3. `spec_entry`: write the entry. For a new command add it to a spec module shaped like [references/spec-shape.md](references/spec-shape.md) with `new: true`, `to`, `root`, `model`, `attlist`, `laws`, `objective` (naming the source honestly in one sentence), `process`, `map` (every declared element in backticks), `template`, `success`. For a conversion add it to dtd/forge-spec.json with `from`, `to`, `root`, `model`, `attlist`, `laws`, `map`.
 4. `forged`: run `node bin/rot-dtd-commander.mjs forge <spec> <name>` from the repository root, with a 120 second ceiling, and read the file it wrote.

@@ -17,6 +17,8 @@ argument-hint: [a path to walk, or blank for the current repository; --stage=alp
   %cc-args;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-amplify SYSTEM "../../dtd/cc-amplify.dtd">
   %cc-amplify;
   <!ENTITY % enhance-codebase SYSTEM "../../dtd/enhance-codebase.dtd">
@@ -101,7 +103,7 @@ Local evidence first, and the two classes are never confused: a `possibility` of
 <grammar_map>
 Render the `enhance_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🪴 Heading` carrying this command's sigil 🪴, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🪴 Arguments**, the walk with its count and its four guards
-- `intake`: **🪴 Intake**, the known and gap slots, each round as n of 5 with its questions, variants and answers, the impactful selections when asked, and the gate choice
+- `intake`: **🪴 Intake**, the known and gap slots, each round as n of 5 with its questions, variants and answers, the impactful selections when asked, and the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `walk`: **🪴 Walk**, the target, whether it declares the layers, the seconds it took, and one line per layer: instrument, exit, read of of, walked
 - `generator`: **🪴 Possibilities**, the page of this round: id, class, verb, layer, confidence, verdict, why, evidence, cost, with the exposed, shown and unshown counts
 - `study`: **🪴 Study**, one line per document with its kind and its path

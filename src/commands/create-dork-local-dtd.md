@@ -15,6 +15,8 @@ argument-hint: [what is hunted, or leave blank; --no-gate for autonomous default
   %cc-form;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT dork_local (args, intake, hunt, patterns, results, forms, proof, assumption_made*)>
   <!ELEMENT hunt (#PCDATA)>
   <!ELEMENT patterns (pattern+)>
@@ -72,7 +74,7 @@ The file types are marked after each is elaborated with its extensions, the cont
 <grammar_map>
 Render the `dork_local` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔦 Heading` carrying this command's sigil 🔦, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🔦 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🔦 Intake**, each round with its questions, the variant beside each, the labels, marks or Other text chosen; the gate choice
+- `intake`: **🔦 Intake**, each round with its questions, the variant beside each, the labels, marks or Other text chosen; the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `hunt`: **🔦 Hunt**, the root, the ceiling, the cap
 - `patterns`: **🔦 Patterns**, one line per tool with its pattern and fixed yes or no
 - `results`: **🔦 Results**, one line per hit with file and line, the count, capped yes or no, the exit

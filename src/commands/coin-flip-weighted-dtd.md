@@ -13,6 +13,8 @@ argument-hint: [side A or side B; --odds 70; leave blank to be asked; --debug pr
   %cc-args;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT weighted (args, intake, call, toss, result, assumption_made*)>
   <!ELEMENT call (side, side)>
   <!ELEMENT side (#PCDATA)>
@@ -57,7 +59,7 @@ The weight is the operator's, quoted; the entropy is real, one execution of WEIG
 <grammar_map>
 Render the `weighted` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🎚️ Heading` carrying this command's sigil 🎚️, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🎚️ Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🎚️ Intake**, the round when asked, its answers, the gate choice; one line saying the sides and odds came from the argument otherwise
+- `intake`: **🎚️ Intake**, the round when asked, its answers, the gate choice; one line saying the sides and odds came from the argument otherwise; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `call`: **🎚️ Call**, the odds, heads with its weight, tails with its weight
 - `toss`: **🎚️ Toss**, the command run and its printed value, quoted
 - `result`: **🎚️ Result**, the rule and the winning side by name

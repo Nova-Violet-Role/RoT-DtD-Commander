@@ -21,6 +21,8 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   %cc-args;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-list SYSTEM "../../dtd/cc-list.dtd">
   %cc-list;
   <!ENTITY % cc-starlist SYSTEM "../../dtd/cc-starlist.dtd">
@@ -93,7 +95,7 @@ Render the `starlist_run` root declared in the DOCTYPE as the markdown below. On
 - `probe`: **⭐ Probe**, the managers present and the managers absent, with the seconds
 - `substrates`: **⭐ Substrates**, the host leg and one line per local substrate of XOS.locals, present or absent, with its probe (LAW.SL.5)
 - `measured`: **⭐ Measured**, what the walk found before the first question: the languages, the build files and the managers present (LAW.STAR.4)
-- `intake`: **⭐ Intake**, the known and gap slots, each round with its questions and answers, the gate choice
+- `intake`: **⭐ Intake**, the known and gap slots, each round with its questions and answers, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `tools`: **⭐ Tools**, one `tool` per line as read back from disk with its name, whether it is reachable, its layer and the date
 - `bounds`: **⭐ Bounds**, every white entry this starlist can no longer support, with the edit
 - `verdicts`: **⭐ Verdicts**, one line per name asked for, holding yes or no

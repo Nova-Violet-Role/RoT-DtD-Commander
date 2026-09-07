@@ -24,6 +24,8 @@ argument-hint: [proposed action or leave blank for current context]
   %cc-lexicon;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT wu_wei (args, intake, text_desc, situation, branch, branch, cost, cost, choice)>
   <!ELEMENT situation (#PCDATA)>
   <!ELEMENT branch (#PCDATA)>
@@ -67,7 +69,7 @@ The Tao Te Ching returns again and again to wu wei, acting by not forcing, and t
 <grammar_map>
 Render the `wu_wei` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🍃 Heading` carrying this command's sigil 🍃, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🍃 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🍃 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `intake`: **🍃 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `text_desc`: **🍃 Voice**, the fixed profile and the book it draws on
 - `situation`: **🍃 Situation**
 - `branch`: **🍃 If We Act** and **🍃 If We Refrain**, each a full account

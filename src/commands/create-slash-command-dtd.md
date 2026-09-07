@@ -17,6 +17,8 @@ argument-hint: [what the slash command is for, or leave blank; --no-gate for aut
   %cc-license;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT command_forge (args, intake, plan, license, invocation, written, guards, audit, proof, assumption_made*)>
   <!ELEMENT plan (#PCDATA)>
   <!ELEMENT invocation (#PCDATA)>
@@ -79,7 +81,7 @@ This command is the door in front of the create-slash-commands-dtd skill. It ask
 <grammar_map>
 Render the `command_forge` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ✍️ Heading` carrying this command's sigil ✍️, with a blank line before and after it (LAW.CORE.6).
 - `args`: **✍️ Args**, the launch walk: count, the flags, the positional words, the known slots
-- `intake`: **✍️ Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice
+- `intake`: **✍️ Intake**, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `plan`: **✍️ Plan**, the artifact, its path, the emoji, the form
 - `license`: **✍️ License**, the expression, single, double or triple, listed yes
 - `invocation`: **✍️ Invocation**, the one Skill call to create-slash-commands-dtd with its argument

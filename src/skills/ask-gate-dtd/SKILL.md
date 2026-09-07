@@ -11,6 +11,8 @@ description: The intake and decision gate as a reusable state machine. Load when
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT gate_skill (slots, round_shape, gate_rules, autonomous_rules)>
   <!ELEMENT slots (#PCDATA)>
   <!ELEMENT round_shape (#PCDATA)>
@@ -48,7 +50,7 @@ The `round_shape` is one `ask` of one to four `question` elements, each with a h
 
 <gate_rules>
 
-The `gate_rules`: after the answers, one AskUserQuestion with header Gate, the question GATE.question, and the three options GATE.start, GATE.more, GATE.add. On more: two or three follow-ups from the accumulated answers, then the gate again. On add: receive the input as an `answer`, then the gate again. On start: execution, opening with a restatement of every known slot and every answer. Round numbers increase by one per gate.
+The `gate_rules`: after the answers, one AskUserQuestion with header Gate, the question GATE.question, and the five options GATE.start, GATE.more, GATE.add, GATE.impactful and GATE.save. On more: two or three follow-ups from the accumulated answers, then the gate again. On add: receive the input as an `answer`, then the gate again. On impactful: one to four ranked selections with their provenance, one picked as an `answer`, then the gate again. On save: write the `cache` under CACHE.dir as CACHE.file in the CACHE.form form, read it back whole, render the `cache` element and stop with CACHE.compact as the last line; nothing else runs in that turn, and the next call of the same command resumes from the file (LAW.CACHE.1 to LAW.CACHE.3). On start: execution, opening with a restatement of every known slot and every answer. Round numbers increase by one per gate. A gate is presented again after every more, add or impactful; an intake that closes on one of them is a failed answer (LAW.CACHE.5), which the Adiutor holds at Stop as a finding of kind gate (LAW.ADIUTOR.13), and a command token that arrives mid-run saves first and opens its own intake whole (LAW.CACHE.4).
 
 </gate_rules>
 
@@ -60,7 +62,7 @@ The `autonomous_rules`: when the session is non-interactive (a -p run, a schedul
 
 <declared_grammar>
 
-Render `gate_skill` as the four sections above. A command that includes this skill's grammar renders its own `intake` as: the known and gap slots, each round's questions and answers, and the gate choice with its round number.
+Render `gate_skill` as the four sections above. A command that includes this skill's grammar renders its own `intake` as: the known and gap slots, each round's questions and answers, the gate choice with its round number, and, when the gate was answered save or the run resumed from a file, the `cache` line with the file, its bytes and its state.
 
 </declared_grammar>
 

@@ -15,6 +15,8 @@ argument-hint: [a task name to pick, or leave blank to be asked; --verbose print
   %cc-task;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT task_audit (args, registry, ledger_tail, open, intake, pick, instruction)>
   <!ELEMENT ledger_tail (#PCDATA)>
   <!ELEMENT open (candidate*)>
@@ -63,7 +65,7 @@ Render the `task_audit` root declared in the DOCTYPE as the markdown below. One 
 - `registry`: **📋 Registry**, one line per entry with its state, then entries, files and drift; the validate findings first when any
 - `ledger_tail`: **📋 Ledger**, the last lines as data, with their count
 - `open`: **📋 Open**, one line per open task: name, length, steps, the elaboration, marked yes or no
-- `intake`: **📋 Intake**, the one round with ASK.TASK.4 (mark) and the marks taken, or the line saying the argument named the task
+- `intake`: **📋 Intake**, the one round with ASK.TASK.4 (mark) and the marks taken, or the line saying the argument named the task; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `pick`: **📋 Pick**, the task picked, or none
 - `instruction`: **📋 Instruction**, the goal and the one step: the task-run line
 </grammar_map>

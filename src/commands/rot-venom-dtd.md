@@ -11,6 +11,8 @@ argument-hint: [the decision or action to take; blank for the current discussion
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-rot SYSTEM "../../dtd/cc-rot.dtd">
   %cc-rot;
   <!ELEMENT rot_venom (router_state, intake, perceive, route, strike, preemption, reversal, expert+, interceptor*, gauge, bound, stanza)>
@@ -62,7 +64,7 @@ Venom is the executive lens of the RoT MoE packet and the lead of the EXECUTIVE 
 <grammar_map>
 Render the `rot_venom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🕷️ Heading` carrying this command's sigil 🕷️, with a blank line before and after it (LAW.CORE.6).
 - `router_state`: **🕷️ Router**, the quoted marker line or the word absent
-- `intake`: **🕷️ Intake**, the questions asked, the answers as data, the gate choice (or **🕷️ Assumptions Made** on an autonomous run)
+- `intake`: **🕷️ Intake**, the questions asked, the answers as data, the gate choice (or **🕷️ Assumptions Made** on an autonomous run); the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `perceive`: **🕷️ Perceive**, need, urgency, window
 - `route`: **🕷️ Route**, the execution depth
 - `strike`: **🕷️ Strike**, the answer, kind, ci, words

@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: change the standing structure of a codebase, only against a survey that exists and a plan declared first. Band III of the fifty-two rung Graphic and Geometric ladder (rectification to diplomatics): the engine refuses by name a renovation missing its survey or its plan, every change names its file with the shape before and after, the record closes with a colophon and the digests it stands on, and the changed tree is certified leg by leg. Gates before the first change"
+description: "DTD-native: change the standing structure of a codebase, only against a survey that exists and a plan declared first. Band III of the one hundred and eight rung Graphic and Geometric ladder (rectification to diplomatics): the engine refuses by name a renovation missing its survey or its plan, every change names its file with the shape before and after, the record closes with a colophon and the digests it stands on, and the changed tree is certified leg by leg. Gates before the first change"
 argument-hint: "[the survey markdown and the plan markdown to stand on, in that order; --no-gate runs autonomously; --verbose prints the digest of each precondition]"
 ---
 
@@ -16,6 +16,8 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
   %cc-figure;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
   <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
@@ -46,13 +48,13 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 <objective>
 Renovate the codebase whose survey and plan are <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (a survey path and a plan path under artifacts/geometry): RENOVATOR.what.
 
-This is Band III of the Graphic and Geometric family, the only band that changes a standing structure. Three commands carry the family as three bands of one ladder of GEOM.ladder.count rungs: codebase-surveyor-dtd measures, codebase-architect-dtd declares, and this one changes (RENOVATOR.band, rectification to diplomatics). The band is a #FIXED attribute on `renovation_run`, and so is what this run needs: a survey and a plan, both on disk, both earlier, so a renovation that is its own justification is invalid against the subset rather than merely rash (LAW.RENOVATOR.1, LAW.RENOVATOR.2). The ladder wraps at its top: what follows diplomatics is planimetry again, and the command this one hands to is the surveyor, because a changed structure is a structure to be measured again.
+This is Band III of the Graphic and Geometric family, the only band that changes a standing structure. Four commands carry the family on one ladder of GEOM.ladder.count rungs: codebase-surveyor-dtd measures, codebase-architect-dtd declares, this one changes (RENOVATOR.band, rectification to diplomatics), and codebase-generator-dtd produces what the three agreed on across the domain bands above. The band is a #FIXED attribute on `renovation_run`, and so is what this run needs: a survey and a plan, both on disk, both earlier, so a renovation that is its own justification is invalid against the subset rather than merely rash (LAW.RENOVATOR.1, LAW.RENOVATOR.2). The ladder wraps at its top: what follows diplomatics is planimetry again, and the command this one hands to is the surveyor, because a changed structure is a structure to be measured again.
 
 The DOCTYPE declares the whole deliverable. The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.6). The `intake` comes from cc-ask under LAW.GEOM.5, and a preview here may carry a `figure` (LAW.ASK.16). The `survey_ref` and `plan_ref` come from geometry.dtd and are rendered before the first change, from the two files `node lib/geometry.mjs renovate` accepted; a refusal it prints ends the run before any file is touched (LAW.GEOM.4, LAW.RENOVATOR.4). The `renovation` and its `change` elements come from geometry.dtd: every change names its file and the shape before and after (LAW.RENOVATOR.3). The `figure` comes from cc-figure: the survey's plate with the changed shapes marked (LAW.GEOM.8). The `certified` element and its three `leg` elements come from cross-os.dtd, one per name of XOS.legs, the host leg measured by the gate and the others unmeasured until the workflow runs (LAW.XOS.2, LAW.RENOVATOR.5). The record closes with a colophon and a diplomatics line, who made it, when, under what terms, and the digests of the survey and the plan it stands on (verbs 47 and 52).
 
 The rungs of this band, declared: GEOM.verb.36 rectification, GEOM.verb.37 transduction, GEOM.verb.38 anamorphosis, GEOM.verb.39 involution, GEOM.verb.40 evolution, GEOM.verb.41 recension, GEOM.verb.42 stemmatics, GEOM.verb.43 collation, GEOM.verb.44 lemmatisation, GEOM.verb.45 rubrication, GEOM.verb.46 marginalia, GEOM.verb.47 colophon, GEOM.verb.48 didascalie, GEOM.verb.49 prosopography, GEOM.verb.50 palimpsest, GEOM.verb.51 facsimile, GEOM.verb.52 diplomatics; the band runs from RENOVATOR.low to RENOVATOR.high. The figure keeps its own contract: FIG.cut.cols by FIG.cut.rows cells in the answer, FIG.exp.cols by FIG.exp.rows on disk, one cell FIG.cell.w by FIG.cell.h pixels on the plate, the two renderings of FIG.renders, the shapes of FIG.shapes, FIG.shapes.count of them, the marks of FIG.marks, and the glyphs FIG.glyph.corner, FIG.glyph.h, FIG.glyph.v, FIG.glyph.diag and FIG.glyph.back, so no widget font can turn a figure into boxes (LAW.FIG.1, LAW.FIG.2, LAW.FIG.3, LAW.FIG.4, LAW.FIG.5).
 
-The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM.verb.52 in three band modules, GEOM.band.renovator among them, and a repository that switches this band off before the include makes this command refuse to run (LAW.GEOM.6). The record is written under GEOM.dir, and when the run closes it names RENOVATOR.next and codebase-surveyor-dtd.
+The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM.verb.52 in three band modules, GEOM.band.renovator among them, and a repository that switches this band off before the include makes this command refuse to run (LAW.GEOM.6). The record is written under GEOM.dir, and when the run closes it names RENOVATOR.next and codebase-generator-dtd, the fourth member, which produces the graphic the three agreed on and hands back to a fresh survey.
 </objective>
 
 <process>
@@ -64,21 +66,21 @@ The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM
 6. Write the record with `node lib/ceiling.mjs 60 node lib/geometry.mjs renovate <survey.md> <plan.md> --write`, then add the change rows to it; the colophon and the digests are the engine's (verbs 47 and 52).
 7. Render `figure`: the survey's plate with the changed shapes marked, the cut figure in the answer marked guessed (LAW.GEOM.8, LAW.FIG.4).
 8. Certify: run the gate on this leg with `node lib/ceiling.mjs 1800 npm run gate` in the foreground and render `certified` with three `leg` elements, the host leg pass or fail by the exit code read directly and the two others unmeasured, to be filled from the workflow once it has run on them (LAW.XOS.2, LAW.RENOVATOR.5).
-9. Render `artifact` naming the renovation record and `next_band` naming RENOVATOR.next and codebase-surveyor-dtd, a fresh survey of what was changed (LAW.RENOVATOR.1).
+9. Render `artifact` naming the renovation record and `next_band` naming RENOVATOR.next and codebase-generator-dtd, the production of what the three agreed on (LAW.RENOVATOR.1).
 </process>
 
 <output_format>
 <grammar_map>
 Render the `renovation_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔨 Heading` carrying this command's sigil 🔨, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🔨 Arguments**, the walk with its count and its four guards
-- `intake`: **🔨 Intake**, the known and gap slots, each round with its questions, variants and answers, the gate choice
+- `intake`: **🔨 Intake**, the known and gap slots, each round with its questions, variants and answers, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `survey_ref`: **🔨 Survey**, the path and date of the survey this renovation stands on, and its digest
 - `plan_ref`: **🔨 Plan**, the path and date of the plan, and its digest
 - `renovation`: **🔨 Renovation**, one line per change: verb, file, before, after; or one line saying nothing was changed and why
 - `figure`: **🔨 Figure**, the cut figure in a fenced block, marked guessed, and the plate with the changed shapes marked
 - `certified`: **🔨 Certified**, one line per leg of the three: pass, fail or unmeasured, with the run once known
 - `artifact`: **🔨 Artifact**, the renovation record under artifacts/geometry
-- `next_band`: **🔨 Next Band**, the rung the ladder wraps to and the command that owns it
+- `next_band`: **🔨 Next Band**, the rung above this band and the command that owns it, the generator
 - `assumption_made`: **🔨 Assumptions Made**, autonomous run only
 </grammar_map>
 
@@ -126,7 +128,7 @@ plate [path.svg] with the changed shapes marked
 
 ### 🔨 Next Band
 
-1 planimetry — run /codebase-surveyor-dtd on the changed tree
+53 chord — run /codebase-generator-dtd on the survey, the plan and this renovation
 </output_format>
 
 <success_criteria>

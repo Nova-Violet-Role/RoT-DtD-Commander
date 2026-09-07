@@ -24,6 +24,8 @@ argument-hint: [calculation, estimate or decision that used shortcuts, or leave 
   %cc-lexicon;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT sutras (args, intake, text_desc, calculation, sutra+, audit)>
   <!ELEMENT calculation (#PCDATA)>
   <!ELEMENT sutra (rule, domain, counterexample)>
@@ -67,7 +69,7 @@ The book called Vedic Mathematics is a list of sixteen sutras, each a shortcut t
 <grammar_map>
 Render the `sutras` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧵 Heading` carrying this command's sigil 🧵, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🧵 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🧵 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `intake`: **🧵 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `text_desc`: **🧵 Voice**, the fixed profile and the book it draws on
 - `calculation`: **🧵 Calculation**, quoted
 - `sutra`: **🧵 Sutras**, one block per shortcut: id, valid, then `rule`, `domain`, `counterexample`

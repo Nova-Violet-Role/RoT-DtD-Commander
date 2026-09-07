@@ -17,6 +17,8 @@ argument-hint: [path to the repository, or leave blank for the current one; --ve
   %cc-args;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT gh_amplification (args, analysis, intake, plan, writes, verdict, assumption_made*)>
   <!ELEMENT analysis (probe+)>
   <!ELEMENT probe (#PCDATA)>
@@ -82,7 +84,7 @@ The probes are the files and settings a visitor meets before the code: README, L
 Render the `gh_amplification` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🐙 Heading` carrying this command's sigil 🐙, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🐙 Args**, the launch walk: count, the flags, the positional words
 - `analysis`: **🐙 Analysis**, one line per probe with present yes, partial or no and its evidence
-- `intake`: **🐙 Intake**, each round as n of ASK.rounds_per_prompt with its questions and the labels or Other text chosen, the impactful selections when asked for, the gate choice
+- `intake`: **🐙 Intake**, each round as n of ASK.rounds_per_prompt with its questions and the labels or Other text chosen, the impactful selections when asked for, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `plan`: **🐙 Plan**, one action per probe with its target and do
 - `writes`: **🐙 Writes**, one line per file written with path and bytes
 - `verdict`: **🐙 Verdict**, perfect yes, partial or no, with the probes still short

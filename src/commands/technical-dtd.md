@@ -12,6 +12,8 @@ argument-hint: [what to implement or leave blank for current context]
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-report SYSTEM "../../dtd/cc-report.dtd">
   %cc-report;
   <!ELEMENT technical_research (intake, report, artifact)>
@@ -100,7 +102,7 @@ After intake complete:
 <output_format>
 <grammar_map>
 Render the `technical_research` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚙️ Heading` carrying this command's sigil ⚙️, with a blank line before and after it (LAW.CORE.6).
-- `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`
+- `intake`: the intake gate: `context_analysis`, one to four `question` elements, the `gate`; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `report`: the report: `strategic_summary` first, then one `section` per name in SECTIONS.technical in that order, then `claude_context` blocks chosen_approach, architecture, files, implementation, then `next_action`, then `sources`
 - `artifact`: saved as artifacts/research/YYYY-MM-DD-topic-technical.md
 </grammar_map>

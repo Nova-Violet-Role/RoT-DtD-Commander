@@ -11,6 +11,8 @@ argument-hint: [blank for the full report; add --last N to review N runs; add --
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT adiutor_report (doctor, ledger_review, prescription*, gate)>
   <!ELEMENT doctor (check+)>
   <!ELEMENT check (#PCDATA)>
@@ -54,7 +56,7 @@ The Adiutor watches every `-dtd` command through hooks: at prompt time it reads 
 3. Run `node <adiutor> doctor` with a 60 second ceiling and stdin closed. Each line becomes one `check` with its name and result, quoted.
 4. Run `node <adiutor> ledger --last N` (N from the argument, default 10). Each line becomes one `run`. A run's ledger line carries what the hook recorded: the `expected` headings (each `heading` derived from the command's grammar_map), every tool `error` seen during the run, the findings and the prescription; quote them, never restate them.
 5. Run `node <adiutor> suggest`. Each prescription becomes one `prescription` with its `charm` and `rite`, quoted; if the output is "no failed runs", write one line saying so.
-6. Present the `gate` with AskUserQuestion, header "Adiutor", options GATE.rerun, GATE.edit, GATE.strict, GATE.dismiss. On rerun, invoke the failed command again with its original argument. On edit, open the command file with Read and show the grammar_map next to the failed heading. On strict, tell the user to set ROT_DTD_ADIUTOR=strict in their environment and what it changes. On dismiss, stop.
+6. Present the `gate` with AskUserQuestion, header "Adiutor", options GATE.rerun, GATE.edit, GATE.strict, GATE.dismiss and GATE.save (LAW.CACHE.1; on save the report is written as the cache and the run stops). On rerun, invoke the failed command again with its original argument. On edit, open the command file with Read and show the grammar_map next to the failed heading. On strict, tell the user to set ROT_DTD_ADIUTOR=strict in their environment and what it changes. On dismiss, stop.
 </process>
 
 <output_format>
@@ -63,7 +65,7 @@ Render the `adiutor_report` root declared in the DOCTYPE as the markdown below. 
 - `doctor`: **🩺 Doctor**, one `check` per line: name, OK or FAIL, detail, quoted from the tool
 - `ledger_review`: **🩺 Ledger**, one `run` per line with command and status
 - `prescription`: **🩺 Prescriptions**, one block per failed run with `charm` and `rite`
-- `gate`: **🩺 Next**, the four options offered and the choice made
+- `gate`: **🩺 Next**, the five options offered and the choice made
 </grammar_map>
 
 ### 🩺 RoT DtD Commander Adiutor

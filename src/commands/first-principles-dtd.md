@@ -11,6 +11,8 @@ argument-hint: [problem or leave blank for current context; add --no-gate to ski
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT first_principles (problem, assumption+, intake?, truth+, rebuild, possibility*, assumption_made*)>
   <!ATTLIST first_principles depth %depth; "comprehensive">
   <!ELEMENT problem (#PCDATA)>
@@ -67,7 +69,7 @@ Strip away assumptions, conventions and analogies to identify fundamental truths
 Render the `first_principles` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🧱 Heading` carrying this command's sigil 🧱, with a blank line before and after it (LAW.CORE.6).
 - `problem`: **🧱 Problem**
 - `assumption`: **🧱 Current Assumptions**, one block per assumption: id, origin, held, the `statement`, then its `challenge` with verdict and confidence
-- `intake`: the assumption gate, one AskUserQuestion round, shown as the ids chosen
+- `intake`: the assumption gate, one AskUserQuestion round, shown as the ids chosen; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `truth`: **🧱 Fundamental Truths**, one line per truth with its irreducible_because
 - `rebuild`: **🧱 Rebuilt Understanding**, ending with the stands_on ids
 - `possibility`: **🧱 New Possibilities**, each ending with its freed_by id

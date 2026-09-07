@@ -15,6 +15,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % command-info-types "record">
   <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
   %cc-record;
@@ -56,13 +58,15 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 Use the Intake and Decision Gate pattern with a long intake to gather requirements before executing <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>.
 
 This is the ask-me-questions command with its rounds raised: eight rounds of four, thirty questions at most, every question bilateral (four declared options plus Other), previews cut and expanded, the impactful selection on the gate, and the back token to re-ask a question. The raise is declared, not promised: the DOCTYPE declares ask.rounds, ask.of, ASK.rounds_per_prompt and ASK.max_total before it includes cc-ask, and the first declaration binds.
+
+The gate's fifth choice is GATE.save (LAW.CACHE.1): the run writes its cache as CACHE.file under CACHE.dir, reads it back whole, renders the `cache` element and stops with CACHE.compact; the next call resumes from the file (LAW.CACHE.2, LAW.CACHE.3). The gate is presented again after every re-entry (LAW.CACHE.5).
 </objective>
 
 <process>
 1. Check whether context was provided in the argument; if not, use AskUserQuestion with TASK.question to set the `task`.
 2. Analyze the task and the conversation into known and gap slots; never ask about a known slot (LAW.ASK.1).
 3. Ask round one about the gaps; chain rounds while open detail remains, never past round ASK.rounds_per_prompt and never past ASK.max_total questions in all (LAW.ASK.6, LAW.MANY.1); render each round as n of ASK.rounds_per_prompt.
-4. Present the gate after each round; loop on more, add or impactful (LAW.ASK.9) until the gate choice is start; a reply of ASK.back re-asks the question just asked (LAW.ASK.12).
+4. Present the gate after each round; loop on more, add or impactful (LAW.ASK.9) until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops (LAW.CACHE.2); a reply of ASK.back re-asks the question just asked (LAW.ASK.12).
 5. Execute the task with the full context; open the `execution` with the restatement (LAW.MANY.3).
 </process>
 
@@ -70,7 +74,7 @@ This is the ask-me-questions command with its rounds raised: eight rounds of fou
 <grammar_map>
 Render the `many_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ❔ Heading` carrying this command's sigil ❔, with a blank line before and after it (LAW.CORE.6).
 - `task`: **❔ Task**, with its kind when it came from TASK.question
-- `intake`: **❔ Intake**, the known and gap slots, then each round as n of 8 with its questions and answers (Other answers quoted as typed), the impactful selections when the gate asked for them, then the gate choice and round number
+- `intake`: **❔ Intake**, the known and gap slots, then each round as n of 8 with its questions and answers (Other answers quoted as typed), the impactful selections when the gate asked for them, then the gate choice and round number; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `execution`: **❔ Execution**, opening with the restatement, then the work itself
 - `artifact`: **❔ Artifact**, the record this run wrote, as one `<artifact>` naming its file under the fixed directory; a run that wrote none says so on that line
 - `assumption_made`: **❔ Assumptions Made**, autonomous mode only
@@ -92,7 +96,7 @@ wrote more than one (LAW.IUPAC.7). Render `<artifact>` with the name it wrote.
 - round 1 of 8: [question headers] answered [labels chosen or Other text]
 - round N of 8: [only when asked]
 - impactful: [rank 1 (provenance) .. rank 4 (provenance), only when the gate asked for them]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### ❔ Execution
 

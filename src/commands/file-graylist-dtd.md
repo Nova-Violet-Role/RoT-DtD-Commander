@@ -21,6 +21,8 @@ argument-hint: "[extension or extensions to mark gray, or blank to read the list
   %cc-args;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-list SYSTEM "../../dtd/cc-list.dtd">
   %cc-list;
   <!ELEMENT file_graylist_run (args, walk, intake, entries, exceptions, verdicts, refused*, next_action, assumption_made*)>
@@ -73,7 +75,7 @@ The declarations this command reads: LIST.class.gray for what a mark means, LIST
 Render the `file_graylist_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🟨 Heading` carrying this command's sigil 🟨, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🟨 Arguments**, the walked argument with every flag and every bare word named
 - `walk`: **🟨 Walk**, the counts of each named extension in this tree, and the seconds
-- `intake`: **🟨 Intake**, the known and gap slots, each round with its questions and answers, the gate choice
+- `intake`: **🟨 Intake**, the known and gap slots, each round with its questions and answers, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `entries`: **🟨 Entries**, one line per gray entry as read back from disk with its scope and class, its layer, reason and date, and the evidence count the walk measured for it
 - `exceptions`: **🟨 Exceptions**, every granted exception with its date and what it was granted for, oldest first
 - `verdicts`: **🟨 Verdicts**, one line per name asked for, holding yes or no

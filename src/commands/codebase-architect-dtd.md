@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: declare what the shape of a codebase should be, standing on a survey, and rewrite nothing. Band II of the fifty-two rung Graphic and Geometric ladder (orthography to apparatus): every projection declares a bound a later survey is held to, the plan names the survey it stands on by path, its figure is the survey's with the projections added, and node lib/geometry.mjs plan --check names every bound a survey exceeds. Gates on the scope before it declares a line"
+description: "DTD-native: declare what the shape of a codebase should be, standing on a survey, and rewrite nothing. Band II of the one hundred and eight rung Graphic and Geometric ladder (orthography to apparatus): every projection declares a bound a later survey is held to, the plan names the survey it stands on by path, its figure is the survey's with the projections added, and node lib/geometry.mjs plan --check names every bound a survey exceeds. Gates on the scope before it declares a line"
 argument-hint: "[the survey json to stand on, or blank for the latest under artifacts/geometry; --no-gate runs autonomously; --verbose prints the measure behind every bound]"
 ---
 
@@ -16,6 +16,8 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
   %cc-figure;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
   <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
@@ -46,7 +48,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 <objective>
 Declare the shape the codebase surveyed at <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (or the latest survey under artifacts/geometry if no arguments provided) should have: ARCHITECT.what.
 
-This is Band II of the Graphic and Geometric family. Three commands carry the family as three bands of one ladder of GEOM.ladder.count rungs, and a command may never act above its band: codebase-surveyor-dtd measures, this one declares (ARCHITECT.band, orthography to apparatus), codebase-renovator-dtd changes. The band is a #FIXED attribute on `plan_run`, and so is the thing this run may never do: rewrite is fixed at no, on the root and on every projection, so an architect that rewrites answers outside its own subset (LAW.ARCHITECT.1, LAW.ARCHITECT.2).
+This is Band II of the Graphic and Geometric family. Four commands carry the family on one ladder of GEOM.ladder.count rungs, and a command may never act above its band: codebase-surveyor-dtd measures, this one declares (ARCHITECT.band, orthography to apparatus), codebase-renovator-dtd changes, and codebase-generator-dtd produces across the domain bands above the codebase application. The band is a #FIXED attribute on `plan_run`, and so is the thing this run may never do: rewrite is fixed at no, on the root and on every projection, so an architect that rewrites answers outside its own subset (LAW.ARCHITECT.1, LAW.ARCHITECT.2).
 
 The DOCTYPE declares the whole deliverable. The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.6). The `intake` comes from cc-ask under LAW.GEOM.5: at least one round, the scope first, and a preview here may carry a `figure` (LAW.ASK.16). The `substrates` element comes from cross-os.dtd (LAW.XOS.1). The `survey_ref` and the `plan` with its `projection` elements come from geometry.dtd: a plan stands on a survey by path, every projection carries a bound and rewrite fixed at no, and `node lib/geometry.mjs plan --check` reads a later survey against the bounds and names each one exceeded (LAW.GEOM.3, LAW.ARCHITECT.3, LAW.ARCHITECT.4, LAW.ARCHITECT.5). The `figure` comes from cc-figure: the survey's figure with the projected shapes added and nothing else, so nothing is drawn as proposed before something was drawn as measured (LAW.GEOM.8).
 
@@ -70,7 +72,7 @@ The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM
 <grammar_map>
 Render the `plan_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🖼️ Heading` carrying this command's sigil 🖼️, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🖼️ Arguments**, the walk with its count and its four guards
-- `intake`: **🖼️ Intake**, the known and gap slots, each round with its questions, variants and answers, the gate choice
+- `intake`: **🖼️ Intake**, the known and gap slots, each round with its questions, variants and answers, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `substrates`: **🖼️ Substrates**, the host leg and one line per local substrate, present or absent
 - `survey_ref`: **🖼️ Survey**, the path and date of the survey this plan stands on, or an empty path and the surveyor named
 - `plan`: **🖼️ Plan**, one line per projection: verb, name, declares, on, operator and bound, rewrite no

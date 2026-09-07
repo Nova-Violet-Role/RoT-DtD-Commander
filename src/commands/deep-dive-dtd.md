@@ -11,6 +11,8 @@ argument-hint: [topic or leave blank for current context; add --no-gate for auto
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-report SYSTEM "../../dtd/cc-report.dtd">
   %cc-report;
   <!ELEMENT deep_dive (intake, report, artifact, assumption_made*)>
@@ -71,7 +73,7 @@ Autonomous mode: when the argument contains --no-gate or the session is non-inte
 <output_format>
 <grammar_map>
 Render the `deep_dive` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🤿 Heading` carrying this command's sigil 🤿, with a blank line before and after it (LAW.CORE.6).
-- `intake`: the intake gate: known and gap slots, each round's questions and answers, the gate choice; or the list of assumptions in autonomous mode
+- `intake`: the intake gate: known and gap slots, each round's questions and answers, the gate choice; or the list of assumptions in autonomous mode; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `report`: `strategic_summary` first (three sentences or fewer), then one `section` per name in SECTIONS.deep_dive in that order, then `claude_context` with one `block` per name in BLOCKS.deep_dive, then `next_action`, then `sources` with one `source` per item carrying its kind (file, command, run, measurement, note)
 - `artifact`: the saved file, name YYYY-MM-DD-topic-deep-dive.md under artifacts/research
 - `assumption_made`: **🤿 Assumptions Made**, autonomous mode only

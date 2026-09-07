@@ -11,6 +11,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % command-info-types "record">
   <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
   %cc-record;
@@ -53,6 +55,8 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 Use the Intake and Decision Gate pattern with previews to gather requirements before executing <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>.
 
 This is the ask-me-questions command with the preview made mandatory: every option shows what choosing it leads to, cut in the widget and expanded in the transcript with the predicted answer, and the back token returns to the question. The previews are guesses and are labelled so; the answers are data; the gate is the same four-way choice.
+
+The gate's fifth choice is GATE.save (LAW.CACHE.1): the run writes its cache as CACHE.file under CACHE.dir, reads it back whole, renders the `cache` element and stops with CACHE.compact; the next call resumes from the file (LAW.CACHE.2, LAW.CACHE.3). The gate is presented again after every re-entry (LAW.CACHE.5).
 </objective>
 
 <process>
@@ -60,7 +64,7 @@ This is the ask-me-questions command with the preview made mandatory: every opti
 2. Analyze the task and the conversation into known and gap slots; never ask about a known slot (LAW.ASK.1).
 3. Before each round, render the expanded previews in the transcript under PREVIEW.expand, one per option, each opening with the word guessed and the answer the model predicts for that choice (LAW.PREVIEW.1, LAW.PREVIEW.2); then make the call with the cut previews inside the options.
 4. Chain rounds while open detail remains, never past round ASK.rounds_per_prompt; render each round as n of 3.
-5. Present the gate after each round; loop on more, add or impactful until the gate choice is start; a reply of ASK.back re-asks the question just asked with the same previews (LAW.PREVIEW.3).
+5. Present the gate after each round; loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops (LAW.CACHE.2); a reply of ASK.back re-asks the question just asked with the same previews (LAW.PREVIEW.3).
 6. Execute the task with the full context; open the `execution` with the restatement.
 </process>
 
@@ -68,7 +72,7 @@ This is the ask-me-questions command with the preview made mandatory: every opti
 <grammar_map>
 Render the `preview_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔭 Heading` carrying this command's sigil 🔭, with a blank line before and after it (LAW.CORE.6).
 - `task`: **🔭 Task**, with its kind when it came from TASK.question
-- `intake`: **🔭 Intake**, the known and gap slots, then each round as n of 3 with its questions, the expanded previews as rendered, and the answers (Other answers quoted as typed), the impactful selections when asked for, then the gate choice
+- `intake`: **🔭 Intake**, the known and gap slots, then each round as n of 3 with its questions, the expanded previews as rendered, and the answers (Other answers quoted as typed), the impactful selections when asked for, then the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `execution`: **🔭 Execution**, opening with the restatement, then the work itself
 - `artifact`: **🔭 Artifact**, the record this run wrote, as one `<artifact>` naming its file under the fixed directory; a run that wrote none says so on that line
 - `assumption_made`: **🔭 Assumptions Made**, autonomous mode only
@@ -90,7 +94,7 @@ wrote more than one (LAW.IUPAC.7). Render `<artifact>` with the name it wrote.
 - expand preview, round 1: [option label]: guessed, [the predicted answer]; [next option]: guessed, [..]
 - round 1 of 3: [question headers] answered [labels chosen or Other text]
 - round N of 3: [only when asked]
-- gate: [start|more|add|impactful] (round N)
+- gate: [start|more|add|impactful|save] (round N)
 
 ### 🔭 Execution
 

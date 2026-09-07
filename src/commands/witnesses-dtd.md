@@ -24,6 +24,8 @@ argument-hint: [claim to attest, or leave blank for the current conclusion]
   %cc-lexicon;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT attestation (args, intake, text_desc, claim_text, witness+, attested*, inferred*, verdict)>
   <!ELEMENT claim_text (#PCDATA)>
   <!ELEMENT witness (#PCDATA)>
@@ -69,7 +71,7 @@ The golden plates come with two signed statements: three witnesses who say what 
 <grammar_map>
 Render the `attestation` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 👁️ Heading` carrying this command's sigil 👁️, with a blank line before and after it (LAW.CORE.6).
 - `args`: **👁️ Args**, the launch walk: count, the flags, the positional words
-- `intake`: **👁️ Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `intake`: **👁️ Intake**, the round with its four questions and the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `text_desc`: **👁️ Voice**, the fixed profile and the book it draws on
 - `claim_text`: **👁️ Claim**, quoted
 - `witness`: **👁️ Witnesses**, one line each: id, kind, saw, conditions

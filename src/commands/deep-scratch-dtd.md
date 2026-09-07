@@ -11,6 +11,8 @@ argument-hint: [what to build or change, or leave blank for the current discussi
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-report SYSTEM "../../dtd/cc-report.dtd">
   %cc-report;
   <!ELEMENT deep_scratch (intake, report, scratch, diff_review, report, merge_gate, artifact, artifact, assumption_made*)>
@@ -85,7 +87,7 @@ Local evidence first: files read, commands run, the worktree measured. The scrat
 <output_format>
 <grammar_map>
 Render the `deep_scratch` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔬 Heading` carrying this command's sigil 🔬, with a blank line before and after it (LAW.CORE.6).
-- `intake`: **🔬 Intake**, the known and gap slots, each round with its questions and answers, the gate choice; or the assumptions of an autonomous run
+- `intake`: **🔬 Intake**, the known and gap slots, each round with its questions and answers, the gate choice; or the assumptions of an autonomous run; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `report`: **🔬 Research** (phase one) and **🔬 Amplified Research** (phase three): the strategic summary, the nine sections in SECTIONS.deep_scratch order, the claude_context blocks, the next action, the sources
 - `scratch`: **🔬 Scratch**: the worktree (path, branch, base), one line per build (file, new or changed), one line per run (command, exit, ceiling)
 - `diff_review`: **🔬 Diff Review**: one line per finding (file, hunk, verdict kept, changed or dropped, severity, confidence)

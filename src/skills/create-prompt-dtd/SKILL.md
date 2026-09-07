@@ -17,6 +17,8 @@ description: "DTD-native: route a prompt to its schematic creator: ask the schem
   %cc-schematic;
   <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT prompt_router (args, intake, launch, instruction, assumption_made*)>
   <!ELEMENT launch (schemas, forms)>
   <!ELEMENT instruction (#PCDATA)>
@@ -56,7 +58,7 @@ Eight creators write prompts, one per schematic (callout, heredoc, yaml, nt, xml
 <grammar_map>
 Render the `prompt_router` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 📝 Heading` carrying this command's sigil 📝, with a blank line before and after it (LAW.CORE.6).
 - `args`: **📝 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **📝 Intake**, each round with its questions and the labels or Other text chosen, the gate choice
+- `intake`: **📝 Intake**, each round with its questions and the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `launch`: **📝 Launch**, the schematic, the kind, the creator selected, the schemas with their parts, the forms
 - `instruction`: **📝 Instruction**, the goal and the one step: the Skill call to the creator with the hand-off argument
 - `assumption_made`: **📝 Assumptions Made**, every question not asked, with the first option taken

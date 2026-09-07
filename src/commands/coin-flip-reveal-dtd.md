@@ -13,6 +13,8 @@ argument-hint: [side A or side B; leave blank to be asked; --debug prints the co
   %cc-args;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT reveal (args, intake, call, toss, feeling, result, assumption_made*)>
   <!ELEMENT call (side, side)>
   <!ELEMENT side (#PCDATA)>
@@ -59,7 +61,7 @@ The instrument is old: a coin does not choose, it reveals what was hoped for whi
 <grammar_map>
 Render the `reveal` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🎭 Heading` carrying this command's sigil 🎭, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🎭 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🎭 Intake**, the rounds asked with their answers and the gate choices
+- `intake`: **🎭 Intake**, the rounds asked with their answers and the gate choices; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `call`: **🎭 Call**, heads bound to the first side, tails to the second
 - `toss`: **🎭 Toss**, the command run and its printed value, quoted, and the announcement
 - `feeling`: **🎭 Feeling**, relieved, disappointed or neutral, as answered

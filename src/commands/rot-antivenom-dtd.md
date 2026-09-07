@@ -12,6 +12,8 @@ allowed-tools: Read Grep Glob
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-rot SYSTEM "../../dtd/cc-rot.dtd">
   %cc-rot;
   <!ELEMENT rot_antivenom (router_state, intake, diagnosis, finding*, isolation, preserved*, neutralization, purification, verification, expert+, interceptor*, gauge, bound, stanza)>
@@ -65,7 +67,7 @@ Anti-Venom is the clinical lens of the RoT MoE packet and the lead of the CLINIC
 <grammar_map>
 Render the `rot_antivenom` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚪ Heading` carrying this command's sigil ⚪, with a blank line before and after it (LAW.CORE.6).
 - `router_state`: **⚪ Router**, the quoted marker line or the word absent
-- `intake`: **⚪ Intake**, the questions asked, the answers as data, the gate choice (or **⚪ Assumptions Made** on an autonomous run)
+- `intake`: **⚪ Intake**, the questions asked, the answers as data, the gate choice (or **⚪ Assumptions Made** on an autonomous run); the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `diagnosis`: **⚪ Diagnose**
 - `finding`: **⚪ Findings**, one line per finding: id, severity, level, ci
 - `isolation`: **⚪ Isolate**

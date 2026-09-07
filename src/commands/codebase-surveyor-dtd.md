@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: measure a codebase and draw it, and move nothing. Band I of the fifty-two rung Graphic and Geometric ladder (planimetry to conspectus): every instrumented rung is measured in the foreground under its ceiling, every measure names its instrument, unit and seconds, the rungs without one are named unmeasured, one figure is drawn from the numbers, and the survey is written under artifacts/geometry for the architect to stand on. Gates on the scope before it draws a line"
+description: "DTD-native: measure a codebase and draw it, and move nothing. Band I of the one hundred and eight rung Graphic and Geometric ladder (planimetry to conspectus): every instrumented rung is measured in the foreground under its ceiling, every measure names its instrument, unit and seconds, the rungs without one are named unmeasured, one figure is drawn from the numbers, and the survey is written under artifacts/geometry for the architect to stand on. Gates on the scope before it draws a line"
 argument-hint: "[a path to survey, or blank for the current repository; --no-gate runs autonomously; --verbose prints the evidence behind every measure]"
 ---
 
@@ -19,6 +19,8 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
   %cc-figure;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
   <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
@@ -52,7 +54,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 <objective>
 Survey the codebase at <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (or the repository of the working directory if no arguments provided): SURVEYOR.what.
 
-This is Band I of the Graphic and Geometric family, the fifteenth family of the Suite and the first that reasons in structure itself rather than in prose about structure. Three commands carry it as three bands of one ladder of GEOM.ladder.count rungs, and a command may never act above its band: this one measures and describes (SURVEYOR.band, planimetry to conspectus), codebase-architect-dtd declares what the shape should be, codebase-renovator-dtd changes the standing structure against a survey and a plan. The band is a #FIXED attribute on `survey_run`, and so is what this run may write: the survey artifact and nothing else (LAW.GEOM.1, LAW.SURVEYOR.1, LAW.SURVEYOR.2).
+This is Band I of the Graphic and Geometric family, the fifteenth family of the Suite and the first that reasons in structure itself rather than in prose about structure. Four commands carry it on one ladder of GEOM.ladder.count rungs, the first GEOM.ladder.codebase in three profession bands and the rest in four domain bands read through the lenses, and a command may never act above its band: this one measures and describes (SURVEYOR.band, planimetry to conspectus), codebase-architect-dtd declares what the shape should be, codebase-renovator-dtd changes the standing structure against a survey and a plan. The band is a #FIXED attribute on `survey_run`, and so is what this run may write: the survey artifact and nothing else (LAW.GEOM.1, LAW.SURVEYOR.1, LAW.SURVEYOR.2).
 
 The DOCTYPE declares the whole deliverable. The `args` element and its guards come from cc-args (LAW.ARGS.1 to LAW.ARGS.6). The `intake` comes from cc-ask, and LAW.GEOM.5 binds it: at least one round before a line is drawn, the first slot the scope, because a measurement taken against the wrong scope is worse than none; a preview here may carry a `figure` (LAW.ASK.16). The `substrates` element comes from cross-os.dtd and renders the leg this run is on and every local substrate the probe found (LAW.SURVEYOR.4). The `survey` and its `measure` elements come from geometry.dtd: the confidence of a measure is fixed at measured, every measure names its instrument, its unit and its seconds, and a rung of GEOM.instrumented with nothing to read, or a rung with no instrument in this release, is rendered unmeasured and named rather than estimated (LAW.GEOM.2). The `figure` comes from cc-figure: one figure drawn from the measures alone, rendered to cells for the answer and to svg for the disk (LAW.GEOM.7, LAW.SURVEYOR.5).
 
@@ -76,7 +78,7 @@ The ladder is declared, not remembered. geometry.dtd carries GEOM.verb.1 to GEOM
 <grammar_map>
 Render the `survey_run` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 📏 Heading` carrying this command's sigil 📏, with a blank line before and after it (LAW.CORE.6).
 - `args`: **📏 Arguments**, the walk with its count and its four guards
-- `intake`: **📏 Intake**, the known and gap slots, each round with its questions, variants and answers, the gate choice
+- `intake`: **📏 Intake**, the known and gap slots, each round with its questions, variants and answers, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `substrates`: **📏 Substrates**, the host leg and one line per local substrate, present or absent, with its probe
 - `survey`: **📏 Survey**, target, substrate, read of of, then one line per measure and one per unmeasured rung
 - `figure`: **📏 Figure**, the cut figure in a fenced block, marked guessed, and the plate paths

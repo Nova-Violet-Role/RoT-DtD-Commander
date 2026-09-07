@@ -11,6 +11,8 @@ argument-hint: [action or leave blank for current context; add --no-gate to skip
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT second_order (action, effect+, intake?, loop*, delayed*, assessment, assumption_made*)>
   <!ELEMENT action (#PCDATA)>
   <!ELEMENT effect (#PCDATA)>
@@ -65,7 +67,7 @@ Ask "and then what?" until the chain is declared, not implied. First-order think
 Render the `second_order` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌊 Heading` carrying this command's sigil 🌊, with a blank line before and after it (LAW.CORE.6).
 - `action`: **🌊 Action**
 - `effect`: **🌊 First-Order Effects**, **🌊 Second-Order Effects** and **🌊 Third-Order Effects**, one line per effect with id, causes, sign, horizon, confidence
-- `intake`: the chain gate, one AskUserQuestion round, shown as the ids chosen
+- `intake`: the chain gate, one AskUserQuestion round, shown as the ids chosen; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `loop`: **🌊 Feedback Loops**, one line per loop with kind and the ids in between
 - `delayed`: **🌊 Delayed Consequences**, one line per item with its effect id and surfaces_after
 - `assessment`: **🌊 Revised Assessment**, with worth and decided_by

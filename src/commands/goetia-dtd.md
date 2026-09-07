@@ -25,6 +25,8 @@ allowed-tools: Read Glob Grep
   %cc-lexicon;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT roster (args, intake, text_desc, task, spirit+, summons, binding)>
   <!ELEMENT task (#PCDATA)>
   <!ELEMENT spirit (office, seal, bound)>
@@ -70,7 +72,7 @@ The Ars Goetia lists seventy-two spirits, each with an office, a seal and the te
 <grammar_map>
 Render the `roster` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔱 Heading` carrying this command's sigil 🔱, with a blank line before and after it (LAW.CORE.6).
 - `args`: **🔱 Args**, the launch walk: count, the flags, the positional words
-- `intake`: **🔱 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice
+- `intake`: **🔱 Intake**, the round with its four questions and the labels or Other text chosen, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `text_desc`: **🔱 Voice**, the fixed profile and the book it draws on
 - `task`: **🔱 Task**
 - `spirit`: **🔱 Roster**, one block per spirit: name, file, then `office`, `seal`, `bound`

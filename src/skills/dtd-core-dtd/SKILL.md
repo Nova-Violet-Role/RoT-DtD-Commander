@@ -87,7 +87,7 @@ To `extension` the contract: add the declaration to the right subset, use it in 
 
 <additional_resources>
 
-- [references/subsets.md](references/subsets.md): the 21 shared subsets with commentary
+- [references/subsets.md](references/subsets.md): the 26 shared subsets with commentary
 - [references/checker-rules.md](references/checker-rules.md): rules C1 to C16 with the fix for each
 - [references/context-handoff.md](references/context-handoff.md), [references/meta-prompting.md](references/meta-prompting.md), [references/todo-management.md](references/todo-management.md): the original design notes for handoffs, meta-prompting and todos, folded here because their records are now declared under cc-record
 

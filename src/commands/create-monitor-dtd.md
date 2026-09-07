@@ -11,6 +11,8 @@ argument-hint: [what the monitor should watch, or leave blank; add --no-gate for
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
   %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT monitor_creation (intake, monitor, wiring, proof, assumption_made*)>
   <!ELEMENT monitor (#PCDATA)>
   <!ELEMENT wiring (#PCDATA)>
@@ -67,7 +69,7 @@ A monitor is the component the loader runs beside the hooks: a persistent proces
 <output_format>
 <grammar_map>
 Render the `monitor_creation` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 📡 Heading` carrying this command's sigil 📡, with a blank line before and after it (LAW.CORE.6).
-- `intake`: **📡 Intake**, the known and gap slots, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice
+- `intake`: **📡 Intake**, the known and gap slots, each `round` n of 3 with its questions and the labels or Other text chosen, the `impactful` selections when asked for, the gate choice; the gate offers GATE.save as its fifth choice (LAW.CACHE.1), and on save the `cache` element names the file written and read back whole (LAW.CACHE.2), or on the next call the file resumed from (LAW.CACHE.3)
 - `monitor`: **📡 Monitor**, the file written, its name, runtime and the lines it may print
 - `wiring`: **📡 Wiring**, the JSON declaration written and where
 - `proof`: **📡 Proof**, the control run as executed: the planted event, the line read back, the stop, tripped yes or no
