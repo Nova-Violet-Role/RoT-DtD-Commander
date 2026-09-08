@@ -294,7 +294,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22, not 20: @anthropic-ai/claude-code 2.1.263 declares engines.node
+          # >= 22, and npm on node 20 installs the newest version whose engines
+          # the runner satisfies, 2.1.197, which the seventh matrix refused by
+          # name (claude at .../node/20.20.2/x64/bin/claude: 2.1.197, npm
+          # latest 2.1.263). The scala measures the CLI users install today.
+          node-version: 22
       - name: the claude CLI on this leg, npm latest, run from the npm prefix and proved before a family spends a turn (the sixth matrix ran 2.1.197 where npm latest was 2.1.263)
         run: |
           npm install -g @anthropic-ai/claude-code > /dev/null 2>&1
