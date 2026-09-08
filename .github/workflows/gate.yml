@@ -295,10 +295,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: the claude CLI on this leg
+      - name: the claude CLI on this leg, npm latest, run from the npm prefix and proved before a family spends a turn (the sixth matrix ran 2.1.197 where npm latest was 2.1.263)
         run: |
           npm install -g @anthropic-ai/claude-code > /dev/null 2>&1
-          claude --version
+          P="$(npm prefix -g)"
+          case "$XOS_LEG" in windows*) B="$P";; *) B="$P/bin";; esac
+          echo "$B" >> "$GITHUB_PATH"
+          U=$(cygpath -u "$B" 2>/dev/null || echo "$B"); export PATH="$U:$PATH"; hash -r
+          want=$(npm view @anthropic-ai/claude-code version)
+          have=$(claude --version | cut -d' ' -f1)
+          echo "claude at $(command -v claude): $have (npm latest $want)"
+          [ "$have" = "$want" ] || { echo "the CLI on $XOS_LEG is $have and npm latest is $want: the leg is refused before a family spends a turn"; exit 1; }
       - name: the credential, one masked secret, written to the runner's config dir and nowhere else
         env:
           CLAUDE_CREDENTIALS_JSON: ${{ secrets.CLAUDE_CREDENTIALS_JSON }}
@@ -332,6 +339,15 @@ jobs:
           head -c 600 "$SCALA_OUT/smoke.json"; echo
           grep -q '"num_turns":[1-9]' "$SCALA_OUT/smoke.json" || { echo "the CLI made no model turn on $XOS_LEG"; exit 1; }
           grep -q '"is_error":false' "$SCALA_OUT/smoke.json" || { echo "the CLI answered an error on $XOS_LEG (a Not logged in result counts one turn and is not an answer)"; exit 1; }
+          claude --version | tee "$SCALA_OUT/cli-version.txt"
+      - name: the engine runs on this leg under the runner's permission mode, proved by its own trace before the families (the sixth matrix's 291 denials were read after 174 minutes)
+        if: env.SCALA_SKIP != '1'
+        run: |
+          ROT_SCALA_TRACE="$SCALA_OUT/smoke.trace" node lib/ceiling.mjs 300 claude -p "Use the Bash tool to run exactly this command from the current directory, then answer with its last output line: node lib/chain.mjs check" --model opus --max-turns 4 --permission-mode bypassPermissions --output-format json > "$SCALA_OUT/smoke-engine.json" 2>&1 || true
+          head -c 400 "$SCALA_OUT/smoke-engine.json"; echo
+          node -e "const j=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));const d=Array.isArray(j.permission_denials)?j.permission_denials:[];console.log('permission denials:',d.length);process.exit(d.length?1:0)" "$SCALA_OUT/smoke-engine.json" || { echo "the permission gate denied a call on $XOS_LEG under bypassPermissions"; exit 1; }
+          grep -q '^check' "$SCALA_OUT/smoke.trace" || { echo "the engine never ran on $XOS_LEG: no check line in $SCALA_OUT/smoke.trace"; exit 1; }
+          echo "engine traced: $(tr '\t' ' ' < "$SCALA_OUT/smoke.trace")"
       - name: one scala per family, every family, scored on the headings each member owns, and this leg's findings written beside the answers
         if: env.SCALA_SKIP != '1'
         run: |

@@ -98,6 +98,25 @@ what they name.
   ceiling on ubuntu: 150 turns and 2400 s per family under a job ceiling
   of 350 minutes, and a run that reached its turn cap is a finding of
   kind turns.
+- **The sixth matrix: the matcher, not the OS.** One leg at a time on a
+  credential resealed at 00:07Z, ubuntu and macOS answered 291 permission
+  denials under `Bash(node lib/:*)`, the bare `node lib/chain.mjs check`
+  among them, on a CLI that printed 2.1.197 where npm latest was 2.1.263;
+  the eleven failures per leg were the model refusing to fake a plan the
+  law says must be read from the engine, and the six passes per leg were
+  the model faking it anyway, one in three turns without a call. The
+  runner now hands the CLI `--permission-mode bypassPermissions` (a
+  throwaway checkout with a temporary config dir; a user's settings never
+  get it), runs the npm-prefix binary and refuses the leg when
+  `claude --version` and npm latest disagree, and proves the engine before
+  the families with a smoke whose trace must carry a check line.
+  `lib/chain.mjs` appends one line per verb to the file ROT_SCALA_TRACE
+  names, and a chained family whose trace carries no plan line is a
+  finding of kind engine, high; a permission denial is a finding of kind
+  denied, high; both fail the family. The plan verb also takes one token
+  per argument on one line, `plan --no-gate /a-dtd /b-dtd`, the chain
+  prose spells it so, a 429 is a finding of kind limit, and the smoke
+  writes the CLI version beside its answer.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
@@ -109,8 +128,8 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 23 run, 0 failing
-- `node lib/chain.mjs controls`: 28 run, 0 failing
+- `node checker/scala.mjs --controls`: 25 run, 0 failing
+- `node lib/chain.mjs controls`: 30 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
 - `node checker/release-notes.mjs --versions`: one version everywhere, 9.1.0, recognised (class mid) from the verbs kept in run 10

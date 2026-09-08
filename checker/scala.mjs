@@ -31,7 +31,7 @@
 // and that family is UNRUN; 2 the arguments are wrong.
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, mkdtempSync, rmSync } from 'node:fs';
-import { join, dirname, resolve, basename, sep } from 'node:path';
+import { join, dirname, resolve, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
@@ -167,6 +167,11 @@ export function diagnose(raw) {
   // answer, an empty result and a raw that names the cap.
   const t = /Reached maximum number of turns \((\d+)\)/.exec(String(raw || ''));
   if (t) return `the run reached its turn cap of ${t[1]} before the answer; the chain needs more turns or a lighter link`;
+  // The fourth matrix of 9.1.0: eleven families per leg answered a 429 with
+  // one turn and no cost once the account's session limit was reached; the
+  // hosted legs run on the operator's own credential and share its limit.
+  const l = /hit your session limit[^"]*|api_error_status":429/.exec(String(raw || ''));
+  if (l) return `the account's session limit was reached on this leg (${l[0].replace(/"/g, '').slice(0, 60)}) and no model was called`;
   return '';
 }
 
@@ -184,14 +189,20 @@ export function runOne(s, { out, model = 'opus', turns = 150, secs = 2400 } = {}
   // MSYS_NO_PATHCONV: on a Windows leg the Bash tool is Git Bash, which
   // rewrites an argument that opens with a slash as a path, and the first
   // stacked token of a plan call arrived as C:/Program Files/Git/<token>.
-  const ceil = join(ROOT, 'lib', 'ceiling.mjs');
+  // No allow-list: the sixth matrix of 9.1.0 measured the runner's CLI
+  // (2.1.197 where this machine ran 2.1.263) refusing even the bare
+  // `node lib/chain.mjs check` under `Bash(node lib/:*)`, 158 denials on
+  // ubuntu and 133 on macOS, the pattern's last word being a directory and
+  // not a word of the command. The runner is a throwaway checkout with a
+  // temporary config dir, so every tool is admitted there and the matrix
+  // measures the Commander instead of the matcher; a user's settings never
+  // get this mode. The trace file is the proof the engine ran (lib/chain.mjs
+  // appends one line per verb when ROT_SCALA_TRACE names it).
+  const trace = join(out, `scala-${s.id}.trace`);
+  rmSync(trace, { force: true });
   const args = ['-p', s.prompt, '--model', model, '--max-turns', String(turns), '--output-format', 'json', '--add-dir', ROOT,
-    // The runtime under any ceiling and bare: the sigil prose spells a 300 s
-    // ceiling for its run verb and the geometry prose calls its engine bare,
-    // and both were declined by a pattern that admitted 60 alone (38e4906:
-    // sigil link 2 partial on macOS, geometry not run on ubuntu).
-    '--allowedTools', `Read,Grep,Glob,Write,Bash(node lib/:*),Bash(node ${join(ROOT, 'lib')}${sep}:*),Bash(node ${ceil}:*)`];
-  const r = spawnSync(process.execPath, [...ceiling, 'claude', ...args], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ROTMOE_VOICE: '0', CCC_HOOK_AUTOINIT: '0', CLAUDECODE: '', MSYS_NO_PATHCONV: '1' }, maxBuffer: 64 * 1024 * 1024 });
+    '--permission-mode', 'bypassPermissions'];
+  const r = spawnSync(process.execPath, [...ceiling, 'claude', ...args], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ROTMOE_VOICE: '0', CCC_HOOK_AUTOINIT: '0', CLAUDECODE: '', MSYS_NO_PATHCONV: '1', ROT_SCALA_TRACE: trace }, maxBuffer: 64 * 1024 * 1024 });
   writeFileSync(raw, (r.stdout || '') + (r.stderr || ''), 'utf8');
   if (r.status === 124) return { id: s.id, status: 124, unrun: true };
   let j = null;
@@ -200,7 +211,10 @@ export function runOne(s, { out, model = 'opus', turns = 150, secs = 2400 } = {}
   writeFileSync(log, answer.replace(/\r/g, '') + (answer.endsWith('\n') ? '' : '\n'), 'utf8');
   const sc = score(answer, s.members);
   const why = diagnose((r.stdout || '') + (r.stderr || ''));
-  return { id: s.id, status: r.status, unrun: false, ok: sc.ok && !why, findings: why ? [why, ...sc.findings] : sc.findings, headings: sc.headings, turns: j ? j.num_turns : null, cost: j ? j.total_cost_usd : null, log };
+  const den = denials((r.stdout || '') + (r.stderr || ''));
+  const eng = engineFinding(existsSync(trace) ? readFileSync(trace, 'utf8') : '', s);
+  const extra = [...(why ? [why] : []), ...den, ...(eng ? [eng] : [])];
+  return { id: s.id, status: r.status, unrun: false, ok: sc.ok && extra.length === 0, findings: [...extra, ...sc.findings], headings: sc.headings, turns: j ? j.num_turns : null, cost: j ? j.total_cost_usd : null, log };
 }
 
 // ---------- the findings as a record (9.1.0) ----------
@@ -217,12 +231,46 @@ export function kindOf(text) {
   if (/^the CLI is not logged in/.test(t)) return { kind: 'login', severity: 'high', member: 'none' };
   if (/^the ceiling could not run/.test(t)) return { kind: 'ceiling', severity: 'high', member: 'none' };
   if (/^the run reached its turn cap/.test(t)) return { kind: 'turns', severity: 'high', member: 'none' };
+  if (/^the account's session limit/.test(t)) return { kind: 'limit', severity: 'high', member: 'none' };
+  if (/tool calls? (?:was|were) denied/.test(t)) return { kind: 'denied', severity: 'high', member: 'none' };
+  if (/^the engine never ran/.test(t)) return { kind: 'engine', severity: 'high', member: 'none' };
   if (/^the answer is empty/.test(t)) return { kind: 'empty', severity: 'high', member: 'none' };
   if (/^the ceiling fired/.test(t)) return { kind: 'unrun', severity: 'high', member: 'none' };
   if (/^no heading of /.test(t)) return { kind: 'heading', severity: 'medium', member: ((/^no heading of (\S+)/.exec(t) || [])[1]) || 'none' };
   if (/carries no chain_close line/.test(t)) return { kind: 'close', severity: 'medium', member: 'none' };
   if (/^chain_close says ran/.test(t)) return { kind: 'count', severity: 'low', member: 'none' };
   return { kind: 'other', severity: 'low', member: 'none' };
+}
+// The permission gate's refusals, read from the result: a chain whose plan
+// call was denied planned by hand, and a family with a denial did not test
+// the leg, whatever its headings say (the sixth matrix: six passes per leg
+// with 6 to 17 denials each).
+export function denials(raw) {
+  let j = null;
+  try { j = JSON.parse(String(raw || '')); } catch { const i = String(raw || '').indexOf('{'); try { j = JSON.parse(String(raw).slice(i)); } catch { j = null; } }
+  const d = j && Array.isArray(j.permission_denials) ? j.permission_denials : [];
+  if (!d.length) return [];
+  const first = d[0] && d[0].tool_input ? String(d[0].tool_input.command || JSON.stringify(d[0].tool_input)).replace(/\s+/g, ' ').slice(0, 120) : '';
+  return [`${d.length} tool call${d.length === 1 ? ' was' : 's were'} denied by the permission gate on this leg; the first: ${first}`];
+}
+// The engine's trace, one line per verb of lib/chain.mjs: a chained family
+// whose trace carries no plan line was rendered by hand (workflow on macOS,
+// twelve headings in three turns and no call at all).
+export function engineTrace(text) {
+  const c = { plan: 0, handoff: 0, check: 0, lines: 0 };
+  for (const line of String(text || '').split('\n')) {
+    const v = line.split('\t')[0];
+    if (!v) continue;
+    c.lines++;
+    if (v in c) c[v]++;
+  }
+  return c;
+}
+export function engineFinding(text, s) {
+  if (!s || !/\/chain-dtd/.test(String(s.prompt || ''))) return '';
+  const c = engineTrace(text);
+  if (c.plan > 0) return '';
+  return `the engine never ran: no plan verb of lib/chain.mjs was traced for this family (${c.lines} traced line${c.lines === 1 ? '' : 's'}), so the answer was rendered by hand`;
 }
 export function legOf(dir, given = '') {
   if (given) return String(given).replace(/-latest$/, '');
@@ -241,6 +289,9 @@ export function readLeg(dir, leg) {
     const findings = [];
     const why = diagnose(rawText);
     if (why) findings.push(why);
+    for (const d of denials(rawText)) findings.push(d);
+    const tr = join(dir, `scala-${s.id}.trace`);
+    if (existsSync(tr)) { const e = engineFinding(readFileSync(tr, 'utf8'), s); if (e) findings.push(e); }
     if (!existsSync(md)) findings.push('the ceiling fired: no answer file was written for this family');
     else if (!answer.trim()) findings.push('the answer is empty: no result came back from the CLI');
     const sc = score(answer, s.members);
@@ -320,6 +371,13 @@ export function controls(io = console) {
   const capped = diagnose('{"type":"result","subtype":"error_max_turns","is_error":false,"num_turns":61,"result":"","errors":["Reached maximum number of turns (60)"]}');
   say(/turn cap of 60/.test(capped) && kindOf(capped).kind === 'turns', `trip: a run that reached its turn cap is a finding of kind turns: ${capped.slice(0, 60)}`);
   const chainFam = all.find((s) => s.id === 'chain');
+  const limited = diagnose('{"type":"result","is_error":true,"api_error_status":429,"num_turns":1,"result":"You\u0027ve hit your session limit · resets 11:20pm (UTC)"}');
+  const den = denials('{"result":"x","permission_denials":[{"tool_name":"Bash","tool_input":{"command":"node lib/chain.mjs check"}},{"tool_name":"Bash","tool_input":{"command":"ls"}}]}');
+  say(kindOf(limited).kind === 'limit' && kindOf(limited).severity === 'high' && den.length === 1 && /2 tool calls were denied/.test(den[0]) && kindOf(den[0]).kind === 'denied' && kindOf(den[0]).severity === 'high' && denials('{"result":"x"}').length === 0, `trip: a 429 session limit is a finding of kind limit and the permission gate's refusals a finding of kind denied, both high: ${den[0].slice(0, 70)}`);
+  const noPlan = engineFinding('', chainFam);
+  const planned = engineFinding('check\t2026-09-08T00:00:00Z\nplan\t2026-09-08T00:00:01Z\nhandoff\t2026-09-08T00:00:02Z\n', chainFam);
+  const unchained = engineFinding('', { prompt: '/sigil-dtd --no-gate' });
+  say(/^the engine never ran/.test(noPlan) && kindOf(noPlan).kind === 'engine' && kindOf(noPlan).severity === 'high' && planned === '' && unchained === '' && engineTrace('plan\tx\nplan\ty\n').plan === 2, `trip: a chained family whose trace carries no plan line is a finding of kind engine, high; a traced plan or an unchained family is none: ${noPlan.slice(0, 60)}`);
   const two = all.find((s) => s.members.length >= 2);
   say(chainFam && chainFam.prompt === '/chain-dtd --no-gate' && two && two.prompt.split('\n')[0] === '/chain-dtd --no-gate' && two.prompt.split('\n').length === two.members.length + 1 && promptOf([]) === '',
     `a family of one is its command with the token (${chainFam ? chainFam.prompt : '?'}); a family of two or more opens with the chain token and stacks its members beneath, ${two ? two.members.length + 1 : '?'} lines for ${two ? two.id : '?'}`);
