@@ -109,7 +109,11 @@ what they name.
   throwaway checkout with a temporary config dir; a user's settings never
   get it), runs the npm-prefix binary and refuses the leg when
   `claude --version` and npm latest disagree, and proves the engine before
-  the families with a smoke whose trace must carry a check line.
+  the families with a smoke whose trace must carry a check line. The
+  seventh matrix was refused by that check in ten minutes on every leg:
+  2.1.263 declares `engines.node >= 22`, the scala job set up node 20,
+  and npm installs the newest version whose engines the runner satisfies,
+  2.1.197; the scala job sets up node 22.
   `lib/chain.mjs` appends one line per verb to the file ROT_SCALA_TRACE
   names, and a chained family whose trace carries no plan line is a
   finding of kind engine, high; a permission denial is a finding of kind
@@ -117,6 +121,18 @@ what they name.
   per argument on one line, `plan --no-gate /a-dtd /b-dtd`, the chain
   prose spells it so, a 429 is a finding of kind limit, and the smoke
   writes the CLI version beside its answer.
+- **The eighth matrix: the engine live, the links rendered where the scorer
+  reads.** On node 22 the ubuntu leg printed 2.1.263, zero denials, the
+  engine traced in every family, and thirteen chains passed with every link
+  rendered inline; four (creators, prompts, filetypes, workflow) ran every
+  link, creators building sixty-four files, then summarised each in a line
+  and pointed at its artifact. The chain prose now says where a link's
+  answer goes: in the chain's answer, whole, under `## Link n of N:
+  /name-dtd sigil` and then the link's own root, even when its product is
+  a file; a link deferred to its artifact is a dropped link
+  (LAW.CHAINRUN.2). The leg keeps the checkout's `artifacts/chain` records
+  beside its answers, and a vanished finding is marked fixed only on a leg
+  the run read.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
@@ -128,7 +144,7 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 25 run, 0 failing
+- `node checker/scala.mjs --controls`: 26 run, 0 failing
 - `node lib/chain.mjs controls`: 30 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml

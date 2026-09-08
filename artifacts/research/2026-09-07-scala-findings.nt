@@ -1,175 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
 # Copyright 2026 Saimonokuma.
-# scala findings, written by node checker/scala.mjs findings; fix and status are carried over by key on regeneration
-run: f8ad5b0
-generated: 2026-09-08T04:54:22.986Z
-legs: ubuntu, macos, windows
+# scala findings, written by node checker/scala.mjs findings; fix and status are kept by hand and carried over by key on the next write
+run: 458be2f
+generated: 2026-09-08T07:40:45.450Z
+legs: ubuntu
 families: 17
 summary:
-  ubuntu: pass 0, fail 17, findings 91
-  macos: pass 1, fail 16, findings 85
-  windows: pass 0, fail 17, findings 69
+  ubuntu: pass 13, fail 4, findings 31
 findings:
-  -
-    n: 1
-    leg: ubuntu
-    family: thinking
-    member: none
-    kind: denied
-    severity: high
-    text: 17 tool calls were denied by the permission gate on this leg; the first: ls lib/chain.mjs lib/ceiling.mjs 2>&1 && echo "---" && for c in pareto-dtd swot-dtd 5-whys-dtd 10-10-10-dtd eisenhower-m
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: research
-    member: none
-    kind: denied
-    severity: high
-    text: 9 tool calls were denied by the permission gate on this leg; the first: printf '/deep-dive-dtd\n/deep-scratch-dtd\n/competitive-dtd\n/feasibility-dtd\n/history-dtd\n/landscape-dtd\n/open-sourc
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: research
-    member: none
-    kind: close
-    severity: medium
-    text: a chain of two or more carries no chain_close line naming how many ran
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: asking
-    member: none
-    kind: denied
-    severity: high
-    text: 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/ask-me-questions-dtd' '/ask-me-many-questions-dtd' '/ask-me-preview-dtd' '/brainstorm-meta-clear-section
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: shelf
-    member: none
-    kind: denied
-    severity: high
-    text: 9 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "--no-gate /phantom-dtd /tetralemma-dtd /loci-dtd /babel-dtd /catalog-dt
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: none
-    kind: denied
-    severity: high
-    text: 7 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs --help 2>&1 | head -40; echo "=== exit $? ==="
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: rot-antivenom
-    kind: heading
-    severity: medium
-    text: no heading of rot-antivenom (⚪) after position 0 of 2 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: rot-carnage
-    kind: heading
-    severity: medium
-    text: no heading of rot-carnage (🩸) after position 0 of 2 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: rot-chroma
-    kind: heading
-    severity: medium
-    text: no heading of rot-chroma (🔮) after position 0 of 2 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: rot-claude
-    kind: heading
-    severity: medium
-    text: no heading of rot-claude (🧭) after position 0 of 2 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: rot-eidolon
-    kind: heading
-    severity: medium
-    text: no heading of rot-eidolon (🜏) after position 0 of 2 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: rot-elevate
-    kind: heading
-    severity: medium
-    text: no heading of rot-elevate (🌌) after position 0 of 2 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: rot-nova
-    kind: heading
-    severity: medium
-    text: no heading of rot-nova (⚜️) after position 0 of 2 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: rot-soleil
-    kind: heading
-    severity: medium
-    text: no heading of rot-soleil (⬜) after position 0 of 2 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lenses
-    member: none
-    kind: close
-    severity: medium
-    text: a chain of two or more carries no chain_close line naming how many ran
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: creators
-    member: none
-    kind: denied
-    severity: high
-    text: 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '--no-gate' '/create-plugin-dtd' '/create-moe-dtd' '/create-router-dtd' '/create-ot-variants-dtd' '/create
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
   -
     n: 1
     leg: ubuntu
@@ -177,7 +15,7 @@ findings:
     member: create-plugin
     kind: heading
     severity: medium
-    text: no heading of create-plugin (🧩) after position 0 of 0 headings
+    text: no heading of create-plugin (🧩) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
     status: in progress
   -
@@ -187,7 +25,7 @@ findings:
     member: create-moe
     kind: heading
     severity: medium
-    text: no heading of create-moe (🎛️) after position 0 of 0 headings
+    text: no heading of create-moe (🎛️) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
     status: in progress
   -
@@ -197,7 +35,7 @@ findings:
     member: create-router
     kind: heading
     severity: medium
-    text: no heading of create-router (🚦) after position 0 of 0 headings
+    text: no heading of create-router (🚦) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
     status: in progress
   -
@@ -207,7 +45,7 @@ findings:
     member: create-ot-variants
     kind: heading
     severity: medium
-    text: no heading of create-ot-variants (🧠) after position 0 of 0 headings
+    text: no heading of create-ot-variants (🧠) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
     status: in progress
   -
@@ -217,7 +55,7 @@ findings:
     member: create-db
     kind: heading
     severity: medium
-    text: no heading of create-db (🗄️) after position 0 of 0 headings
+    text: no heading of create-db (🗄️) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
     status: in progress
   -
@@ -227,7 +65,7 @@ findings:
     member: create-monitor
     kind: heading
     severity: medium
-    text: no heading of create-monitor (📡) after position 0 of 0 headings
+    text: no heading of create-monitor (📡) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
     status: in progress
   -
@@ -237,7 +75,7 @@ findings:
     member: create-mcp
     kind: heading
     severity: medium
-    text: no heading of create-mcp (🔌) after position 0 of 0 headings
+    text: no heading of create-mcp (🔌) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
     status: in progress
   -
@@ -247,28 +85,8 @@ findings:
     member: create-workflowjson
     kind: heading
     severity: medium
-    text: no heading of create-workflowjson (🧰) after position 0 of 0 headings
+    text: no heading of create-workflowjson (🧰) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: creators
-    member: none
-    kind: close
-    severity: medium
-    text: a chain of two or more carries no chain_close line naming how many ran
-    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: prompts
-    member: none
-    kind: denied
-    severity: high
-    text: 8 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40; echo "=== EXIT $? ==="
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
     status: in progress
   -
     n: 1
@@ -353,26 +171,6 @@ findings:
   -
     n: 1
     leg: ubuntu
-    family: prompts
-    member: none
-    kind: close
-    severity: medium
-    text: a chain of two or more carries no chain_close line naming how many ran
-    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: filetypes
-    member: none
-    kind: denied
-    severity: high
-    text: 10 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/create-dork-local-dtd' '/create-dork-search-dtd' '/create-filetype-alarm-dtd' '/create-filetype-callout-
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
     family: filetypes
     member: create-dork-local
     kind: heading
@@ -453,397 +251,6 @@ findings:
   -
     n: 1
     leg: ubuntu
-    family: filetypes
-    member: none
-    kind: count
-    severity: low
-    text: chain_close says ran 0; the scala stacked 8
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: tasks
-    member: none
-    kind: denied
-    severity: high
-    text: 7 tool calls were denied by the permission gate on this leg; the first: printf '/create-task-dtd\n/audit-tasks-dtd\n/create-workflow-tasks-dtd\n/task-run-dtd\n/task-handoff-dtd\n' | node lib/c
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: tasks
-    member: create-task
-    kind: heading
-    severity: medium
-    text: no heading of create-task (📌) after position 0 of 5 headings
-    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: tasks
-    member: audit-tasks
-    kind: heading
-    severity: medium
-    text: no heading of audit-tasks (📋) after position 0 of 5 headings
-    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: tasks
-    member: create-workflow-tasks
-    kind: heading
-    severity: medium
-    text: no heading of create-workflow-tasks (🏗️) after position 0 of 5 headings
-    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: tasks
-    member: task-run
-    kind: heading
-    severity: medium
-    text: no heading of task-run (🏃) after position 0 of 5 headings
-    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: tasks
-    member: task-handoff
-    kind: heading
-    severity: medium
-    text: no heading of task-handoff (🤝) after position 0 of 5 headings
-    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: tasks
-    member: none
-    kind: count
-    severity: low
-    text: chain_close says ran 0; the scala stacked 5
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: repository
-    member: none
-    kind: denied
-    severity: high
-    text: 13 tool calls were denied by the permission gate on this leg; the first: printf '/git-gh-amplification-dtd\n/repo-git-scalar-dtd\n/repo-creativity-askingstorm-dtd\n' | node lib/ceiling.mjs 60 n
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: audits
-    member: none
-    kind: denied
-    severity: high
-    text:
-      > 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/audit-skill-dtd' '/audit-slash-command-dtd' '/audit-subagent-dtd' '/ai-slop-dtd' | node lib/ceiling.mjs 
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: audits
-    member: audit-skill
-    kind: heading
-    severity: medium
-    text: no heading of audit-skill (🔍) after position 0 of 5 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: audits
-    member: audit-slash-command
-    kind: heading
-    severity: medium
-    text: no heading of audit-slash-command (🔎) after position 0 of 5 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: audits
-    member: audit-subagent
-    kind: heading
-    severity: medium
-    text: no heading of audit-subagent (🕵️) after position 0 of 5 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: audits
-    member: ai-slop
-    kind: heading
-    severity: medium
-    text: no heading of ai-slop (🫧) after position 0 of 5 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: audits
-    member: none
-    kind: count
-    severity: low
-    text: chain_close says ran 0; the scala stacked 4
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: growth
-    member: none
-    kind: denied
-    severity: high
-    text: 9 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/amplify-codebase-dtd' '/enhance-codebase-dtd' '/overhaul-codebase-dtd' | node lib/ceiling.mjs 60 node li
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: growth
-    member: amplify-codebase
-    kind: heading
-    severity: medium
-    text: no heading of amplify-codebase (🌱) after position 0 of 5 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: growth
-    member: enhance-codebase
-    kind: heading
-    severity: medium
-    text: no heading of enhance-codebase (🪴) after position 0 of 5 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: growth
-    member: overhaul-codebase
-    kind: heading
-    severity: medium
-    text: no heading of overhaul-codebase (🦋) after position 0 of 5 headings
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: growth
-    member: none
-    kind: close
-    severity: medium
-    text: a chain of two or more carries no chain_close line naming how many ran
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: geometry
-    member: none
-    kind: denied
-    severity: high
-    text: 7 tool calls were denied by the permission gate on this leg; the first: printf '/codebase-surveyor-dtd\n/codebase-architect-dtd\n/codebase-renovator-dtd\n/codebase-generator-dtd\n/typography-d
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: geometry
-    member: codebase-surveyor
-    kind: heading
-    severity: medium
-    text: no heading of codebase-surveyor (📏) after position 0 of 5 headings
-    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: geometry
-    member: codebase-architect
-    kind: heading
-    severity: medium
-    text: no heading of codebase-architect (🖼️) after position 0 of 5 headings
-    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: geometry
-    member: codebase-renovator
-    kind: heading
-    severity: medium
-    text: no heading of codebase-renovator (🔨) after position 0 of 5 headings
-    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: geometry
-    member: codebase-generator
-    kind: heading
-    severity: medium
-    text: no heading of codebase-generator (🖌️) after position 0 of 5 headings
-    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: geometry
-    member: typography
-    kind: heading
-    severity: medium
-    text: no heading of typography (🔤) after position 0 of 5 headings
-    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: geometry
-    member: none
-    kind: count
-    severity: low
-    text: chain_close says ran 0; the scala stacked 5
-    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: chain
-    member: none
-    kind: denied
-    severity: high
-    text: 6 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan --no-gate; echo "EXIT: $?"
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: sigil
-    member: none
-    kind: denied
-    severity: high
-    text: 11 tool calls were denied by the permission gate on this leg; the first: printf '/sigil-dtd\n/verbs-dtd\n' | node lib/ceiling.mjs 60 node lib/chain.mjs plan; echo "EXIT: $?"
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: none
-    kind: denied
-    severity: high
-    text: 11 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '--no-gate' '/file-blacklist-dtd' '/code-blacklist-dtd' '/file-graylist-dtd' '/code-graylist-dtd' '/file-w
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: file-blacklist
-    kind: heading
-    severity: medium
-    text: no heading of file-blacklist (⛔) after position 0 of 5 headings
-    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: code-blacklist
-    kind: heading
-    severity: medium
-    text: no heading of code-blacklist (🚫) after position 0 of 5 headings
-    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: file-graylist
-    kind: heading
-    severity: medium
-    text: no heading of file-graylist (🟨) after position 0 of 5 headings
-    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: code-graylist
-    kind: heading
-    severity: medium
-    text: no heading of code-graylist (🟧) after position 0 of 5 headings
-    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: file-whitelist
-    kind: heading
-    severity: medium
-    text: no heading of file-whitelist (🟩) after position 0 of 5 headings
-    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: code-whitelist
-    kind: heading
-    severity: medium
-    text: no heading of code-whitelist (✅) after position 0 of 5 headings
-    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: starlist
-    kind: heading
-    severity: medium
-    text: no heading of starlist (⭐) after position 0 of 5 headings
-    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: lists
-    member: starlist-manager
-    kind: heading
-    severity: medium
-    text: no heading of starlist-manager (🌟) after position 0 of 5 headings
-    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
-    family: workflow
-    member: none
-    kind: denied
-    severity: high
-    text: 10 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "$(printf '%s\n' '--no-gate' '/whats-next-dtd' '/add-to-todos-dtd' '/che
-    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
-  -
-    n: 1
-    leg: ubuntu
     family: workflow
     member: whats-next
     kind: heading
@@ -914,13 +321,604 @@ findings:
   -
     n: 1
     leg: ubuntu
+    family: thinking
+    member: none
+    kind: denied
+    severity: high
+    text: 17 tool calls were denied by the permission gate on this leg; the first: ls lib/chain.mjs lib/ceiling.mjs 2>&1 && echo "---" && for c in pareto-dtd swot-dtd 5-whys-dtd 10-10-10-dtd eisenhower-m
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: research
+    member: none
+    kind: denied
+    severity: high
+    text: 9 tool calls were denied by the permission gate on this leg; the first: printf '/deep-dive-dtd\n/deep-scratch-dtd\n/competitive-dtd\n/feasibility-dtd\n/history-dtd\n/landscape-dtd\n/open-sourc
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: research
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: asking
+    member: none
+    kind: denied
+    severity: high
+    text: 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/ask-me-questions-dtd' '/ask-me-many-questions-dtd' '/ask-me-preview-dtd' '/brainstorm-meta-clear-section
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: shelf
+    member: none
+    kind: denied
+    severity: high
+    text: 9 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "--no-gate /phantom-dtd /tetralemma-dtd /loci-dtd /babel-dtd /catalog-dt
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: none
+    kind: denied
+    severity: high
+    text: 7 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs --help 2>&1 | head -40; echo "=== exit $? ==="
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: rot-antivenom
+    kind: heading
+    severity: medium
+    text: no heading of rot-antivenom (⚪) after position 0 of 2 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: rot-carnage
+    kind: heading
+    severity: medium
+    text: no heading of rot-carnage (🩸) after position 0 of 2 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: rot-chroma
+    kind: heading
+    severity: medium
+    text: no heading of rot-chroma (🔮) after position 0 of 2 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: rot-claude
+    kind: heading
+    severity: medium
+    text: no heading of rot-claude (🧭) after position 0 of 2 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: rot-eidolon
+    kind: heading
+    severity: medium
+    text: no heading of rot-eidolon (🜏) after position 0 of 2 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: rot-elevate
+    kind: heading
+    severity: medium
+    text: no heading of rot-elevate (🌌) after position 0 of 2 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: rot-nova
+    kind: heading
+    severity: medium
+    text: no heading of rot-nova (⚜️) after position 0 of 2 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: rot-soleil
+    kind: heading
+    severity: medium
+    text: no heading of rot-soleil (⬜) after position 0 of 2 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lenses
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: none
+    kind: denied
+    severity: high
+    text: 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '--no-gate' '/create-plugin-dtd' '/create-moe-dtd' '/create-router-dtd' '/create-ot-variants-dtd' '/create
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: creators
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: none
+    kind: denied
+    severity: high
+    text: 8 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40; echo "=== EXIT $? ==="
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: prompts
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: filetypes
+    member: none
+    kind: denied
+    severity: high
+    text: 10 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/create-dork-local-dtd' '/create-dork-search-dtd' '/create-filetype-alarm-dtd' '/create-filetype-callout-
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: filetypes
+    member: none
+    kind: count
+    severity: low
+    text: chain_close says ran 0; the scala stacked 8
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: none
+    kind: denied
+    severity: high
+    text: 7 tool calls were denied by the permission gate on this leg; the first: printf '/create-task-dtd\n/audit-tasks-dtd\n/create-workflow-tasks-dtd\n/task-run-dtd\n/task-handoff-dtd\n' | node lib/c
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: create-task
+    kind: heading
+    severity: medium
+    text: no heading of create-task (📌) after position 0 of 5 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: audit-tasks
+    kind: heading
+    severity: medium
+    text: no heading of audit-tasks (📋) after position 0 of 5 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: create-workflow-tasks
+    kind: heading
+    severity: medium
+    text: no heading of create-workflow-tasks (🏗️) after position 0 of 5 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: task-run
+    kind: heading
+    severity: medium
+    text: no heading of task-run (🏃) after position 0 of 5 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: task-handoff
+    kind: heading
+    severity: medium
+    text: no heading of task-handoff (🤝) after position 0 of 5 headings
+    fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: tasks
+    member: none
+    kind: count
+    severity: low
+    text: chain_close says ran 0; the scala stacked 5
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: repository
+    member: none
+    kind: denied
+    severity: high
+    text: 13 tool calls were denied by the permission gate on this leg; the first: printf '/git-gh-amplification-dtd\n/repo-git-scalar-dtd\n/repo-creativity-askingstorm-dtd\n' | node lib/ceiling.mjs 60 n
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: audits
+    member: none
+    kind: denied
+    severity: high
+    text:
+      > 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/audit-skill-dtd' '/audit-slash-command-dtd' '/audit-subagent-dtd' '/ai-slop-dtd' | node lib/ceiling.mjs 
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: audits
+    member: audit-skill
+    kind: heading
+    severity: medium
+    text: no heading of audit-skill (🔍) after position 0 of 5 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: audits
+    member: audit-slash-command
+    kind: heading
+    severity: medium
+    text: no heading of audit-slash-command (🔎) after position 0 of 5 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: audits
+    member: audit-subagent
+    kind: heading
+    severity: medium
+    text: no heading of audit-subagent (🕵️) after position 0 of 5 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: audits
+    member: ai-slop
+    kind: heading
+    severity: medium
+    text: no heading of ai-slop (🫧) after position 0 of 5 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: audits
+    member: none
+    kind: count
+    severity: low
+    text: chain_close says ran 0; the scala stacked 4
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: growth
+    member: none
+    kind: denied
+    severity: high
+    text: 9 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/amplify-codebase-dtd' '/enhance-codebase-dtd' '/overhaul-codebase-dtd' | node lib/ceiling.mjs 60 node li
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: growth
+    member: amplify-codebase
+    kind: heading
+    severity: medium
+    text: no heading of amplify-codebase (🌱) after position 0 of 5 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: growth
+    member: enhance-codebase
+    kind: heading
+    severity: medium
+    text: no heading of enhance-codebase (🪴) after position 0 of 5 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: growth
+    member: overhaul-codebase
+    kind: heading
+    severity: medium
+    text: no heading of overhaul-codebase (🦋) after position 0 of 5 headings
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: growth
+    member: none
+    kind: close
+    severity: medium
+    text: a chain of two or more carries no chain_close line naming how many ran
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: none
+    kind: denied
+    severity: high
+    text: 7 tool calls were denied by the permission gate on this leg; the first: printf '/codebase-surveyor-dtd\n/codebase-architect-dtd\n/codebase-renovator-dtd\n/codebase-generator-dtd\n/typography-d
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: codebase-surveyor
+    kind: heading
+    severity: medium
+    text: no heading of codebase-surveyor (📏) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: codebase-architect
+    kind: heading
+    severity: medium
+    text: no heading of codebase-architect (🖼️) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: codebase-renovator
+    kind: heading
+    severity: medium
+    text: no heading of codebase-renovator (🔨) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: codebase-generator
+    kind: heading
+    severity: medium
+    text: no heading of codebase-generator (🖌️) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: typography
+    kind: heading
+    severity: medium
+    text: no heading of typography (🔤) after position 0 of 5 headings
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: geometry
+    member: none
+    kind: count
+    severity: low
+    text: chain_close says ran 0; the scala stacked 5
+    fix: the runtime is allowed under any ceiling and bare, so the sigil run verb and the geometry engine are not declined
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: chain
+    member: none
+    kind: denied
+    severity: high
+    text: 6 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan --no-gate; echo "EXIT: $?"
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: sigil
+    member: none
+    kind: denied
+    severity: high
+    text: 11 tool calls were denied by the permission gate on this leg; the first: printf '/sigil-dtd\n/verbs-dtd\n' | node lib/ceiling.mjs 60 node lib/chain.mjs plan; echo "EXIT: $?"
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: none
+    kind: denied
+    severity: high
+    text: 11 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '--no-gate' '/file-blacklist-dtd' '/code-blacklist-dtd' '/file-graylist-dtd' '/code-graylist-dtd' '/file-w
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: file-blacklist
+    kind: heading
+    severity: medium
+    text: no heading of file-blacklist (⛔) after position 0 of 5 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: code-blacklist
+    kind: heading
+    severity: medium
+    text: no heading of code-blacklist (🚫) after position 0 of 5 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: file-graylist
+    kind: heading
+    severity: medium
+    text: no heading of file-graylist (🟨) after position 0 of 5 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: code-graylist
+    kind: heading
+    severity: medium
+    text: no heading of code-graylist (🟧) after position 0 of 5 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: file-whitelist
+    kind: heading
+    severity: medium
+    text: no heading of file-whitelist (🟩) after position 0 of 5 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: code-whitelist
+    kind: heading
+    severity: medium
+    text: no heading of code-whitelist (✅) after position 0 of 5 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: starlist
+    kind: heading
+    severity: medium
+    text: no heading of starlist (⭐) after position 0 of 5 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: lists
+    member: starlist-manager
+    kind: heading
+    severity: medium
+    text: no heading of starlist-manager (🌟) after position 0 of 5 headings
+    fix: the scorer reads a heading carrying the sigil after an ordinal (LAW.CORE.6 says carrying)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
+    family: workflow
+    member: none
+    kind: denied
+    severity: high
+    text: 10 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "$(printf '%s\n' '--no-gate' '/whats-next-dtd' '/add-to-todos-dtd' '/che
+    fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
+    status: fixed in 458be2f
+  -
+    n: 1
+    leg: ubuntu
     family: workflow
     member: none
     kind: count
     severity: low
     text: chain_close says ran 0; the scala stacked 7
     fix: the Adiutor is not a -dtd token and is named as unchained, stacked nowhere; the scorer reads the close from its counts
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -930,7 +928,7 @@ findings:
     severity: high
     text: 8 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "--no-gate /pareto-dtd /swot-dtd /5-whys-dtd /10-10-10-dtd /eisenhower-m
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -940,7 +938,7 @@ findings:
     severity: high
     text: 10 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan '--no-gate\n/deep-dive-dtd\n/deep-scratch-dtd\n/competitive-dtd\n/feasib
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -950,7 +948,7 @@ findings:
     severity: medium
     text: no heading of deep-dive (🤿) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -960,7 +958,7 @@ findings:
     severity: medium
     text: no heading of deep-scratch (🔬) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -970,7 +968,7 @@ findings:
     severity: medium
     text: no heading of competitive (🏁) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -980,7 +978,7 @@ findings:
     severity: medium
     text: no heading of feasibility (🧪) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -990,7 +988,7 @@ findings:
     severity: medium
     text: no heading of history (🕰️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1000,7 +998,7 @@ findings:
     severity: medium
     text: no heading of landscape (🌄) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1010,7 +1008,7 @@ findings:
     severity: medium
     text: no heading of open-source (🌐) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1020,7 +1018,7 @@ findings:
     severity: medium
     text: no heading of options (🔀) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1030,7 +1028,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 8
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1040,7 +1038,7 @@ findings:
     severity: high
     text: 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/ask-me-questions-dtd' '/ask-me-many-questions-dtd' '/ask-me-preview-dtd' '/brainstorm-meta-clear-section
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1050,7 +1048,7 @@ findings:
     severity: high
     text: 9 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1060,7 +1058,7 @@ findings:
     severity: high
     text: 8 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "--no-gate /rot-antivenom-dtd /rot-carnage-dtd /rot-chroma-dtd /rot-clau
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1150,7 +1148,7 @@ findings:
     severity: medium
     text: a chain of two or more carries no chain_close line naming how many ran
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1160,7 +1158,7 @@ findings:
     severity: high
     text: 7 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' "/create-plugin-dtd" "/create-moe-dtd" "/create-router-dtd" "/create-ot-variants-dtd" "/create-db-dtd" "/c
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1170,7 +1168,7 @@ findings:
     severity: medium
     text: no heading of create-plugin (🧩) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1180,7 +1178,7 @@ findings:
     severity: medium
     text: no heading of create-moe (🎛️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1190,7 +1188,7 @@ findings:
     severity: medium
     text: no heading of create-router (🚦) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1200,7 +1198,7 @@ findings:
     severity: medium
     text: no heading of create-ot-variants (🧠) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1210,7 +1208,7 @@ findings:
     severity: medium
     text: no heading of create-db (🗄️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1220,7 +1218,7 @@ findings:
     severity: medium
     text: no heading of create-monitor (📡) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1230,7 +1228,7 @@ findings:
     severity: medium
     text: no heading of create-mcp (🔌) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1240,7 +1238,7 @@ findings:
     severity: medium
     text: no heading of create-workflowjson (🧰) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1250,7 +1248,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 8
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1260,7 +1258,7 @@ findings:
     severity: high
     text: 8 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1350,7 +1348,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 8
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1360,7 +1358,7 @@ findings:
     severity: high
     text: 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' \ '/create-dork-local-dtd' \ '/create-dork-search-dtd' \ '/create-filetype-alarm-dtd' \ '/create-filetype-
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1370,7 +1368,7 @@ findings:
     severity: medium
     text: no heading of create-dork-local (🔦) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1380,7 +1378,7 @@ findings:
     severity: medium
     text: no heading of create-dork-search (🕸️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1390,7 +1388,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-alarm (🪁) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1400,7 +1398,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-callout (📍) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1410,7 +1408,7 @@ findings:
     severity: medium
     text: no heading of create-filetype (🪃) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1420,7 +1418,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-heredoc (🛎️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1430,7 +1428,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-nt (🧲) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1440,7 +1438,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-polyalarm (🧊) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1450,7 +1448,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 8
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1460,7 +1458,7 @@ findings:
     severity: high
     text: 8 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1520,7 +1518,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 5
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1530,7 +1528,7 @@ findings:
     severity: high
     text: 8 tool calls were denied by the permission gate on this leg; the first: printf '/git-gh-amplification-dtd\n/repo-git-scalar-dtd\n/repo-creativity-askingstorm-dtd\n' | node lib/ceiling.mjs 60 n
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1540,7 +1538,7 @@ findings:
     severity: medium
     text: no heading of git-gh-amplification (🐙) after position 0 of 3 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1550,7 +1548,7 @@ findings:
     severity: medium
     text: no heading of repo-git-scalar (🌿) after position 0 of 3 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1560,7 +1558,7 @@ findings:
     severity: medium
     text: no heading of repo-creativity-askingstorm (🎨) after position 0 of 3 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1570,7 +1568,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 3
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1580,7 +1578,7 @@ findings:
     severity: high
     text: 9 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40; echo "---HELP DONE---"
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1590,7 +1588,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 4
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1600,7 +1598,7 @@ findings:
     severity: high
     text: 9 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1610,7 +1608,7 @@ findings:
     severity: medium
     text: no heading of amplify-codebase (🌱) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1620,7 +1618,7 @@ findings:
     severity: medium
     text: no heading of enhance-codebase (🪴) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1630,7 +1628,7 @@ findings:
     severity: medium
     text: no heading of overhaul-codebase (🦋) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1640,7 +1638,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 3
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1650,7 +1648,7 @@ findings:
     severity: high
     text: 10 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1710,7 +1708,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 5
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1720,7 +1718,7 @@ findings:
     severity: high
     text: 3 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "--no-gate"; echo "EXIT=$?"
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1730,7 +1728,7 @@ findings:
     severity: high
     text: 11 tool calls were denied by the permission gate on this leg; the first: printf '/sigil-dtd\n/verbs-dtd\n' | node lib/ceiling.mjs 60 node lib/chain.mjs plan; echo "EXIT=$?"
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1740,7 +1738,7 @@ findings:
     severity: medium
     text: no heading of sigil (💲) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1750,7 +1748,7 @@ findings:
     severity: medium
     text: no heading of verbs (🔣) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: macos
@@ -1770,7 +1768,7 @@ findings:
     severity: high
     text: 9 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -1780,7 +1778,7 @@ findings:
     severity: high
     text: 7 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "--no-gate\n/pareto-dtd\n/swot-dtd\n/5-whys-dtd\n/10-10-10-dtd\n/eisenho
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -1880,7 +1878,7 @@ findings:
     severity: high
     text: 9 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/deep-dive-dtd' '/deep-scratch-dtd' '/competitive-dtd' '/feasibility-dtd' '/history-dtd' '/landscape-dtd'
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -1890,7 +1888,7 @@ findings:
     severity: high
     text: 8 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/ask-me-questions-dtd' '/ask-me-many-questions-dtd' '/ask-me-preview-dtd' '/brainstorm-meta-clear-section
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -1900,7 +1898,7 @@ findings:
     severity: high
     text: 11 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan '--no-gate /phantom-dtd /tetralemma-dtd /loci-dtd /babel-dtd /catalog-dt
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -1910,7 +1908,7 @@ findings:
     severity: high
     text: 17 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '/rot-antivenom-dtd' '/rot-carnage-dtd' '/rot-chroma-dtd' '/rot-claude-dtd' '/rot-eidolon-dtd' '/rot-eleva
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -1920,7 +1918,7 @@ findings:
     severity: high
     text: 13 tool calls were denied by the permission gate on this leg; the first: printf '%s\n' '--no-gate' '/create-plugin-dtd' '/create-moe-dtd' '/create-router-dtd' '/create-ot-variants-dtd' '/create
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2010,7 +2008,7 @@ findings:
     severity: high
     text: 9 tool calls were denied by the permission gate on this leg; the first: printf '%s' '--no-gate /create-meta-prompt-alarm-dtd /create-meta-prompt-callout-dtd /create-meta-prompt-dtd /create-met
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2110,7 +2108,7 @@ findings:
     severity: high
     text: 16 tool calls were denied by the permission gate on this leg; the first: printf -- '--no-gate\n/create-dork-local-dtd\n/create-dork-search-dtd\n/create-filetype-alarm-dtd\n/create-filetype-call
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2200,7 +2198,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 8
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2210,7 +2208,7 @@ findings:
     severity: high
     text: 7 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan <<'EOF' /create-task-dtd /audit-tasks-dtd /create-workflow-tasks-dtd /ta
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2270,7 +2268,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 5
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2280,7 +2278,7 @@ findings:
     severity: high
     text: 10 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -30; echo "---EXIT $?---"
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2290,7 +2288,7 @@ findings:
     severity: high
     text: 13 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "--no-gate\n/audit-skill-dtd\n/audit-slash-command-dtd\n/audit-subagent-
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2340,7 +2338,7 @@ findings:
     severity: low
     text: chain_close says ran 0; the scala stacked 4
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2350,7 +2348,7 @@ findings:
     severity: high
     text: 13 tool calls were denied by the permission gate on this leg; the first: cd "D:/a/RoT-DtD-Commander/RoT-DtD-Commander" && printf '%s\n' '/amplify-codebase-dtd' '/enhance-codebase-dtd' '/overhau
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2360,7 +2358,7 @@ findings:
     severity: high
     text: 9 tool calls were denied by the permission gate on this leg; the first: printf '/codebase-surveyor-dtd\n/codebase-architect-dtd\n/codebase-renovator-dtd\n/codebase-generator-dtd\n/typography-d
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2430,7 +2428,7 @@ findings:
     severity: high
     text: 5 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan '/chain-dtd --no-gate'; echo "EXIT=$?"
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2440,7 +2438,7 @@ findings:
     severity: high
     text: 16 tool calls were denied by the permission gate on this leg; the first: node lib/chain.mjs 2>&1 | head -40
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2450,7 +2448,7 @@ findings:
     severity: high
     text: 17 tool calls were denied by the permission gate on this leg; the first: node lib/ceiling.mjs 60 node lib/chain.mjs plan "$(printf '%s\n' '--no-gate' '/file-blacklist-dtd' '/code-blacklist-dtd'
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: windows
@@ -2460,7 +2458,7 @@ findings:
     severity: high
     text: 12 tool calls were denied by the permission gate on this leg; the first: printf -- '--no-gate\n/whats-next-dtd\n/add-to-todos-dtd\n/check-todos-dtd\n/run-plan-dtd\n/heal-skill-dtd\n/debug-dtd\n
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 458be2f
   -
     n: 1
     leg: ubuntu

@@ -360,6 +360,7 @@ jobs:
           node checker/scala.mjs run --all --out "$SCALA_OUT" --turns 150 --secs 2400
           rc=$?
           set -e
+          if [ -d artifacts/chain ]; then cp -r artifacts/chain "$SCALA_OUT/chain"; echo "chain records kept: $(ls "$SCALA_OUT/chain" | wc -l)"; fi
           ls -l "$SCALA_OUT"
           node checker/scala.mjs findings "$SCALA_OUT" --leg "$XOS_LEG" --run "$GITHUB_SHA" --out "$SCALA_OUT/findings-$XOS_LEG.nt"
           exit $rc

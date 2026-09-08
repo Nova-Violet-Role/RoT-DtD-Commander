@@ -325,9 +325,14 @@ export function findingsRecord(legs, { run = '', previous = null, generated = ne
     if (p) { if (p.fix) row.fix = p.fix; if (p.status) row.status = p.status; }
     out.push(row);
   }
+  // A finding the new run no longer shows is fixed only on a leg the run
+  // read: the eighth matrix regenerated from its ubuntu leg alone marked the
+  // macOS and windows rows of the sixth fixed before either leg had run.
+  const legsRead = new Set(legs.map((l) => l.summary.leg));
   for (const x of prevRows) {
     if (out.some((r) => keyOf(r) === keyOf(x))) continue;
     if (/^fixed/.test(String(x.status || ''))) { out.push({ ...x }); continue; }
+    if (!legsRead.has(x.leg)) { out.push({ ...x }); continue; }
     out.push({ ...x, status: `fixed in ${run || 'this run'}` });
   }
   const summary = {};
@@ -374,6 +379,13 @@ export function controls(io = console) {
   const limited = diagnose('{"type":"result","is_error":true,"api_error_status":429,"num_turns":1,"result":"You\u0027ve hit your session limit · resets 11:20pm (UTC)"}');
   const den = denials('{"result":"x","permission_denials":[{"tool_name":"Bash","tool_input":{"command":"node lib/chain.mjs check"}},{"tool_name":"Bash","tool_input":{"command":"ls"}}]}');
   say(kindOf(limited).kind === 'limit' && kindOf(limited).severity === 'high' && den.length === 1 && /2 tool calls were denied/.test(den[0]) && kindOf(den[0]).kind === 'denied' && kindOf(den[0]).severity === 'high' && denials('{"result":"x"}').length === 0, `trip: a 429 session limit is a finding of kind limit and the permission gate's refusals a finding of kind denied, both high: ${den[0].slice(0, 70)}`);
+  const prevNt = toNt({ findings: [
+    { n: '1', leg: 'macos', family: 'lists', member: 'none', kind: 'close', severity: 'medium', text: 't', fix: 'f', status: 'open' },
+    { n: '1', leg: 'ubuntu', family: 'lists', member: 'none', kind: 'close', severity: 'medium', text: 't', fix: 'f', status: 'open' },
+  ] }, 'prev');
+  const regen = findingsRecord([{ rows: [], summary: { leg: 'ubuntu', pass: 0, fail: 0, findings: 0, families: [] } }], { run: 'r2', previous: prevNt }).record.findings;
+  const mac = regen.find((r) => r.leg === 'macos'), ubu = regen.find((r) => r.leg === 'ubuntu');
+  say(regen.length === 2 && mac && mac.status === 'open' && ubu && ubu.status === 'fixed in r2', `trip: a vanished finding is fixed only on a leg the run read; the other leg's row keeps its status: macos ${mac && mac.status}, ubuntu ${ubu && ubu.status}`);
   const noPlan = engineFinding('', chainFam);
   const planned = engineFinding('check\t2026-09-08T00:00:00Z\nplan\t2026-09-08T00:00:01Z\nhandoff\t2026-09-08T00:00:02Z\n', chainFam);
   const unchained = engineFinding('', { prompt: '/sigil-dtd --no-gate' });
