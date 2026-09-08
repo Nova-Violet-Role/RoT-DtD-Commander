@@ -130,9 +130,13 @@ what they name.
   answer goes: in the chain's answer, whole, under `## Link n of N:
   /name-dtd sigil` and then the link's own root, even when its product is
   a file; a link deferred to its artifact is a dropped link
-  (LAW.CHAINRUN.2). The leg keeps the checkout's `artifacts/chain` records
-  beside its answers, and a vanished finding is marked fixed only on a leg
-  the run read.
+  (LAW.CHAINRUN.2). A chain never pauses: on macOS the research chain
+  wrote that it would pause while a sweep finished and ended there after
+  39 of 150 turns, so the prose says a link's foreground command runs to
+  its end or its ceiling in the same turn and an answer that ends before
+  `chain_close` is a failed answer. The leg keeps the checkout's
+  `artifacts/chain` records beside its answers, and a vanished finding is
+  marked fixed only on a leg the run read.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
