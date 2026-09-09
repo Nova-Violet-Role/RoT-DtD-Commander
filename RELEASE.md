@@ -18,12 +18,18 @@
 
 ---
 
-## v9.1.0 — Matrix-Commander (in progress)
+## v9.1.0 — Matrix-Commander
 
-Every family clean on every leg. The first three-OS scala matrix, run on
-the 9.0.0 tree, passed one family and failed sixteen on every leg, and its
-answers died in the runners' temp directories; 9.1.0 keeps the answers as
-run artifacts, reads them as a findings record and fixes what they name.
+Every family clean on every leg, measured. The first three-OS scala matrix,
+run on the 9.0.0 tree, passed one family and failed sixteen on every leg,
+and its answers died in the runners' temp directories. Twelve matrices
+later the runner measures the Commander and not its own permission
+matcher: the twelfth matrix ran all seventeen families through the real
+CLI on ubuntu, macOS and windows, 51 answers, zero permission denials, the
+engine traced in every family, and every one of the 51 passes the final
+scorer. The release is sealed on that measurement; the CHANGELOG tells the
+whole story, including the one windows line the runner's own scorer read
+wrong and the thirteenth matrix the operator cancelled to ship.
 
 - **The answers survive the runner** &mdash; every leg uploads its seventeen
   answers, its findings file, the smoke result and the install tail; a
@@ -36,6 +42,19 @@ run artifacts, reads them as a findings record and fixes what they name.
 - **The Windows shim path** &mdash; `lib/ceiling.mjs` runs an npm shim's node
   script without a shell, so a newline in an argument survives.
 - **The gate's fifth choice, visible** &mdash; one ask of two questions.
+- **The runner measures the Commander** &mdash; the CLI users install today,
+  run from the npm prefix on node 22 and proved against npm latest before a
+  family spends a turn; `--permission-mode bypassPermissions` on a throwaway
+  checkout; the engine traced through `ROT_SCALA_TRACE`; the answer read as
+  every assistant message; a link's own record read when the answer lacks
+  its heading; the close the last close; a run that called the model read
+  from its numbers, never from a phrase.
+- **Twelve matrices read whole** &mdash; 158, 133 and 192 permission
+  denials under one pattern on an older CLI; node 20 installing 2.1.197
+  where npm latest declared node 22; links summarised, a chain paused, a
+  final message scored alone, a phrase inside a tool result diagnosed, an
+  experiment's close read for the chain's, a phrase in the answer's own
+  text diagnosed; each named in the findings record and fixed by name.
 - 139 commands, 22 skills, 5 agents; 1932 declarations; recognised 9.1.0
   (class mid) from a top verb of 9 kept in run 10.
 

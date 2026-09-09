@@ -7,7 +7,7 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
-## 9.1.0 (2026-09-07)
+## 9.1.0 (2026-09-10)
 
 ### Matrix-Commander: every family clean on every leg
 
@@ -172,6 +172,34 @@ what they name.
   turn, a cost above zero and no error was a logged-in CLI that knew its
   command, whatever its text says; only its turn cap is named, from the
   subtype. The phrases still read a run of one turn at no cost.
+- **The seal: 9.1.0 ships on the twelfth matrix, and here is the whole
+  story.** Thirteen matrices were dispatched for this release. The first
+  six measured the runner's own permission matcher (every plan call
+  denied, 158, 133 and 192 denials per leg) and an older CLI (2.1.197
+  where npm latest was 2.1.263); the seventh refused itself by design when
+  the CLI check saw node 20 install the older version; the eighth ran the
+  engine live on every leg and named two shapes of the model's own making,
+  a link summarised in a line and a chain that paused; the ninth, tenth and
+  eleventh each named one more fault in how the scorer read a live run: a
+  final message scored alone, a phrase inside a tool result taken for a
+  logged-out CLI, a link narrated across 85 messages while its record
+  carried the headings, an experiment's close read for the chain's. The
+  eleventh measured ubuntu 17 of 17 and windows 17 of 17 green on the
+  runner, macOS 16 of 17 with that close-line reading as its one finding.
+  The twelfth, on 675ba75, measured ubuntu 17 of 17 and macOS 17 of 17
+  green on the runner and windows 16 of 17, its one finding the research
+  chain's own sentence about the second matrix, "seventeen Not logged in
+  answers per leg", read by the diagnoser as the CLI being logged out on a
+  run of 64 turns and 87 headings. That reading is fixed in 0f17b0a; the
+  twelfth's 51 answers and the eleventh's 51 re-read with it pass 102 of
+  102, with zero permission denials and the engine traced in every one.
+  The thirteenth matrix, dispatched on 0f17b0a, was cancelled by the
+  operator at its gate stage before a leg ran, because a fourth eight-hour
+  matrix would have measured the scorer's last phrase and nothing about
+  the Commander that the twelfth had not. 9.1.0 is sealed on the twelfth
+  matrix's measurement, read with the scorer this release ships; the first
+  matrix of 9.2.0 is the run that shows all three legs green on the runner
+  in one dispatch, and its findings record starts from zero.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
@@ -179,7 +207,11 @@ what they name.
   GATE.cache.header with GATE.continue beside GATE.save (LAW.CACHE.1);
   every intake row says so.
 
-Measured so far:
+Measured:
+
+- the twelfth scala matrix (run 34367173453, 675ba75, one leg at a time on node 22, CLI 2.1.266): ubuntu 17 of 17, macOS 17 of 17, windows 16 of 17 on the runner, 51 answers, 0 permission denials, the engine traced in every family, 102 and 103 and 98 chain records kept; re-read with the scorer of 0f17b0a, 51 of 51
+- the eleventh scala matrix (run 34312749248, f19c2db): ubuntu 17 of 17, windows 17 of 17, macOS 16 of 17 on the runner; re-read with the scorer of 0f17b0a, 51 of 51
+- the thirteenth (run 34413427691, 0f17b0a) cancelled by the operator before a leg ran; the release sealed on the twelfth
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing

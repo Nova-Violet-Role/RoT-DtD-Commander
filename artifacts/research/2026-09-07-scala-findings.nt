@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
 # Copyright 2026 Saimonokuma.
-# scala findings, written by node checker/scala.mjs findings; fix and status are carried over by key on regeneration
-run: 458be2f
-generated: 2026-09-08T22:58:33.367Z
+# scala findings, written by node checker/scala.mjs findings; fix and status are kept by hand and carried over by key on the next write
+run: 675ba75
+generated: 2026-09-09T22:47:11.239Z
 legs: ubuntu, macos, windows
 families: 17
 summary:
-  ubuntu: pass 13, fail 4, findings 31
-  macos: pass 11, fail 6, findings 40
-  windows: pass 13, fail 4, findings 24
+  ubuntu: pass 17, fail 0, findings 0
+  macos: pass 17, fail 0, findings 0
+  windows: pass 17, fail 0, findings 0
 findings:
   -
     n: 1
@@ -19,7 +19,7 @@ findings:
     severity: medium
     text: no heading of create-plugin (🧩) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -29,7 +29,7 @@ findings:
     severity: medium
     text: no heading of create-moe (🎛️) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -39,7 +39,7 @@ findings:
     severity: medium
     text: no heading of create-router (🚦) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -49,7 +49,7 @@ findings:
     severity: medium
     text: no heading of create-ot-variants (🧠) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -59,7 +59,7 @@ findings:
     severity: medium
     text: no heading of create-db (🗄️) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -69,7 +69,7 @@ findings:
     severity: medium
     text: no heading of create-monitor (📡) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -79,7 +79,7 @@ findings:
     severity: medium
     text: no heading of create-mcp (🔌) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -89,7 +89,7 @@ findings:
     severity: medium
     text: no heading of create-workflowjson (🧰) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -99,7 +99,7 @@ findings:
     severity: medium
     text: no heading of create-meta-prompt-alarm (📯) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -109,7 +109,7 @@ findings:
     severity: medium
     text: no heading of create-meta-prompt-callout (🗯️) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -119,7 +119,7 @@ findings:
     severity: medium
     text: no heading of create-meta-prompt (🪞) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -129,7 +129,7 @@ findings:
     severity: medium
     text: no heading of create-meta-prompt-heredoc (🧬) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -139,7 +139,7 @@ findings:
     severity: medium
     text: no heading of create-meta-prompt-nt (🪆) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -149,7 +149,7 @@ findings:
     severity: medium
     text: no heading of create-meta-prompt-polyalarm (🪅) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -159,7 +159,7 @@ findings:
     severity: medium
     text: no heading of create-meta-prompt-polyglot (🎩) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -169,7 +169,7 @@ findings:
     severity: medium
     text: no heading of create-meta-prompt-xml (🔖) after position 0 of 5 headings
     fix: turns 150 and 2400 s per family under a job ceiling of 350 minutes; a run at its turn cap is a finding of kind turns
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -179,7 +179,7 @@ findings:
     severity: medium
     text: no heading of create-dork-local (🔦) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -189,7 +189,7 @@ findings:
     severity: medium
     text: no heading of create-dork-search (🕸️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -199,7 +199,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-alarm (🪁) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -209,7 +209,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-callout (📍) after position 0 of 5 headings
     fix: the plan names each link sigil from dtd/sigils.json and the chain prose renders a link under the sigil the plan names
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -219,7 +219,7 @@ findings:
     severity: medium
     text: no heading of create-filetype (🪃) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -229,7 +229,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-heredoc (🛎️) after position 0 of 5 headings
     fix: the plan names each link sigil from dtd/sigils.json and the chain prose renders a link under the sigil the plan names
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -239,7 +239,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-nt (🧲) after position 0 of 5 headings
     fix: the plan names each link sigil from dtd/sigils.json and the chain prose renders a link under the sigil the plan names
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -249,7 +249,7 @@ findings:
     severity: medium
     text: no heading of create-filetype-polyalarm (🧊) after position 0 of 5 headings
     fix: the plan names each link sigil from dtd/sigils.json and the chain prose renders a link under the sigil the plan names
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -259,7 +259,7 @@ findings:
     severity: medium
     text: no heading of whats-next (⏭️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -269,7 +269,7 @@ findings:
     severity: medium
     text: no heading of add-to-todos (➕) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -279,7 +279,7 @@ findings:
     severity: medium
     text: no heading of check-todos (☑️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -289,7 +289,7 @@ findings:
     severity: medium
     text: no heading of run-plan (▶️) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -299,7 +299,7 @@ findings:
     severity: medium
     text: no heading of heal-skill (🩹) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -309,7 +309,7 @@ findings:
     severity: medium
     text: no heading of debug (🐛) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: ubuntu
@@ -319,7 +319,7 @@ findings:
     severity: medium
     text: no heading of setup-ralph (🔄) after position 0 of 5 headings
     fix: the runner hands the CLI --permission-mode bypassPermissions, lib/chain.mjs traces every verb into ROT_SCALA_TRACE and a chained family without a plan line fails, a denial fails the family, and the CLI is run from the npm prefix and proved against npm latest before a family spends a turn (patch O, the seventh matrix)
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -409,7 +409,7 @@ findings:
     severity: medium
     text: a chain of two or more carries no chain_close line naming how many ran
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -579,7 +579,7 @@ findings:
     severity: medium
     text: no heading of file-blacklist (⛔) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -589,7 +589,7 @@ findings:
     severity: medium
     text: no heading of code-blacklist (🚫) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -599,7 +599,7 @@ findings:
     severity: medium
     text: no heading of file-graylist (🟨) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -609,7 +609,7 @@ findings:
     severity: medium
     text: no heading of code-graylist (🟧) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -619,7 +619,7 @@ findings:
     severity: medium
     text: no heading of file-whitelist (🟩) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -629,7 +629,7 @@ findings:
     severity: medium
     text: no heading of code-whitelist (✅) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -639,7 +639,7 @@ findings:
     severity: medium
     text: no heading of starlist (⭐) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -649,7 +649,7 @@ findings:
     severity: medium
     text: no heading of starlist-manager (🌟) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -659,7 +659,7 @@ findings:
     severity: medium
     text: no heading of whats-next (⏭️) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -669,7 +669,7 @@ findings:
     severity: medium
     text: no heading of add-to-todos (➕) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -679,7 +679,7 @@ findings:
     severity: medium
     text: no heading of check-todos (☑️) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -689,7 +689,7 @@ findings:
     severity: medium
     text: no heading of run-plan (▶️) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -699,7 +699,7 @@ findings:
     severity: medium
     text: no heading of heal-skill (🩹) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -709,7 +709,7 @@ findings:
     severity: medium
     text: no heading of debug (🐛) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: macos
@@ -719,7 +719,7 @@ findings:
     severity: medium
     text: no heading of setup-ralph (🔄) after position 0 of 5 headings
     fix: the chain prose says where a link answer goes: in the chain answer, whole, under a link heading and then the link own root, even when its product is a file, a link deferred to its artifact being a dropped link (patch R, LAW.CHAINRUN.2); and a chain never pauses, an answer that ends before chain_close being a failed answer (patch S); the ninth matrix measures both
-    status: in progress
+    status: fixed in 675ba75
   -
     n: 1
     leg: windows
