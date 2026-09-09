@@ -238,11 +238,25 @@ export function diagnoseText(raw) {
   if (!p.result && parts.length === 0) return t;
   return parts.join('\n');
 }
+// A run that called the model is read from its numbers, never from a
+// phrase: more than one turn, a cost above zero and no error mean the CLI
+// was logged in, knew the command and ran, whatever its text says. The
+// twelfth matrix's research chain on windows, 87 headings and 64 turns,
+// took this scala as its topic and wrote "Not logged in" in its own final
+// message, and the phrase alone had diagnosed the leg as logged out. Only
+// the turn cap is named for such a run, from the result's subtype.
+export function modelRan(result) {
+  return Boolean(result) && !result.is_error && Number(result.num_turns) > 1 && Number(result.total_cost_usd) > 0;
+}
 export function diagnose(raw) {
+  const p = parseRaw(raw);
+  if (modelRan(p.result)) {
+    if (String(p.result.subtype || '') === 'error_max_turns') return `the run reached its turn cap of ${p.result.num_turns} before the answer; the chain needs more turns or a lighter link`;
+    return '';
+  }
   const named = diagnoseIn(diagnoseText(raw));
   if (named) return named;
   // A capped run whose text names no cap: the subtype and the turn count say it.
-  const p = parseRaw(raw);
   if (p.result && String(p.result.subtype || '') === 'error_max_turns' && p.result.num_turns != null) return `the run reached its turn cap of ${p.result.num_turns} before the answer; the chain needs more turns or a lighter link`;
   return '';
 }
@@ -507,6 +521,10 @@ export function controls(io = console) {
   const xmlClose = score('### ⛔ One\n### 🚫 Two\n<chain_close ran="2" refused="0" artifact="z"/>\n', ['file-blacklist-dtd', 'code-blacklist-dtd']);
   const shortClose = score('### ⛔ One\n### 🚫 Two\nchain_close ran 1 refused 1\n', ['file-blacklist-dtd', 'code-blacklist-dtd']);
   say(lateClose.ok && xmlClose.ok && !shortClose.ok && /ran 1/.test(shortClose.findings[0] || ''), `trip: the close is the last chain_close line, the engine's XML close closes too, and a close short of the stack is still the finding: ${shortClose.findings[0] || 'none'}`);
+  const ownText = diagnose('{"type":"result","subtype":"success","is_error":false,"num_turns":64,"total_cost_usd":6.95,"result":"### x\\nthe second matrix answered Not logged in seventeen times; Unknown command: /foo was the first scala","permission_denials":[]}');
+  const noModel = diagnose('{"type":"result","subtype":"success","is_error":false,"num_turns":1,"total_cost_usd":0,"result":"Not logged in · Please run /login","permission_denials":[]}');
+  const cappedRan = diagnose('{"type":"result","subtype":"error_max_turns","is_error":false,"num_turns":150,"total_cost_usd":9.1,"result":"","permission_denials":[]}');
+  say(ownText === '' && /not logged in/.test(noModel) && /turn cap of 150/.test(cappedRan), `trip: a run that called the model is never diagnosed by a phrase in its own text, a run of one turn at no cost still is, and a capped run that ran is named from its subtype: ${JSON.stringify(ownText)} / ${noModel.slice(0, 28)} / ${cappedRan.slice(0, 30)}`);
   const noPlan = engineFinding('', chainFam);
   const planned = engineFinding('check\t2026-09-08T00:00:00Z\nplan\t2026-09-08T00:00:01Z\nhandoff\t2026-09-08T00:00:02Z\n', chainFam);
   const unchained = engineFinding('', { prompt: '/sigil-dtd --no-gate' });

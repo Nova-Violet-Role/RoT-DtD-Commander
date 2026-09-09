@@ -164,6 +164,14 @@ what they name.
   refused 8` four hundred lines before its own `chain_close ran 8 refused
   0`, and was scored on the experiment. The scorer reads the last
   chain_close line, and the engine's own XML form of the close closes too.
+- **The twelfth matrix: a run that called the model is read from its
+  numbers.** Ubuntu and macOS passed seventeen of seventeen on the runner;
+  on windows the research chain, 87 headings and 64 turns, took this scala
+  as its topic and wrote "Not logged in" in its own final message, and the
+  phrase alone diagnosed the leg as logged out. A result with more than one
+  turn, a cost above zero and no error was a logged-in CLI that knew its
+  command, whatever its text says; only its turn cap is named, from the
+  subtype. The phrases still read a run of one turn at no cost.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
@@ -175,7 +183,7 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 31 run, 0 failing
+- `node checker/scala.mjs --controls`: 32 run, 0 failing
 - `node lib/chain.mjs controls`: 30 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
