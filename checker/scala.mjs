@@ -152,6 +152,36 @@ export function score(answer, members) {
 // a model: the first hosted scala of 9.0.0 read 18 bytes plus the first
 // token from every one of its seventeen families, on three legs, and scored
 // them as answers with no heading.
+// The raw output of one family, read whole in either shape: one JSON object
+// (the json format of the first eight matrices), or one JSON per line
+// (stream-json), where the result is the line of type result and the answer
+// is every assistant text block in order, joined by a blank line. A raw that
+// is neither yields no result and an empty answer.
+export function parseRaw(text) {
+  const t = String(text || '');
+  let single = null;
+  try { single = JSON.parse(t); } catch { single = null; }
+  if (single && typeof single === 'object' && !Array.isArray(single)) return { result: single, answer: typeof single.result === 'string' ? single.result : '' };
+  let result = null;
+  const parts = [];
+  for (const line of t.split('\n')) {
+    const l = line.trim();
+    if (!l.startsWith('{')) continue;
+    let o = null;
+    try { o = JSON.parse(l); } catch { continue; }
+    if (o && o.type === 'assistant' && o.message && Array.isArray(o.message.content)) {
+      for (const c of o.message.content) if (c && c.type === 'text' && typeof c.text === 'string' && c.text.trim()) parts.push(c.text);
+    } else if (o && o.type === 'result') {
+      result = o;
+    }
+  }
+  if (!result && parts.length === 0) {
+    const i = t.indexOf('{');
+    if (i >= 0) { try { const o = JSON.parse(t.slice(i)); return { result: o, answer: typeof o.result === 'string' ? o.result : '' }; } catch { /* not a JSON tail either */ } }
+    return { result: null, answer: '' };
+  }
+  return { result, answer: parts.join('\n\n') };
+}
 export function diagnose(raw) {
   const m = /Unknown command: (\/\S+)/.exec(String(raw || ''));
   if (m) return `the CLI has no command ${m[1]}: the commander is not installed where this leg reads its commands, and no model was called`;
@@ -200,14 +230,20 @@ export function runOne(s, { out, model = 'opus', turns = 150, secs = 2400 } = {}
   // appends one line per verb when ROT_SCALA_TRACE names it).
   const trace = join(out, `scala-${s.id}.trace`);
   rmSync(trace, { force: true });
-  const args = ['-p', s.prompt, '--model', model, '--max-turns', String(turns), '--output-format', 'json', '--add-dir', ROOT,
+  // stream-json, not json: the json format returns the final assistant
+  // message alone, and the ninth matrix measured the lenses chain of ubuntu
+  // rendering its eight links across earlier messages, the final one holding
+  // the close, the artifact and the assumptions (3454 bytes, two headings),
+  // while the trace carried eight hand-offs and the eight link records
+  // existed. The answer is every assistant text block in order (parseRaw).
+  const args = ['-p', s.prompt, '--model', model, '--max-turns', String(turns), '--output-format', 'stream-json', '--verbose', '--add-dir', ROOT,
     '--permission-mode', 'bypassPermissions'];
   const r = spawnSync(process.execPath, [...ceiling, 'claude', ...args], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, ROTMOE_VOICE: '0', CCC_HOOK_AUTOINIT: '0', CLAUDECODE: '', MSYS_NO_PATHCONV: '1', ROT_SCALA_TRACE: trace }, maxBuffer: 64 * 1024 * 1024 });
   writeFileSync(raw, (r.stdout || '') + (r.stderr || ''), 'utf8');
   if (r.status === 124) return { id: s.id, status: 124, unrun: true };
-  let j = null;
-  try { j = JSON.parse(r.stdout); } catch { const i = String(r.stdout || '').indexOf('{'); try { j = JSON.parse(String(r.stdout).slice(i)); } catch { j = null; } }
-  const answer = j && typeof j.result === 'string' ? j.result : '';
+  const parsed = parseRaw(r.stdout);
+  const j = parsed.result;
+  const answer = parsed.answer;
   writeFileSync(log, answer.replace(/\r/g, '') + (answer.endsWith('\n') ? '' : '\n'), 'utf8');
   const sc = score(answer, s.members);
   const why = diagnose((r.stdout || '') + (r.stderr || ''));
@@ -246,8 +282,7 @@ export function kindOf(text) {
 // the leg, whatever its headings say (the sixth matrix: six passes per leg
 // with 6 to 17 denials each).
 export function denials(raw) {
-  let j = null;
-  try { j = JSON.parse(String(raw || '')); } catch { const i = String(raw || '').indexOf('{'); try { j = JSON.parse(String(raw).slice(i)); } catch { j = null; } }
+  const j = parseRaw(raw).result;
   const d = j && Array.isArray(j.permission_denials) ? j.permission_denials : [];
   if (!d.length) return [];
   const first = d[0] && d[0].tool_input ? String(d[0].tool_input.command || JSON.stringify(d[0].tool_input)).replace(/\s+/g, ' ').slice(0, 120) : '';
@@ -296,8 +331,7 @@ export function readLeg(dir, leg) {
     else if (!answer.trim()) findings.push('the answer is empty: no result came back from the CLI');
     const sc = score(answer, s.members);
     for (const f of sc.findings) findings.push(f);
-    let j = null;
-    try { j = JSON.parse(rawText); } catch { const i = rawText.indexOf('{'); try { j = JSON.parse(rawText.slice(i)); } catch { j = null; } }
+    const j = parseRaw(rawText).result;
     const fam = { family: s.id, ok: findings.length === 0, headings: sc.headings, turns: j && j.num_turns != null ? String(j.num_turns) : 'none', cost: j && j.total_cost_usd != null ? Number(j.total_cost_usd).toFixed(2) : 'none' };
     summary.families.push(fam);
     if (fam.ok) summary.pass++; else summary.fail++;
@@ -386,6 +420,9 @@ export function controls(io = console) {
   const regen = findingsRecord([{ rows: [], summary: { leg: 'ubuntu', pass: 0, fail: 0, findings: 0, families: [] } }], { run: 'r2', previous: prevNt }).record.findings;
   const mac = regen.find((r) => r.leg === 'macos'), ubu = regen.find((r) => r.leg === 'ubuntu');
   say(regen.length === 2 && mac && mac.status === 'open' && ubu && ubu.status === 'fixed in r2', `trip: a vanished finding is fixed only on a leg the run read; the other leg's row keeps its status: macos ${mac && mac.status}, ubuntu ${ubu && ubu.status}`);
+  const streamed = parseRaw('{"type":"system","subtype":"init"}\n{"type":"assistant","message":{"content":[{"type":"text","text":"### 🎯 One"}]}}\n{"type":"user","message":{"content":[{"type":"tool_result","content":"x"}]}}\n{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Bash"},{"type":"text","text":"### 🎯 Two\\nchain_close ran 1 refused 0"}]}}\n{"type":"result","subtype":"success","is_error":false,"num_turns":3,"result":"### 🎯 Two\\nchain_close ran 1 refused 0","permission_denials":[]}\n');
+  const plainRaw = parseRaw('{"type":"result","num_turns":2,"result":"### 🎯 Only","permission_denials":[{"tool_name":"Bash","tool_input":{"command":"ls"}}]}');
+  say(streamed.result && streamed.result.num_turns === 3 && streamed.answer === '### 🎯 One\n\n### 🎯 Two\nchain_close ran 1 refused 0' && plainRaw.result && plainRaw.result.num_turns === 2 && plainRaw.answer === '### 🎯 Only' && denials('{"type":"result","num_turns":2,"result":"x","permission_denials":[{"tool_name":"Bash","tool_input":{"command":"ls"}}]}').length === 1 && parseRaw('not json').result === null, `trip: a stream-json raw yields every assistant text block in order and its result line, a json raw yields its result alone, and neither shape loses the denials: ${JSON.stringify(streamed.answer.slice(0, 24))}`);
   const noPlan = engineFinding('', chainFam);
   const planned = engineFinding('check\t2026-09-08T00:00:00Z\nplan\t2026-09-08T00:00:01Z\nhandoff\t2026-09-08T00:00:02Z\n', chainFam);
   const unchained = engineFinding('', { prompt: '/sigil-dtd --no-gate' });

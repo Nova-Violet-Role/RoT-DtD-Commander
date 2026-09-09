@@ -137,6 +137,15 @@ what they name.
   `chain_close` is a failed answer. The leg keeps the checkout's
   `artifacts/chain` records beside its answers, and a vanished finding is
   marked fixed only on a leg the run read.
+- **The ninth matrix: the answer is every message.** On CLI 2.1.265 the
+  ubuntu leg passed sixteen families with zero denials and ninety-nine
+  chain records kept; the lenses chain ran its eight links, wrote their
+  eight records, and was scored on two headings, because the json output
+  format returns the final assistant message alone and the chain had
+  rendered its links across earlier messages. The runner asks for
+  stream-json and reads the answer as every assistant text block in
+  order, the result from the line of type result, through one parser
+  that reads the json shape of the earlier matrices unchanged.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
@@ -148,7 +157,7 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 26 run, 0 failing
+- `node checker/scala.mjs --controls`: 27 run, 0 failing
 - `node lib/chain.mjs controls`: 30 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
