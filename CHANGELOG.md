@@ -158,6 +158,12 @@ what they name.
   link heading missing from the answer from the link's own record, live
   under the checkout on the runner and from the chain directory a leg
   kept when it is read back, and a link missing from both is the finding.
+- **The eleventh matrix: the close is the last close.** Ubuntu passed
+  seventeen of seventeen with zero findings; on macOS the research chain
+  took this scala as its topic, quoted an experiment's `chain_close ran 0
+  refused 8` four hundred lines before its own `chain_close ran 8 refused
+  0`, and was scored on the experiment. The scorer reads the last
+  chain_close line, and the engine's own XML form of the close closes too.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
@@ -169,7 +175,7 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 30 run, 0 failing
+- `node checker/scala.mjs --controls`: 31 run, 0 failing
 - `node lib/chain.mjs controls`: 30 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml

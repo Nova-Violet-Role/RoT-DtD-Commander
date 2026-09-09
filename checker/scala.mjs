@@ -148,11 +148,18 @@ export function score(answer, members, records = {}) {
     // The close is the line that names how many ran and how many were refused
     // (LAW.CHAIN.8): the chain_close token is preferred, the counts are the
     // contract, and a close written as (ran 8, refused 0) still closes.
+    // The last such line, not the first: the eleventh matrix's research
+    // chain on macOS took this scala as its topic, quoted an experiment's
+    // "chain_close ran 0 refused 8" four hundred lines before its own close
+    // "chain_close ran 8 refused 0", and was scored on the experiment. The
+    // engine's own XML form, ran="8" refused="0", is a close as well.
     const plains = lines.map(plain);
-    const close = plains.find((l) => /chain_close\s+ran\s+\d+/.test(l)) || plains.find((l) => /\bran\s+\d+\b.*\brefused\s+\d+\b/.test(l));
+    const closes = plains.filter((l) => /chain_close\b[^\n]*?\bran\W{0,3}\d+/.test(l));
+    const counted = plains.filter((l) => /\bran\W{0,3}\d+\b.*\brefused\W{0,3}\d+\b/.test(l));
+    const close = closes.length ? closes[closes.length - 1] : (counted.length ? counted[counted.length - 1] : null);
     if (!close) findings.push('a chain of two or more carries no chain_close line naming how many ran');
     else {
-      const ran = Number((/\bran\s+(\d+)/.exec(close) || [])[1]);
+      const ran = Number((/\bran\W{0,3}(\d+)/.exec(close) || [])[1]);
       if (ran !== members.length) findings.push(`chain_close says ran ${ran}; the scala stacked ${members.length}`);
     }
   }
@@ -496,6 +503,10 @@ export function controls(io = console) {
   const recScore = score('### ⛓️ Chain\nnarrated\nchain_close ran 2 refused 0', ['file-blacklist-dtd', 'code-blacklist-dtd'], { 'file-blacklist-dtd': '### ⛔ Arguments\n### ⛔ Walk\n', 'code-blacklist-dtd': '### 🚫 Arguments\n' });
   const halfScore = score('### ⛓️ Chain\nchain_close ran 2 refused 0', ['file-blacklist-dtd', 'code-blacklist-dtd'], { 'file-blacklist-dtd': '### ⛔ Arguments\n' });
   say(recScore.ok && recScore.fromRecords === 2 && !halfScore.ok && halfScore.fromRecords === 1 && /none in its record/.test(halfScore.findings[0] || ''), `trip: a link heading missing from the answer is read from the link record, and a link missing from both is a finding: ${recScore.fromRecords} from records, then ${halfScore.findings.length} finding`);
+  const lateClose = score('### ⛔ One\n- run: chain close exit 1 -> chain_close ran 0 refused 2 artifact x\n### 🚫 Two\n- **chain_close** ran 2 refused 0 artifact y\n', ['file-blacklist-dtd', 'code-blacklist-dtd']);
+  const xmlClose = score('### ⛔ One\n### 🚫 Two\n<chain_close ran="2" refused="0" artifact="z"/>\n', ['file-blacklist-dtd', 'code-blacklist-dtd']);
+  const shortClose = score('### ⛔ One\n### 🚫 Two\nchain_close ran 1 refused 1\n', ['file-blacklist-dtd', 'code-blacklist-dtd']);
+  say(lateClose.ok && xmlClose.ok && !shortClose.ok && /ran 1/.test(shortClose.findings[0] || ''), `trip: the close is the last chain_close line, the engine's XML close closes too, and a close short of the stack is still the finding: ${shortClose.findings[0] || 'none'}`);
   const noPlan = engineFinding('', chainFam);
   const planned = engineFinding('check\t2026-09-08T00:00:00Z\nplan\t2026-09-08T00:00:01Z\nhandoff\t2026-09-08T00:00:02Z\n', chainFam);
   const unchained = engineFinding('', { prompt: '/sigil-dtd --no-gate' });
