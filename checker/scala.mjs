@@ -30,7 +30,7 @@
 // Exit 0 every scala passed; 1 a scala failed its score; 124 a ceiling fired
 // and that family is UNRUN; 2 the arguments are wrong.
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, mkdtempSync, rmSync, statSync } from 'node:fs';
 import { join, dirname, resolve, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -117,11 +117,20 @@ export function census(all = scalas(), families = FAMILIES) {
 // for #### alone. Emphasis is stripped before the close line is read, because
 // a bold ran is still a ran.
 const plain = (l) => String(l).replace(/[*`]/g, '');
-export function score(answer, members) {
+// records: member name -> the text of the link's own record under
+// artifacts/chain, written by the link and required by the hand-off. The
+// tenth matrix measured the lists chain running its eight links, each record
+// carrying the link's headings under its sigil, while the chain's answer
+// narrated the links across 85 messages without one; the link's product is
+// the measurement, so a heading missing from the answer is read from the
+// record before it is a finding, and the count of links read that way is
+// returned as fromRecords.
+export function score(answer, members, records = {}) {
   const lines = String(answer).split(/\r?\n/);
   const heads = lines.filter((l) => /^#{3,6} /.test(l)).map((l) => l.replace(/^#{3,6} /, ''));
   const findings = [];
   let cursor = 0;
+  let fromRecords = 0;
   for (const m of members) {
     const key = m.replace(/-dtd$/, '');
     const sig = SIGILS[key];
@@ -129,8 +138,11 @@ export function score(answer, members) {
     // Carrying, not leading (LAW.CORE.6): the chain renders a link as
     // "#### Link 1 — ⚪ Anti-Venom" and the sigil sits after the ordinal.
     const at = heads.findIndex((h, i) => i >= cursor && h.includes(sig));
-    if (at < 0) findings.push(`no heading of ${m} (${sig}) after position ${cursor} of ${heads.length} headings`);
-    else cursor = at + 1;
+    if (at >= 0) { cursor = at + 1; continue; }
+    const rec = String(records[m] || '');
+    const inRecord = rec.split(/\r?\n/).some((l) => /^#{1,6} /.test(l) && l.includes(sig));
+    if (inRecord) { fromRecords++; continue; }
+    findings.push(`no heading of ${m} (${sig}) after position ${cursor} of ${heads.length} headings, and none in its record`);
   }
   if (members.length >= 2) {
     // The close is the line that names how many ran and how many were refused
@@ -144,7 +156,25 @@ export function score(answer, members) {
       if (ran !== members.length) findings.push(`chain_close says ran ${ran}; the scala stacked ${members.length}`);
     }
   }
-  return { ok: findings.length === 0, findings, headings: heads.length };
+  return { ok: findings.length === 0, findings, headings: heads.length, fromRecords };
+}
+// The link records a family wrote, read live under the checkout after the
+// family ran (runOne, newer than the family's start) or from the chain
+// directory a leg kept beside its answers (readLeg).
+export function linkRecords(dir, members, since = 0) {
+  const out = {};
+  for (const m of members) {
+    // A family names its members bare (file-blacklist); a link writes its
+    // record under the command's name (file-blacklist-dtd.md).
+    for (const name of [`${m}.md`, `${m}-dtd.md`]) {
+      const p = join(dir, name);
+      if (!existsSync(p)) continue;
+      if (since && statSync(p).mtimeMs < since - 1000) continue;
+      out[m] = readFileSync(p, 'utf8');
+      break;
+    }
+  }
+  return out;
 }
 
 // The CLI's own refusal, read before any scoring. A chain whose first token
@@ -182,7 +212,34 @@ export function parseRaw(text) {
   }
   return { result, answer: parts.join('\n\n') };
 }
+// What the diagnoser reads: the result object (its text, its subtype, and
+// the whole object when it is an error) and every line of the raw that is
+// not JSON (the ceiling's refusal, the CLI's own stderr). Never a tool
+// result: the tenth matrix's thinking chain read a file that quotes
+// "Not logged in" and the verbose raw carried it, so the leg was diagnosed
+// as logged out with 44 headings and a cost of 2.6 dollars.
+export function diagnoseText(raw) {
+  const t = String(raw || '');
+  const p = parseRaw(t);
+  const parts = [];
+  if (p.result) {
+    parts.push(String(p.result.result || ''));
+    parts.push(String(p.result.subtype || ''));
+    if (p.result.is_error || /^error/.test(String(p.result.subtype || ''))) parts.push(JSON.stringify(p.result));
+  }
+  for (const line of t.split('\n')) if (line.trim() && !line.trim().startsWith('{')) parts.push(line);
+  if (!p.result && parts.length === 0) return t;
+  return parts.join('\n');
+}
 export function diagnose(raw) {
+  const named = diagnoseIn(diagnoseText(raw));
+  if (named) return named;
+  // A capped run whose text names no cap: the subtype and the turn count say it.
+  const p = parseRaw(raw);
+  if (p.result && String(p.result.subtype || '') === 'error_max_turns' && p.result.num_turns != null) return `the run reached its turn cap of ${p.result.num_turns} before the answer; the chain needs more turns or a lighter link`;
+  return '';
+}
+function diagnoseIn(raw) {
   const m = /Unknown command: (\/\S+)/.exec(String(raw || ''));
   if (m) return `the CLI has no command ${m[1]}: the commander is not installed where this leg reads its commands, and no model was called`;
   // The second hosted matrix of 9.1.0: the sealed credential had expired,
@@ -230,6 +287,7 @@ export function runOne(s, { out, model = 'opus', turns = 150, secs = 2400 } = {}
   // appends one line per verb when ROT_SCALA_TRACE names it).
   const trace = join(out, `scala-${s.id}.trace`);
   rmSync(trace, { force: true });
+  const started = Date.now();
   // stream-json, not json: the json format returns the final assistant
   // message alone, and the ninth matrix measured the lenses chain of ubuntu
   // rendering its eight links across earlier messages, the final one holding
@@ -245,7 +303,8 @@ export function runOne(s, { out, model = 'opus', turns = 150, secs = 2400 } = {}
   const j = parsed.result;
   const answer = parsed.answer;
   writeFileSync(log, answer.replace(/\r/g, '') + (answer.endsWith('\n') ? '' : '\n'), 'utf8');
-  const sc = score(answer, s.members);
+  const sc = score(answer, s.members, linkRecords(join(ROOT, 'artifacts', 'chain'), s.members, started));
+  if (sc.fromRecords) console.log(`  ${sc.fromRecords} link(s) read from their records under artifacts/chain, not from the answer`);
   const why = diagnose((r.stdout || '') + (r.stderr || ''));
   const den = denials((r.stdout || '') + (r.stderr || ''));
   const eng = engineFinding(existsSync(trace) ? readFileSync(trace, 'utf8') : '', s);
@@ -329,7 +388,7 @@ export function readLeg(dir, leg) {
     if (existsSync(tr)) { const e = engineFinding(readFileSync(tr, 'utf8'), s); if (e) findings.push(e); }
     if (!existsSync(md)) findings.push('the ceiling fired: no answer file was written for this family');
     else if (!answer.trim()) findings.push('the answer is empty: no result came back from the CLI');
-    const sc = score(answer, s.members);
+    const sc = score(answer, s.members, linkRecords(join(dir, 'chain'), s.members));
     for (const f of sc.findings) findings.push(f);
     const j = parseRaw(rawText).result;
     const fam = { family: s.id, ok: findings.length === 0, headings: sc.headings, turns: j && j.num_turns != null ? String(j.num_turns) : 'none', cost: j && j.total_cost_usd != null ? Number(j.total_cost_usd).toFixed(2) : 'none' };
@@ -423,6 +482,20 @@ export function controls(io = console) {
   const streamed = parseRaw('{"type":"system","subtype":"init"}\n{"type":"assistant","message":{"content":[{"type":"text","text":"### 🎯 One"}]}}\n{"type":"user","message":{"content":[{"type":"tool_result","content":"x"}]}}\n{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Bash"},{"type":"text","text":"### 🎯 Two\\nchain_close ran 1 refused 0"}]}}\n{"type":"result","subtype":"success","is_error":false,"num_turns":3,"result":"### 🎯 Two\\nchain_close ran 1 refused 0","permission_denials":[]}\n');
   const plainRaw = parseRaw('{"type":"result","num_turns":2,"result":"### 🎯 Only","permission_denials":[{"tool_name":"Bash","tool_input":{"command":"ls"}}]}');
   say(streamed.result && streamed.result.num_turns === 3 && streamed.answer === '### 🎯 One\n\n### 🎯 Two\nchain_close ran 1 refused 0' && plainRaw.result && plainRaw.result.num_turns === 2 && plainRaw.answer === '### 🎯 Only' && denials('{"type":"result","num_turns":2,"result":"x","permission_denials":[{"tool_name":"Bash","tool_input":{"command":"ls"}}]}').length === 1 && parseRaw('not json').result === null, `trip: a stream-json raw yields every assistant text block in order and its result line, a json raw yields its result alone, and neither shape loses the denials: ${JSON.stringify(streamed.answer.slice(0, 24))}`);
+  const quotedPhrase = diagnose('{"type":"assistant","message":{"content":[{"type":"text","text":"reading"}]}}\n{"type":"user","message":{"content":[{"type":"tool_result","content":"the second matrix answered Not logged in seventeen times"}]}}\n{"type":"result","subtype":"success","is_error":false,"num_turns":3,"result":"### x done","permission_denials":[]}\n');
+  const loggedOut = diagnose('{"type":"result","subtype":"success","is_error":true,"num_turns":1,"result":"Not logged in · Please run /login","permission_denials":[]}');
+  const cappedRun = diagnose('{"type":"result","subtype":"error_max_turns","is_error":false,"num_turns":60,"result":"","permission_denials":[]}');
+  const ceilinged = diagnose('ceiling: cannot run claude through C:/npm/prefix/claude.cmd\n');
+  say(quotedPhrase === '' && /not logged in/.test(loggedOut) && /turn cap of 60/.test(cappedRun) && /could not run the CLI/.test(ceilinged), `trip: a phrase inside a tool result diagnoses nothing, a logged-out result and a capped run and a ceiling refusal still do: ${JSON.stringify(quotedPhrase)} / ${loggedOut.slice(0, 30)} / ${cappedRun.slice(0, 30)}`);
+  const recDir = mkdtempSync(join(tmpdir(), 'scala-rec-'));
+  writeFileSync(join(recDir, 'file-blacklist-dtd.md'), '### ⛔ Arguments\n', 'utf8');
+  writeFileSync(join(recDir, 'code-blacklist.md'), '### 🚫 Arguments\n', 'utf8');
+  const fromDir = linkRecords(recDir, ['file-blacklist', 'code-blacklist', 'file-graylist']);
+  const stale = linkRecords(recDir, ['file-blacklist'], Date.now() + 3600000);
+  say(Object.keys(fromDir).length === 2 && /⛔/.test(fromDir['file-blacklist']) && /🚫/.test(fromDir['code-blacklist']) && Object.keys(stale).length === 0, `trip: a bare member reads its record under the command name or its own, a member without one reads nothing, and a record older than the family is skipped: ${Object.keys(fromDir).join(', ')}`);
+  const recScore = score('### ⛓️ Chain\nnarrated\nchain_close ran 2 refused 0', ['file-blacklist-dtd', 'code-blacklist-dtd'], { 'file-blacklist-dtd': '### ⛔ Arguments\n### ⛔ Walk\n', 'code-blacklist-dtd': '### 🚫 Arguments\n' });
+  const halfScore = score('### ⛓️ Chain\nchain_close ran 2 refused 0', ['file-blacklist-dtd', 'code-blacklist-dtd'], { 'file-blacklist-dtd': '### ⛔ Arguments\n' });
+  say(recScore.ok && recScore.fromRecords === 2 && !halfScore.ok && halfScore.fromRecords === 1 && /none in its record/.test(halfScore.findings[0] || ''), `trip: a link heading missing from the answer is read from the link record, and a link missing from both is a finding: ${recScore.fromRecords} from records, then ${halfScore.findings.length} finding`);
   const noPlan = engineFinding('', chainFam);
   const planned = engineFinding('check\t2026-09-08T00:00:00Z\nplan\t2026-09-08T00:00:01Z\nhandoff\t2026-09-08T00:00:02Z\n', chainFam);
   const unchained = engineFinding('', { prompt: '/sigil-dtd --no-gate' });

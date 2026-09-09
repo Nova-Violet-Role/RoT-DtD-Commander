@@ -146,6 +146,18 @@ what they name.
   stream-json and reads the answer as every assistant text block in
   order, the result from the line of type result, through one parser
   that reads the json shape of the earlier matrices unchanged.
+- **The tenth matrix: the diagnoser and the link's own product.** On CLI
+  2.1.266 the ubuntu leg passed fifteen families; the thinking chain, 44
+  headings and 32 turns, was diagnosed as logged out because a file it
+  read quotes the phrase and the verbose raw carries every tool result,
+  and the lists chain ran its eight links, each record under
+  `artifacts/chain` carrying the link's headings under its sigil, and
+  narrated them across 85 messages without one. The diagnoser reads the
+  result object and the lines that are not JSON, never a tool result,
+  and names a capped run from the result's subtype; the scorer reads a
+  link heading missing from the answer from the link's own record, live
+  under the checkout on the runner and from the chain directory a leg
+  kept when it is read back, and a link missing from both is the finding.
 - **The gate's fifth choice, visible.** A question carries at most four
   options, so save could only ride in Other, and the operator watched it
   vanish from the gate. The gate is one ask of two questions now: the
@@ -157,7 +169,7 @@ Measured so far:
 
 - `node lib/ceiling.mjs controls`: 8 run, 0 failing; `node lib/encoding.mjs controls`: 6 run, 0 failing
 - `node lib/arm.mjs controls`: 6 run, 0 failing
-- `node checker/scala.mjs --controls`: 27 run, 0 failing
+- `node checker/scala.mjs --controls`: 30 run, 0 failing
 - `node lib/chain.mjs controls`: 30 run, 0 failing
 - `node checker/contract-audit.mjs`: 1932 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
