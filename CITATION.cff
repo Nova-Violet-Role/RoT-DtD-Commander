@@ -15,7 +15,7 @@ license:
 version: 9.1.0
 date-released: 2026-09-07
 abstract: >-
-  139 Claude Code slash commands, 22 skills and 5 agents whose answer
+  143 Claude Code slash commands, 22 skills and 5 agents whose answer
   grammar, verdict vocabulary, laws and trust boundary are declared in a
   validating XML DTD inside each file, with the shared subsets inlined at
   build time by a two-pass parameter-entity resolver. A checker holds every

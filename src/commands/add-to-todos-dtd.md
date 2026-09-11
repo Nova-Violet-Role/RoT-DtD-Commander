@@ -58,7 +58,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
      - Technical details (line numbers, error messages, conflicting specifications)
      - Root cause if identified
 
-4. Append new section to bottom of file:
+4. Append new section to bottom of file, context quoted as ARG.embed.pcdata (LAW.ARGS.5):
    - **Heading**: `## Brief Context Title - YYYY-MM-DD HH:MM` (3-8 word title, current timestamp)
    - **Todo format**: `- **[Action verb] [Component]** - [Brief description]. **Problem:** [What's wrong/why needed]. **Files:** [Comma-separated paths with line numbers]. **Solution:** [Approach hints or constraints, if applicable].`
    - **Required fields**: Problem and Files (with line numbers like `path/to/file.ts:123-145`)

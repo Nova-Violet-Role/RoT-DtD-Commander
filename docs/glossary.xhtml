@@ -45,19 +45,19 @@ a{color:var(--acc)}
 <body>
 <header>
 <h1>Full glossary</h1>
-<p class="sub">139 commands, 22 skills, 5 agents. What each one does, and how to invoke it. Type to filter; pick a family to narrow.</p>
+<p class="sub">143 commands, 22 skills, 5 agents. What each one does, and how to invoke it. Type to filter; pick a family to narrow.</p>
 <input type="text" id="q" value="" />
 <ul class="chips">
 <li><button type="button" class="chip" data-fam="Thinking models" aria-pressed="false">Thinking models <span class="n">12</span></button></li>
-<li><button type="button" class="chip" data-fam="Research" aria-pressed="false">Research <span class="n">9</span></button></li>
-<li><button type="button" class="chip" data-fam="Asking and deciding" aria-pressed="false">Asking and deciding <span class="n">8</span></button></li>
+<li><button type="button" class="chip" data-fam="Research" aria-pressed="false">Research <span class="n">11</span></button></li>
+<li><button type="button" class="chip" data-fam="Asking and deciding" aria-pressed="false">Asking and deciding <span class="n">9</span></button></li>
 <li><button type="button" class="chip" data-fam="The Phantom Books shelf" aria-pressed="false">The Phantom Books shelf <span class="n">20</span></button></li>
 <li><button type="button" class="chip" data-fam="The RoT MoE lenses" aria-pressed="false">The RoT MoE lenses <span class="n">10</span></button></li>
 <li><button type="button" class="chip" data-fam="Creators" aria-pressed="false">Creators <span class="n">13</span></button></li>
 <li><button type="button" class="chip" data-fam="Prompt creators, one per schematic" aria-pressed="false">Prompt creators, one per schematic <span class="n">17</span></button></li>
 <li><button type="button" class="chip" data-fam="File types and dorks" aria-pressed="false">File types and dorks <span class="n">11</span></button></li>
 <li><button type="button" class="chip" data-fam="Tasks" aria-pressed="false">Tasks <span class="n">5</span></button></li>
-<li><button type="button" class="chip" data-fam="Repository" aria-pressed="false">Repository <span class="n">3</span></button></li>
+<li><button type="button" class="chip" data-fam="Repository" aria-pressed="false">Repository <span class="n">4</span></button></li>
 <li><button type="button" class="chip" data-fam="Audits, in the foreground" aria-pressed="false">Audits, in the foreground <span class="n">4</span></button></li>
 <li><button type="button" class="chip" data-fam="Codebase growth" aria-pressed="false">Codebase growth <span class="n">3</span></button></li>
 <li><button type="button" class="chip" data-fam="The Graphic and Geometric Suite" aria-pressed="false">The Graphic and Geometric Suite <span class="n">5</span></button></li>
@@ -149,7 +149,7 @@ a{color:var(--acc)}
 </ul>
 </section>
 <section class="group">
-<h2>Research <span class="n">9</span></h2>
+<h2>Research <span class="n">11</span></h2>
 <p class="famnote">Gather evidence and save a dated report; every claim marked measured, reasoned or guessed, where measured means something was actually run or read.</p>
 <ul class="grid">
 <li class="card" data-name="/competitive-dtd" data-fam="Research" data-kind="command" data-text="/competitive-dtd who else does this and how: three competitors minimum with sources, a matrix, the gaps, the differentiation options">
@@ -175,6 +175,18 @@ a{color:var(--acc)}
 <p class="what">Can we build it with what we have: technical, resource and external verdicts, blockers with mitigations, one overall go, conditional go or no-go</p>
 <p class="use"><span class="lbl">use</span> <code>/feasibility-dtd [idea/project or leave blank for current context]</code></p>
 <p class="meta">answers as <code>&lt;intake&gt;</code> &middot; 38 laws &middot; 7 declared sections</p>
+</li>
+<li class="card" data-name="/hadal-deep-dive-dtd" data-fam="Research" data-kind="command" data-text="/hadal-deep-dive-dtd dtd-native: research that excavates the user's posted context in strata first, then asks with no binding cap in up to twenty-four rounds, then writes the hybrid artifact, prose plus gulp">
+<h3><span class="sig">🐋</span> <code>/hadal-deep-dive-dtd</code> <span class="kind">command</span></h3>
+<p class="what">DTD-native: research that excavates the user's posted context in strata first, then asks with no binding cap in up to twenty-four rounds, then writes the hybrid artifact, prose plus gulp</p>
+<p class="use"><span class="lbl">use</span> <code>/hadal-deep-dive-dtd [topic or leave blank for current context; add --no-gate for autonomous mode]</code></p>
+<p class="meta">answers as <code>&lt;intake&gt;</code> &middot; 44 laws</p>
+</li>
+<li class="card" data-name="/hadopelagia-deep-dive-dtd" data-fam="Research" data-kind="command" data-text="/hadopelagia-deep-dive-dtd dtd-native: the deepest research; raised rounds past ask-me-many with new ask forms, full context excavation, and the hybrid artifact, prose plus gulp">
+<h3><span class="sig">🪼</span> <code>/hadopelagia-deep-dive-dtd</code> <span class="kind">command</span></h3>
+<p class="what">DTD-native: the deepest research; raised rounds past ask-me-many with new ask forms, full context excavation, and the hybrid artifact, prose plus gulp</p>
+<p class="use"><span class="lbl">use</span> <code>/hadopelagia-deep-dive-dtd [topic or leave blank for current context; add --no-gate for autonomous mode]</code></p>
+<p class="meta">answers as <code>&lt;intake&gt;</code> &middot; 43 laws</p>
 </li>
 <li class="card" data-name="/history-dtd" data-fam="Research" data-kind="command" data-text="/history-dtd what was tried before: dated attempts, why they worked or failed, what is different now, the lessons to adopt or avoid">
 <h3><span class="sig">🕰️</span> <code>/history-dtd</code> <span class="kind">command</span></h3>
@@ -209,9 +221,15 @@ a{color:var(--acc)}
 </ul>
 </section>
 <section class="group">
-<h2>Asking and deciding <span class="n">8</span></h2>
+<h2>Asking and deciding <span class="n">9</span></h2>
 <p class="famnote">Gather requirements through a declared state machine: bounded rounds, bounded re-entries, a gate that terminates by declaration rather than by your patience.</p>
 <ul class="grid">
+<li class="card" data-name="/ask-me-everything-dtd" data-fam="Asking and deciding" data-kind="command" data-text="/ask-me-everything-dtd dtd-native: the uncapped questionnaire; twenty-four rounds with bracket, angle, caret, chained-empty, star and query forms, a running shortlist, and counter-questions that become known slots">
+<h3><span class="sig">🗳️</span> <code>/ask-me-everything-dtd</code> <span class="kind">command</span></h3>
+<p class="what">DTD-native: the uncapped questionnaire; twenty-four rounds with bracket, angle, caret, chained-empty, star and query forms, a running shortlist, and counter-questions that become known slots</p>
+<p class="use"><span class="lbl">use</span> <code>/ask-me-everything-dtd [what to ask about, or leave blank to set the task first; add --no-gate for autonomous mode]</code></p>
+<p class="meta">answers as <code>&lt;intake&gt;</code> &middot; 44 laws</p>
+</li>
 <li class="card" data-name="/ask-me-many-questions-dtd" data-fam="Asking and deciding" data-kind="command" data-text="/ask-me-many-questions-dtd gather requirements through up to thirty bilateral questions in eight rounds of four before executing any task; the rounds are raised in the doctype before the ask grammar is included, and the impactful selection, the previews and the back token are all in force">
 <h3><span class="sig">❔</span> <code>/ask-me-many-questions-dtd</code> <span class="kind">command</span></h3>
 <p class="what">Gather requirements through up to thirty bilateral questions in eight rounds of four before executing any task; the rounds are raised in the DOCTYPE before the ask grammar is included, and the impactful selection, the previews and the back token are all in force</p>
@@ -755,7 +773,7 @@ a{color:var(--acc)}
 </ul>
 </section>
 <section class="group">
-<h2>Repository <span class="n">3</span></h2>
+<h2>Repository <span class="n">4</span></h2>
 <p class="famnote">Operate on a repository as a whole rather than on a file in it.</p>
 <ul class="grid">
 <li class="card" data-name="/git-gh-amplification-dtd" data-fam="Repository" data-kind="command" data-text="/git-gh-amplification-dtd dtd-native: measure a repository's github face (readme, license, contributing, templates, discussions, workflows, releases, funding, citation, changelog, badges), ask up to thirty questions in eight rounds about what is missing, then write what was chosen; git only, never gh">
@@ -763,6 +781,12 @@ a{color:var(--acc)}
 <p class="what">DTD-native: measure a repository's GitHub face (README, license, contributing, templates, discussions, workflows, releases, funding, citation, changelog, badges), ask up to thirty questions in eight rounds about what is missing, then write what was chosen; git only, never gh</p>
 <p class="use"><span class="lbl">use</span> <code>/git-gh-amplification-dtd [path to the repository, or leave blank for the current one; --verbose prints the evidence, --debug prints the commands]</code></p>
 <p class="meta">answers as <code>&lt;args&gt;</code> &middot; 43 laws</p>
+</li>
+<li class="card" data-name="/git-gh-matrix-scala-dtd" data-fam="Repository" data-kind="command" data-text="/git-gh-matrix-scala-dtd dtd-native: build a tested gate.yml by questionnaire for an app, program, project, claude code repo or folder; seven to eight rounds with previews, sealed credentials, ramified or matrix legs, then emit and verify">
+<h3><span class="sig">📊</span> <code>/git-gh-matrix-scala-dtd</code> <span class="kind">command</span></h3>
+<p class="what">DTD-native: build a tested gate.yml by questionnaire for an app, program, project, Claude Code repo or folder; seven to eight rounds with previews, sealed credentials, ramified or matrix legs, then emit and verify</p>
+<p class="use"><span class="lbl">use</span> <code>/git-gh-matrix-scala-dtd [path to the target, or leave blank for the current one; --verbose prints the evidence, --debug prints the commands]</code></p>
+<p class="meta">answers as <code>&lt;args&gt;</code> &middot; 69 laws</p>
 </li>
 <li class="card" data-name="/repo-creativity-askingstorm-dtd" data-fam="Repository" data-kind="command" data-text="/repo-creativity-askingstorm-dtd dtd-native: a storm of up to thirty questions in eight rounds about the creative face of a repository (voice, tagline, logo, sigils, badges, gifs, screenshots, palette, headings, emoji, sections, social preview, contents, callouts, footer, links), a declared palette of hex swatches, then the writes">
 <h3><span class="sig">🎨</span> <code>/repo-creativity-askingstorm-dtd</code> <span class="kind">command</span></h3>

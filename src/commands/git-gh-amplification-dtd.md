@@ -75,7 +75,7 @@ The probes are the files and settings a visitor meets before the code: README, L
 3. Round 1 of ASK.rounds_per_prompt: the four probes that are absent or partial and matter most, one question each from the bank; four options plus Other; render each round.
 4. Present the gate; on more, the next round from the remaining probes and the answers so far, never past ASK.max_total questions in all; on add or impactful, take the answer and present the gate again; on start, every probe not asked takes its first option and is listed under Assumptions Made.
 5. Render the `plan`: one `action` per probe, create, amend, keep or remove, with its target path.
-6. Write the files the plan creates or amends, each with the repository SPDX header where its format allows a comment, UTF-8 LF without BOM, and re-read each; render one `written` per file with its bytes.
+6. Write the files the plan creates or amends, each with the repository SPDX header where its format allows a comment, UTF-8 LF without BOM, and re-read each; plan-derived content embedded as ARG.embed.pcdata (LAW.ARGS.5); render one `written` per file with its bytes.
 7. Render the `verdict`: perfect yes only when every probe is present yes after the writes, partial when some are, no when the run wrote nothing.
 </process>
 

@@ -1,0 +1,20 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  type.dtd : the dictionary relations a schematic may carry.
+
+  Formats that nest (NestedText dictionaries, Markdown sections) also
+  relate: a child refines a parent, an example exemplifies, a constraint
+  constrains. Prose buries these links in verbs; this subset declares
+  them, so a reader that only reads keys still gets the shape. Included
+  beside depth.dtd wherever nested answers render, and by the schematic
+  creators that teach the forms.
+-->
+
+<!ENTITY TYPE.rel "parent|child|refines|constrains|exemplifies|contains">
+<!ENTITY TYPE.rel.count "6">
+<!ENTITY TYPE.key "the relationship rides under the key that owns it, never in prose alone">
+<!ENTITY TYPE.chain "a refines chain reads upward to the nearest parent that states, never to prose around it">
+
+<!ENTITY LAW.TYPE.1 "Every nested answer declares its links in TYPE.rel, TYPE.rel.count of them; a child that neither refines, constrains, exemplifies nor contains is moved beside its parent, and the move is stated.">
+<!ENTITY LAW.TYPE.2 "Relations travel under TYPE.key: a reader that parses keys alone recovers the tree, and a relation stated only in surrounding prose is undeclared; a refines chain is read upward per TYPE.chain.">

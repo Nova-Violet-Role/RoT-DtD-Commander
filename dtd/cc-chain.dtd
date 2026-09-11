@@ -43,12 +43,14 @@
 -->
 
 <!-- ===== THE BOUNDS ===== -->
-<!-- One prompt, one intake, one gate. The chain length is bounded by what a
-     single intake can scope rather than by taste: cc-ask caps a prompt at
-     ASK.max_total questions across at most ASK.rounds_per_prompt rounds, and
-     a command raises those enumerations before the include (LAW.ASK.11); the
-     highest value the raised enumeration takes anywhere in this tree is eight,
-     so eight is the chain's length. A ninth link is refused by name. -->
+<!-- One prompt, one intake, one gate. The chain length is bounded by declaration,
+     not by taste: eight links, CHAIN.max, because a chain longer than a single
+     intake can scope stops being one prompt and starts being a plan. An early
+     draft derived the bound from the highest raised ask enumeration, which was
+     eight then; the deep dives have since raised theirs past it, so the comment
+     records the correction: links are bounded here, rounds are bounded where
+     they are raised, and neither derives from the other. A ninth link is
+     refused by name. -->
 <!ENTITY CHAIN.max "8">
 <!ENTITY CHAIN.min "2">
 <!ENTITY CHAIN.dir "artifacts/chain">

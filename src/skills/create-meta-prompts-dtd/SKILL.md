@@ -20,7 +20,7 @@ description: "Create optimized prompts for Claude-to-Claude pipelines with resea
   <!ATTLIST stage kind (research|plan|implement) #REQUIRED>
   <!ATTLIST dependency from CDATA #REQUIRED to CDATA #REQUIRED>
   <!ATTLIST prompt_file path CDATA #REQUIRED>
-  <!ENTITY LAW.META.1 "A stage output another prompt consumes is written under a declared RECORD with numbered fields.">
+  <!ENTITY LAW.META.1 "A stage output another prompt consumes is written under a declared RECORD with numbered fields, fields embedded as ARG.embed.pcdata (LAW.ARGS.5).">
   <!ENTITY LAW.META.2 "A dependency is declared from a stage to a stage; a cycle is refused.">
   <!ENTITY RECORD.research "research|research.md|1=question:CDATA@1|2=finding:CDATA@1|3=source:CDATA@1|4=confidence:PCDATA@1">
   <!ENTITY RECORD.plan "plan|plan.md|1=step:PCDATA@1|2=task:CDATA@1|3=depends_on:PCDATA@1|4=verify:CDATA@1">

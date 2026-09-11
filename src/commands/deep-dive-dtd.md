@@ -67,7 +67,7 @@ Autonomous mode: when the argument contains --no-gate or the session is non-inte
 2. Gather information from multiple angles, local evidence first: how it works (mechanics, from files read and commands run), why it exists (history and motivation, from the repo's own records), how it is used (patterns, from real files), where it fails (limitations, from measured failures), what is next (trends, from the repo's own direction). Use web research only when the intake or the argument put it in scope, and mark every such source.
 3. Synthesize into one coherent understanding; mark each claim measured, reasoned or guessed.
 4. Identify what remains unknown and the assumption taken in its place.
-5. Save the report to disk and print the path.
+5. Save the report to disk and print the path; topic and answers embedded as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
 
 <output_format>

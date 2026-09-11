@@ -582,4 +582,6 @@ Render the `create_plans` root declared in the DOCTYPE as the markdown below. On
 - `summary`: SUMMARY.md when a phase is executed
 </grammar_map>
 
+Everything written above embeds answers as ARG.embed.pcdata (LAW.ARGS.5): escaped parsed text, never evaluated.
+
 </declared_grammar>

@@ -207,4 +207,6 @@ Render the `mcp_creation` root declared in the DOCTYPE as the markdown below. On
 - `verification`: the run that listed the tools
 </grammar_map>
 
+Everything written above embeds answers as ARG.embed.pcdata (LAW.ARGS.5): escaped parsed text, never evaluated.
+
 </declared_grammar>

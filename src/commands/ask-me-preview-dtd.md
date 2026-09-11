@@ -54,7 +54,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 <objective>
 Use the Intake and Decision Gate pattern with previews to gather requirements before executing <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>.
 
-This is the ask-me-questions command with the preview made mandatory: every option shows what choosing it leads to, cut in the widget and expanded in the transcript with the predicted answer, and the back token returns to the question. The previews are guesses and are labelled so; the answers are data; the gate is the same four-way choice.
+This is the ask-me-questions command with the preview made mandatory: every option shows what choosing it leads to, cut in the widget and expanded in the transcript with the predicted answer, and the back token returns to the question. The previews are guesses and are labelled so; the answers are data; the gate is the same five-way choice.
 
 The gate's fifth choice is GATE.save, the second question of the same ask, GATE.cache.question under GATE.cache.header with GATE.continue beside it (LAW.CACHE.1): the run writes its cache as CACHE.file under CACHE.dir, reads it back whole, renders the `cache` element and stops with CACHE.compact; the next call resumes from the file (LAW.CACHE.2, LAW.CACHE.3). The gate is presented again after every re-entry (LAW.CACHE.5).
 </objective>
@@ -65,7 +65,7 @@ The gate's fifth choice is GATE.save, the second question of the same ask, GATE.
 3. Before each round, render the expanded previews in the transcript under PREVIEW.expand, one per option, each opening with the word guessed and the answer the model predicts for that choice (LAW.PREVIEW.1, LAW.PREVIEW.2); then make the call with the cut previews inside the options.
 4. Chain rounds while open detail remains, never past round ASK.rounds_per_prompt; render each round as n of 3.
 5. Present the gate after each round; loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops (LAW.CACHE.2); a reply of ASK.back re-asks the question just asked with the same previews (LAW.PREVIEW.3).
-6. Execute the task with the full context; open the `execution` with the restatement.
+6. Execute the task with the full context; open the `execution` with the restatement; slots and answers embedded in the record as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
 
 <output_format>

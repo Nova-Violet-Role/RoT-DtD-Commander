@@ -66,7 +66,7 @@ The shape is borrowed from the instruction channel of the RoT DTD GOAL trust con
 4. Render the `brainstorm`: the chosen count of `idea` elements, ranked, the kept ones marked; the ideas come from the topic, the conversation and the files named in it, each idea one sentence with a verb.
 5. Render the `launch`: the schematic chosen (nt when none was), the kind (prompt when none was), the creator they select, then the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was) (LAW.CLEAR.6).
 6. Compose the bigger prompt: the goal, the state as of this run, the files touched, the next step, the kept ideas folded into the prompt the operator gave, whole, and a known-slots block naming the schematic, the schemas, the kind and the forms chosen (LAW.CLEAR.2, LAW.CLEAR.3, LAW.CLEAR.6).
-7. Write the handoff file under CLEAR.dir as `<date>-<slug>.md`, UTF-8 LF without BOM with the SPDX header, re-read it and render the `transmigration` with path and bytes.
+7. Write the handoff file under CLEAR.dir as `<date>-<slug>.md`, UTF-8 LF without BOM with the SPDX header, re-read it and render the `transmigration` with path and bytes; the prompt carried whole as ARG.embed.cdata (LAW.ARGS.5, LAW.CLEAR.2).
 8. Render the `instruction` with goal and step: step one is CLEAR.command, step two is the launch line, the at-sign reference to the handoff file followed by a slash, the creator named in the launch and the purpose of the bigger prompt as its argument.
 </process>
 

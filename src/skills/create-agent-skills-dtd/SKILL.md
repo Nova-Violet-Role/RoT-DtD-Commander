@@ -247,4 +247,6 @@ Render the `skill_creation` root declared in the DOCTYPE as the markdown below. 
 - `verification`: the rdc check result for the new skill
 </grammar_map>
 
+Everything written above embeds answers as ARG.embed.pcdata (LAW.ARGS.5): escaped parsed text, never evaluated.
+
 </declared_grammar>

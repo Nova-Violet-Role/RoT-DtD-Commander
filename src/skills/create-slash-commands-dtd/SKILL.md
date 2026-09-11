@@ -154,6 +154,8 @@ Files created/modified:
 </output>
 ```
 
+When answers become file content, they are embedded as ARG.embed.pcdata (LAW.ARGS.5): escaped parsed text, never evaluated.
+
 </conditional_tags>
 
 <structure_example>

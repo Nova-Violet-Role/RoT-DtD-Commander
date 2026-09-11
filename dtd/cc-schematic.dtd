@@ -72,7 +72,7 @@
 <!ENTITY SCHEMA.yaml.binary         "none">
 
 <!-- ===== nt: NestedText ===== -->
-<!ENTITY SCHEMA.nt.literal          "a multiline string: an angle bracket per line">
+<!ENTITY SCHEMA.nt.literal          "a multiline string: an angle bracket per line, deeper brackets in content for depth per SIGIL.depth.roles">
 <!ENTITY SCHEMA.nt.expanded         "none: every value is a string">
 <!ENTITY SCHEMA.nt.reference        "none">
 <!ENTITY SCHEMA.nt.definition       "none">

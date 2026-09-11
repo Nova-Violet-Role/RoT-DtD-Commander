@@ -1,0 +1,67 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  companions-gate.dtd : the one gate every bypass runs through.
+
+  The matrix command lets the user choose permission mode bypass for
+  companions, audit runners and scala-matrix companions so long CI legs
+  never stall on a prompt nobody can answer. Two tiers: leashed, where
+  bypass removes the PROMPTS and the guard still refuses every writing
+  tool, chain, redirect, background field and substitution; and
+  unlocked, where named writing tools are admitted inside a named
+  scope, ordered by the owner at grant time. The tree is compared
+  before and after under both tiers, and an undisclosed delta fails
+  the run under both tiers.
+
+  Findings ride the .nt schematic read in one gulp, reverse as the
+  prior gate.yml run showed; under unlocked the companion may persist
+  them itself inside its scope, and the runner still stamps the record.
+-->
+
+<!-- ===== THE ROLES ===== -->
+<!-- One grant per role a bypass may carry. Three, named, never open. -->
+<!ENTITY % cg.role "(companion|audit-runner|scala-companion)">
+<!ENTITY CG.roles "companion|audit-runner|scala-companion">
+<!ENTITY CG.roles.count "3">
+<!-- role | what it may run | what persists its findings -->
+<!ENTITY CG.role.companion      "read engines of this repository and reading git verbs, one wrapper call at a time|the runner tees stdout to the scratchpad">
+<!ENTITY CG.role.audit-runner   "the phase diff, the tree, and the scorer|checker/companion-audit.sh writes the record with the run stamp">
+<!ENTITY CG.role.scala-companion "chain tokens under --no-gate plus read engines, scored by sigil headings and the close line|the runner writes artifacts/research/DATE-scala-findings.nt, or the companion itself under unlocked inside its scope">
+
+<!-- ===== THE TIERS ===== -->
+<!-- Leashed is the default; unlocked is ordered per grant, never ambient. -->
+<!ENTITY % cg.tier "(leashed|unlocked)">
+<!ENTITY CG.tiers "leashed|unlocked">
+<!ENTITY CG.tier.leashed  "prompts removed, guard refusals absolute|the tier every grant carries unless unlocked is ordered">
+<!ENTITY CG.tier.unlocked "named writing tools admitted inside a named scope|ordered per grant with tools, paths and ceiling written down first">
+
+<!-- ===== WHAT BYPASS DOES AND DOES NOT TOUCH ===== -->
+<!ENTITY CG.bypass.does "remove permission prompts so unattended legs never stall|named model, effort and thinking envs ride the nested session">
+<!ENTITY CG.bypass.does-not-leashed "admit a writing tool|admit a chain, pipe, redirect, background field or substitution|admit stdin readers|admit commands without their own ceiling|skip the tree compare">
+<!ENTITY CG.bypass.unlocked-admits "named writing tools inside the named scope only|the tools, the paths and the ceiling are written in the grant before launch">
+<!ENTITY CG.bypass.unlocked-keeps "no background field and no spawned agent under any tier|stdin closed on every command|a ceiling on every command|the tree compare with disclosure">
+<!ENTITY CG.ceiling "portable, node lib/ceiling.mjs where timeout is absent|stdin closed on every command, exit 124 reads UNAUDITED per LAW.COMPANION.5">
+
+<!-- ===== ELEMENTS ===== -->
+<!ELEMENT gate_grant (grant+)>
+<!ELEMENT grant (#PCDATA)>
+<!ATTLIST grant
+          role       %cg.role;  #REQUIRED
+          tier       %cg.tier;  "leashed"
+          permission (bypass|default) #REQUIRED
+          tools      CDATA #IMPLIED
+          scope      CDATA #IMPLIED
+          model      CDATA #REQUIRED
+          effort     (low|medium|high|xhigh|max) #REQUIRED
+          ceiling    CDATA #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.CG.1 "A bypass grant names one of CG.roles, CG.roles.count of them; a grant naming any other role, or none, is refused before the session launches.">
+<!ENTITY LAW.CG.2 "Under tier leashed, bypass removes prompts and nothing else: every refusal of the guard (writing tools, chains, redirects, background fields, substitutions, stdin readers, ceiling-less commands) holds exactly as under default, and a session that met one is scored as refused, never as passed.">
+<!ENTITY LAW.CG.3 "The tree, HEAD, porcelain status and ignored files minus the runner's own stream are compared before and after the session under both tiers; any delta the runner did not write and the grant did not name is the companion's breach, disclosed in the scope or scored fail.">
+<!ENTITY LAW.CG.4 "Under tier leashed the companion never persists: findings leave through stdout and the runner writes them, stamped with the run; under unlocked the companion may persist inside its scope and the runner still stamps the record; findings ride the .nt schematic read in one gulp, reverse.">
+<!ENTITY LAW.CG.5 "The nested session carries the model, effort and thinking the matrix chose; the budget stays unset and the hard zero stays --thinking disabled per LAW.MX.5, because a bypassed session with no thinking dial is a session that cannot be steered.">
+<!ENTITY LAW.CG.6 "The grant, its role, tier, model, effort and ceiling are rendered as one grant element before the session starts; a session that ran without a rendered grant is unaudited, never scored.">
+<!ENTITY LAW.CG.7 "Tier unlocked is ordered, never ambient: the grant names the tools, the scope paths and the ceiling first, and the runner launches the nested session without the denying guard for those names alone; permission mode bypass by itself never lifts the hook, so a file edited without this law behind it is still a breach under LAW.CG.3.">
+<!ENTITY LAW.CG.8 "Unlocked keeps every stall law: no background field, no spawned agent, stdin closed, a ceiling on every command; unlocked changes what may be WRITTEN, never what may run away, and a runaway under unlocked fails the run exactly as under leashed.">
+<!ENTITY LAW.CG.9 "The suite holds this file: every new refusal and admission carries a control that trips it on purpose, or the gate that cannot prove its gate ships red by declaration; the runner unlock arm and its controls ride the same release as this law, never a later one.">

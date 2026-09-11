@@ -48,7 +48,7 @@ Subagents enable delegation of complex tasks to specialized agents that operate 
    - **description**: When should this subagent be used?
    - **tools**: Optional comma-separated list (inherits all if omitted)
    - **model**: Optional (`sonnet`, `opus`, `haiku`, or `inherit`)
-5. Write the system prompt (the subagent's instructions)
+5. Write the system prompt (the subagent's instructions), answers embedded as ARG.embed.pcdata (LAW.ARGS.5)
 
 </workflow>
 

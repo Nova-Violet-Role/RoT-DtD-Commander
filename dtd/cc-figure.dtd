@@ -341,6 +341,16 @@
           title   CDATA #IMPLIED
           seed    CDATA #IMPLIED>
 
+<!-- ===== THE PREVIEW CUBE, AS A COMPOSITION ===== -->
+<!-- The expanding preview the ask gate shows before answers is not a new
+     shape: it is an extrude of the option's group, one frame shut and one
+     frame open, set side by side as thumbnails under LAW.FIG.8 inside one
+     cut preview. The shut frame draws the group flat; the open frame draws
+     the same group extruded, so the preview visibly expands from the choice
+     as drawn to the consequence as predicted, both frames inside the grid
+     of LAW.FIG.1 and both marked guessed under LAW.FIG.4. No engine change:
+     extrude, thumbnails and the mark already hold it. -->
+
 <!-- ===== LAWS ===== -->
 <!ENTITY LAW.FIG.1 "A figure declares its grid as columns by rows in cells and every shape lies inside it: a preview figure whose grid exceeds FIG.cut.cols by FIG.cut.rows, an expanded one that exceeds FIG.exp.cols by FIG.exp.rows, or any figure with a shape crossing its grid, is refused by name and never cut, because a preview that does not fit the widget was never a preview.">
 <!ENTITY LAW.FIG.2 "The character grid is the bound on the svg, never the reverse: the svg plate is the cells rendering scaled by FIG.cell.w and FIG.cell.h, it may add colour and a title, and it carries no shape the cells do not carry; a figure that cannot be read in the cells is too complex to be a preview, and a path carrying a command outside FIG.path.commands is such a figure.">

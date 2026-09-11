@@ -76,7 +76,7 @@ The numbers come from git: object count and pack size, commit count, tracked fil
 4. Present the gate; on more, the next round from the remaining probes and the answers so far, never past ASK.max_total questions in all; on add or impactful, take the answer and present the gate again; on start, every probe not asked takes its first option and is listed under Assumptions Made.
 5. Render the `plan`: one `action` per probe, create, amend, keep or remove, with its target path.
 6. For every plan line that would rewrite history (LAW.SCALAR.3), print the exact commands under a warning instead of running them.
-7. Write the files the plan creates or amends, each with the repository SPDX header where its format allows a comment, UTF-8 LF without BOM, and re-read each; render one `written` per file with its bytes.
+7. Write the files the plan creates or amends, each with the repository SPDX header where its format allows a comment, UTF-8 LF without BOM, and re-read each; plan-derived content embedded as ARG.embed.pcdata (LAW.ARGS.5); render one `written` per file with its bytes.
 8. Render the `verdict`: perfect yes only when every probe is present yes after the writes, partial when some are, no when the run wrote nothing.
 </process>
 

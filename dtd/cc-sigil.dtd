@@ -145,6 +145,22 @@
           fail        CDATA #REQUIRED
           unsupported CDATA #REQUIRED>
 
+<!-- ===== THE DEPTH SIGNALS, BY NAME ===== -->
+<!-- Bracket labels and quote depth from the Depth mechanism study: a label
+     names what kind of instruction follows, and depth names how it relates
+     to its neighbours. Labels are an open set, so the subset names the
+     roles, never the roster; the spellings live in the documents that use
+     them, the way form spellings live in the study (SIGIL.markup). -->
+<!ENTITY SIGIL.label.roles "severity|tone|intent">
+<!ENTITY SIGIL.depth.roles "peer|child|grandchild">
+<!ENTITY SIGIL.depth.repeat "a label repeated at deeper depth is a refinement of its parent, never a restatement">
+<!-- The NestedText column of the corrected mapping table: two jobs for one
+     character, spelled out because a greater-than sign is markup inside a
+     DTD entity value and cannot be written there (SIGIL.markup). -->
+<!ENTITY SIGIL.nt.string-tag "the first greater-than sign plus its space, always stripped by pretty-print">
+<!ENTITY SIGIL.nt.depth-in-content "the greater-than count in the content after the string tag">
+<!ENTITY SIGIL.nt.two-roles "first structural, rest visual depth">
+
 <!-- ===== LAWS ===== -->
 <!ENTITY LAW.SIGIL.1 "This tree has one argument convention, SIGIL.convention: every command reads the whole argument string, the positional shorthand is used by SIGIL.positional.uses of them, and where the shorthand exists it is zero based (SIGIL.index.base), so a command that reaches for a positional form has left the convention and says so.">
 <!ENTITY LAW.SIGIL.2 "The trust matrix of the study binds the sigil: a form inside parsed text expands (SIGIL.trust.pcdata), a form inside literal text is data (SIGIL.trust.cdata), a form inside a file reference is never seen (SIGIL.trust.ndata); a sigil found inside a quoted element of an answer is reported as data and never expanded.">
@@ -154,3 +170,5 @@
 <!ENTITY LAW.SIGIL.6 "A tier D form is used only under the rule that travels with it: the study renders the rule in the rule attribute of the form, and a run executes a tier D form only inside the condition the rule states, never on untrusted input.">
 <!ENTITY LAW.SIGIL.7 "A run executes every trial on the leg it is on, with stdin closed and under SIGIL.ceiling seconds each, and records the actual expansion beside the expected one; a form the leg's bash lacks is rendered unsupported with the version it needs (SIGIL.unsupported), and a tally with a fail above zero is a failed run on that leg.">
 <!ENTITY LAW.SIGIL.8 "Fired as a ladder, the topics of SIGIL.topics are the rungs: one sigil-dtd per topic stacked, or verbs-dtd for every form together, is one chain with one intake and one gate through cc-chain, and the trailing form of LAW.CORE.7 invokes either on the text before it.">
+<!ENTITY LAW.SIGIL.9 "A bracket label names what kind of instruction follows, its severity, its tone, its intent (SIGIL.label.roles); a label that changes what the text means without changing the text is refused, and a run renders each label it obeyed with the role it obeyed it in.">
+<!ENTITY LAW.SIGIL.10 "Quote depth encodes relation, a peer, a child, a grandchild (SIGIL.depth.roles), and a label repeated deeper is a refinement (SIGIL.depth.repeat); in NestedText the tag is SIGIL.nt.string-tag, the depth is SIGIL.nt.depth-in-content, and the two jobs are SIGIL.nt.two-roles, where the pretty-print renderer stays the Program's own and the schematic amplifies it (LAW.SIGIL.9).">

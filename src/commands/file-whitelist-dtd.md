@@ -67,7 +67,7 @@ The declarations this command reads: LIST.class.white for what an entry promises
 5. Run the intake (LAW.ASK.6). Ask for the production counterpart of each entry where one exists, and for what should happen to the extensions in `unlisted` — allow, mark gray or refuse.
 6. Refuse a name either black list holds, with both entries and the edit. Refuse a drop of md unless every condition of LIST.md.condition holds, naming the one that failed (LAW.FW.1).
 7. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
-8. Write the entries with reason and date, read back from disk, render `entries`, then `verdicts`, any `refused`, and the `next_action`.
+8. Write the entries with reason and date, read back from disk, render `entries`, then `verdicts`, any `refused`, and the `next_action`; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
 
 <output_format>

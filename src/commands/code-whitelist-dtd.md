@@ -70,7 +70,7 @@ The declarations this command reads: LIST.class.white for what an entry promises
 5. Render `pairs`: every file white entry with its production counterpart, and every pair with one end missing marked incomplete.
 6. Run the intake (LAW.ASK.6). Ask for the file extension each class completes, for whether an unreachable class should still be written, and name the narrowing consequence of LAW.CW.4 in the round that proposes an entry.
 7. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
-8. Write the entries with reason and date, read back from disk, render `entries`, then `verdicts`, any `refused`, and the `next_action`.
+8. Write the entries with reason and date, read back from disk, render `entries`, then `verdicts`, any `refused`, and the `next_action`; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
 
 <output_format>

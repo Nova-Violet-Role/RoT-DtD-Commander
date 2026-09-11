@@ -66,7 +66,7 @@ The declarations this command reads: LIST.class.gray for what a mark means, LIST
 4. Run the intake (LAW.ASK.6). Ask for the reason in the operator's own words, and show the replacements the white list can offer for each name so a mark with no alternative is visible before it is made.
 5. Refuse a name a black list already holds (LAW.FG.1), rendering the refusal with both entries and the edit.
 6. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing, and write nothing when it refuses.
-7. Write the entries with reason and date, read back from disk, render `entries`.
+7. Write the entries with reason and date, read back from disk, render `entries`; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 8. Render `exceptions`: every granted exception in this repository with its date and what it was granted for, oldest first, so an accumulation is visible rather than forgotten (LAW.FG.3). Then `verdicts`, any `refused`, and the `next_action`.
 </process>
 

@@ -1,0 +1,24 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  depth.dtd : how deep an instruction sits, and what the depth means.
+
+  From the Depth mechanism study: a bracket label names what kind of
+  instruction follows (SIGIL.label.roles) and quote depth names how it
+  relates to its neighbours, a peer, a child, a grandchild
+  (SIGIL.depth.roles). This subset binds the numbers: how deep depth may
+  go, how each format marks it, and the refinement rule. Included by any
+  command whose answers nest bracket labels, and by the schematic
+  creators that render them.
+-->
+
+<!ENTITY DEPTH.roles "peer|child|grandchild">
+<!ENTITY DEPTH.roles.count "3">
+<!ENTITY DEPTH.max "5">
+<!ENTITY DEPTH.mark.md "blockquote count: one greater-than per level">
+<!ENTITY DEPTH.mark.nt "content count after the string tag, per SIGIL.nt.depth-in-content">
+<!ENTITY DEPTH.refines "deeper is a refinement of its parent, never a restatement">
+
+<!ENTITY LAW.DEPTH.1 "Depth encodes relation and nothing else: a peer stands beside, a child constrains, a grandchild specifies (DEPTH.roles); a level that neither constrains nor specifies is flattened to its parent.">
+<!ENTITY LAW.DEPTH.2 "Depth never exceeds DEPTH.max levels; a chain that would nest deeper is rewritten as siblings under their nearest common parent, and the rewrite is stated.">
+<!ENTITY LAW.DEPTH.3 "Each format marks depth its own way, DEPTH.mark.md in Markdown and DEPTH.mark.nt in NestedText; a depth readable in one rendering and lost in the other is a failed rendering.">

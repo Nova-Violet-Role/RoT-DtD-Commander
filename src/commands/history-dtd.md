@@ -77,9 +77,11 @@ Options:
 1. **Start research** - I have enough context
 2. **Ask more questions** - There are details to clarify
 3. **Let me add context** - I want to provide additional information
+4. **Save your cache first** - write what the run holds into one file, read it back and stop; the next call resumes from it (GATE.save, the second question of the same ask under GATE.cache.header with GATE.continue beside it)
 
 If "Ask more questions" → generate 2-3 contextual follow-ups, then present decision gate again
 If "Let me add context" → receive input, then present decision gate again
+If "Save your cache first" → write the cache, render the `cache` element and stop (LAW.CACHE.2)
 If "Start research" → proceed to research
 </decision_gate>
 
@@ -200,7 +202,7 @@ Save the research to a file:
    - Format: `YYYY-MM-DD-[topic]-history.md`
    - Example: `2025-01-15-real-time-sync-history.md`
 
-3. Write the complete research to the file
+3. Write the complete research to the file; topic and answers embedded as ARG.embed.pcdata (LAW.ARGS.5)
 
 4. Report to user: "Saved to `artifacts/research/[filename]`"
 </artifact_output>

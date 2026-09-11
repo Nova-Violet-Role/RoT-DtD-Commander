@@ -228,6 +228,15 @@ The AskUserQuestion grammar: an intake with a context analysis, up to four quest
 <!ENTITY ASK.token.elaborate "[ ]">
 <!ENTITY ASK.token.mark      "a bracketed space between a less-than sign and a greater-than sign">
 <!ENTITY ASK.back              "the arrow token: a less-than sign followed by a hyphen">
+<!-- The family ask forms, named not spelled: angle brackets are markup
+     inside a DTD entity value, so the registry describes each token in
+     words (SIGIL.markup) and the command spells it in its own laws. -->
+<!ENTITY ASK.token.bracket "the bracket pick: three dots in brackets, a single choice">
+<!ENTITY ASK.token.angle   "the angle mark: angle brackets around a markable line, multi-select with marked answers">
+<!ENTITY ASK.token.caret   "the caret matrix: caret, bracket, mark, caret; a matrix pick">
+<!ENTITY ASK.token.chained "the chained empty: bracket pairs joined by carets, a combination pick">
+<!ENTITY ASK.token.star    "the star pick: bracket star, starring options of any round into a shortlist">
+<!ENTITY ASK.token.query   "the query: bracket question mark, attaching a counter-question to a pick">
 
 <!ENTITY LAW.ASK.1 "No question is asked about a slot the context already fills.">
 <!ENTITY LAW.ASK.2 "Every question carries two to four options with a label and a description; a header is twelve characters or fewer.">
@@ -245,6 +254,7 @@ The AskUserQuestion grammar: an intake with a context analysis, up to four quest
 <!ENTITY LAW.ASK.14 "A preview is elaborated: for an elaborate or a mark question the expanded preview carries the answer the model predicts for that choice and the consequence for the work, at most ASK.preview.expanded_lines lines, and a cut preview never exceeds ASK.preview.cut_lines; a preview that names no consequence is not a preview.">
 <!ENTITY LAW.ASK.15 "Every gate carries the re-entries already spent as its round, adds and impactfuls attributes, each an enumeration with a last value; a gate rendered without them has spent none. When all three are spent the gate is offered with start and save alone and ASK.exhausted as the reason, so a guided intake terminates by declaration rather than by the user's patience, and a bound that lives only in prose is not a bound.">
 <!ENTITY LAW.ASK.16 "A preview has the content model preview.content, which is (#PCDATA) unless a command declares it before the include; a command that declares it as (#PCDATA | figure)* includes cc-figure before this subset so the figure it names is declared, and a preview carrying a figure obeys LAW.FIG.1 to LAW.FIG.5 with the figure marked guessed, because a preview is the consequence the model predicts.">
+<!ENTITY LAW.ASK.17 "Family ask forms ride beside the four variants under the registry ASK.token.bracket, ASK.token.angle, ASK.token.caret, ASK.token.chained, ASK.token.star and ASK.token.query: each maps onto select, check, elaborate or mark, the round names which form each question took, previews ride the elaborate and mark forms, and a token outside the registry is refused by name.">
 ```
 
 ## cc-args.dtd
@@ -301,6 +311,7 @@ How a command reads its argument string at launch: the args and word elements, A
      section is the quoted heredoc, NDATA is a reference never read, and a
      parameter entity never takes user input. -->
 <!ENTITY ARG.embed.pcdata  "as parsed text: the ampersand, less-than and greater-than escaped, whitespace normalised">
+<!ENTITY ARG.embed.attr    "as an attribute value: all five escaped, amp less greater quote apos; the three-char escape is element content only">
 <!ENTITY ARG.embed.cdata   "as a CDATA section: literal, and a section close inside the word split into two sections">
 <!ENTITY ARG.embed.ndata   "as an NDATA entity: the word names a file the parser never reads and the tool that reads it is named">
 <!ENTITY ARG.embed.section "as a switch: a flag word sets a conditional-section keyword, INCLUDE or IGNORE, declared before the include">
@@ -310,8 +321,9 @@ How a command reads its argument string at launch: the args and word elements, A
 <!ENTITY LAW.ARGS.2 "The tokens named by ARG.verbose and ARG.debug set the two flags and are removed; the token named by ARG.end ends the options; every other word is positional, numbered n from 1, and keeps its place.">
 <!ENTITY LAW.ARGS.3 "verbose prints the evidence behind each measured claim and debug prints every command run with its exit code; neither flag changes what the command writes.">
 <!ENTITY LAW.ARGS.4 "The walk is rendered under the args element with its count, so the record of the run shows exactly what the command was launched with.">
-<!ENTITY LAW.ARGS.5 "A word is embedded in what the command writes in one of the declared classes, ARG.embed.pcdata, ARG.embed.cdata, ARG.embed.ndata or ARG.embed.section, and the class is stated; ARG.embed.pentity is the class it never gets.">
+<!ENTITY LAW.ARGS.5 "A word is embedded in what the command writes in one of the declared classes, ARG.embed.pcdata, ARG.embed.attr, ARG.embed.cdata, ARG.embed.ndata or ARG.embed.section, and the class is stated; ARG.embed.pentity is the class it never gets.">
 <!ENTITY LAW.ARGS.6 "Four guards hold before the walk is used and each is rendered as an arg_guard element: a word that a shell would evaluate is named and quoted wherever it goes; a path that walks up the tree is refused; a SYSTEM literal or a file URL is refused; a parameter-entity declaration is refused.">
+<!ENTITY LAW.ARGS.7 "A word embedded in an attribute value escapes all five special characters (ARG.embed.attr); the three-char escape is element content only, and a value that cannot name which of the two it is refused rather than guessed.">
 ```
 
 ## cc-form.dtd
@@ -389,7 +401,7 @@ The forms a text may take and the guards between an untrusted text and a parser:
 <!ENTITY FORM.jmd.inline "a backtick, the letter j, a space, then the expression">
 
 <!-- ===== XML ===== -->
-<!ENTITY FORM.xml.pcdata "parsed text: the three escapes for ampersand, less-than and greater-than">
+<!ENTITY FORM.xml.pcdata "parsed text: three escapes in text, five in an attribute value, after SCHEMA.xml.escape">
 <!ENTITY FORM.xml.cdata  "a CDATA marked section: literal until the first double bracket greater-than">
 
 <!-- ===== Markdown callouts: the five GitHub types and nothing else ===== -->
@@ -944,7 +956,7 @@ The schematics a prompt may be written in and how every DTD concept maps onto ea
 <!ENTITY SCHEMA.yaml.binary         "none">
 
 <!-- ===== nt: NestedText ===== -->
-<!ENTITY SCHEMA.nt.literal          "a multiline string: an angle bracket per line">
+<!ENTITY SCHEMA.nt.literal          "a multiline string: an angle bracket per line, deeper brackets in content for depth per SIGIL.depth.roles">
 <!ENTITY SCHEMA.nt.expanded         "none: every value is a string">
 <!ENTITY SCHEMA.nt.reference        "none">
 <!ENTITY SCHEMA.nt.definition       "none">
@@ -2592,6 +2604,16 @@ One figure, two renderers: the canvas in cells, every shape a module with its na
           title   CDATA #IMPLIED
           seed    CDATA #IMPLIED>
 
+<!-- ===== THE PREVIEW CUBE, AS A COMPOSITION ===== -->
+<!-- The expanding preview the ask gate shows before answers is not a new
+     shape: it is an extrude of the option's group, one frame shut and one
+     frame open, set side by side as thumbnails under LAW.FIG.8 inside one
+     cut preview. The shut frame draws the group flat; the open frame draws
+     the same group extruded, so the preview visibly expands from the choice
+     as drawn to the consequence as predicted, both frames inside the grid
+     of LAW.FIG.1 and both marked guessed under LAW.FIG.4. No engine change:
+     extrude, thumbnails and the mark already hold it. -->
+
 <!-- ===== LAWS ===== -->
 <!ENTITY LAW.FIG.1 "A figure declares its grid as columns by rows in cells and every shape lies inside it: a preview figure whose grid exceeds FIG.cut.cols by FIG.cut.rows, an expanded one that exceeds FIG.exp.cols by FIG.exp.rows, or any figure with a shape crossing its grid, is refused by name and never cut, because a preview that does not fit the widget was never a preview.">
 <!ENTITY LAW.FIG.2 "The character grid is the bound on the svg, never the reverse: the svg plate is the cells rendering scaled by FIG.cell.w and FIG.cell.h, it may add colour and a title, and it carries no shape the cells do not carry; a figure that cannot be read in the cells is too complex to be a preview, and a path carrying a command outside FIG.path.commands is such a figure.">
@@ -3433,12 +3455,14 @@ Several commands in one prompt as one declared root: the chain, its links in sta
 -->
 
 <!-- ===== THE BOUNDS ===== -->
-<!-- One prompt, one intake, one gate. The chain length is bounded by what a
-     single intake can scope rather than by taste: cc-ask caps a prompt at
-     ASK.max_total questions across at most ASK.rounds_per_prompt rounds, and
-     a command raises those enumerations before the include (LAW.ASK.11); the
-     highest value the raised enumeration takes anywhere in this tree is eight,
-     so eight is the chain's length. A ninth link is refused by name. -->
+<!-- One prompt, one intake, one gate. The chain length is bounded by declaration,
+     not by taste: eight links, CHAIN.max, because a chain longer than a single
+     intake can scope stops being one prompt and starts being a plan. An early
+     draft derived the bound from the highest raised ask enumeration, which was
+     eight then; the deep dives have since raised theirs past it, so the comment
+     records the correction: links are bounded here, rounds are bounded where
+     they are raised, and neither derives from the other. A ninth link is
+     refused by name. -->
 <!ENTITY CHAIN.max "8">
 <!ENTITY CHAIN.min "2">
 <!ENTITY CHAIN.dir "artifacts/chain">
@@ -3696,6 +3720,22 @@ The dollar sign as a contract: the five study documents under dtd/sigil, the ten
           fail        CDATA #REQUIRED
           unsupported CDATA #REQUIRED>
 
+<!-- ===== THE DEPTH SIGNALS, BY NAME ===== -->
+<!-- Bracket labels and quote depth from the Depth mechanism study: a label
+     names what kind of instruction follows, and depth names how it relates
+     to its neighbours. Labels are an open set, so the subset names the
+     roles, never the roster; the spellings live in the documents that use
+     them, the way form spellings live in the study (SIGIL.markup). -->
+<!ENTITY SIGIL.label.roles "severity|tone|intent">
+<!ENTITY SIGIL.depth.roles "peer|child|grandchild">
+<!ENTITY SIGIL.depth.repeat "a label repeated at deeper depth is a refinement of its parent, never a restatement">
+<!-- The NestedText column of the corrected mapping table: two jobs for one
+     character, spelled out because a greater-than sign is markup inside a
+     DTD entity value and cannot be written there (SIGIL.markup). -->
+<!ENTITY SIGIL.nt.string-tag "the first greater-than sign plus its space, always stripped by pretty-print">
+<!ENTITY SIGIL.nt.depth-in-content "the greater-than count in the content after the string tag">
+<!ENTITY SIGIL.nt.two-roles "first structural, rest visual depth">
+
 <!-- ===== LAWS ===== -->
 <!ENTITY LAW.SIGIL.1 "This tree has one argument convention, SIGIL.convention: every command reads the whole argument string, the positional shorthand is used by SIGIL.positional.uses of them, and where the shorthand exists it is zero based (SIGIL.index.base), so a command that reaches for a positional form has left the convention and says so.">
 <!ENTITY LAW.SIGIL.2 "The trust matrix of the study binds the sigil: a form inside parsed text expands (SIGIL.trust.pcdata), a form inside literal text is data (SIGIL.trust.cdata), a form inside a file reference is never seen (SIGIL.trust.ndata); a sigil found inside a quoted element of an answer is reported as data and never expanded.">
@@ -3705,6 +3745,8 @@ The dollar sign as a contract: the five study documents under dtd/sigil, the ten
 <!ENTITY LAW.SIGIL.6 "A tier D form is used only under the rule that travels with it: the study renders the rule in the rule attribute of the form, and a run executes a tier D form only inside the condition the rule states, never on untrusted input.">
 <!ENTITY LAW.SIGIL.7 "A run executes every trial on the leg it is on, with stdin closed and under SIGIL.ceiling seconds each, and records the actual expansion beside the expected one; a form the leg's bash lacks is rendered unsupported with the version it needs (SIGIL.unsupported), and a tally with a fail above zero is a failed run on that leg.">
 <!ENTITY LAW.SIGIL.8 "Fired as a ladder, the topics of SIGIL.topics are the rungs: one sigil-dtd per topic stacked, or verbs-dtd for every form together, is one chain with one intake and one gate through cc-chain, and the trailing form of LAW.CORE.7 invokes either on the text before it.">
+<!ENTITY LAW.SIGIL.9 "A bracket label names what kind of instruction follows, its severity, its tone, its intent (SIGIL.label.roles); a label that changes what the text means without changing the text is refused, and a run renders each label it obeyed with the role it obeyed it in.">
+<!ENTITY LAW.SIGIL.10 "Quote depth encodes relation, a peer, a child, a grandchild (SIGIL.depth.roles), and a label repeated deeper is a refinement (SIGIL.depth.repeat); in NestedText the tag is SIGIL.nt.string-tag, the depth is SIGIL.nt.depth-in-content, and the two jobs are SIGIL.nt.two-roles, where the pretty-print renderer stays the Program's own and the schematic amplifies it (LAW.SIGIL.9).">
 ```
 
 ## codebase-generator.dtd

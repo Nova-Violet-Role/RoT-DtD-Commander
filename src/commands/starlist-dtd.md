@@ -83,7 +83,7 @@ The declarations of cross-os.dtd this command reads beside them: XOS.legs, the X
 3. Probe the local substrates with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe`, in the foreground: render `substrates` with the host leg and one line per substrate, podman present only with a machine row, wsl2 only when wsl answers, and the macOS leg named to its hosted runner (LAW.SL.5, LAW.XOS.1).
 4. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
 5. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
-6. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1).
+6. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1); measured names embedded as ARG.embed.pcdata (LAW.ARGS.5).
 7. Re-run `node lib/ceiling.mjs 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
 8. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
 </process>

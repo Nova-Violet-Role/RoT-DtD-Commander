@@ -40,7 +40,7 @@ Run the sigil's forms for <quoted trust="cdata" source="user-args">$ARGUMENTS</q
 
 This is the second command of the sigil, the one that runs the verbs all together. sigil-dtd reads the documents and says what a form should expand to; this command executes the shell forms of SIGIL.tier.S, SIGIL.tier.A, SIGIL.tier.B and the one tier D form that may be shown, in the bash of the leg it is on, and records what each expanded to beside the expectation. A form the leg's bash lacks is SIGIL.unsupported, rendered with the bash it needs and the bash this leg has, never counted as a pass; the same run on ubuntu, macos and windows is three different tallies, which is the cross-OS measurement the Suite had no instrument for (LAW.SIGIL.7, LAW.VERBS.1). The trials are drawn from the documents under SIGIL.docs.dir and the record is written under SIGIL.dir. Fired as a ladder with sigil-dtd, the two are one chain with one gate through cc-chain (LAW.SIGIL.8).
 
-The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.6). The `intake` comes from cc-ask, one round before the run. The `sigil_run` with its `sigil_leg`, `sigil_trial` and `sigil_tally` elements comes from cc-sigil.dtd.
+The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.7). The `intake` comes from cc-ask, one round before the run. The `sigil_run` with its `sigil_leg`, `sigil_trial` and `sigil_tally` elements comes from cc-sigil.dtd.
 </objective>
 
 <process>

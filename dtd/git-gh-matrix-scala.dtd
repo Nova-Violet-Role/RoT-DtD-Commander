@@ -1,0 +1,152 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  git-gh-matrix-scala.dtd : the matrix a user builds by questionnaire, and
+  the laws the built gate obeys.
+
+  git-gh-amplification-dtd measures a repository's GitHub face and writes
+  what is missing. This subset builds the other direction: a finished
+  gate.yml the runner tests, for an app, a program, a project, a Claude
+  Code repo or a folder, chosen through seven to eight rounds of
+  AskUserQuestion ending in the ask-gate, with every static choice
+  previewed. The full study behind it sits in /full-study/*.nt, read in
+  one gulp, so a major release never repeats the reading.
+
+  Measured anchors: the three legs are XOS.legs and the matrix law is
+  LAW.XOS.6 (lib/cross-os.mjs matrix check holds the built file to it);
+  the companion allow-list and ceiling are the companion contract
+  (checker/companion-run.sh under node lib/ceiling.mjs, guard
+  checker/companion-guard.mjs); the sanitizer rows are the injection
+  tables of the study (GHA ${{ }} textual substitution, XXE six vectors,
+  YAML seven vectors, ]]> split, five-char PCDATA escape); the thinking
+  rows are LZ-BINARY §14 measured 2026-09-11 on binary 2.1.268, which
+  retired the budget table the first draft of this file carried.
+-->
+
+<!-- ===== THE TARGET ===== -->
+<!-- What the built gate tests. Five, named by the intake's first round. -->
+<!ENTITY % mx.target "(app|program|project|claude-code-repo|folder)">
+<!ENTITY MX.targets "app|program|project|claude-code-repo|folder">
+<!ENTITY MX.targets.count "5">
+
+<!-- ===== THE LEGS ===== -->
+<!-- The certified legs are XOS.legs and stay three; the extended set is
+     chosen per run and recorded, never assumed. -->
+<!ENTITY MX.os.3latest "ubuntu-latest|macos-latest|windows-latest">
+<!ENTITY MX.os.extended "extended LTS plus ARM variants, recorded per run|the run names every leg it adds and the matrix --check holds each">
+<!ENTITY MX.os.choice "(3latest|extended)">
+<!-- name | shell | why it is offered -->
+<!ENTITY MX.leg.ubuntu-latest  "hosted|bash 5 GNU coreutils GNU grep|default leg, every gate runs it">
+<!ENTITY MX.leg.macos-latest   "hosted|bash on PATH BSD grep sed no timeout binary|licence-only leg, XOS.macos.local refuses every local substrate">
+<!ENTITY MX.leg.windows-latest "hosted|Git Bash MSYS coreutils GNU grep|the leg this tree is developed on">
+
+<!-- ===== THE GATE SHAPES ===== -->
+<!-- One skeleton, four dispatched profiles, the strict/transitional/
+     frameset precedent: a shared skeleton with additive profiles. -->
+<!ENTITY % mx.shape "(single|ramified|matrix-jobs|manual)">
+<!ENTITY MX.shape.single      "one gate.yml for debugging and testing|smallest approval surface, least coverage">
+<!ENTITY MX.shape.ramified    "gate-1 linux-latest, gate-2 windows-latest, gate-3 macos-latest, dispatched in the chosen order|per-OS tuning, ordered rollout">
+<!ENTITY MX.shape.matrix-jobs "one file, matrix jobs across OS versions|compact CI, shared ceiling">
+<!ENTITY MX.shape.manual      "manual dispatch, no recurrence in the main CI run|safest rollout">
+
+<!-- ===== THE SEALS ===== -->
+<!-- How many seals before credentials.json transfers, and what they are.
+     The sealed file travels unparsed, NDATA-style, never interpolated. -->
+<!ENTITY % mx.seals "(light|heavy)">
+<!ENTITY MX.seals.light "1 to 2 seals, BLAKE2B first|fast rotation path">
+<!ENTITY MX.seals.heavy "3 or more seals, BLAKE2B plus others|paranoid path, slower rotation">
+<!ENTITY MX.seals.count.light "1|2">
+<!ENTITY MX.seals.count.heavy "3+">
+<!ENTITY MX.cred.transport "unparsed|declared NOTATION, recorded URI, never read into YAML text, never interpolated">
+<!ENTITY MX.cred.expiry "dated|the command re-encodes on expiry and the run records the new date, so rotation is a date, never a surprise">
+
+<!-- ===== CEILING, TIMEOUT, NODE ===== -->
+<!-- Per-job ceiling with a portable form on every leg (LAW.XOS.5), and a
+     node checker so the runners prove latest before the matrix runs. -->
+<!ENTITY MX.ceiling.per-job "each job names its ceiling|a job without a ceiling is refused at emission">
+<!ENTITY MX.ceiling.portable "timeout binary where present, node lib/ceiling.mjs where absent|exit 124 on fire, both paths tripped">
+<!ENTITY MX.node.checker "node.js latest proven inside the runner before jobs dispatch|a runner on a stale node fails the gate before it measures anything">
+
+<!-- ===== MODEL, EFFORT, THINKING (corrected) ===== -->
+<!-- LZ-BINARY §14 retired the budget table: on the 5-series the budget
+     resolves and is discarded on the adaptive branch, so the percent
+     table below is legacy and the effort flag is the live dial. -->
+<!ENTITY MX.models "sonnet-5|fable-5|fable-5.1|opus-5|other-manual">
+<!ENTITY MX.effort.levels "low|medium|high|xhigh|max">
+<!ENTITY MX.effort.cost.opus-5  "low 0.67|medium 0.76|high 1|xhigh 1.6|max 1.7|default high">
+<!ENTITY MX.effort.cost.fable-5 "low 0.6|medium 0.77|high 1|xhigh 1.74|max 1.91|plus per_turn_effort on 5.1">
+<!ENTITY MX.thinking.hard-zero "--thinking disabled|measured 0 on opus-5; fable rejects disabled thinking">
+<!ENTITY MX.thinking.budget "UNSET|set reads configured while inert and errors beside effort; --max-thinking-tokens silently dead outside --print">
+<!ENTITY MX.thinking.legacy "5pct 6400|10pct 12800|25pct 32000|50pct 64000|100pct 127999|arithmetically legal, unreachable on 5-series; kept so an old preview still parses">
+<!ENTITY MX.thinking.note "turning thinking off does not disable reasoning: reasoning follows the effort level|shown in the preview of every static choice so users can breathe">
+
+<!-- ===== ENV TIERS ===== -->
+<!-- Choosable values, measured in LZ-BINARY on this machine. The glob
+     row is seconds; every other row is milliseconds or a flag. -->
+<!ENTITY MX.env.timeouts "BASH_DEFAULT_TIMEOUT_MS 86400000|BASH_MAX_TIMEOUT_MS 86400000 floor 600000|CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS 86400000|CLAUDE_CODE_PWSH_PARSE_TIMEOUT_MS 86400000|CLAUDE_CODE_GLOB_TIMEOUT_SECONDS 86400 seconds|CLAUDE_SUBAGENT_BG_SHELL_MAX_MS 86400000">
+<!ENTITY MX.env.flags "CLAUDE_CODE_DISABLE_BG_SHELL_PRESSURE_REAP 1|CLAUDE_CODE_STOP_HOOK_BLOCK_CAP 1000000|CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION 200|CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS 25000 silent-truncate">
+<!ENTITY MX.env.output "CLAUDE_CODE_MAX_OUTPUT_TOKENS catalog default 64000 opus-5 clamp 1 to upper 128000|the only user knob for max_tokens">
+
+<!-- ===== CACHE TIMER ===== -->
+<!-- When the cache saves, even under a timer, so the model never
+     fragments. Polyarm .nt with >>> .md: the .nt stays parseable. -->
+<!ENTITY MX.cache.timer "60m default, choosable|retriggers recorded; each firing writes a new .nt until the chosen count stops the model">
+<!ENTITY MX.cache.polyarm "nt polyarmed with >>> md|parsed as .nt whole, rendered as .md depth; one gulp either way">
+
+<!-- ===== SANITIZERS ===== -->
+<!-- One row per injection class the study measured. The emitter holds
+     every row; a value that cannot be sanitized is refused, never passed. -->
+<!ENTITY MX.san.gha "${{ }} substituted textually before the shell runs|sanitize every interpolated event field; env-indirection pattern, never inline">
+<!ENTITY MX.san.xxe "ENTITY SYSTEM from args|no-DTD parsers, whitelist ^[a-zA-Z0-9._/-]+$, CDATA for untrusted content">
+<!ENTITY MX.san.cdata "]]> split-and-reopen|every CDATA-wrapped arg passes the split first">
+<!ENTITY MX.san.pcdata "five-char escape & < > \" '|every PCDATA interpolation passes all five">
+<!ENTITY MX.san.ndata "path whitelist, no .. segments|sealed transport obeys the same whitelist">
+<!ENTITY MX.san.yaml "safe-only loaders, no !! tags, anchor and depth caps, merges frozen|the .nt cache needs none of this">
+<!ENTITY MX.san.dispatch "$@" dispatch only|eval banned in every verb the .mjs carrier introduces">
+<!ENTITY MX.san "gha|xxe|cdata|pcdata|ndata|yaml|dispatch">
+<!ENTITY MX.san.count "7">
+
+<!-- ===== ELEMENTS ===== -->
+<!-- What a built run renders: the plan it will emit, one choice per row. -->
+<!ELEMENT matrix_plan (target, legs, shape, seals, ceiling, model_tier, env_tier, cache_timer, sanitizers)>
+<!ELEMENT target (#PCDATA)>
+<!ATTLIST target kind %mx.target; #REQUIRED>
+<!ELEMENT legs (leg_choice+)>
+<!ELEMENT leg_choice (#PCDATA)>
+<!ATTLIST leg_choice
+          os      NMTOKEN #REQUIRED
+          profile (3latest|extended) #REQUIRED>
+<!ELEMENT shape (#PCDATA)>
+<!ATTLIST shape kind %mx.shape; #REQUIRED>
+<!ELEMENT seals (#PCDATA)>
+<!ATTLIST seals
+          count CDATA #REQUIRED
+          class %mx.seals; #REQUIRED>
+<!ELEMENT ceiling (#PCDATA)>
+<!ATTLIST ceiling
+          ms    CDATA #REQUIRED
+          portable (yes|no) #REQUIRED>
+<!ELEMENT model_tier (#PCDATA)>
+<!ATTLIST model_tier
+          model   CDATA #REQUIRED
+          effort  (low|medium|high|xhigh|max) #REQUIRED
+          thinking (disabled|adaptive|unset-budget) #REQUIRED>
+<!ELEMENT env_tier (#PCDATA)>
+<!ELEMENT cache_timer (#PCDATA)>
+<!ATTLIST cache_timer
+          every CDATA #REQUIRED
+          firings CDATA #REQUIRED>
+<!ELEMENT sanitizers (#PCDATA)>
+<!ATTLIST sanitizers held (yes|no) #REQUIRED>
+
+<!-- ===== LAWS ===== -->
+<!ENTITY LAW.MX.1 "The built gate tests one of MX.targets, MX.targets.count of them; the intake's first round names it with a preview of what the matrix scales, and a target outside the five is refused, never guessed.">
+<!ENTITY LAW.MX.2 "Legs default to MX.os.3latest and hold LAW.XOS.6: runs-on is ${{ matrix.os }}, the install round trip rides the same matrix, and node lib/cross-os.mjs matrix --check holds the emitted file; extended legs are recorded per run with every name the run added.">
+<!ENTITY LAW.MX.3 "Credentials travel MX.cred.transport with a class of MX.seals.light or MX.seals.heavy chosen by count; MX.cred.expiry is a date the command watches, and rotation re-encodes and records the new date.">
+<!ENTITY LAW.MX.4 "Every job carries MX.ceiling.per-job in MX.ceiling.portable form, and MX.node.checker proves latest node before dispatch; a job without a ceiling or a runner on stale node fails emission, never the night.">
+<!ENTITY LAW.MX.5 "The model tier offers MX.models at MX.effort.levels with MX.thinking.note in every static preview; the budget stays MX.thinking.budget, the hard zero is MX.thinking.hard-zero, and MX.thinking.legacy parses but never drives a 5-series run.">
+<!ENTITY LAW.MX.6 "Env values come from MX.env.timeouts, MX.env.flags and MX.env.output with units as declared; the glob row is seconds and a value written in milliseconds there is refused by name.">
+<!ENTITY LAW.MX.7 "The cache saves on MX.cache.timer under MX.cache.polyarm; every firing is counted and the count stops the model, so the cache never fragments and never runs away.">
+<!ENTITY LAW.MX.8 "Emission holds every row of MX.san, MX.san.count of them: a value that cannot pass its sanitizer is refused with the row named, and the refusal is the finding, never a silent drop.">
+<!ENTITY LAW.MX.9 "The intake runs seven to eight rounds ending in the ask-gate enclosure; no user is obliged for credentials, the model guides scaling choice by context analysis, and every preview is full-audited with the cube visible before answers.">
+<!ENTITY LAW.MX.10 "The run ends the release way: the audit companion .sh runs, the ORG CI goes green to completion, the version is computed and never typed; findings ride the .nt schematic read in one gulp, reverse as the prior gate.yml run showed.">

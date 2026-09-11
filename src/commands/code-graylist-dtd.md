@@ -70,7 +70,7 @@ The declarations this command reads: LIST.class.gray for what a mark means, LIST
 5. Run the intake (LAW.ASK.6). The round carries the cost and the replacements, so the mark is chosen against a measurement rather than an impression.
 6. Refuse a name a black list already holds (LAW.CG.1) with both entries and the edit.
 7. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
-8. Write the entries with reason and date, read back from disk, render `entries`, then `exceptions` oldest first, `verdicts`, any `refused`, and the `next_action`.
+8. Write the entries with reason and date, read back from disk, render `entries`, then `exceptions` oldest first, `verdicts`, any `refused`, and the `next_action`; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
 
 <output_format>

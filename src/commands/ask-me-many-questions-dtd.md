@@ -67,7 +67,7 @@ The gate's fifth choice is GATE.save, the second question of the same ask, GATE.
 2. Analyze the task and the conversation into known and gap slots; never ask about a known slot (LAW.ASK.1).
 3. Ask round one about the gaps; chain rounds while open detail remains, never past round ASK.rounds_per_prompt and never past ASK.max_total questions in all (LAW.ASK.6, LAW.MANY.1); render each round as n of ASK.rounds_per_prompt.
 4. Present the gate after each round; loop on more, add or impactful (LAW.ASK.9) until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops (LAW.CACHE.2); a reply of ASK.back re-asks the question just asked (LAW.ASK.12).
-5. Execute the task with the full context; open the `execution` with the restatement (LAW.MANY.3).
+5. Execute the task with the full context; open the `execution` with the restatement (LAW.MANY.3); slots and answers embedded in the record as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
 
 <output_format>

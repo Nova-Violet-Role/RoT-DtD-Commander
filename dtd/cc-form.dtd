@@ -68,7 +68,7 @@
 <!ENTITY FORM.jmd.inline "a backtick, the letter j, a space, then the expression">
 
 <!-- ===== XML ===== -->
-<!ENTITY FORM.xml.pcdata "parsed text: the three escapes for ampersand, less-than and greater-than">
+<!ENTITY FORM.xml.pcdata "parsed text: three escapes in text, five in an attribute value, after SCHEMA.xml.escape">
 <!ENTITY FORM.xml.cdata  "a CDATA marked section: literal until the first double bracket greater-than">
 
 <!-- ===== Markdown callouts: the five GitHub types and nothing else ===== -->
