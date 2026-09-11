@@ -46,7 +46,7 @@
 <text x="34" y="669" font-size="13" fill="#5b6472">was watched failing</text>
 <rect x="26" y="688" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="705" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/RoT-DtD-Commander-Adiutor [blank for the full report; add --last N to review N runs; add --arm or --disarm]</text>
-<text x="794" y="705" font-size="12" fill="#5b6472" text-anchor="end">32 laws</text>
+<text x="794" y="705" font-size="12" fill="#5b6472" text-anchor="end">33 laws</text>
 <text x="34" y="732" font-size="13" fill="#5b6472">The RoT DtD Commander Adiutor. Doctor and advisor in one run; checks the installed -dtd</text>
 <text x="34" y="751" font-size="13" fill="#5b6472">set, the hooks and the ledger, then prescribes for every -dtd answer that failed its own</text>
 <text x="34" y="770" font-size="13" fill="#5b6472">declared grammar</text>

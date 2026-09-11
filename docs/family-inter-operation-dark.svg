@@ -9,7 +9,7 @@
 <line x1="26" y1="58" x2="794" y2="58" stroke="#242938" stroke-width="1"/>
 <rect x="26" y="74" width="700" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="91" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">/chain-dtd [two to eight command lines stacked, one /name-dtd per line, the first line's arguments the chain's; --no-gate runs the whole chain autonomously]</text>
-<text x="794" y="91" font-size="12" fill="#9aa3b2" text-anchor="end">48 laws</text>
+<text x="794" y="91" font-size="12" fill="#9aa3b2" text-anchor="end">50 laws</text>
 <text x="34" y="118" font-size="13" fill="#9aa3b2">DTD-native: several commands in one prompt as one declared chain. Reads the command</text>
 <text x="34" y="137" font-size="13" fill="#9aa3b2">lines stacked in the arguments, plans the chain through lib/chain.mjs against</text>
 <text x="34" y="156" font-size="13" fill="#9aa3b2">dtd/cc-chain.dtd, runs one intake and one gate for every link, hands each band's</text>

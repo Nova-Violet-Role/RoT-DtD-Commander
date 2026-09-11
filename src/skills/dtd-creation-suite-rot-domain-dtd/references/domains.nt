@@ -1,0 +1,47 @@
+# NestedText v3 — DOMAIN-TYPE-DEFINITION table for dtd-creation-suite-rot-domain
+# Read by the skill, never quoted as argumentation (LAW.SUITE.1).
+# shape: domain > needs > variants > families > commands > gate
+
+screenshot-hosting:
+    needs: screenshots recognized, hosted inside the document, model recreates visuals
+    variants: SVG, XHTML, SCHEMATIC, CHAIN
+    families: Graphic and Geometric Suite, schematic creators
+    commands: codebase-surveyor-dtd, codebase-generator-dtd, typography-dtd, brainstorm-meta-clear-section-dtd
+    gate: ask where hosted, chain for survey then generate
+    example: i need to create a new skill but i want screenshots recognized and hosted inside that very document
+
+research-asking:
+    needs: understand how, one-time ask, save-my-cache bridge
+    variants: RNG, ENT, MOD, DITA, CHAIN, SKILL
+    families: Research, deep-dive branch, asking
+    commands: deep-dive-dtd, hadal-deep-dive-dtd, hadopelagia-deep-dive-dtd, ask-me-questions-dtd, ask-me-everything-dtd
+    gate: ask where deep, cache bridge where long
+    example: i need to understand how example triggers research then deep-dive with ask where allowed
+
+single-then-next:
+    needs: one command only, followed by no-ask commands, suggest what runs next
+    variants: CHAIN, FRAMEWORK
+    families: Phantom shelf, Thinking models, plus the table's suggestion
+    commands: any single command, then chain-dtd suggestion
+    gate: none on the first, ask on the suggestion
+    example: phantom or pareto run alone, skill suggests the measured next
+
+cache-drift-timeout:
+    needs: save-ur-cache mid-work, work-in-progress redirect, drift patches directives debugging
+    variants: NVDL, XSL, CHAIN
+    families: asking (save), chain, tasks
+    commands: ask-me-many-questions-dtd, chain-dtd, task-handoff-dtd
+    gate: save-ur-cache bridge, drift activation beside running work
+    example: direction change in-between via timeout law, drift drafted not interrupted
+
+skill-creation:
+    needs: new skill with routing, schematics, forms, proof
+    variants: SCHEMATIC, SKILL, DCL, XSD
+    families: creators, schematic, filetypes
+    commands: create-agent-skill-dtd, create-prompt-nt-dtd, create-filetype-nt-dtd, brainstorm-meta-clear-section-dtd
+    gate: creators gate always (LAW.ASK.10)
+    example: create a skill through twelve questions that are never skipped
+
+unmatched:
+    routes-to: ask-me-questions-dtd
+    gate: standard

@@ -14,7 +14,7 @@
 <line x1="26" y1="158" x2="794" y2="158" stroke="#e2e5ec" stroke-width="1"/>
 <rect x="26" y="174" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="191" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/codebase-surveyor-dtd [a path to survey, or blank for the current repository; --no-gate runs autonomously; --verbose prints the evidence behind every measure]</text>
-<text x="794" y="191" font-size="12" fill="#5b6472" text-anchor="end">69 laws</text>
+<text x="794" y="191" font-size="12" fill="#5b6472" text-anchor="end">71 laws</text>
 <text x="34" y="218" font-size="13" fill="#5b6472">DTD-native: measure a codebase and draw it, and move nothing. Band I of the one hundred</text>
 <text x="34" y="237" font-size="13" fill="#5b6472">and eight rung Graphic and Geometric ladder (planimetry to conspectus): every</text>
 <text x="34" y="256" font-size="13" fill="#5b6472">instrumented rung is measured in the foreground under its ceiling, every measure names</text>
@@ -23,7 +23,7 @@
 <text x="34" y="313" font-size="13" fill="#5b6472">architect to stand on. Gates on the scope before it draws a line</text>
 <rect x="26" y="332" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="349" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/codebase-architect-dtd [the survey json to stand on, or blank for the latest under artifacts/geometry; --no-gate runs autonomously; --verbose prints the measure behind every bound]</text>
-<text x="794" y="349" font-size="12" fill="#5b6472" text-anchor="end">69 laws</text>
+<text x="794" y="349" font-size="12" fill="#5b6472" text-anchor="end">71 laws</text>
 <text x="34" y="376" font-size="13" fill="#5b6472">DTD-native: declare what the shape of a codebase should be, standing on a survey, and</text>
 <text x="34" y="395" font-size="13" fill="#5b6472">rewrite nothing. Band II of the one hundred and eight rung Graphic and Geometric ladder</text>
 <text x="34" y="414" font-size="13" fill="#5b6472">(orthography to apparatus): every projection declares a bound a later survey is held to,</text>
@@ -32,7 +32,7 @@
 <text x="34" y="471" font-size="13" fill="#5b6472">exceeds. Gates on the scope before it declares a line</text>
 <rect x="26" y="490" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="507" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/codebase-renovator-dtd [the survey markdown and the plan markdown to stand on, in that order; --no-gate runs autonomously; --verbose prints the digest of each precondition]</text>
-<text x="794" y="507" font-size="12" fill="#5b6472" text-anchor="end">69 laws</text>
+<text x="794" y="507" font-size="12" fill="#5b6472" text-anchor="end">71 laws</text>
 <text x="34" y="534" font-size="13" fill="#5b6472">DTD-native: change the standing structure of a codebase, only against a survey that</text>
 <text x="34" y="553" font-size="13" fill="#5b6472">exists and a plan declared first. Band III of the one hundred and eight rung Graphic and</text>
 <text x="34" y="572" font-size="13" fill="#5b6472">Geometric ladder (rectification to diplomatics): the engine refuses by name a renovation</text>
@@ -41,7 +41,7 @@
 <text x="34" y="629" font-size="13" fill="#5b6472">tree is certified leg by leg. Gates before the first change</text>
 <rect x="26" y="648" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="665" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/codebase-generator-dtd [the survey, the plan and the renovation markdown to stand on, in that order, or blank to launch the three; --no-gate runs autonomously; --no-png skips the rasteriser; --seed=&lt;option&gt; carries the figure chosen at the gate]</text>
-<text x="794" y="665" font-size="12" fill="#5b6472" text-anchor="end">71 laws</text>
+<text x="794" y="665" font-size="12" fill="#5b6472" text-anchor="end">73 laws</text>
 <text x="34" y="692" font-size="13" fill="#5b6472">DTD-native: the fourth member of the Graphic and Geometric Suite, the one that produces.</text>
 <text x="34" y="711" font-size="13" fill="#5b6472">With a survey, a plan and a renovation on disk it renders the graphic the three agreed</text>
 <text x="34" y="730" font-size="13" fill="#5b6472">on, one figure of three layers through cc-figure, to cells, svg and png, every byte read</text>
@@ -50,7 +50,7 @@
 <text x="34" y="787" font-size="13" fill="#5b6472">restoration, through the professions' lenses. Gates before it draws</text>
 <rect x="26" y="806" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="823" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/typography-dtd [a number of sides to name, or a figure file whose shapes to check, or blank for the contract alone; --no-gate runs autonomously; --verbose prints every declaration read]</text>
-<text x="794" y="823" font-size="12" fill="#5b6472" text-anchor="end">56 laws</text>
+<text x="794" y="823" font-size="12" fill="#5b6472" text-anchor="end">58 laws</text>
 <text x="34" y="850" font-size="13" fill="#5b6472">DTD-native: the glyph and plate contract of the Graphic and Geometric Suite. Renders the</text>
 <text x="34" y="869" font-size="13" fill="#5b6472">typeset every figure is drawn against: the two faces, the seven glyphs a plate may use,</text>
 <text x="34" y="888" font-size="13" fill="#5b6472">the missing glyph and its reason, and the name of an n-sided figure derived from its</text>

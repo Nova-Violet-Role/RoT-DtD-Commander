@@ -55,7 +55,7 @@ wrong and the thirteenth matrix the operator cancelled to ship.
   final message scored alone, a phrase inside a tool result diagnosed, an
   experiment's close read for the chain's, a phrase in the answer's own
   text diagnosed; each named in the findings record and fixed by name.
-- 143 commands, 22 skills, 5 agents; 2025 declarations; recognised 9.1.0
+- 143 commands, 23 skills, 5 agents; 2057 declarations; recognised 9.1.0
   (class mid) from a top verb of 9 kept in run 10.
 
 ## v9.0.0 — Interoperable-Commander

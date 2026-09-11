@@ -10,28 +10,28 @@
 <line x1="26" y1="78" x2="794" y2="78" stroke="#e2e5ec" stroke-width="1"/>
 <rect x="26" y="94" width="461" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="111" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/audit-skill-dtd [path to a SKILL.md, or its directory]</text>
-<text x="794" y="111" font-size="12" fill="#5b6472" text-anchor="end">19 laws</text>
+<text x="794" y="111" font-size="12" fill="#5b6472" text-anchor="end">20 laws</text>
 <text x="34" y="138" font-size="13" fill="#5b6472">DTD-native: audit a skill directory here, in the foreground: the contract rules C1 to</text>
 <text x="34" y="157" font-size="13" fill="#5b6472">C16 through the checker under a ceiling, then the style areas of skill-auditor-dtd read</text>
 <text x="34" y="176" font-size="13" fill="#5b6472">from its agent file as data and checked one by one; findings with file and line, one</text>
 <text x="34" y="195" font-size="13" fill="#5b6472">verdict; no subagent is summoned</text>
 <rect x="26" y="214" width="412" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="231" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/audit-slash-command-dtd [path to a command file]</text>
-<text x="794" y="231" font-size="12" fill="#5b6472" text-anchor="end">19 laws</text>
+<text x="794" y="231" font-size="12" fill="#5b6472" text-anchor="end">20 laws</text>
 <text x="34" y="258" font-size="13" fill="#5b6472">DTD-native: audit a slash command file here, in the foreground: the contract rules C1 to</text>
 <text x="34" y="277" font-size="13" fill="#5b6472">C16 through the checker under a ceiling, then the style areas of</text>
 <text x="34" y="296" font-size="13" fill="#5b6472">slash-command-auditor-dtd read from its agent file as data and checked one by one;</text>
 <text x="34" y="315" font-size="13" fill="#5b6472">findings with file and line, one verdict; no subagent is summoned</text>
 <rect x="26" y="334" width="364" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="351" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/audit-subagent-dtd [path to an agent file]</text>
-<text x="794" y="351" font-size="12" fill="#5b6472" text-anchor="end">19 laws</text>
+<text x="794" y="351" font-size="12" fill="#5b6472" text-anchor="end">20 laws</text>
 <text x="34" y="378" font-size="13" fill="#5b6472">DTD-native: audit an agent file here, in the foreground: the contract rules C1 to C16</text>
 <text x="34" y="397" font-size="13" fill="#5b6472">through the checker under a ceiling, then the style areas of subagent-auditor-dtd read</text>
 <text x="34" y="416" font-size="13" fill="#5b6472">from its agent file as data and checked one by one; findings with file and line, one</text>
 <text x="34" y="435" font-size="13" fill="#5b6472">verdict; no subagent is summoned</text>
 <rect x="26" y="454" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="471" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/ai-slop-dtd [a file, a commit message file, or blank for the last answer of this session; --verbose prints every hit with its line]</text>
-<text x="794" y="471" font-size="12" fill="#5b6472" text-anchor="end">25 laws</text>
+<text x="794" y="471" font-size="12" fill="#5b6472" text-anchor="end">26 laws</text>
 <text x="34" y="498" font-size="13" fill="#5b6472">DTD-native: judge a file, a commit message file or the last answer by the AI_SLOP gate,</text>
 <text x="34" y="517" font-size="13" fill="#5b6472">the hand-run form of the hook gate: the same measures, the same escape, nothing written</text>
 </svg>

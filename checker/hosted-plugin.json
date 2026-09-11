@@ -20,8 +20,8 @@
     "measuredOn": "2026-09-07",
     "version": "9.1.0",
     "components": {
-      "commands": 139,
-      "skills": 22,
+      "commands": 143,
+      "skills": 23,
       "agents": 5
     },
     "surfaceReported": {
@@ -37,7 +37,7 @@
     ],
     "binStrategy": "dotbin",
     "rootShape": "wrapped",
-    "note": "Raised from 131 to 134 on 2026-09-06 for the Graphic and Geometric family; the 8.0.0 archive is to be re-proven on upload. Raised from 134 to 139 on 2026-09-07 for 9.0.0: chain, codebase-generator, sigil, verbs and typography; the 9.0.0 archive is to be re-proven on upload, and surfaceReported stays as last read until it is."
+    "note": "Raised from 131 to 134 on 2026-09-06 for the Graphic and Geometric family; the 8.0.0 archive is to be re-proven on upload. Raised from 134 to 139 on 2026-09-07 for 9.0.0: chain, codebase-generator, sigil, verbs and typography; the 9.0.0 archive is to be re-proven on upload, and surfaceReported stays as last read until it is. Raised from 139 to 143 on 2026-09-11 for the overhaul workstream (git-gh-matrix-scala, hadal-deep-dive, hadopelagia-deep-dive, ask-me-everything) and skills 22 to 23 (dtd-creation-suite-rot-domain); upload re-proof still open, no upload runs from this machine."
   },
   "whyABaselineAndNotJustRules": "A rule says whether this archive is well formed. A baseline says whether the world still looks the way it looked when a human last proved an upload installs. H12 compares the two and fails on any divergence, so a release that adds a command, a skill, a long description or a name collision turns CI red with the reason named. That failure is the signal to update the table, re-prove an upload, and move the baseline forward. Nothing here is meant to auto-heal: a silent fix would hide the very drift this exists to surface.",
   "unknowns": {

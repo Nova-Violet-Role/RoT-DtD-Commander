@@ -5,7 +5,7 @@
 <rect width="710" height="654" fill="#ffffff"/>
 <rect x="40" y="293" width="210" height="68" rx="10" fill="#f2f4f8"/>
 <text x="145" y="321" font-size="14" font-weight="600" fill="#1a1d24" text-anchor="middle">RoT DtD Commander</text>
-<text x="145" y="343" font-size="12" fill="#5b6472" text-anchor="middle">143 commands · 22 skills · 5 agents</text>
+<text x="145" y="343" font-size="12" fill="#5b6472" text-anchor="middle">143 commands · 23 skills · 5 agents</text>
 <path d="M 250 327 C 295 327, 295 57, 340 57" fill="none" stroke="#27ae60" stroke-width="1.4" opacity="0.55"/>
 <circle cx="340" cy="57" r="3.5" fill="#27ae60"/>
 <text x="352" y="61" font-size="12.5" fill="#1a1d24">🎯 Thinking models</text>

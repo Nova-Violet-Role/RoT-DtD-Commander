@@ -1,0 +1,33 @@
+# bridge.yaml — the ask bridge, the cache bridge and the folded-scalar layer
+# for dtd-creation-suite-rot-domain. Folded scalars (>) carry prose that
+# folds to one line; literal scalars (|) keep line breaks. The %YAML
+# directive names the version; the %TAG directive is NOT used — no custom
+# tags, so the yaml_tags guard holds everywhere this file is read.
+%YAML 1.2
+---
+skill: dtd-creation-suite-rot-domain
+triple:
+    - SKILL.md
+    - references/domains.nt
+    - references/bridge.yaml
+ask_bridge:
+    runs: at most once per routing
+    questions: at most four
+    shape: >
+        One AskUserQuestion call with two to four questions drawn from
+        what the routing needs: what is made or found, whether visuals
+        matter, whether depth or a cache bridge matters, one or chain.
+    skips: anything the request already states
+cache_bridge:
+    offered: when long, heavy, or drifted
+    writes: CACHE.file under CACHE.dir in CACHE.form
+    resumes: the next call reads the file before analysis
+    ends_with: CACHE.compact as the last line
+folded_layer:
+    carries: prose that folds
+    keeps: literal blocks keep breaks
+    refuses: custom tags, anchors above cap, tabs in indent
+depth_marks:
+    md: blockquote count per DEPTH.mark.md
+    nt: content count per DEPTH.mark.nt
+    bound: DEPTH.max levels, deeper rewritten as siblings
