@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — re-posted spec deltas + LZ-BINARY authority (measured 2026-09-11)
+# Spec re-read whole this turn (kept in mind per user); LZ-BINARY.md head 120 + env-grep 64 hits + §14 whole (1695-1851) read
+
+lz-binary-env-table:
+    - BASH_DEFAULT_TIMEOUT_MS: 86400000 ms; fallback-default fn qyt
+    - BASH_MAX_TIMEOUT_MS: 86400000 ms; floor fallback fg_=600000 (10min); floor is max(max,default)
+    - CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS: 86400000 ms
+    - CLAUDE_CODE_PWSH_PARSE_TIMEOUT_MS: 86400000 ms
+    - CLAUDE_CODE_GLOB_TIMEOUT_SECONDS: 86400 SECONDS (unit trap: not ms)
+    - CLAUDE_SUBAGENT_BG_SHELL_MAX_MS: 86400000 ms
+    - CLAUDE_CODE_DISABLE_BG_SHELL_PRESSURE_REAP: 1 flag
+    - CLAUDE_CODE_STOP_HOOK_BLOCK_CAP: 1000000 count
+    - CLAUDE_CODE_MAX_OUTPUT_TOKENS: catalog default (64000 opus-5), clamp [1, upper 128000] via kte; invalid/0 -> default; only user knob for max_tokens
+    - CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION: 200
+    - CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS: 25000 silent truncation
+    - binary-notes: 4 claude.exe copies drift (2.1.223/226/220); grep -a text search; same-length patch rule; hard-link in-place rule
+
+thinking-correction-binding:
+    > Spec's MAX_THINKING_TOKENS=0-off + percent-table is STALE for 5-series (measured §14, binary 2.1.268): budget resolves then is DISCARDED on the adaptive branch; clamp [1024, rF-1] arithmetically right but unreachable; 5%=6400 legal yet inert.
+    > CORRECTED chooser: --effort low/med/high/xhigh/max is the live dial (opus-5 cost low .67 med .76 high 1 xhigh 1.6 max 1.7, default high; fable-5 low .6 … max 1.91 + per_turn_effort); hard zero = --thinking disabled (opus-5 measured 0; fable rejects_disabled_thinking); MAX_THINKING_TOKENS left UNSET (else reads-configured-while-inert AND errors with effort); --max-thinking-tokens silently dead (print-only); flag/env twins unproven-equal (--effort low 994 vs CLAUDE_EFFORT=low 3002 one sample each).
+    > Preview note corrected: "thinking off via effort low + unset budget; hard zero via --thinking disabled (opus-5; fable rejects)" — replaces spec's effort-gated-0 table.
+
+depth-type-corrected-map:
+    signal-md-nt:
+        > Depth: md >-count (blockquote) = nt >-count IN CONTENT after string tag (pretty-printed)
+        > Label: md [!IMPORTANT] = nt text content or key name
+        > String tag: md N/A = nt first '> '+space always stripped
+        > Two roles: md one (blockquote) = nt two (first structural, rest visual depth)
+    pretty-print: re.sub first-tag-strip; renderer lives in Program, AMPLIFIED by .dtd LAW (not replaced)
+    no-whitespace-form: tab-indented '> > [!X]' nests without spaces (NestedText 3.8 technique)
+
+variant-chain-dtd:
+    order: RNG ENT MOD DCL XSD SCH XSL NVDL DITA DITAMAP XSPEC RELS SOC FRAMEWORK XHTML SVG CHAIN SKILL SCHEMATIC DEPTH DOCUMENT-TYPE-DEFINITION
+    skill: DTD-CREATION-SUITE-ROT-DOMAIN.md/nt/yaml — DOMAIN-TYPE-DEFINITION routing, Graphic+Schematic polyglot (SVG-in-yaml/md screenshot hosting), 1-time ask + save-my-cache bridge, Research-family trigger, Save-ur-cache mid-WIP, drift time-out triggers (patches/directives/debug/family-activation), CHAIN-DTD multi-activation incl. Phantom/Thinking no-ask commands, skills OVERHAUL+rename allowed
+
+sigil-examples-new:
+    marks: $MARK $LOG ${#PCDATA-EXAMPLE} ${#CDATA-EXAMPLE} DTD={@NDATA-EXAMPLE} $INFO $% $@ $ARGUMENTS
+    task: simplify $SIGIL guide around $-is-the-power; expandable; collision table is backbone

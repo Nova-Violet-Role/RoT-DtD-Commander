@@ -217,10 +217,10 @@ Measured:
 - `node lib/arm.mjs controls`: 6 run, 0 failing
 - `node checker/scala.mjs --controls`: 32 run, 0 failing
 - `node lib/chain.mjs controls`: 30 run, 0 failing
-- `node checker/contract-audit.mjs`: 2057 declarations, 0 unused, 0 law gaps
+- `node checker/contract-audit.mjs`: 2058 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 85 commands in the gate chain, 0 missing from gate.yml
 - `node checker/release-notes.mjs --versions`: one version everywhere, 9.1.0, recognised (class mid) from the verbs kept in run 10
-- 143 commands, 23 skills, 5 agents; checked 171; 2057 declarations; 85 gate-chain commands
+- 143 commands, 23 skills, 5 agents; checked 171; 2058 declarations; 85 gate-chain commands
 
 ## 9.0.0 (2026-09-07)
 

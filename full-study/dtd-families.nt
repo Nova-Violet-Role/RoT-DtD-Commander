@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — DTD family corpus index (per-folder, one gulp)
+# Root: cc-resources/.dtd-file-examples/ (27 entries measured)
+
+folders:
+    - svg
+    - xhtml
+    - xhtml11
+    - tei
+    - mathml
+    - docbook
+    - JATS-DTDs
+    - daisy
+    - office
+    - dtds
+    - org.oasis-open.dita.v1_2
+    - org.oasis-open.dita.v1_3
+    - org.dita.specialization.dita11
+    - org.lwdita
+    - org.oasis-open.xdita.v0_2_2
+    - com.elovirta.ooxml
+    - com.sophos.tocjs
+
+loose-files:
+    - XMLSchema.dtd
+    - XMLSchema2004.dtd
+    - datatypes.dtd
+    - datatypes2004.dtd
+    - ModularMonet.dtd
+    - WMSDKNS.DTD
+    - edoc.dtd
+    - gdb-syscalls.dtd
+    - krita.dtd
+    - language.dtd
+
+note:
+    > .codemap/cc-resources copy is an index of .codemap.json, holds no DTD; originals above are the study target.
+    > Per-folder .nt detail deferred; this index fixes the folder list so transmigration can proceed folder-by-folder without re-study.
+    > Variants to interlink: RNG ENT MOD DCL XSD SCH XSL NVDL DITA DITAMAP XSPEC RELS SOC FRAMEWORK XHTML SVG CHAIN SKILL SCHEMATIC DEPTH.

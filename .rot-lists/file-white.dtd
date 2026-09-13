@@ -16,6 +16,7 @@
 <!ENTITY LIST.entry.sh "the companion audit and the checker controls|2026-09-04|||">
 <!ENTITY LIST.entry.json "the manifests, the sigils and the settings|2026-09-04|||">
 <!ENTITY LIST.entry.yml "the workflows the gate runs in|2026-09-04|||">
+<!ENTITY LIST.entry.yaml "the yaml reading of a polyglot artifact, the bridge the suite skill declares; one of the three readings 10.0.0 ships, and distinct from yml, which is the workflow extension|2026-09-13|||">
 <!ENTITY LIST.entry.tape "the VHS scripts that record the demonstrations; becomes gif in production|2026-09-04|||gif">
 <!ENTITY LIST.entry.gif "the recorded demonstrations the README shows|2026-09-04|||">
 <!ENTITY LIST.entry.xhtml "the generated glossary; valid XHTML 1.1 so a DTD-reading validator can judge the reference page of a project about declared grammars|2026-09-05|||">

@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — loose pair: XMLSchema.dtd + datatypes.dtd (+2004 revisions noted)
+# Sources: cc-resources/.dtd-file-examples/{XMLSchema.dtd (head 60/402), datatypes.dtd (whole 203)}
+
+self-description:
+    > A DTD for XML Schemas: NOT normative, prose REC definitive — the grammar declares its own non-authority in-band (precedent: our checker refuses prose/declaration drift, same sentence in both places).
+    xs-datatypes: external PUBLIC include of datatypes.dtd (composition, not copy)
+    namespace-parameterization: %p 'xs:' + %s ':xs' redefinable in the consumer's INTERNAL SUBSET (driver-file override, LAW.ASK.11 shape in the wild)
+    element-names: 20+ %name entities (schema complexType element unique key keyref selector field group all choice sequence any include import redefine notation annotation appinfo documentation)
+
+facet-algebra-datatypes:
+    facets: length min/maxLength pattern enumeration whiteSpace max/minInclusive/Exclusive totalDigits fractionDigits
+    composition: minBound maxBound numeric ordered unordered facet (union of unions)
+    customization-hooks: %<facet>Attrs "" empty defaults per facet (override points, cf TEI.extensions.ent)
+    admitted-underconstraint:
+        > "less restrictive than really intended" stated IN the file (mutual exclusion unenforced, repeat rules documented not declared) — the honest-partial pattern behind our partial verdicts.
+    informative-types: URIref XPathExpr QName/QNames NCName nonNegativeInteger boolean derivationSet
+
+2004-revisions:
+    > XMLSchema2004.dtd (349 lines) + datatypes2004.dtd (164 lines) beside the 2001 pair — dated revisioning by filename, as our ordinal-before-.md multi-file runs.

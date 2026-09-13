@@ -7,14 +7,14 @@
 <text x="26" y="32" font-size="19" font-weight="600" fill="#e6e9ef">What is claimed, and the instrument behind each claim</text>
 <text x="26" y="54" font-size="13" fill="#9aa3b2">26 claims. Every one names a command you can run yourself.</text>
 <line x1="26" y1="62" x2="794" y2="62" stroke="#242938" stroke-width="1"/>
-<text x="26" y="88" font-size="13" fill="#e6e9ef">139 commands, 22 skills, 5 agents carry a DOCTYPE</text>
+<text x="26" y="88" font-size="13" fill="#e6e9ef">143 commands, 23 skills, 5 agents carry a DOCTYPE</text>
 <text x="38" y="112" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">rdc list</text>
 <text x="794" y="124" font-size="11" fill="#9aa3b2" text-anchor="end">2026-09-07</text>
 <text x="26" y="148" font-size="13" fill="#e6e9ef">every source passes rules C1 to C16</text>
-<text x="38" y="172" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">rdc check: checked 166 failed 0</text>
+<text x="38" y="172" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">rdc check: checked 171 failed 0</text>
 <text x="794" y="184" font-size="11" fill="#9aa3b2" text-anchor="end">2026-09-07</text>
 <text x="26" y="208" font-size="13" fill="#e6e9ef">the committed resolved tree equals a fresh build</text>
-<text x="38" y="232" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">rdc build --check: 303 targets, 0 drifted, 0 failing</text>
+<text x="38" y="232" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">rdc build --check: 310 targets, 0 drifted, 0 failing</text>
 <text x="794" y="244" font-size="11" fill="#9aa3b2" text-anchor="end">2026-09-07</text>
 <text x="26" y="268" font-size="13" fill="#e6e9ef">the checker refuses every defect it names -- a removed declaration, a (CDATA) model, an</text>
 <text x="26" y="286" font-size="13" fill="#e6e9ef">orphan element, a crammed heading, a missing sigil, a front-matter value YAML would misread,</text>
@@ -25,7 +25,7 @@
 <text x="794" y="376" font-size="11" fill="#9aa3b2" text-anchor="end">2026-09-07</text>
 <text x="26" y="400" font-size="13" fill="#e6e9ef">every declaration in the subsets and the Adiutor contract is used by a source, every law</text>
 <text x="26" y="418" font-size="13" fill="#e6e9ef">prefix is numbered densely, and every law family is read in ascending order</text>
-<text x="38" y="442" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">node checker/contract-audit.mjs: 1932 declarations, 0 unused, 0 law gaps, and the</text>
+<text x="38" y="442" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">node checker/contract-audit.mjs: 2058 declarations, 0 unused, 0 law gaps, and the</text>
 <text x="38" y="460" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">three planted controls</text>
 <text x="794" y="472" font-size="11" fill="#9aa3b2" text-anchor="end">2026-09-07</text>
 <text x="26" y="496" font-size="13" fill="#e6e9ef">the Adiutor finds a missing heading, blocks once and never twice, stays silent on</text>
@@ -127,7 +127,7 @@
 <text x="794" y="2332" font-size="11" fill="#9aa3b2" text-anchor="end">every gate run</text>
 <text x="26" y="2356" font-size="13" fill="#e6e9ef">every subset the repository declares is installed, and a version the recognizer disputes is</text>
 <text x="26" y="2374" font-size="13" fill="#e6e9ef">refused</text>
-<text x="38" y="2398" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">rdc doctor row subsets: 31 subsets, every one installed (run against your own</text>
+<text x="38" y="2398" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">rdc doctor row subsets: 35 subsets, every one installed (run against your own</text>
 <text x="38" y="2416" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">installation, not in CI); node checker/release-notes.mjs --versions: the recognised</text>
 <text x="38" y="2434" font-size="12" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#9aa3b2">class and version printed beside the manifests</text>
 <text x="794" y="2446" font-size="11" fill="#9aa3b2" text-anchor="end">every push</text>

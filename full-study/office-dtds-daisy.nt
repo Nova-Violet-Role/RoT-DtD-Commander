@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — office/ + dtds/ + daisy/ folders (measured listings: 27 + 12 + 12)
+# Sources: cc-resources/.dtd-file-examples/{office,dtds,daisy}/
+
+office-openoffice-era:
+    parts-dtd: Manifest dialog event groupuinames image libraries library module statusbar toolbar accelerator
+    feature-mod: chart datastyl defs drawing dtypes event form image meta module nmspace office script settings statusbar style table text
+    driver: office.dtd + office.mod
+    mechanism:
+        > Part-per-file .dtd for document components + feature .mod for shared vocabularies under one driver — parts vs features split, the same cut as our commands/ (verbs) vs dtd/ (shared subsets).
+
+dtds-micro-twelve:
+    files: dc itunes mscml pocsettings presence reginfo rlmi rss smil watcherinfo xcap-caps xcap-error
+    mechanism:
+        > Single-file protocol/feed grammars (RSS/SMIL/presence/presence-lists/XCAP) with no modules at all — the floor of DTD practice: one file, no subsets, still versioned. Our smallest commands should read like these.
+
+daisy-accessibility:
+    versions: dtbook-2005-1/2/3 + dtbsmil-2005-1/2 + ncx-2005-1 + bookmark/distInfo/resource + oeb12.ent + oebpkg12.dtd + basic.css
+    mechanism:
+        > Parallel text (dtbook) + audio-sync (dtbsmil) + navigation (ncx) + package (oebpkg) side by side per version — multi-track publishing where tracks share entities; precedent for our .md+.nt hybrid pair sharing one record.

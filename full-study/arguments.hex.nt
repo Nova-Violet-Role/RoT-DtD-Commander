@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — arguments part 6: trap, xargs/mapfile, polyglot k8s/report/terraform (measured lines 561-690/829)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES.md
+
+trap-handlers:
+    pattern: cleanup() { echo "Cleaning up (was processing: $*)"; }; trap cleanup EXIT; for job in "$@"
+    note: handler sees $@ at fire-time values
+
+xargs-mapfile:
+    - echo "$@" | xargs -n1 echo "Processing:"
+    - mapfile -t files < <(printf '%s\n' "$@"); ${files[0]}, ${#files[@]}
+
+polyglot-k8s:
+    parse: while+case --env/--region/--replicas with shift 2
+    emit: manifest.yaml via <<EOF with ${env:-dev} ${region:-us-east-1} ${replicas:-1} + DEPLOY_ARGS value "$*"
+
+polyglot-report:
+    dynamic-callout: [!$( [[ "$3" == "FAIL" ]] && echo danger || echo success )] with nt checks [$1 $2 $3], summary Total/Passed/Failed via grep -c on "$@"
+
+polyglot-terraform:
+    emit: main.tf resource tags Name "vpc-$1" Args "$*"; nested user_data <<-EOT heredoc-inside-heredoc

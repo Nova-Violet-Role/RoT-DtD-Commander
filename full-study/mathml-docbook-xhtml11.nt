@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — mathml/ + docbook/ + xhtml11/ folders (measured listings)
+# Sources: cc-resources/.dtd-file-examples/{mathml,docbook,xhtml11}/
+
+mathml:
+    top: 2.0/ 3.0/ catalog.xml dtd/ pdfMathML.xsl plugin.xml xhtmlMathML.xsl
+    dtd: ditabase.dtd + mathmlDomain2.ent + mathmlDomain2.mod
+    mechanism:
+        > MathML carried as a DITA DOMAIN specialization (ditabase + Domain.mod/ent pair) — the exact DITA-domain pattern our DTD-variant chain names; presentation handled by XSL out-of-band.
+
+docbook:
+    versions: 4.2/ 4.3/ 4.4/ 4.5/ 5.0/ 5.1/ (SGML-line 4.x beside XML-line 5.x)
+    5.1-stack: catalog.xml + docbook.nvdl + rng/ + sch/ + tools/ (NO dtd/)
+    mechanism:
+        > Post-DTD validation stack: RELAX NG grammar + Schematron rules + NVDL dispatch, version-catalogued side by side — precedent for layering our checker controls behind the grammar instead of inside it.
+
+xhtml11:
+    dtd: VERSION xhtml-lat1/special/symbol.ent xhtml-math-svg-flat.dtd xhtml-special xhtml11-flat.dtd xhtml11-model-1.mod xhtml11.dtd xhtmlcatalog.xml + schema/ sibling
+    mechanism:
+        > Flat vs modular drivers shipped together (xhtml11.dtd + xhtml11-flat.dtd + model-1.mod) with a math+svg mix profile — same one-skeleton-many-profiles shape as strict/transitional/frameset and our gate-1/2/3 ramification.

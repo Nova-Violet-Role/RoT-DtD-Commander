@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — sigil part 2: substitution, special vars, cross-shell, build systems, CI (measured lines 81-210/384)
+# Source: artifacts/_sweep/byproducts/$SIGIL_VARIABLES_VARIANTS.md
+
+substitution:
+    - $(...): preferred nestable; `...`: legacy hard-to-nest; $(<file): no-fork read
+    - $((...)): arithmetic; $[...]: legacy superseded
+    - $'...': ANSI-C escapes; $"...": locale i18n
+    - <(...)/>(...): process substitution in/out
+
+special-vars:
+    - RANDOM/SRANDOM/SECONDS/LINENO/FUNCNAME/BASH_SOURCE/BASH_LINENO/BASH_SUBSHELL/BASHPID/PIPESTATUS/BASH_REMATCH/EPOCHSECONDS/EPOCHREALTIME/BASH_COMMAND/REPLY/OPTARG/OPTIND/IFS/PS0-4/PROMPT_COMMAND/PWD/OLDPWD/SHLVL/UID/EUID/GROUPS/HOSTNAME/OSTYPE/LINES/COLUMNS/COMP_*/FUNCNEST/GLOBIGNORE/CDPATH/TMOUT/HISTFILE/HISTSIZE
+
+cross-shell:
+    - zsh: $argv $ZSH_ARGZERO 1-based arrays no-default-split ${(s:x:)v} ${(j:,:)a} ${(f)/(F)} ${(U)/(P)/(q)} $pipestatus $funcstack
+    - ksh: ${.sh.version} ${.sh.match} discipline functions
+    - fish: $argv $status $pipestatus, NO $@/$$/$() — (command) instead, lists everywhere
+    - nushell: $env $in $nu
+    - powershell: $args $_/$PSItem $?-boolean $LASTEXITCODE $Error $MyInvocation $PSScriptRoot $null/$true/$false $Matches $PID scope-mods global/script/local/env/using splat @args vs $args
+    - cmd: %-sigil contrast %1 %* %~dp1
+
+build-systems:
+    - make: $@-target $< $^ $+ $?-newer $* $% $| D/F-variants; $$ escapes to shell; trap: recipe $@ is Make-target, shell-$@ needs $$@
+    - cmake: ${VAR} $ENV{} $CACHE{} genex $<CONFIG> $<TARGET_FILE:t> $<IF:> $<JOIN:> evaluated at generate-time
+    - bazel: $(location) $@-output $< $OUTS; just: {{var}} not $; ninja: $in $out $$-escape
+
+ci-config:
+    - docker-compose: ${VAR:-} $$-escape, ARG-vs-ENV timing
+    - k8s: $(VAR_NAME) $$(VAR)-literal downward-API
+    - github-actions-TRAP:
+        > ${{ }} substituted TEXTUALLY before shell runs — untrusted github.event.* (title/body/ref/label/branch) = script injection; even branch 'zzz";echo${IFS}"hello";#' attacks. Gate.yml generator MUST sanitize every interpolated event field (measured source lines 201-202).
+    - gitlab: $CI_* $$-escape; azure: $(var) vs ${{ }} vs $[ ]; jenkins: GString ${}; systemd: $VAR $$-literal %i/%n; terraform: ${} $${-escape} %{} <<EOT; helm: {{ }} $-root

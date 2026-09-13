@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — polyglot guide part 2: YAML nesting, anchors, heredocs, terraform (measured lines 61-190/813)
+# Source: artifacts/_sweep/byproducts/DTD_GUIDE_PROMPT_POLYGLOT_EXAMPLES.md
+
+yaml-nesting:
+    rules: tabs-FORBIDDEN, 2-space convention, less-indent ends block
+    forms: nested maps, sequences, seq-in-seq, block-scalar-in-seq (| and >), map-in-seq-in-map (name+body|-script)
+
+anchors-merge:
+    pattern: defaults: &defaults; prod: <<: *defaults + override
+    multi: <<: [*base, *retry] leftmost-wins
+    gotcha: merge SHALLOW — nested maps replaced not deep-merged (matrix-law: shared gate.yml defaults must be flat)
+
+heredoc-table:
+    - <<EOF: expand yes, indent none
+    - <<'EOF': expand NO
+    - <<-EOF: expand yes + TAB-strip (tabs ONLY never spaces)
+    - <<-'EOF': expand no + tab-strip
+    - <<<"text": here-string single-line
+    nested-rules: unique delimiter per level; closing must match exactly (or tab-indented under <<-)
+
+terraform-heredocs:
+    - <<EOT: preserves indentation
+    - <<-EOT: strips common leading whitespace
+    - nested: <<-OUTER with inner << 'INNER' quoted-literal
+    relevance: gate.yml-adjacent TF runners use identical emission rules

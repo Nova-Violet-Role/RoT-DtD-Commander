@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — $ sigil variables catalogue (expanded skeleton)
+# Source: artifacts/_sweep/byproducts/$SIGIL_VARIABLES_VARIANTS.md (384 lines)
+
+catalogue:
+    topic-1-shell-expansion:
+        - ${var:-word}
+        - ${var-word}
+        - ${var:=word}
+        - ${var:?msg}
+        - ${var:+word}
+        - ${#var}
+        - ${var:offset:length}
+        - ${var#pat}
+        - ${var##pat}
+        - ${var%pat}
+        - ${var%%pat}
+        - ${var/pat/rep}
+        - ${var//pat/rep}
+        - ${var^}
+        - ${var^^}
+        - ${var,,}
+        - ${!var}
+        - ${arr[@]}
+    transform-ops:
+        - @U
+        - @u
+        - @L
+        - @Q
+        - @E
+        - @P
+        - @A
+        - @K
+
+simplification-target:
+    > User asked: simplify $SIGIL section; expand since $ is the power ($ARGUMENTS one piece; $MARK $LOG ${#PCDATA} {@NDATA} DTD={@NDATA} etc).
+    > Decision (round 3): Full+variants — full simplify plus DTD variant cross-links.
+    > Next: per-sigil one-line purpose + safe form + collision row.

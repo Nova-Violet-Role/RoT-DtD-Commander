@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — arguments part 4: nested functions, shift-dispatch, arrays, loops (measured lines 321-440/829)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES.md
+
+nested-functions:
+    chain: outer "$@" -> inner "$@" -> innermost — args relayed intact quoted at each level
+    shift-dispatch:
+        > target="$1"; shift; helper "$@" — head consumed, tail forwarded; Target deploy, Remaining web-1 web-2 db-1
+
+arrays:
+    store: args=( "$@" )
+    access: ${args[0]} ${args[1]} ${args[2]}
+    slice: ${args[@]:1} ${args[@]:0:2}
+    length: ${#args[@]}
+    reverse: "${args[@]: -1}" "${args[@]: -2}" "${args[@]: -3}"
+    map: for a in "${args[@]}"; do mapped+=( "$(upper "$a")" ); done
+
+loops:
+    for-case: for arg in "$@"; do case "$arg" in --verbose/--debug/--output) shift; OUTPUT="$1";; *) Unknown;; esac; done
+    while-shift-idiom: while [[ $# -gt 0 ]]; do case "$1" in -v/-o/--name) shift 2;; esac; done
+    relevance:
+        > This while+shift+case idiom is the exact parser the matrix command's 7-8 guided rounds compile down to: flags --model --effort --thinking --os --seals consumed head-first, remainder forwarded.
+
+assimilation-note:
+    > Lines 441-829 still queued (getopts/getopt long-opts, error handling, strict-mode patterns per ToC).

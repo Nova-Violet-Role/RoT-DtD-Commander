@@ -632,10 +632,10 @@ argument-hint: [path to the target, or leave blank for the current one; --verbos
 <!ENTITY MX.san.gha "${{ }} substituted textually before the shell runs|sanitize every interpolated event field; env-indirection pattern, never inline">
 <!ENTITY MX.san.xxe "ENTITY SYSTEM from args|no-DTD parsers, whitelist ^[a-zA-Z0-9._/-]+$, CDATA for untrusted content">
 <!ENTITY MX.san.cdata "]]> split-and-reopen|every CDATA-wrapped arg passes the split first">
-<!ENTITY MX.san.pcdata "five-char escape & < > \" '|every PCDATA interpolation passes all five">
+<!ENTITY MX.san.pcdata "five-char escape: ampersand, less-than, greater-than, double quote, apostrophe|every PCDATA interpolation passes all five">
 <!ENTITY MX.san.ndata "path whitelist, no .. segments|sealed transport obeys the same whitelist">
 <!ENTITY MX.san.yaml "safe-only loaders, no !! tags, anchor and depth caps, merges frozen|the .nt cache needs none of this">
-<!ENTITY MX.san.dispatch "$@" dispatch only|eval banned in every verb the .mjs carrier introduces">
+<!ENTITY MX.san.dispatch "the quoted dollar-at form, dispatch only|eval banned in every verb the .mjs carrier introduces">
 <!ENTITY MX.san "gha|xxe|cdata|pcdata|ndata|yaml|dispatch">
 <!ENTITY MX.san.count "7">
 

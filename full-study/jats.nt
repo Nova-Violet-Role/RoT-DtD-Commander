@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — JATS-DTDs/ folder (73 entries, measured listing + driver head 45/861)
+# Source: cc-resources/.dtd-file-examples/JATS-DTDs/
+
+drivers-3:
+    - JATS-articleauthoring1-mathml3.dtd (creation-optimized)
+    - JATS-journalpublishing1-mathml3.dtd (publishing-optimized, ANSI/NISO Z39.96-2015 v1.1)
+    - JATS-journalpub-oasis variant + BITS-book2.dtd + BITS-book-oasis2.dtd (book tag set)
+    pattern:
+        > Archiving-and-Interchange SUBSET optimized per use (authoring vs publishing) — subsetting as profiling, same skeleton lighter per role.
+
+customization-quartet:
+    per-profile: custom-classes + custom-mixes + custom-models + custom-modules .ent files (bookcustom, articleauthcustom, journalpubcustom, journalpub-oasis, BITS-book-oasis, BITS-bookcustom)
+    mechanism:
+        > Four-slot override (classes/mixes/models/modules) per customization layer — the extension contract our MX extended-legs + CG unlocked-scope should mirror: override slots named ahead, never ad hoc.
+
+embedded:
+    - mathml3-qname1.mod + mathml3-modules + mathml3.dtd + mathml/ subdir (MathML3 carried inside JATS)
+    - xhtml-table-1.mod + xhtml-inlstyle-1.mod (XHTML modules reused, not reinvented)
+    - iso8879/ iso9573-13/ xmlchars/ entity farms + catalog-jats (base/no-base pair)
+    - Smallsamples/ fixtures
+
+assimilation-note:
+    > JATS header block (MODULE/VERSION/DATE/PUBLIC invocation/SYSTEM/PURPOSE/SPONSOR) is the documentation discipline our command frontmatter only partly matches — description+argument-hint vs MODULE+PURPOSE+CREATED-FOR.

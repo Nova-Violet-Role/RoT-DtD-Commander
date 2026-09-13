@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - svg/ per-folder DETAIL pass (measured 2026-09-13)
+# Source: cc-resources/.dtd-file-examples/svg/ - 55 entries, 49 .mod, 5 drivers
+# Extends svg.nt, which read the driver head and one module and deferred the rest.
+
+measured:
+    modules: 49 .mod files
+    drivers:
+        svg10.dtd: 1704 lines, MONOLITHIC
+        svg11.dtd: 333 lines, modular
+        svg11-basic.dtd: 309 lines, modular
+        svg11-tiny.dtd: 197 lines, modular
+        svg11-tiny-flat.dtd: 2808 lines, THE SAME PROFILE flattened
+    module-families: animation clip color conditional cursor datatypes extensibility filter font framework gradient hyperlink image marker mask paint pattern profile qname script shape structure style text view, plus the -attrib collections and the per-profile attribs and model modules
+
+the-two-numbers-that-matter:
+    modularisation:
+        > SVG 1.0 is 1704 lines in one file. SVG 1.1 is 333 lines plus 49 modules.
+        > The vocabulary did not shrink; the driver did. A driver that names its
+        > parts is a tenth the size of one that contains them.
+    flat-versus-modular:
+        > svg11-tiny.dtd is 197 lines and svg11-tiny-flat.dtd is 2808. SAME PROFILE,
+        > two shipped forms, a factor of fourteen. The modular form is for humans and
+        > maintenance; the flat form is for a consumer that cannot follow external
+        > parameter entities. BOTH SHIP.
+        > This is the measured answer to stream 17's real risk. A triple per artifact
+        > is not 429 files to maintain; it is one source and a flattened emission
+        > beside it, exactly as SVG has shipped since 2001 and TEI since ODD.
+
+the-precedence-mechanism-verbatim:
+    placeholders: %svg-prefw-redecl.module; and %svg-postfw-redecl.module;
+    occurrences: 6 in svg11.dtd
+    reading:
+        > SVG declares TWO override points, not one: prefw, before the framework
+        > loads, and postfw, after. Each is a marked section whose default is IGNORE,
+        > so the placeholder is inert until a profile switches it to INCLUDE.
+        > Precedence is therefore a declared POSITION, not a race between
+        > declarations. First-wins is what happens when nobody declared where the
+        > override belongs.
+        > For stream 4, depth as precedence: this is the corpus saying that a
+        > precedence law needs a named slot, not only an order. depth.dtd should
+        > declare WHERE an override may sit, the way SVG names prefw and postfw,
+        > and the reverse read then resolves which one fired.
+qname-and-attrib-collections:
+    > Every element name is a parameter entity ending .qname and every attribute set
+    > is a collection ending .attrib, both declared empty by default. A profile fills
+    > the collections it wants and leaves the rest empty, and the content models never
+    > change. The empty default is the mechanism: a module can be included by a
+    > profile that uses none of it, at zero cost.
+    > Same shape as TEI's TEI.extensions.ent declared empty and invoked immediately.
+    > Three corpora now measured using one idiom: declare the hook empty, invoke it at
+    > once, let the consumer fill it. That is the strongest cross-corpus pattern found.
+gaps-remaining:
+    > Per-module content models are still not transmigrated; 49 modules at roughly
+    > 300 lines each is a pass of its own. The driver sizes, the flat-versus-modular
+    > pair and the two redecl slots are what streams 4 and 17 needed.

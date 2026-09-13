@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — xhtml1-strict driver head (measured lines 1-60/966)
+# Source: cc-resources/.dtd-file-examples/xhtml/dtd/xhtml1-strict.dtd
+
+identity:
+    public: -//W3C//DTD XHTML 1.0 Strict//EN
+    system: http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd
+    namespace: http://www.w3.org/1999/xhtml
+    note: same as HTML4 Strict modulo XML-vs-SGML differences
+
+entity-imports:
+    - HTMLlat1: xhtml-lat1.ent (PUBLIC -//W3C//ENTITIES Latin 1 for XHTML//EN), invoked immediately via %HTMLlat1;
+    - HTMLsymbol: xhtml-symbol.ent, invoked via %HTMLsymbol;
+    - HTMLspecial: xhtml-special.ent
+    pattern: declare-external-parameter-entity then invoke on next line — the include idiom behind svg .mod loading and our per-folder .nt includes
+
+imported-names:
+    - ContentType: CDATA (RFC2045 media type)
+    - ContentTypes: CDATA (comma-separated list)
+    - Charset: CDATA (RFC2045 encoding)
+    - Charsets: CDATA (space-separated list)
+    - LanguageCode: NMTOKEN (RFC3066)
+    - Character: CDATA (single character per XML 2.2)
+
+assimilation-note:
+    > Typed-name pattern (ContentType vs ContentTypes, Charset vs Charsets) = precedent for Depth.dtd vs Type.dtd split: scalar vs list, each with its RFC-like authority note.
+    > Strict vs transitional vs frameset diff still queued; .ent sample still queued.

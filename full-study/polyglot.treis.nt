@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — polyglot guide part 3: YAML injection class, summary table, NestedText core (measured lines 191-410/813)
+# Source: artifacts/_sweep/byproducts/DTD_GUIDE_PROMPT_POLYGLOT_EXAMPLES.md
+
+yaml-injection-class:
+    - pyyaml-rce: !!python/object/apply os.system (cp-bash suid-backdoor variant)
+    - psych-rce: !ruby/object MR::Shell command whoami; rails: --- !ruby/object:ActiveRecord::Base
+    - js-yaml: !!js/function constructor-constructor process exec
+    - billion-laughs-yaml: &a [*a×9] ×5 levels = 9^5 from ~500 bytes
+    - deep-nest-dos: 10000+ indent levels; CVE-2026-45133 Symfony doParse/parseBlock mutual recursion
+    - merge-bypass: <<: *anchor + &anchor !!python/object (PyYAML <5.4)
+    - template-newline: image "evil\n command [...]" rancher/rails
+    gate-law:
+        > RunnerªYAML rule: generated gate.yml parsed with SAFE-ONLY loaders (no !! tags), anchor/alias caps, depth caps, merge-keys resolved-then-frozen. NT cache needs none of this — zero execution surface.
+
+summary-table-7:
+    yaml: |-::{-|+ / >-::{-|+ / N-indent / maps / seqs / merge-<< / anchors-&*
+    shell: <<EOF / <<'EOF' / <<-EOF / nested-unique-delims / <<<string
+    terraform: <<EOT / <<-EOT / nested
+    injection: 7 rows above keyed by !!-tag / nesting / newline
+
+nestedtext-core:
+    tags: key:-value / key:-nested / ---list / ---nested / >-multiline / >-alone-blank-line / #-comment
+    nesting: dict-in-dict / list-in-dict / dict-in-list / multiline-in-dict+list / arbitrary-depth a-b-c-d-e
+    vs-yaml: 3-types-only / NO-implicit-typing / NO-exec / quoting-never / >-vs-|/literal / NO-anchors / NO-merge / tabs-forbidden-both
+    edge-cases:
+        > Preserved leading whitespace after >-tag; blank via lone >; '> name:...' and '> - ...' inert (no ambiguity); inline rest-of-line tolerates : - > chars

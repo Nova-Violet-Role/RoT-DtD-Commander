@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — tei/ folder (102 entries, measured listing + tei.dtd head 50/2620)
+# Source: cc-resources/.dtd-file-examples/tei/
+
+layout:
+    triplets-per-module: name-decl.dtd + name.dtd + name.rnc + name.rng (20 modules: analysis certainty core corpus dictionaries drama figures gaiji header iso-fs linking msdescription namesdates nets spoken tagdocs textcrit textstructure transcr verse)
+    drivers: tei.dtd + tei_all/bare/corpus/customization/drama/enrich/its/jtei/lite/math/minimal/ms/odds/simplePrint/speech/svg/tite/xinclude + tei.rnc/rng
+
+mechanisms:
+    - odd-single-source: tei.dtd generated from ODD 2019-01-29, v3.5.0 rev 3c0c64ec4 — one literate source emits DTD+RNG+RNC together (precedent: our build resolves src/ to commands/ the same direction)
+    - qname-parameterization: <!ENTITY % n.TEI "TEI"> per element + <!ENTITY % NS ''> + <!ENTITY % TEI.extensions.ent ''> hook invoked immediately — extension point identical in shape to svg redecl placeholder
+    - multi-schema-publishing: every module ships all three grammars; consumers pick DTD-validating, RNG or compact RNC
+
+assimilation-note:
+    > Triplet discipline is the model for our own subset/command/built triple (dtd/*.dtd + src/commands + commands/).

@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — polyglot guide part 5 (FINAL): callout-NT overlap, JSON/TOML, full-stack, master summary (measured lines 631-813/813)
+# Source: artifacts/_sweep/byproducts/DTD_GUIDE_PROMPT_POLYGLOT_EXAMPLES.md — FILE NOW COMPLETE 813/813
+
+overlap-notes:
+    - callout-body-valid-nt: [!example] + ```nt key/list/nested-multiline (Obsidian purple box; NT parser valid on block)
+    - json-subset-yaml: flow JSON valid YAML, NOT valid NT (no braces syntax)
+    - toml-vs-yaml: [server] sections NOT YAML syntax but 1:1 data-model map
+    - fullstack-4-layer: two-heredoc report.md (frontmatter + success/example callouts + nt block); parsers: Bash writes / YAML frontmatter / MD renders / NT block parses
+
+master-summary:
+    rows: 6 yaml-scalar + indent/map/seq/merge/anchor + 3 nt-core + nesting + 4 shell-heredoc + 2 terraform + 3 obsidian-callout + github-alert + json-flow + toml-section + 7 injection + 7 polyglot-forms (each with polyglot-with column)
+
+takeaway-measured:
+    > NestedText is the safe counterpart to YAML — same indentation philosophy, zero implicit typing, zero execution surface; >-tag analogues |-scalar; one file simultaneously Bash+Markdown+YAML+NestedText, each parser reading its own layer. (measured source lines 810-813)
+
+file-complete:
+    > POLYGLOT 813/813 across 5 .nt (part-1 scalars in polyglot-greek.nt + 02 nesting/anchors/heredocs/TF + 03 injection/summary/NT-core + 04 callouts/forms + 05 overlap/master/takeaway).

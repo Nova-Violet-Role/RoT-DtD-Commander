@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — scaffold specs resumed from cache (comprehensive, uncapped hadopelagia honored)
+
+matrix-command:
+    name: git-gh-matrix-scala-dtd
+    law-file: .dtd LAW + .mjs verbs structure
+    delivers: finished gate.yml, tested per target
+    targets: app, program, project, claude-code-repo, folder
+    gate-choices:
+        - seals-count: 1-2 light vs 3+ heavy (BLAKE2B + others)
+        - os-matrix: 3-latest vs extended LTS+ARM
+        - shape: single vs ramified-gate-1-2-3 vs matrix-jobs vs manual
+        - ceiling-timeout-per-job + node-latest-checker
+        - model-tier: Sonnet5 default; Opus/Fable; manual Other; think-off note (reasoning via effort stays)
+        - effort: low med high xhigh max; thinking %: 5/25/50/100/other of 128k table
+        - env-tiers: think-subset + timeout-subset from LZ-BINARY (BASH_DEFAULT/MAX_TIMEOUT_MS, SESSIONEND_HOOKS_TIMEOUT_MS, PWSH_PARSE_TIMEOUT_MS, GLOB_TIMEOUT_SECONDS, SUBAGENT_BG_SHELL_MAX_MS, DISABLE_BG_SHELL_PRESSURE_REAP, STOP_HOOK_BLOCK_CAP, MAX_WEB_SEARCHES_PER_SESSION)
+        - cache-timer: 60m retrigger-count, .nt polyarm + .md >>> nesting
+    secrets:
+        > Credential.json imported sealed (BLAKE2B/various seals), runner blind, expiry rotation via re-encode; never obliged — model-guided 7-8 rounds specify scaling with previews of every requirement.
+
+companions:
+    - git-gh-companion-dtd: same-host Scala-capable, findings as .nt gulp-reverse (as in prior gate.yml run)
+    - companions-gate-dtd: bypassPermissions for companion/audit-runner/matrix-companion
+    - git-gh-family: long-unupdated, add chooser (seal-count, OS-count, model/effort/thinking)
+
+deep-branches:
+    hadal-deep-dive-dtd:
+        > Same question count as many (30 max), deeper user-context scoping, artifact transmuted to .nt/.md hybrid.
+    hadopelagia-deep-dive-dtd:
+        > MORE questions than many — NO round caps per user Other-answer; new ask forms [...], <[]>, ^[X/...]^, []^[]^[]^[] + creativity.
+    skill-suite:
+        > DTD-CREATION-SUITE-ROT-DOMAIN.md/nt/yaml: Depth.dtd (bracket density) + Type.dtd (dictionary relations) + YAML folded scalars + PCDATA/NDATA/CDATA mix; CHAIN-DTD semantic routing; save-my-cache bridge; drift time-out triggers; overhaul + rename stale skills.
+    preview-law:
+        > Every ask chain audited: PNG/SVG cube-expanding preview visible before answers, always.

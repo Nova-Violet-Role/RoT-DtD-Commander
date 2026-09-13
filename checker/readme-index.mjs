@@ -23,43 +23,85 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const BEGIN = '<!-- rdc-index:begin -->';
 const END = '<!-- rdc-index:end -->';
+// 10.0.0: the family prose was hand-written OUTSIDE every marker, so it said
+// fifteen families while this table declared seventeen and docs/ drew nineteen
+// groups -- three views of one tree that disagreed. It is generated now, from
+// the notes on the rows above, and --check refuses a README that drifts.
+const PROSE_BEGIN = '<!-- rdc-prose:begin -->';
+const PROSE_END = '<!-- rdc-prose:end -->';
 const SENTENCE_MAX = 140;
 
 // The families, in the order the README shows them. `rep` names the command
 // whose sigil the family borrows; `members` and `patterns` claim commands by
-// key (the file name without -dtd.md).
+// key (the file name without -dtd.md); `note` says what the family is FOR and
+// is the single source for the prose block below and for the glossary page.
+//
+// 10.0.0: the note used to live in checker/glossary.mjs as a local table of
+// FIFTEEN keys beside a seventeen-family index, so `chain` and `sigil` had no
+// description anywhere and the hand-written README prose mirrored the same
+// fifteen. A note on the row makes a missing one structural: a family declared
+// without one is visible here rather than silently absent three files away.
 export const FAMILIES = [
   { id: 'thinking', name: 'Thinking models', rep: 'pareto', color: '27ae60',
+    note: 'Classical decision frames, each rendered as a grammar rather than a prompt. Reach for one when you know the shape of the thinking you want.',
     members: ['pareto', 'swot', '5-whys', '10-10-10', 'eisenhower-matrix', 'occams-razor', 'inversion', 'one-thing', 'opportunity-cost', 'via-negativa', 'first-principles', 'second-order'] },
   { id: 'research', name: 'Research', rep: 'deep-dive', color: '2980b9',
+    note: 'Gather evidence and save a dated report; every claim marked measured, reasoned or guessed, where measured means something was actually run or read.',
     members: ['deep-dive', 'deep-scratch', 'competitive', 'feasibility', 'history', 'landscape', 'open-source', 'options', 'technical', 'hadal-deep-dive', 'hadopelagia-deep-dive'] },
   { id: 'asking', name: 'Asking and deciding', rep: 'ask-me-questions', color: '8e44ad',
+    note: 'Gather requirements through a declared state machine: bounded rounds, bounded re-entries, a gate that terminates by declaration rather than by your patience.',
     members: ['ask-me-questions', 'ask-me-many-questions', 'ask-me-everything', 'ask-me-preview', 'brainstorm-meta-clear-section'], patterns: [/^coin-flip/] },
   { id: 'shelf', name: 'The Phantom Books shelf', rep: 'phantom', color: 'd35400',
+    note: 'One structure drawn from one book each. The instruments to reach for once the ordinary frames have returned something bland.',
     members: ['phantom', 'tetralemma', 'loci', 'babel', 'catalog', 'count-the-library', 'goetia', 'clean-unclean', 'eleusis', 'voluspa', 'havamal', 'atharvan', 'sutra', 'wu-wei', 'water', 'witnesses', 'four-branches', 'redaction', 'sapiential', 'formula'] },
-  { id: 'lenses', name: 'The RoT MoE lenses', rep: 'rot-elevate', color: '16a085', patterns: [/^rot-/] },
+  { id: 'lenses', name: 'The RoT MoE lenses', rep: 'rot-elevate', color: '16a085',
+    note: 'One lens each, committed to a single way of seeing and forbidden from averaging into the others. Their value is the unblended range.',
+    patterns: [/^rot-/] },
   { id: 'creators', name: 'Creators', rep: 'create-plugin', color: 'c0392b',
+    note: 'Write Claude Code artifacts that pass the checker on the first run. Each gates before it writes.',
     members: ['create-plugin', 'create-moe', 'create-router', 'create-ot-variants', 'create-db', 'create-monitor', 'create-mcp', 'create-workflowjson', 'create-agent-skill', 'create-hook', 'create-slash-command', 'create-subagent', 'create-plan'] },
-  { id: 'prompts', name: 'Prompt creators, one per schematic', rep: 'create-prompt', color: '7f8c8d', patterns: [/^create-(meta-)?prompt(-|$)/] },
-  { id: 'filetypes', name: 'File types and dorks', rep: 'create-filetype', color: 'f39c12', patterns: [/^create-filetype/, /^create-dork/] },
+  { id: 'prompts', name: 'Prompt creators, one per schematic', rep: 'create-prompt', color: '7f8c8d',
+    note: 'Eight prompt schematics in a plain and a meta form, with routers that choose for you. The schematic decides how a prompt survives being pasted somewhere that reformats it.',
+    patterns: [/^create-(meta-)?prompt(-|$)/] },
+  { id: 'filetypes', name: 'File types and dorks', rep: 'create-filetype', color: 'f39c12',
+    note: 'Schematic-shaped files for a named format, and search expressions for the open web or a local tree. Reach for a dork when the hard part is the query.',
+    patterns: [/^create-filetype/, /^create-dork/] },
   { id: 'tasks', name: 'Tasks', rep: 'create-task', color: '2c3e50',
+    note: 'Work that outlives one session: create, audit, compose, run, hand off.',
     members: ['create-task', 'audit-tasks', 'create-workflow-tasks', 'task-run', 'task-handoff'] },
   { id: 'repository', name: 'Repository', rep: 'git-gh-amplification', color: '9b59b6',
+    note: 'Operate on a repository as a whole rather than on a file in it.',
     members: ['git-gh-amplification', 'git-gh-matrix-scala', 'repo-git-scalar', 'repo-creativity-askingstorm'] },
   { id: 'audits', name: 'Audits, in the foreground', rep: 'audit-skill', color: '1abc9c',
+    note: 'Judge an existing artifact against the contract it claims. They report; they do not rewrite.',
     members: ['audit-skill', 'audit-slash-command', 'audit-subagent', 'ai-slop'] },
   { id: 'growth', name: 'Codebase growth', rep: 'amplify-codebase', color: '16a34a',
+    note: 'One fifteen-verb ladder. What these record is what sets the version number, because the release class is computed rather than typed.',
     members: ['amplify-codebase', 'enhance-codebase', 'overhaul-codebase'] },
   { id: 'geometry', name: 'The Graphic and Geometric Suite', rep: 'codebase-surveyor', color: '0e7490',
+    note: 'Measure a codebase, draw it, change it, and produce the graphic the three agreed on, on one ladder of one hundred and eight rungs: three profession bands and four domain bands above them, read through the lens of each profession; the surveyor moves nothing, the architect declares bounds and rewrites nothing, the renovator changes only against a survey and a plan on disk, the generator launches the three or produces, and typography is the contract glyph and plate share.',
     members: ['codebase-surveyor', 'codebase-architect', 'codebase-renovator', 'codebase-generator', 'typography'] },
   { id: 'chain', name: 'Inter-operation', rep: 'chain', color: '6b21a8',
+    note: 'One command that reads what you asked for and fires the others it names, in the order it declares. Reach for it when the work crosses families and you would otherwise drive each one by hand.',
     members: ['chain'] },
   { id: 'sigil', name: 'The sigil', rep: 'sigil', color: '0f766e',
+    note: 'What the dollar tokens mean and how one command hands arguments to the next. Reach for these when you do not know what a token will expand to, or which of the collisions across shell, Make and this Suite you are looking at.',
     members: ['sigil', 'verbs'] },
   { id: 'lists', name: 'The lists', rep: 'file-blacklist', color: 'c0392b',
+    note: 'Per-repository white, grey and black lists, plus the starlist of tools the harness may reach. A grey entry obliges a question and records the answer with a date.',
     members: ['file-blacklist', 'code-blacklist', 'file-graylist', 'code-graylist', 'file-whitelist', 'code-whitelist', 'starlist', 'starlist-manager'] },
   { id: 'workflow', name: 'Workflow and the Adiutor', rep: 'RoT-DtD-Commander-Adiutor', color: 'e67e22',
+    note: 'The doctor: run it, arm it, read its ledger, compose the workflows it judges. Since 5.0.0 the Adiutor is not armed by default.',
     members: ['whats-next', 'add-to-todos', 'check-todos', 'run-plan', 'heal-skill', 'debug', 'setup-ralph', 'RoT-DtD-Commander-Adiutor'] },
+];
+
+// The two groups the README shows beside the families. They carry no commands,
+// so they are not families, but the prose block covers all nineteen groups.
+export const GROUPS = [
+  { id: 'skills', name: 'Skills', sigil: '🎓',
+    note: 'Each loads itself when its description matches what you are doing; none is invoked by name. A skill states what it writes and gates before it writes.' },
+  { id: 'agents', name: 'Agents', sigil: '🕵️',
+    note: 'Subagents the Suite dispatches with their own context and their own contract. They report findings; the session decides what to do with them.' },
 ];
 
 export function classify(key) {
@@ -268,11 +310,60 @@ export function render({ sigils, commands, skills, agents }) {
   return out.join('\n');
 }
 
+// ---------- the families, in prose ----------
+// One entry per group, its note read from the row that declares it. A family
+// whose note is missing is named as missing rather than skipped, because a
+// silently absent description is exactly how chain and sigil went undescribed
+// through four releases.
+export function renderProse({ sigils, commands, skills, agents }) {
+  const out = [];
+  out.push(PROSE_BEGIN);
+  out.push('');
+  out.push(`_Generated by \`node checker/readme-index.mjs\` from the notes on the family rows; \`--check\` refuses a README that disagrees. ${FAMILIES.length} families and ${GROUPS.length} further groups, ${FAMILIES.length + GROUPS.length} in all._`);
+  out.push('');
+  for (const f of FAMILIES) {
+    const n = commands.filter((c) => c.family === f.id).length;
+    const sig = sigils[f.rep] || '';
+    out.push(`**${sig} ${f.name}** · ${n} ${n === 1 ? 'command' : 'commands'}`);
+    out.push('');
+    out.push(f.note || '_(no note declared for this family; declare one on its row in checker/readme-index.mjs)_');
+    out.push('');
+  }
+  for (const g of GROUPS) {
+    const n = g.id === 'skills' ? skills.length : agents.length;
+    out.push(`**${g.sigil} ${g.name}** · ${n}`);
+    out.push('');
+    out.push(g.note);
+    out.push('');
+  }
+  out.push(PROSE_END);
+  return out.join('\n');
+}
+
 export function splice(readme, block) {
   const b = readme.indexOf(BEGIN);
   const e = readme.indexOf(END);
   if (b < 0 || e < 0 || e < b) throw new Error('readme-index: the markers rdc-index:begin and rdc-index:end are missing from README.md or out of order');
   return readme.slice(0, b) + block + readme.slice(e + END.length);
+}
+
+export function spliceProse(readme, block) {
+  const b = readme.indexOf(PROSE_BEGIN);
+  const e = readme.indexOf(PROSE_END);
+  if (b < 0 || e < 0 || e < b) throw new Error('readme-index: the markers rdc-prose:begin and rdc-prose:end are missing from README.md or out of order');
+  return readme.slice(0, b) + block + readme.slice(e + PROSE_END.length);
+}
+
+export function compareProse(readme, block) {
+  const b = readme.indexOf(PROSE_BEGIN);
+  const e = readme.indexOf(PROSE_END);
+  if (b < 0 || e < 0 || e < b) return ['the markers rdc-prose:begin and rdc-prose:end are missing from README.md'];
+  const have = readme.slice(b, e + PROSE_END.length).split('\n');
+  const want = block.split('\n');
+  const diff = [];
+  const n = Math.max(have.length, want.length);
+  for (let i = 0; i < n; i++) if (have[i] !== want[i]) diff.push(`line ${i + 1} of the prose block: have ${JSON.stringify(have[i] ?? '(missing)').slice(0, 90)} want ${JSON.stringify(want[i] ?? '(missing)').slice(0, 90)}`);
+  return diff;
 }
 
 export function compare(readme, block) {
@@ -353,6 +444,22 @@ function controls(readme, block, data) {
   // detected at all.
   say(diff.length > 0, `trip: the README without that plate is reported (${diff.length} differing lines)`);
   say(compare(readme, block).length === 0, 'the README in step reports no difference');
+  // 10.0.0: every family carries its own note, and the prose block is generated
+  // from them. Until this release the notes lived in checker/glossary.mjs as a
+  // table of fifteen beside a seventeen-family index, so chain and sigil had no
+  // description anywhere and nothing said so.
+  const noteless = FAMILIES.filter((f) => !f.note);
+  say(noteless.length === 0, noteless.length === 0
+    ? `every family declares a note: ${FAMILIES.length} families, ${GROUPS.length} further groups`
+    : `a family declares no note: ${noteless.map((f) => f.id).join(', ')}`);
+  const plantedNoteless = [...FAMILIES.map((f) => ({ ...f })), { id: 'a-planted-family', name: 'A planted family' }].filter((f) => !f.note);
+  say(plantedNoteless.length === 1 && plantedNoteless[0].id === 'a-planted-family',
+    `trip: a family planted without a note is named: ${plantedNoteless.map((f) => f.id).join(', ')}`);
+  const proseBlock = renderProse(data);
+  say(compareProse(readme, proseBlock).length === 0, `the README prose covers ${FAMILIES.length + GROUPS.length} groups and is in step`);
+  const proseWithout = readme.split('\n').filter((l) => !l.includes('Inter-operation')).join('\n');
+  say(compareProse(proseWithout, proseBlock).length > 0,
+    'trip: a README whose prose drops a family is reported');
   console.log(`readme-index controls: ${ran} run, ${fail} failing`);
   return fail === 0;
 }
@@ -375,21 +482,25 @@ function main() {
     [join(ROOT, 'docs', 'families-map.svg'), renderMapSvg(famRows, totals, 'light')],
     [join(ROOT, 'docs', 'families-map-dark.svg'), renderMapSvg(famRows, totals, 'dark')],
   ];
+  const prose = renderProse(data);
   if (args[0] === '--check') {
     const diff = compare(readme, block);
+    const pdiff = compareProse(readme, prose);
     for (const d of diff.slice(0, 8)) console.log(`  DRIFT ${d}`);
+    for (const d of pdiff.slice(0, 8)) console.log(`  DRIFT ${d}`);
     for (const [p, want] of plates) {
       if (!existsSync(p) || readFileSync(p, 'utf8') !== want) {
         console.log(`  DRIFT ${p.split(/[\\/]/).pop()}: the map differs from the families, run node checker/readme-index.mjs`);
         process.exit(1);
       }
     }
-    console.log(`readme-index: ${summary}; README block ${diff.length === 0 ? 'in step' : `differs on ${diff.length} lines, run node checker/readme-index.mjs`}`);
-    process.exit(diff.length === 0 ? 0 : 1);
+    const all = diff.length + pdiff.length;
+    console.log(`readme-index: ${summary}; README index and prose ${all === 0 ? 'in step' : `differ on ${all} lines, run node checker/readme-index.mjs`}`);
+    process.exit(all === 0 ? 0 : 1);
   }
   for (const [p, want] of plates) writeFileSync(p, want, 'utf8');
-  writeFileSync(path, splice(readme, block), 'utf8');
-  console.log(`readme-index: ${summary}; README block and 2 map plates written`);
+  writeFileSync(path, spliceProse(splice(readme, block), prose), 'utf8');
+  console.log(`readme-index: ${summary}; README index, prose over ${FAMILIES.length + GROUPS.length} groups, and 2 map plates written`);
 }
 
 const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);

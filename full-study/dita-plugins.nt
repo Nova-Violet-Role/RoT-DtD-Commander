@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — DITA-OT plugin trio: ooxml + tocjs + lwdita (measured listings 9/9/10)
+# Sources: cc-resources/.dtd-file-examples/{com.elovirta.ooxml,com.sophos.tocjs,org.lwdita}/
+
+shape-each:
+    ooxml: build_template.xml build.xml docx/ integrator.xml LICENSE plugin.xml README.md resources/ test/
+    tocjs: basefiles/ buildsample.xml integrator.xml LICENSE license.txt plugin.xml README.md sample/ xsl/
+    lwdita: build-html_template.xml build-html.xml build-markdown_template.xml build-markdown.xml conductor.xml lib/ LICENSE NOTICES plugin.xml xsl/
+
+mechanisms:
+    - plugin-contract: plugin.xml + integrator.xml + LICENSE + README in all three — the install surface our .claude-plugin/plugin.json mirrors (name/version/description/keywords)
+    - conductor-5-lines: lwdita conductor.xml imports build-markdown.xml + build-html.xml and nothing else — two-output orchestration (Markdown AND HTML from one LwDITA source), the polyglot emission our .md+.nt pair copies
+    - template-plus-build: build_<x>_template.xml beside build_<x>.xml — template/instance split, same cut as our forge-spec/installed-file split
+    - fixtures-beside-code: docx/ sample/ basefiles/ test/ resources/ xsl/ lib/ carried inside the plugin — tests and samples ship with the grammar, as our controls/ do
+
+domain-note:
+    > ooxml bridges WordprocessingML into DITA; tocjs compiles navigation into script; lwdita is the Markdown-profile of DITA itself.

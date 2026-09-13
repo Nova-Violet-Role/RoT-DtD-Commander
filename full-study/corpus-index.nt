@@ -1,0 +1,152 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - THE CROSS-CORPUS INDEX
+# Written 2026-09-13 as step one of 10.0.0, ordered by intake-one answer 49.
+# This is the file DOMAIN-TYPE-DEFINITION reads: not a list of corpora, but a list
+# of MECHANISMS, each naming the corpora that use it and what the release takes.
+# Read in reverse: the release-bindings come last and are the most actionable.
+
+sources:
+    corpora: 27 folders plus 10 loose files under cc-resources/.dtd-file-examples
+    measured-files: 768 dtd, mod and ent
+    study-files: 46 nt under full-study, 5 source documents fully transmigrated
+    detail-passes-done: tei dita-shells office-dtds-daisy mathml-docbook-xhtml11 svg
+
+mechanisms:
+
+    empty-hook-invoked-at-once:
+        strength: STRONGEST cross-corpus pattern found; five corpora, one idiom
+        corpora:
+            tei: TEI.extensions.ent declared empty, invoked on the next line
+            svg: 49 .attrib collections and both redecl placeholders declared empty
+            xmlschema: percent-p and percent-s redefinable in the consumer internal subset
+            jats: the customization quartet, classes mixes models modules, one set per profile
+            dita: every domain ships a .mod and .ent pair, the .ent declared ahead
+        shape:
+            > Declare the extension point EMPTY. Invoke it immediately. A consumer that
+            > wants nothing pays nothing; a consumer that wants something declares it
+            > BEFORE the include and the first declaration binds.
+        release-binding: LAW.ASK.11 is this idiom already; stream 4 and stream 14 both depend on it holding
+
+    precedence-by-named-slot:
+        corpora:
+            svg: prefw and postfw, TWO override points, before and after the framework, marked-section IGNORE by default
+            xmlschema: the consumer internal subset as the single named override site
+            dita: catalog.xml resolves identity to location, so a path is never hard-coded
+        shape:
+            > Precedence is a declared POSITION, not a race. First-wins is what happens
+            > when nobody declared where an override belongs.
+        release-binding:
+            > Stream 4, depth as precedence: depth.dtd declares WHERE an override may
+            > sit, the reverse read resolves which fired. This is the F14 fix in law.
+
+    one-source-many-emissions:
+        corpora:
+            tei: ODD emits dtd, rng and rnc together; a quartet per module
+            svg: svg11-tiny 197 lines modular AND svg11-tiny-flat 2808 lines, same profile, factor 14
+            docbook: 5.0 ships dtd rng sch xsd nvdl at once
+            dita: 188 files at v1_2 becoming 656 at v1_3, generated and catalogued
+            lwdita: conductor.xml imports build-html and build-markdown, two outputs one source
+        shape:
+            > The fan-out is never hand-kept. One literate source, many emissions, a
+            > catalog to resolve them.
+        release-binding:
+            > Stream 17: 143 commands to 429 files is this curve. It is survivable
+            > ONLY as generation. DITA at 656 hand-kept files would have collapsed.
+
+    parallel-tracks-aligned:
+        corpora:
+            daisy: four tracks, dtbook 82 elements text, dtbsmil 14 timing, ncx 18 navigation, oebpkg package
+            tei: att.global.linking, corresp synch sameAs copyOf next prev exclude select
+            tei: att.fragmentable part Y N I M F, and att.divLike sample initial medial final unknown complete
+        shape:
+            > A work too large to read linearly declares its own navigation and its own
+            > alignment. No single track is the work; the work is the tracks, aligned.
+        release-binding:
+            > Stream 15, the TEI cache subset. ncx is the reverse read: arrive anywhere,
+            > know the position. A 384-question intake is a work too long to read linearly.
+            > DAISY caution measured: oeb12.ent is 48964 bytes and exactly ONE file
+            > includes it, so the tracks-share-entities claim is narrow, not broad.
+
+    profiles-as-additive-deltas:
+        corpora:
+            xhtml: strict 966 lines, transitional 1189, heads byte-identical through line 60, delta plus 12 presentational elements
+            svg: full, basic, tiny from one module set
+            jats: articleauthoring versus journalpublishing, subsetting as profiling
+            dita: technicalContent SPECIALIZES base, never edits it
+        shape:
+            > One skeleton, additive profiles. A profile constrains or extends; it never
+            > forks the base.
+        release-binding:
+            > gate-1 linux, gate-2 windows, gate-3 macos is this exactly.
+            > Stream 18, per-command laws abolished: a command SPECIALIZES a subset's
+            > law by constraining it, the way technicalContent specializes topic.
+
+    the-ceiling-of-a-dtd:
+        corpora:
+            docbook: 4.2 to 4.5 dtd only, 5.0 every grammar, 5.1 NO dtd at all
+            docbook: rng for datatypes, sch for co-occurrence, nvdl to dispatch
+        shape:
+            > A DTD cannot express co-occurrence constraints, context-dependent content,
+            > or datatypes on text. Past that line the answer is a second instrument.
+        release-binding:
+            > The suite already has the second instrument and calls it checker/. Stream
+            > 19 converges the corpus into every subset; this mechanism says where the
+            > convergence STOPS. Name that line in the release rather than meet it at 11.0.0.
+
+    trust-classes-as-syntax:
+        corpora:
+            dtd-variants: PCDATA parsed and escaped, CDATA raw except the close delimiter, NDATA never read by the processor
+            dtd-variants: the four-format map, literal expanded binary escape across shell, dtd, yaml and nt
+            arguments: quoted dollar-at dispatch only, eval banned, sanitize before interpolate
+        shape:
+            > The trust class is the syntax. NDATA means the processor records a URI and
+            > a type and never opens the file; the APPLICATION resolves it.
+        release-binding:
+            > Stream 16, GLOSSARY.dtd: the alarm prefix carries the entity class.
+            > percent-bang binds, at-bang is carried whole, dollar-bang is the bus.
+            > The trust boundary becomes visible in prose rather than only in a DOCTYPE.
+
+    registry-with-declared-escape:
+        corpora:
+            dita: every enumeration carries -dita-use-conref-target as its escape value
+            jats: four override slots named ahead, never ad hoc
+            xhtml-lat1: 254 flat rows, mnemonic to numeric to Unicode name to ISO set
+        shape:
+            > Name the values. Name the escape. Never leave the open case undeclared.
+        release-binding:
+            > Stream 11, MX.targets: named values plus a declared escape, because ecc
+            > means every other variant. Stream 13, the eight-token ask registry.
+
+    license-and-identity-travel-with-the-grammar:
+        corpora:
+            edoc: full SPDX dual-license header INSIDE the dtd
+            jats: MODULE VERSION DATE PUBLIC SYSTEM PURPOSE SPONSOR header block
+            tei: generated-from stamp, ODD 3.5.0 revision 3c0c64ec4, dated 2019-01-29
+        shape:
+            > A grammar states its own provenance, its own version and its own licence,
+            > in band, so a copy found alone is still identifiable.
+        release-binding:
+            > Stream 14's version stamp is this. TEI stamps the revision it was generated
+            > from; that is precisely what an inlined subset must carry.
+
+    honest-underconstraint:
+        corpora:
+            xmlschema: the file states it is less restrictive than really intended, and that mutual exclusion is unenforced
+            xmlschema: a DTD for XML Schemas that declares its own non-authority, prose being definitive
+        shape:
+            > Where the grammar cannot enforce, it SAYS SO in band rather than implying
+            > enforcement it does not perform.
+        release-binding:
+            > The suite's partial verdict and the measured-reasoned-guessed confidence
+            > ladder are the same discipline. A law that over-promises is a law that fails,
+            > which is why LIVE became a rendering law and not an element.
+
+what-is-not-yet-transmigrated:
+    > Per-module content models for svg 49 modules, tei 20 modules, dita bookmap
+    > learning machineryIndustry subjectScheme xnal, daisy dtbook 82 elements, docbook
+    > 4.5 and the 5.1 schematron rule set.
+    > Untouched folders: com.elovirta.ooxml and com.sophos.tocjs beyond their plugin
+    > shape, org.lwdita beyond its conductor, xhtml11 beyond its driver list, mathml
+    > beyond its domain pair, office 27 parts, dtds 12 micro-grammars.
+    > None of these blocks a stream. Every stream's binding above is measured.

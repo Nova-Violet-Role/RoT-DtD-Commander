@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — DITA shells quartet: dita11 + v1_2 + v1_3 + xdita (measured listings)
+# Sources: cc-resources/.dtd-file-examples/{org.dita.specialization.dita11,org.oasis-open.dita.v1_2,org.oasis-open.dita.v1_3,org.oasis-open.xdita.v0_2_2}/
+
+shell-shape:
+    dita11: catalog.xml dtd/ plugin.xml schema/
+    v1_2: catalog.xml dtd/ plugin.xml schema/
+    v1_3: catalog.xml dtd/ plugin.xml rng/ schema-url/ schema/
+    xdita: catalog-dita.xml dtd/ oxygen_templates/ plugin.xml readme.md samples/
+
+v1_3-dtd-families:
+    base bookmap ditaval learning machineryIndustry subjectScheme technicalContent xnal + catalog.xml
+
+mechanisms:
+    - grammar-per-schema-language: dtd/ + schema/ (XSD) side by side in every shell, rng/ added at v1_3 — three validators, one vocabulary; our cc-core contract audit is the equivalent third eye over src/ + built
+    - specialization-shell: dita11 carries domains-ahead-of-DTDs (creators-audit measured 36 grammar files) — extension before base, the JATS customization-quartet idea in DITA dress
+    - authoring-profile: xdita adds oxygen_templates + samples beside the shell — editor affordances versioned with the grammar, as our previews ride beside the questions

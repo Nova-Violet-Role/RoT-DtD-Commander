@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — svg/ folder detail (measured from originals)
+# Driver: svg11.dtd 333 lines (head 60 read); module: svg-structure.mod 341 lines (head 50 read); folder 55 entries
+
+driver-pattern:
+    file: svg11.dtd
+    public: -//W3C//DTD SVG 1.1//EN
+    system: http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd
+    technique:
+        > Parameter entities (% SVG.version, % NS.prefixed, % SVG.prefix, % SVG.profile) declared FIRST so the first declaration binds — same bind-once pattern as LAW.ASK.11 driver-file raising.
+        > Module inclusion via external parameter entities (PUBLIC + SYSTEM pair) then marked-section wrap: <![%svg-prefw-redecl.module;[%svg-prefw-redecl.mod;]]>.
+        > IGNORE default keeps redecl placeholder inert until a profile overrides it.
+
+structure-module:
+    file: svg-structure.mod
+    declares: svg, g, defs, desc, title, metadata, symbol, use
+    qnames:
+        - SVG.svg.qname = svg
+        - SVG.g.qname = g
+        - SVG.defs.qname = defs
+        - SVG.desc.qname = desc
+        - SVG.title.qname = title
+        - SVG.metadata.qname = metadata
+        - SVG.symbol.qname = symbol
+        - SVG.use.qname = use
+    attrib-collections-empty-default:
+        - SVG.Core.attrib
+        - SVG.Container.attrib
+        - SVG.Conditional.attrib
+        - SVG.Style.attrib
+        - SVG.Viewport.attrib
+        - SVG.Text.attrib
+        - SVG.Paint.attrib
+        - SVG.Graphics.attrib
+
+assimilation-note:
+    > 55 files: 1 driver + profile variants (basic/tiny/full) + per-topic .mod + svgcatalog.xml.
+    > Remainder (model, attribs, paint, text, filter, font, hyperlink, script) follows the same qname+attrib-collection skeleton; detail pass continues file-by-file from here.
+    > Cube-preview relevance: structure elements (svg/g/defs/symbol/use) are the hosts the expanding-cube PNG/SVG mechanic annotates.

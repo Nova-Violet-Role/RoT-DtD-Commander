@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - DocBook per-version DETAIL pass (measured 2026-09-13)
+# Source: cc-resources/.dtd-file-examples/docbook/ - six versions side by side
+# Extends mathml-docbook-xhtml11.nt, which gave DocBook one line.
+
+the-trajectory-measured:
+    4.2: dtd
+    4.3: dtd
+    4.4: dtd
+    4.5: dtd
+    5.0: ChangeLog README VERSION catalog.xml docbook.nvdl dtd rng sch tools xsd
+    5.1: catalog.xml docbook.nvdl rng sch tools
+    reading:
+        > Four versions of DTD alone. Then 5.0 ships EVERY grammar at once, DTD and
+        > RELAX NG and Schematron and XSD and an NVDL dispatch. Then 5.1 drops the
+        > DTD entirely. The transition version carries both worlds so a consumer can
+        > move at its own pace; the version after it does not.
+        > This is the clearest measured statement in the whole corpus about what a
+        > DTD is for and where it stops.
+what-a-dtd-could-not-do:
+    > DocBook did not abandon DTD for fashion. It abandoned it for what a DTD cannot
+    > express: co-occurrence constraints, context-dependent content, datatypes on
+    > text. Schematron covers the first two by asserting rules over a parsed tree;
+    > RELAX NG covers the third. NVDL dispatches a document to whichever schema owns
+    > each section.
+    > The suite's answer to the same limit is already built and named differently:
+    > the checkers. dtd/ declares what can be declared, and checker/*.mjs asserts
+    > what cannot. mathml-docbook-xhtml11.nt called this layering controls BEHIND
+    > the grammar; the version table is the evidence that the layering is forced,
+    > not stylistic.
+what-this-teaches-the-release:
+    the-honest-ceiling:
+        > Stream 19 converges the whole DTD family into every subset. DocBook 5.1 is
+        > the proof that convergence has a ceiling: past a certain expressiveness the
+        > answer is not a better DTD, it is a second instrument. The release should
+        > say where that line falls for us rather than discover it at 11.0.0.
+    the-transition-version:
+        > 5.0 shipping both is the pattern for stream 14. Re-inline at publish AND
+        > stamp for the future is exactly a transition version: the current cut and
+        > the means to detect a stale one, carried together, for one release.
+    nvdl-is-in-our-variant-chain:
+        > NVDL sits at depth 10 of the 23-level ladder in 10.0.0.md and DocBook 5.0
+        > and 5.1 both ship a docbook.nvdl. The ladder is not a list of formats the
+        > release admires; at least one rung is a working dispatch mechanism in a
+        > corpus on this disk.
+gaps-remaining:
+    > The 4.5 DTD content models and the 5.1 Schematron rule set are not
+    > transmigrated. The version trajectory, the reason for it and the mapping onto
+    > our own checker layering are what streams 14 and 19 needed.
+    > MathML and XHTML11 keep the coverage mathml-docbook-xhtml11.nt already gave
+    > them; neither needed a second pass for this release.

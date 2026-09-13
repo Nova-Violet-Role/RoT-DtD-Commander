@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — xhtml/ folder detail (measured listing)
+# Root: cc-resources/.dtd-file-examples/xhtml/ (15 entries); dtd/ subfolder 9 entries
+
+top-level:
+    - css
+    - description.html
+    - descriptions
+    - dtd
+    - html2dita
+    - i18n
+    - nvdl
+    - relaxng
+    - resources
+    - styleguide
+    - templates
+    - web
+    - xhtml.framework
+    - xhtml.jar
+    - xhtml5-(epub3)
+
+dtd-subfolder:
+    drivers:
+        - xhtml1-strict.dtd
+        - xhtml1-transitional.dtd
+        - xhtml1-frameset.dtd
+    entities:
+        - xhtml-lat1.ent
+        - xhtml-special.ent
+        - xhtml-symbol.ent
+    supporting:
+        - xhtml1.dcl: SGML declaration (DOCTYPE scaffolding outside vanilla XML)
+        - xhtml.soc: catalog mapping formal identifiers
+        - xhtmlcatalog.xml: XML catalog
+
+assimilation-note:
+    > Three-driver pattern (strict/transitional/frameset) = the DTD-variant precedent for the ramified gate-1/2/3 shape: one skeleton, three dispatched profiles.
+    > .ent entity modules = precedent for per-topic .mod decomposition seen in svg/.
+    > Next detail pass: strict vs transitional diff head + one .ent sample.

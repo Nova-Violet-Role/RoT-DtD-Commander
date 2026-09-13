@@ -40,25 +40,10 @@ const README = join(ROOT, 'README.md');
 const NL = String.fromCharCode(10);
 const BTQ = String.fromCharCode(96);
 
-// What each family is FOR, keyed by the id readme-index declares. The names,
-// the members and the order all come from there; only these notes are local.
-const NOTE = {
-  thinking: 'Classical decision frames, each rendered as a grammar rather than a prompt. Reach for one when you know the shape of the thinking you want.',
-  research: 'Gather evidence and save a dated report; every claim marked measured, reasoned or guessed, where measured means something was actually run or read.',
-  asking: 'Gather requirements through a declared state machine: bounded rounds, bounded re-entries, a gate that terminates by declaration rather than by your patience.',
-  shelf: 'One structure drawn from one book each. The instruments to reach for once the ordinary frames have returned something bland.',
-  lenses: 'One lens each, committed to a single way of seeing and forbidden from averaging into the others. Their value is the unblended range.',
-  creators: 'Write Claude Code artifacts that pass the checker on the first run. Each gates before it writes.',
-  prompts: 'Eight prompt schematics in a plain and a meta form, with routers that choose for you. The schematic decides how a prompt survives being pasted somewhere that reformats it.',
-  filetypes: 'Schematic-shaped files for a named format, and search expressions for the open web or a local tree. Reach for a dork when the hard part is the query.',
-  tasks: 'Work that outlives one session: create, audit, compose, run, hand off.',
-  repository: 'Operate on a repository as a whole rather than on a file in it.',
-  audits: 'Judge an existing artifact against the contract it claims. They report; they do not rewrite.',
-  growth: 'One fifteen-verb ladder. What these record is what sets the version number, because the release class is computed rather than typed.',
-  geometry: 'Measure a codebase, draw it, change it, and produce the graphic the three agreed on, on one ladder of one hundred and eight rungs: three profession bands and four domain bands above them, read through the lens of each profession; the surveyor moves nothing, the architect declares bounds and rewrites nothing, the renovator changes only against a survey and a plan on disk, the generator launches the three or produces, and typography is the contract glyph and plate share.',
-  lists: 'Per-repository white, grey and black lists, plus the starlist of tools the harness may reach. A grey entry obliges a question and records the answer with a date.',
-  workflow: 'The doctor: run it, arm it, read its ledger, compose the workflows it judges. Since 5.0.0 the Adiutor is not armed by default.',
-};
+// What each family is FOR now lives on the family row in checker/readme-index.mjs
+// as `note`, beside the members it describes. It was a local table of fifteen
+// keys here against a seventeen-family index, so chain and sigil had no
+// description and nothing reported it (10.0.0, finding F11).
 
 // The key readme-index claims a command by: its file name without -dtd.
 export function keyOf(name) {
@@ -145,7 +130,7 @@ export function familyOf(e) {
 export function famMeta(name) {
   const f = INDEX_FAMILIES.find((x) => x.name === name);
   if (!f) return null;
-  return { id: f.id, name: f.name, note: NOTE[f.id] || '' };
+  return { id: f.id, name: f.name, note: f.note || '' };
 }
 
 function card(e) {

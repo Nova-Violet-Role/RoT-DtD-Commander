@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — arguments part 5: conditionals, subshells/pipelines, eval/exec, source (measured lines 441-560/829)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES.md
+
+conditionals:
+    - guard-empty: [[ $# -eq 0 ]] -> exit 1
+    - guard-max: [[ $# -gt 5 ]] -> exit 1
+    - flag-scan: for arg in "$@"; do [[ "$arg" == "--force" ]] && FORCE=true; break; done
+    - all-numeric: =~ ^[0-9]+$ over "$@"
+
+subshell-pipeline:
+    - subshell-inherits: ( shift ) affects copy only; parent $@ untouched
+    - pipeline-NOT-inherited: stages see piped data, not $@; bridge via explicit "$*" or env
+
+eval-exec-source:
+    - eval-danger: eval "$*" runs but is injection vector — NEVER with untrusted args
+    - safe-dispatch: "$@" directly, same effect, no injection surface
+    - exec: exec "$@" replaces shell with first-arg command
+    - source-shares-shell: sourced config inherits and mutates caller vars (FLAG1/ARGS[*])
+    matrix-relevance:
+        > RunnerªSEALED secrets rule: generated gate.yml dispatches via "$@" form only; eval banned in .mjs verbs by LAW.
+
+assimilation-note:
+    > Lines 561-829 still queued (getopts/getopt, strict mode, error tables).

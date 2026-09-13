@@ -1,0 +1,46 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — consolidated answers catalog (restored; cache file was consumed by Revision 2 run)
+# Origin: 5 intake rounds (20 answers) + resume run; source of truth now this file + record line 5
+
+round-1:
+    scope-first: Full-study .nt
+    deliverables: Full-study NT
+    gate-shape: Ramified OS
+    model: Sonnet 5 tier
+round-2:
+    nt-layout: Folder+file (per-folder dtd + per-file args)
+    os-seals: Extended-OS + Heavy-seals
+    timeouts: Per-job-ceiling
+    schematic: Depth+Type + Cube-preview + Polyglot + Skills-redo (all marked yes)
+round-3:
+    deep: Both hadal and hadopelagia
+    ask-forms: Bracket + Angle-mark + Caret-matrix + Empty-chain, hadopelagia UNCAPPED (Other-answer, binding)
+    sigil: Full-simplify + DTD-variants
+    companions: Full-comp (new companion + Scala matrix + companions-gate bypassPermissions)
+round-4:
+    nt-expand: yes (permitted)
+    secrets: Sealed-rotation, blind runner
+    skill: Tri-polyglot + overhaul-all-old-skills
+    env: Think-subset + Timeout-subset (from LZ-BINARY)
+round-5:
+    read: whole before writing .nt
+    release: audit-sh + CI + bypass + reverse-gulp + README (all four)
+    preview: audit-all with cube
+    depth-impl: schematic + brackets + NT38-map + YAML-mix (all four)
+resume-run:
+    mode: Resume-cache, Comprehensive, prior-answers-stand
+    correction: cache answers are known slots — no re-ask (binding on all future runs)
+
+fixed-decisions:
+    priority: full-study-nt-first
+    gate: ramified gate-1-linux gate-2-windows gate-3-macos, ordered/manual options
+    thinking-table: SUPERSEDED by LZ-BINARY §14 correction (rev 14) — MAX_THINKING_TOKENS stale on 5-series; live dial is effort, hard zero is thinking-disabled (opus-5), budget UNSET
+    cache-timer: 60m with retrigger count; .nt polyarm + .md >>> nesting
+
+session-2-many-run:
+    task: continue-from-record under release-plan order (Other text)
+    next-workstream: Skill-suite selected, then REDIRECTED by gate to overhaul order (dtd done, Commands, Skills, Agents)
+    commits: per-workstream (new policy; nothing committed yet)
+    sweep: src/commands staleness grep — zero hits (no stale numbers, no stale family lists)
+    commands-program: family batches, audit-first; asking family pilots next

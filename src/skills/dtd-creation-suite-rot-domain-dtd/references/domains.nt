@@ -1,11 +1,27 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
 # NestedText v3 — DOMAIN-TYPE-DEFINITION table for dtd-creation-suite-rot-domain
 # Read by the skill, never quoted as argumentation (LAW.SUITE.1).
-# shape: domain > needs > variants > families > commands > gate
+#
+# TWO LAYERS. The top layer is INTENT: what a user wants, in their words.
+# The layer beneath is FAMILY: which of the seventeen families that intent
+# reaches. A family is never an intent and an intent is never a family.
+#
+# shape, intent row:    intent > needs > variants > families > commands > gate > example
+# shape, unmatched row: unmatched > routes-to > gate > proof
+#
+# A reader that finds a field the shape does not declare reports the surplus
+# and reads the declared ones (LAW.REC.4); the two shapes are distinct and an
+# intent row is never read with the unmatched shape.
+#
+# UNMATCHED IS PROVABLY EMPTY: every one of the seventeen families declared in
+# checker/readme-index.mjs is named under at least one intent below. The proof
+# is the families layer itself, and a family absent from it is a finding.
 
 screenshot-hosting:
     needs: screenshots recognized, hosted inside the document, model recreates visuals
     variants: SVG, XHTML, SCHEMATIC, CHAIN
-    families: Graphic and Geometric Suite, schematic creators
+    families: The Graphic and Geometric Suite, Prompt creators one per schematic
     commands: codebase-surveyor-dtd, codebase-generator-dtd, typography-dtd, brainstorm-meta-clear-section-dtd
     gate: ask where hosted, chain for survey then generate
     example: i need to create a new skill but i want screenshots recognized and hosted inside that very document
@@ -13,7 +29,7 @@ screenshot-hosting:
 research-asking:
     needs: understand how, one-time ask, save-my-cache bridge
     variants: RNG, ENT, MOD, DITA, CHAIN, SKILL
-    families: Research, deep-dive branch, asking
+    families: Research, Asking and deciding
     commands: deep-dive-dtd, hadal-deep-dive-dtd, hadopelagia-deep-dive-dtd, ask-me-questions-dtd, ask-me-everything-dtd
     gate: ask where deep, cache bridge where long
     example: i need to understand how example triggers research then deep-dive with ask where allowed
@@ -21,7 +37,7 @@ research-asking:
 single-then-next:
     needs: one command only, followed by no-ask commands, suggest what runs next
     variants: CHAIN, FRAMEWORK
-    families: Phantom shelf, Thinking models, plus the table's suggestion
+    families: The Phantom Books shelf, Thinking models
     commands: any single command, then chain-dtd suggestion
     gate: none on the first, ask on the suggestion
     example: phantom or pareto run alone, skill suggests the measured next
@@ -29,7 +45,7 @@ single-then-next:
 cache-drift-timeout:
     needs: save-ur-cache mid-work, work-in-progress redirect, drift patches directives debugging
     variants: NVDL, XSL, CHAIN
-    families: asking (save), chain, tasks
+    families: Asking and deciding, Tasks
     commands: ask-me-many-questions-dtd, chain-dtd, task-handoff-dtd
     gate: save-ur-cache bridge, drift activation beside running work
     example: direction change in-between via timeout law, drift drafted not interrupted
@@ -37,11 +53,60 @@ cache-drift-timeout:
 skill-creation:
     needs: new skill with routing, schematics, forms, proof
     variants: SCHEMATIC, SKILL, DCL, XSD
-    families: creators, schematic, filetypes
+    families: Creators, Prompt creators one per schematic, File types and dorks
     commands: create-agent-skill-dtd, create-prompt-nt-dtd, create-filetype-nt-dtd, brainstorm-meta-clear-section-dtd
     gate: creators gate always (LAW.ASK.10)
     example: create a skill through twelve questions that are never skipped
 
+many-lenses:
+    needs: one problem seen from genuinely different angles, never averaged into consensus
+    variants: FRAMEWORK, CHAIN, SCHEMATIC
+    families: The RoT MoE lenses, Thinking models
+    commands: rot-elevate-dtd, rot-chroma-dtd, first-principles-dtd, inversion-dtd, second-order-dtd
+    gate: none on a single lens, ask before a chain of them
+    example: i am too close to this decision, show me what i am not seeing
+
+repo-and-growth:
+    needs: measure this repository's face, or grow the codebase by a declared verb
+    variants: DITA, DITAMAP, RELS, CHAIN
+    families: Repository, Codebase growth
+    commands: git-gh-amplification-dtd, git-gh-matrix-scala-dtd, amplify-codebase-dtd, enhance-codebase-dtd, overhaul-codebase-dtd
+    gate: ask the band before any verb above amplify
+    example: build me a gate.yml that tests this on three operating systems
+
+judge-my-artifact:
+    needs: is this skill, command, subagent or prose actually any good
+    variants: SCH, XSPEC, FRAMEWORK
+    families: Audits in the foreground
+    commands: audit-skill-dtd, audit-slash-command-dtd, audit-subagent-dtd, ai-slop-dtd
+    gate: none, these scan the whole context instead of asking
+    example: read this skill i wrote and tell me what is wrong with it
+
+argument-plumbing:
+    needs: how commands pass things to each other, what the dollar tokens mean, how to chain them
+    variants: ENT, MOD, DCL, CHAIN
+    families: The sigil, Inter-operation
+    commands: sigil-dtd, verbs-dtd, chain-dtd
+    gate: none on explanation, ask before emitting a chain
+    example: i do not understand what the sigil section is for
+
+policy-and-lists:
+    needs: forbid this, allow that, star the good ones, and hold the rule afterwards
+    variants: SOC, SCH, NVDL
+    families: The lists
+    commands: file-blacklist-dtd, code-blacklist-dtd, file-graylist-dtd, code-graylist-dtd, file-whitelist-dtd, code-whitelist-dtd, starlist-dtd, starlist-manager-dtd
+    gate: gray list asks its declared question (LAW.CORE.8)
+    example: never let this dependency into the tree again
+
+work-in-flight:
+    needs: what runs next, what is still open, heal what broke, debug what fails
+    variants: DITAMAP, CHAIN, FRAMEWORK
+    families: Workflow and the Adiutor
+    commands: whats-next-dtd, add-to-todos-dtd, check-todos-dtd, run-plan-dtd, heal-skill-dtd, debug-dtd, RoT-DtD-Commander-Adiutor
+    gate: none, these read the run in progress
+    example: what should i do next in this repository
+
 unmatched:
     routes-to: ask-me-questions-dtd
     gate: standard
+    proof: all seventeen families of checker/readme-index.mjs are named above; unmatched is reached only by an intent no family claims, and a family missing from the layer above is a finding of kind domain

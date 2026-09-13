@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — dtd rewrite ledger (audit-first, rewrite-on-findings only)
+# Program: every dtd/*.dtd read whole, audited against study + house standards, rewritten only on findings; build+check+audit green per batch
+# Standing rules: law numbers never reused/reordered; public entity names kept (instruments regex them); enumerations checkers read stay finite
+
+pilot:
+    file: dtd/cc-sigil.dtd (156 lines, read whole)
+    verdict: HOLDS — no rewrite
+    reasons:
+        > Tiers S/A/B/C/D name study forms incl. claude-arguments, terraform-literal, prompt-transform-untrusted, zsh flags; 11 collisions; trust matrix bound to cc-core (LAW.SIGIL.2); ladder topics 1-10; C11 markup doctrine documented; lib/sigil.mjs measure holds both directions (LAW.SIGIL.3).
+        > Deal demonstrated: audit-first means hold-when-holds; rewriting this file would be churn, not improvement.
+
+done-batches:
+    - cc-sigil depth signals (LAW.SIGIL.9-10)
+    - cc-args attr law (LAW.ARGS.7) + cc-chain rationale fix
+    - cc-form pcdata + cc-schematic nt.literal alignments
+    - cc-figure cube composition (doc) + cc-record hold
+    - cc-ask token registry (LAW.ASK.17)
+    - depth.dtd + type.dtd NEW (cited from sigil-dtd)
+holds-recorded:
+    - cc-report (hadal/hadopelagia do not include; listing them would falsify)
+    - cc-list cc-rot (externally-sourced systems: DITA constraints, MoE engine numbers — touching numbers falsifies)
+    - cc-starlist typography (manager-as-declaration + STAR.uncapped blocks; corpus-sourced figure mirror)
+    - geometry codebase-architect (xhtml11 driver + DITA growth + TEI switches; band-pinned variants)
+    - amplify-codebase enhance-codebase overhaul-codebase (band-pinned + four $ guards: quoting/literal/pcdata/pentity)
+    - codebase-surveyor renovator generator + cross-os (band variants; legs/substrates/gnu-forms engine-bound; autocrlf row verified true at system level)
+    - cc-lexicon (verb/paraphrase lists engine-bound to ai-slop both-directions)
+    - cc-task cc-workflow (expansion/ceiling/forbidden engine-bound; TASK.never already injection-conscious)
+    - cc-license ai-slop cc-figure-grammar cc-record cc-cache cc-core (tuned/complete; study embodied)
+    - adiutor cc-amplify (hook+ledger+monitor / 15-verb ladder + recognizer; engine-bound, controls both-ways)
+    - cc-cache cc-core (timer/polyarm in MX; trust complete)
+    - cc-license ai-slop (tuned instruments; study already embodied)
+    - cc-figure grammar + cc-record (engine-bound / revhistory-complete)
+queue-dtd:
+    - cc-args (ARG walk conventions)
+    - cc-report (report grammar)
+    - cc-chain (chain + autonomy token)
+    - cc-form (FORM guards incl. nt)
+    - cc-schematic (schematic cells incl. nt column)
+    - cc-figure (figure grammar)
+    - cc-record (already known from prompts; verify src text)
+    - cc-ask cc-core cc-cache (known; verify + Depth/Type hooks?)
+    - adiutor ai-slop amplify-codebase cc-amplify cc-lexicon cc-license cc-list cc-rot cc-starlist cc-task cc-workflow
+    - codebase-architect codebase-generator codebase-renovator codebase-surveyor enhance-codebase overhaul-codebase
+    - companion-audit(dtd? checker/) typography geometry ladder? lists?
+    - git-gh-matrix-scala companions-gate (new; already to standard)
+queue-commands: src/commands 143 (rewrite src, rebuild, never hand-edit commands/)
+    done-command-batches:
+        - asking (save-gate prose + pcdata records)
+        - research (7 save-gates + 8 pcdata)
+        - thinking HELD (no intake, no files — pareto read whole)
+        - shelf HELD (voice + 1-round intake, no file surface, zero drift)
+    done-embeds:
+        - asking/research/records pcdata; brainstorm handoff cdata; lists/starlist pcdata
+        - tasks/workflows pcdata; chain/renovator/sigil/typo records pcdata; db/router files pcdata
+        - deferred-to-skills: agent-skill/hook/mcp/slash-command/plan/workflowjson (skills write, skills state)
+queue-skills: src/skills 22 + src/agents 5
+release-resume: re-read 10.0.0_Release_Plan.md + 10.0.0_LEFT_OUT.md, then release track

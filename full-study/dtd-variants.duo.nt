@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — dtd-variants part 2: NOTATION + Bash×DTD polyglot (measured lines 81-210/733)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES_DTD_VARIANTS.md
+
+notations:
+    - gif: PUBLIC "GIF Image" image/gif
+    - jpeg: SYSTEM image/jpeg
+    - pdf: SYSTEM application/pdf
+    - yaml: SYSTEM application/x-yaml
+    - nt: SYSTEM application/x-nestedtext
+    note: yaml+nt NOTATIONs pre-declared here are what the .nt/.yml polyglot gate artifacts reference
+
+bash-to-dtd:
+    gen: cat > output.dtd <<EOF with ELEMENT/ATTLIST skeleton + "$1" default; for arg in "$@": echo "<!ELEMENT ${arg} (#PCDATA)>"
+    ndata: echo '<!ENTITY diagram SYSTEM "diagram.png" NDATA png>' + '<!NOTATION png SYSTEM "image/png">'
+
+bash-to-xml:
+    pcdata-path: xml_escape() via sed &/<> then interpolate — parsed, must escape
+    cdata-path: <![CDATA[$1]]> raw — no escaping needed
+    key-insight:
+        > CDATA section = XML equivalent of quoted heredoc (<<'EOF'): content never parsed, so $@ values with <>& are safe. (measured source line 168)
+
+pcdata-embed:
+    xml_escape(): printf | sed s/&/\&amp;/ s/</\&lt;/ s/>/\&gt;/
+
+ndata-refs:
+    pattern: NOTATION png/bin + ENTITY img1/data1 SYSTEM "$1"/"$2" NDATA + ATTLIST figure src ENTITY #REQUIRED
+    matrix-use:
+        > Sealed Credential.json travels exactly this way: unparsed external entity with a declared NOTATION, never interpolated into YAML text.

@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — loose app eight: krita + language + edoc + gdb-syscalls + ModularMonet + WMSDKNS (+2004s counted)
+# Sources: cc-resources/.dtd-file-examples/ — krita whole 93, language whole 72, edoc head 30, gdb whole 12, monet whole 8, wmsdkns whole 11
+
+krita-app-format:
+    shape: DOC(IMAGE(LAYERS(layer+))) + FILTERCONFIG; pixel payload EXTERNAL by filename attr (binary beside XML, NDATA idea without the NOTATION)
+    disciplines: OBSOLETE marking in prose (width/height/linked kept but retired), defaults-as-documentation (layertype paintlayer, filter strings empty)
+
+language-highlight-grammar:
+    shape: language(escape-char?,(line-comment|block-comment|string|syntax-item|pattern-item|keyword-list)+) with %itemattrs reuse + boolean-with-default idiom (end-at-line-end true, case-sensitive true)
+    disciplines: FIXME translation markers (_name/_section), regex as PCDATA leaves (start-regex/end-regex/regex/keyword)
+
+edoc-erlang:
+    head: ISO-8859-1 prolog, version 0.3 stamp, full SPDX dual-license header (Apache-2.0 OR LGPL-2.1-or-later) INSIDE the DTD — license travels with the grammar
+
+registries-tiny:
+    gdb-syscalls: syscalls-info(syscall*) EMPTY rows name/number REQUIRED alias/groups IMPLIED — a registry, not a document (cf our sigils.json/glossary shape)
+    ModularMonet: Features(Feature(Option(Include*))) pure containment tree with name/item REQUIRED — the minimal valid DTD (8 lines)
+    WMSDKNS: INTERNAL SUBSET opcode DSL — node(node*) recursive with opcode enum (create|remove|setval|clearval|rename|movebefore) + typed value + secure flag + defaulted version attr — an instruction set, not a document format

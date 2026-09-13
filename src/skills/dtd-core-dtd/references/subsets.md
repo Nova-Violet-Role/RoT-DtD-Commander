@@ -3737,6 +3737,14 @@ The dollar sign as a contract: the five study documents under dtd/sigil, the ten
 <!ENTITY SIGIL.nt.two-roles "first structural, rest visual depth">
 
 <!-- ===== LAWS ===== -->
+<!-- The count is declared here and read by lib/sigil.mjs, the way
+     SIGIL.docs.count, SIGIL.forms.count and SIGIL.collisions.count already
+     are. 10.0.0: the control hard-coded eight while this subset declared ten,
+     so the batch that added LAW.SIGIL.9 and 10 turned the gate red and the
+     failing line printed "LAW.SIGIL.1 to 10" beside an assertion demanding
+     eight. A number a control carries in its own source is a number nobody
+     updates; a number the subset declares is one the control has to read. -->
+<!ENTITY SIGIL.laws.count "10">
 <!ENTITY LAW.SIGIL.1 "This tree has one argument convention, SIGIL.convention: every command reads the whole argument string, the positional shorthand is used by SIGIL.positional.uses of them, and where the shorthand exists it is zero based (SIGIL.index.base), so a command that reaches for a positional form has left the convention and says so.">
 <!ENTITY LAW.SIGIL.2 "The trust matrix of the study binds the sigil: a form inside parsed text expands (SIGIL.trust.pcdata), a form inside literal text is data (SIGIL.trust.cdata), a form inside a file reference is never seen (SIGIL.trust.ndata); a sigil found inside a quoted element of an answer is reported as data and never expanded.">
 <!ENTITY LAW.SIGIL.3 "The forms are named in this subset and spelled in the documents under SIGIL.docs.dir, SIGIL.docs.count of them, because SIGIL.markup; node lib/sigil.mjs measure holds the names to their tokens and the tokens to SIGIL.docs.ranking in both directions, and a name with no token, a token the document does not spell, or a ranked token no name covers is a finding with the name or the token in it.">
@@ -3746,7 +3754,7 @@ The dollar sign as a contract: the five study documents under dtd/sigil, the ten
 <!ENTITY LAW.SIGIL.7 "A run executes every trial on the leg it is on, with stdin closed and under SIGIL.ceiling seconds each, and records the actual expansion beside the expected one; a form the leg's bash lacks is rendered unsupported with the version it needs (SIGIL.unsupported), and a tally with a fail above zero is a failed run on that leg.">
 <!ENTITY LAW.SIGIL.8 "Fired as a ladder, the topics of SIGIL.topics are the rungs: one sigil-dtd per topic stacked, or verbs-dtd for every form together, is one chain with one intake and one gate through cc-chain, and the trailing form of LAW.CORE.7 invokes either on the text before it.">
 <!ENTITY LAW.SIGIL.9 "A bracket label names what kind of instruction follows, its severity, its tone, its intent (SIGIL.label.roles); a label that changes what the text means without changing the text is refused, and a run renders each label it obeyed with the role it obeyed it in.">
-<!ENTITY LAW.SIGIL.10 "Quote depth encodes relation, a peer, a child, a grandchild (SIGIL.depth.roles), and a label repeated deeper is a refinement (SIGIL.depth.repeat); in NestedText the tag is SIGIL.nt.string-tag, the depth is SIGIL.nt.depth-in-content, and the two jobs are SIGIL.nt.two-roles, where the pretty-print renderer stays the Program's own and the schematic amplifies it (LAW.SIGIL.9).">
+<!ENTITY LAW.SIGIL.10 "Quote depth encodes relation, a peer, a child, a grandchild (SIGIL.depth.roles), and a label repeated deeper is a refinement (SIGIL.depth.repeat); in NestedText the tag is SIGIL.nt.string-tag, the depth is SIGIL.nt.depth-in-content, and the two jobs are SIGIL.nt.two-roles, where the pretty-print renderer stays the Program's own and the schematic amplifies it (LAW.SIGIL.9); this subset declares SIGIL.laws.count laws, dense and ascending from one, and the instrument reads that count instead of carrying a number of its own, because a count a control spells in its own source is a count nobody updates when a law is added.">
 ```
 
 ## codebase-generator.dtd

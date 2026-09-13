@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — arguments part 2: special vars, shift/set, heredocs (measured lines 81-200/829)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES.md
+
+special-vars:
+    - form: $?
+      meaning: exit code of last command
+    - form: $-
+      meaning: active shell option flags
+    - form: $$
+      meaning: PID of current shell
+    - form: $!
+      meaning: PID of last background job
+    - form: $_
+      meaning: last argument of previous command
+      example: mkdir -p <dir> && cd "$_"
+
+shift-set:
+    - shift: drop $1, renumber rest
+    - shift-N: drop first N
+    - set---args: replace whole $@
+    - demo: alpha beta gamma -> shift -> beta gamma -> set -- new1 new2 new3
+
+heredoc-control:
+    rule: quoted delimiter = literal, unquoted = expand
+    - delimiter: <<EOF
+      expands: yes
+    - delimiter: <<'EOF'
+      expands: no
+    - delimiter: <<"EOF"
+      expands: no
+    - delimiter: <<\EOF
+      expands: no
+    - delimiter: <<-EOF
+      expands: yes-plus-tab-strip
+    selective: backslash-escape per-variable ($\@ literal beside $1 expanded)
+    nested: inner shell sees its own $@; pass outer via explicit $1 $2 or $*
+
+assimilation-note:
+    > Continues arguments.nt skeleton; lines 201-829 still queued (getopts/getopt, arrays, error handling per ToC pattern).

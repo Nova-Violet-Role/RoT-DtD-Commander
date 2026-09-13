@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - tei/ per-folder DETAIL pass (measured 2026-09-13)
+# Source: cc-resources/.dtd-file-examples/tei/ - 60 .dtd measured, 102 entries total
+# Supersedes nothing; tei.nt is the folder index, this is the detail it deferred.
+# Ordinal: duo, Greek per the 10.0.0 rule that every created file is numbered.
+
+folder-shape:
+    dtd-count: 60
+    triplet-discipline:
+        > Every module ships name-decl.dtd + name.dtd + name.rnc + name.rng.
+        > A QUARTET, not a triplet: the -decl file holds the declarations, the .dtd the
+        > content models, and the two RELAX NG forms the same vocabulary for other
+        > validators. All four generated from ONE ODD literate source.
+    modules: analysis certainty core corpus dictionaries drama figures gaiji header iso-fs linking msdescription namesdates nets spoken tagdocs textcrit textstructure transcr verse
+    drivers: tei tei_all tei_bare tei_corpus tei_customization tei_drama tei_enrich tei_its tei_jtei tei_lite tei_math tei_minimal tei_ms tei_odds tei_simplePrint tei_speech tei_svg tei_tite tei_xinclude
+
+fragment-attributes-VERBATIM:
+    part:
+        > att.fragmentable.attribute.part declares: part (Y|N|I|M|F) "N"
+        > Y yes it is a fragment, N no it is whole, I initial, M medial, F final.
+        > Default N: a thing is whole unless it says otherwise.
+    sample:
+        > att.divLike.attribute.sample declares: sample (initial|medial|final|unknown|complete) "complete"
+        > RICHER than part because it carries UNKNOWN, which is precisely the state a
+        > resumed run is in before it has read its predecessors. Default complete.
+    org:
+        > att.divLike.attribute.org declares: org (composite|uniform) "uniform"
+        > Whether the content is homogeneous or assembled from unlike parts.
+
+linking-module:
+    file: linking.dtd, 151 lines; linking-decl.dtd, 49 lines
+    elements: ab alt altGrp anchor join joinGrp link linkGrp ptr seg timeline when
+    roles:
+        join: names the fragments that constitute one whole
+        joinGrp: a group of joins sharing a result type
+        anchor: a referencable point with no content of its own
+        link and linkGrp: an association between things, and a group of them
+        ptr: a pointer to a thing
+        alt and altGrp: alternatives, and a group of them with a mode
+        timeline and when: temporal alignment points, the synch partner
+        seg and ab: arbitrary segments and anonymous blocks, the containers that carry the attributes
+
+global-linking-VERBATIM:
+    attributes: corresp synch sameAs copyOf next prev exclude select
+    declared-as:
+        > att.global.linking.attributes composes eight separate one-line parameter
+        > entities, each independently redefinable. A consumer overrides ONE without
+        > touching the other seven. That is the override-slot discipline JATS names as
+        > its customization quartet, in a finer grain.
+
+what-stream-15-takes:
+    > The TEI-derived cache and rounds subset takes, measured rather than invented:
+    > 1 part (Y|N|I|M|F) on every ordinal cache, so a file read alone knows whether it
+    >   is initial, medial or final in its intake.
+    > 2 sample (initial|medial|final|unknown|complete), because a resumed run begins at
+    >   unknown and must be able to SAY so rather than guess.
+    > 3 org (composite|uniform), because an intake that merged two sessions is composite.
+    > 4 next and prev to chain the ordinals, corresp to link an answer to the round and
+    >   the evidence that produced it, synch to align the three readings of one polyglot
+    >   triple, sameAs and copyOf for a recovered file such as heis.
+    > 5 join and joinGrp to declare which ordinals constitute one intake, so the series
+    >   is reconstituted by declaration and not by filename convention.
+    > 6 anchor for a referencable point inside a cache that a later file can name.
+
+odd-single-source:
+    > tei.dtd is generated from ODD, version 3.5.0, revision 3c0c64ec4, dated 2019-01-29.
+    > One literate source emits DTD, RNG and RNC together. This is the precedent for the
+    > polyglot triple: not three hand-kept files, but one source and three emissions, which
+    > is why the round 10 answer that all three SHIP does not mean all three are authored.
+
+qname-parameterization:
+    > Each element name is a parameter entity: ENTITY % n.TEI "TEI" and so on, with
+    > ENTITY % NS '' and ENTITY % TEI.extensions.ent '' declared and invoked immediately.
+    > The extension point is declared empty and invoked at once, so an override placed
+    > BEFORE the include binds and the empty default binds otherwise. Same bind-once shape
+    > as LAW.ASK.11, and the same shape svg.nt found in SVG's profile entities.
+
+gaps-remaining:
+    > Per-module content models are not yet transmigrated; this pass covers the folder
+    > shape, the fragment attributes, the linking module and the generation discipline,
+    > which is what streams 15 and 17 need. textcrit, transcr, msdescription and iso-fs
+    > carry apparatus mechanisms worth a later pass for the record and ledger work.

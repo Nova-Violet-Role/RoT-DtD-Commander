@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — sigil part 3 (FINAL): templating, data tools, VCS, Claude Code, attack classes, ranking, collisions (measured lines 211-384/384)
+# Source: artifacts/_sweep/byproducts/$SIGIL_VARIABLES_VARIANTS.md — FILE NOW COMPLETE 384/384
+
+safe-patterns:
+    - github-actions-safe: TITLE via $GITHUB_ENV, echo "$TITLE" — never echo ${{ event }} inline
+    - terraform-escape: $${HOME} literal for shell vs ${var.environment} for TF
+
+templating-regex-text:
+    - regex-refs: $1-$9 $& $` $' $$ $<name>; anchor $; VSCode $$$1 emits $+group
+    - sed: $-last-line &-match \1; awk: $0 $1-$NF $NF $(expr), $0-assign rebuilds
+    - perl: $_ @_ $0 $1 @ARGV $/ $\ $, $! $@ $? $$ $<­$> $^W + English aliases
+    - php: $$var variable-variables $this superglobals heredoc-<<<EOT-expands vs nowdoc-<<<'EOT'-literal (Bash-EOF analogue)
+    - js-ts: ${expr} tagged $ $-identifier jQuery Bun-$`cmd`; kotlin/scala/c#/ruby/python-template/velocity/jinja variants; editor tabstops $1 $2 $0 ${1:default} ${1|a,b|} ${var/regex/fmt}
+
+data-tools:
+    - postgres: $$...$$/$tag$...$tags positional $1 $2 $BODY$ convention; $+digits = param ONLY in function/prepared bodies
+    - mysql: DELIMITER $$; jq: --arg $var $ENV $__loc__ $ARGS.named/.positional @base64/@csv/@sh/@json/@uri
+    - mongo: $set/$gt/$match $field vs $$CURRENT.field $$NOW $$ROOT/$$CURRENT/$$REMOVE $let/$map/$filter
+    - nginx: ~195 vars $host $remote_addr $args $arg_NAME $http_NAME $cookie_NAME
+    - grafana: $var ${var:csv} $__interval{,_ms,_rate} $__range $__from/$__to $__user guns
+    - excel: $A$1 $A1 A$1
+
+vcs-docs:
+    - keywords: $Id$ $Revision$ $Date$ $Author$ $Header$ $Log$; gitattributes ident expands $Id$; form $keyword$ / $keyword:...$ -> $keyword:value$
+    - git-env: GIT_DIR GIT_AUTHOR_* GIT_COMMITTER_* GIT_INDEX_FILE
+    - latex-math: $...$ $$...$$ collides with shell in fences
+
+claude-code-verified:
+    - $ARGUMENTS: whole string, appended as ARGUMENTS: if unused
+    - $ARGUMENTS[N]: 0-based; $N shorthand: $0=FIRST $1=SECOND (shell-blog claim $1-first is WRONG here; issue #19355)
+    - $name: frontmatter-arguments mapped in order; @path: file attach; !`cmd`: pre-approved shell inject
+    - frontmatter: description argument-hint allowed-tools disallowed-tools model effort disable-model-invocation user-invocable arguments context/agent/background hooks shell when_to_use
+    - hooks-stdin-JSON-via-jq: $CLAUDE_PROJECT_DIR $CLAUDE_PLUGIN_ROOT $CLAUDE_ENV_FILE $CLAUDE_EFFORT; settings.json NO ${VAR}; http-hook headers $VAR gated allowedEnvVars; .mcp.json $VAR ok
+
+attack-classes:
+    - log4shell CVE-2021-44228 ${jndi:ldap://} + obfuscation ${${lower:j}ndi} + exfil ${env:}/${sys:}
+    - gha-injection ${{ event.* }} + ${IFS}-bypass cat${IFS}/etc/passwd + @P-RCE (untrusted via @Q first) + indirect + shellshock + SSTI + eval-$@ + ${var:?}-leak + envsubst-leak + homoglyph-$
+
+utility-tiers: S-daily-driver A-weekly B-situational C-niche D-under-stated-rule
+collision-table:
+    > $@: shell-args vs Make-TARGET vs perl-eval-error; $?: shell-int vs Make-newer vs pwsh-BOOL vs perl-child; $$: shell-PID vs Make-LITERAL vs pg-DQUOTE vs compose-LITERAL; $1: shell-first vs pg-bind vs regex-group vs CLAUDE-SECOND vs vscode-tabstop; $0: shell-scriptname vs CLAUDE-FIRST vs awk-record; $_: shell-lastarg vs pwsh-pipeline vs perl-default
+    > SINGLE most valuable reference per source; backbone of simplified $SIGIL guide.
+
+file-complete:
+    > $SIGIL_VARIABLES_VARIANTS.md fully transmigrated: sigil-variables.nt (topic-1) + sigil.duo (subst/special/cross-shell/build/CI) + sigil.treis (templating/data/VCS/claude/attacks/tiers/collisions).

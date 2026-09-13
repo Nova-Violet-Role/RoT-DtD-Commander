@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — arguments part 7 (FINAL): JSON/TOML/fullstack emitters + security (measured lines 691-829/829)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES.md — FILE NOW COMPLETE 829/829
+
+emitters:
+    json: env "$1" region "$2" replicas $3 (unquoted number), all_args joined, arg_count $#
+    toml: [server] env/region + [server.meta] args "$*" count $#
+    fullstack-5-layer: full.md frontmatter pipeline [$1 $2 $3] total $# + nt code block + tip callout with last-arg array idiom
+    five-parsers: Bash expands; Markdown pages; YAML frontmatter parses; NestedText block parses; Obsidian styles callouts
+
+security-table:
+    - vector: unquoted $@ word-split; safe: "$@" one-command
+    - vector: eval "$@" command injection; safe: "$@" direct
+    - vector: heredoc $@ YAML/NT injection (PyYAML RCE); safe: sanitize via printf '%q' before interpolation
+    - vector: set -- from untrusted input; safe: regex-validate ^[a-zA-Z0-9_-]+$ first
+    matrix-law:
+        > Sealed-runner rule confirmed from source: "$@" dispatch only, eval banned, sanitize-before-interpolate for generated gate.yml values.
+
+file-complete:
+    > $ARGUMENTS_VARIANT_EXAMPLES.md fully transmigrated: arguments.nt (positional/quoting/slicing) + 02 (special/shift/heredoc) + 03 (generators/functions) + 04 (nested/arrays/loops) + 05 (conditionals/subshell/eval-source) + 06 (trap/xargs/k8s/report/tf) + 07 (json/toml/fullstack/security).

@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — dtd-variants part 3: NDATA app-resolution, param entities, conditional DTD, CDATA extraction chains (measured lines 211-340/733)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES_DTD_VARIANTS.md
+
+ndata-law:
+    > NDATA = "don't parse this file": processor records URI+type, never reads content; the APPLICATION resolves it. (measured line 218)
+
+param-entities:
+    pattern: header.dtd with <!ENTITY encoding "...$1"> <!ENTITY lang "$2"> ELEMENT page/title/body, ATTLIST lang CDATA "$2"
+    law: %-entities DTD-ONLY, never in document content
+
+conditional-dtd:
+    pattern: mode="${1:-strict}"; <!%if-strict[ strict content-model ]]> <!%if-relaxed[ ANY ]]>
+    matrix-use: strict-vs-relaxed content models = gate-1/gate-2 profile switch precedent
+
+cdata-chains:
+    - xml-to-nt: CDATA-wrapped $1$2$3 then loop echo "  - $arg" to output.nt
+    - xml-to-md: level/message -> callout map (warning/danger/info/note) with embedded <![CDATA[$message]]>
+    comparison-matrix:
+        > PCDATA: escape <>&, entities-YES, shell-analogue <<EOF, whitespace NORMALIZED
+        > CDATA: raw except ]]>, entities-NO, analogue <<'EOF', whitespace PRESERVED
+        > NDATA: binary-OK, entities-NO, analogue file-reference-not-read

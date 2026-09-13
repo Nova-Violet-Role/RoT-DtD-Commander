@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — dtd-variants part 5 (FINAL): 3-layer polyglots, 5-layer full-stack, XXE-class security, SGML, 4-format map (measured lines 471-733/733)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES_DTD_VARIANTS.md — FILE NOW COMPLETE 733/733
+
+polyglot-layers:
+    - xml-dtd-yaml: config.xml (CDATA env/region, raw replicas, versioned DOCTYPE) + equivalent config.yaml
+    - xml-cdata-nt: wrapper.xml with <![CDATA[ nt block (multiline > strings) ]]; extraction yields valid .nt
+    - xml-ndata-binary: manifest.xml payload SYSTEM "$1" NDATA script + checksum CDATA "$2", EMPTY artifact src ENTITY
+    - fullstack-5-layer: pipeline DOCTYPE-validated doc, CDATA steps, 5 parsers (Bash expands / XML well-forms / DTD validates / CDATA raw / app renders)
+
+security-xxe-class:
+    - xxe-via-$@: ENTITY SYSTEM "$1" with file:///etc/passwd — FIX: disable-DTD + whitelist ^[a-zA-Z0-9._/-]+$ + CDATA-for-untrusted
+    - cdata-termination: "]]><script>" breaks out — FIX: ]]>-split idiom (same as part 4)
+    - pcdata-breakout: attr '" ><img onerror>' — FIX: escape all FIVE (&<>"')
+    - ndata-traversal: "../../etc/shadow" — FIX: reject .. segments + whitelist
+    - param-entity-injection: NEVER user input in %entities
+    - billion-laughs: recursive lol entities 9^5 from 500 bytes — FIX: entity-expansion caps / no-DTD
+    gate-law:
+        > Generated gate.yml: no-DTD parsers, whitelist-clamped paths, CDATA only post-split-sanitize, 5-char PCDATA escape, expansion caps. (measured source 7.1-7.6)
+
+sgml-beyond-xml:
+    - SDATA: raw entity values, XML-dropped
+    - RCDATA: title-style (tags parsed, refs decoded) — XML equivalent is CDATA section
+    - data-attributes-on-entities: NDATA yaml (encoding, line-endings) — XML-dropped
+
+four-format-map:
+    > literal: <<'EOF' = CDATA = "|-" strip = '> text'; expanded: <<EOF = PCDATA = '|' literal = key:value; binary: cat-file = NDATA = N/A = N/A; escape: printf-%q = &lt;&gt;&amp; = double-quote = none-needed; comment #-vs-<!-- -->; ref $1-vs-&entity;-vs-*alias; def VAR=-vs-ENTITY-vs-&anchor; conditional case-vs-<!%if>; include source-vs-SYSTEM-entity; types N/A-vs-NOTATION/ATTLIST.
+
+file-complete:
+    > DTD-variants 733/733 across 5 .nt (core + 02 NOTATION/polyglot + 03 chains + 04 collision/NDATA + 05 layers/security/SGML/map).

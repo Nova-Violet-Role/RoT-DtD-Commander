@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — dtd-variants part 4: ]]>-collision fix, whitespace, NDATA asset generator, full-document pattern (measured lines 341-470/733)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES_DTD_VARIANTS.md
+
+cdata-collision-fix:
+    breakage: arg 'value with ]]> in it' TERMINATES section -> INVALID XML
+    fix: safe=${arg1//\]\]>/\]\]\]\[CDATA[>\[CDATA[} (split-and-reopen idiom)
+    matrix-law: gate.yml string fields from user args MUST pass this split before CDATA-wrap
+
+whitespace-law:
+    pcdata: newlines/tabs/multi-space COLLAPSED to single spaces
+    cdata: preserved exactly
+
+ndata-asset-generator:
+    pattern: static NOTATION block (quoted <<'EOF' literal) + loop ext/name split with case png/svg/csv/bin fallback appending <!ENTITY ... NDATA ...>
+    full-document: DOCTYPE-internal NOTATION+ENTITY decls, EMPTY figure/table with ATTLIST src ENTITY #REQUIRED, instance <figure src="chart"/>
+    xml-dtd-yaml-chain: config.xml with CDATA env/region + raw replicas under versioned DOCTYPE skeleton
+
+remaining: lines 471-733 (rest of polyglot section + closing reference per ToC pattern)

@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 full-study cache — arguments variant examples (expanded for one-gulp assimilation)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES.md (829 lines, read head 80 measured)
+
+study:
+    source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES.md
+    lines: 829
+    read: head-80-measured-rest-deferred
+    schematic: nt-v3
+
+positional:
+    - form: $0
+      meaning: script name
+      example: ./deploy.sh
+    - form: $1-$9
+      meaning: 1st-9th argument
+      example: $1=host, $2=port
+    - form: ${10}-${99}
+      meaning: 10th+ argument, braces required
+      example: ${10}=token
+    - form: $@
+      meaning: all args as separate words
+    - form: $*
+      meaning: all args as single word
+    - form: $#
+      meaning: count of arguments
+
+quoting-matrix:
+    rule: Always use "$@"
+    - form: "$@"
+      splitting: no
+      result: "$1" "$2" "$3"
+      verdict: correct
+    - form: "$*"
+      splitting: no
+      result: single IFS-joined word
+    - form: $@
+      splitting: yes
+      verdict: broken-on-spaces
+    - form: $*
+      splitting: yes
+      verdict: broken-on-spaces
+
+slicing:
+    - syntax: ${@:offset}
+      meaning: args from offset to end
+    - syntax: ${@:offset:length}
+      meaning: length args from offset
+    - syntax: ${@: -N}
+      meaning: last N args, space-before-dash required
+    - syntax: array-unset
+      meaning: args=("$@"); unset selected indices
+
+assimilation-note:
+    > Expansion permitted by user: quoting matrix + slicing demos kept verbatim in spirit, prose compressed so brackets allow one-gulp read.
+    > Remainder lines 81-829 deferred to next gulp; structure above is the load-bearing skeleton.

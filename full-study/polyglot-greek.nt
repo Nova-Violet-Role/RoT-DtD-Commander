@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — polyglot guide + greek numbers (expanded skeleton)
+# Sources: DTD_GUIDE_PROMPT_POLYGLOT_EXAMPLES.md (813) + GREEK_NUMBERS.md (202)
+
+yaml-scalars:
+    - literal-clip: '|'
+    - literal-strip: |-
+    - literal-keep: |+
+    - folded-clip: '>'
+    - folded-strip: >-
+    - folded-keep: >+
+    - indent-indicator: '|2 , >1-'
+
+depth-mechanism:
+    > Bracket label [!IMPORTANT]/[!CAUTION]/[!TIP] = kind/severity.
+    > Quote depth >/>>/>>> = relation: peer vs child vs grandchild.
+    > Sequential [!A] then [!B] = independent peers.
+    > Nested >> [!B] inside > [!A] = B subordinate refinement.
+    > Triple >>> [!C] = most specific actionable detail.
+    nt-mapping:
+        > First > + space = string tag, stripped by pretty-print.
+        > Remaining > in content = visual depth.
+        > Line '> > [!IMPORTANT]' renders '> [!IMPORTANT]'.
+
+greek:
+    core-1-12: mono di tri tetra penta hexa hepta octa ennea deca hendeca dodeca
+    teens: triskaideca tetrakaideca pentakaideca hexakaideca heptakaideca octakaideca enneakaideca
+    tens: icosa triaconta tetraconta pentaconta hexaconta heptaconta octaconta enneaconta
+    note: ordinals via lib/ordinals.mjs before .md only on multi-file runs

@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — strict vs transitional measured diff
+# xhtml1-strict.dtd 966 lines / 77 <!ELEMENT>; xhtml1-transitional.dtd 1189 lines / 89 <!ELEMENT>; heads 1-60 identical
+
+shared-head:
+    > Entity imports (lat1/symbol/special) + RFC2045/3066 typed names byte-identical through line 60. Divergence is additive body, not header.
+
+transitional-only-elements:
+    - iframe (%Flow)
+    - center (%Flow)
+    - u (%Inline)
+    - strike (%Inline)
+    - basefont (EMPTY)
+    - font (%Inline)
+    - applet (mixed content)
+    strict-count-of-these: 0 (measured)
+
+delta: +223 lines, +12 elements, all presentational/legacy
+
+ramification-precedent:
+    > Strict = gate-1 (minimal, modern); transitional = gate-2 (superset, legacy-tolerant); frameset = gate-3 (frames profile). One skeleton, additive profiles — exactly the ramified gate.yml shape decided in round 1.

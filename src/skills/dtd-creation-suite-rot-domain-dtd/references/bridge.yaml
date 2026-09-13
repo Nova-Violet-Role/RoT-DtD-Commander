@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
 # bridge.yaml — the ask bridge, the cache bridge and the folded-scalar layer
 # for dtd-creation-suite-rot-domain. Folded scalars (>) carry prose that
 # folds to one line; literal scalars (|) keep line breaks. The %YAML

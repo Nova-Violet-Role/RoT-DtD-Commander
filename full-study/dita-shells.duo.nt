@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - DITA shells per-folder DETAIL pass (measured 2026-09-13)
+# Source: cc-resources/.dtd-file-examples/org.oasis-open.dita.v1_2 and .v1_3
+# Extends dita-shells.nt, which indexed the four shells without opening them.
+
+measured-sizes:
+    v1_2: 188 files
+    v1_3: 656 files
+    growth: 3.5 times in one minor version, from 188 to 656
+    v1_3-dtd-vocabularies: base bookmap ditaval learning machineryIndustry subjectScheme technicalContent xnal, plus catalog.xml
+    base: 25 files
+    technicalContent: 82 files
+
+the-layering:
+    > base holds basetopic.dtd and basemap.dtd beside commonElements.mod and
+    > commonElements.ent. The pair per vocabulary is the whole mechanism: a .mod
+    > declares the content models, a .ent declares the entities the .mod needs,
+    > and a .dtd driver pulls both in. Three files, three jobs, never merged.
+    > technicalContent at 82 files is not a bigger base; it is a SPECIALIZATION of
+    > base, adding concept, task and reference on top of topic without editing
+    > topic. The domain files, delayResolutionDomain, deliveryTargetAttDomain,
+    > ditavalrefDomain, each ship as a .mod plus .ent pair too.
+what-this-teaches-the-release:
+    ent-mod-dtd-triple:
+        > The DITA triple is NOT the same triple as our md, nt and yaml. DITA splits
+        > by ROLE inside one grammar: entities, models, driver. Ours splits by
+        > READER: human, model, tool. Both are called a triple and they are
+        > orthogonal, which is worth declaring so nobody conflates them later.
+    specialization-not-edit:
+        > technicalContent never edits base. It declares new element types whose
+        > content models are constrained versions of base's. This is the precedent
+        > for stream 18, per-command LAW entities abolished: a command does not
+        > legislate for itself, it SPECIALIZES a subset's law by constraining it.
+    growth-is-the-warning:
+        > 188 to 656 files across one minor version is what happens when every
+        > vocabulary gets its own shell and every domain its own pair. Our 143
+        > commands becoming 429 files is the same curve. DITA survives it because
+        > the files are GENERATED from one source and catalogued; a hand-kept 656
+        > would have collapsed. Read with tei.duo.nt: ODD emits the quartet, DITA
+        > catalogues the shells, and neither hand-maintains the fan-out.
+catalog-mechanism:
+    > Every shell carries catalog.xml mapping PUBLIC identifiers to local paths, so
+    > a document names a grammar by identity and the catalog resolves where it
+    > actually sits. Nothing in a DITA document hard-codes a path. This is the
+    > missing half of stream 14: a version stamp says WHICH subset a file was cut
+    > from, and a catalog says WHERE that subset currently lives; the stamp without
+    > the catalog still breaks when a file moves.
+gaps-remaining:
+    > Per-vocabulary content models are not transmigrated. bookmap, learning,
+    > machineryIndustry, subjectScheme and xnal are named and counted, not read.
+    > The plugin trio is covered by dita-plugins.nt and needs no second pass.

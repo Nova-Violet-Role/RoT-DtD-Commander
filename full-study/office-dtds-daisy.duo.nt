@@ -1,0 +1,50 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - DAISY per-folder DETAIL pass (measured 2026-09-13)
+# Source: cc-resources/.dtd-file-examples/daisy/ - 12 entries
+# Extends office-dtds-daisy.nt, which indexed three folders at one line each.
+
+measured:
+    dtbook-2005-3.dtd: 82 elements, the TEXT track
+    ncx-2005-1.dtd: 18 elements, the NAVIGATION track
+    dtbsmil-2005-2.dtd: 14 elements, the SYNCHRONISATION track
+    oebpkg12.dtd: the PACKAGE track
+    oeb12.ent: 48964 bytes, 254 entities, included by oebpkg12.dtd alone
+    versions-side-by-side: dtbook 2005-1, 2005-2, 2005-3; dtbsmil 2005-1, 2005-2; one ncx
+    extras: bookmark-2005-1, distInfo-2005-1, resource-2005-1, dtbook.2005.basic.css
+
+the-four-tracks:
+    > A DAISY book is ONE work in four parallel grammars. dtbook carries the words.
+    > dtbsmil carries the timing that binds a word to a moment of audio. ncx carries
+    > the navigation, its spine measured as ncx, head, smilCustomTest, meta,
+    > docTitle, docAuthor, navMap, navPoint, pageList, pageTarget, navList,
+    > navTarget, navInfo, navLabel, content, text, audio, img. oebpkg names the
+    > manifest that says which files constitute the book.
+    > No single track is the book. The book is the four, aligned.
+what-this-teaches-the-release:
+    the-polyglot-is-not-new:
+        > Stream 17 makes every artifact a triple and calls it new. DAISY has shipped
+        > a quartet since 2005. The difference worth declaring: DAISY's tracks are
+        > DIFFERENT CONTENT aligned by time; ours are the SAME content in three
+        > readings. Alignment is the shared problem, sameness is not.
+    ncx-is-the-reverse-read:
+        > navMap, navPoint, navLabel and content exist so a reader can enter the work
+        > at any point and know where they are without reading from the start. That
+        > is the same job the reverse read does for a cache: arrive anywhere, know
+        > the position. ncx is a declared table of contents for a work too long to
+        > read linearly, which is exactly what a 384-question intake is.
+    one-entity-file-serves-the-package-only:
+        > oeb12.ent is 48964 bytes of 254 entities and exactly ONE file includes it,
+        > oebpkg12.dtd. Measured, not assumed. The shared-entity idea is real but its
+        > reach here is narrow: the package track shares, the content tracks do not.
+        > A claim that DAISY tracks share entities broadly would be false.
+    versions-live-beside-each-other:
+        > dtbook 2005-1, 2005-2 and 2005-3 all ship in the same folder. A consumer
+        > names the version it was authored against and both remain readable. This is
+        > the alternative to our re-inline-at-publish decision: not one current copy,
+        > but every version kept and named. Worth weighing against stream 14 before
+        > the stamp mechanism is written.
+gaps-remaining:
+    > dtbook's 82 element content models are not transmigrated, nor the smil timing
+    > attributes. The four-track shape, the track sizes and the entity reach are what
+    > streams 15 and 17 needed and are what this pass carries.

@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — greek numbers part 2 (FINAL): compound tens, hundreds, thousands, SI, rules (measured lines 61-202/202)
+# Source: artifacts/_sweep/byproducts/GREEK_NUMBERS.md — FILE NOW COMPLETE 202/202
+
+compound-tens: icosi+X (21 icosihena, 22 icosidi, 29 icosienna, 31 triacontahena); +30/40/50/60/70/80/90 +1 rows
+hundreds: hecta hecaton; di/tri/tetra/penta/hexa/hepta/octa/ennea-hecta (200-900, -cosi- variants)
+compound-hundreds: hundreds+tens+unit — 101 hectahena, 110 hectadeca, 120 hectaidosa, 531 pentahectatriacontahena, 999 enneahectenneacontennea
+thousands: chilia kilo; dis/tris/tetrakis/penta/hexa/hepta/octa/ennea-kischilia (2000-9000)
+ten-thousands: myria myri (obsolete-1960); dis/tris/tetrakis/pentakis-myria; hectamyria 100k; chiliamyria 1M
+si-powers: deca hecto kilo myria mega giga tera peta exa + non-Greek zetta yotta ronna quetta (2022)
+submultiples: deci centi milli micro nano pico femto atto zepto yocto ronto quecto (Latin/Greek/mixed noted)
+fractional: hemi-half try-third tetra-quarter
+construction-formula: [hundreds]+[tens]+[unit] — 123 hectadodeca; 245 dihecatetrapenta; 1024 chiliadodecatetra; 9999 enneakischilienneahectenneacontennea
+practical-cap: unwieldy past ~999; rare past 12-gon/10-atom
+decamono-warning: 11-19 STANDARD hendeca/dodeca/triskaideca — deca+unit pattern non-standard, constructed-systems only
+
+law-link:
+    > Ordinals via lib/ordinals.mjs before .md ONLY on multi-file runs (LAW.IUPAC.7); Greek cardinals heis/duo/treis (5.0.0 record ordinals) vs IUPAC multipliers mono/di/tri as second column.
+
+file-complete:
+    > GREEK 202/202 across 2 .nt (polyglot-greek.nt core-1-12/teens/tens + greek.duo.nt compounds/SI/rules).

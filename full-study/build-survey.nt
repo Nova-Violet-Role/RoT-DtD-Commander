@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — matrix build survey (measured; Revision 12 premise WITHDRAWN in Revision 13)
+# Surveyed v2: RoT_DtD_Commander/ tree (commands+src/commands, checker, lib, bin, .github via references, RELEASE.md, package.json scripts)
+
+withdrawal:
+    > Revision 12 surveyed the WRONG tree (cc-resources, the packaged plugin copy) and declared greenfield. The live tree RoT_DtD_Commander/ already holds: git-gh-amplification-dtd.md (529 lines, 8-round/30 raise, inlined subsets), ~140 command files mirrored commands/+src/commands/, checker/companion-run.sh + companion-guard.mjs + companion-audit.sh + companion-audit.dtd, checker/scala.mjs (3-OS scala matrix, findings .nt), lib/cross-os.mjs LAW.XOS.6 (${{ matrix.os }} gate law), bin/rot-dtd-commander.mjs installer, gate-sync.mjs, ceiling.mjs, full controls suite (package.json gate script), RELEASE.md scala history. The "update" premise STANDS; the greenfield claim is withdrawn. (measured 2026-09-11)
+
+existing-machinery-live:
+    installer: bin/rot-dtd-commander.mjs — inlines subsets at install, checker refuses declaration/prose drift
+    matrix-precedent: scala.mjs findings .nt + cross-os.mjs matrix --check against .github/workflows/gate.yml legs
+    companion-precedent: wrapper allow-list (Read Grep Glob + one Bash form), ceiling 300 stdin-closed, --permission-mode default + PreToolUse guard; SECURITY.md documents it
+    command-pattern:
+        > frontmatter (description + argument-hint) + DOCTYPE with inlined subsets + trust_boundary + objective + intake_gate/process/output_format + grammar_map with sigil headings. git-gh-amplification-dtd.md (529 lines) is the direct template: repo-git-face measure + 30-question intake + write chosen.
+    sigil-verbs-chain-skill:
+        > commands/sigil-dtd.md + verbs-dtd.md + chain-dtd.md + create-filetype-*-dtd + create-prompt-*-dtd exist — the $SIGIL simplification and DTD-CREATION-SUITE skill EXTEND these, not start them.
+
+build-order-revised:
+    1. dtd/git-gh-matrix-scala.dtd — LAW.MX.* subset (choices, seals, OS profiles, ceiling/timeout, node checker, model/effort/thinking, env tiers, cache timer, sanitizer laws from study; cites XOS.6, COMPANION guard, scala findings form)
+    2. commands/git-gh-matrix-scala-dtd.md (+ src/commands mirror) — frontmatter + DOCTYPE + 7-8-round intake + gate.yml emission + grammar; template is git-gh-amplification-dtd.md
+    3. gate.yml ramification (single vs gate-1/2/3 vs matrix-jobs vs manual) against existing .github/workflows/gate.yml + cross-os.mjs matrix --check
+    4. companions-gate-dtd (bypassPermissions for companions/audit/matrix) amending companion-run.sh/guard pattern, NOT replacing
+    5. hadal/hadopelagia deep-dive variants extending deep-dive-dtd.md
+    6. validate: rot-dtd-commander check + npm gate steps that touch new files

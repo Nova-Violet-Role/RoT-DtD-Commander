@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — 10.0.0 Matrix-Cross_OS_Scala-Edge-DtD release plan (from intake, 20 answers)
+
+decisions:
+    priority: full-study-nt-first
+    nt-layout: per-folder-dtd-plus-per-file-args
+    nt-expand: permitted
+    gate-shape: ramified-OS-gate-1-linux-gate-2-windows-gate-3-macos
+    os-seals: extended-OS-plus-heavy-seals
+    model: sonnet-5-tier-default
+    deep: both-hadal-and-hadopelagia
+    hadopelagia-rounds: uncapped-per-user
+    ask-forms: bracket-angle-caret-empty-all-four
+    sigil: full-simplify-plus-variants
+    skill: tri-polyglot-md-nt-yaml-plus-overhaul-all-old-skills
+    env: think-subset-plus-timeout-subset
+    read: whole-before-nt
+    release: audit-sh-plus-CI-plus-bypass-plus-reverse-gulp-plus-readme
+    preview: audit-all-with-cube
+    depth: schematic-plus-brackets-plus-NT38-map-plus-YAML-mix
+    secrets: sealed-rotation-blind-run
+    timeouts: per-job-ceiling-plus-cache-timer-60m
+
+matrix-command:
+    name: git-gh-matrix-scala-dtd
+    delivers: finished-gate.yml-tested
+    targets:
+        - app
+        - program
+        - project
+        - claude-code-repo
+        - folder
+    choices:
+        - seals-count
+        - os-count-versions
+        - ceiling-timeout-per-job
+        - node-latest-checker
+        - single-vs-ramified-vs-matrix-vs-manual
+        - model-effort-thinking-5-tier
+        - env-tiers-from-LZ-BINARY
+        - cache-timer-60m-retrigger-count
+    thinking-table:
+        > MAX_THINKING_TOKENS unset = adaptive; 0 = disabled; >0 = enabled budget.
+        > Clamp: min(budget, max_tokens-1); max_tokens via CLAUDE_CODE_MAX_OUTPUT_TOKENS (64000 opus-5 default, 128000 upper).
+        > Percent-of-128k: 5%=6400, 10%=12800, 25%=32000, 50%=64000, 100%=127999.
+        > Effort low/med/high allow thinking-off (0); xhigh/max use low nonzero (25%=16384) to avoid overthinking.
+
+companions:
+    - git-gh-companion-dtd-scala-capable-nt-gulp-reverse
+    - companions-gate-dtd-bypassPermissions-for-family
+    - git-gh-family-update-long-unupdated
+
+release-gate:
+    > audit companion .sh installed on machine, published to ORG repo, CI green, version computed never typed.

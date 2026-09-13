@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — polyglot guide part 4: callout systems + polyglot forms (measured lines 411-630/813)
+# Source: artifacts/_sweep/byproducts/DTD_GUIDE_PROMPT_POLYGLOT_EXAMPLES.md
+
+callouts-obsidian-13:
+    note info todo tip success question warning failure danger bug example quote abstract
+    aliases: summary/tldr check/done help/faq caution/attention error fail/missing cite hint/important
+    warning: [!ALARM] NOT built-in — use [!danger]/[!warning] or CSS snippet
+    syntax: > [!type] / custom-title / +/-collapsible / nested-lists+code
+    github-5: NOTE TIP IMPORTANT WARNING CAUTION (uppercase)
+    custom-css: .callout[data-callout="alarm"] color+icon
+    depth-use:
+        > Bracket-label x quote-depth matrix lives HERE: [!IMPORTANT]>>[!CAUTION]>>>[!TIP] chains render as nested callouts; Depth.dtd counts the >-depth, Type.dtd names the label relation.
+
+polyglot-forms:
+    - md+yaml-frontmatter: --- title/tags/date/description-> --- + body (most common in practice)
+    - yaml-scalar-holds-nt: schema: > server:/host/port/tags (YAML sees string, NT sees structure)
+    - nt-string-holds-yaml: manifest: > apiVersion/kind/metadata/spec (NT sees string, YAML sees manifest)
+    - triple-heredoc: << 'YAMLEOF' quoted-literal wrapping YAML wrapping NT (3 parsers table)
+    - callout-in-scalar: docs.readme |- with [!warning]+[!danger] (YAML sees string, Obsidian sees boxes)

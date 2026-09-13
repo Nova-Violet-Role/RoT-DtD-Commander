@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — DTD/PCDATA/CDATA/NDATA x $ARGUMENTS (expanded)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES_DTD_VARIANTS.md (733 lines)
+
+core-terms:
+    - term: PCDATA
+      full: Parsed Character Data
+      parsed: yes
+      escape: &lt; &gt; &amp;
+    - term: CDATA-section
+      form: <![CDATA[...]]>
+      parsed: no
+      ends-at: ]]>
+    - term: CDATA-attr
+      context: ATTLIST type
+      parsed: yes-entities-resolved
+    - term: NDATA
+      full: Notation Data
+      parsed: no
+      use: external unparsed entity
+    - term: RCDATA
+      context: HTML/SGML only
+      parsed: refs-yes-tags-no
+    - term: SDATA
+      context: SGML only
+
+three-cdata-confusions:
+    > #1 ATTLIST type = any-text, entities resolved.
+    > #2 marked section = literal, entities NOT resolved.
+    > #3 SGML entity type = raw data, dropped in XML.
+
+element-forms:
+    - <!ELEMENT name (#PCDATA)>
+    - <!ELEMENT name (child1, child2)>
+    - <!ELEMENT name (child1+, child2*)>
+    - <!ELEMENT name (child1 | child2)*>
+    - <!ELEMENT name ANY>
+    - <!ELEMENT name EMPTY>
+
+attribute-types:
+    - CDATA
+    - ID
+    - IDREF
+    - IDREFS
+    - ENTITY
+    - ENTITIES
+    - NMTOKEN
+    - NMTOKENS
+
+entity-forms:
+    - internal-general-parsed
+    - external-general-parsed-SYSTEM
+    - external-unparsed-NDATA
+    - parameter-entity-DTD-only

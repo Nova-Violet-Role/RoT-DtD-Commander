@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — xhtml-lat1.ent sample (measured head 40/196)
+# Source: cc-resources/.dtd-file-examples/xhtml/dtd/xhtml-lat1.ent (ISO 8879 carve-out, W3C redistribution)
+
+invocation:
+    > <!ENTITY % HTMLlat1 PUBLIC "-//W3C//ENTITIES Latin 1 for XHTML//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent"> then %HTMLlat1; — same declare-then-invoke as strict driver lines 26-39.
+
+sample-rows:
+    - nbsp: &#160; no-break space U+00A0 ISOnum
+    - iexcl: &#161; inverted exclamation U+00A1
+    - cent: &#162; pound &#163; curren &#164; yen &#165;
+    - sect: &#167; uml &#168; copy &#169; reg &#174;
+    - deg: &#176; plusmn &#177; sup2 &#178;
+
+pattern-note:
+    > Internal general entities mapping mnemonic -> numeric char ref + Unicode name + ISO set tag (ISOnum/ISOdia). Flat catalogue, no nesting — the precedent for our sigil collision table: $form -> meaning -> safe-form -> language-owner.
+    > Remaining 156 lines same shape; strict-vs-transitional driver diff still queued.

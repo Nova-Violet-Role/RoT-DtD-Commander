@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 — arguments part 3: heredoc generators + functions (measured lines 201-320/829)
+# Source: artifacts/_sweep/byproducts/$ARGUMENTS_VARIANT_EXAMPLES.md
+
+heredoc-to-yaml:
+    pattern: parse-flags-then-embed
+    loop: while [[ $# -gt 0 ]]; do case "$1" in --host) HOST="$2"; shift 2;; esac; done
+    embed: cat > config.yaml <<EOF with ${HOST:-localhost} ${PORT:-5432} ${DB:-default} plus $1 $2 $3 list items
+
+heredoc-to-nt:
+    pattern: direct-positional-embed
+    body:
+        > input: [- $1, - $2, - $3]; meta: count $#, all $*, first $1, last via array (NOT ${!#} — invalid Bash)
+    last-arg-idiom:
+        > args=("$@"); last="${args[$((${#args[@]}-1))]}"
+
+heredoc-to-markdown:
+    pattern: callouts-plus-fenced-nt
+    body:
+        > [!warning] Build Summary / Total $# checks; [!example] Results with fenced nt checks [$1 $2 $3], status > $3
+
+functions:
+    scope: function inherits $@ from call site, NOT global args
+    forwarding-rule:
+        > actual_command "$@" = CORRECT; bare $@ = BROKEN word-split; "$*" = WRONG one-arg
+    demo: my_func "hello world" foo "bar baz" -> 3 args preserved quoted
+
+assimilation-note:
+    > Direct precedent for our own generators: gate.yml / .nt / report.md emitted from matrix answers via unquoted-EOF heredoc with ${VAR:-default} fallbacks and quoted "$@" forwarding.
+    > Lines 321-829 still queued.
