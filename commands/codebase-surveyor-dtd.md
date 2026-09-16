@@ -1037,7 +1037,7 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
 <!-- The rungs that have an instrument in this release. A rung without one
      is still a rung: it is never measured by guessing, and a later release
      adds the instrument without renumbering anything (LAW.GEOM.2). -->
-<!ENTITY GEOM.instrumented "1|2|3|4|5|9|10|12|14|15|16|17|23|26|29|33|34|47|52">
+<!ENTITY GEOM.instrumented "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|23|26|29|33|34|47|52">
 <!-- The verb attribute of a measure, a projection and a change is a parameter
      entity each band subset raises to its own enumeration BEFORE this file is
      included (the first declaration binds), so a verb outside the band is
@@ -1296,7 +1296,7 @@ The ladder is declared, not remembered. geometry.dtd carries GEOM.verb.1 to GEOM
 2. Probe the substrate with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe` in the foreground and render `substrates`: the host leg and one `substrate` per local of XOS.locals, present only after its probe answered with rows (LAW.XOS.1, LAW.SURVEYOR.4).
 3. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope first, as a select question over the target and its top-level directories, then a mark question over the rungs of GEOM.instrumented that belong to SURVEYOR.band, each option carrying a cut preview that may hold a `figure` of what that rung draws (LAW.ASK.13, LAW.ASK.16). Present the gate; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
 4. Record `git status --porcelain` before the first instrument, so LAW.SURVEYOR.2 can be measured after.
-5. Survey with `node lib/ceiling.mjs 300 node lib/geometry.mjs survey <target> --write` in the foreground, exit code read directly. Render `survey` with target, substrate, read of of, and one `measure` per rung measured: verb, name, value, unit, instrument, seconds; then the unmeasured rungs with why (LAW.GEOM.2, LAW.SURVEYOR.3).
+5. Survey with `node lib/ceiling.mjs 300 node lib/geometry.mjs survey <target> --write` in the foreground, exit code read directly, passing the rungs the intake marked with `--verbs=n,n` and every root of a multi-root scope as further arguments. Render `survey` with target, substrate, read of of, and one `measure` per rung measured: verb, name, value, unit, instrument, seconds; then the unmeasured rungs with why (LAW.GEOM.2, LAW.SURVEYOR.3).
 6. Render `figure`: the cut figure the engine printed, 60 by 3, marked guessed, inside a fenced block; name the expanded plate and its dark twin written beside the survey (LAW.SURVEYOR.5, LAW.FIG.2).
 7. Read `git status --porcelain` again: every changed path lies under GEOM.dir or the run is a failed answer (LAW.SURVEYOR.2).
 8. Render `artifact` naming the survey file written, and `next_band` naming SURVEYOR.next and codebase-architect-dtd (LAW.SURVEYOR.1).

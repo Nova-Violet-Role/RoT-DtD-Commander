@@ -290,7 +290,7 @@ Measured on the release day:
 - `node checker/contract-audit.mjs`: 1929 declarations, 0 unused, 0 law gaps
 - `node checker/gate-sync.mjs`: 84 commands in the gate chain, 0 missing from gate.yml
 - `node lib/figure.mjs controls`: 44 run, 0 failing
-- `node lib/geometry.mjs controls`: 50 run, 0 failing
+- `node lib/geometry.mjs controls`: 57 run, 0 failing
 - `node lib/typography.mjs controls`: 35 run, 0 failing
 - `node lib/chain.mjs controls`: 26 run, 0 failing
 - `node lib/sigil.mjs controls`: 16 run, 0 failing; `node lib/sigil.mjs run` on windows, bash 5.3: 43 pass, 0 fail, 0 unsupported

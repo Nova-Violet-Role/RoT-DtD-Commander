@@ -1028,7 +1028,7 @@ argument-hint: "[the survey json to stand on, or blank for the latest under arti
 <!-- The rungs that have an instrument in this release. A rung without one
      is still a rung: it is never measured by guessing, and a later release
      adds the instrument without renumbering anything (LAW.GEOM.2). -->
-<!ENTITY GEOM.instrumented "1|2|3|4|5|9|10|12|14|15|16|17|23|26|29|33|34|47|52">
+<!ENTITY GEOM.instrumented "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|23|26|29|33|34|47|52">
 <!-- The verb attribute of a measure, a projection and a change is a parameter
      entity each band subset raises to its own enumeration BEFORE this file is
      included (the first declaration binds), so a verb outside the band is

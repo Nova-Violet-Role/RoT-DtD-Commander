@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - the 429-tree proof, re-derived at 145 commands (measured 2026-09-16)
+# Source: lib/triple.mjs controls 6/0 + full-tree run to scratchpad/triple-full/.
+# The deka 429 was 143 commands times 3; the tree now holds 145.
+
+proof:
+    > 173 artifacts (145 commands + 23 skills + 5 agents) emitted nt+yaml
+    > and verified with 0 findings: 346 emission files beside the 173
+    > committed md sources and mirrors. Commands alone: 145 times 3 = 435
+    > (145 md + 145 nt + 145 yaml). Skills and agents likewise. Supporting
+    > prose (references, workflows, templates) is correctly refused: no
+    > DOCTYPE, no emission. Generation, not authoring.
+
+bugs-found-by-proof:
+    > SKILL.md keyed as SKILL (basename) instead of its directory: fixed to
+    > parent-dir key, control 6 trips it.
+    > All 23 skills overwrote one SKILL.nt (302 files, not 346): fixed with
+    > outName (parent dir), re-run shows 346.
+    > 23 skill sigils missing from the registry: added as family sigil,
+    > collision-free (no key ends in -dtd).
+
+release-binding:
+    > Stream 17 (429-file tree): the proof above is the generation half;
+    > wiring into build/installer/gate is the next slice. Stream 9 keeps
+    > the abolition design and the corpus convergence.
