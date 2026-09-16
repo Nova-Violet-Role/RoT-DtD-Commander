@@ -514,22 +514,22 @@ Stars carry across rounds so a pick from round one still counts in round twenty.
 
 <output_format>
 <grammar_map>
-Render the `maelstrom_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌀️ Heading` carrying this command's sigil 🌀️, with a blank line before and after it (LAW.CORE.6).
-- `task`: **🌀 Task**, with its kind when it came from the task question
-- `intake`: **🌀 Intake**, the known and gap slots, then each round as n of 96 with its questions, forms and answers (Other answers quoted as typed, `query` answers quoted with their replies), the impactful selections when asked for, then the gate choice and round number; the gate offers GATE.save as its fifth choice with the cache question beside it, and on save the `cache` element names the file written and read back whole, or on the next call the file resumed from
-- `shortlist`: **🌀 Shortlist**, every `starred` in rank order with the round that set it rendered as the LiveMap `live` display of the gate, or one line saying none was starred
-- `execution`: **🌀 Execution**, opening with the restatement, then the work itself
-- `artifact`: **🌀 Artifact**, the record this run wrote, as one `<artifact>` naming its file under the fixed directory; a run that wrote none says so on that line
-- `assumption_made`: **🌀 Assumptions Made**, autonomous mode only
+Render the `maelstrom_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🌪️️ Heading` carrying this command's sigil 🌪️️, with a blank line before and after it (LAW.CORE.6).
+- `task`: **🌪️ Task**, with its kind when it came from the task question
+- `intake`: **🌪️ Intake**, the known and gap slots, then each round as n of 96 with its questions, forms and answers (Other answers quoted as typed, `query` answers quoted with their replies), the impactful selections when asked for, then the gate choice and round number; the gate offers GATE.save as its fifth choice with the cache question beside it, and on save the `cache` element names the file written and read back whole, or on the next call the file resumed from
+- `shortlist`: **🌪️ Shortlist**, every `starred` in rank order with the round that set it rendered as the LiveMap `live` display of the gate, or one line saying none was starred
+- `execution`: **🌪️ Execution**, opening with the restatement, then the work itself
+- `artifact`: **🌪️ Artifact**, the record this run wrote, as one `<artifact>` naming its file under the fixed directory; a run that wrote none says so on that line
+- `assumption_made`: **🌪️ Assumptions Made**, autonomous mode only
 </grammar_map>
 
 The `artifact` element is the file this run leaves for the next one: the record named by this command's `RECORD.*` declaration, written under `artifacts/` and the command's own name, with a Greek ordinal before `.md` only when the run wrote more than one (LAW.IUPAC.7). Render `<artifact>` with the name it wrote.
 
-### 🌀 Task
+### 🌪️ Task
 
 [the task, kind: write|build|figure|other]
 
-### 🌀 Intake
+### 🌪️ Intake
 
 - known: what [..] who [..] why [..] how [..] when [..]
 - gaps: [slots asked about]
@@ -537,21 +537,21 @@ The `artifact` element is the file this run leaves for the next one: the record 
 - round N of 96: [only when asked]
 - gate: [start|more|add|impactful|save] (round N)
 
-### 🌀 Shortlist
+### 🌪️ Shortlist
 
 - rank 1 (round N): [starred label]
 - rank N: [only when starred, or one line saying none was starred]
 
-### 🌀 Execution
+### 🌪️ Execution
 
 Restating what was asked: [every known slot, answer, star and answered query]
 [the work]
 
-### 🌀 Artifact
+### 🌪️ Artifact
 
 Saved to `artifacts/ask-me-maelstrom-dtd/ask-me-maelstrom-dtd.md` (one line saying none was written if the run wrote none).
 
-### 🌀 Assumptions Made
+### 🌪️ Assumptions Made
 
 (autonomous mode only)
 - [each gap filled without asking]

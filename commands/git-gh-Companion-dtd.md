@@ -501,19 +501,19 @@ Run the Scratchpad Companion on one build phase of this repository for <quoted t
 
 <output_format>
 <grammar_map>
-Render the `companion_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order. Every heading is a markdown heading `### 🧭 Heading` carrying this command's sigil 🧭, with a blank line before it and after it (LAW.CORE.6).
-- `task`: **🧭 Task**
-- `intake`: **🧭 Intake**, the known and gap slots, each round as n of 2 with questions and answers, then the gate choice and round number
-- `leg`: **🧭 Leg**, one per leg launched, as `<leg>` elements with script, scope, model, effort, range, out, ceiling and verdict
-- `findings`: **🧭 Findings**, the stamped .nt file read back whole, or the UNAUDITED line when a ceiling fired
-- `assumption_made`: **🧭 Assumptions Made**, autonomous mode only
+Render the `companion_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order. Every heading is a markdown heading `### 🛰️ Heading` carrying this command's sigil 🛰️, with a blank line before it and after it (LAW.CORE.6).
+- `task`: **🛰️ Task**
+- `intake`: **🛰️ Intake**, the known and gap slots, each round as n of 2 with questions and answers, then the gate choice and round number
+- `leg`: **🛰️ Leg**, one per leg launched, as `<leg>` elements with script, scope, model, effort, range, out, ceiling and verdict
+- `findings`: **🛰️ Findings**, the stamped .nt file read back whole, or the UNAUDITED line when a ceiling fired
+- `assumption_made`: **🛰️ Assumptions Made**, autonomous mode only
 </grammar_map>
 
-### 🧭 Task
+### 🛰️ Task
 
 [the phase and range]
 
-### 🧭 Intake
+### 🛰️ Intake
 
 - known: what [..] who [..] why [..] how [..] when [..]
 - gaps: [slots asked about]
@@ -521,17 +521,17 @@ Render the `companion_session` root declared in the DOCTYPE as the markdown belo
 - round N of 2: [only when asked]
 - gate: [start|more|add|impactful|save] (round N)
 
-### 🧭 Leg
+### 🛰️ Leg
 
 `<leg>` elements as declared, one line per leg.
 
-### 🧭 Findings
+### 🛰️ Findings
 
 [the stamped findings, read in one gulp reverse, or UNAUDITED with the ceiling that fired]
 
 Warnings inside the findings carry their alarm class: GLOSSARY.classes, four per GLOSSARY.classes.count, plain as GLOSSARY.spell.plain, the bus as GLOSSARY.spell.dollar-bang, the binder as GLOSSARY.spell.percent-bang, the carried whole as GLOSSARY.spell.at-bang, each with the trust its class carries (LAW.GLOSS.1); spellings stay in words, never in glyphs (LAW.GLOSS.2); every alarm is a `glossary_alarm` naming class, trust and term (LAW.GLOSS.3).
 
-### 🧭 Assumptions Made
+### 🛰️ Assumptions Made
 
 (autonomous mode only)
 - [each gap filled without asking]

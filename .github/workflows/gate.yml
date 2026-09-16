@@ -113,6 +113,8 @@ jobs:
         run: node lib/figure.mjs controls
       - name: geometry controls (one hundred and eight rungs, three profession bands and four domain bands, the lenses a partition, a survey that moves nothing, a plan that rewrites nothing, a renovation and a production refused by name, a band and a domain switched off)
         run: node lib/geometry.mjs controls
+      - name: triple controls (one source emits md, nt and yaml; byte-identical twice; a stripped emission named; a sourceless and a sigilless source refused)
+        run: node lib/triple.mjs controls
       - name: typography controls (the cell shared with cc-figure, the seven glyphs glyph for glyph, the guarantee and what falls outside it, the numeral derived from the number, every declaration spent)
         run: node lib/typography.mjs controls
       - name: chain controls (stacked command lines read both ways, the cap, a link that cannot run alone, a successor that does not exist, every hands_to in the tree resolving)

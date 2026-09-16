@@ -585,7 +585,7 @@ Subagents the Suite dispatches with their own context and their own contract. Th
      | every tracked file carries an SPDX expression, or is covered by an annotation of REUSE.toml, or is a licence text | `bash checker/spdx-sweep.sh`: `0 missing`, with a planted covered json and two planted uncovered files moving the counts | 2026-09-07 |
      | no carriage return and no BOM in any tracked file | `bash checker/crlf-sweep.sh`: `0 bad` | 2026-09-02 |
      | install writes a manifest, uninstall removes only what the manifest lists, and a scratch target ends at zero files | the `install-roundtrip` job in `.github/workflows/gate.yml` | every push |
-     | every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `85 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
+     | every command of the gate script is a run line of the gate workflow or a shell segment of one; a step commented out counts for nothing; the workflow may run more, and that direction is not claimed | `node checker/gate-sync.mjs`: `86 commands in the gate chain, 0 missing from gate.yml`, three controls passing (a run line removed, a step commented out, a file of comments) | every push |
      | every build target under commands, skills and agents is tracked; an ignored one would pass the drift check here and fail it on a fresh checkout | `bash checker/tracked-sweep.sh`: `0 ignored build targets`, its planted control reported | every push |
      | every command, skill and agent of the tree is named in the README index, each command in exactly one family | `node checker/readme-index.mjs --check`: `README block in step`; `--controls`: an unclaimed name refused, a removed row reported | every push |
      | the version is one everywhere: package.json, plugin.json, both marketplace fields, CITATION.cff, the top changelog section, a RELEASE.md heading, and the tag that ships | `node checker/release-notes.mjs --versions`, and the release job with the tag; controls plant a stray manifest, a missing heading and a wrong tag | every push, and the tag |
@@ -619,7 +619,7 @@ cd RoT-DtD-Commander
 npm run gate; echo "exit=$?"
 ```
 
-gate opens by proving the workflow runs the same chain (checker/gate-sync.mjs), then runs build --check, check, the thirty-one Adiutor controls, the contract audit, the checker controls, the sweeps, the thirty-four control suites of the gate chain, the slop sweep at zero, the slop measures on README and CHANGELOG (the release ships a changelog section), the tracked-targets sweep, the plates and the release-notes controls; each ends with a line of counts, and the exit code is read directly. Then break it:
+gate opens by proving the workflow runs the same chain (checker/gate-sync.mjs), then runs build --check, check, the thirty-one Adiutor controls, the contract audit, the checker controls, the sweeps, the thirty-five control suites of the gate chain, the slop sweep at zero, the slop measures on README and CHANGELOG (the release ships a changelog section), the tracked-targets sweep, the plates and the release-notes controls; each ends with a line of counts, and the exit code is read directly. Then break it:
 
 {{rdc-verify}}
 
