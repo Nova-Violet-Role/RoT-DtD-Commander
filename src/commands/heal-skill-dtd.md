@@ -12,7 +12,9 @@ allowed-tools: [Read, Edit, Bash(ls:*), Bash(git:*)]
 <!DOCTYPE heal [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT heal (issue, diagnosis, proposed_edit+, approval, applied)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT heal (args, issue, diagnosis, proposed_edit+, approval, applied)>
   <!ELEMENT issue (#PCDATA)>
   <!ELEMENT diagnosis (#PCDATA)>
   <!ELEMENT proposed_edit (#PCDATA)>
@@ -174,6 +176,7 @@ Before completing:
 <output_format>
 <grammar_map>
 Render the `heal` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🩹 Heading` carrying this command's sigil 🩹, with a blank line before and after it (LAW.CORE.6).
+- `args`: the launch walk: count, the flags, the positional words
 - `issue`: what went wrong during execution
 - `diagnosis`: why the skill text caused it
 - `proposed_edit`: one `proposed_edit` per file, quoting current and proposed text

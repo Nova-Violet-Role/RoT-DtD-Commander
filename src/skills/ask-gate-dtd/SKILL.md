@@ -44,7 +44,7 @@ The `slots` are eight: what, who, why, how, when, depth, focus, use. Analyze the
 
 <round_shape>
 
-The `round_shape` is one `ask` of one to four `question` elements, each with a header of twelve characters or fewer, a question ending in a question mark, and two to four `option` elements each with a `label` and a `description`. A question that needs several answers sets multiSelect true. A question whose options are code, layouts or configurations may carry a `preview` per option. The tool always adds an Other free-text option; do not add one yourself.
+The `round_shape` is one `ask` of one to four `question` elements, each with a header of twelve characters or fewer, a question ending in a question mark, and two to four `option` elements each with a `label` and a `description`. Every question declares its variant, select, check, elaborate or mark (LAW.ASK.13); family commands add the six ask forms beside the variants, bracket angle caret chained-empty star and query under ASK.token.* (LAW.ASK.17). A question that needs several answers sets multiSelect true. A question whose options are code, layouts or configurations may carry a `preview` per option. The tool always adds an Other free-text option; do not add one yourself.
 
 </round_shape>
 

@@ -9,6 +9,10 @@ description: Audit one *-dtd artifact or the whole DTD corpus. Runs the rdc chec
 <!DOCTYPE audit_session [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT audit_session (scope, checker_run, dispatch*, summary)>
   <!ELEMENT scope (#PCDATA)>
   <!ATTLIST scope kind (file|corpus|installed) #REQUIRED>

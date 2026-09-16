@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - daisy/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/daisy/ - 12 files.
+# Third of the F18-rest detail passes; pattern follows tei.duo.nt.
+
+folder-shape:
+    tracks: dtbook text, dtbsmil timing, ncx navigation, oebpkg package
+    dtbook-versions: 2005-1 97726 B 82 elements 54 entities, 2005-2 103636 B 82 elements 59 entities, 2005-3 105645 B 82 elements 58 entities
+    small-tracks: dtbsmil 14 elements each version, ncx 18 elements, bookmark 15, distInfo 12, resource 9
+    shared-file: oeb12.ent 48964 B, 254 entities, 0 elements
+    css-rider: dtbook.2005.basic.css 12651 B, presentation beside grammar
+
+parallel-tracks-measured:
+    > Four tracks, four jobs: dtbook carries text (82 elements), dtbsmil
+    > timing (14), ncx navigation (18), oebpkg the package (29). No track
+    > repeats another's elements; the package file references, never embeds.
+    > The dtbook run holds 82 elements across all three versions while
+    > entities accrete 54 to 59 to 58: element stability with entity growth,
+    > versioning by accretion inside one shape, the 4.x DocBook curve.
+
+shared-entity-measured:
+    > oeb12.ent holds 254 entities and 0 elements: a pure shared vocabulary
+    > with nothing to validate on its own. Included by exactly 1 of the 12
+    > files (oebpkg12.dtd:99, F22): broad sharing assumed, single inclusion
+    > measured. A shared file earns its keep by inclusion, never by size.
+
+release-binding:
+    > Stream 17 (parallel tracks): the four-track split is the precedent for
+    > auditing legs that each cover one family and reference instead of
+    > re-reading. Stream 9 (shared entities): oeb12.ent is the cautionary
+    > witness, include narrowly and count the inclusions.

@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - JATS-DTDs/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/JATS-DTDs/ - 98 files, 2.4 MB
+# Supersedes nothing; jats.nt is the folder index, this is the detail it deferred.
+# Ordinal: duo, Greek per the 10.0.0 rule that every created file is numbered.
+# Fourth of the F18-rest detail passes.
+
+quartet-per-profile-measured:
+    JATS-articleauthcustom: 113918 B in 4 files
+    JATS-journalpubcustom: 95321 B in 4 files
+    JATS-journalpub-oasis: 34802 B in 2 files
+    BITS-bookcustom: 142373 B in 4 files, largest customization in the corpus
+    BITS-book-oasis: 86475 B in 3 files
+    JATS-default: 88202 B in 2 files, the fallback layer
+    shape:
+        > Every profile customizes in exactly four slots: classes, mixes,
+        > models, modules. No profile adds a fifth slot and none drops one.
+        > The override surface is a quartet by declaration, so a consumer
+        > knows all four places an override may sit before reading any.
+
+catalog-pair:
+    > catalog-jats-v1-1-no-base.xml 47539 B against
+    > catalog-jats-v1-1-with-base.xml 47878 B: 339 bytes apart, the base
+    > URI alone. Identity resolves to location twice, once per base
+    > assumption, and the pair is the fixture that proves catalogs compose.
+
+samples:
+    > Smallsamples holds six book-part fixtures, bitso-book-part1..4 plus
+    > the small book: the corpus's only part-numbered fixture set, shaped
+    > like an ordinal cache series and read the same way, in order.
+
+release-binding:
+    > Stream 4 (depth as precedence): the quartet is the finest-grained
+    > named-override discipline in the corpus; every override slot the
+    > release declares cites it beside SVG prefw/postfw. Stream 1
+    > (companions-gate): the four CG grant axes mirror the four slots,
+    > role tier tools scope against classes mixes models modules.

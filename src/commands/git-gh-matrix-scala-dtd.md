@@ -64,6 +64,8 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 Build the testing gate for <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>: measure five probes, ask seven to eight rounds with previews about what the matrix scales, then emit a finished gate.yml and say whether it is green.
 
 The probes are the facts emission depends on: the target repo, any existing gate, the node the runners will prove, the secrets that must travel sealed, the OS scope the legs allow. Each short one becomes a question with four options and Other; the answers become a matrix_plan and the plan becomes files. The DocBook shapes behind this: a revhistory revision for the emission record.
+
+Rounds and answers travel the bus: questions go out and answers come back over BUS.classes, four per BUS.classes.count, the argument string on dollar-bang, bound parameters on percent-bang, attached files on at-bang, each with the trust its class carries (LAW.BUS.1: BUS.cargo.plain, BUS.cargo.dollar-bang, BUS.cargo.percent-bang, BUS.cargo.at-bang); only tokens of BUS.emit cross, eight per BUS.emit.count across BUS.emit.dollar-bang, BUS.emit.percent-bang, BUS.emit.at-bang and BUS.emit.braces (LAW.BUS.2), and every crossing is a `bus_use` naming class, token and trust (LAW.BUS.3); the emitted gate.yml is the bus payload at the end, named file by file under `emission`.
 </objective>
 
 <process>
@@ -134,6 +136,7 @@ green [yes|partial|no]; failing: [row or none]
 - Every probe was measured before any question was asked, and no question named a slot already filled
 - No prompt asked more than ASK.max_total questions, and no round more than ASK.max_questions
 - Every static choice carried its preview, and thinking previews carried MX.thinking.note
+- Every preview kept the DAISY navPoint shape of `%preview.daisy;`: a label with a target pointer and a play order, pointing at the consequence and embedding never (LAW.ASK.18)
 - Every file emitted carries the SPDX header its format allows and was re-read, and the gate passed matrix --check
 - The verdict names every failing row when not yes
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer

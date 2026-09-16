@@ -1,6 +1,6 @@
 ---
 name: run-prompt-dtd
-description: "Ejecuta los prompts guardados en contextos de sub-agentes independientes. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
+description: "Run saved prompts in isolated sub-agent contexts, single, sequential or parallel. Carries its own DOCTYPE: a declared output grammar, a trust boundary and laws the checker enforces."
 ---
 
 <!-- SPDX-License-Identifier: (AGPL-3.0-or-later OR EUPL-1.2) AND MIT -->
@@ -11,6 +11,10 @@ description: "Ejecuta los prompts guardados en contextos de sub-agentes independ
 <!DOCTYPE prompt_run [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT prompt_run (prompt_ref+, execution, result+)>
   <!ELEMENT prompt_ref (#PCDATA)>
   <!ELEMENT execution (#PCDATA)>
@@ -97,7 +101,7 @@ For each prompt number/name:
 <single_prompt>
 
 1. Read the complete contents of the prompt file
-2. Delegate as sub-task using Task tool with subagent_type="general-purpose"
+2. Delegate as sub-task using Task tool with subagent_type="general"
 3. Wait for completion
 4. Archive prompt to `completed/` subfolder WITHIN its category (e.g., `./.prompts/2xx-job-search/completed/233-name.md`), NOT to a root `./.prompts/completed/`
 5. Commit all work:

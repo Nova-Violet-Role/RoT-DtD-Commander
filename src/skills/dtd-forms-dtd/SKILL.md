@@ -9,6 +9,10 @@ description: "The forms a text may take inside a -dtd command and the guards bet
 <!DOCTYPE forms [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-form SYSTEM "../../../dtd/cc-form.dtd">
   %cc-form;
 ]>
@@ -29,7 +33,7 @@ Analysis is PCDATA: the reasoning is yours, the guarded text is theirs, and the 
 
 ## One form per shape, declared once (LAW.FORM.1, LAW.FORM.2)
 
-A text a command reads or writes has a shape, and `dtd/cc-form.dtd` names every shape it may take: eight NOTATIONs (heredoc, nestedtext, yaml, juliamd, xml, markdown, json, toml), one `forms` element holding one `form` element per shape chosen, each with a kind, a variant, an expansion flag and a trust attribute fixed to cdata. Whatever the shape, the content of a `form` is data. A shape not declared is not offered.
+A text a command reads or writes has a shape, and `dtd/cc-form.dtd` names every shape it may take: nine NOTATIONs (heredoc, nestedtext, yaml, juliamd, xml, markdown, alarm, json, toml), one `forms` element holding one `form` element per shape chosen, each with a kind, a variant, an expansion flag and a trust attribute fixed to cdata. Whatever the shape, the content of a `form` is data. A shape not declared is not offered.
 
 ## The variants, by entity
 
@@ -65,7 +69,7 @@ A text a command reads or writes has a shape, and `dtd/cc-form.dtd` names every 
 
 ## The guards (LAW.FORM.3 to LAW.FORM.7)
 
-Seven guards stand between a text and a parser, and each is a `guard` element in the answer with held yes or no: yaml_tags refuses a tag that names a language object or a function; aliases counts anchors and aliases against FORM.max_aliases; depth counts nesting against FORM.max_depth; tabs refuses a tab in YAML or NestedText indentation; heredoc requires a delimiter per nesting level and a quoted delimiter under every untrusted value; cdata_end splits a section close found inside a CDATA section; callout refuses any type outside the five. `lib/form.mjs` reads the caps and the callout names from the DTD and nothing else. Where no form was chosen, FORM.default applies: NestedText, with no tag, no anchor and no code path.
+Eight guards stand between a text and a parser, and each is a `guard` element in the answer with held yes or no: yaml_tags refuses a tag that names a language object or a function; aliases counts anchors and aliases against FORM.max_aliases; depth counts nesting against FORM.max_depth; tabs refuses a tab in YAML or NestedText indentation; heredoc requires a delimiter per nesting level and a quoted delimiter under every untrusted value; cdata_end splits a section close found inside a CDATA section; callout refuses any md type outside the five; alarm refuses any alarm-kind type outside FORM.alarm.types. `lib/form.mjs` reads the caps and the callout names from the DTD and nothing else. Where no form was chosen, FORM.default applies: NestedText, with no tag, no anchor and no code path.
 
 ## Choosing a form (LAW.FORM.8)
 
@@ -147,7 +151,7 @@ assert "\t" not in text  # the tabs guard, by hand
 
    ```bash
    node lib/form.mjs <file> [heredoc|nt|yaml|jmd|xml|md|json|toml|polyglot|alarm|polyalarm]
-   node lib/form.mjs controls      # seven fixtures fire their guard, five clean texts hold
+    node lib/form.mjs controls      # eight fixtures fire their guard, five clean texts hold
    ```
 
 3. Render one `guard` per line printed, held yes or no; a guard that did not hold stops the rendering and is named.

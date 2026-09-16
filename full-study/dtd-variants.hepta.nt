@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - DTD switch mechanisms (measured 2026-09-16)
+# Third of the deferred study notes (dodeka: marked sections + percent-p/s).
+# Ordinal: hepta, next in the dtd-variants family.
+
+marked-sections:
+    > <![INCLUDE[ ... ]]> parses, <![IGNORE[ ... ]]> skips: the DTD's own
+    > conditional compilation, sections toggled by parameter entity value.
+    > SVG ships prefw and postfw IGNORE by default with TWO named slots;
+    > a profile flips a slot and the framework re-reads. Switching is
+    > declaration, never editing: the ignored text stays in the file.
+
+percent-p-s:
+    > %p 'xs:' plus %s ':xs' redefinable in the consumer's INTERNAL
+    > SUBSET: the namespace prefix is a parameter, not a spelling. A
+    > consumer renames the prefix without touching the grammar, which is
+    > the driver-file override shape LAW.ASK.11 states for rounds. The
+    > wild's own first-declaration-binds, measured in XMLSchema.dtd.
+
+release-binding:
+    > Stream 4 (depth as precedence): marked sections are the DTD-native
+    > override slots beside prefw/postfw; every override the release
+    > declares cites a slot, never a race. Stream 3 (forms): %p/%s is
+    > why schematic spellings live in entities, never in prose.

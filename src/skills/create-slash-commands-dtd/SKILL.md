@@ -11,6 +11,8 @@ description: "Expert guidance for creating Claude Code slash commands. Use when 
 <!DOCTYPE command_creation [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
   <!ELEMENT command_creation (intake, frontmatter, doctype, body, verification)>
   <!ELEMENT intake (#PCDATA)>
   <!ELEMENT frontmatter (#PCDATA)>
@@ -496,6 +498,15 @@ Review @ package.json for dependencies
 Analyze @ src/database/* for schema
 ```
 (Note: Remove the space after @ in actual usage)
+
+**7. For -dtd commands, headings are required**
+
+The XML-only rule above is the plain-command discipline. A command whose
+name ends in -dtd renders each grammar element under a markdown heading
+carrying its sigil with a blank line on each side (LAW.CORE.6); the
+headings are the answer's shape, not decoration. LAW.CMD.1 already orders
+the body: trust_boundary, objective, process, output_format with a
+grammar_map, success_criteria invoking its LAW entities.
 
 </best_practices>
 

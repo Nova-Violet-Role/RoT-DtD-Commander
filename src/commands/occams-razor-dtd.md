@@ -11,7 +11,9 @@ argument-hint: [situation or leave blank for current context]
 <!DOCTYPE occam [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT occam (candidate+, evidence_check, simplest, why_wins)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT occam (args, candidate+, evidence_check, simplest, why_wins)>
   <!ELEMENT candidate (explanation, assumption+)>
   <!ELEMENT explanation (#PCDATA)>
   <!ELEMENT assumption (#PCDATA)>
@@ -42,21 +44,27 @@ Among competing explanations, prefer the one with fewest assumptions. Simplest �
 </objective>
 
 <process>
-1. List all possible explanations or approaches
-2. For each, count the assumptions required
-3. Identify which assumptions are actually supported by evidence
-4. Eliminate explanations requiring unsupported assumptions
-5. Select the simplest that still explains all observed facts
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. List all possible explanations or approaches
+3. For each, count the assumptions required
+4. Identify which assumptions are actually supported by evidence
+5. Eliminate explanations requiring unsupported assumptions
+6. Select the simplest that still explains all observed facts
 </process>
 
 <output_format>
 <grammar_map>
 Render the `occam` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🪒 Heading` carrying this command's sigil 🪒, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🪒 Args**, the launch walk: count, the flags, the positional words
 - `candidate`: **🪒 Candidate Explanations**, one `candidate` per explanation with its `explanation` and each `assumption` marked supported yes, partial or no
 - `evidence_check`: **🪒 Evidence Check**
 - `simplest`: **🪒 Simplest Valid Explanation**, ref pointing at the winning candidate id
 - `why_wins`: **🪒 Why This Wins**
 </grammar_map>
+
+### 🪒 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🪒 Candidate Explanations
 

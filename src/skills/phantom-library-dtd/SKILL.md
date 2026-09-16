@@ -9,6 +9,10 @@ description: The Phantom Books corpus as a reference shelf for the nineteen book
 <!DOCTYPE library_shelf [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT library_shelf (shelf, book+)>
   <!ELEMENT shelf (#PCDATA)>
   <!ATTLIST shelf path CDATA #FIXED "references/books.md">

@@ -9,6 +9,10 @@ description: "Measure whether a *-dtd command's answers conform to its declared 
 <!DOCTYPE eval_session [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT eval_session (target, fixture, run, ledger_line, mutation, result)>
   <!ELEMENT target (#PCDATA)>
   <!ATTLIST target root NMTOKEN #REQUIRED>
@@ -58,7 +62,7 @@ Render `eval_session` as: **Target** (path and root), **Fixture**, **Run** (the 
 
 <additional_resources>
 
-- `node bin/adiutor.mjs controls` runs the eleven built-in guards in a temporary state directory; C1 is the same missing-heading check this skill trips by hand
+- `node bin/adiutor.mjs controls` runs the thirty-one built-in guards in a temporary state directory; C1 is the same missing-heading check this skill trips by hand
 
 </additional_resources>
 

@@ -35,6 +35,18 @@
 <!ENTITY COMPANION.verdict.pass "COMPANION VERDICT: pass">
 <!ENTITY COMPANION.verdict.fail "COMPANION VERDICT: fail">
 
+<!-- The three-way split: one shared body (checker/companion-audit.sh),
+     three thin scripts (checker/companion-audit-sonnet.sh,
+     checker/companion-audit-opus.sh, checker/companion-audit-fable.sh),
+     each fixing a scope below and a default model of its name. The scope
+     is the tree area the leg covers; the model is the engine, overri-
+     dable per run, and travels the grant beside effort (LAW.CG.5). -->
+<!ENTITY COMPANION.scopes "sonnet|opus|fable">
+<!ENTITY COMPANION.scopes.count "3">
+<!ENTITY COMPANION.scope.sonnet "src/commands, the 143 commands">
+<!ENTITY COMPANION.scope.opus "dtd, lib, checker, bin, the contract core">
+<!ENTITY COMPANION.scope.fable "src/skills, src/agents, docs, records">
+
 <!ENTITY LAW.COMPANION.1 "The companion reads and runs; it never writes, edits, deletes, commits, spawns an agent or backgrounds a process.">
 <!ENTITY LAW.COMPANION.2 "Every command the companion runs carries its own timeout ceiling and has stdin closed; a command that reads stdin is never run.">
 <!ENTITY LAW.COMPANION.3 "A finding names a file and a line it read, its severity and its confidence; measured requires a thing that was run or read in this audit.">
@@ -43,6 +55,7 @@
 <!ENTITY LAW.COMPANION.6 "The scope opens with one line carrying the three attributes of companion_audit, phase= range= model=, and the runner refuses an answer whose line does not match the run it launched.">
 <!ENTITY LAW.COMPANION.7 "The runner stamps the record it writes with the run that wrote it and scores no record carrying another stamp; a run that produced no answer is unaudited, never scored on an older record.">
 <!ENTITY LAW.COMPANION.8 "The four elements appear in the answer as their headings in declared order, Scope, Findings, Verdict, Next; a pass without them is not a pass.">
+<!ENTITY LAW.COMPANION.9 "A run launches only under a scope of COMPANION.scopes declared for its script; the scope rides the run beside the model, and the runner refuses a scope the DTD does not declare before anything launches.">
 
 <!-- Which instrument holds which law. 1 and 2: the runner's tool allow-list
      (Read, Grep, Glob, and one Bash form, the wrapper

@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - org.oasis-open.xdita.v0_2_2/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/org.oasis-open.xdita.v0_2_2/ - 34 files, 441.5 KB.
+# Tenth of the F18-rest detail passes.
+
+folder-shape:
+    dtd: lw-topic.dtd, lw-map.dtd, 3 .mod, pre-release XDITA grammars
+    samples: same lighting product in dita/, hdita/ (.html), mdita/ (.md) and xdita/ side by side, images/ with 4 .png
+    templates: oxygen_templates for editors, catalog-dita.xml, plugin.xml
+
+four-forms-one-product:
+    > dita, hdita, mdita and xdita carry the same lighting-network product:
+    > the corpus's only four-way authoring parallel, with rendered .html
+    > and .png beside the sources. Authoring form is proven interchangeable
+    > by example rather than by claim, the polyglot argument made concrete.
+
+release-binding:
+    > Stream 9 (polyglot triple): the four-way sample set is the precedent
+    > that one content survives three-plus serializations; the triple per
+    > artifact cites it beside TEI ODD. Stream 11 (preview): rendered .html
+    > beside sources is the preview mechanic in miniature.

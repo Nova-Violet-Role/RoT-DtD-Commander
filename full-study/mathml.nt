@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - mathml/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/mathml/ - 144 files, 1.4 MB.
+# Listed inside mathml-docbook-xhtml11.nt; this is the dedicated folder
+# file it deferred. Twelfth of the F18-rest detail passes.
+
+folder-shape:
+    two-versions: 2.0 97 files 866.2 KB, 3.0 38 files 552.5 KB
+    dtd: 3 files 18.2 KB, ditabase.dtd plus mathmlDomain2 ent and mod
+    transforms: pdfMathML.xsl and xhtmlMathML.xsl at root, catalog.xml, plugin.xml
+
+version-consolidation-measured:
+    > 2.0 to 3.0 shrinks 97 files to 38 while growing bytes per file: the
+    > version consolidates modules instead of accreting them, the reverse
+    > of the DITA 188-to-656 curve. Both directions exist in the corpus;
+    > growth is a choice per release, never a law.
+
+transform-pair:
+    > pdfMathML.xsl and xhtmlMathML.xsl render the same vocabulary to
+    > print and to hypertext from one source: the smallest two-output
+    > precedent beside lwdita's conductor pair.
+
+release-binding:
+    > Stream 17 (429-file tree): the 97-to-38 consolidation is the
+    > precedent that a generated tree may shrink across versions; count
+    > emissions, never assume growth. Stream 9 (transforms): the pair
+    > joins html2dita as the round-trip witnesses.

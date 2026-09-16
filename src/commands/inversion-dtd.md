@@ -11,7 +11,9 @@ argument-hint: [goal or leave blank for current context]
 <!DOCTYPE inversion [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT inversion (goal, failure_mode+, anti_goal+, success_by_avoidance, remaining_risk)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT inversion (args, goal, failure_mode+, anti_goal+, success_by_avoidance, remaining_risk)>
   <!ELEMENT goal (#PCDATA)>
   <!ELEMENT failure_mode (way, avoid)>
   <!ELEMENT way (#PCDATA)>
@@ -41,22 +43,28 @@ Instead of asking "How do I succeed?", ask "What would guarantee failure?" then 
 </objective>
 
 <process>
-1. State the goal or desired outcome
-2. Invert: "What would guarantee I fail at this?"
-3. List all failure modes (be thorough and honest)
-4. For each failure mode, identify the avoidance strategy
-5. Build success plan by systematically avoiding failure
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. State the goal or desired outcome
+3. Invert: "What would guarantee I fail at this?"
+4. List all failure modes (be thorough and honest)
+5. For each failure mode, identify the avoidance strategy
+6. Build success plan by systematically avoiding failure
 </process>
 
 <output_format>
 <grammar_map>
 Render the `inversion` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔃 Heading` carrying this command's sigil 🔃, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🔃 Args**, the launch walk: count, the flags, the positional words
 - `goal`: **🔃 Goal**
 - `failure_mode`: **🔃 Guaranteed Failure Modes**, one `failure_mode` per line with `way` and `avoid`
 - `anti_goal`: **🔃 Anti-Goals (Never Do)**
 - `success_by_avoidance`: **🔃 Success By Avoidance**
 - `remaining_risk`: **🔃 Remaining Risk**
 </grammar_map>
+
+### 🔃 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🔃 Goal
 

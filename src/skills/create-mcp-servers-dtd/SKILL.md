@@ -11,6 +11,8 @@ description: "Create Model Context Protocol (MCP) servers that expose tools, res
 <!DOCTYPE mcp_creation [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
   <!ELEMENT mcp_creation (intake, architecture, tool_schema+, server, installation, verification)>
   <!ELEMENT intake (#PCDATA)>
   <!ELEMENT architecture (#PCDATA)>
@@ -158,7 +160,7 @@ claude mcp add --transport stdio <name> \
 # Remove server
 claude mcp remove <name>
 
-# Check logs
+# Check logs (macOS shown; use the platform's log location)
 tail -f ~/Library/Logs/Claude/mcp-server-<name>.log
 
 # Find paths
@@ -173,8 +175,8 @@ which uv && which node && which python
 
 **Environment variable not found:**
 ```bash
-echo $MY_API_KEY  # Check if set
-echo 'export MY_API_KEY="value"' >> ~/.zshrc && source ~/.zshrc
+echo $MY_API_KEY  # Check if set (sh and Nushell read the same environment)
+echo 'export MY_API_KEY="value"' >> ~/.zshrc && source ~/.zshrc  # or the shell's own rc file
 ```
 
 **Secrets visible in conversation:** STOP. Delete conversation. Rotate credentials. Never paste secrets in chat.
@@ -186,7 +188,7 @@ Full troubleshooting: workflows/troubleshoot-server.md
 A production-ready MCP server has:
 - Valid configuration in Claude Code (`claude mcp list` shows ✓ Connected)
 - Valid configuration in Claude Desktop config
-- Environment variables set securely in ~/.zshrc
+- Environment variables set securely in the shell's rc file
 - Architecture matches operation count
 - OAuth stdio isolation if applicable
 - Response optimization for list/search operations

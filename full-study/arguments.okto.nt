@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - $ARGUMENTS remainder transmigration, first of the deferred expansions (measured 2026-09-16)
+# Source: D:\CLAUDE_CODE_COMMANDER\artifacts\_sweep\byproducts\$ARGUMENTS_VARIANT_EXAMPLES.md sections 3-16 (lines 81-829).
+# arguments.nt holds the skeleton (1-80); the seven part-files hold the
+# variants; this file holds the shell-semantics mechanisms distilled, not
+# the tutorial copied. Ordinal: okto, next after hepta.
+
+quoting-discipline:
+    > Unquoted $@ word-splits: three words become one or one becomes
+    > three depending on quoting, never on intent. "$@" preserves arity,
+    > $@ destroys it. The trust boundary's CDATA rule is this discipline
+    > restated: user-args arrive quoted whole, never split by the shell.
+
+expansion-control:
+    > A heredoc delimiter chooses expansion: <<EOF expands, <<'EOF' and
+    > <<"EOF" and <<\EOF do not, <<-EOF expands and strips tabs. Selective
+    > escape (\$@) splits one heredoc into literal and expanded spans.
+    > Nested heredocs rebind: inner $@ is the inner shell's, and outer
+    > values cross only by explicit "$@" handoff. Cache writes use quoted
+    > delimiters for the same reason: no expansion crosses a trust line
+    > unless the writer typed the escape.
+
+scope-and-inheritance:
+    > Functions inherit $@ from the call site; nested functions inherit
+    > down; shift inside a function consumes the function's copy.
+    > Subshells inherit, pipelines do not: a pipeline stage sees piped
+    > data, never $@, and values cross by env or explicit vars. Arrays
+    > hold "$@" whole (store, slice, length); loops and while-shift parse
+    > idiomatically; conditionals test membership and shape.
+
+eval-exec-source-trap:
+    > eval "$@" re-parses and injects: the same words run twice, once as
+    > data and once as code, which is why tool-result is data and never
+    > re-executed. exec "$@" replaces the shell with its first word.
+    > source runs a file in the current shell, inheriting everything.
+    > trap handlers see the $@ of their registration time, not of the
+    > signal. xargs and mapfile re-chunk: one arg per line or one array.
+
+polyglot-generation:
+    > One arg vector generates YAML, NestedText, Markdown callouts, JSON,
+    > TOML, Terraform and the five-layer stack, each through a heredoc
+    > with the delimiter chosen per section above. Generation is
+    > delimiter discipline plus quoting discipline, nothing else.
+
+injection-vectors:
+    > Unquoted $@ splits words; eval "$@" injects commands; unquoted
+    > heredoc $@ injects YAML and NestedText (PyYAML RCE shape); set --
+    > redefines $@ from untrusted input. Safeties in order: quote, never
+    > eval, quote the delimiter, sanitize before interpolation, validate
+    > before set. Five vectors, five safeties, each pair a trust rule the
+    > command trust boundaries already state.
+
+release-binding:
+    > Stream 1 (trust): every vector above is a case the four trust
+    > channels (user-args, tool-result, file-ref, ask-answer) close by
+    > construction; the tutorial is the evidence the boundary answers.
+    > Stream 4 (forms): heredoc delimiter choice is the shell half of the
+    > quoted-vs-unquoted form discipline cc-form declares.

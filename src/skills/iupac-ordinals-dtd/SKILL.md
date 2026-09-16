@@ -9,6 +9,10 @@ description: "The IUPAC numerical multiplier prefixes (mono-, di-, tri-, icosa-,
 <!DOCTYPE iupac_ordinals [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT iupac_ordinals (number, construction, prefix, cardinal, filename, caveat*)>
   <!ELEMENT number (#PCDATA)>
   <!ELEMENT construction (#PCDATA)>

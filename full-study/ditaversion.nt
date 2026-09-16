@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - org.oasis-open.dita.v1_2+v1_3 per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/org.oasis-open.dita.v1_2/ (188 files,
+# 2.0 MB) and org.oasis-open.dita.v1_3/ (656 files, 7.3 MB). Eleventh of the
+# F18-rest detail passes, covering both versions in one file because the
+# finding is the delta between them.
+
+version-delta-measured:
+    v1_2: 24 .dtd, 39 .mod, 34 .ent, 87 .xsd
+    v1_3: 34 .dtd, 55 .mod, 70 .ent, 310 .xsd, 146 .rng, 4 catalog.xml
+    growth: 188 to 656 files, factor 3.5; xsd 87 to 310, rng 0 to 146
+    shape:
+        > A minor version multiplies the tree by three and a half while the
+        > DTD count barely moves (24 to 34): the growth is all in generated
+        > schema forms. v1_3 is generated and catalogued, four catalog.xml
+        > resolving identity to location across the tree.
+
+rng-arrival:
+    > v1_2 ships no .rng at all; v1_3 ships 146. A whole validator class
+    > arrives in one minor version without removing the old ones: addition
+    > without retirement, the reverse of the DocBook 5.1 dtd/ retirement.
+
+release-binding:
+    > Stream 17 (429-file tree): 188-to-656 at 3.5x is the upper bound the
+    > release's own growth is measured against; a scope amounting to less
+    > than a DITA minor is routine, more is metamorphosis until proven.
+    > Stream 4 (precedence): the four catalog.xml files are the catalog
+    > discipline at scale, identity never hard-coded across 656 files.

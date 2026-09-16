@@ -18,7 +18,13 @@
 <!ENTITY DEPTH.mark.md "blockquote count: one greater-than per level">
 <!ENTITY DEPTH.mark.nt "content count after the string tag, per SIGIL.nt.depth-in-content">
 <!ENTITY DEPTH.refines "deeper is a refinement of its parent, never a restatement">
+<!-- F21: overrides are named positions, after the SVG prefw/postfw precedent:
+     an override of the depth machinery may sit before the first level or
+     after the last, and nowhere else. A slot is declared, never improvised. -->
+<!ENTITY DEPTH.override.slots "prefw|postfw">
+<!ENTITY DEPTH.override.slots.count "2">
 
 <!ENTITY LAW.DEPTH.1 "Depth encodes relation and nothing else: a peer stands beside, a child constrains, a grandchild specifies (DEPTH.roles); a level that neither constrains nor specifies is flattened to its parent.">
 <!ENTITY LAW.DEPTH.2 "Depth never exceeds DEPTH.max levels; a chain that would nest deeper is rewritten as siblings under their nearest common parent, and the rewrite is stated.">
 <!ENTITY LAW.DEPTH.3 "Each format marks depth its own way, DEPTH.mark.md in Markdown and DEPTH.mark.nt in NestedText; a depth readable in one rendering and lost in the other is a failed rendering.">
+<!ENTITY LAW.DEPTH.4 "An override of the declared depth sits only at a named slot of DEPTH.override.slots, prefw before the first level and postfw after the last; an override anywhere else is drift.">

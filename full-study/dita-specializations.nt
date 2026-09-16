@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - dita.v1_3 specializations DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/org.oasis-open.dita.v1_3/dtd/ (script census).
+# Last of the what-is-not-yet-transmigrated remainder.
+
+specialization-census:
+    technicalContent: 82 files, 952.7 KB, largest specialization in the corpus
+    learning: 41 files, 344.7 KB
+    base: 25 files, 264.8 KB
+    subjectScheme: 7 files, 77.3 KB
+    bookmap: 4 files, 62.0 KB
+    machineryIndustry: 3 files, 14.5 KB
+    xnal: 3 files, 23.2 KB
+
+specialize-never-edit:
+    > technicalContent's 82 files narrow base's 25 without touching them:
+    > constraint modules redeclare parameter entities before the base
+    > loads, so the base file is never opened for editing. bookmap's 4
+    > files organize whole books; subjectScheme's 7 bind attribute values
+    > to taxonomies; learning's 41 carry pedagogy. Each specialization is
+    > additive law over an untouched base.
+
+release-binding:
+    > Stream 18 (per-command laws abolished): specialization is the named
+    > precedent, a command constrains a subset's law without editing the
+    > subset, the way technicalContent constrains topic. Stream 9
+    > (convergence): the 82-file specialization is the largest single
+    > convergence input; converge the constraints, never the base.

@@ -1,0 +1,50 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - DTD-variants remainder transmigration, second of the deferred expansions (measured 2026-09-16)
+# Source: D:\CLAUDE_CODE_COMMANDER\artifacts\_sweep\byproducts\$ARGUMENTS_VARIANT_EXAMPLES_DTD_VARIANTS.md sections 3.5-9.
+# dtd-variants.nt holds the skeleton with duo/treis/tessares/pente parts;
+# this file holds the NDATA, comparison, polyglot, injection and SGML
+# mechanisms distilled. Ordinal: hex, next in the dtd-variants family.
+
+ndata-deep-dive:
+    > NDATA names the unparsed: an entity with a NOTATION, a path and no
+    > content, the parser hands it to the application untouched. Generated
+    > from $@ as asset lists (logo.png chart.svg data.csv): one entity per
+    > file, the document references, never embeds. Binary beside XML is
+    > NDATA with or without the NOTATION line; the krita DOC/IMAGE shape
+    > is the same idea in a loose grammar.
+
+comparison-matrix:
+    > PCDATA escapes five chars (& < > " ') and normalizes whitespace
+    > (newlines and tabs to spaces, runs to one); CDATA preserves exactly
+    > and escapes nothing; NDATA carries no characters at all. The ]]>
+    > collision terminates CDATA early: an arg containing ]]> must be
+    > split, never trusted. Three contents, three contracts, chosen by
+    > what the content is, never by convenience.
+
+polyglot-layers:
+    > Bash generates XML/DTD, YAML, NestedText, callouts, JSON and the
+    > five-layer stack through CDATA extraction: XML holds CDATA, CDATA
+    > holds NestedText, NestedText renders the callout. Each layer is a
+    > pure function of the one below; a layer that re-parses is a layer
+    > that can inject, so extraction flows one way only.
+
+injection-vectors:
+    > XXE via $@ (external entity reads files: disable DTD processing,
+    > whitelist, CDATA for untrusted); CDATA termination (]]> split);
+    > PCDATA escape bypass (attribute breakout: escape all five);
+    > NDATA path traversal (validate the path, never resolve blind);
+    > parameter-entity DTD injection (parameter entities never take user
+    > input); Billion Laughs (recursive entities: cap expansion depth).
+    > Six vectors, six fixes, each a trust rule the subsets state.
+
+sgml-extensions:
+    > SDATA (specific glyph data) and RCDATA (replaceable character data)
+    > exist in SGML and not in XML: the corpus's DTDs are XML-subset, so
+    > neither appears, and any SGML intake names them before parsing.
+
+release-binding:
+    > Stream 1 (trust): the six vectors are the XML half of the trust
+    > evidence beside the shell five; untrusted content rides CDATA or
+    > PCDATA-escaped, never raw, never eval. Stream 4 (forms): PCDATA vs
+    > CDATA vs NDATA is the content contract behind every form choice.

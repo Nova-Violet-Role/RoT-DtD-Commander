@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - the five form tokens, MODEL PROPOSAL (measured 2026-09-16)
+# Mandate: hepta/hex/pente/tessares round 40 (model designs from the study,
+# user approves at the next gate) + hex/pente/tessares round 49-51 (bring the
+# proposal to the step-one gate). This file IS the proposal. Nothing below
+# is landed: landing needs the user approval gate at the end.
+
+sources:
+    five-tokens: cache/ask-me-many-questions-dtd.okto.nt lines 35-41 (VALUE LIVE COUNT-MARK SEQUENCE WRAP, each with render + example)
+    registry-eight: cache ennea lines 47/55/68/87 + hendeka line 57 + deka line 91 (registry grows to EIGHT, LIVE and WRAP join, star+query activated, fifth variant display carries LIVE)
+    wrap-spelling: D:/10.0.0.md line 223 (dollar-caret token, dollar stands for caret + Message + caret, think/megathink/ultrathink tags in parentheses after every answer)
+    think-postponed: spec section 222-224 (THINK mechanism postponed from Save-ur-Cache)
+
+designs:
+    VALUE:
+        words: bracket dots
+        composed-of: bracket form + select variant + bilateral Other, no new registry entry
+        render: one value chosen from a list or typed; example 60m
+    LIVE:
+        words: angle-bracket empty
+        new: fifth variant display carries it; shown, never answered (timer running, count climbing)
+        open: whether LIVE becomes a new element (okto verdict OPEN) -> approval point 1
+    COUNT-MARK:
+        words: angle caret X
+        composed-of: angle + caret + mark with numeric payload; example how many timer firings before stopping the model
+    SEQUENCE:
+        words: four-slot caret-joined
+        composed-of: chained + check + ordering; example gate-1 linux gate-2 windows gate-3 macos in dispatch order
+    WRAP:
+        words: dollar caret of 10.0.0.md line 223
+        mechanism: chosen answer wrapped with injected message per difficulty; tags ( think ) ( megathink ) ( ultrathink )
+        open: spec-postponed section 222-224 -> approval point 2
+
+registry-math:
+    > Six ASK.token.* forms today (bracket angle caret chained star query,
+    > LAW.ASK.17) plus live plus wrap = EIGHT (stream 13). VALUE COUNT-MARK
+    > SEQUENCE are composed forms needing no entry. Star and query are
+    > already ACTIVE via everything+maelstrom inheritance. Spellings stay in
+    > words per LAW.GLOSS.2; glyphs never enter an entity value (SIGIL.markup).
+
+landing-path:
+    > On approval: name live + wrap in cc-ask beside the six (LAW.SIGIL.3:
+    > named in subset, word-spelled here, engine measure holds both
+    > directions, Companion audits the addition). LIVE-as-element and the
+    > think-tag injection land only under their own open points above.
+
+approval-gate:
+    1. LIVE: new element, or variant-display only?
+    2. WRAP: land think/megathink/ultrathink injection now, or keep postponed?
+    3. On start: land registry entries + laws; on more: revise this file.

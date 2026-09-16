@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - org.lwdita/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/org.lwdita/ - 76 files, 2.4 MB.
+# Ninth of the F18-rest detail passes.
+
+folder-shape:
+    conductor: conductor.xml imports build-html and build-markdown
+    templates: build-html_template.xml beside build-html.xml, build-markdown_template.xml beside build-markdown.xml
+    transforms: 32 .xsl under xsl/
+    deps: 33 .jar under lib/, plugin.xml, LICENSE, NOTICES
+
+one-source-two-outputs:
+    > conductor.xml imports two builders over the same lightweight source:
+    > HTML and Markdown from one tree, template beside build in both
+    > cases. The corpus's smallest one-source-many-emissions after TEI
+    > ODD, and the only one whose recipes are versioned beside the runs.
+
+release-binding:
+    > Stream 17 (429-file tree): conductor-plus-two-builders is the
+    > minimal generation precedent the 429 proof cites after ODD and the
+    > flat emissions. Stream 9 (triple): template-beside-build is the
+    > discipline for keeping emissions reproducible.

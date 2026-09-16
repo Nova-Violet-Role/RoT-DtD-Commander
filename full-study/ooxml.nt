@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - com.elovirta.ooxml/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/com.elovirta.ooxml/ - 34 files.
+# Not a DTD corpus: a DITA-OT plug-in (docx transtype, Apache 2.0) that
+# generates Office Open XML from DITA source. Sixth of the F18-rest passes.
+
+folder-shape:
+    transforms: 26 .xsl under docx/word, topic.xsl 41559 B largest, table.xsl 20434 B, link.xsl 17345 B
+    build: build.xml 8097 B plus build_template.xml 9265 B, integrator.xml 89 B
+    tests: test/document.utils.xspec 3920 B with test/document.utils.xsl 398 B
+    fixtures: resources/Normal.docx 79124 B, plugin.xml 1295 B, README.md 1165 B
+
+mechanisms:
+    - one-transform-per-construct: document.table, document.link, document.topic and numbering each own an .xsl; a construct is never split across files
+    - xspec-discipline: the test names the transform under test and carries its own fixture stylesheet; the only .xspec in the whole example corpus
+    - template-plus-build: build_template.xml is the recipe, build.xml the run; the recipe is versioned, the run is generated
+
+release-binding:
+    > Stream 17 (audit legs): the .xspec file is the corpus's only
+    > transform-level test fixture; audit legs that check generated output
+    > cite it as the shape. Stream 9 (generation): template-plus-build is
+    > the smallest generation pair in the corpus beside TEI ODD.

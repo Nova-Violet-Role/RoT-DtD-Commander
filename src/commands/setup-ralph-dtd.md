@@ -12,7 +12,9 @@ allowed-tools: Skill(setup-ralph-dtd)
 <!DOCTYPE dispatch [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT dispatch (request, invocation)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT dispatch (args, request, invocation)>
   <!ELEMENT request (#PCDATA)>
   <!ELEMENT invocation (#PCDATA)>
   <!ENTITY LAW.DISP.1 "The wrapper adds nothing: the request is quoted and the named skill is invoked once.">
@@ -32,6 +34,7 @@ Invoke the setup-ralph skill for: <quoted trust="cdata" source="user-args">$ARGU
 <output_format>
 <grammar_map>
 Render the `dispatch` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔄 Heading` carrying this command's sigil 🔄, with a blank line before and after it (LAW.CORE.6).
+- `args`: the launch walk: count, the flags, the positional words
 - `request`: the request as given, quoted
 - `invocation`: one Skill call to setup-ralph-dtd
 </grammar_map>

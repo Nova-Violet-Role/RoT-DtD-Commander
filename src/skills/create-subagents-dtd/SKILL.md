@@ -11,6 +11,8 @@ description: "Expert guidance for creating, building, and using Claude Code suba
 <!DOCTYPE agent_creation [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
   <!ELEMENT agent_creation (intake, roster_row, agent_file, verification)>
   <!ELEMENT intake (#PCDATA)>
   <!ELEMENT roster_row (#PCDATA)>
@@ -395,7 +397,7 @@ A well-configured subagent has:
 <grammar_map>
 Render the `agent_creation` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so.
 - `intake`: questions and answers
-- `roster_row`: the AGENT.n entity line: name, element, what it produces, what it may never do
+- `roster_row`: name, element, content and bound per LAW.AGT.1, and the element the agent speaks inside
 - `agent_file`: the agents/name.md written with name, description, tools, model
 - `verification`: the both-direction check
 </grammar_map>

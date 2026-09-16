@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - tei/ per-module DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/tei/ (20 name.dtd, script census).
+# Fourth of the what-is-not-yet-transmigrated remainder: tei 20 modules.
+
+module-census:
+    core: 83 elements, header 69, msdescription 69, namesdates 56, tagdocs 54
+    textstructure 33, dictionaries 33, transcr 30, iso-fs 28, drama 17
+    corpus 14, spoken 14, textcrit 14, nets 12, analysis 11, gaiji 11, linking 11
+    figures 7, verse 4, certainty 3
+    total: 573 elements across 20 modules
+
+one-to-one-measured:
+    > Every module declares exactly as many entities as elements: 83/83,
+    > 69/69, 3/3, without exception across all twenty. Each element rides
+    > with its classes and hooks in the same file, so a module is
+    > removable whole: delete the file and its elements vanish with their
+    > machinery, never orphaned. Modularity as an arithmetic invariant.
+
+size-bands:
+    > Above 30 KB: core header msdescription. 10-30 KB: namesdates tagdocs
+    > textstructure dictionaries transcr iso-fs. Below 10 KB: the other
+    > eleven, verse and certainty under 5 KB. A module earns its file by
+    > cohesion, never by size: certainty's 3 elements still ship alone.
+
+release-binding:
+    > Stream 19 (convergence): the 1:1 invariant is the removability test
+    > every converged subset must pass; a subset whose elements outlive
+    > their file is not converged. Stream 9 (triple): twenty modules one
+    > ODD source stays the generation precedent beside lwdita's conductor.

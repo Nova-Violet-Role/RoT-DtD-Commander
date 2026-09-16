@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - dtds/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/dtds/ - 12 files, 25.2 KB.
+# Completes the office+dtds+daisy trio beside office-dtds-daisy.nt.
+
+folder-shape:
+    wire-protocols: presence, watcherinfo, rlmi, mscml, pocsettings, reginfo, xcap-caps, xcap-error (telecom session and capability grammars)
+    feeds: rss, itunes (podcast extension), smil (timed media)
+    meta: dc (Dublin Core)
+
+protocol-vs-document:
+    > Every file here grammars a wire exchange or a feed, not a document:
+    > presence and watcherinfo carry session state, xcap-caps negotiates
+    > capability, rss carries items. No modules, no drivers, no catalogs;
+    > twelve single-purpose grammars averaging 2 KB, the floor below which
+    > the loose files' 287-byte minimum is the only smaller grammar.
+
+release-binding:
+    > Stream 9 (generation): single-purpose files need no generation
+    > discipline; the triple ships for artifacts with more than one
+    > consumer, and these twelve have exactly one each.
+    > Stream 17 (fixtures): the smallest multi-file battery for sweeps
+    > beside the loose ten.

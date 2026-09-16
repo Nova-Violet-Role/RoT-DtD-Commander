@@ -11,13 +11,17 @@ description: "Create optimized prompts for Claude-to-Claude pipelines with resea
 <!DOCTYPE meta_prompt [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-record SYSTEM "../../../dtd/cc-record.dtd">
   %cc-record;
   <!ELEMENT meta_prompt (stage+, dependency*, prompt_file+)>
   <!ELEMENT stage (#PCDATA)>
   <!ELEMENT dependency (#PCDATA)>
   <!ELEMENT prompt_file (#PCDATA)>
-  <!ATTLIST stage kind (research|plan|implement) #REQUIRED>
+  <!ATTLIST stage kind (research|plan|implement|refine) #REQUIRED>
   <!ATTLIST dependency from CDATA #REQUIRED to CDATA #REQUIRED>
   <!ATTLIST prompt_file path CDATA #REQUIRED>
   <!ENTITY LAW.META.1 "A stage output another prompt consumes is written under a declared RECORD with numbered fields, fields embedded as ARG.embed.pcdata (LAW.ARGS.5).">
@@ -311,7 +315,7 @@ Choose (1-4): _
 Straightforward execution of one prompt.
 
 1. Read prompt file contents
-2. Spawn Task agent with subagent_type="general-purpose"
+2. Spawn Task agent with subagent_type="general"
 3. Include in task prompt:
    - The complete prompt contents
    - Output location: `.prompts/{number}-{topic}-{purpose}/{topic}-{purpose}.md`
@@ -329,7 +333,7 @@ For chained prompts where each depends on previous output.
 1. Build execution queue from dependency order
 2. For each prompt in queue:
    a. Read prompt file
-   b. Spawn Task agent
+   b. Spawn Task agent with subagent_type="general"
    c. Wait for completion
    d. Validate output
    e. If validation fails → stop, report failure, offer recovery options

@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - org.dita.specialization.dita11/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/org.dita.specialization.dita11/ - 76 files, 879 KB.
+# Eighth of the F18-rest detail passes.
+
+folder-shape:
+    dtd: 8 .dtd plus 18 .mod plus 10 .ent, specialization modules for DITA 1.1
+    schema: 38 .xsd beside the dtd/, same specializations in XML Schema
+    catalog: catalog.xml plus plugin.xml at root
+
+dual-grammar-maintenance:
+    > DTD and XSD maintained side by side for the same specializations:
+    > 36 DTD-side files against 38 schema files. Neither is generated from
+    > the other here, which is exactly the hand-kept pair the ODD
+    > discipline exists to replace. The corpus's only maintained-in-parallel
+    > pair at this size.
+
+release-binding:
+    > Stream 9 (generation): this folder is the cost exhibit for
+    > hand-kept dual grammars; every convergence argument cites it.
+    > Stream 9 (corpus convergence): specialization .mod/.ent layering is
+    > the DITA half of the convergence input beside TEI modules.

@@ -35,7 +35,7 @@ export function blocks(text) {
   const offsets = [];
   let at = 0;
   for (const l of lines) { offsets.push(at); at += l.length + 1; }
-  const heads = lines.map((l, i) => (/^## [a-z-]+\.dtd$/.test(l) ? i : -1)).filter((i) => i >= 0);
+  const heads = lines.map((l, i) => (/^## [A-Za-z-]+\.dtd$/.test(l) ? i : -1)).filter((i) => i >= 0);
   const out = [];
   heads.forEach((h, k) => {
     const stop = k + 1 < heads.length ? heads[k + 1] : lines.length;

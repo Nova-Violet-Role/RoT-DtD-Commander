@@ -1,0 +1,40 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  GLOSSARY.dtd : the alarm syntax converged with the entity classes.
+
+  The intake ordered it (deka): one syntax for alarms in prose and the
+  DTD entity classes behind them, so the trust boundary is visible where
+  a reader reads. Four classes: a plain alarm, dollar-bang for the
+  argument bus, percent-bang for the parameter entities that bind,
+  at-bang for notation and NDATA carried whole. Each class carries the
+  trust its bus class carries (LAW.BUS.1); the prefix is cc-core's own
+  classes made visible.
+
+  Spellings in words, never in glyphs: percent, ampersand and less-than
+  are markup inside an entity value (SIGIL.markup), so each spelling is
+  named here the way ASK.token.mark already names its brackets, and the
+  engine plus the alarm renderer spell them.
+-->
+
+<!-- ===== THE CLASSES ===== -->
+<!ENTITY GLOSSARY.classes "plain|dollar-bang|percent-bang|at-bang">
+<!ENTITY GLOSSARY.classes.count "4">
+<!-- One spelling per class, in words. -->
+<!ENTITY GLOSSARY.spell.plain "a bracketed label callout">
+<!ENTITY GLOSSARY.spell.dollar-bang "dollar followed by bang">
+<!ENTITY GLOSSARY.spell.percent-bang "percent followed by bang">
+<!ENTITY GLOSSARY.spell.at-bang "at-sign followed by bang">
+
+<!-- ===== THE ALARM ===== -->
+<!-- One warned thing: the class it carries, the trust the class gives
+     it, and the term it warns about. -->
+<!ELEMENT glossary_alarm (#PCDATA)>
+<!ATTLIST glossary_alarm
+          class (plain|dollar-bang|percent-bang|at-bang) #REQUIRED
+          trust (pcdata|cdata|ndata) #REQUIRED
+          term  NMTOKEN #REQUIRED>
+
+<!ENTITY LAW.GLOSS.1 "Alarms come in four classes and each carries one trust: plain carries PCDATA, dollar-bang carries CDATA, percent-bang carries PCDATA, at-bang carries NDATA, the cargo of LAW.BUS.1; the prefix is the trust boundary made visible in prose.">
+<!ENTITY LAW.GLOSS.2 "Spellings live in words: GLOSSARY.spell names each prefix the way ASK.token.mark names its brackets, because percent, ampersand and less-than are markup inside an entity value; a literal glyph where a word belongs is not a spelling.">
+<!ENTITY LAW.GLOSS.3 "Every alarm names its class and its trust in a glossary_alarm element carrying its term; emphasis without a class is prose, never an alarm.">

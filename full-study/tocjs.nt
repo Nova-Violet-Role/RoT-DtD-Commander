@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - com.sophos.tocjs/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/com.sophos.tocjs/ - 85 files, 206.8 KB.
+# A DITA-OT plug-in generating an expanding-collapsing HTML table of
+# contents for XHTML output. Seventh of the F18-rest detail passes.
+
+folder-shape:
+    transforms: xsl/tocjs.xsl plus frameset, gethref, jstext, topichead, topicref
+    assets: basefiles css/img per check-default-folders-local-menu skin set
+    sample: tocjs.ditamap with concepts/ and tasks/ plus basefiles/
+    plugin: plugin.xml, integrator.xml, buildsample.xml
+
+mechanisms:
+    - output-side-enhancement: the transform changes navigation, never content; content pipeline untouched
+    - skin-sets: check, default, folders, local, menu variants of css/img; presentation as swappable sets
+    - map-driven-sample: the sample is a ditamap plus topics, the same shape a companion audit leg walks
+
+release-binding:
+    > Stream 11 (preview): swappable presentation sets are the precedent
+    > for preview skins; the cube expands the same under every skin.
+    > Stream 17 (fixtures): the map-driven sample is the smallest runnable
+    > audit fixture in the corpus.

@@ -11,6 +11,10 @@ description: "Set up and configure Geoffrey Huntley's original Ralph Wiggum auto
 <!DOCTYPE ralph_setup [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT ralph_setup (directory, prompt_file+, backpressure+, loop)>
   <!ELEMENT directory (#PCDATA)>
   <!ELEMENT prompt_file (#PCDATA)>
@@ -63,7 +67,7 @@ The loop feeds a prompt file to Claude, the agent completes one task, updates th
 
 **File I/O as State**: The plan file persists between isolated loop executions, serving as deterministic shared state—no sophisticated orchestration needed.
 
-**Remote Backup**: The loop automatically creates a private GitHub repo and pushes after each commit. This protects against accidental data loss from autonomous operations. Requires `gh` CLI authenticated. Disable with `RALPH_BACKUP=false`.
+**Remote Backup**: The loop automatically pushes to the configured git remote after each commit (plain `git push`, no `gh` dependency). This protects against accidental data loss from autonomous operations. Disable with `RALPH_BACKUP=false`.
 
 **Safety Rules**: PROMPT_build.md includes critical safety rules prohibiting dangerous operations like `rm -rf` on project directories. Tests must run in isolated temp directories.
 </essential_principles>

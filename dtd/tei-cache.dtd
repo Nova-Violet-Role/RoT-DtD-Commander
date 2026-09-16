@@ -1,0 +1,47 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  tei-cache.dtd : the rounds and the cache as a fragmentable text.
+
+  Taken measured from TEI (full-study/tei.duo.nt, what-stream-15-takes),
+  not invented: TEI's subject is a text that exists in fragments and must
+  be reconstituted without loss, which is exactly what a 384-intake cache
+  series is. An ordinal cache file carries its fragment state, so a file
+  read alone knows whether it is initial, medial or final; a resumed run
+  begins at unknown and says so rather than guessing; ordinals chain by
+  declaration, never by filename convention; and the read order is
+  reverse, binding declaration last.
+
+  The file form stays NestedText (cc-cache, FORM.nt); this subset is the
+  vocabulary and the laws laid over it, with one element for a span that
+  names another span.
+-->
+
+<!-- ===== FRAGMENT STATE, VERBATIM FROM att.fragmentable AND att.divLike ===== -->
+<!ENTITY TEI.part "Y|N|I|M|F">
+<!ENTITY TEI.part.count "5">
+<!ENTITY TEI.sample "initial|medial|final|unknown|complete">
+<!ENTITY TEI.sample.count "5">
+<!ENTITY TEI.org "composite|uniform">
+<!ENTITY TEI.org.count "2">
+
+<!-- ===== LINKING, FROM THE TEI LINKING MODULE ===== -->
+<!ENTITY TEI.links "next|prev|corresp|synch|sameAs|copyOf">
+<!ENTITY TEI.links.count "6">
+<!ENTITY TEI.joins "join|joinGrp|anchor">
+<!ENTITY TEI.joins.count "3">
+
+<!-- ===== THE SPAN ===== -->
+<!-- One cache span naming another: what it is in the series, how the run
+     resumes from it, and which link carries the relation. -->
+<!ELEMENT tei_span (#PCDATA)>
+<!ATTLIST tei_span
+          part   (Y|N|I|M|F) #REQUIRED
+          sample (initial|medial|final|unknown|complete) #REQUIRED
+          org    (composite|uniform) "uniform"
+          link   (next|prev|corresp|synch|sameAs|copyOf|join|joinGrp|anchor) #REQUIRED
+          target CDATA #REQUIRED>
+
+<!ENTITY LAW.TEI.1 "Every ordinal cache carries TEI.part, TEI.sample and TEI.org; a resumed run reads sample unknown until it has read its predecessors, and a file that does not know its state says unknown rather than guessing.">
+<!ENTITY LAW.TEI.2 "The read order is reverse: next first, then findings newest-first, then the gate, then the answers, and the binding declaration last; a run that read top-down and missed the binding reads again.">
+<!ENTITY LAW.TEI.3 "Ordinals chain by declaration: next and prev, corresp from an answer to its round and evidence, synch across the three readings of one polyglot triple, sameAs and copyOf for a recovered file, join and joinGrp for the ordinals constituting one intake; a series reconstituted by filename convention is not reconstituted.">

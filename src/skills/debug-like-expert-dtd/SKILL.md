@@ -11,6 +11,10 @@ description: "Deep analysis debugging mode for complex issues. Activates methodi
 <!DOCTYPE investigation [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT investigation (symptom, evidence+, hypothesis+, root_cause, fix, verification)>
   <!ELEMENT symptom (#PCDATA)>
   <!ELEMENT evidence (#PCDATA)>

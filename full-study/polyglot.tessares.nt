@@ -19,3 +19,11 @@ polyglot-forms:
     - nt-string-holds-yaml: manifest: > apiVersion/kind/metadata/spec (NT sees string, YAML sees manifest)
     - triple-heredoc: << 'YAMLEOF' quoted-literal wrapping YAML wrapping NT (3 parsers table)
     - callout-in-scalar: docs.readme |- with [!warning]+[!danger] (YAML sees string, Obsidian sees boxes)
+
+alarm-note:
+    > [!ALARM] is not built-in anywhere, but alarms now have classes:
+    > GLOSSARY.classes plain dollar-bang percent-bang at-bang, each with
+    > its trust (LAW.GLOSS.1-3). A warning that binds names percent-bang,
+    > one carried whole names at-bang; emphasis without a class is prose,
+    > never an alarm. The CSS snippet stays for rendering; the class is
+    > for trust.

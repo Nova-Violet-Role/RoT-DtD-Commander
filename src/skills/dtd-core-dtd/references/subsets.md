@@ -255,6 +255,13 @@ The AskUserQuestion grammar: an intake with a context analysis, up to four quest
 <!ENTITY LAW.ASK.15 "Every gate carries the re-entries already spent as its round, adds and impactfuls attributes, each an enumeration with a last value; a gate rendered without them has spent none. When all three are spent the gate is offered with start and save alone and ASK.exhausted as the reason, so a guided intake terminates by declaration rather than by the user's patience, and a bound that lives only in prose is not a bound.">
 <!ENTITY LAW.ASK.16 "A preview has the content model preview.content, which is (#PCDATA) unless a command declares it before the include; a command that declares it as (#PCDATA | figure)* includes cc-figure before this subset so the figure it names is declared, and a preview carrying a figure obeys LAW.FIG.1 to LAW.FIG.5 with the figure marked guessed, because a preview is the consequence the model predicts.">
 <!ENTITY LAW.ASK.17 "Family ask forms ride beside the four variants under the registry ASK.token.bracket, ASK.token.angle, ASK.token.caret, ASK.token.chained, ASK.token.star and ASK.token.query: each maps onto select, check, elaborate or mark, the round names which form each question took, previews ride the elaborate and mark forms, and a token outside the registry is refused by name.">
+<!-- 10.0.0: the DAISY preview shape as a shared parameter entity. A DAISY
+     navPoint is a label, a content pointer and a play order with nested
+     children; a navMap is the tree, a navList the flat set. A cut preview
+     renders the flat set, an expanded preview the tree, and no preview
+     embeds what it points at. -->
+<!ENTITY % preview.daisy "(label, target, order)">
+<!ENTITY LAW.ASK.18 "Previews share the DAISY navPoint shape under preview.daisy: a cut preview renders the flat navList set, an expanded preview the navMap tree, every node a label with a target pointer and a play order, and a preview that embeds its target is not a preview.">
 ```
 
 ## cc-args.dtd
@@ -3755,6 +3762,171 @@ The dollar sign as a contract: the five study documents under dtd/sigil, the ten
 <!ENTITY LAW.SIGIL.8 "Fired as a ladder, the topics of SIGIL.topics are the rungs: one sigil-dtd per topic stacked, or verbs-dtd for every form together, is one chain with one intake and one gate through cc-chain, and the trailing form of LAW.CORE.7 invokes either on the text before it.">
 <!ENTITY LAW.SIGIL.9 "A bracket label names what kind of instruction follows, its severity, its tone, its intent (SIGIL.label.roles); a label that changes what the text means without changing the text is refused, and a run renders each label it obeyed with the role it obeyed it in.">
 <!ENTITY LAW.SIGIL.10 "Quote depth encodes relation, a peer, a child, a grandchild (SIGIL.depth.roles), and a label repeated deeper is a refinement (SIGIL.depth.repeat); in NestedText the tag is SIGIL.nt.string-tag, the depth is SIGIL.nt.depth-in-content, and the two jobs are SIGIL.nt.two-roles, where the pretty-print renderer stays the Program's own and the schematic amplifies it (LAW.SIGIL.9); this subset declares SIGIL.laws.count laws, dense and ascending from one, and the instrument reads that count instead of carrying a number of its own, because a count a control spells in its own source is a count nobody updates when a law is added.">
+```
+
+## cc-bus.dtd
+
+The wire protocol between commands: the suite links commands by declared feature and the wire they speak on is the dollar sigil bus, four classes with one trust each, eight emittable tokens across them, every emission typed by class, token and trust in a bus_use element under LAW.BUS.1 to 3. cc-sigil.dtd keeps the study of the shell's 125 forms; this subset declares the emittable few. First consumer: git-gh-matrix-scala-dtd, whose rounds and answers travel the bus and whose gate.yml is the payload.
+
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-bus.dtd : the wire protocol between commands.
+
+  The suite skill links commands by DECLARED FEATURE, never by activation,
+  and the wire they speak on is the dollar sigil bus declared here, not in
+  prose. cc-sigil.dtd keeps the STUDY of the shell's sigil (125 forms in
+  five tiers across ten topics); this subset declares what a command may
+  EMIT onto the bus between commands. The split is the F5 fix: the study
+  documents 88093 bytes and implements two tokens, because nothing named
+  the emittable few apart from the studied many.
+
+  The classes come from the GLOSSARY direction the intake ordered (deka):
+  a plain alarm, dollar-bang for the argument bus, percent-bang for the
+  parameter entities that bind, at-bang for notation and NDATA carried
+  whole. The alarm prefix is the trust boundary made visible in prose and
+  maps onto cc-core's own classes: the model's parsed prose is PCDATA, the
+  quoted argument string is CDATA, a carried file is NDATA.
+
+  Names not spellings: the shell's markup characters cannot sit in an
+  ENTITY value (SIGIL.markup), so each token is named here and spelled by
+  the engine and the GLOSSARY alarm syntax.
+-->
+
+<!-- ===== THE CLASSES, THE THIRD AXIS ===== -->
+<!ENTITY BUS.classes "plain|dollar-bang|percent-bang|at-bang">
+<!ENTITY BUS.classes.count "4">
+<!-- What each class carries, the trust boundary in bus order. -->
+<!ENTITY BUS.cargo.plain "pcdata">
+<!ENTITY BUS.cargo.dollar-bang "cdata">
+<!ENTITY BUS.cargo.percent-bang "pcdata">
+<!ENTITY BUS.cargo.at-bang "ndata">
+
+<!-- ===== THE EMITTABLE TOKENS, BY CLASS ===== -->
+<!-- dollar-bang: the argument bus. percent-bang: the binding parameter.
+     at-bang: the attach and the carried whole. Braces ride their trust. -->
+<!ENTITY BUS.emit "arguments|mark|info|percent|at|pcdata-brace|cdata-brace|ndata-brace">
+<!ENTITY BUS.emit.count "8">
+<!ENTITY BUS.emit.dollar-bang "arguments|mark|info">
+<!ENTITY BUS.emit.percent-bang "percent">
+<!ENTITY BUS.emit.at-bang "at">
+<!ENTITY BUS.emit.braces "pcdata-brace|cdata-brace|ndata-brace">
+
+<!-- ===== THE EMISSION ===== -->
+<!-- One use of the bus: the class it travels, the token it carries, and
+     the trust the class gives it. Rendered wherever a command hands
+     another command (or its own next round) a value off-channel. -->
+<!ELEMENT bus_use (#PCDATA)>
+<!ATTLIST bus_use
+          class (plain|dollar-bang|percent-bang|at-bang) #REQUIRED
+          token NMTOKEN #REQUIRED
+          trust (pcdata|cdata|ndata) #REQUIRED>
+
+<!ENTITY LAW.BUS.1 "The bus has four classes and each carries one trust: plain carries PCDATA, dollar-bang carries CDATA, percent-bang carries PCDATA, at-bang carries NDATA; a class carrying another trust is not the bus.">
+<!ENTITY LAW.BUS.2 "A command emits only tokens of BUS.emit, MARK and INFO travel dollar-bang, percent travels percent-bang, at travels at-bang, and each brace rides its own trust class; a token outside the list was not emitted.">
+<!ENTITY LAW.BUS.3 "Every emission names its class and its trust in a bus_use element, and the trust agrees with the class cargo of LAW.BUS.1 and the channel that carries it; an emission without a class is not an emission.">
+```
+
+## GLOSSARY.dtd
+
+The alarm syntax converged with the entity classes: a plain alarm, dollar-bang for the argument bus, percent-bang for the parameter entities that bind, at-bang for notation and NDATA carried whole, each class carrying the trust its bus class carries under LAW.GLOSS.1 to 3. Spellings live in words per GLOSSARY.spell, never in glyphs; every alarm is a glossary_alarm naming class, trust and term. First consumer: git-gh-Companion-dtd, whose findings warn in class.
+
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  GLOSSARY.dtd : the alarm syntax converged with the entity classes.
+
+  The intake ordered it (deka): one syntax for alarms in prose and the
+  DTD entity classes behind them, so the trust boundary is visible where
+  a reader reads. Four classes: a plain alarm, dollar-bang for the
+  argument bus, percent-bang for the parameter entities that bind,
+  at-bang for notation and NDATA carried whole. Each class carries the
+  trust its bus class carries (LAW.BUS.1); the prefix is cc-core's own
+  classes made visible.
+
+  Spellings in words, never in glyphs: percent, ampersand and less-than
+  are markup inside an entity value (SIGIL.markup), so each spelling is
+  named here the way ASK.token.mark already names its brackets, and the
+  engine plus the alarm renderer spell them.
+-->
+
+<!-- ===== THE CLASSES ===== -->
+<!ENTITY GLOSSARY.classes "plain|dollar-bang|percent-bang|at-bang">
+<!ENTITY GLOSSARY.classes.count "4">
+<!-- One spelling per class, in words. -->
+<!ENTITY GLOSSARY.spell.plain "a bracketed label callout">
+<!ENTITY GLOSSARY.spell.dollar-bang "dollar followed by bang">
+<!ENTITY GLOSSARY.spell.percent-bang "percent followed by bang">
+<!ENTITY GLOSSARY.spell.at-bang "at-sign followed by bang">
+
+<!-- ===== THE ALARM ===== -->
+<!-- One warned thing: the class it carries, the trust the class gives
+     it, and the term it warns about. -->
+<!ELEMENT glossary_alarm (#PCDATA)>
+<!ATTLIST glossary_alarm
+          class (plain|dollar-bang|percent-bang|at-bang) #REQUIRED
+          trust (pcdata|cdata|ndata) #REQUIRED
+          term  NMTOKEN #REQUIRED>
+
+<!ENTITY LAW.GLOSS.1 "Alarms come in four classes and each carries one trust: plain carries PCDATA, dollar-bang carries CDATA, percent-bang carries PCDATA, at-bang carries NDATA, the cargo of LAW.BUS.1; the prefix is the trust boundary made visible in prose.">
+<!ENTITY LAW.GLOSS.2 "Spellings live in words: GLOSSARY.spell names each prefix the way ASK.token.mark names its brackets, because percent, ampersand and less-than are markup inside an entity value; a literal glyph where a word belongs is not a spelling.">
+<!ENTITY LAW.GLOSS.3 "Every alarm names its class and its trust in a glossary_alarm element carrying its term; emphasis without a class is prose, never an alarm.">
+```
+
+## tei-cache.dtd
+
+The rounds and the cache as a fragmentable text, taken measured from TEI: every ordinal cache carries fragment state (part, sample, org), ordinals chain by declaration (next, prev, corresp, synch, sameAs, copyOf, join, joinGrp, anchor), and the read order is reverse with the binding declaration last, under LAW.TEI.1 to 3. The file form stays NestedText; this is the vocabulary and the laws over it. First consumer: ask-me-maelstrom-dtd, which resumes 384-intakes from cache.
+
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  tei-cache.dtd : the rounds and the cache as a fragmentable text.
+
+  Taken measured from TEI (full-study/tei.duo.nt, what-stream-15-takes),
+  not invented: TEI's subject is a text that exists in fragments and must
+  be reconstituted without loss, which is exactly what a 384-intake cache
+  series is. An ordinal cache file carries its fragment state, so a file
+  read alone knows whether it is initial, medial or final; a resumed run
+  begins at unknown and says so rather than guessing; ordinals chain by
+  declaration, never by filename convention; and the read order is
+  reverse, binding declaration last.
+
+  The file form stays NestedText (cc-cache, FORM.nt); this subset is the
+  vocabulary and the laws laid over it, with one element for a span that
+  names another span.
+-->
+
+<!-- ===== FRAGMENT STATE, VERBATIM FROM att.fragmentable AND att.divLike ===== -->
+<!ENTITY TEI.part "Y|N|I|M|F">
+<!ENTITY TEI.part.count "5">
+<!ENTITY TEI.sample "initial|medial|final|unknown|complete">
+<!ENTITY TEI.sample.count "5">
+<!ENTITY TEI.org "composite|uniform">
+<!ENTITY TEI.org.count "2">
+
+<!-- ===== LINKING, FROM THE TEI LINKING MODULE ===== -->
+<!ENTITY TEI.links "next|prev|corresp|synch|sameAs|copyOf">
+<!ENTITY TEI.links.count "6">
+<!ENTITY TEI.joins "join|joinGrp|anchor">
+<!ENTITY TEI.joins.count "3">
+
+<!-- ===== THE SPAN ===== -->
+<!-- One cache span naming another: what it is in the series, how the run
+     resumes from it, and which link carries the relation. -->
+<!ELEMENT tei_span (#PCDATA)>
+<!ATTLIST tei_span
+          part   (Y|N|I|M|F) #REQUIRED
+          sample (initial|medial|final|unknown|complete) #REQUIRED
+          org    (composite|uniform) "uniform"
+          link   (next|prev|corresp|synch|sameAs|copyOf|join|joinGrp|anchor) #REQUIRED
+          target CDATA #REQUIRED>
+
+<!ENTITY LAW.TEI.1 "Every ordinal cache carries TEI.part, TEI.sample and TEI.org; a resumed run reads sample unknown until it has read its predecessors, and a file that does not know its state says unknown rather than guessing.">
+<!ENTITY LAW.TEI.2 "The read order is reverse: next first, then findings newest-first, then the gate, then the answers, and the binding declaration last; a run that read top-down and missed the binding reads again.">
+<!ENTITY LAW.TEI.3 "Ordinals chain by declaration: next and prev, corresp from an answer to its round and evidence, synch across the three readings of one polyglot triple, sameAs and copyOf for a recovered file, join and joinGrp for the ordinals constituting one intake; a series reconstituted by filename convention is not reconstituted.">
 ```
 
 ## codebase-generator.dtd

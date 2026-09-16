@@ -15,9 +15,11 @@ allowed-tools:
 <!DOCTYPE todo_add [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
   <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
   %cc-record;
-  <!ELEMENT todo_add (context_capture, entry)>
+  <!ELEMENT todo_add (args, context_capture, entry)>
   <!ELEMENT context_capture (#PCDATA)>
   <!ELEMENT entry (#PCDATA)>
   <!ENTITY LAW.TODO.1 "An entry carries the five fields of RECORD.todo in declared order; a field with nothing to say is written empty, never omitted.">
@@ -42,15 +44,16 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 
 ## Instructions
 
-1. Read TO-DOS.md in the working directory (create with Write tool if it doesn't exist)
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. Read TO-DOS.md in the working directory (create with Write tool if it doesn't exist)
 
-2. Check for duplicates:
+3. Check for duplicates:
    - Extract key concept/action from the new todo
    - Search existing todos for similar titles or overlapping scope
    - If found, ask user: "A similar todo already exists: [title]. Would you like to:\n\n1. Skip adding (keep existing)\n2. Replace existing with new version\n3. Add anyway as separate item\n\nReply with the number of your choice."
    - Wait for user response before proceeding
 
-3. Extract todo content:
+4. Extract todo content:
    - **With <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>**: Use as the focus/title for the todo and context heading
    - **Without <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted>**: Analyze recent conversation to extract:
      - Specific problem or task discussed
@@ -58,7 +61,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
      - Technical details (line numbers, error messages, conflicting specifications)
      - Root cause if identified
 
-4. Append new section to bottom of file, context quoted as ARG.embed.pcdata (LAW.ARGS.5):
+5. Append new section to bottom of file, context quoted as ARG.embed.pcdata (LAW.ARGS.5):
    - **Heading**: `## Brief Context Title - YYYY-MM-DD HH:MM` (3-8 word title, current timestamp)
    - **Todo format**: `- **[Action verb] [Component]** - [Brief description]. **Problem:** [What's wrong/why needed]. **Files:** [Comma-separated paths with line numbers]. **Solution:** [Approach hints or constraints, if applicable].`
    - **Required fields**: Problem and Files (with line numbers like `path/to/file.ts:123-145`)
@@ -66,7 +69,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
    - Make each section self-contained for future Claude to understand weeks later
    - Use simple list items (not checkboxes) - todos are removed when work begins
 
-5. Confirm and offer to continue with original work:
+6. Confirm and offer to continue with original work:
    - Identify what the user was working on before `/add-to-todos` was called
    - Confirm the todo was saved: "✓ Saved to todos."
    - Ask if they want to continue with the original work: "Would you like to continue with [original task]?"
@@ -85,6 +88,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 <output_format>
 <grammar_map>
 Render the `todo_add` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ➕ Heading` carrying this command's sigil ➕, with a blank line before and after it (LAW.CORE.6).
+- `args`: the launch walk: count, the flags, the positional words
 - `context_capture`: what was captured from the conversation, quoted
 - `entry`: the entry appended to TO-DOS.md under the RECORD.todo field order
 </grammar_map>

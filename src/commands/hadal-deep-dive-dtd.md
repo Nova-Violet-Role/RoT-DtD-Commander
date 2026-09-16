@@ -1,5 +1,5 @@
 ---
-description: "DTD-native: research that excavates the user's posted context in strata first, then asks with no binding cap in up to twenty-four rounds, then writes the hybrid artifact, prose plus gulp"
+description: "DTD-native: research that excavates the user's posted context in strata first, then asks with no binding cap in up to forty-eight rounds, then writes the hybrid artifact, prose plus gulp"
 argument-hint: [topic or leave blank for current context; add --no-gate for autonomous mode]
 ---
 
@@ -7,10 +7,10 @@ argument-hint: [topic or leave blank for current context; add --no-gate for auto
 <!-- Copyright 2026 Saimonokuma. -->
 
 <!DOCTYPE hadal_session [
-  <!ENTITY % ask.rounds "(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24)">
-  <!ENTITY % ask.of "(24)">
-  <!ENTITY ASK.rounds_per_prompt "24">
-  <!ENTITY ASK.max_total "96">
+  <!ENTITY % ask.rounds "(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48)">
+  <!ENTITY % ask.of "(48)">
+  <!ENTITY ASK.rounds_per_prompt "48">
+  <!ENTITY ASK.max_total "192">
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
@@ -33,7 +33,7 @@ argument-hint: [topic or leave blank for current context; add --no-gate for auto
             name CDATA #REQUIRED>
   <!ENTITY RECORD.hadal "hadal|artifacts/hadal-deep-dive-dtd/hadal-deep-dive-dtd.md|1=task:CDATA@1|2=strata:PCDATA@1|3=rounds:PCDATA@1|4=answers:CDATA@1|5=gate:PCDATA@1|6=execution:CDATA@1">
   <!ENTITY LAW.HAD.1 "Excavation precedes intake: the posted context is read in strata, stated then quoted then inferred, at most five, and every round quotes the stratum it digs under.">
-  <!ENTITY LAW.HAD.2 "No round cap binds this command: twenty-four rounds of four stand open and the declared enumeration is the checker's finite handle, unreachable by design; termination belongs to the gate choice start or save alone, and a run cut off by count is a failed answer.">
+  <!ENTITY LAW.HAD.2 "No round cap binds this command: forty-eight rounds of four stand open and the declared enumeration is the checker's finite handle, unreachable by design; termination belongs to the gate choice start or save alone, and a run cut off by count is a failed answer.">
   <!ENTITY LAW.HAD.3 "The artifact is a hybrid pair: the .md prose record named by RECORD.hadal and its .nt twin beside it, both written UTF-8 LF without BOM and both re-read; one without the other is a failed answer.">
   <!ENTITY LAW.HAD.4 "Execution opens with the restatement of every known slot, every stratum and every answer, so the work audits against what was asked and what was posted.">
   <!ENTITY LAW.HAD.5 "An inferred stratum is marked guessed; a stratum quoted from the post carries its lines; reasoning beyond the deepest stratum is refused.">
@@ -68,7 +68,7 @@ The strata are the layers the post already holds: what it states outright, what 
 <grammar_map>
 Render the `hadal_session` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🐋 Heading` carrying this command's sigil 🐋, with a blank line before and after it (LAW.CORE.6).
 - `task`: **🐋 Task**, with its kind when it came from the task question
-- `intake`: **🐋 Intake**, the known and gap slots, then each round as n of 24 with its questions, strata and answers, the impactful selections when asked for, then the gate choice and round number; the gate offers GATE.save as its fifth choice with the cache question beside it, and on save the `cache` element names the file written and read back whole, or on the next call the file resumed from
+- `intake`: **🐋 Intake**, the known and gap slots, then each round as n of 48 with its questions, strata and answers, the impactful selections when asked for, then the gate choice and round number; the gate offers GATE.save as its fifth choice with the cache question beside it, and on save the `cache` element names the file written and read back whole, or on the next call the file resumed from
 - `excavation`: **🐋 Excavation**, one line per stratum with its depth and the lines it holds
 - `execution`: **🐋 Execution**, opening with the restatement, then the work itself
 - `artifact`: **🐋 Artifact**, the hybrid pair this run wrote, as `<artifact>` elements naming the .md and its .nt twin; a run that wrote none says so on that line
@@ -85,8 +85,8 @@ The `artifact` elements are the files this run leaves for the next one: the reco
 
 - known: what [..] who [..] why [..] how [..] when [..]
 - gaps: [slots asked about]
-- round 1 of 24: [question headers] answered [labels chosen or Other text]
-- round N of 24: [only when asked]
+- round 1 of 48: [question headers] answered [labels chosen or Other text]
+- round N of 48: [only when asked]
 - gate: [start|more|add|impactful|save] (round N)
 
 ### 🐋 Excavation
@@ -112,7 +112,7 @@ Saved to `artifacts/hadal-deep-dive-dtd/hadal-deep-dive-dtd.md` plus its `.nt` t
 <success_criteria>
 - No question is asked about information already provided or already stratified
 - Rounds ran with no binding cap inside the declared enumeration, and no willing user was cut off
-- Every question was bilateral and every round was rendered as n of 24
+- Every question was bilateral and every round was rendered as n of 48
 - Both halves of the hybrid artifact were written and re-read, or neither was claimed
 - Execution started only after the gate choice start, or in autonomous mode with every assumption listed
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer

@@ -11,7 +11,9 @@ argument-hint: [goal or leave blank for current context]
 <!DOCTYPE one_thing [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT one_thing (goal, candidate+, the_one, why_this, next_action)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT one_thing (args, goal, candidate+, the_one, why_this, next_action)>
   <!ELEMENT goal (#PCDATA)>
   <!ELEMENT candidate (#PCDATA)>
   <!ELEMENT the_one (#PCDATA)>
@@ -39,22 +41,28 @@ Ask: "What's the ONE thing I can do such that by doing it everything else will b
 </objective>
 
 <process>
-1. Clarify the ultimate goal or desired outcome
-2. List all possible actions that could contribute
-3. For each action, ask: "Does this make other things easier or unnecessary?"
-4. Identify the domino that knocks down others
-5. Define the specific next action for that one thing
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. Clarify the ultimate goal or desired outcome
+3. List all possible actions that could contribute
+4. For each action, ask: "Does this make other things easier or unnecessary?"
+5. Identify the domino that knocks down others
+6. Define the specific next action for that one thing
 </process>
 
 <output_format>
 <grammar_map>
 Render the `one_thing` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔑 Heading` carrying this command's sigil 🔑, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🔑 Args**, the launch walk: count, the flags, the positional words
 - `goal`: **🔑 Goal**
 - `candidate`: **🔑 Candidate Actions**, one `candidate` each with its downstream effect
 - `the_one`: **🔑 The One Thing**
 - `why_this`: **🔑 Why This One**
 - `next_action`: **🔑 Next Action**
 </grammar_map>
+
+### 🔑 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🔑 Goal
 

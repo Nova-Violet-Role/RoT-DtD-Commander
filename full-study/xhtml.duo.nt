@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - xhtml/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/xhtml/ - 373 files, 2.1 MB
+# Supersedes nothing; xhtml.nt is the folder index, this is the detail it deferred.
+# Ordinal: duo, Greek per the 10.0.0 rule that every created file is numbered.
+# Fifth of the F18-rest detail passes.
+
+three-drivers:
+    > xhtml1-strict.dtd, xhtml1-transitional.dtd, xhtml1-frameset.dtd: one
+    > vocabulary in three conformance profiles, strict inside transitional
+    > inside frameset by inclusion. Conformance as subtraction: each driver
+    > names what it refuses, never what it adds.
+
+second-grammars:
+    > relaxng 40 files beside the dtd/ drivers; nvdl 3 files dispatching
+    > between them. The folder carries its own multi-schema publishing
+    > beside DocBook's: DTD for validation, RELAX NG for extension, NVDL
+    > for choosing per namespace.
+
+reverse-transform:
+    > html2dita 16 files: the only reverse pipeline in the corpus, HTML
+    > back into DITA topic types. Every other transform in every other
+    > folder runs forward from authoring to output; this one proves the
+    > vocabulary round-trips, which is what a reconstituted cache claims.
+
+epub3-profile:
+    > xhtml5-(epub3)/ carries mod/html5, mod/mathml, mod/security and
+    > mod/svg11 beside dict, edupub and idx: a delivery profile composed
+    > of modules, the same composition the installer performs over
+    > RUNTIME entries.
+
+release-binding:
+    > Stream 9 (corpus convergence): the strict-inside-transitional
+    > inclusion is the subset pattern for converging corpora without
+    > copying them. Stream 17 (audit legs): html2dita is the precedent
+    > for legs that read the built tree back into the source shape.

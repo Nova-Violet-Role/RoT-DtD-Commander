@@ -9,6 +9,10 @@ description: "The AI_SLOP gate, the voice contract of every -dtd answer and, whe
 <!DOCTYPE slop_report [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % ai-slop SYSTEM "../../../dtd/ai-slop.dtd">
   %ai-slop;
 ]>
@@ -43,10 +47,10 @@ Two rhythm measures back the layers (LAW.SLOP.3): the coefficient of variation o
 
 The gate renders one `slop_report`: a `slop_verdict` with alive yes or no, one `slop_hit` per phrase with its kind and line, and one `slop_measure` per measure with its value, its bound and whether it holds. A verdict stated without those lines was not given. The Adiutor applies the same scan at Stop and records a failed gate as a finding of kind `slop` (LAW.ADIUTOR.9).
 
-## The gate as a hook on four spots (LAW.SLOP.7, LAW.SLOP.8)
+## The gate as a hook on five spots (LAW.SLOP.7, LAW.SLOP.8)
 
 Since 5.1.0 an armed Adiutor (`rdc arm`, `rdc install --arm`; a plain
-install arms nothing) judges four spots without any command being run,
+install arms nothing) judges five spots without any command being run,
 each named by an entity: SLOP.spot.1, the answer to any turn at Stop when
 no `-dtd` run is open; SLOP.spot.2, the text of a Write, an Edit or a
 NotebookEdit before it lands; SLOP.spot.3, the message of a `git commit`
@@ -63,7 +67,7 @@ SLOP.comment.angle is code, and its comments alone are lifted and judged
 to judge and passes. A small body is judged on the ban list alone
 (LAW.SLOP.6).
 
-The four spots are strict whatever `ROT_DTD_ADIUTOR` says (LAW.SLOP.8): a
+The five spots are strict whatever `ROT_DTD_ADIUTOR` says (LAW.SLOP.8): a
 failed answer blocks the Stop once and the re-fired Stop passes; a failed
 Write, Edit, commit or body is denied until its text changes; every refusal
 closes one ledger line whose command is `slop:` and the spot, so `rdc
@@ -73,11 +77,12 @@ a `quoted` element, never a CDATA section. The escape is the contract: a
 phrase inside a code fence, an inline code span or a quoted element is
 data (LAW.SLOP.1) and never a hit. The hand-run form is `/ai-slop-dtd`,
 which judges a file, a commit message file or the last answer with the
-same instrument. Controls C21 to C26 of `node bin/adiutor.mjs controls`
+same instrument. Controls C21 to C31 of `node bin/adiutor.mjs controls`
 trip every spot on purpose: the plain answer blocked once, the prose file
 denied with the phrases quoted, the code file judged by its comments alone,
 the commit message inline and by `-F`, the request body by `gh` and by
-`curl`, and the fenced phrases passing.
+`curl`, the subagent answer at SubagentStop, the tally and the fields, the
+lists at Write and the cache gate law, and the fenced phrases passing.
 
 ## The controls come first
 

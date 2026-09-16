@@ -1,0 +1,57 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+<!--
+  cc-bus.dtd : the wire protocol between commands.
+
+  The suite skill links commands by DECLARED FEATURE, never by activation,
+  and the wire they speak on is the dollar sigil bus declared here, not in
+  prose. cc-sigil.dtd keeps the STUDY of the shell's sigil (125 forms in
+  five tiers across ten topics); this subset declares what a command may
+  EMIT onto the bus between commands. The split is the F5 fix: the study
+  documents 88093 bytes and implements two tokens, because nothing named
+  the emittable few apart from the studied many.
+
+  The classes come from the GLOSSARY direction the intake ordered (deka):
+  a plain alarm, dollar-bang for the argument bus, percent-bang for the
+  parameter entities that bind, at-bang for notation and NDATA carried
+  whole. The alarm prefix is the trust boundary made visible in prose and
+  maps onto cc-core's own classes: the model's parsed prose is PCDATA, the
+  quoted argument string is CDATA, a carried file is NDATA.
+
+  Names not spellings: the shell's markup characters cannot sit in an
+  ENTITY value (SIGIL.markup), so each token is named here and spelled by
+  the engine and the GLOSSARY alarm syntax.
+-->
+
+<!-- ===== THE CLASSES, THE THIRD AXIS ===== -->
+<!ENTITY BUS.classes "plain|dollar-bang|percent-bang|at-bang">
+<!ENTITY BUS.classes.count "4">
+<!-- What each class carries, the trust boundary in bus order. -->
+<!ENTITY BUS.cargo.plain "pcdata">
+<!ENTITY BUS.cargo.dollar-bang "cdata">
+<!ENTITY BUS.cargo.percent-bang "pcdata">
+<!ENTITY BUS.cargo.at-bang "ndata">
+
+<!-- ===== THE EMITTABLE TOKENS, BY CLASS ===== -->
+<!-- dollar-bang: the argument bus. percent-bang: the binding parameter.
+     at-bang: the attach and the carried whole. Braces ride their trust. -->
+<!ENTITY BUS.emit "arguments|mark|info|percent|at|pcdata-brace|cdata-brace|ndata-brace">
+<!ENTITY BUS.emit.count "8">
+<!ENTITY BUS.emit.dollar-bang "arguments|mark|info">
+<!ENTITY BUS.emit.percent-bang "percent">
+<!ENTITY BUS.emit.at-bang "at">
+<!ENTITY BUS.emit.braces "pcdata-brace|cdata-brace|ndata-brace">
+
+<!-- ===== THE EMISSION ===== -->
+<!-- One use of the bus: the class it travels, the token it carries, and
+     the trust the class gives it. Rendered wherever a command hands
+     another command (or its own next round) a value off-channel. -->
+<!ELEMENT bus_use (#PCDATA)>
+<!ATTLIST bus_use
+          class (plain|dollar-bang|percent-bang|at-bang) #REQUIRED
+          token NMTOKEN #REQUIRED
+          trust (pcdata|cdata|ndata) #REQUIRED>
+
+<!ENTITY LAW.BUS.1 "The bus has four classes and each carries one trust: plain carries PCDATA, dollar-bang carries CDATA, percent-bang carries PCDATA, at-bang carries NDATA; a class carrying another trust is not the bus.">
+<!ENTITY LAW.BUS.2 "A command emits only tokens of BUS.emit, MARK and INFO travel dollar-bang, percent travels percent-bang, at travels at-bang, and each brace rides its own trust class; a token outside the list was not emitted.">
+<!ENTITY LAW.BUS.3 "Every emission names its class and its trust in a bus_use element, and the trust agrees with the class cargo of LAW.BUS.1 and the channel that carries it; an emission without a class is not an emission.">

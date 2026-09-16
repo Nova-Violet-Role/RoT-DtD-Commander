@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - docbook/5.1 schematron DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/docbook/5.1/sch/ (4 files, script census).
+# Second of the what-is-not-yet-transmigrated remainder: the 5.1 rule set.
+
+rule-census:
+    docbookxi.sch: 15 patterns, 83 asserts
+    docbook.sch: 15 patterns, 83 asserts
+    dbits.sch: 15 patterns, 83 asserts
+    assembly.sch: 16 patterns, 85 asserts
+
+exclusion-matrices:
+    > Admonitions never nest: caution important note tip warning exclude
+    > each other in all five contexts, 25 asserts for one rule. Caption,
+    > equation, example, figure and table exclude each other mutually.
+    > Footnote excludes twelve block kinds. The DTD allows the nesting;
+    > the schematron refuses it: co-occurrence lives outside the DTD.
+
+linkend-type-constraints:
+    > footnoteref points at footnote, firstterm glossterm glosssee and
+    > seealso at glossentry, synopfragmentref at synopfragment, indexterm
+    > startref at startofrange: reference targets typed by assertion,
+    > because IDREF alone cannot say what kind the target is.
+
+xlink-placement:
+    > Arc, locator and resource occur only as direct children of extended;
+    > extended never nests in extended; title nests in extended, locator
+    > or arc. Placement is rank, stated as parent tests.
+
+release-binding:
+    > Stream 19 (convergence): the exclusion matrix is where DTD
+    > convergence STOPS and the second instrument starts; the suite
+    > already has it and calls it checker/. Name that line in the
+    > release, per the ceiling-of-a-DTD mechanism, rather than meet it
+    > at 11.0.0.

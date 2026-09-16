@@ -30,7 +30,7 @@ research-asking:
     needs: understand how, one-time ask, save-my-cache bridge
     variants: RNG, ENT, MOD, DITA, CHAIN, SKILL
     families: Research, Asking and deciding
-    commands: deep-dive-dtd, hadal-deep-dive-dtd, hadopelagia-deep-dive-dtd, ask-me-questions-dtd, ask-me-everything-dtd
+    commands: deep-dive-dtd, hadal-deep-dive-dtd, hadopelagia-deep-dive-dtd, ask-me-questions-dtd, ask-me-katabasis-dtd, ask-me-maelstrom-dtd, ask-me-everything-dtd
     gate: ask where deep, cache bridge where long
     example: i need to understand how example triggers research then deep-dive with ask where allowed
 
@@ -47,7 +47,7 @@ cache-drift-timeout:
     variants: NVDL, XSL, CHAIN
     families: Asking and deciding, Tasks
     commands: ask-me-many-questions-dtd, chain-dtd, task-handoff-dtd
-    gate: save-ur-cache bridge, drift activation beside running work
+    gate: save-ur-cache bridge, drift activation beside running work, resume reads reverse with fragment states (LAW.TEI.1-3)
     example: direction change in-between via timeout law, drift drafted not interrupted
 
 skill-creation:
@@ -70,7 +70,7 @@ repo-and-growth:
     needs: measure this repository's face, or grow the codebase by a declared verb
     variants: DITA, DITAMAP, RELS, CHAIN
     families: Repository, Codebase growth
-    commands: git-gh-amplification-dtd, git-gh-matrix-scala-dtd, amplify-codebase-dtd, enhance-codebase-dtd, overhaul-codebase-dtd
+    commands: git-gh-amplification-dtd, git-gh-matrix-scala-dtd, git-gh-Companion-dtd, amplify-codebase-dtd, enhance-codebase-dtd, overhaul-codebase-dtd
     gate: ask the band before any verb above amplify
     example: build me a gate.yml that tests this on three operating systems
 
@@ -79,7 +79,7 @@ judge-my-artifact:
     variants: SCH, XSPEC, FRAMEWORK
     families: Audits in the foreground
     commands: audit-skill-dtd, audit-slash-command-dtd, audit-subagent-dtd, ai-slop-dtd
-    gate: none, these scan the whole context instead of asking
+    gate: none, these scan the whole context instead of asking; findings warn in class (LAW.GLOSS.1-3)
     example: read this skill i wrote and tell me what is wrong with it
 
 argument-plumbing:
@@ -87,7 +87,7 @@ argument-plumbing:
     variants: ENT, MOD, DCL, CHAIN
     families: The sigil, Inter-operation
     commands: sigil-dtd, verbs-dtd, chain-dtd
-    gate: none on explanation, ask before emitting a chain
+    gate: none on explanation, ask before emitting a chain; emissions name their bus class (LAW.BUS.1-3)
     example: i do not understand what the sigil section is for
 
 policy-and-lists:

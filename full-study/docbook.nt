@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - docbook/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/docbook/ - 169 files, 8.6 MB
+# Six versions 4.2 to 5.1. Second of the F18-rest detail passes; pattern
+# follows tei.duo.nt and xhtml11.nt: folder shape, then mechanisms with
+# release bindings, nothing invented.
+
+folder-shape:
+    versions: 4.2 29 files, 4.3 33 files, 4.4 31 files, 4.5 30 files, 5.0 17 files, 5.1 16 files
+    four-x: dtd plus ent directories, DocBook XML without namespaces
+    five-0: dtd 202992 B in 2 files, rng 1607011 B in 7, sch 17344 B in 1, xsd 762014 B in 3, docbook.nvdl at root, tools 46022 B in 2
+    five-1: rng 3981566 B in 8, sch 53934 B in 4, docbook.nvdl at root, tools 51022 B in 2, no dtd directory
+
+multi-schema-publishing-measured:
+    > 5.0 ships five grammars for one vocabulary: dtd, rng, sch, xsd and
+    > nvdl side by side. 5.1 drops the dtd directory and more than doubles
+    > the rng to 3981566 bytes: the RELAX NG grammar is the maintained one
+    > and the DTD is the legacy emission, the reverse of the 4.x shape.
+    > Strongest in-corpus witness, beside TEI ODD, that one vocabulary
+    > carries many grammars and the hand-kept one wins.
+
+version-migration:
+    > 4.x to 5.0 is a namespace migration with a grammar change on top:
+    > DocBook 5 is namespaced, 4.x is not, so no 4.x document validates
+    > under 5.x without rewriting. The 4.2-to-4.5 run (29/33/31/30 files)
+    > is accretion inside one shape; 5.0 is a new shape that still ships
+    > the old grammar beside the new ones for exactly one minor.
+
+release-binding:
+    > Stream 17 (429-file tree): DocBook 5.1 dropping dtd/ while doubling
+    > rng/ is the precedent for retiring an emission without retiring the
+    > vocabulary; the triple per artifact may likewise drop a form and keep
+    > the source. Stream 9 (corpus convergence): the 4.x ent layering feeds
+    > the shared-entity discipline beside DAISY.

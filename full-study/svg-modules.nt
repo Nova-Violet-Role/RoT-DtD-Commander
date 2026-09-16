@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - svg/ per-module DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/svg/ (49 .mod + 5 drivers, script census).
+# Third of the what-is-not-yet-transmigrated remainder: svg 49 modules.
+
+module-shape:
+    feature-modules: animation clip color conditional container cursor datatypes extensibility filter font gradient hyperlink image marker mask opacity paint pattern script shape structure style text view (38 content modules)
+    attrib-collections: core container extresources graphics graphevents animevents docevents basic-graphics-attrib basic-paint-attrib opacity paint viewport xlink (12 attribute bundles)
+    qname: svg-qname.mod 9610 B, 96 entities, the namespace machinery alone
+    profile: svg-profile.mod (2 switches), framework (4 switches), catalog svgcatalog.xml
+
+profile-deltas-measured:
+    tiny-model: 35 entities
+    basic-model: 46 entities
+    full-model: 48 entities
+    shape:
+        > Three profiles over one module set, differing by thirteen
+        > entities from tiny to full. A profile is an entity count, never
+        > a fork: basic adds eleven, full adds two more, every smaller
+        > profile validates inside the larger one's shadow.
+
+drivers-five:
+    > svg10, svg11, basic, tiny, tiny-flat: five drivers, one flat
+    > emission (tiny-flat 2808 lines against tiny 197 modular, factor
+    > 14 per F20). The flat file is generated; the modules are kept.
+
+release-binding:
+    > Stream 11 (profiles): the 35/46/48 entity ladder is the measured
+    > precedent for additive profiles; a matrix leg names its profile by
+    > count, never by hope. Stream 4 (override points): prefw and
+    > postfw stay the two named slots beside qname's 96.

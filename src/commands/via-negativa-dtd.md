@@ -11,7 +11,9 @@ argument-hint: [situation or leave blank for current context]
 <!DOCTYPE via_negativa [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT via_negativa (current_state, candidate+, keep*, after, say_no+)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT via_negativa (args, current_state, candidate+, keep*, after, say_no+)>
   <!ELEMENT current_state (#PCDATA)>
   <!ELEMENT candidate (item, reason, impact)>
   <!ELEMENT item (#PCDATA)>
@@ -41,22 +43,28 @@ Instead of asking "What should I add?", ask "What should I remove?" Subtraction 
 </objective>
 
 <process>
-1. State the current situation or goal
-2. List everything currently present (activities, features, commitments, beliefs)
-3. For each item, ask: "Does removing this improve the outcome?"
-4. Identify what to stop, eliminate, or say no to
-5. Describe the improved state after subtraction
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. State the current situation or goal
+3. List everything currently present (activities, features, commitments, beliefs)
+4. For each item, ask: "Does removing this improve the outcome?"
+5. Identify what to stop, eliminate, or say no to
+6. Describe the improved state after subtraction
 </process>
 
 <output_format>
 <grammar_map>
 Render the `via_negativa` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ➖ Heading` carrying this command's sigil ➖, with a blank line before and after it (LAW.CORE.6).
+- `args`: **➖ Args**, the launch walk: count, the flags, the positional words
 - `current_state`: **➖ Current State**
 - `candidate`: **➖ Subtraction Candidates**, one `candidate` with `item`, `reason`, `impact`
 - `keep`: **➖ Keep (Passed the Test)**
 - `after`: **➖ After Subtraction**
 - `say_no`: **➖ What to Say No To**
 </grammar_map>
+
+### ➖ Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### ➖ Current State
 

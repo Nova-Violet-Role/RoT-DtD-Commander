@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - xhtml11/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/xhtml11/ - 67 files, 1.0 MB
+# dtd/: driver xhtml11.dtd (323 lines, 64 declarations) + xhtml11-model-1.mod
+# (6969 B) + 3 entity sets + VERSION + catalog; schema/: RNG/RNC/XSD mirrors.
+# First of the F18-rest detail passes; pattern follows tei.duo.nt.
+
+folder-shape:
+    dtd-count: 9
+    driver: xhtml11.dtd, "-//W3C//DTD XHTML 1.1//EN", Murray M. Altheim
+    modules: xhtml11-model-1.mod alone carries the content model
+    entity-sets: xhtml-lat1.ent 8758 B, xhtml-special.ent 4259 B, xhtml-symbol.ent 12771 B
+    catalog: xhtmlcatalog.xml 1639 B, identity to location, never hard-coded
+    flat: xhtml11-flat.dtd 157593 B and 939 declarations; xhtml-math-svg-flat.dtd 573705 B
+
+modular-vs-flat-measured:
+    > Driver plus modules: 18977 bytes. Flat emission: 157593 bytes, factor 8.3.
+    > The flat file carries 939 declarations against the driver's 64: the
+    > modules are pulled in whole, comments and all. Same curve as svg11-tiny
+    > 197 against svg11-tiny-flat 2808 (F20): one maintained source, one
+    > generated emission, the factor measuring how much the modules share.
+
+mechanisms:
+    - driver-plus-one-model: a single .mod file holds the whole content model; the driver holds identity, namespaces and switches
+    - entity-set-layering: latin-1, special and symbol sets stack; a profile takes the layers it needs
+    - catalog-identity: xhtmlcatalog.xml resolves public identity to location, second witness beside DITA catalog.xml for precedence-by-named-slot
+    - math-svg-flat: the 573705-byte math-plus-svg flat is the largest single emission in the corpus; a profile that needs everything pays everything
+
+release-binding:
+    > Stream 17 (429-file tree): the 8.3 factor joins the F20 pair as the
+    > third witness that a maintained tree and its generated emission differ
+    > by an order of magnitude, so the triple ships generated or not at all.
+    > Stream 4 (depth as precedence): the catalog witness joins the named
+    > override-slot discipline; no path is hard-coded where a catalog can
+    > resolve it.

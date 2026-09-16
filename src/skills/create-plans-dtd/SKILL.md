@@ -11,6 +11,10 @@ description: "Create hierarchical project plans optimized for solo agentic devel
 <!DOCTYPE create_plans [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ENTITY % cc-record SYSTEM "../../../dtd/cc-record.dtd">
   %cc-record;
   <!ELEMENT create_plans (brief, roadmap, phase_plan+, summary?)>

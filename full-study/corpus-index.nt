@@ -9,8 +9,8 @@
 sources:
     corpora: 27 folders plus 10 loose files under cc-resources/.dtd-file-examples
     measured-files: 768 dtd, mod and ent
-    study-files: 46 nt under full-study, 5 source documents fully transmigrated
-    detail-passes-done: tei dita-shells office-dtds-daisy mathml-docbook-xhtml11 svg
+    study-files: 69 nt under full-study, 5 source documents fully transmigrated
+    detail-passes-done: tei dita-shells office-dtds-daisy mathml-docbook-xhtml11 svg xhtml11 docbook daisy jats-duo xhtml-duo ooxml tocjs dita11 lwdita xdita ditaversion mathml office dtds dtbook docbook-sch svg-modules tei-modules dita-specializations
 
 mechanisms:
 
@@ -145,8 +145,6 @@ mechanisms:
 what-is-not-yet-transmigrated:
     > Per-module content models for svg 49 modules, tei 20 modules, dita bookmap
     > learning machineryIndustry subjectScheme xnal, daisy dtbook 82 elements, docbook
-    > 4.5 and the 5.1 schematron rule set.
-    > Untouched folders: com.elovirta.ooxml and com.sophos.tocjs beyond their plugin
-    > shape, org.lwdita beyond its conductor, xhtml11 beyond its driver list, mathml
-    > beyond its domain pair, office 27 parts, dtds 12 micro-grammars.
+    > 4.5 and the 5.1 schematron rule set: all transmigrated 2026-09-16
+    > (svg-modules, tei-modules, dita-specializations, dtbook, docbook-sch).
     > None of these blocks a stream. Every stream's binding above is measured.

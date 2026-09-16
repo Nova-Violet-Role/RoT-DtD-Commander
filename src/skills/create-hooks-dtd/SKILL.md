@@ -11,6 +11,10 @@ description: "Expert guidance for creating, configuring, and using Claude Code h
 <!DOCTYPE hook_creation [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
+  <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
+  %cc-cache;
   <!ELEMENT hook_creation (event, matcher?, script, settings_entry, test)>
   <!ELEMENT event (#PCDATA)>
   <!ELEMENT matcher (#PCDATA)>

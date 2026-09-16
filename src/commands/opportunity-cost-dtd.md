@@ -11,7 +11,9 @@ argument-hint: [choice or leave blank for current context]
 <!DOCTYPE opportunity_cost [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT opportunity_cost (choice, resources, alternatives, true_cost, verdict)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT opportunity_cost (args, choice, resources, alternatives, true_cost, verdict)>
   <!ELEMENT choice (#PCDATA)>
   <!ELEMENT resources (resource+)>
   <!ELEMENT resource (#PCDATA)>
@@ -43,22 +45,28 @@ Every yes is a no to something else. What's the true cost of this choice?
 </objective>
 
 <process>
-1. State the choice being considered
-2. List what resources it consumes (time, money, energy, attention)
-3. Identify the best alternative use of those same resources
-4. Compare value of chosen option vs. best alternative
-5. Determine if the tradeoff is worth it
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. State the choice being considered
+3. List what resources it consumes (time, money, energy, attention)
+4. Identify the best alternative use of those same resources
+5. Compare value of chosen option vs. best alternative
+6. Determine if the tradeoff is worth it
 </process>
 
 <output_format>
 <grammar_map>
 Render the `opportunity_cost` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 💱 Heading` carrying this command's sigil 💱, with a blank line before and after it (LAW.CORE.6).
+- `args`: **💱 Args**, the launch walk: count, the flags, the positional words
 - `choice`: **💱 Choice**
 - `resources`: **💱 Resources Required**, one `resource` per kind
 - `alternatives`: **💱 Best Alternative Uses**, one `alternative` per resource kind
 - `true_cost`: **💱 True Cost**
 - `verdict`: **💱 Verdict**
 </grammar_map>
+
+### 💱 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 💱 Choice
 

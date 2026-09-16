@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - daisy/dtbook per-module DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/daisy/dtbook-2005-3.dtd (82 elements, script census).
+# First of the what-is-not-yet-transmigrated remainder: dtbook 82 elements.
+
+element-census:
+    total: 82 elements, 0 EMPTY
+    spine: dtbook head book frontmatter bodymatter rearmatter
+    levels: level plus level1 through level6, depth 6 by declaration
+    headings-three-systems: h1-h6 plus hd plus bridgehead in one grammar
+    speech-grain: sent w linenum pagenum, words and sentences addressable
+    reference-layer: noteref annoref imggroup covertitle doctitle docauthor
+    tables: full table caption thead tfoot tbody colgroup col tr th td
+    lists: list li lic plus dl dt dd, blockquote bridgehead epigraph byline dateline
+
+no-empty-measured:
+    > Zero EMPTY elements in 82: every element carries content because every
+    > element must speak. A talking-book grammar cannot have content-free
+    > nodes; structure without speech is structure removed. The constraint
+    > is the medium, stated as a census rather than a rule.
+
+release-binding:
+    > Stream 4 (depth): level1-6 plus level plus h1-6 plus hd is depth
+    > declared three ways in one file; the precedence encoding cites it as
+    > the case depth-as-rank, depth-as-nesting and depth-as-heading coexist.
+    > Stream 17 (fixtures): the 82-name census is the element battery for
+    > sweeps that must name every element of a mid-size grammar.

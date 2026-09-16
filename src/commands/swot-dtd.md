@@ -11,7 +11,9 @@ argument-hint: [subject or leave blank for current context]
 <!DOCTYPE swot [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT swot (subject, strengths, weaknesses, opportunities, threats, moves)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT swot (args, subject, strengths, weaknesses, opportunities, threats, moves)>
   <!ELEMENT subject (#PCDATA)>
   <!ELEMENT strengths (item+)>
   <!ELEMENT weaknesses (item+)>
@@ -43,17 +45,19 @@ Map internal factors (strengths/weaknesses) and external factors (opportunities/
 </objective>
 
 <process>
-1. Define the subject being analyzed (project, decision, position)
-2. Identify internal strengths (advantages you control)
-3. Identify internal weaknesses (disadvantages you control)
-4. Identify external opportunities (favorable conditions you don't control)
-5. Identify external threats (unfavorable conditions you don't control)
-6. Develop strategies that turn strengths toward opportunities while weaknesses and threats are contained
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. Define the subject being analyzed (project, decision, position)
+3. Identify internal strengths (advantages you control)
+4. Identify internal weaknesses (disadvantages you control)
+5. Identify external opportunities (favorable conditions you don't control)
+6. Identify external threats (unfavorable conditions you don't control)
+7. Develop strategies that turn strengths toward opportunities while weaknesses and threats are contained
 </process>
 
 <output_format>
 <grammar_map>
 Render the `swot` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### ⚖️ Heading` carrying this command's sigil ⚖️, with a blank line before and after it (LAW.CORE.6).
+- `args`: **⚖️ Args**, the launch walk: count, the flags, the positional words
 - `subject`: **⚖️ Subject**
 - `strengths`: **⚖️ Strengths (Internal +)**, `item` locus internal sign plus
 - `weaknesses`: **⚖️ Weaknesses (Internal -)**, `item` locus internal sign minus
@@ -61,6 +65,10 @@ Render the `swot` root declared in the DOCTYPE as the markdown below. One declar
 - `threats`: **⚖️ Threats (External -)**
 - `moves`: **⚖️ Strategic Moves**, exactly four `move` elements: SO, WO, ST, WT
 </grammar_map>
+
+### ⚖️ Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### ⚖️ Subject
 

@@ -11,6 +11,8 @@ description: "Expert guidance for creating, writing, building, and refining Clau
 <!DOCTYPE skill_creation [
   <!ENTITY % cc-core SYSTEM "../../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-ask SYSTEM "../../../dtd/cc-ask.dtd">
+  %cc-ask;
   <!ELEMENT skill_creation (intake, skill_file, supporting_file*, verification)>
   <!ELEMENT intake (#PCDATA)>
   <!ELEMENT skill_file (#PCDATA)>
@@ -84,6 +86,10 @@ Keep markdown formatting within content (bold, lists, code blocks).
 ### 5. Progressive Disclosure
 
 SKILL.md under 500 lines. Split detailed content into reference files. Load only what's needed for the current workflow.
+
+### 6. The -dtd Layer (House Rule)
+
+The five sections above are the ported generic discipline and stay as written. A skill whose name ends in -dtd adds the house layer on top: a DOCTYPE with its own root element and at least one LAW entity (LAW.SKL.1), a trust boundary with the four channels, sigil headings on every rendered section, the ask gate via cc-ask where the skill asks, and a record where the skill writes. Generic guidance never overrides a LAW.* entity; where they conflict, the DOCTYPE binds.
 
 </essential_principles>
 
@@ -235,6 +241,7 @@ A well-structured skill:
 - Keeps SKILL.md under 500 lines
 - Asks minimal clarifying questions only when truly needed
 - Has been tested with real usage
+- Carries the -dtd layer (DOCTYPE, trust boundary, laws) when its name ends in -dtd
 
 </success_criteria>
 

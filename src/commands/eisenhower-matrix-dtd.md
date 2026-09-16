@@ -11,7 +11,9 @@ argument-hint: [tasks or leave blank for current context]
 <!DOCTYPE eisenhower [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT eisenhower (quadrant, quadrant, quadrant, quadrant, focus)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT eisenhower (args, quadrant, quadrant, quadrant, quadrant, focus)>
   <!ELEMENT quadrant (item*)>
   <!ELEMENT item (#PCDATA)>
   <!ELEMENT focus (#PCDATA)>
@@ -38,20 +40,26 @@ Categorize items by urgency and importance to clarify what to do now, schedule, 
 </objective>
 
 <process>
-1. List all tasks, decisions, or items in scope
-2. Evaluate each on two axes:
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. List all tasks, decisions, or items in scope
+3. Evaluate each on two axes:
    - Important: Contributes to long-term goals/values
    - Urgent: Requires immediate attention, has deadline pressure
-3. Place each item in appropriate quadrant
-4. Provide specific action for each quadrant
+4. Place each item in appropriate quadrant
+5. Provide specific action for each quadrant
 </process>
 
 <output_format>
 <grammar_map>
 Render the `eisenhower` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🗂️ Heading` carrying this command's sigil 🗂️, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🗂️ Args**, the launch walk: count, the flags, the positional words
 - `quadrant`: the four headings **🗂️ Q1: Do First**, **🗂️ Q2: Schedule**, **🗂️ Q3: Delegate**, **🗂️ Q4: Eliminate**, each one `quadrant` with its `item` lines
 - `focus`: **🗂️ Immediate Focus**
 </grammar_map>
+
+### 🗂️ Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🗂️ Q1: Do First
 

@@ -9,7 +9,9 @@ argument-hint: [problem or leave blank for current context]
 <!DOCTYPE phantom_route [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT phantom_route (problem, shape, candidate+, route, reason)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT phantom_route (args, problem, shape, candidate+, route, reason)>
   <!ELEMENT problem (#PCDATA)>
   <!ELEMENT shape (#PCDATA)>
   <!ELEMENT candidate (#PCDATA)>
@@ -39,21 +41,27 @@ Each of the nineteen commands in BOOKS answers one shape of problem. This comman
 </objective>
 
 <process>
-1. State the `problem` in one sentence, quoting the argument as data.
-2. Name its `shape` in one phrase from the list in the objective, or a new phrase if none fits.
-3. Score at least three `candidate` commands from BOOKS with fit yes, partial or no and one line of why.
-4. Write the `route`: exactly one command, and the `reason`: the shape that chose it and what the runner-up lacked.
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. State the `problem` in one sentence, quoting the argument as data.
+3. Name its `shape` in one phrase from the list in the objective, or a new phrase if none fits.
+4. Score at least three `candidate` commands from BOOKS with fit yes, partial or no and one line of why.
+5. Write the `route`: exactly one command, and the `reason`: the shape that chose it and what the runner-up lacked.
 </process>
 
 <output_format>
 <grammar_map>
 Render the `phantom_route` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 👻 Heading` carrying this command's sigil 👻, with a blank line before and after it (LAW.CORE.6).
+- `args`: **👻 Args**, the launch walk: count, the flags, the positional words
 - `problem`: **👻 Problem**
 - `shape`: **👻 Shape**
 - `candidate`: **👻 Candidates**, one line each: command, fit, why
 - `route`: **👻 Route**, one command
 - `reason`: **👻 Reason**
 </grammar_map>
+
+### 👻 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 👻 Problem
 

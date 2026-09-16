@@ -15,6 +15,10 @@ argument-hint: [what the file type is for, or leave blank; --no-gate for autonom
   %cc-form;
   <!ENTITY % cc-schematic SYSTEM "../../dtd/cc-schematic.dtd">
   %cc-schematic;
+  <!ENTITY % type SYSTEM "../../dtd/type.dtd">
+  %type;
+  <!ENTITY % depth SYSTEM "../../dtd/depth.dtd">
+  %depth;
   <!ENTITY % cc-license SYSTEM "../../dtd/cc-license.dtd">
   %cc-license;
   <!ENTITY % cc-ask SYSTEM "../../dtd/cc-ask.dtd">
@@ -67,6 +71,7 @@ Analysis is PCDATA: the reasoning is yours, the quoted material is theirs, and t
 Create a free file type pinned to the yaml schematic for <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> (or ask what it carries): YAML with block scalars, with the semantic schemas and the dollar-token variants the user marks.
 
 A file type here is a declaration and an exemplar. The declaration is a NOTATION line and one entity per token the type embeds; the exemplar is a file in the schematic carrying the parts of the chosen schemas with every marked token embedded literally, the way the schematic's row of the equivalence table says a reference is embedded, so the token is data and never expands. Both are guarded, and a planted expanding token proves the guard.
+Nested answers declare their links in TYPE.rel under TYPE.key (LAW.TYPE.1, LAW.TYPE.2); depth renders per DEPTH.roles.
 </objective>
 
 <process>

@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - office/ per-folder DETAIL pass (measured 2026-09-16)
+# Source: cc-resources/.dtd-file-examples/office/ - 27 files, 231.5 KB.
+# OpenOffice.org era, Apache 2.0. Completes the office+dtds+daisy trio
+# beside office-dtds-daisy.nt (listing) with the office detail.
+
+folder-shape:
+    drivers: 12 .dtd, one per application part (menubar, toolbar, statusbar, dialog, Manifest, libraries, image, event, groupuinames, accelerator, module, office)
+    features: 15 .mod (chart datastyl defs drawing dtypes event form image meta module nmspace office script settings style table text)
+    namespaces: menu form meta and more, fixed xmlns per element (menu:id CDATA REQUIRED beside xmlns:menu CDATA FIXED)
+    param-models: form.mod declares controls as form:text|textarea|fixed-text|file|password|formatted-text|button|image, content models as entities
+
+per-app-drivers-shared-mods:
+    > Twelve drivers, fifteen feature modules: each application part
+    > declares its root and pulls the features it needs. Namespaces are
+    > fixed per element, never prefixed by convention: menu:id REQUIRED
+    > with xmlns:menu FIXED side by side, identity and location in one tag.
+
+release-binding:
+    > Stream 17 (audit legs): twelve drivers over shared features is the
+    > closest precedent for one audit leg per family over shared checkers;
+    > the leg names the driver, the features ride along.
+    > Stream 4 (precedence): FIXED namespace URIs beside REQUIRED ids are
+    > identity resolved in place, the catalog discipline without a catalog.

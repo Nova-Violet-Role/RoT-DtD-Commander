@@ -135,6 +135,17 @@ secs="${6:-900}"
 # A focus line from the operator, appended to the prompt as data: the folders
 # no earlier pass reached, or whatever the next pass must not skip.
 focus="${7:-}"
+# The three-way split: companion-audit-{sonnet,opus,fable}.sh fix
+# COMPANION_SCOPE and exec this body. The scope is validated against the
+# DTD before anything launches (LAW.COMPANION.9) and rides the prompt as
+# focus data; unset, the body behaves exactly as before, so every planted
+# control that calls it directly reads no difference.
+scope="${COMPANION_SCOPE:-}"
+if [ -n "$scope" ]; then
+  grep -F -q "COMPANION.scope.$scope \"" "$here/checker/companion-audit.dtd" || { echo "companion: scope '$scope' not declared in checker/companion-audit.dtd (LAW.COMPANION.9)"; exit 2; }
+  if [ -n "$focus" ]; then focus="scope=$scope ($here/checker/companion-audit.dtd COMPANION.scope.$scope); $focus";
+  else focus="scope=$scope ($here/checker/companion-audit.dtd COMPANION.scope.$scope)"; fi
+fi
 mkdir -p "$out"
 out="$(cd "$out" && pwd)"
 # The nested session runs in a scratch directory outside the tree: its hooks

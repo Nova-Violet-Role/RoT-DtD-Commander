@@ -11,7 +11,9 @@ argument-hint: [problem or leave blank for current context]
 <!DOCTYPE five_whys [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
-  <!ELEMENT five_whys (problem, why, why, why, why?, why?, root_cause, intervention)>
+  <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
+  %cc-args;
+  <!ELEMENT five_whys (args, problem, why, why, why, why?, why?, root_cause, intervention)>
   <!ELEMENT problem (#PCDATA)>
   <!ELEMENT why (#PCDATA)>
   <!ELEMENT root_cause (#PCDATA)>
@@ -38,22 +40,28 @@ Keep asking "why" until you hit the root cause, not just symptoms.
 </objective>
 
 <process>
-1. State the problem clearly
-2. Ask "Why does this happen?" - Answer 1
-3. Ask "Why?" about Answer 1 - Answer 2
-4. Ask "Why?" about Answer 2 - Answer 3
-5. Continue until you hit a root cause (usually 5 iterations, sometimes fewer)
-6. Identify actionable intervention at the root
+1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2) and render the walk under `args`.
+2. State the problem clearly
+3. Ask "Why does this happen?" - Answer 1
+4. Ask "Why?" about Answer 1 - Answer 2
+5. Ask "Why?" about Answer 2 - Answer 3
+6. Continue until you hit a root cause (usually 5 iterations, sometimes fewer)
+7. Identify actionable intervention at the root
 </process>
 
 <output_format>
 <grammar_map>
 Render the `five_whys` root declared in the DOCTYPE as the markdown below. One declared element per heading, in declared order; a required element with nothing to say still appears, with one line saying so. Every heading is a markdown heading `### 🔁 Heading` carrying this command's sigil 🔁, with a blank line before and after it (LAW.CORE.6).
+- `args`: **🔁 Args**, the launch walk: count, the flags, the positional words
 - `problem`: **🔁 Problem**
 - `why`: **🔁 Why 1** through **🔁 Why 5**, one `why` each with n set; three minimum, five maximum
 - `root_cause`: **🔁 Root Cause**
 - `intervention`: **🔁 Intervention**
 </grammar_map>
+
+### 🔁 Args
+
+count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 
 ### 🔁 Problem
 
