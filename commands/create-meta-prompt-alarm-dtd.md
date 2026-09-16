@@ -793,6 +793,28 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
 <!ENTITY LAW.SCHEMA.8 "A part that occurs one and is missing is a failed answer; a part that occurs optional may be absent; a part that occurs many carries at least one occurrence, each rendered by the many rule.">
 <!ENTITY LAW.SCHEMA.9 "The skeleton of a cell is what node lib/schematic.mjs render prints for the schema and the form; its controls render every cell, run the cc-form guards of the form on the rendering, read the parts back in order, hold SEMANTIC.forms to the kinds cc-form declares, and hold references/semantic-schemas.md to a fresh render; a cell the code cannot render, guard or read back is a failed contract.">
 <!ENTITY LAW.SCHEMA.10 "A launcher that hands a prompt to a creator asks the schematic through ASK.SCHEMATIC.1 and ASK.SCHEMATIC.2, the schemas through ASK.SCHEMA.1 and ASK.SCHEMA.2 and the forms through ASK.FORM.1 and ASK.FORM.2 before the hand-off, names the creator as SCHEMA.creator.prompt or SCHEMA.creator.meta followed by a hyphen, the schematic and -dtd, and writes every choice into the hand-off as a known slot, so the creator never asks it again (LAW.ASK.1).">
+
+<!-- ===== THE CREATOR LAWS (stream 9 abolition) ===== -->
+<!-- LAW.META.1-8 governed the eight meta-prompt creators from inside
+     each file; they live here once now. .1/.2/.4/.6 name no schematic:
+     every creator fixes its own in its DOCTYPE and the generic text
+     reads it there. .3/.5/.7/.8 moved verbatim. Same for PROMPT. -->
+<!ENTITY LAW.META.1 "The schematic of this command is fixed in its DOCTYPE; the file it writes is that schematic's shape, and every syntax in it comes from a SCHEMA.* entity of the fixed schematic (LAW.SCHEMA.1).">
+<!ENTITY LAW.META.2 "The sections are those of SCHEMA.meta.sections, rendered in that order; the argument words are embedded through that schematic's reference and literal entities in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).">
+<!ENTITY LAW.META.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.">
+<!ENTITY LAW.META.4 "The file takes the extension the fixed schematic declares, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).">
+<!ENTITY LAW.META.5 "The proof reads the file back, runs the guards, runs node lib/schematic.mjs check for every schema chosen, one line per schema with its parts read back by form in order, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a FAIL line or a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
+<!ENTITY LAW.META.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by its cell for the fixed schematic, the SEMANTIC entity named by the schema and then the schematic, whose skeleton node lib/schematic.mjs render prints; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8, LAW.SCHEMA.9).">
+<!ENTITY LAW.META.7 "The forms a written meta-prompt may take for its own answers are those chosen by ASK.FORM.1 and ASK.FORM.2, asked apart from the schemas and from this command's schematic, rendered as a forms element with one form per kind chosen, its variant named and expansion no, the default nt when none was chosen; a kind not chosen is not offered to the written meta-prompt (LAW.FORM.2, LAW.FORM.4).">
+<!ENTITY LAW.META.8 "A written meta-prompt carries its checks as numbered laws, one per promise it makes about the prompts it writes, and every prompt it writes inherits them as success criteria.">
+<!ENTITY LAW.PROMPT.1 "The schematic of this command is fixed in its DOCTYPE; the file it writes is that schematic's shape, and every syntax in it comes from a SCHEMA.* entity of the fixed schematic (LAW.SCHEMA.1).">
+<!ENTITY LAW.PROMPT.2 "The sections are those of SCHEMA.prompt.sections, rendered in that order; the argument words are embedded through that schematic's reference and literal entities in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).">
+<!ENTITY LAW.PROMPT.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.">
+<!ENTITY LAW.PROMPT.4 "The file takes the extension the fixed schematic declares, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).">
+<!ENTITY LAW.PROMPT.5 "The proof reads the file back, runs the guards, runs node lib/schematic.mjs check for every schema chosen, one line per schema with its parts read back by form in order, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a FAIL line or a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
+<!ENTITY LAW.PROMPT.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by its cell for the fixed schematic, the SEMANTIC entity named by the schema and then the schematic, whose skeleton node lib/schematic.mjs render prints; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8, LAW.SCHEMA.9).">
+<!ENTITY LAW.PROMPT.7 "The forms a written prompt may take for its own answers are those chosen by ASK.FORM.1 and ASK.FORM.2, asked apart from the schemas and from this command's schematic, rendered as a forms element with one form per kind chosen, its variant named and expansion no, the default nt when none was chosen; a kind not chosen is not offered to the written prompt (LAW.FORM.2, LAW.FORM.4).">
+<!ENTITY LAW.PROMPT.8 "A written prompt keeps its own voice under three hundred words unless the argument says otherwise; the sections, the schema parts and the forms declared do not count.">
 <!-- end subset cc-schematic -->
 
   
@@ -1106,14 +1128,7 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
   <!ATTLIST embedding reference CDATA #REQUIRED literal CDATA #REQUIRED class (pcdata|cdata|ndata|section) #REQUIRED>
   <!ATTLIST file path CDATA #REQUIRED bytes CDATA #REQUIRED>
   <!ATTLIST proof tripped (yes|no) #REQUIRED>
-  <!ENTITY LAW.META.1 "The schematic of this command is alarm, fixed in its DOCTYPE; the file it writes is the alarm shape, Markdown with the house callout vocabulary and every syntax in it comes from a SCHEMA.alarm.* entity (LAW.SCHEMA.1).">
-  <!ENTITY LAW.META.2 "The sections are those of SCHEMA.meta.sections, rendered in that order; the argument words are embedded through SCHEMA.alarm.reference and SCHEMA.alarm.literal in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).">
-  <!ENTITY LAW.META.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.">
-  <!ENTITY LAW.META.4 "The file takes the extension SCHEMA.ext.alarm, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).">
-  <!ENTITY LAW.META.5 "The proof reads the file back, runs the guards, runs node lib/schematic.mjs check for every schema chosen, one line per schema with its parts read back by form in order, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a FAIL line or a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
-  <!ENTITY LAW.META.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by its cell for alarm, the SEMANTIC entity named by the schema and then alarm, whose skeleton node lib/schematic.mjs render prints; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8, LAW.SCHEMA.9).">
-  <!ENTITY LAW.META.7 "The forms a written meta-prompt may take for its own answers are those chosen by ASK.FORM.1 and ASK.FORM.2, asked apart from the schemas and from this command's schematic, rendered as a forms element with one form per kind chosen, its variant named and expansion no, the default nt when none was chosen; a kind not chosen is not offered to the written meta-prompt (LAW.FORM.2, LAW.FORM.4).">
-  <!ENTITY LAW.META.8 "A written meta-prompt carries its checks as numbered laws, one per promise it makes about the prompts it writes, and every prompt it writes inherits them as success criteria.">
+
   <!ENTITY ASK.META.1 "Name|What is the meta-prompt called?|A kebab-case name from the argument|The name of the prompts it will write, with meta in front|A name typed under Other|Undecided, ask again after the target">
   <!ENTITY ASK.META.2 "Target|What prompts does it write?|Prompts of one declared schematic, this one|Prompts of any schematic, the schematic asked first|Prompts for one task family named under Other|Undecided">
   <!ENTITY ASK.META.3 "Questions|How many questions does a written prompt ask its user?|Up to twelve in three rounds, the cc-ask shape|Four, one round|None, it takes its arguments and runs|Typed under Other">
@@ -1217,6 +1232,6 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
 - Every schema chosen carries its parts in order as its cell for this schematic renders them, and no required part is missing
 - The forms were asked apart from the schemas, and the guards of every kind chosen held on the file
 - Every guard held, every schema chosen read back in order under node lib/schematic.mjs check, the sections are in order, and the planted syntax was refused
-- Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
+- Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer Bound in particular by LAW.META.1, LAW.META.2, LAW.META.3, LAW.META.4, LAW.META.5, LAW.META.6, LAW.META.7, LAW.META.8 (declared in dtd/cc-schematic.dtd).
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

@@ -1,6 +1,6 @@
 ---
 name: dtd-contract-auditor
-description: Audits the shared DTD subsets (every dtd/cc-*.dtd, twenty of them, and the root grammars beside them) against every *-dtd command, skill and agent in a repository or an installed .claude tree, in both directions. Invoke after editing a shared subset, adding a *-dtd artifact, or before an install, to find declarations nothing uses and files that drift from the contract.
+description: Audits the shared DTD subsets (every dtd/cc-*.dtd, twenty-one of them, and the root grammars beside them) against every *-dtd command, skill and agent in a repository or an installed .claude tree, in both directions. Invoke after editing a shared subset, adding a *-dtd artifact, or before an install, to find declarations nothing uses and files that drift from the contract.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

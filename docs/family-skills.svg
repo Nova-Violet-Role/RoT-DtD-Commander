@@ -65,7 +65,7 @@
 <text x="34" y="1028" font-size="13" fill="#5b6472">grammar, a trust boundary and laws the checker enforces.</text>
 <rect x="26" y="1047" width="284" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="1064" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">create-prompt-dtd  (loads itself)</text>
-<text x="794" y="1064" font-size="12" fill="#5b6472" text-anchor="end">65 laws</text>
+<text x="794" y="1064" font-size="12" fill="#5b6472" text-anchor="end">81 laws</text>
 <text x="34" y="1091" font-size="13" fill="#5b6472">DTD-native: route a prompt to its schematic creator: ask the schematic, the</text>
 <text x="34" y="1110" font-size="13" fill="#5b6472">semantic-schema families and the forms, then hand the purpose and every choice as known</text>
 <text x="34" y="1129" font-size="13" fill="#5b6472">slots to create-prompt-&lt;schematic&gt;-dtd, which writes the file; this skill writes no</text>

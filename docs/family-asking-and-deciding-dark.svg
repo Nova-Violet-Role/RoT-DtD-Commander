@@ -43,7 +43,7 @@
 <text x="34" y="638" font-size="13" fill="#9aa3b2">become known slots</text>
 <rect x="26" y="657" width="700" height="24" rx="5" fill="#1d2230"/>
 <text x="34" y="674" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#e6e9ef">/brainstorm-meta-clear-section-dtd [topic or the prompt to carry over; --verbose prints the ideas discarded, --debug prints the file bytes]</text>
-<text x="794" y="674" font-size="12" fill="#9aa3b2" text-anchor="end">67 laws</text>
+<text x="794" y="674" font-size="12" fill="#9aa3b2" text-anchor="end">83 laws</text>
 <text x="34" y="701" font-size="13" fill="#9aa3b2">DTD-native: brainstorm a topic, choose the schematic, the semantic schemas and the forms</text>
 <text x="34" y="720" font-size="13" fill="#9aa3b2">the bigger prompt will be written in, transmigrate that prompt into a handoff file for</text>
 <text x="34" y="739" font-size="13" fill="#9aa3b2">the next context section, and print the instruction to clear and resume through the</text>

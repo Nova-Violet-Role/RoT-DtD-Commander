@@ -10,7 +10,7 @@
 <line x1="26" y1="78" x2="794" y2="78" stroke="#e2e5ec" stroke-width="1"/>
 <rect x="26" y="94" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="111" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/create-task-dtd [what the task is, or a TO-DOS.md line to import; --no-gate for autonomous defaults]</text>
-<text x="794" y="111" font-size="12" fill="#5b6472" text-anchor="end">76 laws</text>
+<text x="794" y="111" font-size="12" fill="#5b6472" text-anchor="end">92 laws</text>
 <text x="34" y="138" font-size="13" fill="#5b6472">DTD-native: create a task in the project tasks folder through twelve questions in three</text>
 <text x="34" y="157" font-size="13" fill="#5b6472">rounds never skipped (length select, variables check, steps elaborate, license mark): a</text>
 <text x="34" y="176" font-size="13" fill="#5b6472">task file in the chosen schematic with the parts of the chosen semantic schemas,</text>

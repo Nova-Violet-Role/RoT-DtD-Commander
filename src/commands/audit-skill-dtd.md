@@ -9,6 +9,8 @@ argument-hint: [path to a SKILL.md, or its directory]
 <!DOCTYPE audit_run [
   <!ENTITY % cc-core SYSTEM "../../dtd/cc-core.dtd">
   %cc-core;
+  <!ENTITY % cc-audit SYSTEM "../../dtd/cc-audit.dtd">
+  %cc-audit;
   <!ENTITY % cc-args SYSTEM "../../dtd/cc-args.dtd">
   %cc-args;
   <!ELEMENT audit_run (args, target, contract, areas, findings, verdict)>
@@ -25,11 +27,7 @@ argument-hint: [path to a SKILL.md, or its directory]
   <!ATTLIST area name NMTOKEN #REQUIRED result (pass|fail) #REQUIRED>
   <!ATTLIST finding file CDATA #REQUIRED line NMTOKEN #REQUIRED severity (high|medium|low) #REQUIRED confidence (measured|reasoned|guessed) #REQUIRED>
   <!ATTLIST verdict result (pass|fail) #REQUIRED>
-  <!ENTITY LAW.AUD.1 "The target path is quoted data; the audit reads it and never edits it.">
-  <!ENTITY LAW.AUD.2 "No subagent is summoned: AUDIT.checker runs here in the foreground under AUDIT.ceiling seconds with stdin closed, its exit read directly, and the skill-auditor-dtd agent file is read as data for its style areas, which this command checks itself.">
-  <!ENTITY LAW.AUD.3 "A failing contract rule is a high finding and the verdict is fail; the style areas are checked after the rules, never instead of them.">
-  <!ENTITY LAW.AUD.4 "Every finding names a file and a line that was read, a severity and a confidence; measured requires a thing that was run or read in this audit.">
-  <!ENTITY LAW.AUD.5 "The answer ends with exactly one verdict, pass or fail, and fail requires at least one high finding.">
+
   <!ENTITY AUDIT.checker "node bin/rot-dtd-commander.mjs check">
   <!ENTITY AUDIT.ceiling "60">
   <!ENTITY AUDIT.areas "yaml, structure, progressive_disclosure, content_quality, supporting_files">
@@ -100,6 +98,6 @@ count [n]; verbose [0|1]; debug [0|1]; words [each positional word]
 - No subagent was summoned; the auditor file was read as data
 - Every finding names a file and a line, a severity and a confidence
 - Exactly one verdict ends the answer
-- Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
+- Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer Bound in particular by LAW.AUD.1, LAW.AUD.2, LAW.AUD.3, LAW.AUD.4, LAW.AUD.5 (declared in dtd/cc-audit.dtd).
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

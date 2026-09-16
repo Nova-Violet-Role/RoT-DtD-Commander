@@ -28,14 +28,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
   <!ATTLIST embedding reference CDATA #REQUIRED literal CDATA #REQUIRED class (pcdata|cdata|ndata|section) #REQUIRED>
   <!ATTLIST file path CDATA #REQUIRED bytes CDATA #REQUIRED>
   <!ATTLIST proof tripped (yes|no) #REQUIRED>
-  <!ENTITY LAW.PROMPT.1 "The schematic of this command is polyglot, fixed in its DOCTYPE; the file it writes is a polyglot of more than one parser and every syntax in it comes from a SCHEMA.polyglot.* entity (LAW.SCHEMA.1).">
-  <!ENTITY LAW.PROMPT.2 "The sections are those of SCHEMA.prompt.sections, rendered in that order; the argument words are embedded through SCHEMA.polyglot.reference and SCHEMA.polyglot.literal in the class the intake chose (LAW.SCHEMA.2, LAW.SCHEMA.3).">
-  <!ENTITY LAW.PROMPT.3 "Nothing is written before the gate chose start; every question not asked takes its first option and is listed as an assumption_made.">
-  <!ENTITY LAW.PROMPT.4 "The file takes the extension SCHEMA.ext.polyglot, carries the chosen SPDX identifier where its form allows a comment, and passes every cc-form guard of its kind before it is reported (LAW.SCHEMA.4).">
-  <!ENTITY LAW.PROMPT.5 "The proof reads the file back, runs the guards, runs node lib/schematic.mjs check for every schema chosen, one line per schema with its parts read back by form in order, checks the sections are present in order, and plants one syntax outside the table in a scratch copy to show it refused; a FAIL line or a proof that did not trip stops the command before the report (LAW.SCHEMA.5).">
-  <!ENTITY LAW.PROMPT.6 "Every semantic schema chosen by ASK.SCHEMA.1 and ASK.SCHEMA.2 is rendered as a semantic element whose parts are those of its SEMANTIC entity in order, by its cell for polyglot, the SEMANTIC entity named by the schema and then polyglot, whose skeleton node lib/schematic.mjs render prints; a required part missing is a failed answer (LAW.SCHEMA.6, LAW.SCHEMA.7, LAW.SCHEMA.8, LAW.SCHEMA.9).">
-  <!ENTITY LAW.PROMPT.7 "The forms a written prompt may take for its own answers are those chosen by ASK.FORM.1 and ASK.FORM.2, asked apart from the schemas and from this command's schematic, rendered as a forms element with one form per kind chosen, its variant named and expansion no, the default nt when none was chosen; a kind not chosen is not offered to the written prompt (LAW.FORM.2, LAW.FORM.4).">
-  <!ENTITY LAW.PROMPT.8 "A written prompt keeps its own voice under three hundred words unless the argument says otherwise; the sections, the schema parts and the forms declared do not count.">
+
   <!ENTITY ASK.PROMPT.1 "Name|What is the prompt called?|A kebab-case name from the argument|The name of the task it performs|A name typed under Other|Undecided, ask again after the objective">
   <!ENTITY ASK.PROMPT.2 "Objective|What does the prompt make its reader do?|The one task named in the argument, stated as a verb and an object|A judgement with a declared verdict vocabulary|A transformation of an input into an output form|Typed under Other">
   <!ENTITY ASK.PROMPT.3 "Reader|Who reads it?|A Claude Code session, as a slash command|A model called through an API|A person, as a checklist|Typed under Other">
@@ -139,6 +132,6 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
 - Every schema chosen carries its parts in order as its cell for this schematic renders them, and no required part is missing
 - The forms were asked apart from the schemas, and the guards of every kind chosen held on the file
 - Every guard held, every schema chosen read back in order under node lib/schematic.mjs check, the sections are in order, and the planted syntax was refused
-- Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
+- Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer Bound in particular by LAW.PROMPT.1, LAW.PROMPT.2, LAW.PROMPT.3, LAW.PROMPT.4, LAW.PROMPT.5, LAW.PROMPT.6, LAW.PROMPT.7, LAW.PROMPT.8 (declared in dtd/cc-schematic.dtd).
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>
