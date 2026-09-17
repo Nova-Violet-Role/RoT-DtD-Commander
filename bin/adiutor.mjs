@@ -555,8 +555,18 @@ export function doctor({ target = claudeDir(), io = console } = {}) {
     row('env', d.ok, d.ok ? `${Object.keys(env).length} keys of dtd/claude-env.json present with the shipped values` : `drift: missing ${d.missing.join(', ') || 'none'}; differing ${d.differ.join(', ') || 'none'}; rdc env --yes merges`);
   } catch (e) { row('env', false, `dtd/claude-env.json unreadable: ${e.message}`); }
   const armed = parsed ? armedIn(settings) : [];
-  row('slop gate', armed.length === EVENTS.length, armed.length === EVENTS.length ? 'armed with the hooks: the answer at Stop, a Write, an Edit, a NotebookEdit, a commit message and a request body, strict (LAW.SLOP.7, LAW.SLOP.8)' : 'not armed (rdc arm); the -dtd Stop gate and the sweep stand');
-  row('hooks', armed.length === EVENTS.length, `${armed.length}/${EVENTS.length} Adiutor events armed${armed.length ? ': ' + armed.join(', ') : ''}`);
+  // An opencode target takes no settings hooks (rdc install refuses --arm
+  // there): the bridge plugin observes tool calls instead, and judgement
+  // stays manual. The rows below read the bridge, not the hooks.
+  const isOC = existsSync(join(target, 'opencode.jsonc')) || existsSync(join(target, 'opencode.json'));
+  const bridge = join(target, 'plugin', 'rot-dtd-adiutor.js');
+  if (isOC) {
+    row('slop gate', false, 'manual in opencode (no Stop hook exists there); the -dtd Stop gate and the sweep stand');
+    row('hooks', existsSync(bridge), existsSync(bridge) ? 'bridge plugin observes tool calls (Pre/PostToolUse, 5/10 s); register "./plugin/rot-dtd-adiutor.js" and restart opencode' : 'bridge plugin missing: rdc install --opencode writes plugin/rot-dtd-adiutor.js');
+  } else {
+    row('slop gate', armed.length === EVENTS.length, armed.length === EVENTS.length ? 'armed with the hooks: the answer at Stop, a Write, an Edit, a NotebookEdit, a commit message and a request body, strict (LAW.SLOP.7, LAW.SLOP.8)' : 'not armed (rdc arm); the -dtd Stop gate and the sweep stand');
+    row('hooks', armed.length === EVENTS.length, `${armed.length}/${EVENTS.length} Adiutor events armed${armed.length ? ': ' + armed.join(', ') : ''}`);
+  }
   const lp = ledgerPath();
   if (existsSync(lp)) {
     const { rows: runs, bad } = parseLedger(readFileSync(lp, 'utf8'));

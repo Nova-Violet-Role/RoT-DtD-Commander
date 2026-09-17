@@ -7,6 +7,18 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 10.1.0 (2026-09-17)
+
+### Second-Target: the installer learns opencode, and upgrades stop keeping the dead
+
+What is new, measured: opencode is a first-class install target. The guided wizard offers it beside user-wide, project and custom, and a target carrying `opencode.jsonc` is detected with or without the flag. Command mains gain the `$ARGUMENTS` line in the position Claude appends to, agents translate to `mode: subagent` with session defaults, and the bridge plugin observes tool calls through `adiutor observe` under the Pre/PostToolUse timeouts without ever touching output. A full install prunes owned files its plan no longer writes, so a deleted command stops being loadable after an upgrade. `rdc install --arm` refuses an opencode target, and doctor reads the bridge there instead of the hooks.
+
+What got better, measured: the wiring audit proves every requirement of all 173 artifacts resolves to a shipped file on both targets with zero unwired; shared leaf elements live once in `cc-core` with the family attributes staying scoped; the subsets sweep fails any resolved tree that reads one element under two models. `node bin/rot-dtd-commander.mjs check`: checked 173, failed 0; `node checker/contract-audit.mjs`: 2127 declarations, 0 unused, 0 law gaps; `node checker/gate-sync.mjs`: 86 commands in the gate chain, 0 missing from gate.yml.
+
+- 145 commands, 23 skills, 5 agents; checked 173; 2127 declarations; 86 gate-chain commands
+- `node checker/release-notes.mjs --versions`: one version everywhere, 10.1.0, recognised (class mid) from the verbs kept in run 12
+- `node bin/adiutor.mjs controls`: 31 run, 0 failing; `node lib/triple.mjs controls`: 6 run, 0 failing; `node lib/geometry.mjs controls`: 57 run, 0 failing
+
 ## 10.0.0 (2026-09-16)
 
 ### Interim-Commander: the asking ladder doubles twice, and the tree proves its own generation

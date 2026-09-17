@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 11
-- verb: 15
+- run: 12
+- verb: 12
 - offset: 0
 - page: 4
-- from: 9.1.0
-- release: major 10.0.0
+- from: 10.0.0
+- release: mid 10.1.0
 - walked: contract, schematic, args, report, guard
 
 | id | class | layer | verdict | verb | refused_at | why | run |
@@ -106,3 +106,5 @@
 | d1c0de05 | gap | contract | done | 8 |  | the gate fifth choice rode in Other because a question carries four options, and the operator watched it vanish; the gate is one ask of two questions, GATE.cache.header, GATE.cache.question and GATE.continue declared and LAW.CACHE.1 saying how the choice is rendered | 10 |
 | e1b0de01 | gap | contract | done | 15 |  | the triple per artifact plus the abolition of per-command laws plus the corpus convergence plan is verb 15 verbatim: lib/triple.mjs emits md, nt and yaml from one source with six controls, and the full tree proves 173 artifacts and 346 emissions with zero findings | 11 |
 | e1b0de02 | gap | contract | done | 15 |  | LAW.AUD.1-5, LAW.META.1-8 and LAW.PROMPT.1-8 were declared identically in nineteen command files; they live once in dtd/cc-audit.dtd and dtd/cc-schematic.dtd now, every command binding its laws by name, and the contract reads zero unused with zero gaps | 11 |
+| f2c0de01 | gap | install | done | 12 |  | an upgrade kept every owned file the new plan no longer wrote, so a deleted command stayed loadable; a full install prunes owned files outside its plan now, and the guided wizard offers opencode beside user-wide, project and custom | 12 |
+| f2c0de02 | gap | install | done | 9 |  | opencode is a first-class install target: command mains gain the $ARGUMENTS line Claude appends, agents translate to mode subagent with session defaults, the bridge plugin observes tool calls, and doctor reads the bridge; the full wiring audit proves zero unwired requirements across all 173 artifacts on both targets | 12 |

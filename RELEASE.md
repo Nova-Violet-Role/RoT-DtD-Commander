@@ -18,6 +18,15 @@
 
 ---
 
+## v10.1.0 — Second-Target
+
+The commander installs into opencode as a first-class target: the wizard offers it, the flag adapts commands, agents and the observation bridge, upgrades prune what left the tree, and doctor reads the bridge where no hooks can arm. Shared leaf elements live once in `cc-core`, and the sweep guards every resolved tree against one element under two models. The version below is recognised, not typed.
+
+- **A second target that works** &mdash; `$ARGUMENTS` parity, translated agents, a never-throwing bridge, and a wiring audit with zero unwired requirements across all 173 artifacts on both targets.
+- **Upgrades that forget** &mdash; owned files outside the new plan are pruned on full installs, so removed commands stop loading.
+- **Convergence with a named ceiling** &mdash; `dtd/` declares, `checker/` asserts, and the stop line is written in the release instead of met at 11.0.0.
+- 145 commands, 23 skills, 5 agents; 2127 declarations; recognised 10.1.0 (class mid) from the verbs kept in run 12.
+
 ## v10.0.0 — Interim-Commander
 
 The asking ladder doubles twice and the tree proves its own generation. Two new ask commands (katabasis 192/48, maelstrom 384/96) with hadal and hadopelagia risen to match; the Companion command with its three-way audit split; LIVE and WRAP tokens with a display variant and the LiveMap shortlist; the TEI cache, GLOSSARY and bus subsets; the triple emitter with a full-tree proof of 173 artifacts and 346 emissions; five new surveyor instruments; and nineteen files' shared laws abolished into two subsets. The gate is green end to end with 86 commands in its chain, and the version below is recognised, not typed.

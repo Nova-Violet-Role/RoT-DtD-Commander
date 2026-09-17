@@ -109,6 +109,7 @@ function parseArgs(argv) {
     else if (a === '--dry-run') o.dryRun = true;
     else if (a === '--check') o.check = true;
     else if (a === '--arm') o.arm = true;
+    else if (a === '--opencode') o.opencode = true;
     else if (a === '--no-arm') o.arm = false;
     else if (a === '--no-env') o.env = false;
     else if (a === '--secs') o.secs = argv[++i];
@@ -288,6 +289,13 @@ function capabilities(target) {
 
 async function cmdInstall(o) {
   let target = targetDir(o);
+  // An opencode target speaks opencode with or without the flag: the config
+  // file at its root is the marker, never the path string.
+  if (!o.opencode && (existsSync(join(target, 'opencode.jsonc')) || existsSync(join(target, 'opencode.json')))) {
+    o.opencode = true;
+    console.log('  opencode target detected (opencode.jsonc at its root): command $ARGUMENTS line, agent translation, adiutor bridge');
+  }
+  if (o.opencode && o.arm) die('opencode targets take no settings hooks: the adiutor bridge plugin observes instead; judgement stays manual (rdc doctor, rdc controls)');
   const inv = inventory();
   if (inv.commands.length + inv.skills.length + inv.agents.length === 0) die('no resolved artifacts under commands/, skills/, agents/; run rdc build first', 1);
   let kinds = { commands: !!o.commands, skills: !!o.skills, agents: !!o.agents };
@@ -319,9 +327,11 @@ async function cmdInstall(o) {
     console.log(`  1) user-wide  ${join(os.homedir(), '.claude')}`);
     console.log(`  2) project    ${presolve(process.cwd(), '.claude')}`);
     console.log('  3) custom path');
+    console.log(`  4) opencode   ${join(os.homedir(), '.config', 'opencode')} (command $ARGUMENTS line, agent translation, adiutor bridge)`);
     const t = (await ask('target [1]: ')).trim() || '1';
     if (t === '2') target = presolve(process.cwd(), '.claude');
     else if (t === '3') target = presolve((await ask('path: ')).trim());
+    else if (t === '4') { target = join(os.homedir(), '.config', 'opencode'); o.opencode = true; }
     const k = (await ask('kinds: commands,skills,agents [all]: ')).trim();
     if (k) kinds = { commands: /commands/.test(k), skills: /skills/.test(k), agents: /agents/.test(k) };
     console.log(`\nwill install into ${target}:`);
@@ -353,7 +363,7 @@ async function cmdInstall(o) {
   let failed = 0;
   let skipped = 0;
 
-  const writeOne = (src, dest, label, isMain) => {
+  const writeOne = (src, dest, label, isMain, kind) => {
     if (existsSync(dest) && !owned.has(dest) && !o.force) {
       console.log(`  SKIP ${label} (exists and was not installed by ${NAME}; use --force)`);
       skipped++;
@@ -369,6 +379,22 @@ async function cmdInstall(o) {
         return;
       }
       outText = p.resolved.text;
+      // --opencode: the installed tree speaks opencode. Claude appends
+      // slash-command arguments after the prompt; opencode drops them unless
+      // the template carries $ARGUMENTS, so command mains gain one trailing
+      // line in exactly the position Claude appends to. Agent frontmatter is
+      // translated: mode subagent (their auditor role), model and tools
+      // dropped (opencode would route unknown keys into options and fail a
+      // bare model name; both inherit the session defaults instead).
+      if (o.opencode && kind === 'command') outText = outText.replace(/\n?$/, '\n') + '\n$ARGUMENTS\n';
+      if (o.opencode && kind === 'agent') {
+        const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n/.exec(outText);
+        if (m) {
+          const kept = m[1].split('\n').filter((l) => !/^(model|tools):/.test(l));
+          if (!kept.some((l) => /^mode:/.test(l))) kept.push('mode: subagent');
+          outText = '---\n' + kept.join('\n') + '\n---\n' + outText.slice(m[0].length);
+        } else console.log(`  WARN ${label}: no frontmatter, opencode agent translation skipped`);
+      }
     } else if (TEXT_EXT.has(extname(src).toLowerCase())) outText = normalize(readFileSync(src, 'utf8'));
     else outBuf = readFileSync(src);
     if (o.dryRun) {
@@ -398,7 +424,7 @@ async function cmdInstall(o) {
     for (const src of files) {
       const rel = item.kind === 'skill' ? join(item.entry, relative(join(ROOT, 'skills', item.entry), src)) : basename(src);
       const isMain = item.kind !== 'skill' || basename(src) === 'SKILL.md';
-      writeOne(src, join(destRoot, rel), `${item.kind} ${rel.split(sep).join('/')}`, isMain);
+      writeOne(src, join(destRoot, rel), `${item.kind} ${rel.split(sep).join('/')}`, isMain, item.kind);
     }
   }
 
@@ -437,6 +463,44 @@ async function cmdInstall(o) {
   // 5.0.0: no monitor plugin is written. The monitor is declared in
   // monitors/manual.json and runs only through rdc watch (300 s ceiling).
   console.log('  monitor: not started by Claude Code; run it by hand with rdc watch (ceiling 300 s)');
+  // --opencode: the Adiutor observation bridge. opencode has no Stop hook,
+  // so judgement stays manual (rdc doctor, rdc controls); what maps is
+  // observation: tool.execute.before/after spawn adiutor observe with a
+  // translated payload, mirroring the Pre/PostToolUse timeouts (5/10 s).
+  // The bridge never throws and never touches output, so a failing Adiutor
+  // cannot break a session; ROT_DTD_OPENCODE_BRIDGE=0 disables it. The file
+  // is manifest-tracked, so uninstall removes it. Register one line in
+  // opencode.jsonc ("plugin": ["./plugin/rot-dtd-adiutor.js"]) and restart.
+  if (o.opencode) {
+    const adiutor = join(target, NAME, 'bin', 'adiutor.mjs').replace(/\\/g, '/');
+    const bridge = `// Generated by rdc install --opencode: edit the installer, never this file.
+// Observation bridge: opencode tool events into adiutor observe (Pre/PostToolUse).
+// Judgement stays manual (rdc doctor, rdc controls): opencode has no Stop hook.
+// ROT_DTD_OPENCODE_BRIDGE=0 disables this file. Restart opencode after changes.
+import { execFileSync } from 'node:child_process';
+const ADIUTOR = ${JSON.stringify(adiutor)};
+const CFG = ${JSON.stringify(target.replace(/\\/g, '/'))};
+function observe(event, input) {
+  if (process.env.ROT_DTD_OPENCODE_BRIDGE === '0') return;
+  const payload = JSON.stringify({
+    hook_event_name: event,
+    tool_name: (input && (input.tool || input.toolName)) || 'unknown',
+    tool_input: (input && (input.args || input.params)) || {},
+    opencode: true,
+  });
+  try {
+    execFileSync('node', [ADIUTOR, 'observe', event],
+      { input: payload, timeout: event === 'PreToolUse' ? 5000 : 10000, stdio: ['pipe', 'ignore', 'ignore'] });
+  } catch { /* observation never breaks a session */ }
+}
+export default async () => ({
+  'tool.execute.before': async (input) => { observe('PreToolUse', input); },
+  'tool.execute.after': async (input) => { observe('PostToolUse', input); },
+});
+`;
+    writeGenerated(join(target, 'plugin', 'rot-dtd-adiutor.js'), bridge, 'opencode bridge plugin/rot-dtd-adiutor.js');
+    console.log('  opencode: add "./plugin/rot-dtd-adiutor.js" to the "plugin" array in opencode.jsonc, then quit and restart opencode');
+  }
 
   if (o.dryRun) {
     console.log(`\nplanned ${plan.length} artifact(s); skipped ${skipped}; failed ${failed}`);
@@ -820,6 +884,6 @@ switch (cmd) {
     break;
   }
   default:
-    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | prune-plugin | list | check | build | resolve | forge | env | arm | disarm | doctor | controls | ledger | suggest | watch\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --arm (hooks are not armed unless asked) | --no-env (the env block of dtd/claude-env.json is merged unless asked not to)\n  env       [--yes | --check]   merge the six keys of dtd/claude-env.json into settings.json under env, or compare; uninstall removes what install added\n  prune-plugin  remove what the plugin CLI leaves under plugins/cache and plugins/marketplaces after uninstall; refuses while still registered\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C16\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose; both end at a 300 s ceiling\n  watch     [--once] [--poll <ms>] [--secs <n>]   the Commander-Adiutor monitor by hand, its only way to run: one line per -dtd answer that failed its grammar; stops at 300 s unless --secs says otherwise\n`);
+    console.log(`RoT DtD Commander ${VERSION} (rdc)\n\n  install | uninstall | prune-plugin | list | check | build | resolve | forge | env | arm | disarm | doctor | controls | ledger | suggest | watch\n\n  install   guided by default; --yes for non-interactive; default target ${join(os.homedir(), '.claude')}\n            --project (./.claude) | --target <dir> | --commands --skills --agents | --only a,b | --force | --dry-run | --arm (hooks are not armed unless asked) | --opencode (command $ARGUMENTS line, agent frontmatter translation, adiutor observation bridge) | --no-env (the env block of dtd/claude-env.json is merged unless asked not to)\n  env       [--yes | --check]   merge the six keys of dtd/claude-env.json into settings.json under env, or compare; uninstall removes what install added\n  prune-plugin  remove what the plugin CLI leaves under plugins/cache and plugins/marketplaces after uninstall; refuses while still registered\n  build     [--check]   resolve src/ into commands/, skills/, agents/; --check proves the committed output matches\n  check     [paths...]   check every DOCTYPE-bearing source against its own DOCTYPE, rules C1 to C16\n  doctor    the Adiutor doctor; controls trips every Adiutor guard on purpose; both end at a 300 s ceiling\n  watch     [--once] [--poll <ms>] [--secs <n>]   the Commander-Adiutor monitor by hand, its only way to run: one line per -dtd answer that failed its grammar; stops at 300 s unless --secs says otherwise\n`);
     process.exit(cmd ? 2 : 0);
 }
