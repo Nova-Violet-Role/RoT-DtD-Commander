@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 10
-- verb: 9
+- run: 11
+- verb: 15
 - offset: 0
 - page: 4
-- from: 9.0.0
-- release: minor 9.1.0
+- from: 9.1.0
+- release: major 10.0.0
 - walked: contract, schematic, args, report, guard
 
 | id | class | layer | verdict | verb | refused_at | why | run |
@@ -104,3 +104,5 @@
 | d1c0de03 | gap | generic | done | 3 |  | lib/ceiling.mjs ran a .cmd shim through a shell with every argument quoted and a prompt with a newline lost every argument after it, so the windows leg answered in plain text; the shim is read for the node script it wraps and run without a shell, a newline through an unreadable shim refused by name | 10 |
 | d1c0de04 | gap | form | done | 7 |  | a session ran under the CLI defaults for output, bash, task and file-read sizes; dtd/claude-env.json ships six keys merged on install, removed on uninstall, compared by doctor and rdc env --check, written to the runner before the chains | 10 |
 | d1c0de05 | gap | contract | done | 8 |  | the gate fifth choice rode in Other because a question carries four options, and the operator watched it vanish; the gate is one ask of two questions, GATE.cache.header, GATE.cache.question and GATE.continue declared and LAW.CACHE.1 saying how the choice is rendered | 10 |
+| e1b0de01 | gap | contract | done | 15 |  | the triple per artifact plus the abolition of per-command laws plus the corpus convergence plan is verb 15 verbatim: lib/triple.mjs emits md, nt and yaml from one source with six controls, and the full tree proves 173 artifacts and 346 emissions with zero findings | 11 |
+| e1b0de02 | gap | contract | done | 15 |  | LAW.AUD.1-5, LAW.META.1-8 and LAW.PROMPT.1-8 were declared identically in nineteen command files; they live once in dtd/cc-audit.dtd and dtd/cc-schematic.dtd now, every command binding its laws by name, and the contract reads zero unused with zero gaps | 11 |

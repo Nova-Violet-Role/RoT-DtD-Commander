@@ -7,6 +7,19 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 10.0.0 (2026-09-16)
+
+### Interim-Commander: the asking ladder doubles twice, and the tree proves its own generation
+
+What is new, measured: two ask commands, `ask-me-katabasis-dtd` (192 questions in 48 rounds) and `ask-me-maelstrom-dtd` (384 in 96), with hadal risen to 192/48 and hadopelagia to 384/96, the ladder 12/30/96/192/384 held by script across all seven; `git-gh-Companion-dtd` with its sonnet/opus/fable split and LAW.COMPANION.9; the LIVE and WRAP tokens with the display variant, the live element and LAW.ASK.19/20, and the shortlist rendered as the LiveMap live display; `dtd/tei-cache.dtd`, `dtd/GLOSSARY.dtd` and `dtd/cc-bus.dtd`; `lib/triple.mjs`, the ODD-shaped emitter with six controls and a full-tree proof of 173 artifacts and 346 emissions with zero findings, wired into the gate; five new surveyor instruments with multi-root runs, a `--verbs` scope filter and a plate-only writer; and the law abolition, LAW.AUD/META/PROMPT moved once into `dtd/cc-audit.dtd` and `dtd/cc-schematic.dtd` across nineteen files.
+
+What got better, measured: the preview command is removed while its shared DAISY entity stays; every sigil is worn by one command again after the control named three collisions; all twenty-three skills carry cc-ask and pass check and slop; the fifteen no-gate commands that read `$ARGUMENTS` declare the walk; the About is patched live to what the tree measures; the scala matrix is archived out of CI and the repo Actions permission that killed every workflow since 09-13 is repaired; `node bin/rot-dtd-commander.mjs check`: checked 173, failed 0; `node checker/contract-audit.mjs`: 2131 declarations, 0 unused, 0 law gaps; `node checker/gate-sync.mjs`: 86 commands in the gate chain, 0 missing from gate.yml; the ledger holds 246 rows with zero unverdicts.
+
+- 145 commands, 23 skills, 5 agents; checked 173; 2131 declarations; 86 gate-chain commands
+- `node checker/release-notes.mjs --versions`: one version everywhere, 10.0.0, recognised (class major) from the verbs kept in run 11
+- `node lib/triple.mjs controls`: 6 run, 0 failing; `node lib/geometry.mjs controls`: 57 run, 0 failing
+- `node checker/subsets-sweep.mjs --controls`: 5 run, 0 failing; `node checker/counts-sweep.mjs --controls`: 7 run, 0 failing
+
 ## 9.1.0 (2026-09-10)
 
 ### Matrix-Commander: every family clean on every leg

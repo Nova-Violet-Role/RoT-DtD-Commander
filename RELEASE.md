@@ -18,6 +18,15 @@
 
 ---
 
+## v10.0.0 — Interim-Commander
+
+The asking ladder doubles twice and the tree proves its own generation. Two new ask commands (katabasis 192/48, maelstrom 384/96) with hadal and hadopelagia risen to match; the Companion command with its three-way audit split; LIVE and WRAP tokens with a display variant and the LiveMap shortlist; the TEI cache, GLOSSARY and bus subsets; the triple emitter with a full-tree proof of 173 artifacts and 346 emissions; five new surveyor instruments; and nineteen files' shared laws abolished into two subsets. The gate is green end to end with 86 commands in its chain, and the version below is recognised, not typed.
+
+- **The answers survive the ladder** &mdash; intakes to 384 questions with a running live display, counter-questions that become known slots, and a shortlist that pins now and returns every gate.
+- **The tree emits itself** &mdash; `node lib/triple.mjs` reads one source and writes md, nt and yaml with six controls; the proof covers every command, skill and agent.
+- **The laws live once** &mdash; AUD/META/PROMPT in their subsets, every command binding its own by name, the contract reading zero unused.
+- 145 commands, 23 skills, 5 agents; 2131 declarations; recognised 10.0.0 (class major) from the verbs kept in run 11.
+
 ## v9.1.0 — Matrix-Commander
 
 Every family clean on every leg, measured. The first three-OS scala matrix,
