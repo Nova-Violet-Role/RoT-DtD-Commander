@@ -104,7 +104,6 @@
           verdict    (exposed|marked|refused|done|reopen) #REQUIRED
           refused_at CDATA #IMPLIED>
 <!ELEMENT why (#PCDATA)>
-<!ELEMENT evidence (#PCDATA)>
 <!ATTLIST evidence
           instrument CDATA #IMPLIED
           adds       CDATA #IMPLIED>

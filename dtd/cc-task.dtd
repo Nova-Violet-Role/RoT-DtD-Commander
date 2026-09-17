@@ -29,7 +29,6 @@
           created   CDATA #REQUIRED>
 <!ELEMENT var EMPTY>
 <!ATTLIST var name NMTOKEN #REQUIRED value CDATA #REQUIRED>
-<!ELEMENT step (#PCDATA)>
 <!ATTLIST step
           n            NMTOKEN #REQUIRED
           run          CDATA #REQUIRED

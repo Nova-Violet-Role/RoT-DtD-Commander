@@ -18,7 +18,6 @@
           name    NMTOKEN #REQUIRED
           trigger (manual|hook|cron) "manual"
           on_fail (stop|continue) "stop">
-<!ELEMENT step (#PCDATA)>
 <!ATTLIST step
           name         NMTOKEN #REQUIRED
           run          CDATA #REQUIRED

@@ -25,7 +25,8 @@ The asking ladder doubles twice and the tree proves its own generation. Two new 
 - **The answers survive the ladder** &mdash; intakes to 384 questions with a running live display, counter-questions that become known slots, and a shortlist that pins now and returns every gate.
 - **The tree emits itself** &mdash; `node lib/triple.mjs` reads one source and writes md, nt and yaml with six controls; the proof covers every command, skill and agent.
 - **The laws live once** &mdash; AUD/META/PROMPT in their subsets, every command binding its own by name, the contract reading zero unused.
-- 145 commands, 23 skills, 5 agents; 2131 declarations; recognised 10.0.0 (class major) from the verbs kept in run 11.
+- **Convergence stops at the DTD ceiling** &mdash; `dtd/` declares what can be declared and `checker/` asserts what cannot; shared leaf elements live once in `cc-core`, family models stay in disjoint trees, and the sweep fails any tree that reads one element under two models.
+- 145 commands, 23 skills, 5 agents; 2127 declarations; recognised 10.0.0 (class major) from the verbs kept in run 11.
 
 ## v9.1.0 — Matrix-Commander
 
@@ -64,7 +65,7 @@ wrong and the thirteenth matrix the operator cancelled to ship.
   final message scored alone, a phrase inside a tool result diagnosed, an
   experiment's close read for the chain's, a phrase in the answer's own
   text diagnosed; each named in the findings record and fixed by name.
-- 145 commands, 23 skills, 5 agents; 2131 declarations; recognised 9.1.0
+- 145 commands, 23 skills, 5 agents; 2127 declarations; recognised 9.1.0
   (class mid) from a top verb of 9 kept in run 10.
 
 ## v9.0.0 — Interoperable-Commander

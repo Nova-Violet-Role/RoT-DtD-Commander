@@ -62,7 +62,6 @@
           revnumber NMTOKEN #REQUIRED
           date      CDATA   #REQUIRED
           remark    CDATA   #REQUIRED>
-<!ELEMENT evidence (#PCDATA)>
 <!ATTLIST evidence kind (file|exit|line|note) #REQUIRED>
 
 <!ENTITY RECORD.dir              "artifacts">

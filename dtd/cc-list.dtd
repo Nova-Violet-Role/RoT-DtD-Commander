@@ -78,7 +78,6 @@
           layer   (repository|machine) #REQUIRED
           granted CDATA #IMPLIED>
 <!ELEMENT reason (#PCDATA)>
-<!ELEMENT evidence (#PCDATA)>
 <!ATTLIST evidence count CDATA #IMPLIED>
 
 <!ELEMENT verdicts (verdict+)>

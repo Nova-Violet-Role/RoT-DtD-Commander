@@ -35,7 +35,6 @@
           source CDATA #IMPLIED>
 <!ELEMENT glossary (glossentry+)>
 <!ELEMENT glossentry (term, def, locator)>
-<!ELEMENT term (#PCDATA)>
 <!ELEMENT def (#PCDATA)>
 <!ELEMENT locator (#PCDATA)>
 <!ELEMENT library (bibl+)>

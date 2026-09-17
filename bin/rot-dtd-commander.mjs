@@ -35,7 +35,7 @@
 // printed. No monitor plugin is written: an operator who wants the loader
 // to start the monitor declares it in a monitors.json of their own.
 
-import { readdirSync, existsSync, readFileSync, copyFileSync, rmSync, rmdirSync, mkdirSync, statSync } from 'node:fs';
+import { readdirSync, existsSync, readFileSync, copyFileSync, rmSync, rmdirSync, mkdirSync, statSync, unlinkSync } from 'node:fs';
 import { join, dirname, basename, resolve as presolve, relative, extname, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -444,7 +444,24 @@ async function cmdInstall(o) {
   }
 
   const keep = prev.files.filter((f) => !written.some((w) => w.path === f.path) && existsSync(f.path));
-  const manifest = { tool: NAME, version: VERSION, target, installedAt: new Date().toISOString(), files: [...keep, ...written.map(({ label, ...w }) => w)] };
+  // A removed artifact lingered for ever: keep carried every owned file the
+  // new plan no longer writes, so a deleted command stayed loadable after an
+  // upgrade (measured 2026-09-16: ask-me-preview-dtd.md survived its removal).
+  // On a full install (all kinds, no --only filter) owned files outside the
+  // new plan are pruned; a partial install never deletes what it did not select.
+  let pruned = 0;
+  const full = kinds.commands && kinds.skills && kinds.agents && !only;
+  const fresh = new Set(written.map((w) => w.path));
+  const keptPaths = [];
+  for (const f of keep) {
+    if (full && !fresh.has(f.path) && f.path.startsWith(target)) {
+      if (!o.dryRun) {
+        try { unlinkSync(f.path); pruned++; console.log(`  PRUNED ${f.path} (owned by a previous install, absent from this one)`); }
+        catch (e) { console.log(`  FAIL prune ${f.path}: ${e.message}`); failed++; keptPaths.push(f); continue; }
+      } else { console.log(`  plan prune ${f.path}`); }
+    } else keptPaths.push(f);
+  }
+  const manifest = { tool: NAME, version: VERSION, target, installedAt: new Date().toISOString(), files: [...keptPaths, ...written.map(({ label, ...w }) => w)] };
   writeLF(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
   let bad = 0;
   for (const w of written) {
@@ -709,7 +726,12 @@ function delegate(sub, o) {
   // Every run of the Adiutor by hand ends at the ceiling (5.0.0): a doctor or
   // a controls run that hangs costs the ceiling, never a session.
   const secs = ceilingSecs();
-  const r = spawnSync(process.execPath, [join(ROOT, 'bin', 'adiutor.mjs'), sub, ...o._], { stdio: 'inherit', timeout: secs * 1000 });
+  // The Adiutor resolves its target from CLAUDE_CONFIG_DIR, never from a
+  // flag: without this line a doctor --target X silently doctored the
+  // default target instead (measured 2026-09-16: the opencode install read
+  // green on disk while doctor compared the repo against ~/.claude).
+  const env = o.target ? { ...process.env, CLAUDE_CONFIG_DIR: o.target } : process.env;
+  const r = spawnSync(process.execPath, [join(ROOT, 'bin', 'adiutor.mjs'), sub, ...o._], { stdio: 'inherit', timeout: secs * 1000, env });
   if (r.error && r.error.code === 'ETIMEDOUT') {
     console.error(`adiutor: ${sub} reached the ${secs} s ceiling and was stopped (exit 124)`);
     process.exit(124);

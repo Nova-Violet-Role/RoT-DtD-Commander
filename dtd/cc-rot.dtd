@@ -35,7 +35,6 @@
 <!ATTLIST interceptor name CDATA #REQUIRED fired (yes|no) #REQUIRED>
 <!ELEMENT gauge (term+, correction?)>
 <!ATTLIST gauge rs CDATA #REQUIRED k CDATA #REQUIRED band %band; #REQUIRED source (measured|estimated) #REQUIRED>
-<!ELEMENT term (#PCDATA)>
 <!ATTLIST term lens %lens; #REQUIRED lambda CDATA #REQUIRED delta CDATA #REQUIRED sigma CDATA #REQUIRED entropy CDATA #REQUIRED mu CDATA #REQUIRED ci CDATA #REQUIRED value CDATA #REQUIRED>
 <!ELEMENT correction (#PCDATA)>
 <!ATTLIST correction direction (diverge|converge) #REQUIRED>

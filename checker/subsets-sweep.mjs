@@ -13,7 +13,7 @@
 //
 //   node checker/subsets-sweep.mjs             re-embed every block from dtd/
 //   node checker/subsets-sweep.mjs --check     "N blocks in step", or the drifted names and exit 1
-//   node checker/subsets-sweep.mjs --controls  five controls, a planted character tripped
+//   node checker/subsets-sweep.mjs --controls  six controls, a planted character tripped
 //
 // A block is `## <name>.dtd`, prose, then a ```dtd fence whose body is
 // dtd/<name>.dtd without its final newline. Every cc-*.dtd must have a
@@ -21,7 +21,7 @@
 // does not teach. A root grammar is quoted or not by choice.
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
+import { join, dirname, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -109,7 +109,31 @@ export function controls() {
   let refused = '';
   try { reembedText(ROOT, ghost); } catch (e) { refused = e.message; }
   say(/cc-ghost\.dtd and dtd\/ has no such file/.test(refused), `trip: a re-embed of a block with no file is refused by name: ${refused.slice(0, 80)}`);
-  console.log(`subsets-sweep controls: 5 run, ${fail} failing`);
+  // Stream 19, the TEI 1:1 invariant at our architectural level. TEI modules
+  // build one product, so one element lives in one file. This corpus builds
+  // 173 separate doctypes, so the invariant binds per resolved tree: no
+  // artifact may include two subsets declaring one element under two models.
+  // evidence, step and term live once in cc-core; entry, section and walk
+  // keep family models in disjoint trees with zero instantiations, and this
+  // control fails the day one tree reads both.
+  const elf = (p) => readFileSync(p, 'utf8');
+  const emodels = (t) => [...t.matchAll(/<!ELEMENT\s+([\w.:-]+)\s*(\([^>]*\)|EMPTY|ANY)/g)].map((m) => [m[1], m[2].replace(/\s+/g, ' ')]);
+  const dt = {};
+  for (const f of readdirSync(join(ROOT, 'dtd')).filter((f) => f.endsWith('.dtd'))) dt[f.slice(0, -4)] = new Map(emodels(elf(join(ROOT, 'dtd', f))));
+  const arts = [];
+  for (const [sub, pat] of [['commands', '*.md'], ['agents', '*.md']]) for (const f of readdirSync(join(ROOT, 'src', sub)).filter((n) => n.endsWith('.md'))) arts.push(join(ROOT, 'src', sub, f));
+  for (const d of readdirSync(join(ROOT, 'src', 'skills'))) { const p = join(ROOT, 'src', 'skills', d, 'SKILL.md'); if (existsSync(p)) arts.push(p); }
+  const collisions = [];
+  for (const a of arts) {
+    const inc = [...elf(a).matchAll(/<!ENTITY\s+%\s+([\w-]+)\s+SYSTEM/g)].map((m) => m[1]).filter((n) => dt[n]);
+    const seen = new Map();
+    for (const n of inc) for (const [e, m] of dt[n]) {
+      if (seen.has(e) && seen.get(e).model !== m) collisions.push(`${e} in ${relative(ROOT, a)} via ${seen.get(e).from} vs ${n}`);
+      else if (!seen.has(e)) seen.set(e, { model: m, from: n });
+    }
+  }
+  say(collisions.length === 0, collisions.length === 0 ? `every resolved tree declares one model per element: ${arts.length} artifacts read` : `one tree reads one element under two models: ${collisions.slice(0, 3).join('; ')}`);
+  console.log(`subsets-sweep controls: 6 run, ${fail} failing`);
   return fail === 0;
 }
 

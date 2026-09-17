@@ -72,6 +72,14 @@ Trust classes, the four unparsed channels and their notations, the shared enumer
 <!ENTITY LAW.CORE.6 "Every heading of an answer is a markdown heading carrying the command's sigil, with a blank line before it and after it; a crammed answer is a failed answer.">
 <!ENTITY LAW.CORE.7 "A /name-dtd token that ends a prompt, alone or followed by the arrow token (a less-than sign and a hyphen), invokes that command on the text before it; that text is its user-args, and the call is as complete as one that opens the prompt.">
 <!ENTITY LAW.CORE.8 "Before writing or proposing a file or a code artifact whose class a gray list names, the command asks the declared gray question, naming the reason recorded when the entry was listed and offering the replacements the white list of the same scope already allows; the answer is data to the gate, an answer of use-it-anyway is written back as a dated exception and not asked again for that entry in that repository, and a refusal is never silent. A tree with no .rot-lists directory has no gray list and this law asks nothing.">
+
+<!-- ===== SHARED LEAF ELEMENTS (stream 19 convergence) ===== -->
+<!-- evidence, step and term were declared identically (#PCDATA) in
+     seven subsets; they live here once now. Every artifact includes
+     cc-core, so no resolved tree changes. -->
+<!ELEMENT evidence (#PCDATA)>
+<!ELEMENT step (#PCDATA)>
+<!ELEMENT term (#PCDATA)>
 ```
 
 ## cc-ask.dtd
@@ -510,7 +518,6 @@ The lexicon behind the voice gate: the verb list the static classifier reads (LE
           source CDATA #IMPLIED>
 <!ELEMENT glossary (glossentry+)>
 <!ELEMENT glossentry (term, def, locator)>
-<!ELEMENT term (#PCDATA)>
 <!ELEMENT def (#PCDATA)>
 <!ELEMENT locator (#PCDATA)>
 <!ELEMENT library (bibl+)>
@@ -1519,7 +1526,6 @@ A workflow file (WORKFLOW.file: steps with a run string, a ceiling, an expected 
           name    NMTOKEN #REQUIRED
           trigger (manual|hook|cron) "manual"
           on_fail (stop|continue) "stop">
-<!ELEMENT step (#PCDATA)>
 <!ATTLIST step
           name         NMTOKEN #REQUIRED
           run          CDATA #REQUIRED
@@ -1595,7 +1601,6 @@ The tasks folder of a project and its registry (tasks, task, var, step; registry
           created   CDATA #REQUIRED>
 <!ELEMENT var EMPTY>
 <!ATTLIST var name NMTOKEN #REQUIRED value CDATA #REQUIRED>
-<!ELEMENT step (#PCDATA)>
 <!ATTLIST step
           n            NMTOKEN #REQUIRED
           run          CDATA #REQUIRED
@@ -1755,7 +1760,6 @@ The numbered, append-only field discipline for any file one session writes and a
           revnumber NMTOKEN #REQUIRED
           date      CDATA   #REQUIRED
           remark    CDATA   #REQUIRED>
-<!ELEMENT evidence (#PCDATA)>
 <!ATTLIST evidence kind (file|exit|line|note) #REQUIRED>
 
 <!ENTITY RECORD.dir              "artifacts">
@@ -2160,7 +2164,6 @@ the repository overriding the machine. Declares `LIST.classes`, `LIST.scopes`,
           layer   (repository|machine) #REQUIRED
           granted CDATA #IMPLIED>
 <!ELEMENT reason (#PCDATA)>
-<!ELEMENT evidence (#PCDATA)>
 <!ATTLIST evidence count CDATA #IMPLIED>
 
 <!ELEMENT verdicts (verdict+)>
@@ -4267,7 +4270,6 @@ Quoted verbatim from dtd/cc-amplify.dtd, whose header comment says what it is; e
           verdict    (exposed|marked|refused|done|reopen) #REQUIRED
           refused_at CDATA #IMPLIED>
 <!ELEMENT why (#PCDATA)>
-<!ELEMENT evidence (#PCDATA)>
 <!ATTLIST evidence
           instrument CDATA #IMPLIED
           adds       CDATA #IMPLIED>
@@ -4360,7 +4362,6 @@ Quoted verbatim from dtd/cc-rot.dtd, whose header comment says what it is; every
 <!ATTLIST interceptor name CDATA #REQUIRED fired (yes|no) #REQUIRED>
 <!ELEMENT gauge (term+, correction?)>
 <!ATTLIST gauge rs CDATA #REQUIRED k CDATA #REQUIRED band %band; #REQUIRED source (measured|estimated) #REQUIRED>
-<!ELEMENT term (#PCDATA)>
 <!ATTLIST term lens %lens; #REQUIRED lambda CDATA #REQUIRED delta CDATA #REQUIRED sigma CDATA #REQUIRED entropy CDATA #REQUIRED mu CDATA #REQUIRED ci CDATA #REQUIRED value CDATA #REQUIRED>
 <!ELEMENT correction (#PCDATA)>
 <!ATTLIST correction direction (diverge|converge) #REQUIRED>
