@@ -15,6 +15,8 @@ argument-hint: [what to compare or leave blank for current context]
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-report SYSTEM "../../dtd/cc-report.dtd">
   %cc-report;
   <!ELEMENT options_comparison (intake, report, artifact)>
@@ -82,8 +84,12 @@ Options:
 If "Ask more questions" → generate 2-3 contextual follow-ups, then present decision gate again
 If "Let me add context" → receive input, then present decision gate again
 If "Save your cache first" → write the cache, render the `cache` element and stop (LAW.CACHE.2)
-If "Start comparison" → proceed to research
+If "Start comparison" → offer the terminal choice, then proceed to research
 </decision_gate>
+
+<terminal_gate>
+On start and before research, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 </intake_gate>
 
@@ -209,6 +215,7 @@ Save the research to a file:
 - Runner-up provides contingency
 - Implementation context gives Claude everything needed to proceed
 - Output saved to artifacts/research/ directory
+- Research starts only after the gate choice start plus one terminal combo
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

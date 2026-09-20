@@ -15,6 +15,8 @@ argument-hint: "[two to eight command lines stacked, one /name-dtd per line, the
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-chain SYSTEM "../../dtd/cc-chain.dtd">
   %cc-chain;
   <!ELEMENT chain_run (args, intake, chain, artifact, assumption_made*)>
@@ -46,10 +48,14 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.7). The `intake` c
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements; read the CHAIN.autonomy.token as its own word only (LAW.ARGS.2, LAW.CHAIN.4).
 2. Run `node lib/ceiling.mjs 60 node lib/chain.mjs plan` with the stacked lines as its arguments, one token per argument and the autonomy token among them (`plan --no-gate /a-dtd /b-dtd`), one line with no quote and no newline, in the foreground, exit code read directly, and render `chain` from what it printed: links, autonomy, gate, bands, declared, one `link` per line with its n, of, command, sigil, root, band, runs_alone, takes and hands_to. A refusal ends the run here: every refused link carries its `link_refusal` with why, the `chain_close` says ran 0, and the `artifact` names the record of the refusal (LAW.CHAINRUN.1, LAW.CHAIN.8).
-3. Run the one intake (LAW.CHAIN.3): the slots of every link gathered into one round, the scope first, then the gate; a link the gate declines is passed to the plan as --decline, and the rounds and questions spent are passed as --rounds and --questions so `chain_intake` carries them, and a band this run switched off is passed as --band-off so its link is refused band-off before link one. With the token present, skip it, render `chain_intake` with asked no and the reason, and list every gap as an `assumption_made`.
+3. Run the one intake (LAW.CHAIN.3): the slots of every link gathered into one round, the scope first, then the gate; on start offer the terminal choice before link one; a link the gate declines is passed to the plan as --decline, and the rounds and questions spent are passed as --rounds and --questions so `chain_intake` carries them, and a band this run switched off is passed as --band-off so its link is refused band-off before link one. With the token present, skip it, render `chain_intake` with asked no and the reason, and list every gap as an `assumption_made`.
 4. For each link in order: invoke the command with its user-args, the first from the prompt and each later one the previous link's artifact quoted as CDATA; a link is invoked by reading its file, `commands/<name>.md` in the tree that carries `lib/chain.mjs` or the commands directory it was installed to, and rendering its root as that file declares, every heading of its grammar map under its own sigil, the one the plan names on its link line; a link summarised in place of being run is a dropped link (LAW.CHAIN.8); render the link's answer here, in this answer, whole: first the link heading `## Link n of N: /name-dtd sigil`, then the link's own root with every heading of its grammar map under its sigil, even when the link's product is a file (the file is named in the rendered root, the answer is not moved into it); a link whose answer is deferred to its artifact and summarised here in a line is a dropped link, whatever its artifact holds (the eighth matrix of 9.1.0: four chains of the ubuntu leg ran every link, one of them building sixty-four files, and rendered none, LAW.CHAINRUN.2); then run `node lib/ceiling.mjs 60 node lib/chain.mjs handoff <this link>` and render the `handoff` it prints, the artifact and its bytes read from the file; a file it does not find refuses the next link with why artifact-missing (LAW.CHAINRUN.2, LAW.CHAIN.5). A chain never pauses: a link's foreground command runs to its end or its ceiling in the same turn, no link waits for the operator or promises to continue later, and an answer that ends before `chain_close` is a failed answer (the eighth matrix of 9.1.0: the research chain of the macOS leg wrote that it would pause while a sweep finished, and ended there after 39 of 150 turns).
 5. Write the record under CHAIN.dir as the date and chain, its frontmatter carrying the bands string the chain element carries (LAW.CHAIN.7), bands and counts embedded as ARG.embed.pcdata (LAW.ARGS.5), then render `chain_close` with ran, refused and the artifact, and `artifact` naming the same file.
 </process>
+
+<terminal_gate>
+On the one gate choice start and before link one, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). The chain never pauses: the terminal answer is taken in the same turn and the links run to their end. Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -92,6 +98,7 @@ links [n] autonomy [gated|no-gate] gate [one|none] bands [the string] declared [
 <success_criteria>
 - The plan was read before link one, and a refused chain ran nothing
 - Exactly one intake and one gate ran for the whole chain, or the token skipped them and every gap is listed
+- The one gate closed with start plus one terminal combo before link one
 - Every hand-off names a file that exists with its bytes, quoted as CDATA
 - Every link declares runs_alone yes and a successor the tree carries, or none
 - The bands stamped on the chain element are the bands stamped in the record

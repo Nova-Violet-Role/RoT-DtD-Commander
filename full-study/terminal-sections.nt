@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+# NestedText v3 - terminal sections per-folder DETAIL pass (DRAFT, unlanded)
+# Source: 10.2.0.md + src/commands/ask-me-*.md + dtd/cc-ask.dtd + dtd/cc-cache.dtd + lib/ordinals.mjs + lib/cache.mjs
+# Status: draft for gate review; scope counts measured, file shape proposed, Megathink mapping open.
+
+command: ask-terminal-study
+saved: 2026-09-19T00:00:00Z
+task:
+  > Implement Add-to-todo, Full-study and Save-cache terminal sections
+  > on every askuserquestion command variant via the DTD method.
+scope:
+  - every command under src/commands that includes cc-ask: 122 files measured plus 23 skills; ask-me-questions, many-questions, everything, katabasis, maelstrom first as the exemplar patch set; all gated commands after
+  - build is generated: edit src/commands, never commands/; bin/rot-dtd-commander.mjs build regenerates; build --check currently 143 drifted tree-wide, pre-existing, only one drift line is ours
+definitions:
+  greeknumber: record ordinal from lib/ordinals.mjs greek(n); parse() reads greek and pre-5.0.0 IUPAC; next() is max+1
+  full-study: ACT where the agent uses thinking and effort to study what the questionnaire pointed at
+  askuserquestion: tool capability to interact with the operator via asked questions
+  todo: tool capability to save logistic operative tasks sorted by sequential intersection
+combos:
+  - add to todo and Megathink sort todo and Start Working
+  - Full study and Sort study_greeknumber.nt and Start working
+  - Save your cache and Start Working
+folders:
+  dotstudy: .full_study/study_<greek>.nt inside the Project/Folder, NestedText under nt schematic
+  dotcache: .cache/cache_<greek>.nt inside the Project/Folder, cc-cache eight fields in order, angle-bracket literals, guards depth|tabs
+positioning:
+  - Q and A appended to the relevant todo section only after thinking each answer into adequate completion-sequence position
+  - Megathink sort of the whole todo runs before Start working
+  - study entries sorted before Start working; cache read back whole before Start working
+question-ts:
+  - new variant question-dtd.ts beside Question-Opencode/question.ts; mirrors DTD ask/gate: rounds, bilateral Other, previews cut/expanded, impactful, save choice, terminal combos
+next:
+  > Write dtd/cc-terminal.dtd, then patch the five ask-me-* sources to include it, then write question-dtd.ts, then build --check.

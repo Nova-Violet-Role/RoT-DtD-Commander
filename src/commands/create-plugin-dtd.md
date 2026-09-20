@@ -17,6 +17,8 @@ argument-hint: [plugin name or purpose, or leave blank; --no-gate for autonomous
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT plugin_creation (args, intake, shell, bundle, manifests, license, instruction*, proof, assumption_made*)>
   <!ELEMENT shell (domain+)>
   <!ELEMENT domain (#PCDATA)>
@@ -74,7 +76,7 @@ The shell is built the way the DITA shells are built: a header, a declaration pe
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the name or purpose; render the walk under `args`. A plugin is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.PLUGIN.1 to ASK.PLUGIN.4 as one AskUserQuestion call, four options each plus Other (ASK.PLUGIN.1 select, the creation questions check), questions 2 to 4 multi-select (LAW.PLUGIN.3); render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.PLUGIN.5 to ASK.PLUGIN.8; on more again, round 3 of 3 with ASK.PLUGIN.9 to ASK.PLUGIN.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.PLUGIN.5 to ASK.PLUGIN.8; on more again, round 3 of 3 with ASK.PLUGIN.9 to ASK.PLUGIN.12; on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Check the license against LICENSE.list (LAW.PLUGIN.4, LAW.LICENSE.1): an identifier in the list, or a compound expression of listed identifiers joined by LICENSE.join, passes; anything else is refused with the list printed and ASK.PLUGIN.5 asked again; render the `license` with the expression, its count and listed yes.
 5. Write the `shell`: dtd/<name>.dtd at the plugin root with the header (PLUGIN.shell.header), one parameter entity per creation set to INCLUDE or IGNORE, one conditional section per creation declaring that creation's domain elements and entities, the nesting override, the element integration, and the cc-core include; render one `domain` per creation with its keyword (LAW.PLUGIN.1, LAW.PLUGIN.2).
 6. Write the tree in the chosen layout: the directories the loader reads for every creation under INCLUDE and none for one under IGNORE, a README with the roster, a CHANGELOG with the first version, the license file for the chosen expression; render one `component` per file with its kind, path and bytes; every file UTF-8 LF without BOM with the SPDX header where a comment is allowed.
@@ -83,6 +85,10 @@ The shell is built the way the DITA shells are built: a header, a declaration pe
 9. Run the proof (LAW.PLUGIN.7): rdc check on every file written, JSON.parse on every manifest, and a read of the tree that shows one creation under IGNORE absent from the bundle and the manifests; render the `proof` with tripped yes; a proof that did not trip stops the command before the report.
 10. Report the shell, the bundle, the manifests, the license, the instructions, the proof and the assumptions; record the run under artifacts at the plugin root with this command's generated name (LAW.PLUGIN.8).
 </process>
+
+<terminal_gate>
+On start and before the shell, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -141,6 +147,7 @@ rdc check [n] files, 0 failing; manifests parsed [n]; excluded [creation] absent
 
 <success_criteria>
 - Round one ran before any file was written; the creation questions were check questions and All of them selected every creation
+- Work starts only after the gate choice start plus one terminal combo
 - The shell carries one conditional section per creation with the keyword the intake chose, and an excluded creation appears nowhere else
 - The license is a curated identifier or a compound of curated identifiers, and it heads every file that allows a comment
 - The manifests were rendered from the shell and parsed back

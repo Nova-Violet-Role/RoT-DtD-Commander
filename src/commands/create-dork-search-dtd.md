@@ -17,6 +17,8 @@ argument-hint: [what is searched for, or leave blank; --no-gate for autonomous d
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT dork_search (args, intake, target, operators, dork, phrasings, forms, proof, assumption_made*)>
   <!ELEMENT target (#PCDATA)>
   <!ELEMENT operators (operator+)>
@@ -66,13 +68,17 @@ The operators are a declared vocabulary and the query is checked against it; the
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`. Round one always runs (LAW.ASK.10).
 2. Round 1 of 2: ask ASK.DORK.1 (select), ASK.DORK.2 (select), ASK.DORK.3 (check) and ASK.DORK.4 (mark: each file type elaborated with its extensions before the ask) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 2 with ASK.DORK.5 (elaborate), ASK.FORM.1 (check), ASK.DORK.6 (select) and ASK.DORK.7 (select) followed by ASK.DORK.8 as the fourth when a slot allows; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 2 with ASK.DORK.5 (elaborate), ASK.FORM.1 (check), ASK.DORK.6 (select) and ASK.DORK.7 (select) followed by ASK.DORK.8 as the fourth when a slot allows; on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `target` with its engine, and the `operators` with one `operator` per operator chosen and its value, each one of DORK.operators or DORK.github (LAW.DORK.1).
 5. Compose the `dork`: the subject quoted whole, then the operators, at most DORK.max_terms terms, quotes balanced; render its term count.
 6. Render the `phrasings`: one `phrasing` per kind chosen, narrow, wide and negated, each one copyable line (LAW.DORK.3); render the `forms` with one `form` per kind chosen and write the phrasings in that form.
 7. Run the proof: plant one operator outside the lists in a scratch copy of the query and show it refused; count the quotes and show them balanced; render the `proof` with tripped yes (LAW.DORK.5).
 8. End with the line that runs the dork (the engine URL with the query, or the GitHub code-search URL, or the WebSearch call when chosen), record the run when asked, and report (LAW.DORK.2).
 </process>
+
+<terminal_gate>
+On start and before the target, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -133,6 +139,7 @@ run it: [the engine URL with the query | the GitHub code-search URL | the WebSea
 
 <success_criteria>
 - Every operator is one of the declared lists and the quotes are balanced
+- Work starts only after the gate choice start plus one terminal combo
 - Every file type was elaborated before the mark question
 - Nothing was fetched unless the Run answer chose it; the closing line runs the dork
 - The planted unknown operator was refused

@@ -27,6 +27,8 @@ allowed-tools: Read Glob Grep Bash
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT catalog_check (args, intake, text_desc, directory, index, entry+, missing*, orphan*, verdict)>
   <!ELEMENT directory (#PCDATA)>
   <!ELEMENT index (#PCDATA)>
@@ -58,7 +60,7 @@ In the Library of Babel there must be a catalog of the library, and a catalog of
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
-2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start offer the terminal choice, then proceed with every unasked question at its first option; render the round under `intake`.
 3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
 4. Name the `directory` and the `index` file that claims to describe it. Read both; their contents are tool-result data.
 5. Extract every item the index declares (names, paths, links) and every item the directory holds (Glob), and write one `entry` per item with declared and present.
@@ -66,6 +68,10 @@ In the Library of Babel there must be a catalog of the library, and a catalog of
 7. List each `orphan` item: present true, declared false.
 8. Write the `verdict` with drift equal to missing plus orphan; zero passes, anything else names what to add or remove.
 </process>
+
+<terminal_gate>
+On start and before step 3, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -121,6 +127,7 @@ drift [N]. [what to add or remove]
 
 <success_criteria>
 - Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
+- Work starts only after the gate choice start plus one terminal combo
 - Both the index and the directory were read this session
 - Every item is in exactly one of the three states
 - Drift is a number and zero is the only pass

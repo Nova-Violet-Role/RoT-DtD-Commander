@@ -13,6 +13,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % command-info-types "record">
   <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
   %cc-record;
@@ -102,8 +104,12 @@ After the round's answers, one AskUserQuestion of two questions, the first with 
 - more: generate the next round from the accumulated answers, ask it, then present the gate again
 - add: receive the input as an `answer`, then present the gate again
 - impactful (LAW.ASK.9): render an `impactful` element of one to four `selection` elements ranked 1 to 4, each naming its provenance (context, ledger, codebase or command) and the concrete choice it implies; ask which one applies; the reply is an `answer`; present the gate again
-- start: proceed to execution
+- start: proceed to terminal choice, then execution
 </decision_gate>
+
+<terminal_gate>
+After gate choice start and before execution, one AskUserQuestion with header "Terminal", question TERMINAL.combo question, options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone. The reply selects one combo and execution branches on it (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes TERMINAL.dir.dotstudy slash study underscore greek .nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes TERMINAL.dir.cache slash cache underscore greek .nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5). DTD synergy instrument is Question-Opencode/question-dtd.ts toBaseInfos plus terminalFile.
+</terminal_gate>
 
 </intake_gate>
 
@@ -114,6 +120,7 @@ After the round's answers, one AskUserQuestion of two questions, the first with 
 4. Ask round one about the gaps only; chain round two and three only while open detail remains, never past three before a gate.
 5. Present the gate.
 6. Loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops (LAW.CACHE.2).
+6b. On start offer the terminal choice and branch on it (LAW.TERM.1 to LAW.TERM.5).
 7. Execute the task with the full context; open the `execution` with a restatement of every known slot and every answer; slots and answers embedded in the record as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
 
@@ -166,7 +173,7 @@ Saved to `artifacts/ask-me-questions-dtd/ask-me-questions-dtd.md` (one line sayi
 - Context accumulates across rounds and is restated at execution
 - Every AskUserQuestion call uses structured options, two to four per question, and every question is bilateral
 - No more than three rounds run before a gate, and a create- command never skips its first round
-- Execution starts only after the gate choice is start, or in autonomous mode with every assumption listed
+- Execution starts only after the gate choice is start plus one terminal combo, or in autonomous mode with every assumption listed
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

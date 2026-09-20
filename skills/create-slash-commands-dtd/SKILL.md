@@ -98,7 +98,7 @@ description: "Expert guidance for creating Claude Code slash commands. Use when 
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds

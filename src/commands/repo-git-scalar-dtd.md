@@ -19,6 +19,8 @@ argument-hint: [path to the repository, or leave blank for the current one; --ve
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT git_scalar (args, analysis, intake, plan, writes, verdict, assumption_made*)>
   <!ELEMENT analysis (probe+)>
   <!ELEMENT probe (#PCDATA)>
@@ -73,12 +75,16 @@ The numbers come from git: object count and pack size, commit count, tracked fil
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags ARG.verbose and ARG.debug and the positional words; render the walk under `args`.
 2. Measure every probe by reading the tree and running git in the foreground under a timeout with stdin closed, never a network call and never gh; render one `probe` per name with present yes, partial or no and the evidence behind it (verbose prints all of it, debug prints the commands).
 3. Round 1 of ASK.rounds_per_prompt: the four probes that are absent or partial and matter most, one question each from the bank; four options plus Other; render each round.
-4. Present the gate; on more, the next round from the remaining probes and the answers so far, never past ASK.max_total questions in all; on add or impactful, take the answer and present the gate again; on start, every probe not asked takes its first option and is listed under Assumptions Made.
+4. Present the gate; on more, the next round from the remaining probes and the answers so far, never past ASK.max_total questions in all; on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then every probe not asked takes its first option and is listed under Assumptions Made.
 5. Render the `plan`: one `action` per probe, create, amend, keep or remove, with its target path.
 6. For every plan line that would rewrite history (LAW.SCALAR.3), print the exact commands under a warning instead of running them.
 7. Write the files the plan creates or amends, each with the repository SPDX header where its format allows a comment, UTF-8 LF without BOM, and re-read each; plan-derived content embedded as ARG.embed.pcdata (LAW.ARGS.5); render one `written` per file with its bytes.
 8. Render the `verdict`: perfect yes only when every probe is present yes after the writes, partial when some are, no when the run wrote nothing.
 </process>
+
+<terminal_gate>
+On start and before the plan, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -129,6 +135,7 @@ perfect [yes|partial|no]; short: [probes still not yes]
 - Every number in the analysis was read from a git command that ran
 - No history was rewritten; every rewrite is a printed plan line with a warning
 - No prompt asked more than ASK.max_total questions
+- Work starts only after the gate choice start plus one terminal combo
 - The verdict names every probe still short
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

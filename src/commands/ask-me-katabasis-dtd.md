@@ -17,6 +17,8 @@ argument-hint: [task or leave blank; add --no-gate for autonomous mode]
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % command-info-types "record">
   <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
   %cc-record;
@@ -67,8 +69,13 @@ The gate's fifth choice is GATE.save, the second question of the same ask, GATE.
 2. Analyze the task and the conversation into known and gap slots; never ask about a known slot (LAW.ASK.1).
 3. Ask round one about the gaps; chain rounds while open detail remains, never past round ASK.rounds_per_prompt and never past ASK.max_total questions in all (LAW.ASK.6, LAW.KAT.1); render each round as n of ASK.rounds_per_prompt.
 4. Present the gate after each round; loop on more, add or impactful (LAW.ASK.9) until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops (LAW.CACHE.2); a reply of ASK.back re-asks the question just asked (LAW.ASK.12).
+4b. On start offer the terminal choice and branch on it (LAW.TERM.1 to LAW.TERM.5).
 5. Execute the task with the full context; open the `execution` with the restatement (LAW.KAT.3); slots and answers embedded in the record as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
+
+<terminal_gate>
+After gate choice start and before execution, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone. Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -117,7 +124,7 @@ Saved to `artifacts/ask-me-katabasis-dtd/ask-me-katabasis-dtd.md` (one line sayi
 - No question is asked about information already provided
 - No more than forty-eight rounds and no more than one hundred ninety-two questions ran before execution
 - Every question was bilateral and every round was rendered as n of 48
-- Execution started only after the gate choice start, or in autonomous mode with every assumption listed
+- Execution started only after the gate choice start plus one terminal combo, or in autonomous mode with every assumption listed
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

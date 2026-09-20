@@ -837,7 +837,7 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -1127,6 +1127,41 @@ argument-hint: [what the prompt is for, or leave blank; --no-gate for autonomous
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
 
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
   <!ELEMENT prompt_forge (args, intake, sections, schemas, forms, embedding, file, guards, proof, assumption_made*)>
   <!ELEMENT embedding (#PCDATA)>
   <!ELEMENT file (#PCDATA)>
@@ -1165,13 +1200,17 @@ The schematic is pinned: a quoted line under a house callout, one of FORM.alarm.
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; words after ARG.end that read schematic=, schemas= or forms= are known slots placed by a router and fill those questions without asking (LAW.ASK.1); render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.PROMPT.1 to ASK.PROMPT.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, check), ASK.SCHEMA.2 (select), ASK.FORM.1 and ASK.FORM.2 (check), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.PROMPT.5 (elaborate: each voice elaborated before the ask), ASK.PROMPT.6 (select), ASK.PROMPT.7 (select) and ASK.PROMPT.8 (mark: each license elaborated, the marked ones joined into the expression); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, check), ASK.SCHEMA.2 (select), ASK.FORM.1 and ASK.FORM.2 (check), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.PROMPT.5 (elaborate: each voice elaborated before the ask), ASK.PROMPT.6 (select), ASK.PROMPT.7 (select) and ASK.PROMPT.8 (mark: each license elaborated, the marked ones joined into the expression); on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `sections`: one `section` per name of SCHEMA.prompt.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for alarm: print its skeleton with node lib/schematic.mjs render, the schema name and alarm, and fill the bracketed words in place (LAW.PROMPT.6); render the `forms`: one `form` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.PROMPT.7); render the `embedding`: the reference syntax SCHEMA.alarm.reference, the literal syntax SCHEMA.alarm.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.md: the alarm shape, Markdown with the house callout vocabulary, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.PROMPT.4).
 6. Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
 7. Run the proof: node lib/schematic.mjs check on the file, alarm and the schemas chosen comma-separated prints one line per schema with its parts read back by form in order, and a FAIL line stops the command; the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with one line per schema and tripped yes (LAW.SCHEMA.5).
 8. Record the run under artifacts with this command's generated filename and report.
 </process>
+
+<terminal_gate>
+On start and before the sections, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -1235,6 +1274,7 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
 
 <success_criteria>
 - Round one ran before any file was written
+- Work starts only after the gate choice start plus one terminal combo
 - Every syntax in the file is one the SCHEMA.alarm.* table declares
 - The argument words are embedded in a declared class and never evaluated
 - Every schema chosen carries its parts in order as its cell for this schematic renders them, and no required part is missing

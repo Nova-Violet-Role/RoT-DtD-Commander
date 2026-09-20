@@ -17,6 +17,8 @@ argument-hint: [topic or leave blank for current context; add --no-gate for auto
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
   %cc-record;
   <!ELEMENT hadopelagia_session (task, intake, abyss, artifact, assumption_made*)>
@@ -59,9 +61,13 @@ Seven strata at most, the seventh married from two below it. Ninety-six rounds s
 2. Sound the abyss: render up to seven `stratum` elements, stated, quoted, inferred, then married with both parents named; inferred and married are marked guessed where they guess.
 3. Analyze the task, the strata and the conversation into known and gap slots; never ask about a known slot or a stratum that answers it (LAW.ASK.1).
 4. Ask round one about the gaps, each question naming its stratum and its form, bracket, angle, caret or chained empty beside select, check, elaborate and mark under LAW.ASK.17 (ASK.token.bracket, ASK.token.angle, ASK.token.caret, ASK.token.chained); chain rounds while open detail remains with no binding cap, the declared enumeration standing open and unreachable; render each round as n of ASK.rounds_per_prompt.
-5. Present the gate after each round; loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops; a reply of the back token re-asks the question just asked; the loops stay open and no willing user is cut off.
+5. Present the gate after each round; loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops; a reply of the back token re-asks the question just asked; the loops stay open and no willing user is cut off. On start offer the terminal choice before step 6.
 6. Execute with the full context; open the `execution` with the restatement of every slot, stratum and answer.
 </process>
+
+<terminal_gate>
+On start and before the execution, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -114,6 +120,7 @@ Saved to `artifacts/hadopelagia-deep-dive-dtd/hadopelagia-deep-dive-dtd.md` plus
 - Every question was bilateral, every round named its stratum and form and was rendered as n of 96
 - Both halves of the hybrid artifact were written and re-read, or neither was claimed
 - Execution started only after the gate choice start, or in autonomous mode with every assumption listed
+- Work starts only after one terminal combo
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

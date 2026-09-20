@@ -23,6 +23,8 @@ argument-hint: "[code class or classes to mark gray, or blank to read the list; 
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-list SYSTEM "../../dtd/cc-list.dtd">
   %cc-list;
   <!ENTITY % cc-starlist SYSTEM "../../dtd/cc-starlist.dtd">
@@ -67,11 +69,15 @@ The declarations this command reads: LIST.class.gray for what a mark means, LIST
 2. Measure the project with `node lib/ceiling.mjs 120 node lib/starlist.mjs measure`: the languages present, the build files, and which managers this machine actually has. Render it as `walk`.
 3. Read both layers with `node lib/list.mjs show code gray`, and read the code white list, because that is where the replacements come from.
 4. Render `cost` before the intake writes anything: for each named class, the manager that could reach it, whether it is already present, and what the gate would gain (LAW.CG.2).
-5. Run the intake (LAW.ASK.6). The round carries the cost and the replacements, so the mark is chosen against a measurement rather than an impression.
+5. Run the intake (LAW.ASK.6). The round carries the cost and the replacements, so the mark is chosen against a measurement rather than an impression. On start offer the terminal choice before step 8.
 6. Refuse a name a black list already holds (LAW.CG.1) with both entries and the edit.
 7. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
 8. Write the entries with reason and date, read back from disk, render `entries`, then `exceptions` oldest first, `verdicts`, any `refused`, and the `next_action`; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
+
+<terminal_gate>
+On start and before anything is written, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -136,6 +142,7 @@ Render the `code_graylist_run` root declared in the DOCTYPE as the markdown belo
 <success_criteria>
 - Every entry written is a declaration under LIST.dir whose file FIXES the scope code and the class gray
 - The cost of each class was measured from the starlist and the machine, never guessed, and carried into the round that proposed it
+- Work starts only after the gate choice start plus one terminal combo
 - The replacements offered came from the code white list, and a class with none said so
 - A name already held by a black list was refused with both entries named
 - Nothing was written when the reachability guard refused

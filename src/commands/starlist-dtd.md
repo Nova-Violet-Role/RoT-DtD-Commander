@@ -23,6 +23,8 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-list SYSTEM "../../dtd/cc-list.dtd">
   %cc-list;
   <!ENTITY % cc-starlist SYSTEM "../../dtd/cc-starlist.dtd">
@@ -82,11 +84,15 @@ The declarations of cross-os.dtd this command reads beside them: XOS.legs, the X
 2. Probe the six managers with `node lib/ceiling.mjs 300 node lib/starlist.mjs managers`, in the foreground, exit codes read directly. Render `probe` with the present set and the absent set named (LAW.SL.1).
 3. Probe the local substrates with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe`, in the foreground: render `substrates` with the host leg and one line per substrate, podman present only with a machine row, wsl2 only when wsl answers, and the macOS leg named to its hosted runner (LAW.SL.5, LAW.XOS.1).
 4. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
-5. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
+5. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command. On start offer the terminal choice before step 6.
 6. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1); measured names embedded as ARG.embed.pcdata (LAW.ARGS.5).
 7. Re-run `node lib/ceiling.mjs 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
 8. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
 </process>
+
+<terminal_gate>
+On start and before anything is written, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -160,6 +166,7 @@ host leg [ubuntu-latest|macos-latest|windows-latest] ([how])
 - Every entry records a measurement: a tool written reachable answered its probe, and one that did not is written absent
 - The probe named both the present and the absent managers, and nothing was inferred from another manager's catalogue
 - The machine layer was the default and a repository entry meant this project relies on the tool
+- Work starts only after the gate choice start plus one terminal combo
 - The reachability guard was re-run after the write and every white entry the starlist can no longer support was rendered
 - Nothing was installed by this command; anything unreachable was named to starlist-manager-dtd
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer

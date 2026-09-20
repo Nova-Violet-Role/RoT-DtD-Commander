@@ -15,6 +15,8 @@ argument-hint: [what the lenses are for, or leave blank; --no-gate for autonomou
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT moe_creation (args, intake, roster, contract, checker, proof, assumption_made*)>
   <!ELEMENT roster (lens+)>
   <!ELEMENT lens (#PCDATA)>
@@ -65,13 +67,17 @@ The model is rot-voice.dtd: nine lens elements, a LENS roster of name, element, 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. A mixture is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.MOE.1 to ASK.MOE.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.MOE.5 to ASK.MOE.8; on more again, round 3 of 3 with ASK.MOE.9 to ASK.MOE.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.MOE.5 to ASK.MOE.8; on more again, round 3 of 3 with ASK.MOE.9 to ASK.MOE.12; on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `roster`: one `lens` per lens with its name, element, sigil, charter and bound; the sigils are unique and declared as glyphs.
 5. Write the `contract`: dtd/<name>-voice.dtd with the frame and quoted elements, one element per lens, the LENS entities, the lane, verdict and band entities, the voice block content model, the formula NOTATION when chosen, the ENV and EXCLUDE entities when chosen, the LAW entities for every promise the intake made, and the cc-core include (LAW.MOE.1 to LAW.MOE.4); answer-derived names and charters embedded as ARG.embed.pcdata in every file these steps write (LAW.ARGS.5).
 6. Write one agent file per lens under agents/: frontmatter with name, description and tools, the charter, the bound clause verbatim, and the rule that it speaks only inside its element (LAW.MOE.2); every file with the SPDX header (LAW.MOE.7).
 7. Write the `checker`: checker/<name>-voice-contract.sh reading the roster from the contract, holding files and declarations identical in both directions, grepping the exclusions, and carrying its negative control.
 8. Run the checker in the foreground under a timeout with stdin closed: the written tree passes; then plant an undeclared lens file, remove a declared file, and insert a stanza outside its element in a scratch copy, and show each refused (LAW.MOE.6); render the `proof` with tripped yes; a control that did not trip stops the command before the report.
 </process>
+
+<terminal_gate>
+On start and before the roster, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -120,6 +126,7 @@ tree passed; planted undeclared file refused; missing file refused; stanza outsi
 
 <success_criteria>
 - Round one ran before any file was written
+- Work starts only after the gate choice start plus one terminal combo
 - Every lens has a file, every file speaks only in its element, and the roster is declared once
 - The checker ran both directions and its three plants were refused
 - Every file written carries the chosen SPDX identifier

@@ -19,6 +19,8 @@ argument-hint: "[a number of sides to name, or a figure file whose shapes to che
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % typography SYSTEM "../../dtd/typography.dtd">
   %typography;
   <!ELEMENT typeset_run (args, intake, typeset, artifact, assumption_made*)>
@@ -51,12 +53,16 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.7). The `intake` c
 
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements: the first positional word is a number of sides or a figure path, blank means the contract alone; read --no-gate and --verbose (LAW.ARGS.2, LAW.ARGS.6).
-2. Run the intake (LAW.ASK.6): round one asks what to typeset as a select question (the contract alone, the name of an n-sided figure, the glyphs a figure file uses), then a mark question over the classes of TYPO.classes to keep on. Present the gate; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
+2. Run the intake (LAW.ASK.6): round one asks what to typeset as a select question (the contract alone, the name of an n-sided figure, the glyphs a figure file uses), then a mark question over the classes of TYPO.classes to keep on. Present the gate; on start offer the terminal choice before step 3; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
 3. Run `node lib/ceiling.mjs 60 node lib/typography.mjs controls` in the foreground, exit code read directly; a red control ends the run with the failing line quoted (LAW.TYPESET.2).
 4. Run `node lib/ceiling.mjs 60 node lib/typography.mjs table` and, for a number asked, `node lib/ceiling.mjs 60 node lib/typography.mjs numeral <n>`; for a figure file, read it and resolve every character of every label and text through the guarantee.
 5. Render `typeset`: one `face` per face with its family, generic, role, weight and style; one `glyph` per glyph of the figure repertoire with its unicode, name, class, fallback and advance; the glyphs of each class the intake kept on inside its class element, `rule_glyphs`, `arrow_glyphs`, `math_glyphs`, `greek_glyphs`, or `block_glyphs` when that module was switched on; one `missing_glyph` with draws and reason; one `numeral` per number asked with n, name, form and suffix (LAW.TYPO.7).
 6. Write the record under artifacts/typography as the date and typeset, names and measures embedded as ARG.embed.pcdata (LAW.ARGS.5), then render `artifact` naming it.
 </process>
+
+<terminal_gate>
+On start and before the controls, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -98,6 +104,7 @@ known [slots]; gaps [slots]; round 1 of 3 [what to typeset, classes, answers]; g
 - The cell equals cc-figure's and the seven glyphs equal cc-figure's, glyph for glyph, read from both files
 - Every glyph rendered is inside the guarantee or carries a fallback inside it
 - Every numeral was derived from its number by the engine, never typed
+- Work starts only after the gate choice start plus one terminal combo
 - The controls ran green in the foreground before the typeset was rendered
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

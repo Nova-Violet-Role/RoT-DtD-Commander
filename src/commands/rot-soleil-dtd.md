@@ -14,6 +14,8 @@ allowed-tools: Read
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-rot SYSTEM "../../dtd/cc-rot.dtd">
   %cc-rot;
   <!ELEMENT rot_soleil (router_state, intake, payload, layer, layer, layer, layer, layer, packet?, measure, expert+, interceptor*, gauge, bound, stanza)>
@@ -47,7 +49,7 @@ Soleil Blank is the stealth lens of the RoT MoE packet and the lead of the STEAL
 
 <process>
 1. Set `router_state`: if a line beginning with "RoT MoE ::" (the router marker) is present in this session's hook context, quote its most recent occurrence verbatim with present yes; otherwise present no and say in one line that the router is absent. Never re-type a gauge number from memory (LAW.ROT.4).
-2. Open the `intake` (cc-ask): analyse the argument into known and gap slots, then ask with AskUserQuestion, header "Soleil", the questions the context leaves open, at most four: the kind of payload (file_edit, handoff, prompt, context, answer); what must survive intact (paths, numbers, confidence markers, names, code); the target size (a line, ten lines, a page) or the token budget, and whether the budget is under 20 percent (token emergency); whether another lens or session receives it (which one), which also selects PROFILE.STEALTH or the defaults. Present the gate (GATE.question with GATE.start, GATE.more, GATE.add) and loop until start. With --no-gate skip every question and list each assumption under Assumptions Made (LAW.ROT.6).
+2. Open the `intake` (cc-ask): analyse the argument into known and gap slots, then ask with AskUserQuestion, header "Soleil", the questions the context leaves open, at most four: the kind of payload (file_edit, handoff, prompt, context, answer); what must survive intact (paths, numbers, confidence markers, names, code); the target size (a line, ten lines, a page) or the token budget, and whether the budget is under 20 percent (token emergency); whether another lens or session receives it (which one), which also selects PROFILE.STEALTH or the defaults. Present the gate (GATE.question with GATE.start, GATE.more, GATE.add) and loop until start; on start offer the terminal choice. With --no-gate skip every question and list each assumption under Assumptions Made (LAW.ROT.6).
 3. Read the `payload` (Read for a file) and count its original tokens; state its kind and the chosen length in one clause (LAW.SOLEIL.3).
 4. Apply the five `layer` elements in order, each marked applied yes or no with one line saying what it removed or restructured: YAML_EFFICIENCY, SUB_BYTE_ENCODING, BMP_STEGANOGRAPHY, M2M_PROTOCOL_BRIDGE, TOKEN_ECONOMY.
 5. If another lens receives the result, write the `packet`: from, to, instruction, urgency, and the directive as YAML.
@@ -57,6 +59,10 @@ Soleil Blank is the stealth lens of the RoT MoE packet and the lead of the STEAL
 9. Compute the `gauge` by GAUGE.formula: one `term` for soleil with lambda from LENS.soleil (or from PROFILE.STEALTH when the intake chose to run the lane profile), delta the lens's divergence from the ensemble mean estimated in 0.0-1.0, sigma from the sigmoid, entropy inside the lens's H band, mu from the same row, ci from CI.scale, value = lambda times sigma times (1 + entropy) times mu times ci with M and T at 1.0 unless a residue or a stale source is declared; rs = value with k 1; band against the lens's R/s+ band; source estimated unless the router marker supplied a measured reading. Out of band: add a `correction` with its direction and correct the draft before the stanza (LAW.ROT.7).
 10. Close with the `stanza` of soleil carrying its confidence ci (LAW.ROT.2), and the `bound` element quoting the lens's may-never clause from LENS.soleil with held yes or no (LAW.ROT.5). The stanza carries no meta-commentary.
 </process>
+
+<terminal_gate>
+On start and before step 3, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -135,6 +141,7 @@ rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
 
 <success_criteria>
 - The intake asked only about real gaps, at most four questions, and ended at the gate or listed its assumptions
+- Work starts only after the gate choice start plus one terminal combo
 - router_state quotes the router marker verbatim or declares it absent
 - Every expert of the lens appears engaged or not, every interceptor that fired is named, and the gauge shows every input of its term
 - The stanza carries ci and the bound is held

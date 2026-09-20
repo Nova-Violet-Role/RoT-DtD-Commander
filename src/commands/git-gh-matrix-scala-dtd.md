@@ -19,6 +19,8 @@ argument-hint: [path to the target, or leave blank for the current one; --verbos
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
   <!ENTITY % git-gh-matrix-scala SYSTEM "../../dtd/git-gh-matrix-scala.dtd">
@@ -72,11 +74,15 @@ Rounds and answers travel the bus: questions go out and answers come back over B
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags ARG.verbose and ARG.debug and the positional words; render the walk under `args`.
 2. Measure every probe by reading the tree and running git in the foreground under a timeout with stdin closed, never a network call and never gh; render one `probe` per name with present yes, partial or no and the evidence behind it (verbose prints all of it, debug prints the commands).
 3. Round 1 of ASK.rounds_per_prompt: target, then shape, seals and legs; four options plus Other with the static preview beside each; render each round (LAW.MX.1, LAW.MX.2, LAW.MX.3).
-4. Round on while open slots remain, never past ASK.max_total questions in all: ceiling and node, model, effort, thinking with MX.thinking.note in the preview, env tier, cache timer; on more, the next round from the remaining slots and the answers so far; on add or impactful, take the answer and present the gate again; on start, every slot not asked takes its first option and is listed under Assumptions Made (LAW.MX.4, LAW.MX.5, LAW.MX.6, LAW.MX.7, LAW.MX.9).
+4. Round on while open slots remain, never past ASK.max_total questions in all: ceiling and node, model, effort, thinking with MX.thinking.note in the preview, env tier, cache timer; on more, the next round from the remaining slots and the answers so far; on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then every slot not asked takes its first option and is listed under Assumptions Made (LAW.MX.4, LAW.MX.5, LAW.MX.6, LAW.MX.7, LAW.MX.9).
 5. Render the `matrix_plan`: one `matrix_plan` with target, legs, shape, seals, ceiling, model_tier, env_tier, cache_timer and sanitizers, each choice carrying the round that set it. Field sources, named so the checker holds them: target of MX.targets, MX.targets.count of them; legs of MX.os.3latest or MX.os.extended per MX.os.choice, each a MX.leg.ubuntu-latest, MX.leg.macos-latest or MX.leg.windows-latest row; shape one of MX.shape.single, MX.shape.ramified, MX.shape.matrix-jobs or MX.shape.manual; seals of MX.seals.light or MX.seals.heavy at MX.seals.count.light or MX.seals.count.heavy, carried MX.cred.transport with MX.cred.expiry dated; ceiling of MX.ceiling.per-job in MX.ceiling.portable form with MX.node.checker proven; model of MX.models at MX.effort.levels with MX.effort.cost.opus-5 or MX.effort.cost.fable-5, thinking per MX.thinking.hard-zero with MX.thinking.budget unset and MX.thinking.legacy parsing only; env of MX.env.timeouts, MX.env.flags and MX.env.output; cache of MX.cache.timer under MX.cache.polyarm.
 6. Emit the files the plan names, each with the repository SPDX header where its format allows a comment, UTF-8 LF without BOM, and re-read each; hold the gate file to LAW.XOS.6 by node lib/cross-os.mjs matrix --check and every value to its MX.san row; values in attribute position escape all five characters per ARG.embed.attr (LAW.ARGS.7); render one `emitted` per file with its bytes. Sanitizers hold MX.san.gha, MX.san.xxe, MX.san.cdata, MX.san.pcdata, MX.san.ndata, MX.san.yaml and MX.san.dispatch, MX.san.count of them (LAW.MX.8); render one `gate_grant` with its `grant` rows, one of CG.roles, CG.roles.count of them, CG.role.companion, CG.role.audit-runner or CG.role.scala-companion, tier CG.tier.leashed or CG.tier.unlocked of CG.tiers, under CG.bypass.does and CG.bypass.does-not-leashed or CG.bypass.unlocked-admits with CG.bypass.unlocked-keeps, ceiling CG.ceiling (LAW.CG.1, LAW.CG.2, LAW.CG.3, LAW.CG.4, LAW.CG.5, LAW.CG.6, LAW.CG.7, LAW.CG.8, LAW.CG.9).
 7. Render the `verdict`: green yes only when matrix --check passes and every sanitizer holds, partial when some do, no when the run emitted nothing; the release ending rides with it per LAW.MX.10.
 </process>
+
+<terminal_gate>
+On start and before the matrix plan, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -134,6 +140,7 @@ green [yes|partial|no]; failing: [row or none]
 
 <success_criteria>
 - Every probe was measured before any question was asked, and no question named a slot already filled
+- Work starts only after the gate choice start plus one terminal combo
 - No prompt asked more than ASK.max_total questions, and no round more than ASK.max_questions
 - Every static choice carried its preview, and thinking previews carried MX.thinking.note
 - Every preview kept the DAISY navPoint shape of `%preview.daisy;`: a label with a target pointer and a play order, pointing at the consequence and embedding never (LAW.ASK.18)

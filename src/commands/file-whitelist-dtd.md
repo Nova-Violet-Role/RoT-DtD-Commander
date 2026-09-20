@@ -23,6 +23,8 @@ argument-hint: "[extension or extensions to allow, or blank to read the list; --
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-list SYSTEM "../../dtd/cc-list.dtd">
   %cc-list;
   <!ELEMENT file_whitelist_run (args, walk, intake, entries, unlisted, verdicts, refused*, next_action, assumption_made*)>
@@ -64,11 +66,15 @@ The declarations this command reads: LIST.class.white for what an entry promises
 2. Walk the tree and count every extension present. This is the measurement FW.silence needs, and it is rendered as `walk`.
 3. Read both layers with `node lib/list.mjs show file white`, and read both black lists, because they decide what may not be written here (LAW.FW.3).
 4. Render `unlisted` before the intake: every extension present in this tree that the resulting white list would not name, with its file count, so the cost of the commitment is on the page before it is made.
-5. Run the intake (LAW.ASK.6). Ask for the production counterpart of each entry where one exists, and for what should happen to the extensions in `unlisted` — allow, mark gray or refuse.
+5. Run the intake (LAW.ASK.6). Ask for the production counterpart of each entry where one exists, and for what should happen to the extensions in `unlisted` — allow, mark gray or refuse. On start offer the terminal choice before step 8.
 6. Refuse a name either black list holds, with both entries and the edit. Refuse a drop of md unless every condition of LIST.md.condition holds, naming the one that failed (LAW.FW.1).
 7. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing; write nothing when it refuses.
 8. Write the entries with reason and date, read back from disk, render `entries`, then `verdicts`, any `refused`, and the `next_action`; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 </process>
+
+<terminal_gate>
+On start and before anything is written, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -128,6 +134,7 @@ Render the `file_whitelist_run` root declared in the DOCTYPE as the markdown bel
 <success_criteria>
 - Every entry written is a declaration under LIST.dir whose file FIXES the scope file and the class white
 - The extensions that would become refusals were measured and rendered before the first entry was written
+- Work starts only after the gate choice start plus one terminal combo
 - A production counterpart was asked for wherever one exists, and the code white list that must carry it was named
 - md was never removed unless every condition of the interlock held, and the refusal named the one that failed
 - Nothing was written when the reachability guard refused

@@ -167,7 +167,7 @@ argument-hint: [a path to walk, or blank for the current repository; --stage=alp
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -456,6 +456,41 @@ argument-hint: [a path to walk, or blank for the current repository; --stage=alp
 <!ENTITY LAW.CACHE.7 "The cache is the lightest form: NestedText, the CACHE.schematic schematic of cc-schematic, whose cells declare an angle-bracket literal, a hash comment, and none for expanded, reference, definition, escape, include, conditional, type and binary; three types, no implicit typing, no tag, no reference, no code, read whole in one pass and lighter than the markdown of the run it saves; a file in another form, over CACHE.max_bytes bytes, failing a guard, or carrying a construct the cells say none to is refused by name and the save is reported as not done.">
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
+
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
 
   
   
@@ -748,11 +783,15 @@ Local evidence first, and the two classes are never confused: a `possibility` of
 5. Build the possibilities from what the walk returned: every failing instrument, every disagreement between a declaration and the tree, is a `possibility` of class gap with its `evidence` naming the instrument and the path; every shape the codebase implies but does not declare is a possibility of class idea whose evidence names in adds what it would create. Give each its verb from this command's band, its `cost` with the file count and the risk, and its id (LAW.AMP.3, LAW.AMP.4).
 6. Drop every id the state record closed, then rank: gaps before ideas, then risk, then breadth. A refusal whose AMP.reopen.after runs have passed, or whose files moved since, returns as verdict reopen carrying refused_at, and is offered as the second offer it is (LAW.AMP.6, LAW.AMP.12).
 7. Set the page: resume the size from the state record, move it by what the last round earned, and hold it under the ceiling the walk's own size allows; print the size beside the unshown count (LAW.AMP.5, LAW.AMP.11).
-8. Ask in rounds of four (LAW.ASK.6, and the raised count of LAW.ASK.11): round one offers the highest page of possibilities as a mark question with the unshown counted beside them, and asks the scope and the intensity; every later round is generated from the answers just given, pulling in the layers and files they opened. Present the gate after the last round, or earlier when a round would ask nothing new.
+8. Ask in rounds of four (LAW.ASK.6, and the raised count of LAW.ASK.11): round one offers the highest page of possibilities as a mark question with the unshown counted beside them, and asks the scope and the intensity; every later round is generated from the answers just given, pulling in the layers and files they opened. Present the gate after the last round, or earlier when a round would ask nothing new; on start offer the terminal choice.
 9. Write the study with `node lib/ceiling.mjs 120 node lib/amplify.mjs study <run.json>`, the run's own data as JSON, which writes every document and refuses a study missing a kind (LAW.AMP.7): one `document` of kind family per layer walked, one of kind ledger ranking every possibility of this run, one of kind roadmap ordering the kept ones toward the named release, and one of kind handoff carrying what the next run needs. Print every path.
 10. Recognise the release: `node lib/ceiling.mjs 60 node lib/amplify.mjs recognize <verb numbers of the kept>`, with --stage overriding the class. Render the `release` element with its class, its from, its to and taken no; name the version and never take it (LAW.AMP.8).
 11. Write the state record back with this run's number, the generator offset, the verb it ended on, the release badge and every possibility with its verdict; then render `next_verb` with `AMPLIFY.next`, the verb above `AMPLIFY.high`, and the command that owns it, the band having run from `AMPLIFY.low` and the kind of change being `AMPLIFY.what` (LAW.AMP.4, LAW.AMP.6).
 </process>
+
+<terminal_gate>
+On gate choice start and before the walk of step 4, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -816,6 +855,7 @@ class [major|mid|minor|alpha|beta|pre] from [x.y.z] to [x.y.z] taken no
 - The four documents are written and their paths printed
 - A release is named and never taken, and the version the manifests carry is the one the recognizer computes from the kept verbs (LAW.AMP.14)
 - The four guards hold: the argument walked and never evaluated, the study written literally, every possibility escaped into PCDATA, a foreign parameter entity reported as data (LAW.AMP.13)
+- Work starts only after the gate choice start plus one terminal combo
 - The band is the one the subset pins, the guards are the ones it names, and the page is the size the answering earned (LAW.AMPLIFY.1, LAW.AMPLIFY.2, LAW.AMPLIFY.3)
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

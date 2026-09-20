@@ -15,6 +15,8 @@ argument-hint: [what is stored, or leave blank; --no-gate for autonomous default
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT db_creation (args, intake, schema, store, migration, proof, assumption_made*)>
   <!ELEMENT schema (record+)>
   <!ELEMENT record (field+)>
@@ -67,12 +69,16 @@ The discipline is the one the trust contract of RoT DTD GOAL learned from column
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and what is stored; render the walk under `args`. A layer is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.DB.1 to ASK.DB.4 as one AskUserQuestion call, four options each plus Other; render the round.
-3. Present the gate; on more, round 2 of 3 with ASK.DB.5 to ASK.DB.8; on more again, round 3 of 3 with ASK.DB.9 to ASK.DB.12; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.DB.5 to ASK.DB.8; on more again, round 3 of 3 with ASK.DB.9 to ASK.DB.12; on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `schema`: one `record` per record with its file, and one `field` per field with n, name, type, since and key (LAW.DB.1, LAW.DB.2); render the `store` with its kind and path; render the `migration` with its policy (LAW.DB.5).
 5. Write the contract dtd/<name>-schema.dtd: the RECORD entities in DB.field.format, the twin sequence elements, the store enumeration, the NOTATIONs and NDATA entities when chosen, and a LAW entity per promise the intake made; include cc-core; answer-derived names embedded as ARG.embed.pcdata in every file these steps write (LAW.ARGS.5).
 6. Write the module lib/<name>-store.mjs for the chosen kind: write a row, read rows, refuse a torn row with its line, keep the cat-readable form when chosen (LAW.DB.3, LAW.DB.4); write the verifier checker/<name>-schema.mjs: dense numbers, since monotone, twin agreement, live column counts.
 7. Run the control in the foreground under a timeout with stdin closed: write one row, read it back equal, plant a torn row in a scratch copy and show it refused, run the verifier on the schema and on a mutated copy with a gap and show the gap named; render the `proof` with tripped yes (LAW.DB.6); a control that did not trip stops the command before the report.
 </process>
+
+<terminal_gate>
+On start and before the schema, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -120,6 +126,7 @@ wrote 1 row, read back equal; torn row at line [n] refused; verifier: schema ok,
 
 <success_criteria>
 - Round one ran before any file was written
+- Work starts only after the gate choice start plus one terminal combo
 - Every record is declared twice and the two agree; numbers are dense and since is monotone
 - The torn row was refused with its line and the mutated schema was refused with its gap
 - Every file written carries the chosen SPDX identifier

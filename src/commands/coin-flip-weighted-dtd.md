@@ -15,6 +15,8 @@ argument-hint: [side A or side B; --odds 70; leave blank to be asked; --debug pr
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT weighted (args, intake, call, toss, result, assumption_made*)>
   <!ELEMENT call (side, side)>
   <!ELEMENT side (#PCDATA)>
@@ -49,11 +51,15 @@ The weight is the operator's, quoted; the entropy is real, one execution of WEIG
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the two sides and, after the option odds, the whole number; render the walk under `args`.
-2. When a side or the odds is missing, round 1 of 3: ask ASK.WEIGHT.1 and ASK.WEIGHT.2 in one call; present the gate; on start, bind them (LAW.WEIGHT.1).
+2. When a side or the odds is missing, round 1 of 3: ask ASK.WEIGHT.1 and ASK.WEIGHT.2 in one call; present the gate; on start, offer the terminal choice, then bind them (LAW.WEIGHT.1).
 3. Render the `call` with odds and the two `side` elements, heads with weight odds and tails with weight one hundred minus odds.
 4. Run `node lib/ceiling.mjs 10 node -e "console.log(require('node:crypto').randomInt(100))" < /dev/null`, quote its stdout, render the `toss` with the printed value (LAW.WEIGHT.2).
 5. Render the `result`: heads when the value is below the odds, tails otherwise, with the rule written beside it (LAW.WEIGHT.3).
 </process>
+
+<terminal_gate>
+On start and before the toss, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -93,6 +99,7 @@ rule: heads when printed is below the odds; winner: [heads|tails], [the side by 
 
 <success_criteria>
 - The odds were quoted from the operator and never adjusted
+- Work starts only after the gate choice start plus one terminal combo
 - The printed value came from a command that ran and was quoted
 - The rule is stated beside the result and re-derives the winner
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer

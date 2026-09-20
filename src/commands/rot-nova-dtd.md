@@ -13,6 +13,8 @@ argument-hint: [question or decision; blank for the current discussion; --no-gat
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-rot SYSTEM "../../dtd/cc-rot.dtd">
   %cc-rot;
   <!ELEMENT rot_nova (router_state, intake, tier1, axis, axis, axis, axis, axis, axis, decision, role, role, role, role, role?, role?, purification, convergence, tension*, expert+, interceptor*, gauge, bound, stanza, next_action)>
@@ -47,7 +49,7 @@ Nova is the sovereign intent layer of the RoT MoE packet and the lead of the CON
 
 <process>
 1. Set `router_state`: if a line beginning with "RoT MoE ::" (the router marker) is present in this session's hook context, quote its most recent occurrence verbatim with present yes; otherwise present no and say in one line that the router is absent. Never re-type a gauge number from memory (LAW.ROT.4).
-2. Open the `intake` (cc-ask): analyse the argument into known and gap slots, then ask with AskUserQuestion, header "Nova", the questions the context leaves open, at most four: the stakes of a wrong answer (low, real, irreversible); the horizon that matters (now, months, years); which lens the Socio already suspects is needed (nova, chroma, venom, antivenom, other); whether to run the STRATEGIC lane profile (PROFILE.STRATEGIC) or the defaults. Present the gate (GATE.question with GATE.start, GATE.more, GATE.add) and loop until start. With --no-gate skip every question and list each assumption under Assumptions Made (LAW.ROT.6).
+2. Open the `intake` (cc-ask): analyse the argument into known and gap slots, then ask with AskUserQuestion, header "Nova", the questions the context leaves open, at most four: the stakes of a wrong answer (low, real, irreversible); the horizon that matters (now, months, years); which lens the Socio already suspects is needed (nova, chroma, venom, antivenom, other); whether to run the STRATEGIC lane profile (PROFILE.STRATEGIC) or the defaults. Present the gate (GATE.question with GATE.start, GATE.more, GATE.add) and loop until start; on start offer the terminal choice. With --no-gate skip every question and list each assumption under Assumptions Made (LAW.ROT.6).
 3. Scan the question against the TIER 1 stems, STEMS.CLINICAL, STEMS.EXECUTIVE, STEMS.EMPATHIC, STEMS.STRATEGIC, STEMS.CREATIVE, STEMS.PREDICTIVE, STEMS.STEALTH, STEMS.RECURSIVE, STEMS.FORGE, and STEMS.CONVERGENT when none match; render the `tier1` element with the lane and the stems that matched (LAW.ROT.8, LAW.NOVA.1).
 4. Read the six `axis` elements: surface, need, emotion, complexity, stakes, domain; one line each.
 5. Write the `decision`: CONFIRM, OVERRIDE, BOOST, FUSE or ELEVATE, with the lenses it summons named in lenses and the lane it lands on in lane; an OVERRIDE names the stems that misled. FUSE names two lenses and computes their hybrid by HYBRID.law in the stanza (LAW.ROT.3).
@@ -61,6 +63,10 @@ Nova is the sovereign intent layer of the RoT MoE packet and the lead of the CON
 13. Close with the `stanza` of nova carrying its confidence ci (LAW.ROT.2), and the `bound` element quoting the lens's may-never clause from LENS.nova with held yes or no (LAW.ROT.5).
 14. End with one `next_action`.
 </process>
+
+<terminal_gate>
+On start and before step 3, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -159,6 +165,7 @@ rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
 
 <success_criteria>
 - The intake asked only about real gaps, at most four questions, and ended at the gate or listed its assumptions
+- Work starts only after the gate choice start plus one terminal combo
 - router_state quotes the router marker verbatim or declares it absent
 - Every expert of the lens appears engaged or not, every interceptor that fired is named, and the gauge shows every input of its term
 - The stanza carries ci and the bound is held

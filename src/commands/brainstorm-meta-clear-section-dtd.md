@@ -19,6 +19,8 @@ argument-hint: [topic or the prompt to carry over; --verbose prints the ideas di
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT clear_section (args, intake, brainstorm, launch, transmigration, instruction, assumption_made*)>
   <!ELEMENT brainstorm (idea+)>
   <!ELEMENT idea (#PCDATA)>
@@ -62,13 +64,17 @@ The shape is borrowed from the instruction channel of the RoT DTD GOAL trust con
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the topic or the prompt; render the walk under `args`.
 2. Round 1 of 3: ask ASK.CLEAR.1 to ASK.CLEAR.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (select); on more again, round 3 of 3 with ASK.CLEAR.5 (elaborate: each kind elaborated), ASK.FORM.1 and ASK.FORM.2 (check); the ideas of the brainstorm are then marked (mark: each idea elaborated, the marked ones kept); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (select); on more again, round 3 of 3 with ASK.CLEAR.5 (elaborate: each kind elaborated), ASK.FORM.1 and ASK.FORM.2 (check); the ideas of the brainstorm are then marked (mark: each idea elaborated, the marked ones kept); on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `brainstorm`: the chosen count of `idea` elements, ranked, the kept ones marked; the ideas come from the topic, the conversation and the files named in it, each idea one sentence with a verb.
 5. Render the `launch`: the schematic chosen (nt when none was), the kind (prompt when none was), the creator they select, then the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was) (LAW.CLEAR.6).
 6. Compose the bigger prompt: the goal, the state as of this run, the files touched, the next step, the kept ideas folded into the prompt the operator gave, whole, and a known-slots block naming the schematic, the schemas, the kind and the forms chosen (LAW.CLEAR.2, LAW.CLEAR.3, LAW.CLEAR.6).
 7. Write the handoff file under CLEAR.dir as `<date>-<slug>.md`, UTF-8 LF without BOM with the SPDX header, re-read it and render the `transmigration` with path and bytes; the prompt carried whole as ARG.embed.cdata (LAW.ARGS.5, LAW.CLEAR.2).
 8. Render the `instruction` with goal and step: step one is CLEAR.command, step two is the launch line, the at-sign reference to the handoff file followed by a slash, the creator named in the launch and the purpose of the bigger prompt as its argument.
 </process>
+
+<terminal_gate>
+On start and before the brainstorm, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -125,6 +131,7 @@ step 2: [the launch line: an at-sign reference to the handoff file, then /[creat
 - The clear command was never run by this command; the instruction names it as a step
 - The handoff file holds the prompt byte for byte, the goal, the state, the files and the next step, and was re-read
 - Every idea carries a rank and a kept mark
+- Work starts only after the gate choice start plus one terminal combo
 - The launch names the creator that matches the schematic and the kind, and the handoff carries the schematic, the schemas and the forms as known slots
 - The instruction is its own element, with a goal and a step, and says nothing about what happened
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer

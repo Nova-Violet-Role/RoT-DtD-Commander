@@ -23,6 +23,8 @@ argument-hint: "[code class or classes to refuse, such as a compiler, an artifac
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-list SYSTEM "../../dtd/cc-list.dtd">
   %cc-list;
   <!ELEMENT code_blacklist_run (args, walk, intake, entries, implied, verdicts, refused*, next_action, assumption_made*)>
@@ -64,12 +66,16 @@ The declarations this command reads: LIST.class.black for what refusal means, LI
 1. Walk the argument with the cc-args grammar: bare words are class names, `--drop` takes one, `--machine` selects the layer, `--no-gate` skips the intake. The walk splits like shell words and never evaluates.
 2. Measure before asking: read the build files and the extensions present with `node lib/ceiling.mjs 120 node lib/starlist.mjs measure`, so the intake can say what this project would lose. Render it as `walk`.
 3. Read both layers with `node lib/list.mjs show code black`, and render what each holds with its layer.
-4. Run the intake (LAW.ASK.6). Ask only what the measurement cannot answer: which classes, the reason for each, the layer, and whether the softer CB.sibling was meant. Name CB.reaches in the round that proposes the entry, so the install consequence is read before it is chosen.
+4. Run the intake (LAW.ASK.6). Ask only what the measurement cannot answer: which classes, the reason for each, the layer, and whether the softer CB.sibling was meant. Name CB.reaches in the round that proposes the entry, so the install consequence is read before it is chosen. On start offer the terminal choice before step 6.
 5. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing. A class this project's whitelisted artifacts need in order to exist is refused with both entries named, and nothing is written (LAW.CB.3).
 6. Write the entry with its reason and today's date, read the file back, and render `entries` from disk; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 7. Render `implied`: the file rule this code entry carries for free, stated once so no one writes it twice.
 8. Render `verdicts`, then `refused` for anything the guard stopped, then the `next_action`.
 </process>
+
+<terminal_gate>
+On start and before the entry is written, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -130,6 +136,7 @@ Render the `code_blacklist_run` root declared in the DOCTYPE as the markdown bel
 - Every entry written is a declaration under LIST.dir whose file FIXES the scope code and the class black
 - The implied file rule was rendered once and never written as a second entry
 - The install consequence of CB.reaches was named in the intake before the entry was written
+- Work starts only after the gate choice start plus one terminal combo
 - The reachability guard ran before the write and refused any class a whitelisted artifact needs
 - Nothing was written when the guard refused
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer

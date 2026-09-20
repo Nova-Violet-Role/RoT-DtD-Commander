@@ -19,6 +19,8 @@ argument-hint: [what the meta-prompt is for, or leave blank; --no-gate for auton
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT meta_forge (args, intake, sections, schemas, forms, embedding, file, guards, proof, assumption_made*)>
   <!ELEMENT embedding (#PCDATA)>
   <!ELEMENT file (#PCDATA)>
@@ -57,13 +59,17 @@ The schematic is pinned: YAML front matter naming the parts, then house callouts
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; words after ARG.end that read schematic=, schemas= or forms= are known slots placed by a router and fill those questions without asking (LAW.ASK.1); render the walk under `args`. This is a create- command, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.META.1 to ASK.META.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, check), ASK.SCHEMA.2 (select), ASK.FORM.1 and ASK.FORM.2 (check), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.META.5 (elaborate: each voice elaborated before the ask), ASK.META.6 (select), ASK.META.7 (select) and ASK.META.8 (mark: each license elaborated, the marked ones joined into the expression); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, check), ASK.SCHEMA.2 (select), ASK.FORM.1 and ASK.FORM.2 (check), the schemas and the forms asked apart; on more again, round 3 of 3 with ASK.META.5 (elaborate: each voice elaborated before the ask), ASK.META.6 (select), ASK.META.7 (select) and ASK.META.8 (mark: each license elaborated, the marked ones joined into the expression); on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `sections`: one `section` per name of SCHEMA.meta.sections, in order, each with its text; render the `schemas`: one `semantic` per schema chosen, its `part` elements from the SEMANTIC entity of that schema with occurs one, optional or many, each rendered from the schema's cell for polyalarm: print its skeleton with node lib/schematic.mjs render, the schema name and polyalarm, and fill the bracketed words in place (LAW.META.6); render the `forms`: one `form` per kind chosen by ASK.FORM.1 and ASK.FORM.2 with its variant and expansion no, nt alone when none was chosen (LAW.META.7); render the `embedding`: the reference syntax SCHEMA.polyalarm.reference, the literal syntax SCHEMA.polyalarm.literal, and the cc-args class chosen for the argument words.
 5. Write the `file` <name>.<schematic>.md: a polyglot whose Markdown layer is the alarm shape, the sections in order, every concept in the syntax the table declares, the SPDX header where a comment is allowed, UTF-8 LF without BOM; re-read it and render path and bytes (LAW.META.4).
 6. Run the cc-form guards of this schematic's kind and of every form chosen on the file with node lib/form.mjs and render one `guard` per line printed, held yes or no; a guard that did not hold stops the command.
 7. Run the proof: node lib/schematic.mjs check on the file, polyalarm and the schemas chosen comma-separated prints one line per schema with its parts read back by form in order, and a FAIL line stops the command; the sections are present in order; then plant one syntax outside the table in a scratch copy (a sixth callout type, an expanding heredoc around an argument word, a YAML tag, a tab in NestedText, an unescaped ampersand in parsed text, or an inner layer that expands) and show the guards or the section check refuse it; render the `proof` with one line per schema and tripped yes (LAW.SCHEMA.5).
 8. Record the run under artifacts with this command's generated filename and report.
 </process>
+
+<terminal_gate>
+On start and before the sections, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -127,6 +133,7 @@ sections in order: yes; planted [the out-of-table syntax]: refused by [guard or 
 
 <success_criteria>
 - Round one ran before any file was written
+- Work starts only after the gate choice start plus one terminal combo
 - Every syntax in the file is one the SCHEMA.polyalarm.* table declares
 - The argument words are embedded in a declared class and never evaluated
 - Every schema chosen carries its parts in order as its cell for this schematic renders them, and no required part is missing

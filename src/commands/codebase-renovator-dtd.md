@@ -18,6 +18,8 @@ argument-hint: "[the survey markdown and the plan markdown to stand on, in that 
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
   <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
@@ -61,13 +63,17 @@ The ladder is declared, not remembered: geometry.dtd carries GEOM.verb.1 to GEOM
 1. Walk the argument through cc-args and render `args`: the first two positional words are the survey and the plan under GEOM.dir; read --no-gate, --verbose and --debug (LAW.ARGS.2, LAW.ARGS.6).
 2. Check the preconditions before anything else, with `node lib/ceiling.mjs 60 node lib/geometry.mjs renovate <survey.md> <plan.md>` in the foreground, exit code read directly. A refusal is printed by name: render `survey_ref` and `plan_ref` as found, `renovation` with one line saying nothing was changed, and close naming the band that is missing (LAW.GEOM.4, LAW.RENOVATOR.4).
 3. Read the plan's bounds against its survey with `node lib/ceiling.mjs 60 node lib/geometry.mjs plan --check <survey.json> <plan.json>`: the bounds exceeded are the changes this run may make, and a bound that holds is not a reason to change anything (LAW.GEOM.3).
-4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope, then a mark question over the exceeded bounds and the verbs of RENOVATOR.band each change would take, each option carrying a cut preview with a `figure` of the shape after the change (LAW.ASK.13, LAW.ASK.16). Present the gate; with --no-gate every gap is an `assumption_made`.
+4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope, then a mark question over the exceeded bounds and the verbs of RENOVATOR.band each change would take, each option carrying a cut preview with a `figure` of the shape after the change (LAW.ASK.13, LAW.ASK.16). Present the gate; on start offer the terminal choice before step 5; with --no-gate every gap is an `assumption_made`.
 5. Make the marked changes, one file at a time, and render `renovation` with one `change` per file: the verb, the file, the shape before and the shape after, each shape a measure a later survey can take (LAW.RENOVATOR.3).
 6. Write the record with `node lib/ceiling.mjs 60 node lib/geometry.mjs renovate <survey.md> <plan.md> --write`, then add the change rows to it, rows embedded as ARG.embed.pcdata (LAW.ARGS.5); the colophon and the digests are the engine's (verbs 47 and 52).
 7. Render `figure`: the survey's plate with the changed shapes marked, the cut figure in the answer marked guessed (LAW.GEOM.8, LAW.FIG.4).
 8. Certify: run the gate on this leg with `node lib/ceiling.mjs 1800 npm run gate` in the foreground and render `certified` with three `leg` elements, the host leg pass or fail by the exit code read directly and the two others unmeasured, to be filled from the workflow once it has run on them (LAW.XOS.2, LAW.RENOVATOR.5).
 9. Render `artifact` naming the renovation record and `next_band` naming RENOVATOR.next and codebase-generator-dtd, the production of what the three agreed on (LAW.RENOVATOR.1).
 </process>
+
+<terminal_gate>
+On start and before any file is touched, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -133,6 +139,7 @@ plate [path.svg] with the changed shapes marked
 
 <success_criteria>
 - The preconditions were checked before any file was touched, and a refusal ended the run with nothing changed
+- Work starts only after the gate choice start plus one terminal combo
 - Every change names its file and the shape before and after
 - The record closes with a colophon and the digests of the survey and the plan
 - The certified element carries three legs, the host leg measured by the gate and the others unmeasured, never assumed

@@ -380,7 +380,7 @@
 <!ENTITY LEX.gloss.13 "ledger|the ten-field append-only line the Adiutor writes per run|dtd/adiutor.dtd RECORD.run">
 <!ENTITY LEX.gloss.14 "monitor|a persistent process beside the hooks, run only by hand since 5.0.0|monitors/manual.json">
 <!ENTITY LEX.gloss.15 "hook|a command Claude Code runs at an event, armed only by the operator|lib/arm.mjs">
-<!ENTITY LEX.gloss.16 "gate|the four-way choice after a round: start, more, add, impactful|dtd/cc-ask.dtd">
+<!ENTITY LEX.gloss.16 "gate|the five-way choice after a round: start, more, add, impactful, save|dtd/cc-ask.dtd">
 <!ENTITY LEX.gloss.17 "round|one AskUserQuestion call of one to four questions, four options each plus Other|dtd/cc-ask.dtd">
 <!ENTITY LEX.gloss.18 "impactful|the one to four ranked selections the model offers on the gate, each with its provenance|dtd/cc-ask.dtd">
 <!ENTITY LEX.gloss.19 "form|the declared shape of a text, its content CDATA|dtd/cc-form.dtd">

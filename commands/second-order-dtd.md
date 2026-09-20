@@ -96,7 +96,7 @@ argument-hint: [action or leave blank for current context; add --no-gate to skip
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -386,6 +386,41 @@ argument-hint: [action or leave blank for current context; add --no-gate to skip
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
 
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
   <!ELEMENT second_order (action, effect+, intake?, loop*, delayed*, assessment, assumption_made*)>
   <!ELEMENT action (#PCDATA)>
   <!ELEMENT effect (#PCDATA)>
@@ -428,12 +463,16 @@ Ask "and then what?" until the chain is declared, not implied. First-order think
 <process>
 1. State the `action` in one sentence.
 2. List the first-order `effect` elements: immediate, obvious consequences. Give each an id (E1, E2, ...), order 1, no causes, a sign (plus, minus, mixed), a horizon (now, months, years) and a confidence.
-3. Chain gate. Skipped when the argument contains --no-gate or the session is non-interactive. Otherwise use AskUserQuestion once: header "Trace", multiSelect true, question "Which effects should the chain follow to third order?", options are up to four first-order effects by id. The reply arrives on the ask-answer channel and picks the chains traced to order 3; the rest stop at order 2. In autonomous mode trace every chain to order 2, the two largest-magnitude chains to order 3, and write one `assumption_made` saying so.
+3. Chain gate. Skipped when the argument contains --no-gate or the session is non-interactive. Otherwise use AskUserQuestion once: header "Trace", multiSelect true, question "Which effects should the chain follow to third order?", options are up to four first-order effects by id. The reply arrives on the ask-answer channel and picks the chains traced to order 3; the rest stop at order 2. On the replies offer the terminal choice before step 4. In autonomous mode trace every chain to order 2, the two largest-magnitude chains to order 3, and write one `assumption_made` saying so.
 4. For each first-order effect ask "and then what happens?" and write order-2 effects with causes set to the parent id. Continue to order 3 on the chosen chains.
 5. Name every `loop`: two or more effects that feed each other, reinforcing or balancing, by ids in between.
 6. Name every `delayed` consequence: the effect id and surfaces_after (a horizon or a trigger).
 7. Write the `assessment`: worth yes, partial or no, and decided_by listing the effect ids that carried the decision.
 </process>
+
+<terminal_gate>
+On the chain replies and before the second order, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -491,6 +530,7 @@ worth: [yes|partial|no] decided by: E2, E5, E7
 
 <success_criteria>
 - Traces causal chains beyond the obvious effects, with every link declared by id
+- Work starts only after the chain replies plus one terminal combo
 - Names feedback loops and unintended consequences instead of implying them
 - Reveals delayed costs or benefits with the horizon at which they surface
 - Distinguishes actions that compound well from those that do not, by sign and loop kind

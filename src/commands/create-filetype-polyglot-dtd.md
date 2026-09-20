@@ -25,6 +25,8 @@ argument-hint: [what the file type is for, or leave blank; --no-gate for autonom
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT filetype_forge (args, intake, filetype, schemas, forms, variants, license, exemplar, declaration, guards, proof, assumption_made*)>
   <!ELEMENT filetype (#PCDATA)>
   <!ELEMENT variants (variant+)>
@@ -77,13 +79,17 @@ Nested answers declare their links in TYPE.rel under TYPE.key (LAW.TYPE.1, LAW.T
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; words after ARG.end that read name=, ext=, schemas= or forms= are known slots placed by the router and fill those questions without asking (LAW.ASK.1); render the walk under `args`. Round one always runs (LAW.FTPOLYGLOT.1).
 2. Round 1 of 3: ask ASK.FTPOLYGLOT.1 (select), ASK.FTPOLYGLOT.2 (select), ASK.FTPOLYGLOT.3 (select) and ASK.FTPOLYGLOT.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, check), ASK.SCHEMA.2 (select), ASK.FORM.1 (check) and ASK.FTPOLYGLOT.5 (mark: each token of FTPOLYGLOT.tokens elaborated from SCHEMA.polyglot.reference before the ask, the marked ones embedded); on more again, round 3 of 3 with ASK.FTPOLYGLOT.6 (elaborate: each embedding elaborated), ASK.LICENSE.1 (mark), ASK.FTPOLYGLOT.7 (select) and ASK.FTPOLYGLOT.8 (select); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMA.1 (the families, check), ASK.SCHEMA.2 (select), ASK.FORM.1 (check) and ASK.FTPOLYGLOT.5 (mark: each token of FTPOLYGLOT.tokens elaborated from SCHEMA.polyglot.reference before the ask, the marked ones embedded); on more again, round 3 of 3 with ASK.FTPOLYGLOT.6 (elaborate: each embedding elaborated), ASK.LICENSE.1 (mark), ASK.FTPOLYGLOT.7 (select) and ASK.FTPOLYGLOT.8 (select); on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `filetype`: name, extension, notation, kind polyglot (LAW.FTPOLYGLOT.2); the `schemas` with one `semantic` per schema chosen and its `part` elements; the `forms` with one `form` per kind chosen; the `variants` with one `variant` per token of FTPOLYGLOT.tokens, embedded yes for the marked ones; the `license` checked against LICENSE.list (LAW.LICENSE.1).
 5. Write the exemplar under FTPOLYGLOT.dir as the name followed by the extension: the skeleton of every schema chosen from node lib/schematic.mjs render, the marked tokens embedded the way ASK.FTPOLYGLOT.6 chose, headed by the license where the form allows; write the declaration as the name followed by .notation.dtd with one NOTATION line and one entity per marked token; re-read both and render the `exemplar` and the `declaration` with their bytes (LAW.FTPOLYGLOT.4).
 6. Run the cc-form guards on the exemplar with node lib/form.mjs and its kind, and on the declaration as xml; render one `guard` per line under `guards`; a guard that did not hold stops the command (LAW.FTPOLYGLOT.5).
 7. Run the proof: count every marked token in the exemplar with a fixed-string search (grep -F) and show each present verbatim; then plant one token in an expanding position in a scratch copy and run the guard or node lib/schematic.mjs check on it; render the `proof` with the counts, the planted position, the refusal and tripped yes (LAW.FTPOLYGLOT.3, LAW.FTPOLYGLOT.6).
 8. Record the run under artifacts with this command's generated filename when ASK.FTPOLYGLOT.7 chose it, and report.
 </process>
+
+<terminal_gate>
+On start and before the filetype, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -157,6 +163,7 @@ planted [token] in [the expanding position]: refused by [guard or check]; trippe
 
 <success_criteria>
 - Round one ran before anything was written
+- Work starts only after the gate choice start plus one terminal combo
 - The schematic is polyglot and was never asked; the kind is polyglot
 - Every marked token is present verbatim in the exemplar and never expands
 - Both files held every guard, and the planted expanding token was refused

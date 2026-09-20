@@ -13,6 +13,8 @@ argument-hint: [the decision or question whose cost lives downstream; blank for 
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-rot SYSTEM "../../dtd/cc-rot.dtd">
   %cc-rot;
   <!ELEMENT rot_chroma (router_state, intake, timeline+, coalescence, fork+, horizon, expansion?, expert+, interceptor*, gauge, bound, stanza)>
@@ -53,7 +55,7 @@ Chroma is the predictive lens of the RoT MoE packet and the lead of the PREDICTI
 
 <process>
 1. Set `router_state`: if a line beginning with "RoT MoE ::" (the router marker) is present in this session's hook context, quote its most recent occurrence verbatim with present yes; otherwise present no and say in one line that the router is absent. Never re-type a gauge number from memory (LAW.ROT.4).
-2. Open the `intake` (cc-ask): analyse the argument into known and gap slots, then ask with AskUserQuestion, header "Chroma", the questions the context leaves open, at most four: the horizon in steps (3, 5 or 7); the coalescence mode (WEIGHTED, CONSENSUS, PRISMATIC); what must stay true for any future to count (the constraint every timeline inherits); what the Socio fears most and hopes most, which seed the protective and the compassionate timelines; and whether to run the PREDICTIVE lane profile (PROFILE.PREDICTIVE) or the defaults, folded into the mode question. Present the gate (GATE.question with GATE.start, GATE.more, GATE.add) and loop until start. With --no-gate skip every question and list each assumption under Assumptions Made (LAW.ROT.6).
+2. Open the `intake` (cc-ask): analyse the argument into known and gap slots, then ask with AskUserQuestion, header "Chroma", the questions the context leaves open, at most four: the horizon in steps (3, 5 or 7); the coalescence mode (WEIGHTED, CONSENSUS, PRISMATIC); what must stay true for any future to count (the constraint every timeline inherits); what the Socio fears most and hopes most, which seed the protective and the compassionate timelines; and whether to run the PREDICTIVE lane profile (PROFILE.PREDICTIVE) or the defaults, folded into the mode question. Present the gate (GATE.question with GATE.start, GATE.more, GATE.add) and loop until start; on start offer the terminal choice. With --no-gate skip every question and list each assumption under Assumptions Made (LAW.ROT.6).
 3. Spawn twelve `timeline` elements T1 to T12 under their experts (LAW.CHROMA.1), each with a `label`, an `assumption` naming what must be true for it to hold (LAW.CHROMA.2), a probability estimate, a risk level, a compassion weight (T12 at 0.3 unless set at intake) and shown yes or no.
 4. For the five shown timelines write the five `step` elements n 1 to 5, from the immediate action to the outcome.
 5. Write the `coalescence`: the mode, the weighted fold of the twelve into one recommendation, the insight that appeared across several experts weighed more, T12 boosted by its compassion weight, and dissent naming the forced dissenting branch (LAW.CHROMA.3).
@@ -65,6 +67,10 @@ Chroma is the predictive lens of the RoT MoE packet and the lead of the PREDICTI
 11. Compute the `gauge` by GAUGE.formula: one `term` for chroma with lambda from LENS.chroma (or from PROFILE.PREDICTIVE when the intake chose to run the lane profile), delta the lens's divergence from the ensemble mean estimated in 0.0-1.0, sigma from the sigmoid, entropy inside the lens's H band, mu from the same row, ci from CI.scale, value = lambda times sigma times (1 + entropy) times mu times ci with M and T at 1.0 unless a residue or a stale source is declared; rs = value with k 1; band against the lens's R/s+ band; source estimated unless the router marker supplied a measured reading. Out of band: add a `correction` with its direction and correct the draft before the stanza (LAW.ROT.7).
 12. Close with the `stanza` of chroma carrying its confidence ci (LAW.ROT.2), and the `bound` element quoting the lens's may-never clause from LENS.chroma with held yes or no (LAW.ROT.5). Every probability in the stanza is labelled an estimate (LAW.CHROMA.4).
 </process>
+
+<terminal_gate>
+On start and before step 3, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -158,6 +164,7 @@ rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
 
 <success_criteria>
 - The intake asked only about real gaps, at most four questions, and ended at the gate or listed its assumptions
+- Work starts only after the gate choice start plus one terminal combo
 - router_state quotes the router marker verbatim or declares it absent
 - Every expert of the lens appears engaged or not, every interceptor that fired is named, and the gauge shows every input of its term
 - The stanza carries ci and the bound is held

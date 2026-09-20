@@ -17,6 +17,8 @@ argument-hint: [phase name and git range, or leave blank to audit the working tr
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % companions-gate SYSTEM "../../dtd/companions-gate.dtd">
   %companions-gate;
   <!ELEMENT companion_session (task, intake, leg+, findings, assumption_made*)>
@@ -58,11 +60,15 @@ Run the Scratchpad Companion on one build phase of this repository for <quoted t
 <process>
 1. Check whether phase and range were posted in the argument; if not, use AskUserQuestion with the task question to set the `task`.
 2. Ask round one about the gaps: legs (ASK.CP.legs), model (ASK.CP.model), effort (ASK.CP.effort), grant tier (ASK.CP.grant); each question bilateral with Other beside its options (LAW.ASK.7); chain round two while open detail remains, at most ASK.max_total questions in all.
-3. Present the gate after each round; loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops.
+3. Present the gate after each round; loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops. On start offer the terminal choice before step 4.
 4. Render one `grant` element per leg under companions-gate before anything launches: role companion, the tier granted, model, effort and ceiling (LAW.CG.6); a leg without a rendered grant never launches.
 5. Run each leg in the foreground in scope order sonnet, opus, fable: `bash checker/companion-audit-<script>.sh <phase> <range> <out> <model>` with stdin closed and the granted ceiling; record one `leg` element per run with the verdict the scorer returns. Rounds and answers travel the bus over BUS.classes with the trust each class carries (LAW.BUS.1).
 6. Read the stamped findings .nt back whole in one gulp, reverse (LAW.CG.4); a ceiling that fired (exit 124) is UNAUDITED, never passed (LAW.COMPANION.5).
 </process>
+
+<terminal_gate>
+On start and before the grants, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -108,6 +114,7 @@ Warnings inside the findings carry their alarm class: GLOSSARY.classes, four per
 - Every leg carries its rendered grant, scope, model, effort and scored verdict; a leg without a grant never launched
 - The findings file was read back whole and carries the stamp of the run that wrote it (LAW.COMPANION.7)
 - Execution started only after the gate choice start, or in autonomous mode with every assumption listed
+- Legs launch only after one terminal combo
 - Every LAW.* entity the run leans on holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

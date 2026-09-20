@@ -26,6 +26,8 @@ argument-hint: [space to size or leave blank for current context]
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT count (args, intake, text_desc, space, bound, bound, method, feasibility)>
   <!ELEMENT space (#PCDATA)>
   <!ELEMENT bound (#PCDATA)>
@@ -55,7 +57,7 @@ The Unimaginable Mathematics of Borges' Library of Babel works out how large the
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
-2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start offer the terminal choice, then proceed with every unasked question at its first option; render the round under `intake`.
 3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
 4. Describe the `space`: what one element is and what varies.
 5. Write the lower `bound`: the smallest the space can be, with the multiplication that produced it and a confidence.
@@ -63,6 +65,10 @@ The Unimaginable Mathematics of Borges' Library of Babel works out how large the
 7. Write the `method`: how one element is checked and how many can be checked per minute, measured if a check was actually run, otherwise reasoned.
 8. Write the `feasibility`: upper bound divided by rate, compared with the time available; enumerable yes, partial (a sub-space is) or no. When no, name what to sample and how to sample it.
 </process>
+
+<terminal_gate>
+On start and before step 3, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -112,6 +118,7 @@ derivation original; domain the arithmetic of Borges' library applied to a searc
 
 <success_criteria>
 - Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
+- Work starts only after the gate choice start plus one terminal combo
 - Both bounds show their arithmetic
 - The rate is measured when a check was run
 - A no verdict comes with a sampling plan, not a shrug

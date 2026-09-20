@@ -237,7 +237,7 @@ argument-hint: [a workflow name and task names, or leave blank to be asked; --no
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -527,6 +527,41 @@ argument-hint: [a workflow name and task names, or leave blank to be asked; --no
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
 
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
   <!ELEMENT task_workflow (args, intake, selection, workflow_file, validation, proof, assumption_made*)>
   <!ELEMENT selection (chosen+)>
   <!ELEMENT chosen (#PCDATA)>
@@ -565,13 +600,17 @@ The chosen tasks' steps become the steps of a workflow file the runner walks in 
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags, a workflow name and task names when given; render the walk under `args`. Round one always runs (LAW.ASK.10).
-2. Read the registry with node lib/task.mjs audit and validate in the foreground; elaborate every open task (its purpose, its steps) before the ask; then Round 1 of 1: ask ASK.WTASK.1 (mark, the open tasks as options), ASK.WTASK.2 (select), ASK.WTASK.3 (select) and ASK.WTASK.4 (select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13); present the gate.
+2. Read the registry with node lib/task.mjs audit and validate in the foreground; elaborate every open task (its purpose, its steps) before the ask; then Round 1 of 1: ask ASK.WTASK.1 (mark, the open tasks as options), ASK.WTASK.2 (select), ASK.WTASK.3 (select) and ASK.WTASK.4 (select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13); present the gate; on start, offer the terminal choice before step 3.
 3. Render the `selection`: one `chosen` per marked task with its step count and its order.
 4. Compose the workflow: for each chosen task in order, one step per task step named task dot n, the run string expanded from the task's own variables (a refusal stops the command), the ceiling and the expected exit carried; on_fail from ASK.WTASK.3; write it under TASK.dir as the name followed by WTASK.ext, UTF-8 LF, re-read it and render the `workflow_file` with path, bytes, step count and on_fail (LAW.WTASK.1); task-derived run strings embedded as ARG.embed.pcdata (LAW.ARGS.5).
 5. Run node lib/workflow.mjs validate and node lib/workflow.mjs run --dry on the file, in the foreground, stdin closed, exits read directly; render the `validation` with sound yes or no and dry_run yes or no; a refused file is deleted (LAW.WTASK.2).
 6. Run the proof: copy the file to a scratch path, raise one step's ceiling above WORKFLOW.ceiling.max, run validate on the copy and show the refusal; render the `proof` with tripped yes (LAW.WTASK.4).
 7. End with the line that runs the workflow, node lib/workflow.mjs run on the file, and stop (LAW.WTASK.3).
 </process>
+
+<terminal_gate>
+On start and before the selection, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -620,6 +659,7 @@ run it: node lib/workflow.mjs run tasks/[name].workflow.json
 
 <success_criteria>
 - Every open task was elaborated before the mark question
+- Work starts only after the gate choice start plus one terminal combo
 - Every step's variables were expanded from its own task, and the file validated and dry-ran in the foreground
 - The workflow was not run here; the closing line runs it
 - The planted ceiling was refused

@@ -171,7 +171,7 @@ argument-hint: "[extension or extensions to refuse, or blank to read the list; -
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -463,6 +463,41 @@ argument-hint: "[extension or extensions to refuse, or blank to read the list; -
 
   
   
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
+  
+  
 <!-- begin subset cc-list -->
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
@@ -611,12 +646,16 @@ The declarations this command reads: LIST.classes and LIST.scopes for the axes, 
 1. Walk the argument with the cc-args grammar: bare words are extensions, `--drop` takes one, `--machine` selects the layer, `--no-gate` skips the intake. The walk splits like shell words and never evaluates: a path with a space is one word.
 2. Measure the tree before asking anything: count the files of each extension, so the intake can say what refusing one would actually cost here. Render this as `walk`.
 3. Read both layers with `node lib/list.mjs show file black`, and render what each already holds with its layer.
-4. Run the intake (LAW.ASK.6). Ask only what the walk cannot answer: which extensions, the reason for each, whether the repository or the machine layer, and whether a sibling code entry is meant instead. Never ask about an extension the argument already named.
+4. Run the intake (LAW.ASK.6). Ask only what the walk cannot answer: which extensions, the reason for each, whether the repository or the machine layer, and whether a sibling code entry is meant instead. Never ask about an extension the argument already named. On start offer the terminal choice before step 7.
 5. Before writing, run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach`. A refused combination stops the write, and every refusal is rendered as a `refused` element carrying the entry, the collision, the layer and the edit (LAW.FB.3).
 6. Check the markdown interlock when md is among the names (LAW.FB.4); refuse with the failed condition named.
 7. Write the entries with their reasons and today's date, then read the file back and render the `entries` element from what is on disk, never from what was intended; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 8. Render `verdicts`: one line per name, holding yes when it is now listed and no when it was refused, and close with the `next_action` a reader should take.
 </process>
+
+<terminal_gate>
+On start and before anything is written, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -671,6 +710,7 @@ Render the `file_blacklist_run` root declared in the DOCTYPE as the markdown bel
 <success_criteria>
 - Every entry written is a declaration under LIST.dir with its reason and date, and the file it lands in FIXES the scope file and the class black
 - Both layers were read and the repository layer won every entry they share
+- Work starts only after the gate choice start plus one terminal combo
 - The reachability guard ran before the write and its refusals name both colliding entries and the edit
 - The markdown interlock was checked whenever md was named
 - Nothing was written when the guard refused

@@ -163,7 +163,7 @@ argument-hint: "[two to eight command lines stacked, one /name-dtd per line, the
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -455,6 +455,41 @@ argument-hint: "[two to eight command lines stacked, one /name-dtd per line, the
 
   
   
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
+  
+  
 <!-- begin subset cc-chain -->
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
@@ -643,10 +678,14 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.7). The `intake` c
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements; read the CHAIN.autonomy.token as its own word only (LAW.ARGS.2, LAW.CHAIN.4).
 2. Run `node lib/ceiling.mjs 60 node lib/chain.mjs plan` with the stacked lines as its arguments, one token per argument and the autonomy token among them (`plan --no-gate /a-dtd /b-dtd`), one line with no quote and no newline, in the foreground, exit code read directly, and render `chain` from what it printed: links, autonomy, gate, bands, declared, one `link` per line with its n, of, command, sigil, root, band, runs_alone, takes and hands_to. A refusal ends the run here: every refused link carries its `link_refusal` with why, the `chain_close` says ran 0, and the `artifact` names the record of the refusal (LAW.CHAINRUN.1, LAW.CHAIN.8).
-3. Run the one intake (LAW.CHAIN.3): the slots of every link gathered into one round, the scope first, then the gate; a link the gate declines is passed to the plan as --decline, and the rounds and questions spent are passed as --rounds and --questions so `chain_intake` carries them, and a band this run switched off is passed as --band-off so its link is refused band-off before link one. With the token present, skip it, render `chain_intake` with asked no and the reason, and list every gap as an `assumption_made`.
+3. Run the one intake (LAW.CHAIN.3): the slots of every link gathered into one round, the scope first, then the gate; on start offer the terminal choice before link one; a link the gate declines is passed to the plan as --decline, and the rounds and questions spent are passed as --rounds and --questions so `chain_intake` carries them, and a band this run switched off is passed as --band-off so its link is refused band-off before link one. With the token present, skip it, render `chain_intake` with asked no and the reason, and list every gap as an `assumption_made`.
 4. For each link in order: invoke the command with its user-args, the first from the prompt and each later one the previous link's artifact quoted as CDATA; a link is invoked by reading its file, `commands/<name>.md` in the tree that carries `lib/chain.mjs` or the commands directory it was installed to, and rendering its root as that file declares, every heading of its grammar map under its own sigil, the one the plan names on its link line; a link summarised in place of being run is a dropped link (LAW.CHAIN.8); render the link's answer here, in this answer, whole: first the link heading `## Link n of N: /name-dtd sigil`, then the link's own root with every heading of its grammar map under its sigil, even when the link's product is a file (the file is named in the rendered root, the answer is not moved into it); a link whose answer is deferred to its artifact and summarised here in a line is a dropped link, whatever its artifact holds (the eighth matrix of 9.1.0: four chains of the ubuntu leg ran every link, one of them building sixty-four files, and rendered none, LAW.CHAINRUN.2); then run `node lib/ceiling.mjs 60 node lib/chain.mjs handoff <this link>` and render the `handoff` it prints, the artifact and its bytes read from the file; a file it does not find refuses the next link with why artifact-missing (LAW.CHAINRUN.2, LAW.CHAIN.5). A chain never pauses: a link's foreground command runs to its end or its ceiling in the same turn, no link waits for the operator or promises to continue later, and an answer that ends before `chain_close` is a failed answer (the eighth matrix of 9.1.0: the research chain of the macOS leg wrote that it would pause while a sweep finished, and ended there after 39 of 150 turns).
 5. Write the record under CHAIN.dir as the date and chain, its frontmatter carrying the bands string the chain element carries (LAW.CHAIN.7), bands and counts embedded as ARG.embed.pcdata (LAW.ARGS.5), then render `chain_close` with ran, refused and the artifact, and `artifact` naming the same file.
 </process>
+
+<terminal_gate>
+On the one gate choice start and before link one, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). The chain never pauses: the terminal answer is taken in the same turn and the links run to their end. Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -689,6 +728,7 @@ links [n] autonomy [gated|no-gate] gate [one|none] bands [the string] declared [
 <success_criteria>
 - The plan was read before link one, and a refused chain ran nothing
 - Exactly one intake and one gate ran for the whole chain, or the token skipped them and every gap is listed
+- The one gate closed with start plus one terminal combo before link one
 - Every hand-off names a file that exists with its bytes, quoted as CDATA
 - Every link declares runs_alone yes and a successor the tree carries, or none
 - The bands stamped on the chain element are the bands stamped in the record

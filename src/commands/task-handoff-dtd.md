@@ -20,6 +20,8 @@ argument-hint: [the task name; --no-gate for autonomous defaults]
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT task_handoff (args, task_ref, intake, attestation, record_file, instruction, assumption_made*)>
   <!ELEMENT task_ref (#PCDATA)>
   <!ELEMENT attestation (item+)>
@@ -61,12 +63,16 @@ Four questions in one round: the outcome, the evidence to carry, the next step e
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the task name; render the walk under `args`.
 2. Read the registry with node lib/task.mjs validate on TASK.dir; find the task; render the `task_ref` with its name and its status before; a task that is not in the registry stops the command.
-3. Round 1 of 1: ask ASK.HTASK.1 (select), ASK.HTASK.2 (check), ASK.HTASK.3 (elaborate: each next step elaborated before the ask) and ASK.HTASK.4 (select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13); present the gate; on start proceed with every unasked question at its first option.
+3. Round 1 of 1: ask ASK.HTASK.1 (select), ASK.HTASK.2 (check), ASK.HTASK.3 (elaborate: each next step elaborated before the ask) and ASK.HTASK.4 (select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13); present the gate; on start offer the terminal choice, then proceed with every unasked question at its first option.
 4. Gather the `attestation`: one `item` per file re-read, ledger line read, or exit code measured in this session, each with its kind and confidence; a done outcome needs at least one measured item (LAW.HTASK.2).
 5. Set the status through HTASK.command on TASK.dir, the name and the outcome, in the foreground with stdin closed, the exit read directly; read the registry again and render status_after on the `task_ref` (LAW.HTASK.1).
 6. Write the record file under HTASK.dir named after this command (the ordinal from node lib/ordinals.mjs only when a file of this run already exists there), UTF-8 LF: the frontmatter with the five fields of RECORD.handoff in order, then the body as a revision history, one revision heading per event of this task read from the ledger with its evidence lines under it; re-read it, run node lib/record.mjs check on this command file and the project root, and render the `record_file` with path, bytes and the revision count (LAW.HTASK.3, LAW.REC.6); ledger-derived lines embedded as ARG.embed.pcdata (LAW.ARGS.5).
 7. Render the `instruction` with goal and step for the next session (LAW.HTASK.4), and stop.
 </process>
+
+<terminal_gate>
+On start and before the attestation, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -115,6 +121,7 @@ step: [/task-run-dtd [name] | the fix | nothing]
 <success_criteria>
 - The status landed through the runtime and the ledger carries the event
 - Every attestation item was read, run or measured here, with its confidence
+- Work starts only after the gate choice start plus one terminal combo
 - The record keeps the command-generated filename, its fields are in declared order, and every revision carries evidence
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

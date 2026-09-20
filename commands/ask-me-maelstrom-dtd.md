@@ -100,7 +100,7 @@ argument-hint: [what to ask about, or leave blank to set the task first; add --n
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -392,6 +392,41 @@ argument-hint: [what to ask about, or leave blank to set the task first; add --n
 
   
   
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
+  
+  
 <!-- begin subset cc-record -->
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
@@ -515,9 +550,14 @@ Stars carry across rounds so a pick from round one still counts in round twenty.
 2. Analyze the task and the conversation into known and gap slots; never ask about a known slot (LAW.ASK.1).
 3. Ask round one about the gaps, each question naming its form, bracket, angle, caret, chained empty, star, query, live or wrap beside select, check, elaborate, mark and display under LAW.ASK.17 and LAW.ASK.19 (ASK.token.bracket, ASK.token.angle, ASK.token.caret, ASK.token.chained, ASK.token.star, ASK.token.query, ASK.token.live, ASK.token.wrap); chain rounds while open detail remains with no binding cap, the declared enumeration standing open and unreachable; render each round as n of ASK.rounds_per_prompt. A ninety-six-round intake shows its running state in a `live` element under ASK.variant.display and wraps each answer with its difficulty's `wrap` level (LAW.ASK.19, LAW.ASK.20).
 4. Present the gate after each round with the shortlist in full as a `live` display (state: gate-N with the round's stars): the LiveMap the run reads back before every ask, pins now and returns in the shortlist (LAW.MAEL.3, LAW.ASK.19); loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops; a reply of the back token re-asks the question just asked; a star answer joins the shortlist and a query answer is asked next round.
+4b. On start offer the terminal choice and branch on it (LAW.TERM.1 to LAW.TERM.5).
 5. On resume from a cache file, read reverse per LAW.TEI.2: next first, findings newest-first, gate, answers, binding declaration last; carry TEI.part, TEI.sample and TEI.org with TEI.part.count, TEI.sample.count and TEI.org.count states, link spans with TEI.links and TEI.joins with TEI.links.count and TEI.joins.count relations, each crossing a `tei_span` (LAW.TEI.1, LAW.TEI.3); a resumed run starts at sample unknown.
 6. Execute with the full context; open the `execution` with the restatement of every slot, answer, star and answered query.
 </process>
+
+<terminal_gate>
+After gate choice start and before execution, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone. Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -569,7 +609,7 @@ Saved to `artifacts/ask-me-maelstrom-dtd/ask-me-maelstrom-dtd.md` (one line sayi
 - Rounds ran with no binding cap inside the declared enumeration, and no willing user was cut off
 - Every question named its form and was bilateral; stars accumulated and no star was lost
 - Every query was asked next round or rendered asked no; every reply became a known slot
-- Execution started only after the gate choice start, or in autonomous mode with every assumption listed
+- Execution started only after the gate choice start plus one terminal combo, or in autonomous mode with every assumption listed
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

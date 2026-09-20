@@ -13,6 +13,8 @@ argument-hint: [topic or leave blank for current context; add --no-gate for auto
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-report SYSTEM "../../dtd/cc-report.dtd">
   %cc-report;
   <!ELEMENT deep_dive (intake, report, artifact, assumption_made*)>
@@ -55,10 +57,14 @@ One `ask` with two to four `question` elements chosen from the gaps:
 </initial_questions>
 
 <decision_gate>
-One AskUserQuestion with header "Gate", question GATE.question, options GATE.start (start the research), GATE.more (there are details to clarify), GATE.add (I want to provide additional information). On more: two or three contextual follow-ups, then the gate again. On add: receive the input, then the gate again. On start: research.
+One AskUserQuestion with header "Gate", question GATE.question, options GATE.start (start the research), GATE.more (there are details to clarify), GATE.add (I want to provide additional information). On more: two or three contextual follow-ups, then the gate again. On add: receive the input, then the gate again. On start: offer the terminal choice, then research.
 
 Autonomous mode: when the argument contains --no-gate or the session is non-interactive, skip every question and the gate, fill each gap with an assumption written as an `assumption_made`, and proceed.
 </decision_gate>
+
+<terminal_gate>
+On start and before research, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 </intake_gate>
 
@@ -169,6 +175,7 @@ Save the research to a file:
 - Synthesizes into actionable understanding and a specific implementation context
 - States what is still unknown and the assumption taken for each
 - Output saved to artifacts/research and the path printed
+- Research starts only after the gate choice start plus one terminal combo
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

@@ -26,6 +26,8 @@ argument-hint: [proposed action or leave blank for current context]
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT wu_wei (args, intake, text_desc, situation, branch, branch, cost, cost, choice)>
   <!ELEMENT situation (#PCDATA)>
   <!ELEMENT branch (#PCDATA)>
@@ -56,7 +58,7 @@ The Tao Te Ching returns again and again to wu wei, acting by not forcing, and t
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
-2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start offer the terminal choice, then proceed with every unasked question at its first option; render the round under `intake`.
 3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
 4. Describe the `situation` as it is now, without the proposal.
 5. Write the act `branch`: what the proposal does and what follows.
@@ -64,6 +66,10 @@ The Tao Te Ching returns again and again to wu wei, acting by not forcing, and t
 7. Write the `cost` of each branch in one shared unit (hours, money, risk of a named event) at a stated horizon with a confidence.
 8. Write the `choice`: act, refrain, or wait; a wait names the condition in until that would turn it into act.
 </process>
+
+<terminal_gate>
+On start and before step 3, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -117,6 +123,7 @@ derivation paraphrase; domain wu wei of the Tao Te Ching applied to a decision; 
 
 <success_criteria>
 - Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
+- Work starts only after the gate choice start plus one terminal combo
 - The refrain branch is as detailed as the act branch
 - Both costs share a unit and a horizon
 - A wait names its trigger

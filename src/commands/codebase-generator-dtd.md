@@ -21,6 +21,8 @@ argument-hint: "[the survey, the plan and the renovation markdown to stand on, i
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!-- The launch is a chain: one root, one intake, one gate (LAW.CHAIN.1). -->
   <!ENTITY % cc-chain SYSTEM "../../dtd/cc-chain.dtd">
   %cc-chain;
@@ -67,12 +69,16 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.7). The `intake` c
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements: three positional paths are the survey, the plan and the renovation, blank means launch; read --no-gate, --no-png, --seed and --verbose (LAW.ARGS.2, LAW.ARGS.6).
 2. Run `node lib/ceiling.mjs 60 node lib/geometry.mjs produce <survey> <plan> <renovation>` in the foreground, exit code read directly: exit 3 with LAUNCH on the first line is the launch path, exit 1 with REFUSED lines is a refusal rendered as found, exit 0 is the production path (LAW.GENERATOR.2, LAW.GENERATOR.5).
 3. Render `survey_ref`, `plan_ref` and `renovation_ref` with the path and date of each, or absent for each one missing.
-4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the target first, then a figure question whose options are figures rendered as thumbnails through `node lib/figure.mjs`, at most FIG.thumbnails.max, then a mark question over the domains of GEOM.domains to draw from. Present the gate; work starts only on start. The figure chosen is the seed (LAW.GENERATOR.6). With --no-gate, every gap becomes an `assumption_made`.
+4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the target first, then a figure question whose options are figures rendered as thumbnails through `node lib/figure.mjs`, at most FIG.thumbnails.max, then a mark question over the domains of GEOM.domains to draw from. Present the gate; on start offer the terminal choice before step 5; work starts only on start. The figure chosen is the seed (LAW.GENERATOR.6). With --no-gate, every gap becomes an `assumption_made`.
 5. On the launch path: run `node lib/ceiling.mjs 60 node lib/chain.mjs plan` on the four stacked lines of the launches attribute and render `chain` from it; then run each link in band order with the previous link's artifact as its user-args, rendering each `handoff`, and close with `chain_close`; the last link is this command again, now on the production path (LAW.CHAIN.5, LAW.CHAIN.7).
 6. On the production path: run `node lib/ceiling.mjs 300 node lib/geometry.mjs produce <survey> <plan> <renovation> --write [--seed=<option>] [--no-png]` in the foreground and render `production` with its survey, plan, renovation and target, one `produced` per format written with verb, format, path and bytes, then the rungs used through their lenses and the domains left unused with why (LAW.GENERATOR.3, LAW.GENERATOR.4).
 7. Render `figure`: the production's cells inside a fenced block, marked measured, the plate and its dark twin named beside it; on the launch path one line saying the figure is the last link's (LAW.FIG.2, LAW.FIG.7).
 8. Render `artifact` naming the production record under GENERATOR.dir, and `next_band` naming GENERATOR.next and codebase-surveyor-dtd (LAW.GENERATOR.1).
 </process>
+
+<terminal_gate>
+On start and before step 5, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). The figure seed chosen at the gate is carried through the terminal answer into the production. Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -143,6 +149,7 @@ plate [path.svg], dark [path-dark.svg]; mark measured
 - The engine was read before anything was drawn, and the path taken is the one its exit code named
 - A production stands on three files that exist, in date order, on one target, or the run launched the three instead
 - Every produced line carries bytes read back from the file, and a png absent on this leg is named unmeasured, never faked
+- Work starts only after the gate choice start plus one terminal combo, carrying the figure seed
 - The figure is one plate of three layers, each coloured by its band, and the seed chosen at the gate is carried into it
 - The rungs used were named by what was drawn, and every domain unused says why
 - The band is the one the subset pins, and the next band is named with its command

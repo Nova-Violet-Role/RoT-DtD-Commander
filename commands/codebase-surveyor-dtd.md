@@ -520,7 +520,7 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -809,6 +809,41 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
 <!ENTITY LAW.CACHE.7 "The cache is the lightest form: NestedText, the CACHE.schematic schematic of cc-schematic, whose cells declare an angle-bracket literal, a hash comment, and none for expanded, reference, definition, escape, include, conditional, type and binary; three types, no implicit typing, no tag, no reference, no code, read whole in one pass and lighter than the markdown of the run it saves; a file in another form, over CACHE.max_bytes bytes, failing a guard, or carrying a construct the cells say none to is refused by name and the save is reported as not done.">
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
+
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
 
   
   
@@ -1302,13 +1337,17 @@ The ladder is declared, not remembered. geometry.dtd carries GEOM.verb.1 to GEOM
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements: the first positional word is the target path, blank means the working directory; read --no-gate, --verbose and --debug (LAW.ARGS.2, LAW.ARGS.6).
 2. Probe the substrate with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe` in the foreground and render `substrates`: the host leg and one `substrate` per local of XOS.locals, present only after its probe answered with rows (LAW.XOS.1, LAW.SURVEYOR.4).
-3. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope first, as a select question over the target and its top-level directories, then a mark question over the rungs of GEOM.instrumented that belong to SURVEYOR.band, each option carrying a cut preview that may hold a `figure` of what that rung draws (LAW.ASK.13, LAW.ASK.16). Present the gate; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
+3. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope first, as a select question over the target and its top-level directories, then a mark question over the rungs of GEOM.instrumented that belong to SURVEYOR.band, each option carrying a cut preview that may hold a `figure` of what that rung draws (LAW.ASK.13, LAW.ASK.16). Present the gate; on start offer the terminal choice before step 4; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
 4. Record `git status --porcelain` before the first instrument, so LAW.SURVEYOR.2 can be measured after.
 5. Survey with `node lib/ceiling.mjs 300 node lib/geometry.mjs survey <target> --write` in the foreground, exit code read directly, passing the rungs the intake marked with `--verbs=n,n` and every root of a multi-root scope as further arguments. Render `survey` with target, substrate, read of of, and one `measure` per rung measured: verb, name, value, unit, instrument, seconds; then the unmeasured rungs with why (LAW.GEOM.2, LAW.SURVEYOR.3).
 6. Render `figure`: the cut figure the engine printed, 60 by 3, marked guessed, inside a fenced block; name the expanded plate and its dark twin written beside the survey (LAW.SURVEYOR.5, LAW.FIG.2).
 7. Read `git status --porcelain` again: every changed path lies under GEOM.dir or the run is a failed answer (LAW.SURVEYOR.2).
 8. Render `artifact` naming the survey file written, and `next_band` naming SURVEYOR.next and codebase-architect-dtd (LAW.SURVEYOR.1).
 </process>
+
+<terminal_gate>
+On start and before the first instrument, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -1366,6 +1405,7 @@ plate [path.svg], dark [path-dark.svg]; mark guessed here, measured on disk
 - Every measure names its instrument, its unit and its seconds, and its confidence is measured by declaration
 - Every rung without an instrument, or with nothing to read, is named unmeasured with the reason
 - The substrates were probed before the first instrument, and the survey names the leg it ran on
+- Work starts only after the gate choice start plus one terminal combo
 - git status shows nothing changed outside artifacts/geometry
 - The figure in the answer fits 60 by 3 cells and the plate on disk is the same figure at 80 by 12
 - The band is the one the subset pins, and the next band is named with its command

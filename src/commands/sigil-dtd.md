@@ -15,6 +15,8 @@ argument-hint: "[a form by name or token, a tier S to D, a topic 1 to 10, or all
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-sigil SYSTEM "../../dtd/cc-sigil.dtd">
   %cc-sigil;
   <!ELEMENT sigil_session (args, intake, sigil_study, artifact, assumption_made*)>
@@ -47,11 +49,15 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.7). The `intake` c
 
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements: the first positional word is a form name, a token, a tier letter, a topic number, or all; read --no-gate (LAW.ARGS.2, LAW.ARGS.6). A token typed there is quoted and never expanded (LAW.SIGILRUN.2).
-2. Run the intake (LAW.ASK.6): round one asks the scope as a select question (one form, one tier, one topic, all), then a check question over the tiers to render. Present the gate; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
+2. Run the intake (LAW.ASK.6): round one asks the scope as a select question (one form, one tier, one topic, all), then a check question over the tiers to render. Present the gate; on start offer the terminal choice before step 3; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
 3. Run `node lib/ceiling.mjs 60 node lib/sigil.mjs measure` in the foreground, exit code read directly; a finding it prints is quoted in the verdict, never smoothed over (LAW.SIGIL.3).
 4. Run `node lib/ceiling.mjs 60 node lib/sigil.mjs study <scope>` and render `sigil_study`: one `sigil_doc` per document with name, bytes and sha256; one `sigil_form` per form in scope with name, token, context, tier, topic, found and, for tier D, its rule; one `sigil_collision` per colliding token in scope with its contexts; the `sigil_verdict` with declared, found, missing and unranked.
 5. Write the record under artifacts/sigil as the date and study, scope and forms embedded as ARG.embed.pcdata (LAW.ARGS.5), then render `artifact` naming it.
 </process>
+
+<terminal_gate>
+On start and before the measure, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -92,6 +98,7 @@ scope [form|tier|topic|all], docs 5
 - Every form rendered carries a token the engine spelled and a found value the ranking document was read for
 - The verdict's missing and unranked are zero, or every finding behind them is quoted
 - The token asked about was quoted as data and never expanded
+- Work starts only after the gate choice start plus one terminal combo
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

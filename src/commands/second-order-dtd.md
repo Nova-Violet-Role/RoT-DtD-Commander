@@ -13,6 +13,8 @@ argument-hint: [action or leave blank for current context; add --no-gate to skip
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT second_order (action, effect+, intake?, loop*, delayed*, assessment, assumption_made*)>
   <!ELEMENT action (#PCDATA)>
   <!ELEMENT effect (#PCDATA)>
@@ -55,12 +57,16 @@ Ask "and then what?" until the chain is declared, not implied. First-order think
 <process>
 1. State the `action` in one sentence.
 2. List the first-order `effect` elements: immediate, obvious consequences. Give each an id (E1, E2, ...), order 1, no causes, a sign (plus, minus, mixed), a horizon (now, months, years) and a confidence.
-3. Chain gate. Skipped when the argument contains --no-gate or the session is non-interactive. Otherwise use AskUserQuestion once: header "Trace", multiSelect true, question "Which effects should the chain follow to third order?", options are up to four first-order effects by id. The reply arrives on the ask-answer channel and picks the chains traced to order 3; the rest stop at order 2. In autonomous mode trace every chain to order 2, the two largest-magnitude chains to order 3, and write one `assumption_made` saying so.
+3. Chain gate. Skipped when the argument contains --no-gate or the session is non-interactive. Otherwise use AskUserQuestion once: header "Trace", multiSelect true, question "Which effects should the chain follow to third order?", options are up to four first-order effects by id. The reply arrives on the ask-answer channel and picks the chains traced to order 3; the rest stop at order 2. On the replies offer the terminal choice before step 4. In autonomous mode trace every chain to order 2, the two largest-magnitude chains to order 3, and write one `assumption_made` saying so.
 4. For each first-order effect ask "and then what happens?" and write order-2 effects with causes set to the parent id. Continue to order 3 on the chosen chains.
 5. Name every `loop`: two or more effects that feed each other, reinforcing or balancing, by ids in between.
 6. Name every `delayed` consequence: the effect id and surfaces_after (a horizon or a trigger).
 7. Write the `assessment`: worth yes, partial or no, and decided_by listing the effect ids that carried the decision.
 </process>
+
+<terminal_gate>
+On the chain replies and before the second order, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -118,6 +124,7 @@ worth: [yes|partial|no] decided by: E2, E5, E7
 
 <success_criteria>
 - Traces causal chains beyond the obvious effects, with every link declared by id
+- Work starts only after the chain replies plus one terminal combo
 - Names feedback loops and unintended consequences instead of implying them
 - Reveals delayed costs or benefits with the horizon at which they surface
 - Distinguishes actions that compound well from those that do not, by sign and loop kind

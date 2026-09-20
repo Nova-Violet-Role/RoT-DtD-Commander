@@ -520,7 +520,7 @@ argument-hint: "[the survey, the plan and the renovation markdown to stand on, i
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -809,6 +809,41 @@ argument-hint: "[the survey, the plan and the renovation markdown to stand on, i
 <!ENTITY LAW.CACHE.7 "The cache is the lightest form: NestedText, the CACHE.schematic schematic of cc-schematic, whose cells declare an angle-bracket literal, a hash comment, and none for expanded, reference, definition, escape, include, conditional, type and binary; three types, no implicit typing, no tag, no reference, no code, read whole in one pass and lighter than the markdown of the run it saves; a file in another form, over CACHE.max_bytes bytes, failing a guard, or carrying a construct the cells say none to is refused by name and the save is reported as not done.">
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
+
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
 
   <!-- The launch is a chain: one root, one intake, one gate (LAW.CHAIN.1). -->
   
@@ -1384,12 +1419,16 @@ The `args` element comes from cc-args (LAW.ARGS.1 to LAW.ARGS.7). The `intake` c
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements: three positional paths are the survey, the plan and the renovation, blank means launch; read --no-gate, --no-png, --seed and --verbose (LAW.ARGS.2, LAW.ARGS.6).
 2. Run `node lib/ceiling.mjs 60 node lib/geometry.mjs produce <survey> <plan> <renovation>` in the foreground, exit code read directly: exit 3 with LAUNCH on the first line is the launch path, exit 1 with REFUSED lines is a refusal rendered as found, exit 0 is the production path (LAW.GENERATOR.2, LAW.GENERATOR.5).
 3. Render `survey_ref`, `plan_ref` and `renovation_ref` with the path and date of each, or absent for each one missing.
-4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the target first, then a figure question whose options are figures rendered as thumbnails through `node lib/figure.mjs`, at most FIG.thumbnails.max, then a mark question over the domains of GEOM.domains to draw from. Present the gate; work starts only on start. The figure chosen is the seed (LAW.GENERATOR.6). With --no-gate, every gap becomes an `assumption_made`.
+4. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the target first, then a figure question whose options are figures rendered as thumbnails through `node lib/figure.mjs`, at most FIG.thumbnails.max, then a mark question over the domains of GEOM.domains to draw from. Present the gate; on start offer the terminal choice before step 5; work starts only on start. The figure chosen is the seed (LAW.GENERATOR.6). With --no-gate, every gap becomes an `assumption_made`.
 5. On the launch path: run `node lib/ceiling.mjs 60 node lib/chain.mjs plan` on the four stacked lines of the launches attribute and render `chain` from it; then run each link in band order with the previous link's artifact as its user-args, rendering each `handoff`, and close with `chain_close`; the last link is this command again, now on the production path (LAW.CHAIN.5, LAW.CHAIN.7).
 6. On the production path: run `node lib/ceiling.mjs 300 node lib/geometry.mjs produce <survey> <plan> <renovation> --write [--seed=<option>] [--no-png]` in the foreground and render `production` with its survey, plan, renovation and target, one `produced` per format written with verb, format, path and bytes, then the rungs used through their lenses and the domains left unused with why (LAW.GENERATOR.3, LAW.GENERATOR.4).
 7. Render `figure`: the production's cells inside a fenced block, marked measured, the plate and its dark twin named beside it; on the launch path one line saying the figure is the last link's (LAW.FIG.2, LAW.FIG.7).
 8. Render `artifact` naming the production record under GENERATOR.dir, and `next_band` naming GENERATOR.next and codebase-surveyor-dtd (LAW.GENERATOR.1).
 </process>
+
+<terminal_gate>
+On start and before step 5, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). The figure seed chosen at the gate is carried through the terminal answer into the production. Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -1460,6 +1499,7 @@ plate [path.svg], dark [path-dark.svg]; mark measured
 - The engine was read before anything was drawn, and the path taken is the one its exit code named
 - A production stands on three files that exist, in date order, on one target, or the run launched the three instead
 - Every produced line carries bytes read back from the file, and a png absent on this leg is named unmeasured, never faked
+- Work starts only after the gate choice start plus one terminal combo, carrying the figure seed
 - The figure is one plate of three layers, each coloured by its band, and the seed chosen at the gate is carried into it
 - The rungs used were named by what was drawn, and every domain unused says why
 - The band is the one the subset pins, and the next band is named with its command

@@ -17,6 +17,8 @@ argument-hint: [a task name to pick, or leave blank to be asked; --verbose print
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT task_audit (args, registry, ledger_tail, open, intake, pick, instruction)>
   <!ELEMENT ledger_tail (#PCDATA)>
   <!ELEMENT open (candidate*)>
@@ -57,6 +59,10 @@ The registry is checked against the folder both ways, the ledger is read for wha
 5. When the argument named an open task, skip the question (LAW.ASK.1); otherwise ask ASK.TASK.4 as a mark question with the candidates as its options, one round; render the round under `intake` and set marked yes or no on every candidate (LAW.ATASK.3).
 6. Render the `pick`: the first marked candidate, or none; render the `instruction` with goal (run the picked task) and step (the task-run-dtd line with the name), and stop (LAW.ATASK.4).
 </process>
+
+<terminal_gate>
+After the mark answers and before the pick, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -104,6 +110,7 @@ step: /task-run-dtd [name]
 <success_criteria>
 - The audit ran in the foreground and every entry carries its state
 - Every open task was elaborated before the mark question, and each came back marked yes or no
+- The pick proceeds only after one terminal combo (todo, study or cache) plus Start working
 - Nothing ran here; the instruction is one task-run line
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

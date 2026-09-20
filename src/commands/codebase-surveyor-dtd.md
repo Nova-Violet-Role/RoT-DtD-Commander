@@ -21,6 +21,8 @@ argument-hint: "[a path to survey, or blank for the current repository; --no-gat
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cross-os SYSTEM "../../dtd/cross-os.dtd">
   %cross-os;
   <!-- The band subset comes BEFORE geometry.dtd: it raises the verb
@@ -66,13 +68,17 @@ The ladder is declared, not remembered. geometry.dtd carries GEOM.verb.1 to GEOM
 <process>
 1. Walk the argument through cc-args and render `args` with its words and its four `arg_guard` elements: the first positional word is the target path, blank means the working directory; read --no-gate, --verbose and --debug (LAW.ARGS.2, LAW.ARGS.6).
 2. Probe the substrate with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe` in the foreground and render `substrates`: the host leg and one `substrate` per local of XOS.locals, present only after its probe answered with rows (LAW.XOS.1, LAW.SURVEYOR.4).
-3. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope first, as a select question over the target and its top-level directories, then a mark question over the rungs of GEOM.instrumented that belong to SURVEYOR.band, each option carrying a cut preview that may hold a `figure` of what that rung draws (LAW.ASK.13, LAW.ASK.16). Present the gate; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
+3. Run the intake (LAW.GEOM.5, LAW.ASK.6): round one asks the scope first, as a select question over the target and its top-level directories, then a mark question over the rungs of GEOM.instrumented that belong to SURVEYOR.band, each option carrying a cut preview that may hold a `figure` of what that rung draws (LAW.ASK.13, LAW.ASK.16). Present the gate; on start offer the terminal choice before step 4; work starts only on start. With --no-gate, every gap becomes an `assumption_made`.
 4. Record `git status --porcelain` before the first instrument, so LAW.SURVEYOR.2 can be measured after.
 5. Survey with `node lib/ceiling.mjs 300 node lib/geometry.mjs survey <target> --write` in the foreground, exit code read directly, passing the rungs the intake marked with `--verbs=n,n` and every root of a multi-root scope as further arguments. Render `survey` with target, substrate, read of of, and one `measure` per rung measured: verb, name, value, unit, instrument, seconds; then the unmeasured rungs with why (LAW.GEOM.2, LAW.SURVEYOR.3).
 6. Render `figure`: the cut figure the engine printed, 60 by 3, marked guessed, inside a fenced block; name the expanded plate and its dark twin written beside the survey (LAW.SURVEYOR.5, LAW.FIG.2).
 7. Read `git status --porcelain` again: every changed path lies under GEOM.dir or the run is a failed answer (LAW.SURVEYOR.2).
 8. Render `artifact` naming the survey file written, and `next_band` naming SURVEYOR.next and codebase-architect-dtd (LAW.SURVEYOR.1).
 </process>
+
+<terminal_gate>
+On start and before the first instrument, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -130,6 +136,7 @@ plate [path.svg], dark [path-dark.svg]; mark guessed here, measured on disk
 - Every measure names its instrument, its unit and its seconds, and its confidence is measured by declaration
 - Every rung without an instrument, or with nothing to read, is named unmeasured with the reason
 - The substrates were probed before the first instrument, and the survey names the leg it ran on
+- Work starts only after the gate choice start plus one terminal combo
 - git status shows nothing changed outside artifacts/geometry
 - The figure in the answer fits 60 by 3 cells and the plate on disk is the same figure at 80 by 12
 - The band is the one the subset pins, and the next band is named with its command

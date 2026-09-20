@@ -17,6 +17,8 @@ argument-hint: [what is hunted, or leave blank; --no-gate for autonomous default
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT dork_local (args, intake, hunt, patterns, results, forms, proof, assumption_made*)>
   <!ELEMENT hunt (#PCDATA)>
   <!ELEMENT patterns (pattern+)>
@@ -63,12 +65,16 @@ The file types are marked after each is elaborated with its extensions, the cont
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`. Round one always runs (LAW.ASK.10).
 2. Round 1 of 2: ask ASK.LDORK.1 (select), ASK.LDORK.2 (mark: each file type elaborated with its extensions before the ask), ASK.LDORK.3 (elaborate) and ASK.LDORK.4 (check) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 2 with ASK.LDORK.5 (select), ASK.FORM.1 (check), ASK.LDORK.6 (select) and ASK.LDORK.8 (select), ASK.LDORK.7 taking the slot of ASK.FORM.1 when the form is known; on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 2 with ASK.LDORK.5 (select), ASK.FORM.1 (check), ASK.LDORK.6 (select) and ASK.LDORK.8 (select), ASK.LDORK.7 taking the slot of ASK.FORM.1 when the form is known; on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `hunt` with the root, the ceiling and the cap (never above LDORK.cap.max), and the `patterns` with one `pattern` per tool: the rg pattern with fixed yes when it carries a backslash or a path (LAW.LDORK.2), the fd glob per marked file type, the ccc grep pattern when chosen.
 5. Run the proof first (LAW.LDORK.5): write one file carrying the pattern into a scratch directory, run the hunt on it and show the hit; then run the same hunt on an empty scratch directory and show zero; render the `proof` with tripped yes and zero yes.
 6. Run the hunt on the root in the foreground under the ceiling with stdin closed, each tool's exit read directly (LAW.LDORK.1); render the `results` with one `hit` per file and line up to the cap, the count, capped yes or no, and the exit; under --verbose print every hit line whole.
 7. Render the `forms` with one `form` per kind chosen and write the catalog in that form; record the run when asked, and report.
 </process>
+
+<terminal_gate>
+On start and before the hunt, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -123,6 +129,7 @@ planted `[scratch file]`: found at line [n]; empty directory: 0 hits; tripped ye
 
 <success_criteria>
 - The hunt ran in the foreground under its ceiling and every exit was read directly
+- Work starts only after the gate choice start plus one terminal combo
 - A pattern with a backslash was matched as a fixed string
 - The planted file was found and the empty directory reported zero before the real hunt ran
 - Every hit is a catalog line, quoted as data

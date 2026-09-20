@@ -19,6 +19,8 @@ argument-hint: [what the slash command is for, or leave blank; --no-gate for aut
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT command_forge (args, intake, plan, license, invocation, written, guards, audit, proof, assumption_made*)>
   <!ELEMENT plan (#PCDATA)>
   <!ELEMENT invocation (#PCDATA)>
@@ -68,7 +70,7 @@ This command is the door in front of the create-slash-commands-dtd skill. It ask
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; words after ARG.end that read name=, emoji=, license= or form= are known slots placed by create-plugin or a router and fill those questions without asking (LAW.ASK.1); render the walk under `args`. Round one always runs (LAW.CMD.1).
 2. Round 1 of 3: ask ASK.CMD.1 to ASK.CMD.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 3 with ASK.CMD.5 (select), ASK.CMD.6 (select), ASK.LICENSE.1 (mark: each license elaborated, the marked ones joined) and ASK.FORM.1 (check); on more again, round 3 of 3 with ASK.CMD.7 (elaborate: each voice profile elaborated before the ask), ASK.CMD.8 (select), ASK.CMD.9 (select) and ASK.CMD.10 (select); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.CMD.5 (select), ASK.CMD.6 (select), ASK.LICENSE.1 (mark: each license elaborated, the marked ones joined) and ASK.FORM.1 (check); on more again, round 3 of 3 with ASK.CMD.7 (elaborate: each voice profile elaborated before the ask), ASK.CMD.8 (select), ASK.CMD.9 (select) and ASK.CMD.10 (select); on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `plan`: the artifact, its path, the emoji and the form chosen; render the `license`: the expression checked against LICENSE.list, its count (single, double or triple) and listed yes; an expression outside the list is refused with the list printed and ASK.LICENSE.1 asked again (LAW.LICENSE.1).
 5. Render the `invocation`: one Skill call to create-slash-commands-dtd with the argument made of the purpose, then ARG.end, then the known slots; then make that call (LAW.CMD.2).
 6. Read back: render `written` with one `file` per file written, its path, its bytes and headed yes or no; run the cc-form guards on each file of a guarded kind with node lib/form.mjs and render one `guard` per line printed under `guards`; a guard that did not hold stops the command.
@@ -76,6 +78,10 @@ This command is the door in front of the create-slash-commands-dtd skill. It ask
 8. Run the proof: plant one fault in a scratch copy (an element declared and never named, or a law numbered out of sequence) and run the audit on it; render the `proof` with the fault, the rule that refused it and tripped yes (LAW.CMD.5).
 9. When the artifact lands in this repository, register the emoji in dtd/sigils.json after checking no other key carries the glyph (LAW.CMD.6); record the run under artifacts with this command's generated filename and report.
 </process>
+
+<terminal_gate>
+On start and before the plan, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -138,6 +144,7 @@ planted [the fault]: refused by [code]; tripped yes
 
 <success_criteria>
 - Round one ran before anything was written
+- Work starts only after the gate choice start plus one terminal combo
 - create-slash-commands-dtd was invoked once with the known slots and asked none of them again
 - Every file was read back, guarded, and headed by a listed license where its format allows
 - The audit ran in the foreground, one rule per code, and no subagent was summoned

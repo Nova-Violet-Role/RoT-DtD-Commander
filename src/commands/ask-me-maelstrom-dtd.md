@@ -17,6 +17,8 @@ argument-hint: [what to ask about, or leave blank to set the task first; add --n
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-record SYSTEM "../../dtd/cc-record.dtd">
   %cc-record;
   <!ELEMENT maelstrom_session (task, intake, shortlist, execution, artifact, assumption_made*)>
@@ -65,9 +67,14 @@ Stars carry across rounds so a pick from round one still counts in round twenty.
 2. Analyze the task and the conversation into known and gap slots; never ask about a known slot (LAW.ASK.1).
 3. Ask round one about the gaps, each question naming its form, bracket, angle, caret, chained empty, star, query, live or wrap beside select, check, elaborate, mark and display under LAW.ASK.17 and LAW.ASK.19 (ASK.token.bracket, ASK.token.angle, ASK.token.caret, ASK.token.chained, ASK.token.star, ASK.token.query, ASK.token.live, ASK.token.wrap); chain rounds while open detail remains with no binding cap, the declared enumeration standing open and unreachable; render each round as n of ASK.rounds_per_prompt. A ninety-six-round intake shows its running state in a `live` element under ASK.variant.display and wraps each answer with its difficulty's `wrap` level (LAW.ASK.19, LAW.ASK.20).
 4. Present the gate after each round with the shortlist in full as a `live` display (state: gate-N with the round's stars): the LiveMap the run reads back before every ask, pins now and returns in the shortlist (LAW.MAEL.3, LAW.ASK.19); loop on more, add or impactful until the gate choice is start, or save, on which the run writes its cache, renders the `cache` element and stops; a reply of the back token re-asks the question just asked; a star answer joins the shortlist and a query answer is asked next round.
+4b. On start offer the terminal choice and branch on it (LAW.TERM.1 to LAW.TERM.5).
 5. On resume from a cache file, read reverse per LAW.TEI.2: next first, findings newest-first, gate, answers, binding declaration last; carry TEI.part, TEI.sample and TEI.org with TEI.part.count, TEI.sample.count and TEI.org.count states, link spans with TEI.links and TEI.joins with TEI.links.count and TEI.joins.count relations, each crossing a `tei_span` (LAW.TEI.1, LAW.TEI.3); a resumed run starts at sample unknown.
 6. Execute with the full context; open the `execution` with the restatement of every slot, answer, star and answered query.
 </process>
+
+<terminal_gate>
+After gate choice start and before execution, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone. Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -119,7 +126,7 @@ Saved to `artifacts/ask-me-maelstrom-dtd/ask-me-maelstrom-dtd.md` (one line sayi
 - Rounds ran with no binding cap inside the declared enumeration, and no willing user was cut off
 - Every question named its form and was bilateral; stars accumulated and no star was lost
 - Every query was asked next round or rendered asked no; every reply became a known slot
-- Execution started only after the gate choice start, or in autonomous mode with every assumption listed
+- Execution started only after the gate choice start plus one terminal combo, or in autonomous mode with every assumption listed
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed
 </success_criteria>

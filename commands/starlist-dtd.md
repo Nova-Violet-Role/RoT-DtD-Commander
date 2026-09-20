@@ -171,7 +171,7 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -460,6 +460,41 @@ argument-hint: "[tool or tools to record as reachable, or blank to read the list
 <!ENTITY LAW.CACHE.7 "The cache is the lightest form: NestedText, the CACHE.schematic schematic of cc-schematic, whose cells declare an angle-bracket literal, a hash comment, and none for expanded, reference, definition, escape, include, conditional, type and binary; three types, no implicit typing, no tag, no reference, no code, read whole in one pass and lighter than the markdown of the run it saves; a file in another form, over CACHE.max_bytes bytes, failing a guard, or carrying a construct the cells say none to is refused by name and the save is reported as not done.">
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
+
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
 
   
   
@@ -830,11 +865,15 @@ The declarations of cross-os.dtd this command reads beside them: XOS.legs, the X
 2. Probe the six managers with `node lib/ceiling.mjs 300 node lib/starlist.mjs managers`, in the foreground, exit codes read directly. Render `probe` with the present set and the absent set named (LAW.SL.1).
 3. Probe the local substrates with `node lib/ceiling.mjs 60 node lib/cross-os.mjs probe`, in the foreground: render `substrates` with the host leg and one line per substrate, podman present only with a machine row, wsl2 only when wsl answers, and the macOS leg named to its hosted runner (LAW.SL.5, LAW.XOS.1).
 4. Read the current starlist of both layers, and read the two white lists, because they are what SL.bounds will be measured against.
-5. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command.
+5. Run the intake (LAW.ASK.6). Ask only what a probe cannot answer: whether this project relies on a reachable tool, what must never be reachable here, and which unreachable tools matter enough to hand to the manager command. On start offer the terminal choice before step 6.
 6. Write the entries with what was measured and today's date; a tool that did not answer is written absent rather than omitted (LAW.SL.1); measured names embedded as ARG.embed.pcdata (LAW.ARGS.5).
 7. Re-run `node lib/ceiling.mjs 300 node lib/list.mjs reach` and render `bounds`: every white entry this starlist can no longer support, with the edit that would resolve it (LAW.SL.3).
 8. Render `verdicts`, any `refused`, and a `next_action` that names starlist-manager-dtd for anything unreachable that matters.
 </process>
+
+<terminal_gate>
+On start and before anything is written, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -908,6 +947,7 @@ host leg [ubuntu-latest|macos-latest|windows-latest] ([how])
 - Every entry records a measurement: a tool written reachable answered its probe, and one that did not is written absent
 - The probe named both the present and the absent managers, and nothing was inferred from another manager's catalogue
 - The machine layer was the default and a repository entry meant this project relies on the tool
+- Work starts only after the gate choice start plus one terminal combo
 - The reachability guard was re-run after the write and every white entry the starlist can no longer support was rendered
 - Nothing was installed by this command; anything unreachable was named to starlist-manager-dtd
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer

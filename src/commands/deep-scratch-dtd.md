@@ -13,6 +13,8 @@ argument-hint: [what to build or change, or leave blank for the current discussi
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-report SYSTEM "../../dtd/cc-report.dtd">
   %cc-report;
   <!ELEMENT deep_scratch (intake, report, scratch, diff_review, report, merge_gate, artifact, artifact, assumption_made*)>
@@ -73,7 +75,7 @@ Local evidence first: files read, commands run, the worktree measured. The scrat
 </objective>
 
 <process>
-1. Intake: read the argument and the conversation into `known` and `gap` slots; ask up to three rounds, one to four questions each, every question with its variant and its bilateral Other; present the gate; start only on start. With --no-gate skip the intake, write every gap as an `assumption_made`, and still stop at the merge gate (LAW.DS.4).
+1. Intake: read the argument and the conversation into `known` and `gap` slots; ask up to three rounds, one to four questions each, every question with its variant and its bilateral Other; present the gate; start only on start. On start offer the terminal choice before step 2. With --no-gate skip the intake, write every gap as an `assumption_made`, and still stop at the merge gate (LAW.DS.4).
 2. Research: write the first `report`, the nine sections in SECTIONS.deep_scratch order, every claim marked measured, reasoned or guessed; save it as the first `artifact`, `YYYY-MM-DD-<topic>-deep-dive.md` under artifacts/research, and print the path (LAW.DS.6).
 3. Open the scratch from the repository root: `node lib/ceiling.mjs 60 node lib/scratch.mjs open <topic>` with the topic in lower-case letters, digits and hyphens (LAW.DS.1); render the `worktree` with its path, branch and base.
 4. Build inside the worktree only: every Write and every Edit under its path, one `build` line per file with kind new or changed; commit there with `git -C <path> add -A && git -C <path> commit`.
@@ -83,6 +85,10 @@ Local evidence first: files read, commands run, the worktree measured. The scrat
 8. Merge gate: one `pro` and one `con` per changed file, each with the lines it carries; then the mark question MERGE.question with the four options MERGE.all, MERGE.marked, MERGE.keep and MERGE.discard, multiSelect for the marked files. A question holds at most four options, so four files are marked per round and at most twelve across the three rounds; a diff of more than twelve files is marked by group instead, one option per top directory with its files and line counts, and the answer names the groups (LAW.DS.4). The replies are `answer` elements.
 9. Apply and close: merge-all with `node lib/scratch.mjs merge-all <topic>`, the marked files with `node lib/scratch.mjs merge <topic> <path...>`, then the project gate on the merged tree under the ceiling; a red gate is reverted (`git reset --hard <base>` after merge-all, `git checkout HEAD -- <paths>` after a marked merge) and the `verdict` carries gate red (LAW.DS.5); keep prints the worktree path; discard runs `node lib/scratch.mjs discard <topic>` (LAW.DS.7); render the `verdict` with its choice and its gate.
 </process>
+
+<terminal_gate>
+On start and before the research, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -137,6 +143,7 @@ known [slots]; gaps [slots]; round 1 of 3 [headers and answers]; gate [start]
 
 <success_criteria>
 - Nothing outside the worktree changes before the merge gate
+- Work starts only after the gate choice start plus one terminal combo
 - Every run has an exit code read directly and every phase-one claim is re-marked
 - Every hunk is a finding and every changed file has a pro and a con
 - The merge gate is asked, the chosen merge is applied, and the gate runs on the merged tree

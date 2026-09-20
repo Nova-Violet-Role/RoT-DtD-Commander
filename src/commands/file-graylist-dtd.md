@@ -23,6 +23,8 @@ argument-hint: "[extension or extensions to mark gray, or blank to read the list
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-list SYSTEM "../../dtd/cc-list.dtd">
   %cc-list;
   <!ELEMENT file_graylist_run (args, walk, intake, entries, exceptions, verdicts, refused*, next_action, assumption_made*)>
@@ -63,12 +65,16 @@ The declarations this command reads: LIST.class.gray for what a mark means, LIST
 1. Walk the argument with the cc-args grammar: bare words are extensions, `--exceptions` reads rather than writes, `--drop` takes one, `--machine` selects the layer, `--no-gate` skips the intake.
 2. Measure the tree first: count the files of each named extension so the intake can say how often the question would fire here. Render it as `walk`.
 3. Read both layers with `node lib/list.mjs show file gray`, and read the white list of the same scope, because that is where the replacements will come from.
-4. Run the intake (LAW.ASK.6). Ask for the reason in the operator's own words, and show the replacements the white list can offer for each name so a mark with no alternative is visible before it is made.
+4. Run the intake (LAW.ASK.6). Ask for the reason in the operator's own words, and show the replacements the white list can offer for each name so a mark with no alternative is visible before it is made. On start offer the terminal choice before step 7.
 5. Refuse a name a black list already holds (LAW.FG.1), rendering the refusal with both entries and the edit.
 6. Run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach` before writing, and write nothing when it refuses.
 7. Write the entries with reason and date, read back from disk, render `entries`; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 8. Render `exceptions`: every granted exception in this repository with its date and what it was granted for, oldest first, so an accumulation is visible rather than forgotten (LAW.FG.3). Then `verdicts`, any `refused`, and the `next_action`.
 </process>
+
+<terminal_gate>
+On start and before anything is written, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -128,6 +134,7 @@ Render the `file_graylist_run` root declared in the DOCTYPE as the markdown belo
 <success_criteria>
 - Every entry written is a declaration under LIST.dir whose file FIXES the scope file and the class gray
 - Every entry carries a reason a later reader could act on, and the replacements it would offer were shown before it was written
+- Work starts only after the gate choice start plus one terminal combo
 - A name already held by a black list was refused with both entries named
 - Every granted exception was rendered with its date and what it was granted for
 - Nothing was written when the reachability guard refused

@@ -17,6 +17,8 @@ argument-hint: [a workflow name and task names, or leave blank to be asked; --no
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT task_workflow (args, intake, selection, workflow_file, validation, proof, assumption_made*)>
   <!ELEMENT selection (chosen+)>
   <!ELEMENT chosen (#PCDATA)>
@@ -55,13 +57,17 @@ The chosen tasks' steps become the steps of a workflow file the runner walks in 
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags, a workflow name and task names when given; render the walk under `args`. Round one always runs (LAW.ASK.10).
-2. Read the registry with node lib/task.mjs audit and validate in the foreground; elaborate every open task (its purpose, its steps) before the ask; then Round 1 of 1: ask ASK.WTASK.1 (mark, the open tasks as options), ASK.WTASK.2 (select), ASK.WTASK.3 (select) and ASK.WTASK.4 (select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13); present the gate.
+2. Read the registry with node lib/task.mjs audit and validate in the foreground; elaborate every open task (its purpose, its steps) before the ask; then Round 1 of 1: ask ASK.WTASK.1 (mark, the open tasks as options), ASK.WTASK.2 (select), ASK.WTASK.3 (select) and ASK.WTASK.4 (select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13); present the gate; on start, offer the terminal choice before step 3.
 3. Render the `selection`: one `chosen` per marked task with its step count and its order.
 4. Compose the workflow: for each chosen task in order, one step per task step named task dot n, the run string expanded from the task's own variables (a refusal stops the command), the ceiling and the expected exit carried; on_fail from ASK.WTASK.3; write it under TASK.dir as the name followed by WTASK.ext, UTF-8 LF, re-read it and render the `workflow_file` with path, bytes, step count and on_fail (LAW.WTASK.1); task-derived run strings embedded as ARG.embed.pcdata (LAW.ARGS.5).
 5. Run node lib/workflow.mjs validate and node lib/workflow.mjs run --dry on the file, in the foreground, stdin closed, exits read directly; render the `validation` with sound yes or no and dry_run yes or no; a refused file is deleted (LAW.WTASK.2).
 6. Run the proof: copy the file to a scratch path, raise one step's ceiling above WORKFLOW.ceiling.max, run validate on the copy and show the refusal; render the `proof` with tripped yes (LAW.WTASK.4).
 7. End with the line that runs the workflow, node lib/workflow.mjs run on the file, and stop (LAW.WTASK.3).
 </process>
+
+<terminal_gate>
+On start and before the selection, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -110,6 +116,7 @@ run it: node lib/workflow.mjs run tasks/[name].workflow.json
 
 <success_criteria>
 - Every open task was elaborated before the mark question
+- Work starts only after the gate choice start plus one terminal combo
 - Every step's variables were expanded from its own task, and the file validated and dry-ran in the foreground
 - The workflow was not run here; the closing line runs it
 - The planted ceiling was refused

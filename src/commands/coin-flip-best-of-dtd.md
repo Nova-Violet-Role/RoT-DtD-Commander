@@ -15,6 +15,8 @@ argument-hint: [side A or side B; --of 3|5|7; leave blank to be asked; --debug p
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT series (args, intake, call, toss+, result, assumption_made*)>
   <!ELEMENT call (side, side)>
   <!ELEMENT side (#PCDATA)>
@@ -49,11 +51,15 @@ Each toss is real and separate: BEST.source runs once per toss, its digit is quo
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the two sides and, after the option of, the series length; render the walk under `args`.
-2. When a side or the length is missing, round 1 of 3: ask ASK.BEST.1 and ASK.BEST.2 in one call; present the gate; on start, bind them.
+2. When a side or the length is missing, round 1 of 3: ask ASK.BEST.1 and ASK.BEST.2 in one call; present the gate; on start, offer the terminal choice, then bind them.
 3. Render the `call` with of and the two `side` elements, heads bound to the first option (LAW.BEST.2).
 4. For n from 1 while neither face has a majority: run `node lib/ceiling.mjs 10 node -e "console.log(require('node:crypto').randomInt(2))" < /dev/null`, quote its stdout, render one `toss` with n and the printed value (LAW.BEST.1).
 5. Render the `result` with the heads count, the tails count and the winner (LAW.BEST.3).
 </process>
+
+<terminal_gate>
+On start and before the first toss, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -96,6 +102,7 @@ heads [count], tails [count]; winner: [heads|tails], [the side by name]
 <success_criteria>
 - Every toss line came from its own command that ran and was quoted
 - The series length was odd and bound before the first toss
+- Work starts only after the gate choice start plus one terminal combo
 - The series stopped when the outcome was settled and the counts add up to the tosses run
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

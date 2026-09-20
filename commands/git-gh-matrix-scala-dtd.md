@@ -167,7 +167,7 @@ argument-hint: [path to the target, or leave blank for the current one; --verbos
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -456,6 +456,41 @@ argument-hint: [path to the target, or leave blank for the current one; --verbos
 <!ENTITY LAW.CACHE.7 "The cache is the lightest form: NestedText, the CACHE.schematic schematic of cc-schematic, whose cells declare an angle-bracket literal, a hash comment, and none for expanded, reference, definition, escape, include, conditional, type and binary; three types, no implicit typing, no tag, no reference, no code, read whole in one pass and lighter than the markdown of the run it saves; a file in another form, over CACHE.max_bytes bytes, failing a guard, or carrying a construct the cells say none to is refused by name and the save is reported as not done.">
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
+
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
 
   
   
@@ -834,11 +869,15 @@ Rounds and answers travel the bus: questions go out and answers come back over B
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags ARG.verbose and ARG.debug and the positional words; render the walk under `args`.
 2. Measure every probe by reading the tree and running git in the foreground under a timeout with stdin closed, never a network call and never gh; render one `probe` per name with present yes, partial or no and the evidence behind it (verbose prints all of it, debug prints the commands).
 3. Round 1 of ASK.rounds_per_prompt: target, then shape, seals and legs; four options plus Other with the static preview beside each; render each round (LAW.MX.1, LAW.MX.2, LAW.MX.3).
-4. Round on while open slots remain, never past ASK.max_total questions in all: ceiling and node, model, effort, thinking with MX.thinking.note in the preview, env tier, cache timer; on more, the next round from the remaining slots and the answers so far; on add or impactful, take the answer and present the gate again; on start, every slot not asked takes its first option and is listed under Assumptions Made (LAW.MX.4, LAW.MX.5, LAW.MX.6, LAW.MX.7, LAW.MX.9).
+4. Round on while open slots remain, never past ASK.max_total questions in all: ceiling and node, model, effort, thinking with MX.thinking.note in the preview, env tier, cache timer; on more, the next round from the remaining slots and the answers so far; on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then every slot not asked takes its first option and is listed under Assumptions Made (LAW.MX.4, LAW.MX.5, LAW.MX.6, LAW.MX.7, LAW.MX.9).
 5. Render the `matrix_plan`: one `matrix_plan` with target, legs, shape, seals, ceiling, model_tier, env_tier, cache_timer and sanitizers, each choice carrying the round that set it. Field sources, named so the checker holds them: target of MX.targets, MX.targets.count of them; legs of MX.os.3latest or MX.os.extended per MX.os.choice, each a MX.leg.ubuntu-latest, MX.leg.macos-latest or MX.leg.windows-latest row; shape one of MX.shape.single, MX.shape.ramified, MX.shape.matrix-jobs or MX.shape.manual; seals of MX.seals.light or MX.seals.heavy at MX.seals.count.light or MX.seals.count.heavy, carried MX.cred.transport with MX.cred.expiry dated; ceiling of MX.ceiling.per-job in MX.ceiling.portable form with MX.node.checker proven; model of MX.models at MX.effort.levels with MX.effort.cost.opus-5 or MX.effort.cost.fable-5, thinking per MX.thinking.hard-zero with MX.thinking.budget unset and MX.thinking.legacy parsing only; env of MX.env.timeouts, MX.env.flags and MX.env.output; cache of MX.cache.timer under MX.cache.polyarm.
 6. Emit the files the plan names, each with the repository SPDX header where its format allows a comment, UTF-8 LF without BOM, and re-read each; hold the gate file to LAW.XOS.6 by node lib/cross-os.mjs matrix --check and every value to its MX.san row; values in attribute position escape all five characters per ARG.embed.attr (LAW.ARGS.7); render one `emitted` per file with its bytes. Sanitizers hold MX.san.gha, MX.san.xxe, MX.san.cdata, MX.san.pcdata, MX.san.ndata, MX.san.yaml and MX.san.dispatch, MX.san.count of them (LAW.MX.8); render one `gate_grant` with its `grant` rows, one of CG.roles, CG.roles.count of them, CG.role.companion, CG.role.audit-runner or CG.role.scala-companion, tier CG.tier.leashed or CG.tier.unlocked of CG.tiers, under CG.bypass.does and CG.bypass.does-not-leashed or CG.bypass.unlocked-admits with CG.bypass.unlocked-keeps, ceiling CG.ceiling (LAW.CG.1, LAW.CG.2, LAW.CG.3, LAW.CG.4, LAW.CG.5, LAW.CG.6, LAW.CG.7, LAW.CG.8, LAW.CG.9).
 7. Render the `verdict`: green yes only when matrix --check passes and every sanitizer holds, partial when some do, no when the run emitted nothing; the release ending rides with it per LAW.MX.10.
 </process>
+
+<terminal_gate>
+On start and before the matrix plan, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -896,6 +935,7 @@ green [yes|partial|no]; failing: [row or none]
 
 <success_criteria>
 - Every probe was measured before any question was asked, and no question named a slot already filled
+- Work starts only after the gate choice start plus one terminal combo
 - No prompt asked more than ASK.max_total questions, and no round more than ASK.max_questions
 - Every static choice carried its preview, and thinking previews carried MX.thinking.note
 - Every preview kept the DAISY navPoint shape of `%preview.daisy;`: a label with a target pointer and a play order, pointing at the consequence and embedding never (LAW.ASK.18)

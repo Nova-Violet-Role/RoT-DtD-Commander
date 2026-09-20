@@ -837,7 +837,7 @@ argument-hint: [topic or the prompt to carry over; --verbose prints the ideas di
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -1127,6 +1127,41 @@ argument-hint: [topic or the prompt to carry over; --verbose prints the ideas di
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
 
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
   <!ELEMENT clear_section (args, intake, brainstorm, launch, transmigration, instruction, assumption_made*)>
   <!ELEMENT brainstorm (idea+)>
   <!ELEMENT idea (#PCDATA)>
@@ -1170,13 +1205,17 @@ The shape is borrowed from the instruction channel of the RoT DTD GOAL trust con
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the topic or the prompt; render the walk under `args`.
 2. Round 1 of 3: ask ASK.CLEAR.1 to ASK.CLEAR.4 (select) as one AskUserQuestion call, four options each plus Other; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (select); on more again, round 3 of 3 with ASK.CLEAR.5 (elaborate: each kind elaborated), ASK.FORM.1 and ASK.FORM.2 (check); the ideas of the brainstorm are then marked (mark: each idea elaborated, the marked ones kept); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (select); on more again, round 3 of 3 with ASK.CLEAR.5 (elaborate: each kind elaborated), ASK.FORM.1 and ASK.FORM.2 (check); the ideas of the brainstorm are then marked (mark: each idea elaborated, the marked ones kept); on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `brainstorm`: the chosen count of `idea` elements, ranked, the kept ones marked; the ideas come from the topic, the conversation and the files named in it, each idea one sentence with a verb.
 5. Render the `launch`: the schematic chosen (nt when none was), the kind (prompt when none was), the creator they select, then the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was) (LAW.CLEAR.6).
 6. Compose the bigger prompt: the goal, the state as of this run, the files touched, the next step, the kept ideas folded into the prompt the operator gave, whole, and a known-slots block naming the schematic, the schemas, the kind and the forms chosen (LAW.CLEAR.2, LAW.CLEAR.3, LAW.CLEAR.6).
 7. Write the handoff file under CLEAR.dir as `<date>-<slug>.md`, UTF-8 LF without BOM with the SPDX header, re-read it and render the `transmigration` with path and bytes; the prompt carried whole as ARG.embed.cdata (LAW.ARGS.5, LAW.CLEAR.2).
 8. Render the `instruction` with goal and step: step one is CLEAR.command, step two is the launch line, the at-sign reference to the handoff file followed by a slash, the creator named in the launch and the purpose of the bigger prompt as its argument.
 </process>
+
+<terminal_gate>
+On start and before the brainstorm, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -1233,6 +1272,7 @@ step 2: [the launch line: an at-sign reference to the handoff file, then /[creat
 - The clear command was never run by this command; the instruction names it as a step
 - The handoff file holds the prompt byte for byte, the goal, the state, the files and the next step, and was re-read
 - Every idea carries a rank and a kept mark
+- Work starts only after the gate choice start plus one terminal combo
 - The launch names the creator that matches the schematic and the kind, and the handoff carries the schematic, the schemas and the forms as known slots
 - The instruction is its own element, with a goal and a step, and says nothing about what happened
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer

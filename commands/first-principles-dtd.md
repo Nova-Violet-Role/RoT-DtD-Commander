@@ -96,7 +96,7 @@ argument-hint: [problem or leave blank for current context; add --no-gate to ski
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -386,6 +386,41 @@ argument-hint: [problem or leave blank for current context; add --no-gate to ski
 <!ENTITY LAW.CACHE.8 "A save is written in three places and read from one: the cache file, a revision saved with an evidence line of kind file naming the cache where the command declares a record (cc-record, LAW.REC.6), and the ledger line the Adiutor writes for the answer at Stop where it is armed; a resume reads the cache file alone.">
 <!-- end subset cc-cache -->
 
+  
+  
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
   <!ELEMENT first_principles (problem, assumption+, intake?, truth+, rebuild, possibility*, assumption_made*)>
   <!ATTLIST first_principles depth (overview|solid|comprehensive) "comprehensive">
   <!ELEMENT problem (#PCDATA)>
@@ -430,12 +465,16 @@ Strip away assumptions, conventions and analogies to identify fundamental truths
 <process>
 1. State the `problem` in one sentence. If the argument is blank, take it from the current discussion and say so.
 2. List every `assumption` in play, including the obvious ones, each as a `statement` with an id (A1, A2, ...) and an origin: convention (that is how it is done), analogy (it worked for X), measurement (a number was read), necessity (arithmetic, physics, a contract).
-3. Assumption gate. Skipped when the argument contains --no-gate or the session is non-interactive. Otherwise use AskUserQuestion once: header "Held", multiSelect true, question "Which of these do you treat as non-negotiable?", options are up to four assumption statements labelled by id. The reply arrives on the ask-answer channel and sets held true on the chosen ids and false on the rest; it changes nothing else. In autonomous mode set held unknown everywhere and write one `assumption_made` saying the gate was skipped.
+3. Assumption gate. Skipped when the argument contains --no-gate or the session is non-interactive. Otherwise use AskUserQuestion once: header "Held", multiSelect true, question "Which of these do you treat as non-negotiable?", options are up to four assumption statements labelled by id. The reply arrives on the ask-answer channel and sets held true on the chosen ids and false on the rest; it changes nothing else. On held replies offer the terminal choice before step 4. In autonomous mode set held unknown everywhere and write one `assumption_made` saying the gate was skipped.
 4. Write a `challenge` for each assumption: is this actually true, and how would we know? Assign the verdict true, false or partial with a confidence; measured only if something was run or read in this session. Challenge held-true assumptions hardest; those are the ones nobody has tested.
 5. Extract the `truth` elements: statements that survive with origin necessity or measurement and verdict true. Write irreducible_because for each: what would have to be false for this truth to fail.
 6. Write the `rebuild` from the truths alone, listing their ids in stands_on. If a step needs something that is not a truth, it is an assumption; return to step 2 and add it.
 7. List each `possibility` that opens once a false or partial assumption is dropped, naming that assumption in freed_by.
 </process>
+
+<terminal_gate>
+On the held replies and before the challenge, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -485,6 +524,7 @@ stands on: T1, T2
 
 <success_criteria>
 - Surfaces hidden assumptions, including the ones that felt like facts
+- Work starts only after the held replies plus one terminal combo
 - Distinguishes convention from necessity by origin, not by tone
 - Identifies irreducible base truths, each with a stated failure condition
 - Opens solution paths that were invisible while the false assumptions stood

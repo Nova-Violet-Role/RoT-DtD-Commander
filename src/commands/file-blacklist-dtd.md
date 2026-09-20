@@ -23,6 +23,8 @@ argument-hint: "[extension or extensions to refuse, or blank to read the list; -
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-list SYSTEM "../../dtd/cc-list.dtd">
   %cc-list;
   <!ELEMENT file_blacklist_run (args, walk, intake, entries, verdicts, refused*, next_action, assumption_made*)>
@@ -62,12 +64,16 @@ The declarations this command reads: LIST.classes and LIST.scopes for the axes, 
 1. Walk the argument with the cc-args grammar: bare words are extensions, `--drop` takes one, `--machine` selects the layer, `--no-gate` skips the intake. The walk splits like shell words and never evaluates: a path with a space is one word.
 2. Measure the tree before asking anything: count the files of each extension, so the intake can say what refusing one would actually cost here. Render this as `walk`.
 3. Read both layers with `node lib/list.mjs show file black`, and render what each already holds with its layer.
-4. Run the intake (LAW.ASK.6). Ask only what the walk cannot answer: which extensions, the reason for each, whether the repository or the machine layer, and whether a sibling code entry is meant instead. Never ask about an extension the argument already named.
+4. Run the intake (LAW.ASK.6). Ask only what the walk cannot answer: which extensions, the reason for each, whether the repository or the machine layer, and whether a sibling code entry is meant instead. Never ask about an extension the argument already named. On start offer the terminal choice before step 7.
 5. Before writing, run the reachability guard with `node lib/ceiling.mjs 120 node lib/list.mjs reach`. A refused combination stops the write, and every refusal is rendered as a `refused` element carrying the entry, the collision, the layer and the edit (LAW.FB.3).
 6. Check the markdown interlock when md is among the names (LAW.FB.4); refuse with the failed condition named.
 7. Write the entries with their reasons and today's date, then read the file back and render the `entries` element from what is on disk, never from what was intended; entry names and reasons embedded as ARG.embed.pcdata (LAW.ARGS.5).
 8. Render `verdicts`: one line per name, holding yes when it is now listed and no when it was refused, and close with the `next_action` a reader should take.
 </process>
+
+<terminal_gate>
+On start and before anything is written, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -122,6 +128,7 @@ Render the `file_blacklist_run` root declared in the DOCTYPE as the markdown bel
 <success_criteria>
 - Every entry written is a declaration under LIST.dir with its reason and date, and the file it lands in FIXES the scope file and the class black
 - Both layers were read and the repository layer won every entry they share
+- Work starts only after the gate choice start plus one terminal combo
 - The reachability guard ran before the write and its refusals name both colliding entries and the edit
 - The markdown interlock was checked whenever md was named
 - Nothing was written when the guard refused

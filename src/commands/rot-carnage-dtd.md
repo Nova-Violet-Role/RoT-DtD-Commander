@@ -13,6 +13,8 @@ argument-hint: [the problem to detonate; blank for the current discussion; --no-
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ENTITY % cc-rot SYSTEM "../../dtd/cc-rot.dtd">
   %cc-rot;
   <!ELEMENT rot_carnage (router_state, intake, domain, domain, domain, domain?, domain?, fragment+, weave, burst, dream?, survivor*, expert+, interceptor*, gauge, bound, stanza)>
@@ -48,7 +50,7 @@ Carnage is the creative lens of the RoT MoE packet and the lead of the CREATIVE 
 
 <process>
 1. Set `router_state`: if a line beginning with "RoT MoE ::" (the router marker) is present in this session's hook context, quote its most recent occurrence verbatim with present yes; otherwise present no and say in one line that the router is absent. Never re-type a gauge number from memory (LAW.ROT.4).
-2. Open the `intake` (cc-ask): analyse the argument into known and gap slots, then ask with AskUserQuestion, header "Carnage", the questions the context leaves open, at most four: how much entropy is wanted (structured 0.7, maximum 0.9 as in PROFILE.CREATIVE); whether a second lens should resonate through the chaos (violet, antivenom, venom, chroma, nova, none); whether the Socio wants the dream narrative; what real constraint the collisions will be judged against (a compiler, a budget, a user, a deadline). Present the gate (GATE.question with GATE.start, GATE.more, GATE.add) and loop until start. With --no-gate skip every question and list each assumption under Assumptions Made (LAW.ROT.6).
+2. Open the `intake` (cc-ask): analyse the argument into known and gap slots, then ask with AskUserQuestion, header "Carnage", the questions the context leaves open, at most four: how much entropy is wanted (structured 0.7, maximum 0.9 as in PROFILE.CREATIVE); whether a second lens should resonate through the chaos (violet, antivenom, venom, chroma, nova, none); whether the Socio wants the dream narrative; what real constraint the collisions will be judged against (a compiler, a budget, a user, a deadline). Present the gate (GATE.question with GATE.start, GATE.more, GATE.add) and loop until start; on start offer the terminal choice. With --no-gate skip every question and list each assumption under Assumptions Made (LAW.ROT.6).
 3. Pick three to five `domain` elements unrelated to the problem, each with an id and a name (LAW.CARNAGE.1).
 4. Detonate one `fragment` per domain, from naming the domain, written as if that domain were answering the problem.
 5. Write the `weave`: the fragments joined by juxtaposition only, no logical connectors.
@@ -60,6 +62,10 @@ Carnage is the creative lens of the RoT MoE packet and the lead of the CREATIVE 
 11. Compute the `gauge` by GAUGE.formula: one `term` for carnage with lambda from LENS.carnage (or from PROFILE.CREATIVE when the intake chose to run the lane profile), delta the lens's divergence from the ensemble mean estimated in 0.0-1.0, sigma from the sigmoid, entropy inside the lens's H band, mu from the same row, ci from CI.scale, value = lambda times sigma times (1 + entropy) times mu times ci with M and T at 1.0 unless a residue or a stale source is declared; rs = value with k 1; band against the lens's R/s+ band; source estimated unless the router marker supplied a measured reading. Out of band: add a `correction` with its direction and correct the draft before the stanza (LAW.ROT.7).
 12. Close with the `stanza` of carnage carrying its confidence ci (LAW.ROT.2), and the `bound` element quoting the lens's may-never clause from LENS.carnage with held yes or no (LAW.ROT.5).
 </process>
+
+<terminal_gate>
+On start and before step 3, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -149,6 +155,7 @@ rs [x.xx] k 1 band [below|in|above] source [estimated|measured]
 
 <success_criteria>
 - The intake asked only about real gaps, at most four questions, and ended at the gate or listed its assumptions
+- Work starts only after the gate choice start plus one terminal combo
 - router_state quotes the router marker verbatim or declares it absent
 - Every expert of the lens appears engaged or not, every interceptor that fired is named, and the gauge shows every input of its term
 - The stanza carries ci and the bound is held

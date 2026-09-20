@@ -19,6 +19,8 @@ description: "DTD-native: route a prompt to its schematic creator: ask the schem
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT prompt_router (args, intake, launch, instruction, assumption_made*)>
   <!ELEMENT launch (schemas, forms)>
   <!ELEMENT instruction (#PCDATA)>
@@ -49,10 +51,14 @@ Eight creators write prompts, one per schematic (callout, heredoc, yaml, nt, xml
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the purpose; render the walk under `args`. This is a create- skill, so round one always runs (LAW.ASK.10).
 2. Round 1 of 3: ask ASK.SCHEMATIC.1 (select), ASK.SCHEMATIC.2 (select), ASK.SCHEMA.1 (the families, check) and ASK.SCHEMA.2 (which of them, select) as one AskUserQuestion call; render the round with the variant beside each question (LAW.ASK.13).
-3. Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (check) and ASK.ROUTE.1 (elaborate: each purpose elaborated before the ask); on add or impactful, take the answer and present the gate again; on start, proceed with every unasked question at its first option, listed under Assumptions Made.
+3. Present the gate; on more, round 2 of 3 with ASK.FORM.1 and ASK.FORM.2 (check) and ASK.ROUTE.1 (elaborate: each purpose elaborated before the ask); on add or impactful, take the answer and present the gate again; on start, offer the terminal choice, then proceed with every unasked question at its first option, listed under Assumptions Made.
 4. Render the `launch`: the schematic (nt when none was chosen), the kind, the creator they select, the `schemas` with one `semantic` per schema chosen and its `part` elements from the SEMANTIC entity of that schema, and the `forms` with one `form` per kind chosen (nt alone when none was).
 5. Render the `instruction`: goal, the purpose; step, one Skill call to the creator with the argument made of the purpose, then ARG.end, then schematic=, schemas= and forms= with comma-separated values (LAW.ROUTE.3); then make that call and stop (LAW.ROUTE.4).
 </process>
+
+<terminal_gate>
+On start and before the hand-off, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -93,6 +99,7 @@ step: Skill create-prompt-[schematic]-dtd with "[purpose] -- schematic=[schemati
 <success_criteria>
 - Round one ran before any hand-off
 - No prompt file was written here; the creator named in the launch writes it
+- The hand-off proceeds only after the gate choice start plus one terminal combo
 - The hand-off argument carries the purpose, the end token and the three known slots, and the creator asked none of them again
 - Every LAW.* entity declared in the DOCTYPE holds; a violated law is a failed answer
 - Each claim carries a confidence: measured, reasoned or guessed

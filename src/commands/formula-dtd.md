@@ -27,6 +27,8 @@ allowed-tools: Read Grep Glob Bash
   %cc-ask;
   <!ENTITY % cc-cache SYSTEM "../../dtd/cc-cache.dtd">
   %cc-cache;
+  <!ENTITY % cc-terminal SYSTEM "../../dtd/cc-terminal.dtd">
+  %cc-terminal;
   <!ELEMENT formula_layer (args, intake, text_desc, subject, formula+, derivation+, drift)>
   <!ELEMENT subject (#PCDATA)>
   <!ELEMENT formula (#PCDATA)>
@@ -57,13 +59,17 @@ The formulas that run through Dantalian no Shoka, with their sigma and gamma and
 
 <process>
 1. Walk the argument string once (LAW.ARGS.1, LAW.ARGS.2): <quoted trust="cdata" source="user-args">$ARGUMENTS</quoted> gives the flags and the subject; render the walk under `args`.
-2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start proceed with every unasked question at its first option; render the round under `intake`.
+2. Round 1 of 1: ask ASK.LEX.1 to ASK.LEX.4 as one AskUserQuestion call, four options each plus Other, never skipped on the strength of context (LAW.LEX.6, LAW.ASK.10); present the gate; on more, add or impactful take the answer and present it again; on start offer the terminal choice, then proceed with every unasked question at its first option; render the round under `intake`.
 3. Render the `text_desc`: the profile fixed in the DOCTYPE, derivation, domain, factuality, preparedness, purpose and degree, with VOICE.source as the book it draws on; the answer keeps that voice (LAW.LEX.5).
 4. Name the `subject` and read it; list every number it states or relies on.
 5. Write each as a `formula` with an id, its term (the expression or the name of the constant) and the value the subject states.
 6. For each formula write a `derivation`: the source (a file and line, a command, a measurement) that produces the real value, the value that came out, and a confidence: measured only when the source was read or run this session.
 7. Write `drift`: the count of formulas whose derived value differs from the stated one, naming each and the side to correct.
 </process>
+
+<terminal_gate>
+On start and before step 3, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -116,6 +122,7 @@ derivation paraphrase; domain the formulas of the Phantom Books applied to the n
 
 <success_criteria>
 - Round one ran before the analysis, and the voice profile fixed in the DOCTYPE was kept
+- Work starts only after the gate choice start plus one terminal combo
 - Every number in the subject has a formula
 - Every derivation names an executable source
 - Drift is a number and each drifted formula is named

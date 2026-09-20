@@ -167,7 +167,7 @@ argument-hint: "[what you are trying to build, or blank to start from the walk; 
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -459,6 +459,41 @@ argument-hint: "[what you are trying to build, or blank to start from the walk; 
 
   
   
+<!-- begin subset cc-terminal -->
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
+<!-- end subset cc-terminal -->
+
+  
+  
 <!-- begin subset cc-list -->
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
 <!-- Copyright 2026 Saimonokuma. -->
@@ -717,12 +752,16 @@ The declarations this command reads: STAR.managers and its six adapters for what
 1. Walk the argument with the cc-args grammar: the bare text is the search subject, `--manager` limits to one of the six, `--resume` reads the session record, `--no-gate` skips the intake.
 2. Measure with `node lib/ceiling.mjs 300 node lib/starlist.mjs measure`: languages with counts, build files, managers present. Render `measured` (LAW.SM.1).
 3. On `--resume`, read the session record and render what it carried; otherwise open block 1.
-4. Run a block of up to eight rounds of four questions (LAW.SM.2), asking only what the walk cannot answer. After each round write the session record.
+4. Run a block of up to eight rounds of four questions (LAW.SM.2), asking only what the walk cannot answer. After each round write the session record. On the gate choice start offer the terminal choice before step 5.
 5. Search with `node lib/ceiling.mjs 300 node lib/starlist.mjs search <query>`, in the foreground, per-manager ceilings, exit codes read directly. Render `hits` with one `hit` per manager carrying its exit; an absent manager is rendered absent and no hit is invented (LAW.SM.3).
 6. For each candidate worth adopting, build the install plan and check it against both black lists. A refused plan is rendered as `refused` with the entry, the layer and the edit, and no confirmation is offered for it (LAW.SM.4).
 7. For each surviving plan, ask one confirmation showing SM.confirm, with the options to install, to decline, or to print the line and run it yourself. Install only on the choice to install, in the foreground under the declared ceiling, exit code read directly.
 8. Write every adoption into the starlist with its date and the answer that authorised it, render `adopted`, then the `session` path, then the `next_action`. When the toolchain is still unsettled, open the next block instead of closing.
 </process>
+
+<terminal_gate>
+On start and before the search, one AskUserQuestion with header "Terminal": options TERMINAL.combo.todo (add to todo and Megathink sort todo and Start Working), TERMINAL.combo.study (Full study and Sort study_greeknumber.nt and Start working), TERMINAL.combo.cache (Save your cache and Start Working), plus Start working alone (LAW.TERM.1). Add-to-todo thinks each answer into adequate completion-sequence position then Megathink-sorts before Start working (LAW.TERM.2). Full-study writes .full_study/study_greek.nt via lib/ordinals.mjs next(), sorts, then Start working (LAW.TERM.3, LAW.TERM.5). Save-cache writes .cache/cache_greek.nt with the eight cache fields under the nt schematic, reads back whole, then Start working (LAW.TERM.4, LAW.TERM.5).
+</terminal_gate>
 
 <output_format>
 <grammar_map>
@@ -785,6 +824,7 @@ Render the `starlist_manager_run` root declared in the DOCTYPE as the markdown b
 
 <success_criteria>
 - The tree was measured before the first question and nothing measurable was asked
+- Work starts only after the gate choice start plus one terminal combo
 - Every round was rendered as n of 8 with its block, and a new block named the answers it carried
 - Every search ran in the foreground under its manager's declared ceiling with its exit read directly, and an absent manager was named absent with no invented hits
 - No install happened without a confirmation showing the literal line, the manager and the ceiling
