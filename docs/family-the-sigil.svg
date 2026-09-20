@@ -12,7 +12,7 @@
 <line x1="26" y1="118" x2="794" y2="118" stroke="#e2e5ec" stroke-width="1"/>
 <rect x="26" y="134" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="151" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/sigil-dtd [a form by name or token, a tier S to D, a topic 1 to 10, or all; --no-gate runs autonomously]</text>
-<text x="794" y="151" font-size="12" fill="#5b6472" text-anchor="end">55 laws</text>
+<text x="794" y="151" font-size="12" fill="#5b6472" text-anchor="end">60 laws</text>
 <text x="34" y="178" font-size="13" fill="#5b6472">DTD-native: the dollar sign as a contract. Studies one form, one tier or every form</text>
 <text x="34" y="197" font-size="13" fill="#5b6472">against the five documents under dtd/sigil: the form's token, context, tier and topic,</text>
 <text x="34" y="216" font-size="13" fill="#5b6472">whether the ranking document spells it, the eleven tokens that collide across contexts,</text>
@@ -21,7 +21,7 @@
 <text x="34" y="273" font-size="13" fill="#5b6472">ranked form no name covers, is a finding. Gates on what to study</text>
 <rect x="26" y="292" width="700" height="24" rx="5" fill="#f2f4f8"/>
 <text x="34" y="309" font-size="13.5" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" fill="#1a1d24">/verbs-dtd [a tier S to D, a form by name, or all; --write leaves the record under artifacts/sigil; --no-gate runs autonomously]</text>
-<text x="794" y="309" font-size="12" fill="#5b6472" text-anchor="end">55 laws</text>
+<text x="794" y="309" font-size="12" fill="#5b6472" text-anchor="end">60 laws</text>
 <text x="34" y="336" font-size="13" fill="#5b6472">DTD-native: every form of the sigil run together, on the leg it is on. Executes the</text>
 <text x="34" y="355" font-size="13" fill="#5b6472">shell forms of the study in bash with stdin closed under a ceiling and records what each</text>
 <text x="34" y="374" font-size="13" fill="#5b6472">expanded to beside what the study says: pass, fail, or unsupported with the bash the</text>
