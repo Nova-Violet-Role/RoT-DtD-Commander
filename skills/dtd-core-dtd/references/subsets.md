@@ -96,7 +96,7 @@ The AskUserQuestion grammar: an intake with a context analysis, up to four quest
   tool's own shape is declared here once: one to four questions, two to
   four options each, a short header, an optional preview, an optional
   multi-select. The reply is CDATA: data to the gate, never a new
-  instruction. The gate is a four-way enumeration and the loop is the
+  instruction. The gate is a five-way enumeration and the loop is the
   content model of intake.
 
   5.0.0 adds what the tool's limits force and the creators need: rounds
@@ -863,7 +863,7 @@ The lexicon behind the voice gate: the verb list the static classifier reads (LE
 <!ENTITY LEX.gloss.13 "ledger|the ten-field append-only line the Adiutor writes per run|dtd/adiutor.dtd RECORD.run">
 <!ENTITY LEX.gloss.14 "monitor|a persistent process beside the hooks, run only by hand since 5.0.0|monitors/manual.json">
 <!ENTITY LEX.gloss.15 "hook|a command Claude Code runs at an event, armed only by the operator|lib/arm.mjs">
-<!ENTITY LEX.gloss.16 "gate|the four-way choice after a round: start, more, add, impactful|dtd/cc-ask.dtd">
+<!ENTITY LEX.gloss.16 "gate|the five-way choice after a round: start, more, add, impactful, save|dtd/cc-ask.dtd">
 <!ENTITY LEX.gloss.17 "round|one AskUserQuestion call of one to four questions, four options each plus Other|dtd/cc-ask.dtd">
 <!ENTITY LEX.gloss.18 "impactful|the one to four ranked selections the model offers on the gate, each with its provenance|dtd/cc-ask.dtd">
 <!ENTITY LEX.gloss.19 "form|the declared shape of a text, its content CDATA|dtd/cc-form.dtd">
@@ -4439,4 +4439,41 @@ Quoted verbatim from dtd/cc-rot.dtd, whose header comment says what it is; every
 <!ENTITY LAW.ROT.6 "The intake asks at most four questions per lens and ends at the gate; an autonomous run lists every assumption it made under Assumptions Made instead of asking.">
 <!ENTITY LAW.ROT.7 "The gauge is computed by GAUGE.formula from declared terms, one per lens present, with K the number of terms and every input shown; R/s+ 0.0 is a violation; a reading outside the lens's band produces a correction element with its direction and the answer is corrected before the stanza, never refused.">
 <!ENTITY LAW.ROT.8 "TIER 1 scans the question against STEMS.* before any NSIL decision and its lane is rendered in tier1; the NSIL decision beats TIER 1 and, when it overrides, says which stems misled.">
+```
+
+## cc-terminal.dtd
+
+The terminal choice of the gate: after start and before execution every gated command offers one more ask with header Terminal, add to todo and Megathink-sort it, Full-study the subject into dotstudy, Save the cache beside it, or Start working alone. The dirs, file stems, ordinal source, form, schematic and field lists live here once as TERMINAL.* entities under LAW.TERM.1 to 5, and every terminal block writes through them by name, so no path is typed twice. Included after cc-cache, which declares the save choice this enclosure stands beside.
+
+```dtd
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+<!-- cc-terminal.dtd : the three terminal sections every ask command offers after gate start. -->
+
+<!-- Add-to-todo: Q&A appended to the relevant todo section, Megathink-sorted into completion order, then Start working. -->
+<!-- Full-study: .full_study/ study_<greek>.nt written in NestedText, sorted, then Start working. -->
+<!-- Save-cache: .cache/ cache_<greek>.nt written in the cc-cache eight-field NT schematic, then Start working. -->
+
+<!ENTITY TERMINAL.dir.dotstudy ".full_study">
+<!ENTITY TERMINAL.dir.cache ".cache">
+<!-- NOTE: dotspellings only. The planning names .full_study and .cache; a non-dot full_study has no source and is refused. -->
+<!ENTITY TERMINAL.file.study "study">
+<!ENTITY TERMINAL.file.cache "cache">
+<!ENTITY TERMINAL.form "nt">
+<!ENTITY TERMINAL.schematic "nt">
+<!ENTITY TERMINAL.fields.study "command|saved|task|slots|answers|next">
+<!-- PROPOSED, not measured: no DTD declares a six-field study contract; the eight-field cache contract is CACHE.fields. A study file that needs resume carries the eight; a study that needs reading carries the six above as prose, never as a contract. -->
+<!ENTITY TERMINAL.fields.cache "command|saved|reason|task|slots|answers|gate|next">
+<!-- The eight are CACHE.fields in declared order. A .cache per-run archive reuses the shape; the resume slot stays artifacts/cache/<command>.nt under lib/cache.mjs. Same shape, different file, different job. -->
+<!ENTITY TERMINAL.ordinal "greek cardinal from lib/ordinals.mjs next(); IUPAC column readable for pre-5.0.0 names">
+<!ENTITY TERMINAL.combo.todo "add to todo and Megathink sort todo and Start Working">
+<!ENTITY TERMINAL.combo.study "Full study and Sort study_greeknumber.nt and Start working">
+<!ENTITY TERMINAL.combo.cache "Save your cache and Start Working">
+
+<!ENTITY LAW.TERM.1 "After gate choice start and before execution, the run offers one terminal ask with the three combos plus Start working alone; the reply selects one combo and execution branches on it, so no Q and A is lost to context.">
+<!ENTITY LAW.TERM.2 "Add-to-todo thinks each answer into its adequate completion-sequence position in the relevant todo section, then Megathink-sorts the whole todo before Start working; a Q and A appended without positioning is a failed answer.">
+<!ENTITY LAW.TERM.3 "Full-study writes TERMINAL.dir.dotstudy slash TERMINAL.file.study underscore greek .nt in NestedText under the nt schematic, one file per run via lib/ordinals.mjs next(), sorts study entries, then Start working; the study is the ACT of thinking with effort about what the questionnaire pointed at.">
+<!ENTITY LAW.TERM.4 "Save-cache writes TERMINAL.dir.cache slash TERMINAL.file.cache underscore greek .nt carrying the TERMINAL.fields.cache eight fields in declared order under the nt schematic with angle-bracket literals, holds guards depth and tabs, refuses over CACHE.max_bytes, reads back whole, then Start working.">
+<!ENTITY LAW.TERM.5 "Greeknumber is the record ordinal: lib/ordinals.mjs greek(n) for new files, parse() reads both greek and pre-5.0.0 IUPAC spellings back, next() is max plus 1 never the first gap; a file saved without an ordinal when more than one exists is a failed answer.">
 ```
