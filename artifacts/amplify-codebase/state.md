@@ -4,12 +4,12 @@
 
 # amplify-codebase: the state between runs
 
-- run: 12
-- verb: 12
+- run: 13
+- verb: 8
 - offset: 0
 - page: 4
-- from: 10.0.0
-- release: mid 10.1.0
+- from: 10.1.0
+- release: minor 10.1.1
 - walked: contract, schematic, args, report, guard
 
 | id | class | layer | verdict | verb | refused_at | why | run |
@@ -108,3 +108,5 @@
 | e1b0de02 | gap | contract | done | 15 |  | LAW.AUD.1-5, LAW.META.1-8 and LAW.PROMPT.1-8 were declared identically in nineteen command files; they live once in dtd/cc-audit.dtd and dtd/cc-schematic.dtd now, every command binding its laws by name, and the contract reads zero unused with zero gaps | 11 |
 | f2c0de01 | gap | install | done | 12 |  | an upgrade kept every owned file the new plan no longer wrote, so a deleted command stayed loadable; a full install prunes owned files outside its plan now, and the guided wizard offers opencode beside user-wide, project and custom | 12 |
 | f2c0de02 | gap | install | done | 9 |  | opencode is a first-class install target: command mains gain the $ARGUMENTS line Claude appends, agents translate to mode subagent with session defaults, the bridge plugin observes tool calls, and doctor reads the bridge; the full wiring audit proves zero unwired requirements across all 173 artifacts on both targets | 12 |
+| 5909fa9b | gap | schematic | marked | 8 |  | dtd/cc-terminal.dtd declared seven entities no command named, so the contract audit refused the tree; every terminal block now writes the study and the cache through TERMINAL.dir, TERMINAL.file, TERMINAL.ordinal, TERMINAL.form, TERMINAL.fields and TERMINAL.schematic by name across all 122 files | 13 |
+| e72adf9f | gap | voice | marked | 3 |  | ask-me-questions-dtd.md carried the ban-list tell synergy in its terminal block, so the slop sweep refused the tree; the sentence names the instrument without the tell | 13 |

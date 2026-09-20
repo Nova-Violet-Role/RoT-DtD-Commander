@@ -7,6 +7,17 @@ Every number below was produced by the command named beside it on the day of
 the release. If one of them does not re-run for you, open the
 "A claim in our docs is false" issue; the report is credited here.
 
+## 10.1.1 (2026-09-20)
+
+### Three-Doors: every asking command ends its gate with somewhere for the answers to go
+
+What is new, measured: the terminal sections. After the gate choice start and before any work, every one of the 121 cc-ask commands offers one AskUserQuestion with header Terminal: add the answers to the todo and Megathink-sort it before Start Working, Full-study the subject into `.full_study/study_<greek>.nt` and sort it, or Save the Q&A into `.cache/cache_<greek>.nt` with the eight cache fields under the nt schematic and read back whole — plus Start working alone. The combos live once in the new shared subset `dtd/cc-terminal.dtd` (TERMINAL.dir, TERMINAL.file, TERMINAL.combo, LAW.TERM.1 to 5) and are inlined into every file by `rdc build`. Placement follows each family's shape, read from the file: book lenses before the analysis, rot lenses on start, lists before the write, geometry bands before plan and produce, coin flips before the toss, forges before the plan, routers before the hand-off, the Held and Trace chain gates before step 4, ELEVATE on the last of its nine gates. The one gate-bearing skill, `create-prompt-dtd`, carries the same enclosure; `debug-dtd`, the Adiutor and the twenty gate-less skills were assessed out with the reason written in `artifacts/terminal-rollout-dtd/terminal-rollout-dtd.md`.
+
+What got better, measured: `node bin/rot-dtd-commander.mjs check`: checked 173, failed 0; `node bin/rot-dtd-commander.mjs build`: 312 written, 0 failing, and `build --check` after: 312 targets, 0 drifted. No batch automation touched the sources; every file was read, edited by hand, and verified by diff plus per-file check.
+
+- 145 commands, 23 skills, 5 agents; checked 173; 312 build targets, 0 drifted
+- `node checker/release-notes.mjs --versions`: one version everywhere, 10.1.1, recognised (class minor) from the verbs kept in run 13
+
 ## 10.1.0 (2026-09-17)
 
 ### Second-Target: the installer learns opencode, and upgrades stop keeping the dead

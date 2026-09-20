@@ -18,6 +18,14 @@
 
 ---
 
+## v10.1.1 — Three-Doors
+
+Every asking command ends its gate with somewhere for the answers to go. After gate choice start and before any work, all 121 cc-ask commands offer one Terminal question: add the answers to the todo and Megathink-sort it, Full-study the subject into `.full_study/`, or Save the Q&A into `.cache/` — or Start working alone. The combos live once in `dtd/cc-terminal.dtd` and ride the build into every file. Run 13 wired the seven entities the audit refused by name into all 122 terminal blocks and reworded the one ban-list tell the slop sweep refused; the version below is recognised, not typed.
+
+- **Three doors behind start** &mdash; todo, study and cache combos with their laws, placed per family shape, one success criterion each.
+- **The gate-bearing skill matches** &mdash; `create-prompt-dtd` carries the same enclosure; dispatches and gate-less shelves assessed out with reasons.
+- 145 commands, 23 skills, 5 agents; check 173/0; build 312, 0 drifted.
+
 ## v10.1.0 — Second-Target
 
 The commander installs into opencode as a first-class target: the wizard offers it, the flag adapts commands, agents and the observation bridge, upgrades prune what left the tree, and doctor reads the bridge where no hooks can arm. Shared leaf elements live once in `cc-core`, and the sweep guards every resolved tree against one element under two models. The version below is recognised, not typed.

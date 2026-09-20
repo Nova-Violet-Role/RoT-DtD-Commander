@@ -12,8 +12,8 @@ repository-code: "https://github.com/Nova-Violet-Role/RoT-DtD-Commander"
 license:
   - AGPL-3.0-or-later
   - EUPL-1.2
-version: 10.1.0
-date-released: 2026-09-07
+version: 10.1.1
+date-released: 2026-09-20
 abstract: >-
   145 Claude Code slash commands, 23 skills and 5 agents whose answer
   grammar, verdict vocabulary, laws and trust boundary are declared in a

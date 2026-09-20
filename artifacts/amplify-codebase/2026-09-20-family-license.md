@@ -1,0 +1,10 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2 -->
+<!-- Copyright 2026 Saimonokuma. -->
+
+# The license layer, run 13
+
+- instrument: node lib/license.mjs controls
+- exit: 0
+- read: 0 of 0
+- walked: true
+
