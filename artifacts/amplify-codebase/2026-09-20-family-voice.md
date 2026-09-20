@@ -8,4 +8,4 @@
 - read: 0 of 0
 - walked: true
 
-- [gap] ask-me-questions-dtd.md carried the ban-list tell synergy in its terminal block, so the slop sweep refused the tree; the sentence names the instrument without the tell
+- [gap] ask-me-questions-dtd.md carried one ban-list tell in its terminal block, so the slop sweep refused the tree; the sentence names the instrument without it
