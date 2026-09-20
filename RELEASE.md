@@ -24,7 +24,7 @@ Every asking command ends its gate with somewhere for the answers to go. After g
 
 - **Three doors behind start** &mdash; todo, study and cache combos with their laws, placed per family shape, one success criterion each.
 - **The gate-bearing skill matches** &mdash; `create-prompt-dtd` carries the same enclosure; dispatches and gate-less shelves assessed out with reasons.
-- 145 commands, 23 skills, 5 agents; check 173/0; build 312, 0 drifted.
+- 145 commands, 23 skills, 5 agents; check 173/0; build 312, 0 drifted; 2144 declarations; recognised 10.1.1 (class minor) from the verbs kept in run 13.
 
 ## v10.1.0 — Second-Target
 

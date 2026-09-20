@@ -15,7 +15,8 @@ What is new, measured: the terminal sections. After the gate choice start and be
 
 What got better, measured: `node bin/rot-dtd-commander.mjs check`: checked 173, failed 0; `node bin/rot-dtd-commander.mjs build`: 312 written, 0 failing, and `build --check` after: 312 targets, 0 drifted. No batch automation touched the sources; every file was read, edited by hand, and verified by diff plus per-file check.
 
-- 145 commands, 23 skills, 5 agents; checked 173; 312 build targets, 0 drifted
+- 145 commands, 23 skills, 5 agents; checked 173; 2144 declarations; 86 gate-chain commands; 312 build targets, 0 drifted
+- `node checker/contract-audit.mjs`: 2144 declarations, 0 unused, 0 law gaps
 - `node bin/adiutor.mjs controls`: 31 run, 0 failing; `node lib/cache.mjs controls`: 20 passed, 0 failed; `node lib/amplify.mjs controls`: 36 run, 0 failing
 - `node checker/release-notes.mjs --versions`: one version everywhere, 10.1.1, recognised (class minor) from the verbs kept in run 13
 
